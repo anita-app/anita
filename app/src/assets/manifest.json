@@ -1,7 +1,7 @@
 {
   "name": "Anita",
   "short_name": "Anita",
-  "description": "Anita is a private, no-server, powerful and fully customizable data management solution, open source and free of charge. With the help of Anita you will be able to keep track on any number of things you want to track, or use one of our pre-configured Anita Templates. Anita features three different data screens: Chart, List and Calendar. Each screen can be customized to match your personal preferences.",
+  "description": "Anita is a private, no-server, powerful and fully customizable data management solution, open source and free of charge. With Anita you can organize any number of things you want to track, with one of our pre-configured Anita Templates or by defining your own custom data structure. Anita can handle many different data types, and can present your data in multiple useful ways.",
   "icons": [
     {
       "src": "/assets/icons/windows11/SmallTile.scale-100.png",
