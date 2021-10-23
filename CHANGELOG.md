@@ -7,6 +7,11 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.2.1] - 2021-10-23
+### Fixed
+- fixed script to publish to github pages.
+- applied copy changes to index.html.
+
 ## [0.2.0] - 2021-10-23
 ### Added
 - added script to publish on github pages.
