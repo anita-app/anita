@@ -6,7 +6,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "module": "es2020",
-    "outDir": "./dist/out-tsc",
+    "outDir": "./anita-app.github.io/out-tsc",
     "sourceMap": false,
     "declaration": false,
     "moduleResolution": "node",

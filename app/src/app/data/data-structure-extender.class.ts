@@ -68,7 +68,6 @@ export class DataStructureExtender {
    * Creates a new key on the datastructure and sets on it the model of the section.
    */
   private addToTempTs(sez: SectionModel<SectionElement>): void {
-    console.log('addToTempTs ~ sez', sez);
     this.datastructure[sez.name] = sez;
   }
 

@@ -51,7 +51,6 @@ export class DataStructureBuilder {
    * Adds a Section to the class property `ds` using `name` as key.
    */
   private addToTempDs<T>(sez: SectionModel<T>): void {
-    console.log('sez', sez);
     this.ds[sez.name] = sez;
   }
 

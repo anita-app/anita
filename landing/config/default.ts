@@ -4,7 +4,7 @@ import { buildTailwind } from '../src/app/yassb-plugins/styles-parser/build-tail
 
 export default {
   workingDir: {
-    out: '../dist',
+    out: '../anita-app.github.io',
     styles: 'styles/styles.css'
   },
   stylesParser: buildTailwind,

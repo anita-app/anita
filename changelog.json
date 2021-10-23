@@ -4,6 +4,24 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.2.0",
+      "date": "2021-10-23",
+      "items": [
+        {
+          "type": "changed",
+          "value": "changed out folder to the github pages repository"
+        },
+        {
+          "type": "changed",
+          "value": "improved landing texts"
+        },
+        {
+          "type": "added",
+          "value": "added script to publish on github pages"
+        }
+      ]
+    },
+    {
       "version": "0.1.0",
       "date": "2021-10-23",
       "items": [

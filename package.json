@@ -1,10 +1,15 @@
 {
   "name": "anita-manager",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "scripts": {
     "build-landing": "cd landing && npm run build",
     "build-app": "cd app && npm run build",
-    "deploy": "cglg --action=newRelease && npm run do-no-run-this-deploy-directly && cglg --action=closeRelease",
+    "testdist": "cd anita-app.github.io && http-server",
+    "add-all": "cd anita-app.github.io && git add --all",
+    "commit-with-message": "cd anita-app.github.io && git commit -m \"New version\"",
+    "push-to-origin": "cd anita-app.github.io && git push -u origin main",
+    "publish-to-github-pages": "npm run add-all && npm run commit-with-message && npm run push-to-origin",
+    "deploy": "cglg --action=newRelease && npm run do-no-run-this-deploy-directly && cglg --action=closeRelease && publish-to-github-pages",
     "do-no-run-this-deploy-directly": "npm run build-landing && npm run build-app"
   },
   "author": "ilDon",

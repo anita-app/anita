@@ -3,8 +3,7 @@
   "version": "0.0.1",
   "scripts": {
     "serve": "ng serve --ssl",
-    "build": "ng build --configuration production --base-href /app/",
-    "testdist": "cd dist && http-server"
+    "build": "ng build --configuration production --base-href /app/"
   },
   "private": true,
   "dependencies": {

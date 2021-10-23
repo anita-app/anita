@@ -6,7 +6,7 @@
   "compilerOptions": {
     "jsx": "react",
     "baseUrl": "./",
-    "outDir": "./dist/out-tsc",
+    "outDir": "./anita-app.github.io/out-tsc",
     "sourceMap": false,
     "declaration": false,
     "moduleResolution": "node",

@@ -7,6 +7,14 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.2.0] - 2021-10-23
+### Added
+- added script to publish on github pages.
+
+### Changed
+- changed out folder to the github pages repository.
+- improved landing texts.
+
 ## [0.1.0] - 2021-10-23
 ### Added
 - created deploy pipe.
