@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.2.4] - 2021-10-23
+### Changed
+- set useHash to true in RouterModule.forRoot for compatibility with GitHub pages server.
+
 ## [0.2.3] - 2021-10-23
 ### Fixed
 - changed start_url in manifest to index.html.

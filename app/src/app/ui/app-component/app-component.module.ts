@@ -7,7 +7,7 @@ import { routes } from '@anita/client/ui/app-component/routes.contant';
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes, { useHash: true })
   ],
   declarations: [
     AppComponent

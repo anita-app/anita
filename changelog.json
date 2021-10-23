@@ -4,6 +4,16 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.2.4",
+      "date": "2021-10-23",
+      "items": [
+        {
+          "type": "changed",
+          "value": "set useHash to true in RouterModule.forRoot for compatibility with GitHub pages server"
+        }
+      ]
+    },
+    {
       "version": "0.2.3",
       "date": "2021-10-23",
       "items": [

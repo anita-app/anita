@@ -453,7 +453,7 @@
     }
   ],
   "scope": "https://anita-app.com/app/",
-  "start_url": "https://anita-app.com/app/index.html",
+  "start_url": "https://anita-app.com/app/#/private/projects/list",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#002346",
