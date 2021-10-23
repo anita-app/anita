@@ -1,0 +1,16 @@
+<span [formGroup]="formData">
+  <label [for]="formEle.fieldName" *ngIf="formEle.externalLabel">{{ formEle.label }}</label>
+  <input autocomplete="off" [placeholder]="formEle.label" appValidatorChecker [invalid]="formData.controls[formEle.fieldName].invalid" [touched]="formData.controls[formEle.fieldName].touched"
+    [currentValue]="formData.controls[formEle.fieldName].value" [id]="formEle.fieldName" [attr.aria-describedby]="attrAriaDescribedBy" [formControlName]="formEle.fieldName" [type]="formEle.type || 'text'" [readOnly]="formEle.readonly">
+
+  <app-required-label *ngIf="formEle.validators && formEle.validators.required; else labeforunrequired" [formEle]="formData.controls[formEle.fieldName]" [label]="formEle.label"></app-required-label>
+  <ng-template #labeforunrequired><small *ngIf="formData.controls[formEle.fieldName].value">{{ formEle.label }}</small>
+  </ng-template>
+
+  <div class="invalid-feedback" *ngIf="formData.controls[formEle.fieldName].errors">
+    <span *ngIf="formData.controls[formEle.fieldName].errors.required">Required field</span>
+    <span *ngIf="formData.controls[formEle.fieldName].errors.minlength">Min. length:
+      {{ formEle.validators.minLength }}</span>
+    <span *ngIf="formData.controls[formEle.fieldName].errors.email">Please enter a valid email address</span>
+  </div>
+</span>

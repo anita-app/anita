@@ -1,0 +1,90 @@
+// @nebular theming framework
+@import '~@nebular/theme/styles/theming';
+// @nebular out of the box themes
+@import '~@nebular/theme/styles/themes';
+
+// which themes you what to enable (empty to enable all)
+$nb-enabled-themes: (default);
+
+$nb-themes: nb-register-theme((
+  color-primary-100: #2D96FF,
+  color-primary-200: #1389FF,
+  color-primary-300: #006FDF,
+  color-primary-400: #0056AC,
+  color-primary-500: #003C79,
+  color-primary-600: #002346,
+  color-primary-700: #000f20,
+  color-primary-800: #000e1f,
+  color-primary-900: #000d1b,
+
+  color-primary-transparent-100: rgba(51, 102, 255, 0.08),
+  color-primary-transparent-200: rgba(51, 102, 255, 0.16),
+  color-primary-transparent-300: rgba(51, 102, 255, 0.24),
+  color-primary-transparent-400: rgba(51, 102, 255, 0.32),
+  color-primary-transparent-500: rgba(51, 102, 255, 0.40),
+  color-primary-transparent-600: rgba(51, 102, 255, 0.48),
+
+  calendar-active-item-bg: #002346,
+  calendar-selected-item-bg: #002346,
+  checkbox-checked-border-color: #002346,
+  color-fg-highlight: #002346,
+  color-primary: #002346,
+  context-menu-active-bg: #002346,
+  context-menu-border: #002346,
+  form-control-selected-border-color: #002346,
+  link-color-hover: #a4abb3,
+  link-color:	#002346,
+  menu-submenu-active-border-color: #002346,
+  popover-border: #002346,
+  radio-checked-border-color: #002346,
+  radio-checked-checkmark: #002346,
+  route-tabs-selected: #002346,
+  smart-table-paging-bg-active: #002346,
+  tabs-selected: #002346,
+  form-control-border-width: 1px,
+  stepper-step-padding: 1em,
+  btn-hero-primary-degree: 3deg,
+  btn-fg: #424242,
+ 
+  // app wise variables for each theme
+  sidebar-header-gap: 2rem,
+  sidebar-header-height: initial,
+  layout-content-width: 1400px,
+  color-bg: #edf1f7,
+
+
+  font-main: Roboto,
+  font-secondary: Exo,
+  font-weight-normal: 300,
+  font-weight-bolder: 500,
+
+  switcher-background: #ebeff5,
+  switcher-background-percentage: 50%,
+  drops-icon-line-gadient: -webkit-linear-gradient(#002346, #002346),
+
+  list-item-border-width: 1px,
+
+  slide-out-container-width: 30%,
+  slide-out-background: linear-gradient(270deg, #f7fafb 0%, #ecf2f5 100%),
+  slide-out-shadow-color: 0 4px 14px 0 #a2d2c8,
+  slide-out-shadow-color-rtl: 0 4px 14px 0 #a2d2c8,
+
+  chart-panel-summary-box-shadow: none,
+  chart-panel-summary-background-color: #ecf2f5,
+  chart-panel-summary-border-color: #ebeff1,
+  chart-panel-summary-border-width: 1px,
+
+  ecommerce-card-border-width: 1px,
+
+  progress-bar-background: linear-gradient(90deg, #002346 0%, #002346 100%),
+
+  form-control-border-radius: 5px,
+  form-control-border: 1px,
+
+  btn-border-radius: 3.5px,
+
+  padding: 0px,
+  radius: 3px,
+  separator: 1px
+
+), default, default);

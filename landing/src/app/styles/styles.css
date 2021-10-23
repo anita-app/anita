@@ -1,0 +1,164 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+article h2 {
+  @apply text-3xl;
+}
+article h3 {
+  @apply text-2xl;
+}
+article h4 {
+  @apply text-xl;
+}
+article h5 {
+  @apply font-bold;
+}
+article h1,
+article h2,
+article h3,
+article h4,
+article h5 {
+  @apply mt-3;
+  @apply mb-2;
+  @apply font-semibold;
+  @apply leading-normal;
+}
+
+article h1 {
+  @apply mt-8;
+  @apply text-5xl;
+  @apply mb-10;
+}
+
+article p {
+  @apply text-justify;
+  @apply my-4;
+  @apply text-base;
+}
+
+article li {
+  @apply text-justify;
+  @apply text-base;
+}
+
+article ul {
+  @apply list-disc;
+  @apply list-outside;
+  @apply pl-5;
+}
+
+article a {
+  @apply text-blue-600;
+  @apply underline;
+}
+
+.code-block {
+  @apply my-6;
+  @apply rounded-xl;
+  @apply overflow-x-auto;
+  @apply bg-gray-800;
+  @apply text-white;
+  @apply pt-3;
+  @apply pl-5;
+  @apply pb-3;
+  @apply pr-5;
+}
+
+p code,
+li code,
+td code {
+  @apply text-pink-600;
+}
+
+a code {
+  @apply text-pink-600;
+  @apply underline;
+}
+
+/** 
+ * Responsive table 
+ * @see https://tailwindcomponents.com/component/mobile-responsive-table
+ */
+
+@media (min-width: 1024px) {
+  table {
+    display: inline-table !important;
+  }
+
+  thead tr:not(:first-child) {
+    display: none;
+  }
+}
+
+
+article th {
+  @apply bg-pink-100;
+}
+
+article th,
+article td {
+  @apply border;
+  @apply border-gray-100;
+  @apply px-4;
+  @apply py-2;
+  @apply text-left;
+}
+
+article tr:nth-child(even),
+article tr:nth-child(even) td {
+  @apply bg-gray-100;
+  @apply border-white;
+}
+
+article table {
+  @apply w-full;
+  @apply flex;
+  @apply flex-row;
+  @apply flex-nowrap;
+  @apply rounded-lg;
+  @apply overflow-hidden;
+  @apply my-5;
+}
+
+article table thead tr {
+  @apply flex;
+  @apply flex-col;
+  @apply flex-nowrap;
+  @apply mb-2;
+  @apply rounded-l-lg;
+}
+
+article tbody {
+  @apply flex-1;
+}
+article tbody tr {
+  @apply flex;
+  @apply flex-col;
+  @apply flex-nowrap;
+  @apply mb-2;
+}
+
+@media (min-width: 1024px) {
+  article table {
+    @apply shadow-lg;
+  }
+  article table thead tr {
+    @apply table-row;
+    @apply rounded-none;
+  }
+  article tbody {
+    @apply flex-none;
+  }
+  article tbody tr {
+    @apply table-row;
+  }
+}
+
+
+/**
+ * For the docs
+ */
+ nav a:hover {
+   text-decoration: none !important;
+ }

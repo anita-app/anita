@@ -1,0 +1,11 @@
+<nb-card class="text-center">
+  <nb-card-header>No projects found</nb-card-header>
+  <nb-card-body>
+    <h5 class="card-title">You do not have any Projects on this device yet</h5>
+    <p class="card-text">You can create a new project or import one from an existing project file.</p>
+  </nb-card-body>
+  <nb-card-footer>
+    <button nbButton status="primary" class="mr-3" (click)="importPrject()">Import an existing project</button>
+    <button nbButton status="info" routerLink="/private/projects/add">Create a new project</button>
+  </nb-card-footer>
+</nb-card>

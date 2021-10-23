@@ -1,0 +1,9 @@
+<div *ngIf="formData" [formGroup]="formData" class="form-group">
+  <label [for]="formEle.fieldName" *ngIf="formEle.externalLabel">{{ formEle.label }}</label>
+  <textarea appValidatorChecker [invalid]="formData.controls[formEle.fieldName].invalid" [touched]="formData.controls[formEle.fieldName].touched" [currentValue]="formData.controls[formEle.fieldName].value" [id]="formEle.fieldName" rows="3"
+    [formControlName]="formEle.fieldName" [placeholder]="formEle.label" [readOnly]="formEle.readonly"></textarea>
+  <app-required-label *ngIf="formEle.validators && formEle.validators.required" [formEle]="formData.controls[formEle.fieldName]"></app-required-label>
+  <div class="invalid-feedback">
+    Required field
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<p *ngIf="showLabel" class="label mb-2">{{fieldElement['label']}}</p>
+<p [ngSwitch]="fieldElement.componentCode" [ngClass]="[ showLabel ? '' : 'mb-0']">
+  <span *ngSwitchCase="basicInput">
+    {{ element[fieldName]}}
+  </span>
+  <span *ngSwitchCase="basicTextarea">
+    {{ element[fieldName]}}
+  </span>
+  <span *ngSwitchCase="basicSelect">
+    {{ fieldElement['options'] | txtByFieldValue: element[fieldName]}}
+  </span>
+  <span *ngSwitchCase="basicRadio">
+    {{ fieldElement['options'] | txtByFieldValue: element[fieldName]}}
+  </span>
+  <span *ngSwitchCase="basicCheckbox">
+    <nb-checkbox [id]="fieldElement.fieldName" [(checked)]="element[fieldName]" (checkedChange)="toggle(element)"></nb-checkbox>
+  </span>
+  <span *ngSwitchCase="datePicker">
+    {{ element[fieldName] | date:'fullDate' }}
+  </span>
+  <span *ngSwitchCase="dateTimePicker">
+    {{ element[fieldName] | date:'medium' }}
+  </span>
+</p>

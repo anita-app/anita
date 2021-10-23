@@ -1,0 +1,153 @@
+/* Global styles */
+html, body {
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+  height: 100%;
+  margin: 0px;
+}
+
+// Buttons
+
+.btn-rounded {
+  border-radius: 48px !important;
+}
+
+button:disabled {
+  cursor: no-drop !important;
+}
+
+.btn-success:hover,
+.btn-info:hover,
+.btn-warning:hover,
+.btn-danger:hover {
+  color: #5c5c5c !important;
+}
+
+/* Bootstrap overrides */
+$theme-colors: (
+  "primary": #002346
+);
+
+$border-radius: .125rem !default;
+$border-radius-lg: .150rem !default;
+$border-radius-sm: .1rem !default;
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1500px,
+  xxxl: 2000px
+) !default;
+
+$spacer: 1rem !default;
+$spacers: () !default;
+// stylelint-disable-next-line scss/dollar-variable-default
+$spacers: map-merge(
+  (
+    0: 0,
+    1: ($spacer * .25),
+    2: ($spacer * .5),
+    3: $spacer,
+    4: ($spacer * 1.5),
+    5: ($spacer * 2),
+    6: ($spacer * 3)
+  ),
+  $spacers
+);
+
+// Grid containers
+//
+// Define the maximum width of `.container` for different screen sizes.
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1440px,
+  xxxl: 1940px
+) !default;
+
+// ICONS
+
+.fa-header {
+  font-size: 1.5em !important;
+}
+
+// Inputs
+
+$input-height: calc(2.25em + 10px) !default;
+
+// FULL WIDTH DIALOG
+
+.full-width-dialog + div.cdk-global-overlay-wrapper > div.cdk-overlay-pane {
+  width: 100% !important;
+  height: 100% !important;
+  
+  nb-dialog-container {
+    width:100% !important;
+    height: 100% !important;
+  }
+}
+
+.debugger-win {
+  width:95%;
+  min-height: 300px;
+}
+
+// HANDOSOME TABLE
+
+.wtHolder {
+  height:100% !important;
+}
+
+/* Bootstrap imports */
+@import"~bootstrap/scss/functions";
+@import"~bootstrap/scss/variables";
+@import"~bootstrap/scss/mixins";
+@import"~bootstrap/scss/root";
+@import"~bootstrap/scss/reboot";
+@import"~bootstrap/scss/type";
+@import"~bootstrap/scss/images";
+@import"~bootstrap/scss/code";
+@import"~bootstrap/scss/grid";
+@import"~bootstrap/scss/tables";
+@import"~bootstrap/scss/forms";
+@import"~bootstrap/scss/buttons";
+@import"~bootstrap/scss/transitions";
+@import"~bootstrap/scss/dropdown";
+@import"~bootstrap/scss/button-group";
+@import"~bootstrap/scss/input-group";
+@import"~bootstrap/scss/custom-forms";
+@import"~bootstrap/scss/nav";
+@import"~bootstrap/scss/navbar";
+@import"~bootstrap/scss/card";
+@import"~bootstrap/scss/breadcrumb";
+@import"~bootstrap/scss/pagination";
+@import"~bootstrap/scss/badge";
+@import"~bootstrap/scss/jumbotron";
+@import"~bootstrap/scss/alert";
+@import"~bootstrap/scss/progress";
+@import"~bootstrap/scss/media";
+@import"~bootstrap/scss/list-group";
+@import"~bootstrap/scss/close";
+@import"~bootstrap/scss/modal";
+@import"~bootstrap/scss/tooltip";
+@import"~bootstrap/scss/popover";
+@import"~bootstrap/scss/utilities";
+@import"~bootstrap/scss/print";
+
+.c-pointer {
+  cursor: pointer !important;
+}
+
+.c-default {
+  cursor: default !important;
+}
+
+.c-no-drop {
+  cursor: no-drop !important;
+}

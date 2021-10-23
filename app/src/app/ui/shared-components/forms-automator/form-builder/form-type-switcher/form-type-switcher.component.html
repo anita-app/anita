@@ -1,0 +1,6 @@
+<app-stepper-form *ngIf="stepper; else nostepper" [formModel]="formModel[0]" [formData]="formData"
+  [stepperDirection]="stepper"></app-stepper-form>
+<ng-template #nostepper>
+  <app-group-forms *ngFor="let formEles of formModel; trackBy: trackFormEles" [formEles]="formEles"
+    [formData]="formData"></app-group-forms>
+</ng-template>

@@ -1,0 +1,14 @@
+<div *ngIf="formData" [formGroup]="formData" class="form-group">
+  <div>
+    <label [for]="formEle.fieldName" *ngIf="formEle.externalLabel">{{ (formEle.label) ? formEle.label: 'Please select one' }}</label>
+    <select appValidatorChecker [invalid]="formData.controls[formEle.fieldName].invalid" [touched]="formData.controls[formEle.fieldName].touched" [currentValue]="formData.controls[formEle.fieldName].value" [id]="formEle.fieldName"
+      [attr.aria-describedby]="attrAriaDescribedBy" [formControlName]="formEle.fieldName">
+      <option *ngFor="let optionData of formEle.options; trackBy: trackItems" [ngValue]="optionData.value">
+        {{ optionData.txt }}</option>
+    </select>
+    <div class="invalid-feedback">
+      Please choose one
+    </div>
+  </div>
+  <app-required-label *ngIf="formEle.validators && formEle.validators.required" [formEle]="formData.controls[formEle.fieldName]"></app-required-label>
+</div>

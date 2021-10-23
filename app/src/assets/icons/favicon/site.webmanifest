@@ -1,0 +1,19 @@
+{
+  "name": "Anita",
+  "short_name": "Anita",
+  "icons": [
+    {
+      "src": "/assets/icons/favicon/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/icons/favicon/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#002346",
+  "background_color": "#002346",
+  "display": "standalone"
+}

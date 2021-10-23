@@ -1,0 +1,21 @@
+<span *ngIf="sections$ | async; let sections">
+  <span *ngIf="sections | sectionById: sectionId; let section">
+    <nb-card>
+      <nb-card-header>
+        Details
+      </nb-card-header>
+      <nb-card-body>
+        <span *ngIf="element">
+          <span *ngFor="let fieldGroup of section.formModel">
+            <span *ngFor="let fieldElement of fieldGroup">
+              <span *ngIf="!reserved[fieldElement.fieldName] && (element[fieldElement.fieldName] || fieldElement.componentCode === basicCheckboxCode)">
+                <app-element-value-viewer [fieldElement]="fieldElement" [element]="element" [fieldName]="fieldElement.fieldName"></app-element-value-viewer>
+              </span>
+            </span>
+          </span>
+        </span>
+      </nb-card-body>
+    </nb-card>
+  </span>
+</span>
+<app-add-btn *ngIf="element" [url]="editUrl" icon="edit-outline" [element]="element"></app-add-btn>

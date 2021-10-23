@@ -1,0 +1,12 @@
+<div class="header-container w-100 left d-flex justify-content-between">
+  <div class="logo-containter" class="d-block d-lg-none">
+    <a *ngIf="(projects$ | async ).length" (click)="toggleSidebar()" href="#" class="navigation">
+      <nb-icon icon="menu-outline"></nb-icon>
+    </a>
+  </div>
+  <div class="d-flex align-items-center">
+    <img src="/assets/logo/logo_square.svg" style="height: 35px; width: auto;" alt="Anita">
+    <span class="lead ml-3">Anita</span><sup>Beta</sup>
+  </div>
+  <span class="d-block d-lg-none"></span>
+</div>

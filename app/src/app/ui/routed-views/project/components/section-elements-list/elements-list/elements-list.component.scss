@@ -1,0 +1,21 @@
+td.clickable {
+  cursor: pointer;
+}
+
+/**
+ * Ensures that columns with .min class are as small as possible
+ * Used for checkboxes
+ * see: https://stackoverflow.com/a/26983473 
+ */
+table.has-min {
+  /* override Bootstrap's width */
+  width: inherit !important;
+}
+tr {}
+td, th {
+  width: auto;
+}
+td.min, th.min {
+  width: 1% !important;
+  white-space: nowrap !important;
+}

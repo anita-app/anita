@@ -1,0 +1,5 @@
+<p *ngIf="showalert.state === true" [class]="alertClasses">
+  <nb-alert [status]="alertType" closable (close)="hideAlert()">
+    <ng-content></ng-content>
+  </nb-alert>
+</p>

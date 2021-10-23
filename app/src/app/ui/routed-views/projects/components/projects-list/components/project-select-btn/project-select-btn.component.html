@@ -1,0 +1,13 @@
+<span *ngIf="currentProject$ | async; let currentProject; else notactive">
+  <span *ngIf="currentProject[settingsKey][0] && currentProject[settingsKey][0].id === pickedProject.id; else notactive">
+    <button nbButton shape="rectangle" class="mr-2" [routerLink]="['/private/projects/edit/', pickedProject.id]">
+      <nb-icon icon="edit-outline"></nb-icon> Edit Project
+    </button>
+    <button nbButton shape="rectangle" status="info" [routerLink]="['/private/project/', pickedProject.id, 'info']">
+      <nb-icon icon="info-outline"></nb-icon> Project details
+    </button>
+  </span>
+</span>
+<ng-template #notactive>
+  <button nbButton shape="rectangle" status="success" (click)="loadProject()">Load Project</button>
+</ng-template>

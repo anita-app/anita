@@ -1,0 +1,29 @@
+<span *ngIf="projects$ | async; let projects">
+  <span *ngIf="projects.length; else noprojects">
+    <nb-card accent="primary">
+      <nb-card-header class="d-flex justify-content-between align-items-center">
+        <span>Projects on this device</span>
+        <span>
+          <button nbButton nbTooltip="Import existing Project from file" shape="rectangle" status="primary" class="mr-3" size="medium" (click)="importProject()">
+            <nb-icon icon="download-outline"></nb-icon>
+          </button>
+          <button nbButton nbTooltip="Create a new Project" shape="rectangle" status="info" size="medium" [routerLink]="['/private/projects/add']">
+            <nb-icon icon="plus-outline"></nb-icon>
+          </button>
+        </span>
+      </nb-card-header>
+    </nb-card>
+    <div class="container">
+      <div class="row" *ngFor="let project of projects; trackBy: trackProjects">
+        <app-project-card [project]="project" class="w-100"></app-project-card>
+      </div>
+    </div>
+    <app-add-btn url="/private/projects/add">
+    </app-add-btn>
+  </span>
+
+  <ng-template #noprojects>
+    <app-no-projects></app-no-projects>
+  </ng-template>
+
+</span>

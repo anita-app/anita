@@ -1,0 +1,18 @@
+<nb-card class="shadow-sm col-12 mr-4">
+  <nb-card-header>
+    {{ project.title }}
+  </nb-card-header>
+  <nb-card-body>
+    <p class="card-text">
+      {{ project.description }}</p>
+    <small class="text-muted">Creation date: </small>
+    <p class="card-text">
+      {{ project.dateCreation | date:'short' }}</p>
+    <nb-card-footer class="row d-flex justify-content-between pb-0 pl-3">
+      <button nbButton shape="rectangle" outline status="danger" (click)="deleteProject()">
+        <nb-icon icon="trash-2-outline" class="mr-0 mr-md-2"></nb-icon><span class="d-none d-md-block">Delete Project</span>
+      </button>
+      <app-project-select-btn [pickedProject]="project"></app-project-select-btn>
+    </nb-card-footer>
+  </nb-card-body>
+</nb-card>

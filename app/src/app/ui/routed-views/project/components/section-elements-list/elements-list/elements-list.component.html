@@ -1,0 +1,34 @@
+<nb-card *ngIf="source && allColumns.length">
+  <nb-card-header class="d-flex justify-content-between">
+    <h2>{{ section.title }}</h2>
+    <input nbInput placeholder="Search" [nbFilterInput]="source" id="search" class="search-input">
+  </nb-card-header>
+  <nb-card-body>
+    <table [nbTreeGrid]="source" [nbSort]="source" (sort)="updateSort($event)" [ngClass]="tableClass">
+      <tr nbTreeGridHeaderRow *nbTreeGridHeaderRowDef="allColumns"></tr>
+      <tr nbTreeGridRow *nbTreeGridRowDef="let row; columns: allColumns"></tr>
+
+      <ng-container *ngFor="let column of allColumns; trackBy: trackCols; let i = index" [nbTreeGridColumnDef]="column">
+        <span *ngIf="formModels[i].componentCode !== basicCheckboxCode; else checkboxTh">
+          <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>{{columnNames[column]}}</th>
+        </span>
+        <ng-template #checkboxTh>
+          <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef class="min">{{columnNames[column]}}</th>
+        </ng-template>
+        <th nbTreeGridHeaderCell [nbSortHeader]="getSortDirection(column)" *nbTreeGridHeaderCellDef>{{columnNames[column]}}</th>
+        <span *ngIf="formModels[i].componentCode !== basicCheckboxCode; else checkboxTd">
+          <td nbTreeGridCell *nbTreeGridCellDef="let row" (click)="openDetails(row.data)" class="clickable">
+            <app-element-value-viewer [fieldElement]="formModels[i]" [element]="row.data" [fieldName]="column" [showLabel]="false"></app-element-value-viewer>
+          </td>
+        </span>
+        <ng-template #checkboxTd>
+          <td nbTreeGridCell *nbTreeGridCellDef="let row" class="min">
+            <app-element-value-viewer [fieldElement]="formModels[i]" [element]="row.data" [fieldName]="column" [showLabel]="false"></app-element-value-viewer>
+          </td>
+        </ng-template>
+
+      </ng-container>
+
+    </table>
+  </nb-card-body>
+</nb-card>

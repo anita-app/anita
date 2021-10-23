@@ -1,0 +1,10 @@
+<nb-card>
+  <nb-card-header>Delete</nb-card-header>
+  <nb-card-body>
+    <p>Are you sure you want to delete this element?</p>
+  </nb-card-body>
+  <nb-card-footer class="d-flex justify-content-between align-items-center">
+    <button class="btn btn-outline-info" status="secondary" (click)="dismiss()">Cancel</button>
+    <button nbButton status="danger" (click)="doDelete()">Delete</button>
+  </nb-card-footer>
+</nb-card>

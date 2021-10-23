@@ -1,0 +1,48 @@
+{
+  "index": "/index.html",
+  "routing": {
+    "index": "/",
+    "routes": {
+      "/": {
+        "match": "exact"
+      },
+      "/manifest.json": {
+        "match": "exact"
+      },
+      "/auth": {
+        "prefix": true
+      },
+      "/private": {
+        "prefix": true
+      },
+      "/assets/**/*.*": {
+        "match": "regex"
+      }
+    }
+  },
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "resources": {
+        "files": [
+          "/index.html",
+          "/*.bundle.css",
+          "/*.bundle.js",
+          "/*.chunk.js",
+          "/workers/*.js"
+        ]
+      }
+    },
+    {
+      "name": "assets",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/assets/**"
+        ]
+      }
+    }
+  ]
+}

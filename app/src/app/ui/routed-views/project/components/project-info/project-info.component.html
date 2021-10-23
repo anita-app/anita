@@ -1,0 +1,13 @@
+<span *ngIf="project$ | async; let project">
+  <nb-card accent="primary">
+    <nb-card-header>Project info</nb-card-header>
+    <nb-card-body>
+      <app-project-details [project]="project[0]"></app-project-details>
+    </nb-card-body>
+    <nb-card-footer class="row d-flex justify-content-end">
+      <button nbButton shape="rectangle" class="mr-2" [routerLink]="['/private/projects/edit/', project[0].id]">
+        <nb-icon icon="edit-outline"></nb-icon> Edit Project
+      </button>
+    </nb-card-footer>
+  </nb-card>
+</span>
