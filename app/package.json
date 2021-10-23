@@ -4,9 +4,7 @@
   "scripts": {
     "serve": "ng serve --ssl",
     "build": "ng build --configuration production --base-href /app/",
-    "testdist": "cd dist && http-server",
-    "deploy": "cglg --action=newRelease && npm run do-no-run-this-deploy-directly && cglg --action=closeRelease",
-    "do-no-run-this-deploy-directly": "npm run build && cd dist && npm run deploy"
+    "testdist": "cd dist && http-server"
   },
   "private": true,
   "dependencies": {

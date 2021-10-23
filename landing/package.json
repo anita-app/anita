@@ -4,10 +4,11 @@
   "version": "0.0.1",
   "author": "Anita Team",
   "scripts": {
-    "build": "yassb build",
     "watch": "yassb watch",
+    "build": "yassb build",
     "serve": "yassb serve",
-    "build-docs-landing": "npm run docs && npm run build-landing"
+    "deploy": "cglg --action=newRelease && npm run do-no-run-this-deploy-directly && cglg --action=closeRelease",
+    "do-no-run-this-deploy-directly": "npm run build"
   },
   "dependencies": {
     "tailwindcss": "^2.2.16"
