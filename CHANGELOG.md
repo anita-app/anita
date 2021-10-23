@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.2.3] - 2021-10-23
+### Fixed
+- changed start_url in manifest to index.html.
+
 ## [0.2.2] - 2021-10-23
 ### Fixed
 - improved manifes.

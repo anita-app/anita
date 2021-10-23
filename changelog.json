@@ -4,6 +4,16 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.2.3",
+      "date": "2021-10-23",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "changed start_url in manifest to index.html"
+        }
+      ]
+    },
+    {
       "version": "0.2.2",
       "date": "2021-10-23",
       "items": [
