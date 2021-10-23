@@ -4,6 +4,16 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.2.5",
+      "date": "2021-10-23",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "removed /index.html to link to app in get started button"
+        }
+      ]
+    },
+    {
       "version": "0.2.4",
       "date": "2021-10-23",
       "items": [

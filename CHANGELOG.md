@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.2.5] - 2021-10-23
+### Fixed
+- removed /index.html to link to app in get started button.
+
 ## [0.2.4] - 2021-10-23
 ### Changed
 - set useHash to true in RouterModule.forRoot for compatibility with GitHub pages server.
