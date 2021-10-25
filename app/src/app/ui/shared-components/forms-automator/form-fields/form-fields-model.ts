@@ -60,7 +60,7 @@ export interface BasicRadio<T> extends CommonTypes<T> {
 }
 
 export interface BasicSelect<T> extends CommonTypes<T> {
-  componentCode: FORM_COMPONENTS_CODES.basicSelect | FORM_COMPONENTS_CODES.childOfSelectorForSectionComponent;
+  componentCode: FORM_COMPONENTS_CODES.basicSelect | FORM_COMPONENTS_CODES.childOfSelectorForSection | FORM_COMPONENTS_CODES.parentsSelector;
   options: Array<OptionKeysModel>;
   value?: string | number;
   validators?: {

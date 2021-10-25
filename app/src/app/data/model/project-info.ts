@@ -103,13 +103,10 @@ export interface Section extends SectionDetailsDeclaration {
  * Defines the bare minimum fields of an `Element` of a `Section`.
  */
 export interface SectionElement {
-  id: string;
-  dateCreation: string;
-  lastModified?: string;
-  [key: string]: any;
-}
-
-export interface ParentsInfo {
-  name: string;
   [RESERVED_FIELDS.id]: string;
+  [RESERVED_FIELDS.dateCreation]: string;
+  [RESERVED_FIELDS.createdBy]?: string;
+  [RESERVED_FIELDS.parentsInfo]?: string;
+  [RESERVED_FIELDS.lastModified]?: string;
+  [key: string]: any;
 }

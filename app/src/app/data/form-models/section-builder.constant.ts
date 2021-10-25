@@ -23,16 +23,10 @@ export const sectionDetails: Array<Array<FormFieldsModel<SectionDetailsDeclarati
       }
     },
     {
-      componentCode: FORM_COMPONENTS_CODES.childOfSelectorForSectionComponent,
+      componentCode: FORM_COMPONENTS_CODES.childOfSelectorForSection,
       fieldName: 'childOf',
       label: 'Parent sections:',
-      options: [{
-        txt: 'test',
-        value: 'val'
-      }, {
-        txt: 'test2',
-        value: 'val2'
-      }]
+      options: []
     }
   ]
 ];

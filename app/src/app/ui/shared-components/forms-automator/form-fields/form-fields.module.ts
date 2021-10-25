@@ -10,6 +10,7 @@ import { BasicTextareaComponent } from '@anita/client/ui/shared-components/forms
 import { ChildOfSelectorForSectionComponent } from '@anita/client/ui/shared-components/forms-automator/form-fields/child-of-selector-for-section/child-of-selector-for-section.component';
 import { DateTimePickerComponent } from '@anita/client/ui/shared-components/forms-automator/form-fields/date-time-picker/date-time-picker.component';
 import { OptionsMakerComponent } from '@anita/client/ui/shared-components/forms-automator/form-fields/options-maker/options-maker.component';
+import { ParentsSelectorComponent } from '@anita/client/ui/shared-components/forms-automator/form-fields/parents-selector/parents-selector.component';
 import { RequiredLabelComponent } from '@anita/client/ui/shared-components/forms-automator/form-fields/required-label/required-label.component';
 import { ValidatorCheckerDirective } from '@anita/client/ui/shared-components/forms-automator/form-fields/validator-checker.directive';
 import {
@@ -37,7 +38,8 @@ export type SupportedComponents =
   OptionsMakerComponent |
   DatePickerComponent |
   DateTimePickerComponent |
-  ChildOfSelectorForSectionComponent;
+  ChildOfSelectorForSectionComponent |
+  ParentsSelectorComponent;
 
 const FormComponents = [
   HiddenInputComponent,
@@ -49,7 +51,8 @@ const FormComponents = [
   OptionsMakerComponent,
   DatePickerComponent,
   DateTimePickerComponent,
-  ChildOfSelectorForSectionComponent
+  ChildOfSelectorForSectionComponent,
+  ParentsSelectorComponent
 ];
 
 @NgModule({

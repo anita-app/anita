@@ -8,6 +8,7 @@ import { DatePickerComponent } from '@anita/client/ui/shared-components/forms-au
 import { DateTimePickerComponent } from '@anita/client/ui/shared-components/forms-automator/form-fields/date-time-picker/date-time-picker.component';
 import { HiddenInputComponent } from '@anita/client/ui/shared-components/forms-automator/form-fields/hidden-input/hidden-input.component';
 import { OptionsMakerComponent } from '@anita/client/ui/shared-components/forms-automator/form-fields/options-maker/options-maker.component';
+import { ParentsSelectorComponent } from '@anita/client/ui/shared-components/forms-automator/form-fields/parents-selector/parents-selector.component';
 
 /**
  * Defines the Object that contains the prerequisite necessary to show a field of a form.
@@ -52,7 +53,8 @@ export const enum FORM_COMPONENTS_CODES {
   optionsMaker = 7,
   datePicker = 8,
   dateTimePicker = 9,
-  childOfSelectorForSectionComponent = 10
+  childOfSelectorForSection = 10,
+  parentsSelector = 11
 }
 
 /**
@@ -69,7 +71,8 @@ export const COMPONENT_CODE_TO_COMPONENT = {
   [FORM_COMPONENTS_CODES.optionsMaker]: OptionsMakerComponent,
   [FORM_COMPONENTS_CODES.datePicker]: DatePickerComponent,
   [FORM_COMPONENTS_CODES.dateTimePicker]: DateTimePickerComponent,
-  [FORM_COMPONENTS_CODES.childOfSelectorForSectionComponent]: ChildOfSelectorForSectionComponent
+  [FORM_COMPONENTS_CODES.childOfSelectorForSection]: ChildOfSelectorForSectionComponent,
+  [FORM_COMPONENTS_CODES.parentsSelector]: ParentsSelectorComponent
 };
 
 /**

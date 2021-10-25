@@ -87,12 +87,14 @@ export class SectionElementEditorComponent implements OnInit, OnDestroy {
       return;
 
     const formDataModel = new ComponentCodeToName(this.section.formModel).parse();
-    const formDataParserOptions = {
+    this.sectionEles = this.formDataParser.make({
       formDataModel,
       section: this.section.id,
-      element: this.elementToEdit
-    };
-    this.sectionEles = this.formDataParser.make(formDataParserOptions);
+      element: this.elementToEdit,
+      childOf: this.section.childOf,
+      sections: project[RESERVED_UDS_KEYS._sections]
+    });
+    console.log('setFormDataForSection ~ this.sectionEles', this.sectionEles);
   }
 
 }
