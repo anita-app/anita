@@ -29,7 +29,7 @@ export class DbConnector<DbTypes> implements DbConnectorInstance<DbTypes> {
   constructor(
     private executers: DbObjects<unknown, DbTypes>,
     public options: DsDbInitOptions = {},
-    private allSez?: Array<SectionDefinition<any>>,
+    private allSez: Array<SectionDefinition<any>> = [],
     private addSystemSections: boolean = true
   ) { }
 
