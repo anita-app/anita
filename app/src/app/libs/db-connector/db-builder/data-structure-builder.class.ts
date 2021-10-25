@@ -40,7 +40,6 @@ export class DataStructureBuilder {
       sezParams.indexes,
       sezParams.orderBy,
       sezParams.childOf,
-      sezParams.parentOf,
       sezParams.parentsIdentifiers,
       sezParams.ownerIdentifier
     ).make();

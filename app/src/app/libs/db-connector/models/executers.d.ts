@@ -150,6 +150,5 @@ interface DeletorConstructable<E, DbTypes> {
  * Defines the public interface that a Deletor instance must have
  */
 interface Deletor<E> {
-  setDeleteChilds(): Deletor<E>;
   autoDelete(): Promise<void>;
 }

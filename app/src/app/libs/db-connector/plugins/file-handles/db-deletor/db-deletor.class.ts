@@ -21,13 +21,6 @@ export class DbDeletor<E> implements Deletor<E> {
   ) { }
 
   /**
-   * TODO
-   */
-  public setDeleteChilds(): DbDeletor<E> {
-    return this;
-  }
-
-  /**
    * Deletes an element from the collection
    */
   public async autoDelete(): Promise<any> {

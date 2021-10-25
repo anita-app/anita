@@ -2,8 +2,6 @@ import { DEFAULT_OWNER_IDENTIFIER, DEFAULT_PARENTS_IDENTIFIER, DEFAULT_PK } from
 import { SectionDefinition, SectionModel, SectionName } from '@anita/client/libs/db-connector/db-builder/sez-definition';
 import { Logger } from '@anita/client/libs/logger/logger.class';
 
-type Relations = 'childOf' | 'parentOf';
-
 /**
  * Builds a Section model
  */
@@ -23,7 +21,6 @@ export class SezBuilder<T> {
    * @param [indexes] the indexes of the section (aka table).
    * @param [orderBy] default sorting order.
    * @param [childOf] list of sections of which the current section is child. Needed for the UI, to add the parent delector.
-   * @param [parentOf] list of sections of which the current section is parent. Needed for the UI, to display child items.
    * @param [parentsIdentifiers] name of the field identifying the parent id value.
    * @param [ownerIdentifier] name of the field identifying the id of the owner.
    */
@@ -35,7 +32,6 @@ export class SezBuilder<T> {
     private indexes: Array<keyof T> = [DEFAULT_PK] as Array<keyof T>,
     private orderBy: keyof T & string = DEFAULT_PK as keyof T & string,
     private childOf?: Array<SectionName>,
-    private parentOf?: Array<SectionName>,
     private parentsIdentifiers?: keyof T,
     private ownerIdentifier?: keyof T
   ) { }
@@ -100,43 +96,39 @@ export class SezBuilder<T> {
   }
 
   /**
-   * Checks that the values of `parentOf` and `childOf` correspond to valid section names.
+   * Checks that the values of `childOf` correspond to valid section names.
    */
   private checkRelations(): void {
-    if (this.parentOf)
-      this.loopAllRelations('parentOf');
     if (this.childOf)
-      this.loopAllRelations('childOf');
+      this.loopAllRelations();
   }
 
   /**
    * Loops all relations for a given scope and calls checkRelationsExist to check if the value is valid.
    * Sets the scope to undefined if there are no valid relationships.
-   * @param scope either `childOf` or `parentOf`
    *
    * @see checkRelationsExist
    */
-  private loopAllRelations(scope: Relations): void {
-    this[scope].forEach((sezName: SectionName) => this.checkRelationsExist(sezName, scope));
-    if (!this[scope].length)
-      this[scope] = undefined;
+  private loopAllRelations(): void {
+    this.childOf.forEach((sezName: SectionName) => this.checkRelationsExist(sezName));
+    if (!this.childOf.length)
+      this.childOf = undefined;
   }
 
   /**
-   * Checks that the section name found in `childOf` or `parentOf` correponds to an actual section.
-   * If not, removes the section name from the list of sections in `childOf` or `parentOf`.
+   * Checks that the section name found in `childOf` correponds to an actual section.
+   * If not, removes the section name from the list of sections in `childOf`.
    * @param sezName the name of the section to look for
-   * @param scope either `childOf` or `parentOf`
    */
-  private checkRelationsExist(sezName: SectionName, scope: Relations): void {
+  private checkRelationsExist(sezName: SectionName): void {
     const indexSez = this.getSezByName(sezName);
     if (indexSez >= 0)
       return;
 
-    const indexInScope = this[scope].indexOf(sezName as string);
-    this[scope].splice(indexInScope, 1);
+    const indexInScope = this.childOf.indexOf(sezName as string);
+    this.childOf.splice(indexInScope, 1);
 
-    Logger.error(`Error in '${scope}' list`, `Section '${sezName}' does not exist in the sections list and has hence been removed from the '${scope}' list`);
+    Logger.error(`Error in .childOf list`, `Section '${sezName}' does not exist in the sections list and has hence been removed from the .childOf list`);
   }
 
   /**
@@ -176,16 +168,7 @@ export class SezBuilder<T> {
       fields: this.fields,
       ownerIdentifier: this.ownerIdentifier
     };
-    this.addParentOf();
     this.addChildOf();
-  }
-
-  /**
-   * Adds the filed `parentOf` if any
-   */
-  private addParentOf(): void {
-    if (this.parentOf)
-      this.section.parentOf = this.parentOf;
   }
 
   /**

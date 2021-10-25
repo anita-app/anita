@@ -11,11 +11,6 @@ import Dexie from 'dexie';
 export class DbDeletor<E> implements Deletor<E> {
 
   /**
-   * Whether to delte childe elements or not.
-   */
-  private deleteChilds = false;
-
-  /**
    * Creates an instance of db deletor.
    * @param section the section of the element to delete
    * @param args the arguments for the query, must include the primary key (`pk`) value
@@ -27,14 +22,6 @@ export class DbDeletor<E> implements Deletor<E> {
   ) { }
 
   /**
-   * Toggles `deleteChilds`
-   */
-  public setDeleteChilds(): DbDeletor<E> {
-    this.deleteChilds = !this.deleteChilds;
-    return this;
-  }
-
-  /**
    * Perform the delete action on the given element.
    */
   public async autoDelete(): Promise<void> {
@@ -43,26 +30,8 @@ export class DbDeletor<E> implements Deletor<E> {
       await new QueryMaker(this.dbConnector, this.section)
         .addWhere([this.dbConnector.DS[this.section].pk as string, '=', aliasElementToDelete])
         .delete();
-
-      if (this.deleteChilds)
-        await this.seekAndDestroyChilds(aliasElementToDelete);
     } else
       Logger.error('Error in autoDelete', 'No PK value was found on the element');
-  }
-
-  /**
-   * If `deleteChilds` is true, loops over all child sections and calls ChildDeletor.
-   *
-   * @see ChildDeletor
-   */
-  private async seekAndDestroyChilds(aliasElementToDelete: string): Promise<void> {
-    if (!this.dbConnector.DS[this.section].parentOf)
-      return;
-    const childsDestroyers = [];
-    this.dbConnector.DS[this.section].parentOf.forEach((childSez: keyof AbstractModel) =>
-      childsDestroyers.push(new ChildDeletor(this.dbConnector, aliasElementToDelete, childSez).do())
-    );
-    await Promise.all(childsDestroyers);
   }
 
 }

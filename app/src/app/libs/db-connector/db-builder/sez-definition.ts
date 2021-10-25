@@ -15,7 +15,6 @@ export interface SectionDefinition<T> {
   ownerIdentifier?: keyof T;
   childOf?: Array<SectionName>;
   parentsIdentifiers?: keyof T;
-  parentOf?: Array<SectionName>;
 }
 
 /**

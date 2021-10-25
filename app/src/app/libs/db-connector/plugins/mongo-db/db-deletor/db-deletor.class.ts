@@ -2,12 +2,11 @@ import { AbstractModel } from '@anita/client/libs/db-connector/constants/ds.cons
 import { DbConnectorInstance, Deletor } from '@anita/client/libs/db-connector/models/executers';
 import { Logger } from '@anita/client/libs/logger/logger.class';
 import { Db } from 'mongodb';
+
 /**
  * Implements deletor for MongoDB
  */
 export class DbDeletor<E> implements Deletor<E> {
-
-  private deleteChilds = true;
 
   /**
    * Creates an instance of db deletor.
@@ -19,13 +18,6 @@ export class DbDeletor<E> implements Deletor<E> {
     private section: keyof AbstractModel,
     private args: Partial<E>
   ) { }
-
-  /**
-   * TODO should toggle deleteChilds. Not currently implemented.
-   */
-  public setDeleteChilds(): DbDeletor<E> {
-    return this;
-  }
 
   /**
    * Checks the DB is connected, if not it esablishes a connection, and then calls autoDelete
@@ -46,7 +38,7 @@ export class DbDeletor<E> implements Deletor<E> {
   private async doAutoDelete(): Promise<void> {
     if (!this.args || !Object.keys(this.args).length)
       return this.throwFilterError();
-    await this.dbConnector.dbStore.db.collection(this.dbConnector.DS[this.section].table).deleteMany(this.args);
+    await this.dbConnector.dbStore.db.collection(this.dbConnector.DS[this.section].name).deleteMany(this.args);
   }
 
   /**

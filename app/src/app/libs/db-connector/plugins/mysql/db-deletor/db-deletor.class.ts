@@ -24,13 +24,6 @@ export class DbDeletor<E> extends WhereBuilder<E> implements Deletor<E> {
   }
 
   /**
-   * TODO
-   */
-  public setDeleteChilds(): DbDeletor<E> {
-    return this;
-  }
-
-  /**
    * Builds the query with QueryMaker and runs it with executeQuery
    * 
    * @see QueryMaker
