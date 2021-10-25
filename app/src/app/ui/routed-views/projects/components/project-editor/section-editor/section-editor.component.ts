@@ -18,7 +18,7 @@ import { FormInfoForBuilder } from '@anita/client/ui/shared-components/forms-aut
 import { FormDataParserService } from '@anita/client/ui/shared-components/forms-automator/form-builder/services/form-data-parser.service';
 import { FormModelExpander } from '@anita/client/ui/shared-components/forms-automator/form-builder/services/form-model-expander.class';
 import { FormFieldsModel, FormModel } from '@anita/client/ui/shared-components/forms-automator/form-fields/form-fields-model';
-import { arrayOfFormsArrayValidator } from '@anita/client/ui/shared-components/forms-automator/form-fields/services/forms-array-validator.function';
+import { formsArrayValidator } from '@anita/client/ui/shared-components/forms-automator/form-fields/services/forms-array-validator.function';
 import { select } from '@ngrx/store';
 import { take } from 'rxjs/operators';
 
@@ -29,7 +29,7 @@ import { take } from 'rxjs/operators';
 export class SectionEditorComponent implements OnInit {
 
   @Input()
-  public sectionFieldsGroups: Array<Array<FormInfoForBuilder<FormModel>>>;
+  public sectionFieldsGroup: Array<FormInfoForBuilder<FormModel>>;
 
   @Input()
   public allIsValid: { state: boolean };
@@ -39,8 +39,6 @@ export class SectionEditorComponent implements OnInit {
 
   public isSaving = false;
 
-  private groupCounterForEditMode: number;
-
   constructor(
     private formDataParser: FormDataParserService
   ) { }
@@ -49,24 +47,20 @@ export class SectionEditorComponent implements OnInit {
     (currentRouteConstant.data.mode === EDITOR_MODE.edit) ? this.handleEditing() : this.handleAdding();
   }
 
-  public addSectionField(eleToAdd: Array<Array<FormFieldsModel<SectionElement>>> | Array<Array<FormFieldsModel<SectionCustomFieldProperties>>> | Array<Array<FormFieldsModel<SectionDetailsDeclaration>>> = sectionFieldForNewItem, index: number = 1, values?: any): void {
+  public addSectionField(eleToAdd: Array<FormFieldsModel<SectionElement>> | Array<FormFieldsModel<SectionCustomFieldProperties>> | Array<FormFieldsModel<SectionDetailsDeclaration>> = sectionFieldForNewItem, values?: any): void {
     const eles = this.formDataParser.make({ formDataModel: eleToAdd as any, element: values });
-    if (!this.sectionFieldsGroups[index])
-      this.sectionFieldsGroups[index] = [];
-    this.sectionFieldsGroups[index].push(eles);
+    this.sectionFieldsGroup.push(eles);
     this.handleFormDataChange(eles.formData, eles.formModel);
     this.checkValidity();
   }
 
-  public removeQuestion(group: number, index: number): void {
-    this.sectionFieldsGroups[group].splice(index, 1);
-    if (!this.sectionFieldsGroups[group].length)
-      this.sectionFieldsGroups.splice(group, 1);
+  public removeQuestion(index: number): void {
+    this.sectionFieldsGroup.splice(index, 1);
     this.checkValidity();
   }
 
   private async handleAdding(): Promise<void> {
-    this.addSectionField(sectionDetails, 0);
+    this.addSectionField(sectionDetails);
     this.addSectionField(sectionFieldForNewItem);
   }
 
@@ -82,9 +76,8 @@ export class SectionEditorComponent implements OnInit {
       title: sectionDataToEdit.title,
       childOf: sectionDataToEdit.childOf
     };
-    this.addSectionField(sectionDetails, 0, sectionData);
-    this.groupCounterForEditMode = 1;
-    sectionDataToEdit.formModel.forEach(eles => { this.addGroupValuesForEditing(eles); });
+    this.addSectionField(sectionDetails, sectionData);
+    sectionDataToEdit.formModel.forEach(ele => { this.addValueForEditing(ele); });
   }
 
   /**
@@ -93,13 +86,10 @@ export class SectionEditorComponent implements OnInit {
    * @remarks
    * Hidden fields (system fields such as `id` or `dateCreation` are skipped as they are added later programmatically so they don't neet to be in the form.
    */
-  private addGroupValuesForEditing(eles: Array<SectionSystemFieldsProperties | SectionCustomFieldProperties>): void {
-    eles.forEach(fieldEle => {
-      if (fieldEle.componentCode === FORM_COMPONENTS_CODES.hiddenInput)
-        return;
-      this.addSectionField(sectionFieldForEditing, this.groupCounterForEditMode, fieldEle);
-      this.groupCounterForEditMode++;
-    });
+  private addValueForEditing(fieldEle: SectionSystemFieldsProperties | SectionCustomFieldProperties): void {
+    if (fieldEle.componentCode === FORM_COMPONENTS_CODES.hiddenInput)
+      return;
+    this.addSectionField(sectionFieldForEditing, fieldEle);
   }
 
   private handleFormDataChange(formData: FormGroup, formModel: FormModel): void {
@@ -110,9 +100,9 @@ export class SectionEditorComponent implements OnInit {
   }
 
   private checkValidity(): void {
-    if (this.sectionFieldsGroups[0][0].formData.value.hasOwnProperty('childOf'))
-      stateData.ngRxStore.dispatch(REDUCER_ACTIONS.addSectionForChildOfSelector({ payload: this.sectionFieldsGroups[0][0].formData.value }));
-    this.allIsValid.state = arrayOfFormsArrayValidator(this.sectionFieldsGroups);
+    if (this.sectionFieldsGroup[0].formData.value.hasOwnProperty('childOf'))
+      stateData.ngRxStore.dispatch(REDUCER_ACTIONS.addSectionForChildOfSelector({ payload: this.sectionFieldsGroup[0].formData.value }));
+    this.allIsValid.state = formsArrayValidator(this.sectionFieldsGroup);
   }
 
 }

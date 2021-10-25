@@ -43,10 +43,8 @@ export class DataStructureExtender {
       name: section.id,
       fields: Object.values(RESERVED_FIELDS)
     };
-    section.formModel.forEach(ele => {
-      ele.forEach(field => {
-        sezDefinition.fields.push(field.fieldName);
-      });
+    section.formModel.forEach(field => {
+      sezDefinition.fields.push(field.fieldName);
     });
 
     this.allSez.push(sezDefinition);

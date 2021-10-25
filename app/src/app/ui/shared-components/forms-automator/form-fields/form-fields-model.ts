@@ -11,7 +11,7 @@ export type FormFieldsModel<T> = BasicInput<T> | BasicCheckbox<T> | BasicSelect<
 
 export type SupportedFormsTypes = ProjectSettings | SectionCustomFieldProperties | SectionDetailsDeclaration | OptionKeysModel;
 
-export type FormModel<T = FormFieldsModel<SupportedFormsTypes>> = Array<Array<T>>;
+export type FormModel<T = FormFieldsModel<SupportedFormsTypes>> = Array<T>;
 
 export interface HiddenInput<T> extends CommonTypes<T> {
   componentCode: FORM_COMPONENTS_CODES.hiddenInput;

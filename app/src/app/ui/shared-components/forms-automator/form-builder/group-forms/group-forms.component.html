@@ -1,5 +1,5 @@
 <div class="form-row">
-  <div *ngFor="let formEle of formEles; trackBy: trackFormEle; let i = index" [ngClass]="[ (formEle.componentCode === hiddenFormEleCode) ? '' : 'form-group', (formEle['width']) ? formEle['width'] : 'col-md-12']">
+  <div *ngFor="let formEle of formEles; trackBy: trackFormEles" [ngClass]="[ (formEle.componentCode === hiddenFormEleCode) ? '' : 'form-group', (formEle['width']) ? formEle['width'] : 'col-md-12']">
     <span *ngIf="formData.controls[formEle['fieldName']]">
       <app-form-fields [componentCode]="formEle.componentCode" [formEle]="formEle" [formData]="formData">
       </app-form-fields>

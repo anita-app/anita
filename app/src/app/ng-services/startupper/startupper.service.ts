@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CLIENT_SECTIONS, CLIENT_SEZ_DEFINITIONS, previousVersions } from '@anita/client/data/client-sections.enum';
+import { CLIENT_SEZ_DEFINITIONS, previousVersions } from '@anita/client/data/client-sections.enum';
 import { dbInstances } from '@anita/client/data/db-instances.const';
 import { DbConnector } from '@anita/client/libs/db-connector/db-connector.class';
 import { INDEXEDDB_PLUGIN } from '@anita/client/libs/db-connector/plugins/indexed-db/exporter.constant';

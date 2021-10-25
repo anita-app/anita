@@ -5,6 +5,10 @@
     {
       "type": "added",
       "value": "added ability to set parent sections in the project structure"
+    },
+    {
+      "type": "changed",
+      "value": "BREAKING CHANGE: simplified project structure, now section fields are stored in a 1D Array"
     }
   ],
   "changes": [

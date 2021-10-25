@@ -6,7 +6,7 @@
     <nb-card>
       <nb-card-body>
         <div class="p-4 pr-5">
-          <app-group-forms *ngFor="let formEles of sectionEles.formModel" [formEles]="formEles" [formData]="sectionEles.formData"></app-group-forms>
+          <app-group-forms [formEles]="sectionEles.formModel" [formData]="sectionEles.formData"></app-group-forms>
         </div>
       </nb-card-body>
       <nb-card-footer class="d-flex justify-content-end">

@@ -7,12 +7,12 @@
 
   <nb-card *ngIf="projectForm">
     <nb-card-body>
-      <app-group-forms *ngFor="let formEles of projectForm.formModel" [formEles]="formEles" [formData]="projectForm.formData"></app-group-forms>
+      <app-group-forms [formEles]="projectForm.formModel" [formData]="projectForm.formData"></app-group-forms>
     </nb-card-body>
   </nb-card>
 
   <div *ngFor="let sectionEles of dataStructureEles; index as i" class="p-3">
-    <app-section-editor [sectionFieldsGroups]="sectionEles" [allIsValid]="allIsValid" [sectionIndex]="i"></app-section-editor>
+    <app-section-editor [sectionFieldsGroup]="sectionEles" [allIsValid]="allIsValid" [sectionIndex]="i"></app-section-editor>
   </div>
 
   <nb-card>

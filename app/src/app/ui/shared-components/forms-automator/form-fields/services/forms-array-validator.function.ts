@@ -5,13 +5,3 @@ export function formsArrayValidator(arrFormState: Array<FormInfoForBuilder<FormM
   const index = arrFormState.findIndex(formState => formState.formData.invalid);
   return (index > -1) ? false : true;
 }
-
-export function arrayOfFormsArrayValidator(sectionFieldsGroups: Array<Array<FormInfoForBuilder<FormModel>>> = [[]]): boolean {
-  let res = true;
-  let counter = 0;
-  while (res && counter < sectionFieldsGroups.length) {
-    res = formsArrayValidator(sectionFieldsGroups[counter]);
-    counter++;
-  }
-  return res;
-}

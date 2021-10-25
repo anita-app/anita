@@ -3,25 +3,25 @@
     Section #{{sectionIndex + 1}}
   </nb-card-header>
   <nb-card-body>
-    <span *ngFor="let sectionFieldsGroup of sectionFieldsGroups; let groupNumber = index">
-      <span *ngFor="let sectionFieldEditorForm of sectionFieldsGroup; let fieldNumber = index">
 
-        <span *ngIf="groupNumber > 0 || fieldNumber > 0">
-          <hr class="mb-5">
-          <label>Field # {{ fieldNumber + 1 }}</label>
-        </span>
+    <span *ngFor="let sectionFieldEditorForm of sectionFieldsGroup; let fieldNumber = index">
 
-        <app-group-forms *ngFor="let formEles of sectionFieldEditorForm.formModel" [formEles]="formEles" [formData]="sectionFieldEditorForm.formData"></app-group-forms>
-
-        <div *ngIf="groupNumber > 0" class="w-100" class="d-flex justify-content-end">
-          <button nbButton [disabled]="sectionFieldsGroups.length === 2 && sectionFieldsGroup.length === 1" size="small" status="danger" (click)="removeQuestion(groupNumber, fieldNumber)">Remove
-            field</button>
-        </div>
-
+      <span *ngIf="fieldNumber > 0">
+        <hr class="mb-5">
+        <label>Field # {{ fieldNumber }}</label>
       </span>
+
+      <app-group-forms [formEles]="sectionFieldEditorForm.formModel" [formData]="sectionFieldEditorForm.formData"></app-group-forms>
+
+      <div *ngIf="sectionFieldsGroup.length > 2" class="w-100" class="d-flex justify-content-end">
+        <button *ngIf="fieldNumber > 0" nbButton [disabled]="sectionFieldsGroup.length === 2" size="small" status="danger" (click)="removeQuestion(fieldNumber)">Remove
+          field</button>
+      </div>
+
     </span>
+
   </nb-card-body>
   <nb-card-footer class="d-flex justify-content-start">
-    <button nbButton status="info" outline (click)="addSectionField(undefined, sectionFieldsGroups.length)">Add field</button>
+    <button nbButton status="info" outline (click)="addSectionField()">Add field</button>
   </nb-card-footer>
 </nb-card>

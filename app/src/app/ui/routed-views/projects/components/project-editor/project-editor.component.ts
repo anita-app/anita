@@ -26,7 +26,7 @@ import { take } from 'rxjs/operators';
 })
 export class ProjectEditorComponent implements OnInit, AfterContentChecked {
 
-  public dataStructureEles: Array<Array<Array<FormInfoForBuilder<FormModel>>>> = [];
+  public dataStructureEles: Array<Array<FormInfoForBuilder<FormModel>>> = [];
   public isSaving = false;
   public allIsValid: { state: boolean } = { state: false };
   public projectFormEles = projects;
@@ -49,7 +49,7 @@ export class ProjectEditorComponent implements OnInit, AfterContentChecked {
   }
 
   public addSection(): void {
-    this.dataStructureEles.push([[]]);
+    this.dataStructureEles.push([]);
   }
 
   public async save(): Promise<void> {

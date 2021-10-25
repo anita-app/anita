@@ -6,11 +6,9 @@
       </nb-card-header>
       <nb-card-body>
         <span *ngIf="element">
-          <span *ngFor="let fieldGroup of section.formModel">
-            <span *ngFor="let fieldElement of fieldGroup">
-              <span *ngIf="!reserved[fieldElement.fieldName] && (element[fieldElement.fieldName] || fieldElement.componentCode === basicCheckboxCode)">
-                <app-element-value-viewer [fieldElement]="fieldElement" [element]="element" [fieldName]="fieldElement.fieldName"></app-element-value-viewer>
-              </span>
+          <span *ngFor="let fieldElement of section.formModel">
+            <span *ngIf="!reserved[fieldElement.fieldName] && (element[fieldElement.fieldName] || fieldElement.componentCode === basicCheckboxCode)">
+              <app-element-value-viewer [fieldElement]="fieldElement" [element]="element" [fieldName]="fieldElement.fieldName"></app-element-value-viewer>
             </span>
           </span>
         </span>

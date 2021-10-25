@@ -74,7 +74,7 @@ export class ElementsListComponent implements OnChanges {
   private setColumns(): void {
     const arrReservedCols = Object.keys(RESERVED_FIELDS);
     this.allColumns.length = 0;
-    this.section.formModel.forEach(fieldGroup => fieldGroup.forEach(fieldModel => {
+    this.section.formModel.forEach(fieldModel => {
       if (arrReservedCols.includes(fieldModel.fieldName) || this.allColumns.includes(fieldModel.fieldName) || !this.isCustomField(fieldModel))
         return;
       this.allColumns.push(fieldModel.fieldName);
@@ -82,7 +82,7 @@ export class ElementsListComponent implements OnChanges {
       this.columnNames[fieldModel.fieldName] = fieldModel.label;
       if (fieldModel.componentCode === this.basicCheckboxCode)
         this.tableClass = 'has-min';
-    }));
+    });
   }
 
   private isCustomField(arg: SectionCustomFieldProperties | SectionSystemFieldsProperties): arg is SectionCustomFieldProperties {

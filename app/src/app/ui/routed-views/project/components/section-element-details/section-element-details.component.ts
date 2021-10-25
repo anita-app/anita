@@ -1,18 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { RESERVED_FIELDS } from '@anita/client/data/form-models/system-fields-for-sections.constant';
 import { FORM_COMPONENTS_CODES } from '@anita/client/data/model/form-model-commons';
-import {
-  AnitaUniversalDataStorage,
-  RESERVED_UDS_KEYS,
-  SectionElement,
-  SystemData
-  } from '@anita/client/data/model/project-info';
+import { RESERVED_UDS_KEYS, SectionElement, SystemData } from '@anita/client/data/model/project-info';
 import { ReducerTypes } from '@anita/client/libs/ng-rx/reducers.const';
 import { currentRouteConstant, URL_PARAMS } from '@anita/client/ng-services/app-routing/current-route.constant';
-import { stateData } from '@anita/client/ng-services/state-data/state-data.constant';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-section-element-details',

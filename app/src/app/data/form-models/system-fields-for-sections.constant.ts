@@ -19,15 +19,13 @@ export enum RESERVED_FIELDS {
  *
  * @see SectionGenerator
  */
-export const systemFieldsForSections: Array<Array<FormFieldsModel<SectionElement>>> = [
-  [
-    {
-      componentCode: FORM_COMPONENTS_CODES.hiddenInput,
-      fieldName: RESERVED_FIELDS.id
-    },
-    {
-      componentCode: FORM_COMPONENTS_CODES.hiddenInput,
-      fieldName: RESERVED_FIELDS.dateCreation
-    }
-  ]
+export const systemFieldsForSections: Array<FormFieldsModel<SectionElement>> = [
+  {
+    componentCode: FORM_COMPONENTS_CODES.hiddenInput,
+    fieldName: RESERVED_FIELDS.id
+  },
+  {
+    componentCode: FORM_COMPONENTS_CODES.hiddenInput,
+    fieldName: RESERVED_FIELDS.dateCreation
+  }
 ];

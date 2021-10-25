@@ -17,7 +17,7 @@ import { PrerequisitesChecker } from '@anita/client/ui/shared-components/forms-a
 import { FormFieldsModel } from '@anita/client/ui/shared-components/forms-automator/form-fields/form-fields-model';
 
 interface MakeArgs {
-  formDataModel: Array<Array<FormFieldsModel<Partial<SectionCustomFieldProperties | SectionElement>>>>;
+  formDataModel: Array<FormFieldsModel<Partial<SectionCustomFieldProperties | SectionElement>>>;
   section?: string | number;
   element?: Partial<SectionElement>;
   childOf?: Array<string>;
@@ -29,12 +29,12 @@ interface MakeArgs {
 })
 export class FormDataParserService {
 
-  private formDataModel: Array<Array<FormFieldsModel<Partial<SectionCustomFieldProperties | SectionElement>>>>;
+  private formDataModel: Array<FormFieldsModel<Partial<SectionCustomFieldProperties | SectionElement>>>;
   private formGroup: { [key: string]: FormControl };
   private dynamicForm: FormGroup;
   private element: Partial<SectionElement>;
   private section: string | number;
-  private payload: FormInfoForBuilder<Array<Array<FormFieldsModel<Partial<SectionElement>>>>>;
+  private payload: FormInfoForBuilder<Array<FormFieldsModel<Partial<SectionElement>>>>;
   private sectionModelInDS: SectionModel<SectionElement>;
   private childOf: Array<string>;
   private sections: SystemData[RESERVED_UDS_KEYS._sections];
@@ -43,7 +43,7 @@ export class FormDataParserService {
     private formBuilder: FormBuilder
   ) { }
 
-  public make({ formDataModel, section, element = {}, childOf, sections }: MakeArgs): FormInfoForBuilder<Array<Array<FormFieldsModel<Partial<SectionElement | SectionCustomFieldProperties>>>>> {
+  public make({ formDataModel, section, element = {}, childOf, sections }: MakeArgs): FormInfoForBuilder<Array<FormFieldsModel<Partial<SectionElement | SectionCustomFieldProperties>>>> {
     this.formGroup = {};
     this.formDataModel = formDataModel;
 
@@ -91,7 +91,7 @@ export class FormDataParserService {
   }
 
   private setFormProps(): void {
-    this.formDataModel.forEach(formFields => formFields.forEach(formField => (formField.fieldName) ? this.setFormFieldDetails(formField) : undefined));
+    this.formDataModel.forEach(formField => (formField.fieldName) ? this.setFormFieldDetails(formField) : undefined);
   }
 
   private setFormFieldDetails(formField: FormFieldsModel<Partial<SectionCustomFieldProperties | SectionElement>>): void {

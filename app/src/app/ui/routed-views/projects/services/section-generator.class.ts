@@ -9,7 +9,6 @@ import {
 import { SectionFormEleGenerator } from '@anita/client/ui/routed-views/projects/services/section-form-ele-generator.class';
 import { FormInfoForBuilder } from '@anita/client/ui/shared-components/forms-automator/form-builder/form-builder';
 import { FormModel } from '@anita/client/ui/shared-components/forms-automator/form-fields/form-fields-model';
-import { FormDataToValuesArray } from '@anita/client/ui/shared-components/forms-automator/form-fields/services/form-data-to-values-array.class';
 
 /**
  * Generates a section to be stored in the `AnitaUniversalDataStorage`
@@ -19,19 +18,19 @@ export class SectionGenerator {
   /**
    * Values set by the user when creating the `Section` in 2D Array
    */
-  private arrValues: Array<Array<SectionDetailsDeclaration | SectionCustomFieldProperties>> = [];
+  private arrValues: Array<SectionDetailsDeclaration | SectionCustomFieldProperties> = [];
   /**
    * The `Section` to be generated
    */
   private section: Partial<Section> = {};
-  private formModel: Array<Array<SectionCustomFieldProperties | SectionSystemFieldsProperties>> = [];
+  private formModel: Array<SectionCustomFieldProperties | SectionSystemFieldsProperties> = [];
 
   /**
    * Creates an instance of section generator.
    * @param sectionFieldsGroups form info set by the user
    */
   constructor(
-    private sectionFieldsGroups: Array<Array<FormInfoForBuilder<FormModel>>>
+    private sectionFieldsGroups: Array<FormInfoForBuilder<FormModel>>
   ) { }
 
   public generate(): Section {
@@ -50,28 +49,28 @@ export class SectionGenerator {
    * Converts the form values to a 2D Array of Objects with a key value pair structure.
    */
   private setArrValues(): void {
-    this.sectionFieldsGroups.forEach(ele => this.arrValues.push(new FormDataToValuesArray(ele).process()));
+    this.sectionFieldsGroups.forEach(ele => this.arrValues.push(ele.formData.value));
   }
 
   /**
    * Sets the id of the section
    */
   private setId(): void {
-    this.section.id = this.arrValues[0][0][RESERVED_FIELDS.id];
+    this.section.id = this.arrValues[0][RESERVED_FIELDS.id];
   }
 
   /**
    * Sets the title of the section
    */
   private setTitle(): void {
-    this.section.title = this.arrValues[0][0]['title'];
+    this.section.title = this.arrValues[0]['title'];
   }
 
   /**
    * Sets the childOf of the section
    */
   private setChildOf(): void {
-    this.section.childOf = this.arrValues[0][0]['childOf'];
+    this.section.childOf = this.arrValues[0]['childOf'];
   }
 
   /**
@@ -85,23 +84,14 @@ export class SectionGenerator {
    * Loops over all remaining values to populate the form model
    */
   private populateFormModel(): void {
-    this.arrValues.forEach((arrEles: Array<SectionCustomFieldProperties>, group) => this.handleFormElesGroup(arrEles, group));
+    this.arrValues.forEach((ele: SectionCustomFieldProperties) => this.handleFormEle(ele));
   }
 
   /**
    * Computes each formModel and stores it in memory
    */
-  private handleFormElesGroup(arrEles: Array<SectionCustomFieldProperties>, group: number): void {
-    this.setFormElesGroup(group);
-    arrEles.forEach(ele => this.formModel[group].push(new SectionFormEleGenerator(ele).make()));
-  }
-
-  /**
-   * Ensures the formModel group Array is set
-   */
-  private setFormElesGroup(group: number): void {
-    if (!this.formModel[group])
-      this.formModel[group] = [];
+  private handleFormEle(ele: SectionCustomFieldProperties): void {
+    this.formModel.push(new SectionFormEleGenerator(ele).make());
   }
 
   /**
@@ -113,13 +103,13 @@ export class SectionGenerator {
    */
   private addSystemFields(): void {
     const systemFields = [];
-    systemFieldsForSections[0].forEach(ele => {
+    systemFieldsForSections.forEach(ele => {
       systemFields.push({
         componentCode: FORM_COMPONENTS_CODES.hiddenInput,
         fieldName: ele.fieldName
       });
     });
-    this.formModel.unshift(systemFields);
+    this.formModel.unshift(...systemFields);
   }
 
   /**

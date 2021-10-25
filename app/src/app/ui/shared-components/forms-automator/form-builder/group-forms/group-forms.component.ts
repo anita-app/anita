@@ -17,8 +17,8 @@ export class GroupFormsComponent<T extends FormFieldsModel<T>> {
 
   public hiddenFormEleCode = FORM_COMPONENTS_CODES.hiddenInput;
 
-  public trackFormEle(index: number, formElement: T): string {
-    return formElement.fieldName as string;
+  public trackFormEles(index: number, formElement: Object): string {
+    return `${index}-${JSON.stringify(formElement)}`;
   }
 
 }

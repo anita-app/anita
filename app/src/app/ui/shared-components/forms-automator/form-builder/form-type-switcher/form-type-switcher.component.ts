@@ -17,8 +17,4 @@ export class FormTypeSwitcherComponent {
   @Input()
   public formData: FormGroup;
 
-  public trackFormEles(index: number, formElement: Array<Object>): string {
-    return `${index}-${JSON.stringify(formElement)}`;
-  }
-
 }

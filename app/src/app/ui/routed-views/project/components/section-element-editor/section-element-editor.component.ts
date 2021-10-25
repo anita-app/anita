@@ -28,7 +28,7 @@ export class SectionElementEditorComponent implements OnInit, OnDestroy {
   public project: SystemData;
   public section: Section;
   public watchProject = true;
-  public sectionEles: FormInfoForBuilder<Array<Array<FormFieldsModel<Partial<SectionElement | SectionCustomFieldProperties>>>>>;
+  public sectionEles: FormInfoForBuilder<Array<FormFieldsModel<Partial<SectionElement | SectionCustomFieldProperties>>>>;
   public isSaving = false;
   private elementToEdit: SectionElement;
   private mode: EDITOR_MODE;

@@ -17,7 +17,7 @@ export class ProjectSaver {
 
   constructor(
     private projctSettings: ProjectSettings,
-    private dataStructureEles: Array<Array<Array<FormInfoForBuilder<FormModel>>>> = [],
+    private dataStructureEles: Array<Array<FormInfoForBuilder<FormModel>>> = [],
     private mode: EDITOR_MODE
 
   ) { }

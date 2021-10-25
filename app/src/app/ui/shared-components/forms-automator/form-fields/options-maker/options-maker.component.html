@@ -2,10 +2,10 @@
   <li *ngFor="let optionData of arrOptionsEles; let i = index">
     <div class="form-row">
       <div class="form-group col-md-2">
-        <app-basic-input [formData]="optionData.formData" [formEle]="optionData.formModel[0][0]"></app-basic-input>
+        <app-basic-input [formData]="optionData.formData" [formEle]="optionData.formModel[0]"></app-basic-input>
       </div>
       <div class="form-group col-md-5">
-        <app-basic-input [formData]="optionData.formData" [formEle]="optionData.formModel[0][1]"></app-basic-input>
+        <app-basic-input [formData]="optionData.formData" [formEle]="optionData.formModel[1]"></app-basic-input>
       </div>
       <div class="form-group" *ngIf="i > 1">
         <nb-icon class="c-pointer mt-3" nbTooltip="Remove option" (click)="removeQuestion(i)" icon="close-circle-outline" size="giant"></nb-icon>

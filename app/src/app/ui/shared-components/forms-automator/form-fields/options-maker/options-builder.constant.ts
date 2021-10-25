@@ -17,19 +17,17 @@ const commonFields: FormFieldsModel<OptionKeysModel> = {
  * @remarks
  * For adding options only, some properties can't be changed after the filed has been created. Existing items must use `optionsBuilderForEditing` instead.
  */
-export const optionsBuilderForAdding: Array<Array<FormFieldsModel<OptionKeysModel>>> = [
-  [
-    {
-      componentCode: FORM_COMPONENTS_CODES.basicInput,
-      fieldName: 'value',
-      type: 'text',
-      label: 'Value',
-      validators: {
-        required: true
-      }
-    },
-    commonFields
-  ]
+export const optionsBuilderForAdding: Array<FormFieldsModel<OptionKeysModel>> = [
+  {
+    componentCode: FORM_COMPONENTS_CODES.basicInput,
+    fieldName: 'value',
+    type: 'text',
+    label: 'Value',
+    validators: {
+      required: true
+    }
+  },
+  commonFields
 ];
 
 /**
@@ -38,18 +36,17 @@ export const optionsBuilderForAdding: Array<Array<FormFieldsModel<OptionKeysMode
  * @remarks
  * For existing fields only, some properties can't be changed after the filed has been created. New items must use `optionsBuilderForAdding` instead.
  */
-export const optionsBuilderForEditing: Array<Array<FormFieldsModel<OptionKeysModel>>> = [
-  [
-    {
-      componentCode: FORM_COMPONENTS_CODES.basicInput,
-      fieldName: 'value',
-      type: 'text',
-      label: 'Value',
-      readonly: true,
-      validators: {
-        required: true
-      }
-    },
-    commonFields
-  ]
+export const optionsBuilderForEditing: Array<FormFieldsModel<OptionKeysModel>> = [
+  {
+    componentCode: FORM_COMPONENTS_CODES.basicInput,
+    fieldName: 'value',
+    type: 'text',
+    label: 'Value',
+    readonly: true,
+    validators: {
+      required: true
+    }
+  },
+  commonFields
+
 ];

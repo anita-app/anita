@@ -49,8 +49,8 @@ export class FormModelExpander {
   }
 
   private setFormElesToCheck(): void {
-    this.formModel.forEach(groupEles => this.formElesToCheck.push(...groupEles.filter(ele => {
+    this.formElesToCheck = this.formModel.filter(ele => {
       return ele.prerequisites && Object.keys(ele.prerequisites).length;
-    }) as any));
+    });
   }
 }

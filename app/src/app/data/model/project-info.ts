@@ -1,6 +1,5 @@
 import { RESERVED_FIELDS } from '@anita/client/data/form-models/system-fields-for-sections.constant';
 import { FORM_COMPONENTS_CODES, OptionKeysModel } from '@anita/client/data/model/form-model-commons';
-import { SectionModel, SectionName } from '@anita/client/libs/db-connector/db-builder/sez-definition';
 import { FileSystemFileHandle } from '@anita/client/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
 
 /**
@@ -96,7 +95,7 @@ export interface SectionDetailsDeclaration {
  * Defines the full properties of a Section.
  */
 export interface Section extends SectionDetailsDeclaration {
-  formModel: Array<Array<SectionSystemFieldsProperties | SectionCustomFieldProperties>>;
+  formModel: Array<SectionSystemFieldsProperties | SectionCustomFieldProperties>;
 }
 
 /**
