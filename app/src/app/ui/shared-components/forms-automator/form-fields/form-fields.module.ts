@@ -7,6 +7,7 @@ import { BasicInputComponent } from '@anita/client/ui/shared-components/forms-au
 import { BasicRadioComponent } from '@anita/client/ui/shared-components/forms-automator/form-fields/basic-radio/basic-radio.component';
 import { BasicSelectComponent } from '@anita/client/ui/shared-components/forms-automator/form-fields/basic-select/basic-select.component';
 import { BasicTextareaComponent } from '@anita/client/ui/shared-components/forms-automator/form-fields/basic-textarea/basic-textarea.component';
+import { ChildOfSelectorForSectionComponent } from '@anita/client/ui/shared-components/forms-automator/form-fields/child-of-selector-for-section/child-of-selector-for-section.component';
 import { DateTimePickerComponent } from '@anita/client/ui/shared-components/forms-automator/form-fields/date-time-picker/date-time-picker.component';
 import { OptionsMakerComponent } from '@anita/client/ui/shared-components/forms-automator/form-fields/options-maker/options-maker.component';
 import { RequiredLabelComponent } from '@anita/client/ui/shared-components/forms-automator/form-fields/required-label/required-label.component';
@@ -35,7 +36,8 @@ export type SupportedComponents =
   BasicSelectComponent |
   OptionsMakerComponent |
   DatePickerComponent |
-  DateTimePickerComponent;
+  DateTimePickerComponent |
+  ChildOfSelectorForSectionComponent;
 
 const FormComponents = [
   HiddenInputComponent,
@@ -46,7 +48,8 @@ const FormComponents = [
   BasicSelectComponent,
   OptionsMakerComponent,
   DatePickerComponent,
-  DateTimePickerComponent
+  DateTimePickerComponent,
+  ChildOfSelectorForSectionComponent
 ];
 
 @NgModule({

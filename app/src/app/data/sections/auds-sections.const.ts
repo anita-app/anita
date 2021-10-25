@@ -8,5 +8,5 @@ import { SectionDefinition } from '@anita/client/libs/db-connector/db-builder/se
 export const auds_sections: SectionDefinition<Section> = {
   name: RESERVED_UDS_KEYS._sections,
   pk: 'id',
-  fields: ['title', 'formModel']
+  fields: ['title', 'childOf', 'formModel']
 };

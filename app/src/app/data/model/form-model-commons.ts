@@ -3,6 +3,7 @@ import { BasicInputComponent } from '@anita/client/ui/shared-components/forms-au
 import { BasicRadioComponent } from '@anita/client/ui/shared-components/forms-automator/form-fields/basic-radio/basic-radio.component';
 import { BasicSelectComponent } from '@anita/client/ui/shared-components/forms-automator/form-fields/basic-select/basic-select.component';
 import { BasicTextareaComponent } from '@anita/client/ui/shared-components/forms-automator/form-fields/basic-textarea/basic-textarea.component';
+import { ChildOfSelectorForSectionComponent } from '@anita/client/ui/shared-components/forms-automator/form-fields/child-of-selector-for-section/child-of-selector-for-section.component';
 import { DatePickerComponent } from '@anita/client/ui/shared-components/forms-automator/form-fields/date-picker/date-picker.component';
 import { DateTimePickerComponent } from '@anita/client/ui/shared-components/forms-automator/form-fields/date-time-picker/date-time-picker.component';
 import { HiddenInputComponent } from '@anita/client/ui/shared-components/forms-automator/form-fields/hidden-input/hidden-input.component';
@@ -50,7 +51,8 @@ export const enum FORM_COMPONENTS_CODES {
   hiddenInput = 6,
   optionsMaker = 7,
   datePicker = 8,
-  dateTimePicker = 9
+  dateTimePicker = 9,
+  childOfSelectorForSectionComponent = 10
 }
 
 /**
@@ -66,7 +68,8 @@ export const COMPONENT_CODE_TO_COMPONENT = {
   [FORM_COMPONENTS_CODES.basicSelect]: BasicSelectComponent,
   [FORM_COMPONENTS_CODES.optionsMaker]: OptionsMakerComponent,
   [FORM_COMPONENTS_CODES.datePicker]: DatePickerComponent,
-  [FORM_COMPONENTS_CODES.dateTimePicker]: DateTimePickerComponent
+  [FORM_COMPONENTS_CODES.dateTimePicker]: DateTimePickerComponent,
+  [FORM_COMPONENTS_CODES.childOfSelectorForSectionComponent]: ChildOfSelectorForSectionComponent
 };
 
 /**

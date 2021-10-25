@@ -21,6 +21,18 @@ export const sectionDetails: Array<Array<FormFieldsModel<SectionDetailsDeclarati
       validators: {
         required: true
       }
+    },
+    {
+      componentCode: FORM_COMPONENTS_CODES.childOfSelectorForSectionComponent,
+      fieldName: 'childOf',
+      label: 'Parent sections',
+      options: [{
+        txt: 'test',
+        value: 'val'
+      }, {
+        txt: 'test2',
+        value: 'val2'
+      }]
     }
   ]
 ];

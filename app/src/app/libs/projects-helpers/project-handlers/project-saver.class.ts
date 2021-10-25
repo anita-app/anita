@@ -48,6 +48,7 @@ export class ProjectSaver {
   }
 
   private async saveSections(): Promise<void> {
+    console.log('saveSections ~ this.projectDataToSave[RESERVED_UDS_KEYS._sections]', this.projectDataToSave[RESERVED_UDS_KEYS._sections]);
     await asyncForEach(this.projectDataToSave[RESERVED_UDS_KEYS._sections], async section => await dbInstances[this.projctSettings.id].callInsertor(RESERVED_UDS_KEYS._sections, section).autoInsert());
   }
 

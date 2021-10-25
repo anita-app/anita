@@ -10,7 +10,7 @@ import {
   SectionElement,
   SectionSystemFieldsProperties
   } from '@anita/client/data/model/project-info';
-import { asyncForEach } from '@anita/client/libs/tools/tools';
+import { REDUCER_ACTIONS } from '@anita/client/libs/ng-rx/ngrx-actions.const';
 import { currentRouteConstant } from '@anita/client/ng-services/app-routing/current-route.constant';
 import { stateData } from '@anita/client/ng-services/state-data/state-data.constant';
 import { EDITOR_MODE } from '@anita/client/ui/editor-mode.enum';
@@ -79,7 +79,8 @@ export class SectionEditorComponent implements OnInit {
 
     const sectionData = {
       id: sectionDataToEdit.id,
-      title: sectionDataToEdit.title
+      title: sectionDataToEdit.title,
+      childOf: sectionDataToEdit.childOf
     };
     this.addSectionField(sectionDetails, 0, sectionData);
     this.groupCounterForEditMode = 1;
@@ -109,6 +110,8 @@ export class SectionEditorComponent implements OnInit {
   }
 
   private checkValidity(): void {
+    if (this.sectionFieldsGroups[0][0].formData.value.hasOwnProperty('childOf'))
+      stateData.ngRxStore.dispatch(REDUCER_ACTIONS.addSectionForChildOfSelector({ payload: this.sectionFieldsGroups[0][0].formData.value }));
     this.allIsValid.state = arrayOfFormsArrayValidator(this.sectionFieldsGroups);
   }
 

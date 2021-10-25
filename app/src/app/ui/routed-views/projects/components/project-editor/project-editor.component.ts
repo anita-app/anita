@@ -9,6 +9,7 @@ import { CLIENT_SECTIONS } from '@anita/client/data/client-sections.enum';
 import { projects } from '@anita/client/data/form-models/projects.constant';
 import { AnitaUniversalDataStorage, ProjectSettings, RESERVED_UDS_KEYS } from '@anita/client/data/model/project-info';
 import { IdCreator } from '@anita/client/libs/id-creator/id-creator.class';
+import { REDUCER_ACTIONS } from '@anita/client/libs/ng-rx/ngrx-actions.const';
 import { ProjectSaver } from '@anita/client/libs/projects-helpers/project-handlers/project-saver.class';
 import { currentRouteConstant } from '@anita/client/ng-services/app-routing/current-route.constant';
 import { stateData } from '@anita/client/ng-services/state-data/state-data.constant';
@@ -39,6 +40,7 @@ export class ProjectEditorComponent implements OnInit, AfterContentChecked {
   ) { }
 
   public ngOnInit(): void {
+    stateData.ngRxStore.dispatch(REDUCER_ACTIONS.resetSectionForChildOfSelector());
     this.setData();
   }
 

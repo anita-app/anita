@@ -15,7 +15,6 @@ export class FormModelExpander {
   ) { }
 
   public handleTrigger(): void {
-
     this.setFormElesToCheck();
 
     this.formElesToCheck.forEach(ele => this.handleEachEle(ele));

@@ -36,8 +36,9 @@ export class SectionGenerator {
 
   public generate(): Section {
     this.setArrValues();
-    this.setTitle();
     this.setId();
+    this.setTitle();
+    this.setChildOf();
     this.removeTitleDescriptionGroup();
     this.populateFormModel();
     this.addSystemFields();
@@ -53,6 +54,13 @@ export class SectionGenerator {
   }
 
   /**
+   * Sets the id of the section
+   */
+  private setId(): void {
+    this.section.id = this.arrValues[0][0][RESERVED_FIELDS.id];
+  }
+
+  /**
    * Sets the title of the section
    */
   private setTitle(): void {
@@ -60,10 +68,10 @@ export class SectionGenerator {
   }
 
   /**
-   * Sets the id of the section
+   * Sets the childOf of the section
    */
-  private setId(): void {
-    this.section.id = this.arrValues[0][0][RESERVED_FIELDS.id];
+  private setChildOf(): void {
+    this.section.childOf = this.arrValues[0][0]['childOf'];
   }
 
   /**

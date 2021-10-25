@@ -89,6 +89,7 @@ export interface SectionCustomFieldProperties extends SectionSystemFieldsPropert
 export interface SectionDetailsDeclaration {
   id: string;
   title: string;
+  childOf?: Array<string>;
 }
 
 /**
