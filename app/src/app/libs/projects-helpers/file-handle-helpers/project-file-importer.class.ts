@@ -84,7 +84,7 @@ export class ProjectFileImporter {
    * Initialize the DbConnector instance
    */
   private async initializeDb(): Promise<void> {
-    dbInstances[this.projectData[RESERVED_UDS_KEYS._settings][0].id] = await new DbConnector([], FILE_HANDLES_PLUGIN, { projectInfo: this.localProjectSettings }).init();
+    dbInstances[this.projectData[RESERVED_UDS_KEYS._settings][0].id] = await new DbConnector(FILE_HANDLES_PLUGIN, { projectInfo: this.localProjectSettings }).init();
   }
 
   /**

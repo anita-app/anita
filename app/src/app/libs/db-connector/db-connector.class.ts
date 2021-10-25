@@ -16,9 +16,10 @@ import {
 /**
  *  Initialize `db-connector` for the given storage (MySQL, IndexedDB, etc.)
  *
- * @param allSez Section definitions defining the data structure of the DB
  * @param executers The plugin implementing the read/write operations on the DB
  * @param [options={}] Initialization options of the DB. These very depending on the plugin requirements (e.g. connection parameters)
+ * @param [allSez] section definitions defining the data structure of the DB
+ * @param [addSystemSections=true] whether to automatically build the data structure for system sections (`_settings` and `_sections`)
  */
 export class DbConnector<DbTypes> implements DbConnectorInstance<DbTypes> {
 
@@ -26,9 +27,9 @@ export class DbConnector<DbTypes> implements DbConnectorInstance<DbTypes> {
   public DS: AbstractModel = {};
 
   constructor(
-    private allSez: Array<SectionDefinition<any>>,
     private executers: DbObjects<unknown, DbTypes>,
     public options: DsDbInitOptions = {},
+    private allSez?: Array<SectionDefinition<any>>,
     private addSystemSections: boolean = true
   ) { }
 
@@ -39,8 +40,6 @@ export class DbConnector<DbTypes> implements DbConnectorInstance<DbTypes> {
 
     if (this.allSez.length)
       this.DS = Object.assign(this.DS, new DataStructureBuilder(this.allSez).make());
-    else if (!this.options.projectInfo)
-      throw new Error('No SectionDefinition passed to DbConnector. To initialize DbConnector, you must pass a valid Array<SectionDefinition>');
 
     if (this.executers.dbStore)
       this.dbStore = await new this.executers.dbStore(this, this.options).initDB();

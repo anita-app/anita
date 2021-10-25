@@ -40,7 +40,7 @@ export class ProjectSaver {
   }
 
   private async initDbInstance(): Promise<void> {
-    dbInstances[this.projctSettings.id] = await new DbConnector([], FILE_HANDLES_PLUGIN, { projectInfo: this.projctSettings }).init();
+    dbInstances[this.projctSettings.id] = await new DbConnector(FILE_HANDLES_PLUGIN, { projectInfo: this.projctSettings }).init();
   }
 
   private async saveSettings(): Promise<void> {

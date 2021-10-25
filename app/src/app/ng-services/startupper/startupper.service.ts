@@ -37,7 +37,7 @@ export class StartupperService {
    * Inits IndexedDB for system data
    */
   private async initSystemIndexedDb(indexedDbName: string): Promise<void> {
-    dbInstances.system = await new DbConnector(CLIENT_SEZ_DEFINITIONS, INDEXEDDB_PLUGIN, { previousVersions, indexedDbName }, false).init();
+    dbInstances.system = await new DbConnector(INDEXEDDB_PLUGIN, { previousVersions, indexedDbName }, CLIENT_SEZ_DEFINITIONS, false).init();
   }
 
   /**

@@ -35,7 +35,7 @@ export class ProjectSelectBtnComponent {
 
   public async loadProject(): Promise<void> {
     const projectInfo = await dbInstances.system.callSelector<LocalProjectSettings>(CLIENT_SECTIONS.projects, { id: this.pickedProject.id }).single();
-    dbInstances[this.pickedProject.id] = await new DbConnector([], FILE_HANDLES_PLUGIN, { projectInfo }).init();
+    dbInstances[this.pickedProject.id] = await new DbConnector(FILE_HANDLES_PLUGIN, { projectInfo }).init();
     new CurrentProjectSetter(dbInstances[this.pickedProject.id].dbStore.db[RESERVED_UDS_KEYS._settings], dbInstances[this.pickedProject.id].dbStore.db[RESERVED_UDS_KEYS._sections]).set();
   }
 
