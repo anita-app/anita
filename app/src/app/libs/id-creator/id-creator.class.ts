@@ -1,4 +1,4 @@
-import { sha256 } from 'js-sha256';
+import CryptoES from 'crypto-es';
 
 /**
  * Randomly generated strings hasehd with sha256 to be used as unique identifiers
@@ -15,7 +15,7 @@ export class IdCreator {
 
     const id = `${name}${aliasDate}${randNumber}`;
 
-    return sha256(id);
+    return CryptoES.SHA256(id).toString();
   }
 
   /**
@@ -28,7 +28,7 @@ export class IdCreator {
 
     const id = `${aliasDate}${randNumber}`;
 
-    return sha256(id);
+    return CryptoES.SHA256(id).toString();
   }
 
 }
