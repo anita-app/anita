@@ -27,9 +27,10 @@
       "resources": {
         "files": [
           "/index.html",
-          "/*.bundle.css",
-          "/*.bundle.js",
-          "/*.chunk.js",
+          "/main.*.js",
+          "/runtime.*.js",
+          "/polyfills.*.js",
+          "/styles.*.css",
           "/workers/*.js"
         ]
       }

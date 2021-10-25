@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.3.1] - 2021-10-25
+### Fixed
+- fixed assets files for service worker.
+
 ## [0.3.0] - 2021-10-25
 ### Added
 - added ability to set parent sections in the project structure.
