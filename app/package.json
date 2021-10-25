@@ -29,10 +29,8 @@
     "lodash.find": "^4.6.0",
     "mongodb": "^3.6.3",
     "mysql": "^2.18.1",
-    "roboto-fontface": "^0.10.0",
     "rxjs": "^6.5.3",
     "squel": "^5.13.0",
-    "typeface-exo": "^0.0.61",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {

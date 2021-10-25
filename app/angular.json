@@ -29,8 +29,6 @@
             ],
             "styles": [
               "src/styles.scss",
-              "node_modules/typeface-exo/index.css",
-              "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
               "src/app/ui/shared-components/admin/@theme/styles/styles.scss"
             ],
             "scripts": [],
