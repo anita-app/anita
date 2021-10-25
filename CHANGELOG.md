@@ -7,6 +7,13 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.3.0] - 2021-10-25
+### Added
+- added ability to set parent sections in the project structure.
+
+### Changed
+- BREAKING CHANGE: simplified project structure, now section fields are stored in a 1D Array.
+
 ## [0.2.5] - 2021-10-23
 ### Fixed
 - removed /index.html to link to app in get started button.
