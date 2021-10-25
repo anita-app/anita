@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "scripts": {
     "serve": "ng serve --ssl",
-    "build": "ng build --configuration production --base-href /app/"
+    "build": "ng build --configuration production --base-href /app/",
+    "postinstall": "patch-package"
   },
   "private": true,
   "dependencies": {
@@ -56,6 +57,7 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "patch-package": "^6.4.7",
     "post-compile-webpack-plugin": "^0.1.2",
     "postinstall-postinstall": "^2.1.0",
     "protractor": "~7.0.0",
