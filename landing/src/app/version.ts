@@ -2,4 +2,4 @@
  * Auto generated file, do not edit.
  */
 
-export const appVersion = '0.4.1';
+export const appVersion = '0.5.0';
