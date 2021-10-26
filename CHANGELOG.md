@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.5.0] - 2021-10-26
+### Added
+- added maskable icon to manifest.json for Android.
+
 ## [0.4.1] - 2021-10-26
 ### Changed
 - updated roadmap in the README.

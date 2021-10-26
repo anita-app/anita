@@ -324,6 +324,12 @@
       "sizes": "256x256"
     },
     {
+      "src": "/app/assets/icons/android/maskable_icon.png",
+      "sizes": "2235x2235",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
       "src": "/app/assets/icons/android/android-launchericon-512-512.png",
       "sizes": "512x512"
     },
