@@ -1,37 +1,16 @@
 {
-  "index": "/index.html",
-  "routing": {
-    "index": "/",
-    "routes": {
-      "/": {
-        "match": "exact"
-      },
-      "/manifest.json": {
-        "match": "exact"
-      },
-      "/auth": {
-        "prefix": true
-      },
-      "/private": {
-        "prefix": true
-      },
-      "/assets/**/*.*": {
-        "match": "regex"
-      }
-    }
-  },
+  "index": "/app/index.html",
   "assetGroups": [
     {
       "name": "app",
       "installMode": "prefetch",
+      "updateMode": "prefetch",
       "resources": {
         "files": [
-          "/index.html",
-          "/main.*.js",
-          "/runtime.*.js",
-          "/polyfills.*.js",
-          "/styles.*.css",
-          "/workers/*.js"
+          "/**/index.html",
+          "/**/*.js",
+          "/**/*.css",
+          "**/assets/**"
         ]
       }
     },
@@ -40,9 +19,7 @@
       "installMode": "prefetch",
       "updateMode": "prefetch",
       "resources": {
-        "files": [
-          "/assets/**"
-        ]
+        "files": []
       }
     }
   ]

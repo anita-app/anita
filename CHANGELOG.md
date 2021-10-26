@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.3.2] - 2021-10-26
+### Changed
+- changed fetch strategy in ngsw.json.
+
 ## [0.3.1] - 2021-10-25
 ### Fixed
 - fixed assets files for service worker.

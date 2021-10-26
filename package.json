@@ -1,6 +1,6 @@
 {
   "name": "anita-manager",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "scripts": {
     "build-landing": "cd landing && npm run build",
     "build-app": "cd app && npm run build",
