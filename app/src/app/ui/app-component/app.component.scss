@@ -9,11 +9,11 @@
 }
 
 .app-loading {
-  -webkit-transition: visibility 0s 1s, opacity 1s linear;
-  -moz-transition: visibility 0s 1s, opacity 1s linear;
-  -ms-transition: visibility 0s 1s, opacity 1s linear;
-  -o-transition: visibility 0s 1s, opacity 1s linear;
+  -webkit-transition: visibility 0s 0.2s, opacity 0.2s linear;
+  -moz-transition: visibility 0s 0.2s, opacity 0.2s linear;
+  -ms-transition: visibility 0s 0.2s, opacity 0.2s linear;
+  -o-transition: visibility 0s 0.2s, opacity 0.2s linear;
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s 1s, opacity 1s linear;
+  transition: visibility 0s 0.2s, opacity 0.2s linear;
 }
