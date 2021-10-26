@@ -1,8 +1,9 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { LocalProjectSettings } from '@anita/client/data/model/project-info';
 import { ReducerTypes } from '@anita/client/libs/ng-rx/reducers.const';
 import { getDateTime } from '@anita/client/libs/tools/tools';
 import { StateService } from '@anita/client/ui/shared-components/admin/@core/state.service';
+import { appVersion } from '@anita/client/version';
 import {
   NbMediaBreakpoint,
   NbMediaBreakpointsService,
@@ -15,16 +16,17 @@ import { Observable } from 'rxjs';
 import { delay, takeWhile, withLatestFrom } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-sample-layout',
-  styleUrls: ['./sample.layout.scss'],
-  templateUrl: './sample.layout.html'
+  selector: 'app-sidebar-layout',
+  styleUrls: ['./sidebar-layout.component.scss'],
+  templateUrl: './sidebar-layout.component.html'
 })
-export class SampleLayoutComponent implements OnDestroy {
+export class SidebarLayoutComponent implements OnDestroy {
 
   public projects$: Observable<Array<LocalProjectSettings>>;
 
   public currentTheme: string;
   public today = getDateTime();
+  public version = appVersion;
   private alive = true;
 
   constructor(

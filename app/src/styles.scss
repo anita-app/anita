@@ -151,3 +151,26 @@ $input-height: calc(2.25em + 10px) !default;
 .c-no-drop {
   cursor: no-drop !important;
 }
+
+// Inner left sidebar props to move it coherently with container and main content
+
+@media (min-width:769px) and (max-width: 994px) {
+  .nb-theme-default nb-sidebar.menu-sidebar .main-container {
+    margin-top: 1.5rem !important;
+    height: calc(100vh - 4.75rem - 1.5) !important;
+  }
+}
+
+@media (min-width:995px) {
+  .nb-theme-default nb-sidebar.menu-sidebar .main-container {
+    margin-top: 2rem !important;
+    height: calc(100vh - 4.75rem - 2rem) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .nb-theme-default nb-sidebar.menu-sidebar .main-container {
+    margin-top: 1rem !important;
+    height: calc(100vh - 4.75rem - 1rem) !important;
+  }
+}

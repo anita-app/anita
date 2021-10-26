@@ -8,6 +8,9 @@
       {{ today | date }}
     </nb-sidebar-header>
     <ng-content select="nb-menu"></ng-content>
+    <nb-sidebar-footer>
+      <div class="text-muted"><small>v{{version}}</small></div>
+    </nb-sidebar-footer>
   </nb-sidebar>
 
   <nb-layout-column class="main-content">

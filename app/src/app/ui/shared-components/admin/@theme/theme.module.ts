@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from '@anita/client/ui/shared-components/admin/@theme/components/header/header.component';
-import { SampleLayoutComponent } from '@anita/client/ui/shared-components/admin/@theme/layouts/sample.layout';
+import { SidebarLayoutComponent } from '@anita/client/ui/shared-components/admin/@theme/layouts/sidebar-layout.component';
 import { CapitalizePipe } from '@anita/client/ui/shared-components/admin/@theme/pipes/capitalize.pipe';
 import { NumberWithCommasPipe } from '@anita/client/ui/shared-components/admin/@theme/pipes/number-with-commas.pipe';
 import { PluralPipe } from '@anita/client/ui/shared-components/admin/@theme/pipes/plural.pipe';
@@ -55,7 +55,7 @@ const NB_MODULES = [
 
 const COMPONENTS = [
   HeaderComponent,
-  SampleLayoutComponent
+  SidebarLayoutComponent
 ];
 
 const PIPES = [

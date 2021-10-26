@@ -8,10 +8,10 @@ import { takeWhile } from 'rxjs/operators';
 @Component({
   selector: 'app-admin',
   template: `
-    <app-sample-layout>
+    <app-sidebar-layout>
       <nb-menu [items]="menu"></nb-menu>
       <router-outlet></router-outlet>
-    </app-sample-layout>
+    </app-sidebar-layout>
   `
 })
 export class AdminComponent implements OnInit, OnDestroy {
