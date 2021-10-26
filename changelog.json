@@ -4,6 +4,16 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.4.1",
+      "date": "2021-10-26",
+      "items": [
+        {
+          "type": "changed",
+          "value": "updated roadmap in the README"
+        }
+      ]
+    },
+    {
       "version": "0.4.0",
       "date": "2021-10-26",
       "items": [

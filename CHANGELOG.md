@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.4.1] - 2021-10-26
+### Changed
+- updated roadmap in the README.
+
 ## [0.4.0] - 2021-10-26
 ### Added
 - support for child elements to link to parent elements of parent sections.
