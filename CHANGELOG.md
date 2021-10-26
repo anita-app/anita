@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.4.0] - 2021-10-26
+### Added
+- support for child elements to link to parent elements of parent sections.
+
 ## [0.3.2] - 2021-10-26
 ### Changed
 - changed fetch strategy in ngsw.json.
