@@ -1,7 +1,7 @@
 {
   "name": "anita-landing",
   "description": "Anita landing page",
-  "version": "0.0.1",
+  "version": "0.3.2",
   "author": "Anita Team",
   "scripts": {
     "watch": "yassb watch",
