@@ -13,6 +13,7 @@ import { ElementSaver } from '@anita/client/libs/projects-helpers/section-elemen
 import { currentRouteConstant, previousRoutes, URL_PARAMS } from '@anita/client/ng-services/app-routing/current-route.constant';
 import { EDITOR_MODE } from '@anita/client/ui/editor-mode.enum';
 import { ComponentCodeToName } from '@anita/client/ui/routed-views/project/components/section-element-editor/component-code-to-name.class';
+import { ParentInfoFormModelAdder } from '@anita/client/ui/routed-views/project/components/section-element-editor/parent-info-form-model-adder.class';
 import { FormInfoForBuilder } from '@anita/client/ui/shared-components/forms-automator/form-builder/form-builder';
 import { FormDataParserService } from '@anita/client/ui/shared-components/forms-automator/form-builder/services/form-data-parser.service';
 import { FormFieldsModel } from '@anita/client/ui/shared-components/forms-automator/form-fields/form-fields-model';
@@ -87,14 +88,15 @@ export class SectionElementEditorComponent implements OnInit, OnDestroy {
       return;
 
     const formDataModel = new ComponentCodeToName(this.section.formModel).parse();
+
+    if (Array.isArray(this.section.childOf) && this.section.childOf.length)
+      new ParentInfoFormModelAdder(formDataModel, this.section.childOf, project[RESERVED_UDS_KEYS._sections]).add();
+
     this.sectionEles = this.formDataParser.make({
       formDataModel,
       section: this.section.id,
-      element: this.elementToEdit,
-      childOf: this.section.childOf,
-      sections: project[RESERVED_UDS_KEYS._sections]
+      element: this.elementToEdit
     });
-    console.log('setFormDataForSection ~ this.sectionEles', this.sectionEles);
   }
 
 }

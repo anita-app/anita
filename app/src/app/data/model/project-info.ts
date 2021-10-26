@@ -105,7 +105,7 @@ export interface SectionElement {
   [RESERVED_FIELDS.id]: string;
   [RESERVED_FIELDS.dateCreation]: string;
   [RESERVED_FIELDS.createdBy]?: string;
-  [RESERVED_FIELDS.parentsInfo]?: string;
+  [RESERVED_FIELDS.parentsInfo]?: Array<string>;
   [RESERVED_FIELDS.lastModified]?: string;
   [key: string]: any;
 }

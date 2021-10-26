@@ -1,9 +1,10 @@
 <div *ngIf="formData" [formGroup]="formData" class="form-group">
-  <div>
+  <div *ngIf="optionsGroups.length">
     <label [for]="formEle.fieldName">{{ formEle.label }}</label>
     <nb-select multiple fullWidth size="large" [id]="formEle.fieldName" [attr.aria-describedby]="formEle.fieldName + 'Help'" [formControlName]="formEle.fieldName">
-      <nb-option *ngFor="let optionData of formEle.options; trackBy: trackItems" [value]="optionData.value">
-        {{ optionData.txt }}</nb-option>
+      <nb-option-group *ngFor="let optionsGroup of optionsGroups" [title]="optionsGroup.txt">
+        <nb-option *ngFor="let optionData of optionsGroup.options; trackBy: trackOptions" [value]="optionData.value">{{ optionData.txt }}</nb-option>
+      </nb-option-group>
     </nb-select>
   </div>
 </div>

@@ -25,6 +25,8 @@ import { ProjectDetailsComponent } from './components/project-details/project-de
 import { SectionElementDetailsComponent } from './components/section-element-details/section-element-details.component';
 import { ElementsListComponent } from './components/section-elements-list/elements-list/elements-list.component';
 import { SectionByIdPipe } from './pipes/section-by-id.pipe';
+import { FirstUserDefinedFieldPipe } from './pipes/first-user-defined-field.pipe';
+import { ParentInfoViewerAndLinkComponent } from './components/parent-info-viewer-and-link/parent-info-viewer-and-link.component';
 
 @NgModule({
   imports: [
@@ -53,7 +55,9 @@ import { SectionByIdPipe } from './pipes/section-by-id.pipe';
     ElementsListComponent,
     SectionElementDetailsComponent,
     ProjectDetailsComponent,
-    ElementValueViewerComponent
+    ElementValueViewerComponent,
+    FirstUserDefinedFieldPipe,
+    ParentInfoViewerAndLinkComponent
   ]
 })
 export class ProjectModule { }

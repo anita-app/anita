@@ -32,6 +32,15 @@ export type FormEleWidths = 'col-md-1' | 'col-md-2' | 'col-md-3' | 'col-md-4' | 
 /**
  * Defines the structure of possible choices to be selected in a Radio or Select html element.
  */
+export interface OptionKeysModelGroup {
+  value: string | number;
+  txt: string;
+  options: Array<OptionKeysModel>;
+}
+
+/**
+ * Defines the structure of possible choices to be selected in a Radio or Select html element.
+ */
 export interface OptionKeysModel {
   value: string | number;
   txt: string;

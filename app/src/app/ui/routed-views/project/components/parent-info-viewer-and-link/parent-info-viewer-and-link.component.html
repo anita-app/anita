@@ -1,0 +1,4 @@
+<span *ngIf="parentsInfo.length">
+  <p class="label mb-2">{{ parentsInfo.length === 1 ? 'Parent element:' : 'Parent Elements:' }}</p>
+  <button nbButton size="small" *ngFor="let parentInfo of parentsInfo" class="mr-3" (click)="openDetails(parentInfo.sectionId, parentInfo.element)">{{parentInfo.txt}}</button>
+</span>

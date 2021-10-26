@@ -21,12 +21,21 @@ export class DbSelector<E> implements Selector<E> {
   public async single(): Promise<E> {
     await this.doSelect();
 
-    if (this.results.length)
-      return this.results[0];
+    if (!this.results.length)
+      return;
 
-    // TODO
+    return this.results.find(ele => this.filterKeys(ele));
+  }
 
-    return;
+  private filterKeys(eleToCheck: E): boolean {
+    const keys = Object.keys(this.args);
+    let res = true;
+    let counter = 0;
+    while (res && counter < keys.length) {
+      res = eleToCheck[keys[counter]] === this.args[keys[counter]];
+      counter++;
+    }
+    return res;
   }
 
   /**
