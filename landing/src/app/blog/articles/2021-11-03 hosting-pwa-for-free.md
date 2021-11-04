@@ -94,19 +94,6 @@ A remote repository is nevertheless useful to easily sync data between devices. 
 
 There are many things to discuss on this topic, I’ll address them when I’ll start to design the logic for connecting to remote databases, possibly including support for the [InterPlanetary File System (IPFS)](https://ipfs.io/) protocol. Stay tuned!
 
-### Legal stuff: watch out for the terms and conditions
-
-Before hosting Anita on GitHub Pages I checked whether GitHub was actually ok with that.
-The terms and conditions of GitHub Pages can be found under the [GitHub Terms for Additional Products and Features](https://docs.github.com/en/github/site-policy/github-terms-for-additional-products-and-features).
-
-The [section dedicated to Pages](https://docs.github.com/en/github/site-policy/github-terms-for-additional-products-and-features) states the following:
-
-> GitHub Pages is not intended for or allowed to be used as a free web hosting service to run your online business, e-commerce site, or any other website that is primarily directed at either facilitating commercial transactions or providing commercial software as a service (SaaS). Some monetization efforts are permitted on Pages, such as donation buttons and crowdfunding links.
-
-Anita is free and open source software, and I do not intend, at least in the foreseeable future, to monetize it, or transform it in any kind of business. At this time I don't think that it can be frames as a *commercial software as a service*.
-
-I do intend to allow for some donations in the future, but that should be allowed. Given my use case, I think I am in the clear. If I am not, I sincerely apologize.
-
 ### Custom domain
 
 Websites hosted on GitHub Pages are assigned by default a URL with this structure: `https://[username].github.io`, where `username` is the name of the organization or of the user to which the repository belongs. For Anita that would be `https://anita-app.github.io`.
@@ -119,6 +106,21 @@ Although a free subdomain is a nice thing, hosting a PWA on a subdomain has two 
 For these reasons I purchased the domain [anita-app.com](https://anita-app.com/). 
 
 Unfortunately, this means that I did incur in a cost. For me that is still acceptable because the price is negligible (the domain was available) and because I consider that having a custom domain on internet is a condition of existence for a project like Anita.
+
+### Legal stuff: watch out for the terms and conditions
+
+Before hosting Anita on GitHub Pages I checked whether GitHub was actually ok with that.
+The terms and conditions of GitHub Pages can be found under the [GitHub Terms for Additional Products and Features](https://docs.github.com/en/github/site-policy/github-terms-for-additional-products-and-features).
+
+The [section dedicated to Pages](https://docs.github.com/en/github/site-policy/github-terms-for-additional-products-and-features) states the following:
+
+> GitHub Pages is not intended for or allowed to be used as a free web hosting service to run your online business, e-commerce site, or any other website that is primarily directed at either facilitating commercial transactions or providing commercial software as a service (SaaS). Some monetization efforts are permitted on Pages, such as donation buttons and crowdfunding links.
+
+Anita is free and open source software, and I do not intend, at least in the foreseeable future, to monetize it, or transform it in any kind of business. I do intend to allow for some donations in the future, but that seems to be allowed by Pages Terms.
+
+For this reason at this time I think that Anita is not a *commercial Software as a Service*. I would define it as a *non-commercial Software as a Gift* (SaaG). In case you've never heard of SaaG, I just came up with that. 
+
+All things considered, given my specific case and my intended use of the service, I think I am in the clear. If I am not, I sincerely apologize.
 
 ## Final thoughts
 
