@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- component="head/head.component.html" -->
+  <title>Anita ❤ open source</title>
+  <meta name="description" content="List of all the open source packages making Anita possible.">
+</head>
+
+<body class="text-gray-800 antialiased flex flex-col h-screen justify-between">
+  <!-- component="navbar/navbar.component.html" -->
+
+  <section class="relative">
+    <div class="mx-auto mt-36 mb-36">
+      <div class="w-full lg:w-7/12 ml-auto mr-auto p-10 shadow-md">
+        <article>
+
+          <p class="text-lg">Anita is made possible thanks to the following open source software:</p>
+          <ul>
+            <li>Landing page:
+              <!-- create-from-data-source="landing-packages.json" renderer="packagesList" -->
+            </li>
+            <li>Progressive web app:
+              <!-- create-from-data-source="app-packages.json" renderer="packagesList" -->
+            </li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- component="footer.component.html" -->
+
+</body>
+
+</html>

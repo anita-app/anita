@@ -2,6 +2,7 @@
   "name": "anita-app",
   "version": "0.5.0",
   "scripts": {
+    "licenses": "npx license-checker --production --json --out ../landing/src/app/data-sources/app-packages.json",
     "serve": "ng serve --ssl",
     "build": "ng build --configuration production --base-href /app/",
     "postinstall": "patch-package"

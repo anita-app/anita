@@ -4,6 +4,7 @@
   "version": "0.5.0",
   "author": "Anita Team",
   "scripts": {
+    "licenses": "npx license-checker --production --json --out src/app/data-sources/landing-packages.json",
     "watch": "yassb watch",
     "build": "yassb build",
     "serve": "yassb serve",
