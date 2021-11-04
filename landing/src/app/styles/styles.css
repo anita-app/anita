@@ -2,6 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
+/**
+ * Automatic headers numbering for blog articles
+ * @see https://2ality.com/2012/01/numbering-headingshtml.html
+ **/
+
+body {
+  counter-reset: h2counter;
+}
+h1 {
+  counter-reset: h2counter;
+}
+article h2:before {
+  content: counter(h2counter) ".\0000a0\0000a0";
+  counter-increment: h2counter;
+  counter-reset: h3counter;
+}
+article h3:before {
+  content: counter(h2counter) "." counter(h3counter) ".\0000a0\0000a0";
+  counter-increment: h3counter;
+}
+
+/**
+ * Blog layout
+ **/
+
 article h2 {
   @apply text-3xl;
 }
@@ -49,7 +74,7 @@ article ul {
 }
 
 article a {
-  @apply text-blue-600;
+  @apply text-prussian-blue-300;
   @apply underline;
 }
 
@@ -68,97 +93,58 @@ article a {
 p code,
 li code,
 td code {
-  @apply text-pink-600;
+  @apply text-prussian-blue-600;
 }
 
 a code {
-  @apply text-pink-600;
+  @apply text-prussian-blue-600;
   @apply underline;
 }
 
-/** 
- * Responsive table 
- * @see https://tailwindcomponents.com/component/mobile-responsive-table
- */
-
-@media (min-width: 1024px) {
-  table {
-    display: inline-table !important;
-  }
-
-  thead tr:not(:first-child) {
-    display: none;
-  }
-}
-
-
-article th {
-  @apply bg-pink-100;
-}
-
-article th,
-article td {
-  @apply border;
-  @apply border-gray-100;
-  @apply px-4;
-  @apply py-2;
-  @apply text-left;
-}
-
-article tr:nth-child(even),
-article tr:nth-child(even) td {
+blockquote {
+  @apply border-l-4;
+  @apply px-3 py-1;
+  @apply border-prussian-blue-600;
   @apply bg-gray-100;
-  @apply border-white;
 }
 
-article table {
-  @apply w-full;
-  @apply flex;
-  @apply flex-row;
-  @apply flex-nowrap;
-  @apply rounded-lg;
-  @apply overflow-hidden;
-  @apply my-5;
+ol {
+  list-style: decimal;
+  @apply pl-5;
 }
 
-article table thead tr {
-  @apply flex;
-  @apply flex-col;
-  @apply flex-nowrap;
-  @apply mb-2;
-  @apply rounded-l-lg;
-}
+ /**
+  * Blog list
+  **/
 
-article tbody {
-  @apply flex-1;
-}
-article tbody tr {
-  @apply flex;
-  @apply flex-col;
-  @apply flex-nowrap;
-  @apply mb-2;
-}
-
-@media (min-width: 1024px) {
-  article table {
-    @apply shadow-lg;
+  .row-preview {
+    width: 100%;
+    max-height: 150px;
+    position: relative;
+    display: flex;
+    flex-flow: column-reverse wrap;
+    overflow: hidden;
   }
-  article table thead tr {
-    @apply table-row;
-    @apply rounded-none;
+  
+  .content-preview {
+    max-height: 100%;
+    overflow: hidden;
   }
-  article tbody {
-    @apply flex-none;
+  
+  .background {
+    width: 100%;
+    height: 100px;
+    position: relative;
   }
-  article tbody tr {
-    @apply table-row;
+  
+  .background:before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100px;
+    left: -100%;
+    bottom: 0;
+    position: absolute;
+    background: linear-gradient(transparent, white);
+    pointer-events: none
   }
-}
-
-
-/**
- * For the docs
- */
- nav a:hover {
-   text-decoration: none !important;
- }

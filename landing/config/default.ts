@@ -1,5 +1,7 @@
 import { YassbConfig } from 'yassb-web';
+import { blogList } from '../src/app/yassb-plugins/custom-renderers/blog-list';
 import { featuresList } from '../src/app/yassb-plugins/custom-renderers/features-list';
+import { addDivToPreCode } from '../src/app/yassb-plugins/post-processors/add-div-to-pre-code.function';
 import { buildTailwind } from '../src/app/yassb-plugins/styles-parser/build-tailwind.function';
 
 export default {
@@ -9,7 +11,8 @@ export default {
   },
   stylesParser: buildTailwind,
   customRenderers: {
-    featuresList: featuresList
+    featuresList: featuresList,
+    blogList: blogList
   },
   htmlMinificationOptions: {
     removeAttributeQuotes: false,
@@ -19,5 +22,10 @@ export default {
     minifyCSS: true,
     minifyJS: true,
     removeComments: true
-  }
+  },
+  grayMatterOption: {
+    excerpt: true,
+    excerpt_separator: '<!-- /preview -->'
+  },
+  postProcessors: [addDivToPreCode]
 } as YassbConfig;
