@@ -1,5 +1,6 @@
 ---
 title: The journey of Anita to the ultimate bootstrapping thanks to GitHub Pages
+description: How to build a zero cost (as in zero kelvins) free and open source progressive web app and host it on GitHub Pages.
 date: 2021-11-02
 author: ilDon
 ---
