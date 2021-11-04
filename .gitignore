@@ -38,3 +38,4 @@ testem.log
 Thumbs.db
 yarn.lock
 landing/src/app/data-sources/landing-packages.json
+landing/src/app/data-sources/app-packages.json
