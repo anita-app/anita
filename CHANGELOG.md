@@ -7,6 +7,14 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.6.0] - 2021-11-04
+### Added
+- added blog section and first post.
+- added licenses page with all FOSS used by Anita.
+
+### Changed
+- improved no-projects view with better spacing between buttons.
+
 ## [0.5.0] - 2021-10-26
 ### Added
 - added maskable icon to manifest.json for Android.
