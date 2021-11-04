@@ -4,6 +4,16 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.6.1",
+      "date": "2021-11-04",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "landing navbar collapsable to prevent navbar from hiding hero text"
+        }
+      ]
+    },
+    {
       "version": "0.6.0",
       "date": "2021-11-04",
       "items": [
