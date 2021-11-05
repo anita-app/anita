@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.6.2] - 2021-11-05
+### Changed
+- properly formatting dates.
+
 ## [0.6.1] - 2021-11-04
 ### Fixed
 - landing navbar collapsable to prevent navbar from hiding hero text.
