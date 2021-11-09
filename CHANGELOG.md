@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.6.3] - 2021-11-09
+### Added
+- added meta description to index.html.
+
 ## [0.6.2] - 2021-11-05
 ### Changed
 - properly formatting dates.

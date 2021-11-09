@@ -4,6 +4,16 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.6.3",
+      "date": "2021-11-09",
+      "items": [
+        {
+          "type": "added",
+          "value": "added meta description to index.html"
+        }
+      ]
+    },
+    {
       "version": "0.6.2",
       "date": "2021-11-05",
       "items": [
