@@ -1,7 +1,7 @@
 {
-  "name": "anita-react",
+  "name": "anita-app",
   "version": "0.6.3",
-  "private": true,
+  "private": false,
   "scripts": {
     "licenses": "npx license-checker --production --json --out ../landing/src/app/data-sources/app-packages.json",
     "start": "craco start",
