@@ -1,0 +1,170 @@
+"filename", "language", "TypeScript React", "TypeScript", "CSS", "comment", "blank", "total"
+"c:\Source\anita\app\src\app\anita-routes\anita-routes.component.tsx", "TypeScript React", 24, 0, 0, 0, 2, 26
+"c:\Source\anita\app\src\app\anita-routes\anita-routes.constant.ts", "TypeScript", 0, 18, 0, 7, 3, 28
+"c:\Source\anita\app\src\app\anita-routes\url-param-fillers.function.ts", "TypeScript", 0, 6, 0, 3, 1, 10
+"c:\Source\anita\app\src\app\data\auds-system-sections.enum.ts", "TypeScript", 0, 7, 0, 6, 3, 16
+"c:\Source\anita\app\src\app\data\client-sections.enum.ts", "TypeScript", 0, 10, 0, 14, 4, 28
+"c:\Source\anita\app\src\app\data\data-structure-extender.class.ts", "TypeScript", 0, 38, 0, 24, 11, 73
+"c:\Source\anita\app\src\app\data\db-instances.const.ts", "TypeScript", 0, 12, 0, 0, 3, 15
+"c:\Source\anita\app\src\app\data\form-models\options-builder.constant.ts", "TypeScript", 0, 33, 0, 12, 5, 50
+"c:\Source\anita\app\src\app\data\form-models\project-form-fields-model.constant.ts", "TypeScript", 0, 29, 0, 4, 2, 35
+"c:\Source\anita\app\src\app\data\form-models\section-builder.constant.ts", "TypeScript", 0, 96, 0, 16, 5, 117
+"c:\Source\anita\app\src\app\data\form-models\system-fields-for-sections.constant.ts", "TypeScript", 0, 20, 0, 9, 3, 32
+"c:\Source\anita\app\src\app\data\model\form-model-commons.ts", "TypeScript", 0, 56, 0, 26, 7, 89
+"c:\Source\anita\app\src\app\data\model\project-info.ts", "TypeScript", 0, 61, 0, 39, 12, 112
+"c:\Source\anita\app\src\app\data\sections\auds-sections.const.ts", "TypeScript", 0, 7, 0, 4, 2, 13
+"c:\Source\anita\app\src\app\data\sections\auds-settings.const.ts", "TypeScript", 0, 7, 0, 4, 2, 13
+"c:\Source\anita\app\src\app\data\sections\local-settings.const.ts", "TypeScript", 0, 17, 0, 20, 6, 43
+"c:\Source\anita\app\src\app\data\sections\projects.const.ts", "TypeScript", 0, 12, 0, 4, 2, 18
+"c:\Source\anita\app\src\app\libs\db-connector\constants\ds.constant.ts", "TypeScript", 0, 4, 0, 3, 2, 9
+"c:\Source\anita\app\src\app\libs\db-connector\crypter\crypt-helper.class.ts", "TypeScript", 0, 49, 0, 37, 17, 103
+"c:\Source\anita\app\src\app\libs\db-connector\crypter\decrypter.class.ts", "TypeScript", 0, 17, 0, 12, 7, 36
+"c:\Source\anita\app\src\app\libs\db-connector\crypter\encrypter.class.ts", "TypeScript", 0, 17, 0, 12, 7, 36
+"c:\Source\anita\app\src\app\libs\db-connector\crypter\options.constant.ts", "TypeScript", 0, 1, 0, 3, 1, 5
+"c:\Source\anita\app\src\app\libs\db-connector\crypter\string-crypter.function.ts", "TypeScript", 0, 5, 0, 7, 2, 14
+"c:\Source\anita\app\src\app\libs\db-connector\crypter\string-decrypter.function.ts", "TypeScript", 0, 5, 0, 7, 2, 14
+"c:\Source\anita\app\src\app\libs\db-connector\db-builder\data-structure-builder.class.ts", "TypeScript", 0, 30, 0, 19, 8, 57
+"c:\Source\anita\app\src\app\libs\db-connector\db-builder\default-values.constant.ts", "TypeScript", 0, 4, 0, 9, 4, 17
+"c:\Source\anita\app\src\app\libs\db-connector\db-builder\sez-builder.class.ts", "TypeScript", 0, 101, 0, 64, 21, 186
+"c:\Source\anita\app\src\app\libs\db-connector\db-builder\sez-definition.ts", "TypeScript", 0, 19, 0, 9, 3, 31
+"c:\Source\anita\app\src\app\libs\db-connector\db-connector.class.ts", "TypeScript", 0, 47, 0, 32, 14, 93
+"c:\Source\anita\app\src\app\libs\db-connector\models\executers.d.ts", "TypeScript", 0, 101, 0, 37, 18, 156
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\file-handles\db-deletor\db-deletor.class.ts", "TypeScript", 0, 15, 0, 12, 8, 35
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\file-handles\db-insertor\db-insertor.class.ts", "TypeScript", 0, 13, 0, 11, 6, 30
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\file-handles\db-selector\db-selector.class.ts", "TypeScript", 0, 45, 0, 26, 13, 84
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\file-handles\db-store\dbstore.class.ts", "TypeScript", 0, 42, 0, 21, 16, 79
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\file-handles\db-updator\db-updator.class.ts", "TypeScript", 0, 13, 0, 11, 6, 30
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\file-handles\exporter.constant.ts", "TypeScript", 0, 14, 0, 3, 2, 19
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\file-handles\helpers\element-adder-to-collection.class.ts", "TypeScript", 0, 30, 0, 17, 9, 56
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\file-handles\helpers\file-handle-checker.function.ts", "TypeScript", 0, 9, 0, 3, 4, 16
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\file-handles\helpers\file-system-access-api.d.ts", "TypeScript", 0, 76, 0, 1, 19, 96
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\file-handles\helpers\fs-helper.ts", "TypeScript", 0, 54, 0, 31, 9, 94
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\file-handles\helpers\project-file-handle-saver.class.ts", "TypeScript", 0, 25, 0, 24, 8, 57
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\indexed-db\db-deletor\db-deletor.class.ts", "TypeScript", 0, 21, 0, 11, 5, 37
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\indexed-db\db-insertor\db-insertor.class.ts", "TypeScript", 0, 17, 0, 11, 5, 33
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\indexed-db\db-selector\db-selector.class.ts", "TypeScript", 0, 44, 0, 33, 15, 92
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\indexed-db\db-store\dbstore.class.ts", "TypeScript", 0, 42, 0, 4, 19, 65
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\indexed-db\db-updator\db-updator.class.ts", "TypeScript", 0, 17, 0, 11, 5, 33
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\indexed-db\exporter.constant.ts", "TypeScript", 0, 14, 0, 3, 2, 19
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\indexed-db\query-makers\query-helper.class.ts", "TypeScript", 0, 96, 0, 23, 29, 148
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\indexed-db\query-makers\query-maker.class.ts", "TypeScript", 0, 113, 0, 63, 46, 222
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mongo-db\db-deletor\db-deletor.class.ts", "TypeScript", 0, 25, 0, 19, 8, 52
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mongo-db\db-insertor\db-insertor.class.ts", "TypeScript", 0, 25, 0, 21, 10, 56
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mongo-db\db-selector\db-selector.class.ts", "TypeScript", 0, 50, 0, 41, 21, 112
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mongo-db\db-store\dbstore.class.ts", "TypeScript", 0, 44, 0, 0, 16, 60
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mongo-db\db-updator\db-updator.class.ts", "TypeScript", 0, 48, 0, 41, 15, 104
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mongo-db\exporter.constant.ts", "TypeScript", 0, 14, 0, 3, 2, 19
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mongo-db\helpers\connection-string-maker.class.ts", "TypeScript", 0, 32, 0, 24, 12, 68
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mysql\db-deletor\db-deletor.class.ts", "TypeScript", 0, 22, 0, 14, 7, 43
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mysql\db-insertor\db-insertor.class.ts", "TypeScript", 0, 22, 0, 19, 6, 47
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mysql\db-selector\db-selector.class.ts", "TypeScript", 0, 41, 0, 26, 12, 79
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mysql\db-store\dbstore.class.ts", "TypeScript", 0, 26, 0, 3, 11, 40
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mysql\db-updator\db-updator.class.ts", "TypeScript", 0, 22, 0, 19, 6, 47
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mysql\exporter.constant.ts", "TypeScript", 0, 14, 0, 3, 2, 19
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mysql\helpers\execute-query.function.ts", "TypeScript", 0, 10, 0, 3, 2, 15
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mysql\helpers\query-maker.class.ts", "TypeScript", 0, 54, 0, 23, 13, 90
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mysql\helpers\where-builder.class.ts", "TypeScript", 0, 24, 0, 16, 8, 48
+"c:\Source\anita\app\src\app\libs\id-creator\id-creator.class.ts", "TypeScript", 0, 15, 0, 9, 11, 35
+"c:\Source\anita\app\src\app\libs\logger\logger.class.ts", "TypeScript", 0, 60, 0, 44, 27, 131
+"c:\Source\anita\app\src\app\libs\project-helpers\get-parent-info-for-details-view.class.ts", "TypeScript", 0, 35, 0, 0, 6, 41
+"c:\Source\anita\app\src\app\libs\project-helpers\parent-info-form-ele-builder\options-for-parents-selector.class.ts", "TypeScript", 0, 36, 0, 0, 5, 41
+"c:\Source\anita\app\src\app\libs\project-helpers\parent-info-form-ele-builder\parent-info-form-ele-builder.class.ts", "TypeScript", 0, 31, 0, 5, 8, 44
+"c:\Source\anita\app\src\app\libs\project-helpers\parent-info-form-ele-builder\parent-info-obj-to-string.function.ts", "TypeScript", 0, 8, 0, 4, 1, 13
+"c:\Source\anita\app\src\app\libs\project-helpers\parent-info-form-ele-builder\parent-info-string-to-obj.function.ts", "TypeScript", 0, 29, 0, 15, 17, 61
+"c:\Source\anita\app\src\app\libs\project-helpers\project-handlers\current-project-setter.class.ts", "TypeScript", 0, 15, 0, 10, 5, 30
+"c:\Source\anita\app\src\app\libs\project-helpers\project-handlers\is-project-loaded.function.ts", "TypeScript", 0, 6, 0, 4, 2, 12
+"c:\Source\anita\app\src\app\libs\project-helpers\project-handlers\project-deletor.class.ts", "TypeScript", 0, 19, 0, 16, 7, 42
+"c:\Source\anita\app\src\app\libs\project-helpers\project-handlers\project-loader.class.ts", "TypeScript", 0, 26, 0, 16, 8, 50
+"c:\Source\anita\app\src\app\libs\project-helpers\project-handlers\project-saver.class.ts", "TypeScript", 0, 48, 0, 0, 19, 67
+"c:\Source\anita\app\src\app\libs\project-helpers\project-handlers\save-project-settings-in-indexeddb.class.ts", "TypeScript", 0, 27, 0, 24, 9, 60
+"c:\Source\anita\app\src\app\libs\project-helpers\section-elements-handlers\element-saver.class.ts", "TypeScript", 0, 48, 0, 30, 14, 92
+"c:\Source\anita\app\src\app\libs\project-helpers\txt-by-field-value.function.ts", "TypeScript", 0, 7, 0, 5, 5, 17
+"c:\Source\anita\app\src\app\libs\projects-helpers\file-handle-helpers\project-file-importer.class.ts", "TypeScript", 0, 49, 0, 37, 12, 98
+"c:\Source\anita\app\src\app\libs\projects-helpers\projects-handlers\projects-list-loader.class.ts", "TypeScript", 0, 18, 0, 15, 7, 40
+"c:\Source\anita\app\src\app\libs\projects-helpers\sections-forms-helpers\section-form-ele-generator.class.ts", "TypeScript", 0, 29, 0, 22, 9, 60
+"c:\Source\anita\app\src\app\libs\redux\action.type.ts", "TypeScript", 0, 74, 0, 0, 12, 86
+"c:\Source\anita\app\src\app\libs\redux\reducers.const.ts", "TypeScript", 0, 26, 0, 6, 3, 35
+"c:\Source\anita\app\src\app\libs\redux\reducers\form-element.reducer.ts", "TypeScript", 0, 19, 0, 6, 4, 29
+"c:\Source\anita\app\src\app\libs\redux\reducers\form-eles-valid-state.reducer.ts", "TypeScript", 0, 21, 0, 6, 3, 30
+"c:\Source\anita\app\src\app\libs\redux\reducers\form-project.reducer.ts", "TypeScript", 0, 80, 0, 8, 4, 92
+"c:\Source\anita\app\src\app\libs\redux\reducers\layout.reducer.ts", "TypeScript", 0, 18, 0, 6, 4, 28
+"c:\Source\anita\app\src\app\libs\redux\reducers\project.reducer.ts", "TypeScript", 0, 12, 0, 6, 3, 21
+"c:\Source\anita\app\src\app\libs\redux\reducers\projects.reducer.ts", "TypeScript", 0, 14, 0, 6, 2, 22
+"c:\Source\anita\app\src\app\libs\redux\reducers\sections-for-child-of-selector.reducer.ts", "TypeScript", 0, 20, 0, 8, 5, 33
+"c:\Source\anita\app\src\app\libs\redux\redux-actions.const.ts", "TypeScript", 0, 22, 0, 8, 1, 31
+"c:\Source\anita\app\src\app\libs\redux\state.store.ts", "TypeScript", 0, 4, 0, 0, 2, 6
+"c:\Source\anita\app\src\app\libs\startupper\startupper.class.ts", "TypeScript", 0, 23, 0, 12, 7, 42
+"c:\Source\anita\app\src\app\libs\tools\check-is-valid-value-for-controlled-react-form.function.ts", "TypeScript", 0, 3, 0, 0, 0, 3
+"c:\Source\anita\app\src\app\libs\tools\find-first-user-defined-field.function.ts", "TypeScript", 0, 12, 0, 0, 6, 18
+"c:\Source\anita\app\src\app\libs\tools\find-section-by-id.function.ts", "TypeScript", 0, 4, 0, 0, 2, 6
+"c:\Source\anita\app\src\app\libs\tools\tools.ts", "TypeScript", 0, 11, 0, 11, 3, 25
+"c:\Source\anita\app\src\app\ui-react-components\admin-layout\admin-layout.component.tsx", "TypeScript React", 19, 0, 0, 0, 2, 21
+"c:\Source\anita\app\src\app\ui-react-components\admin-layout\components\sidebar-menu.component.tsx", "TypeScript React", 60, 0, 0, 0, 11, 71
+"c:\Source\anita\app\src\app\ui-react-components\admin-layout\content.component.tsx", "TypeScript React", 6, 0, 0, 0, 1, 7
+"c:\Source\anita\app\src\app\ui-react-components\admin-layout\header.component.tsx", "TypeScript React", 26, 0, 0, 0, 6, 32
+"c:\Source\anita\app\src\app\ui-react-components\admin-layout\sidebar.component.tsx", "TypeScript React", 26, 0, 0, 0, 3, 29
+"c:\Source\anita\app\src\app\ui-react-components\editor-mode.enum.ts", "TypeScript", 0, 4, 0, 0, 1, 5
+"c:\Source\anita\app\src\app\ui-react-components\project\add-edit-components\form-element-manager.component.tsx", "TypeScript React", 28, 0, 0, 0, 6, 34
+"c:\Source\anita\app\src\app\ui-react-components\project\add-edit-components\save-element.component.tsx", "TypeScript React", 30, 0, 0, 0, 6, 36
+"c:\Source\anita\app\src\app\ui-react-components\project\add-edit-section-element.component.tsx", "TypeScript React", 47, 0, 0, 0, 15, 62
+"c:\Source\anita\app\src\app\ui-react-components\project\details-components\parents-link-shower.component.tsx", "TypeScript React", 35, 0, 0, 0, 7, 42
+"c:\Source\anita\app\src\app\ui-react-components\project\list-components\tableList.component.tsx", "TypeScript React", 71, 0, 0, 11, 8, 90
+"c:\Source\anita\app\src\app\ui-react-components\project\list-components\td-with-link-to-details.component.tsx", "TypeScript React", 21, 0, 0, 0, 4, 25
+"c:\Source\anita\app\src\app\ui-react-components\project\no-section-data.component.tsx", "TypeScript React", 21, 0, 0, 0, 2, 23
+"c:\Source\anita\app\src\app\ui-react-components\project\project-details.component.tsx", "TypeScript React", 49, 0, 0, 1, 18, 68
+"c:\Source\anita\app\src\app\ui-react-components\project\section-element-details.component.tsx", "TypeScript React", 73, 0, 0, 0, 16, 89
+"c:\Source\anita\app\src\app\ui-react-components\project\section-elements-list.component.tsx", "TypeScript React", 47, 0, 0, 0, 13, 60
+"c:\Source\anita\app\src\app\ui-react-components\project\values-renderers\basic-text.component.tsx", "TypeScript React", 1, 0, 0, 0, 1, 2
+"c:\Source\anita\app\src\app\ui-react-components\project\values-renderers\check-box-as-check.component.tsx", "TypeScript React", 1, 0, 0, 0, 1, 2
+"c:\Source\anita\app\src\app\ui-react-components\project\values-renderers\custom-render-picker.component.tsx", "TypeScript React", 25, 0, 0, 0, 2, 27
+"c:\Source\anita\app\src\app\ui-react-components\project\values-renderers\formatted-date-time.component.tsx", "TypeScript React", 2, 0, 0, 0, 2, 4
+"c:\Source\anita\app\src\app\ui-react-components\project\values-renderers\formatted-date.component.tsx", "TypeScript React", 2, 0, 0, 0, 2, 4
+"c:\Source\anita\app\src\app\ui-react-components\project\values-renderers\text-from-options-by-value.component.tsx", "TypeScript React", 3, 0, 0, 0, 2, 5
+"c:\Source\anita\app\src\app\ui-react-components\projects\add-edit-project-components\form-project-manager.component.tsx", "TypeScript React", 61, 0, 0, 0, 6, 67
+"c:\Source\anita\app\src\app\ui-react-components\projects\add-edit-project-components\section-form-model-manager.component.tsx", "TypeScript React", 84, 0, 0, 0, 11, 95
+"c:\Source\anita\app\src\app\ui-react-components\projects\add-edit-project-components\section-manager.component.tsx", "TypeScript React", 82, 0, 0, 0, 8, 90
+"c:\Source\anita\app\src\app\ui-react-components\projects\add-edit-project.component.tsx", "TypeScript React", 55, 0, 0, 2, 17, 74
+"c:\Source\anita\app\src\app\ui-react-components\projects\no-projects.component.tsx", "TypeScript React", 34, 0, 0, 1, 5, 40
+"c:\Source\anita\app\src\app\ui-react-components\projects\project-card-components\project-loaded-footer.component.tsx", "TypeScript React", 13, 0, 0, 0, 2, 15
+"c:\Source\anita\app\src\app\ui-react-components\projects\project-card-components\project-not-loaded-footer.component.tsx", "TypeScript React", 7, 0, 0, 0, 2, 9
+"c:\Source\anita\app\src\app\ui-react-components\projects\project-card.component.tsx", "TypeScript React", 30, 0, 0, 0, 7, 37
+"c:\Source\anita\app\src\app\ui-react-components\projects\projects-list.component.tsx", "TypeScript React", 62, 0, 0, 2, 17, 81
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\buttons\add-edit-element-button.component.tsx", "TypeScript React", 30, 0, 0, 0, 10, 40
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\buttons\buttons-layout-tw-classes.const.ts", "TypeScript", 0, 4, 0, 0, 1, 5
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\buttons\delete-project.component.tsx", "TypeScript React", 49, 0, 0, 0, 7, 56
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\buttons\edit-project-button.component.tsx", "TypeScript React", 9, 0, 0, 0, 1, 10
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\common-ui-eles\card-footer-items-end.component.tsx", "TypeScript React", 6, 0, 0, 0, 1, 7
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\common-ui-eles\main-content-container.component.tsx", "TypeScript React", 12, 0, 0, 0, 0, 12
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\forms-automator\form-automator.component.tsx", "TypeScript React", 19, 0, 0, 0, 5, 24
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\forms-automator\form-builder\calc-width.function.ts", "TypeScript", 0, 3, 0, 1, 0, 4
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\forms-automator\form-builder\form-eles-switcher.function.tsx", "TypeScript React", 42, 0, 0, 0, 1, 43
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\forms-automator\form-builder\prerequisites-checker.class.ts", "TypeScript", 0, 30, 0, 2, 11, 43
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\forms-automator\form-fields\basic-checkbox.component.tsx", "TypeScript React", 36, 0, 0, 0, 5, 41
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\forms-automator\form-fields\basic-input.component.tsx", "TypeScript React", 43, 0, 0, 0, 5, 48
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\forms-automator\form-fields\basic-radio.component.tsx", "TypeScript React", 47, 0, 0, 2, 6, 55
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\forms-automator\form-fields\basic-select.component.tsx", "TypeScript React", 45, 0, 0, 0, 5, 50
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\forms-automator\form-fields\basic-textarea.component.tsx", "TypeScript React", 37, 0, 0, 0, 5, 42
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\forms-automator\form-fields\child-of-selector-for-section.component.tsx", "TypeScript React", 65, 0, 0, 2, 13, 80
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\forms-automator\form-fields\date-picker.component.tsx", "TypeScript React", 40, 0, 0, 0, 5, 45
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\forms-automator\form-fields\date-time-picker.component.tsx", "TypeScript React", 41, 0, 0, 0, 5, 46
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\forms-automator\form-fields\form-fields-model.ts", "TypeScript", 0, 83, 0, 0, 15, 98
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\forms-automator\form-fields\hidden-input.component.tsx", "TypeScript React", 9, 0, 0, 0, 2, 11
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\forms-automator\form-fields\options-maker.component.tsx", "TypeScript React", 55, 0, 0, 8, 6, 69
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\forms-automator\form-fields\parents-selector.component.tsx", "TypeScript React", 59, 0, 0, 2, 13, 74
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\forms-automator\form-layout\field-selector.component.tsx", "TypeScript React", 14, 0, 0, 0, 6, 20
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\forms-automator\form-layout\fom-elements-css-classes.const.ts", "TypeScript", 0, 2, 0, 0, 0, 2
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\forms-automator\form-layout\form-ele-container.component.tsx", "TypeScript React", 6, 0, 0, 0, 1, 7
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\forms-automator\form-layout\form-element-label.component.tsx", "TypeScript React", 3, 0, 0, 0, 0, 3
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\forms-automator\validators\required-field.component.tsx", "TypeScript React", 19, 0, 0, 0, 7, 26
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\forms-automator\validators\validators-container.component.tsx", "TypeScript React", 12, 0, 0, 0, 4, 16
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\forms-automator\validators\validators.d.ts", "TypeScript", 0, 1, 0, 0, 1, 2
+"c:\Source\anita\app\src\app\ui-react-components\shared-components\loader\loader.component.tsx", "TypeScript React", 6, 0, 0, 0, 1, 7
+"c:\Source\anita\app\src\app\version.ts", "TypeScript", 0, 1, 0, 3, 2, 6
+"c:\Source\anita\app\src\index.css", "CSS", 0, 0, 16, 3, 3, 22
+"c:\Source\anita\app\src\index.tsx", "TypeScript React", 18, 0, 0, 0, 3, 21
+"c:\Source\anita\app\src\react-app-env.d.ts", "TypeScript", 0, 0, 0, 1, 1, 2
+"c:\Source\anita\app\src\reportWebVitals.ts", "TypeScript", 0, 13, 0, 0, 3, 16
+"c:\Source\anita\app\src\service-worker.ts", "TypeScript", 0, 38, 0, 30, 13, 81
+"c:\Source\anita\app\src\serviceWorkerRegistration.ts", "TypeScript", 0, 98, 0, 31, 14, 143
+"c:\Source\anita\app\src\setupTests.ts", "TypeScript", 0, 1, 0, 4, 1, 6
+"Total", "-", 1767, 3149, 16, 1482, 1175, 7589
