@@ -1,6 +1,6 @@
-import { localSettings } from '@anita/client/data/sections/local-settings.const';
-import { projects } from '@anita/client/data/sections/projects.const';
-import { SectionDefinition } from '@anita/client/libs/db-connector/db-builder/sez-definition';
+import { localSettings } from 'app/data/sections/local-settings.const';
+import { projects } from 'app/data/sections/projects.const';
+import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition';
 
 /**
  * Identifies the table on which run the query with `db-connector`.

@@ -1,6 +1,6 @@
-import { AbstractModel } from '@anita/client/libs/db-connector/constants/ds.constant';
-import { Decrypter } from '@anita/client/libs/db-connector/crypter/decrypter.class';
-import { DbConnectorInstance, Selector } from '@anita/client/libs/db-connector/models/executers';
+import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { Decrypter } from 'app/libs/db-connector/crypter/decrypter.class';
+import { DbConnectorInstance, Selector } from 'app/libs/db-connector/models/executers';
 import { Db } from 'mongodb';
 
 /**
@@ -73,8 +73,8 @@ export class DbSelector<E> implements Selector<E> {
    * @see Decrypter
    */
   private async doSingle(): Promise<E> {
-    this.result = await this.dbConnector.dbStore.db.collection(this.dbConnector.DS[this.section].table)
-      .findOne(this.args);
+    this.result = await this.dbConnector.dbStore.db.collection(this.dbConnector.DS[this.section].name)
+      .findOne(this.args) as unknown as E;
 
     if (this.result && this.dbConnector.options.encrypted)
       await new Decrypter(this.dbConnector, this.section, this.result).do();
@@ -88,7 +88,7 @@ export class DbSelector<E> implements Selector<E> {
    * @see Decrypter
    */
   private async doMultiple(): Promise<Array<E>> {
-    this.result = await this.dbConnector.dbStore.db.collection(this.dbConnector.DS[this.section].table)
+    this.result = await this.dbConnector.dbStore.db.collection(this.dbConnector.DS[this.section].name)
       .find(this.args)
       .toArray() as Array<E>;
 

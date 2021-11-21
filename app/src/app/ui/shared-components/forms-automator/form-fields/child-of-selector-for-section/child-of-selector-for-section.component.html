@@ -1,9 +1,0 @@
-<div *ngIf="formData" [formGroup]="formData" class="form-group">
-  <div *ngIf="selectableSections.length">
-    <label [for]="formEle.fieldName">{{ (formEle.label) ? formEle.label: 'Please select one' }}</label>
-    <nb-select fullWidth size="large" multiple appValidatorChecker [id]="formEle.fieldName" [attr.aria-describedby]="formEle.fieldName + 'Help'" [formControlName]="formEle.fieldName">
-      <nb-option *ngFor="let optionData of selectableSections; trackBy: trackItems" [value]="optionData.value">
-        {{ optionData.txt }}</nb-option>
-    </nb-select>
-  </div>
-</div>

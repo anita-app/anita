@@ -1,9 +1,9 @@
-import { AbstractModel } from '@anita/client/libs/db-connector/constants/ds.constant';
-import { securePassEncrypter } from '@anita/client/libs/db-connector/crypter/options.constant';
-import { stringCrypter } from '@anita/client/libs/db-connector/crypter/string-crypter.function';
-import { stringDecrypter } from '@anita/client/libs/db-connector/crypter/string-decrypter.function';
-import { DbConnectorInstance } from '@anita/client/libs/db-connector/models/executers';
-import { Logger } from '@anita/client/libs/logger/logger.class';
+import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { securePassEncrypter } from 'app/libs/db-connector/crypter/options.constant';
+import { stringCrypter } from 'app/libs/db-connector/crypter/string-crypter.function';
+import { stringDecrypter } from 'app/libs/db-connector/crypter/string-decrypter.function';
+import { DbConnectorInstance } from 'app/libs/db-connector/models/executers';
+import { Logger } from 'app/libs/logger/logger.class';
 
 /**
  * Common methods needed to crypt and decrypt data, when data encryption in the DB is enabled.
@@ -28,6 +28,7 @@ export class CryptHelper<E, DbTypes> {
 
   /**
    * Creates an instance of Decrypter.
+   * @param dbConnector Instance of DbConnector.
    * @param section the section definition, needed to know which fields should be decrypted.
    * @param element the element to be decrypted.
    */
@@ -67,7 +68,7 @@ export class CryptHelper<E, DbTypes> {
    * Sets the id of the owner of the element being processed.
    */
   private setOwner(): void {
-    const owner = this.element[this.dbConnector.DS[this.section].ownerIdentifier];
+    this.owner = this.element[this.dbConnector.DS[this.section].ownerIdentifier];
   }
 
   /**

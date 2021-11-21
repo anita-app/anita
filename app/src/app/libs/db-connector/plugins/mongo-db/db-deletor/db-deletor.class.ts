@@ -1,6 +1,6 @@
-import { AbstractModel } from '@anita/client/libs/db-connector/constants/ds.constant';
-import { DbConnectorInstance, Deletor } from '@anita/client/libs/db-connector/models/executers';
-import { Logger } from '@anita/client/libs/logger/logger.class';
+import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { DbConnectorInstance, Deletor } from 'app/libs/db-connector/models/executers';
+import { Logger } from 'app/libs/logger/logger.class';
 import { Db } from 'mongodb';
 
 /**

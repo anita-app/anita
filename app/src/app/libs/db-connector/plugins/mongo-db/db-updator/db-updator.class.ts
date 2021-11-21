@@ -1,8 +1,8 @@
-import { RESERVED_FIELDS } from '@anita/client/data/form-models/system-fields-for-sections.constant';
-import { AbstractModel } from '@anita/client/libs/db-connector/constants/ds.constant';
-import { Encrypter } from '@anita/client/libs/db-connector/crypter/encrypter.class';
-import { DbConnectorInstance, Updator } from '@anita/client/libs/db-connector/models/executers';
-import { Db, UpdateQuery } from 'mongodb';
+import { RESERVED_FIELDS } from 'app/data/form-models/system-fields-for-sections.constant';
+import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { Encrypter } from 'app/libs/db-connector/crypter/encrypter.class';
+import { DbConnectorInstance, Updator } from 'app/libs/db-connector/models/executers';
+import { Db } from 'mongodb';
 
 /**
  * Implements updator for MongoDB
@@ -16,7 +16,7 @@ export class DbUpdator<E> implements Updator<E> {
   /**
    * Query to run with MongoDB
    */
-  private query: UpdateQuery<E> = {};
+  private query: { [key: string]: any } = {};
 
   /**
    * Creates an instance of db updator.
@@ -90,7 +90,7 @@ export class DbUpdator<E> implements Updator<E> {
    * Runs the actual update
    */
   private async doAutoUpdate(): Promise<void> {
-    await this.dbConnector.dbStore.db.collection(this.dbConnector.DS[this.section].table).updateOne(this.filter, this.query);
+    await this.dbConnector.dbStore.db.collection(this.dbConnector.DS[this.section].name).updateOne(this.filter, this.query);
   }
 
   /**

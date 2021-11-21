@@ -1,6 +1,6 @@
-import { DsDbInitOptions } from '@anita/client/libs/db-connector/models/executers';
-import { FileSystemFileHandle } from '@anita/client/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
-import { getNewFileHandle, verifyPermission } from '@anita/client/libs/db-connector/plugins/file-handles/helpers/fs-helper';
+import { DsDbInitOptions } from 'app/libs/db-connector/models/executers';
+import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
+import { getNewFileHandle, verifyPermission } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper';
 
 /**
  * Uses the fileHandle stored in IndexedDB, if any, or asks for a new one 

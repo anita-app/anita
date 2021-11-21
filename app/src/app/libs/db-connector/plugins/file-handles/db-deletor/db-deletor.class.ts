@@ -1,8 +1,6 @@
-import { AnitaUniversalDataStorage } from '@anita/client/data/model/project-info';
-import { AbstractModel } from '@anita/client/libs/db-connector/constants/ds.constant';
-import { DbConnectorInstance, Deletor } from '@anita/client/libs/db-connector/models/executers';
-import { executeQuery } from '@anita/client/libs/db-connector/plugins/mysql/helpers/execute-query.function';
-import { QueryMaker } from '@anita/client/libs/db-connector/plugins/mysql/helpers/query-maker.class';
+import { AnitaUniversalDataStorage } from 'app/data/model/project-info';
+import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { DbConnectorInstance, Deletor } from 'app/libs/db-connector/models/executers';
 
 /**
  * Implements deletor for MySql

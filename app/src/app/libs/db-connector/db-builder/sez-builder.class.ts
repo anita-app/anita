@@ -1,6 +1,6 @@
-import { DEFAULT_OWNER_IDENTIFIER, DEFAULT_PARENTS_IDENTIFIER, DEFAULT_PK } from '@anita/client/libs/db-connector/db-builder/default-values.constant';
-import { SectionDefinition, SectionModel, SectionName } from '@anita/client/libs/db-connector/db-builder/sez-definition';
-import { Logger } from '@anita/client/libs/logger/logger.class';
+import { DEFAULT_OWNER_IDENTIFIER, DEFAULT_PARENTS_IDENTIFIER, DEFAULT_PK } from 'app/libs/db-connector/db-builder/default-values.constant';
+import { SectionDefinition, SectionModel, SectionName } from 'app/libs/db-connector/db-builder/sez-definition';
+import { Logger } from 'app/libs/logger/logger.class';
 
 /**
  * Builds a Section model
@@ -33,7 +33,7 @@ export class SezBuilder<T> {
     private orderBy: keyof T & string = DEFAULT_PK as keyof T & string,
     private childOf?: Array<SectionName>,
     private parentsIdentifiers?: keyof T,
-    private ownerIdentifier?: keyof T
+    private ownerIdentifier?: keyof T & string
   ) { }
 
   /**
@@ -82,7 +82,7 @@ export class SezBuilder<T> {
    */
   private setOwnerIdentifier(): void {
     if (!this.ownerIdentifier)
-      this.ownerIdentifier = DEFAULT_OWNER_IDENTIFIER as keyof T;
+      this.ownerIdentifier = DEFAULT_OWNER_IDENTIFIER as keyof T & string;
     if (!this.fields.includes(this.ownerIdentifier))
       this.fields.push(this.ownerIdentifier);
   }

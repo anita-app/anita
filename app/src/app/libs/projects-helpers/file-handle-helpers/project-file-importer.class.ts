@@ -1,19 +1,19 @@
-import { dbInstances } from '@anita/client/data/db-instances.const';
+import { dbInstances } from 'app/data/db-instances.const';
 import {
   AnitaUniversalDataStorage,
   LocalProjectSettings,
   ProjectSettings,
   RESERVED_UDS_KEYS
-  } from '@anita/client/data/model/project-info';
-import { DbConnector } from '@anita/client/libs/db-connector/db-connector.class';
-import { FILE_HANDLES_PLUGIN } from '@anita/client/libs/db-connector/plugins/file-handles/exporter.constant';
-import { FileSystemFileHandle } from '@anita/client/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
-import { getFileHandle, readFileHandleAsText } from '@anita/client/libs/db-connector/plugins/file-handles/helpers/fs-helper';
-import { REDUCER_ACTIONS } from '@anita/client/libs/ng-rx/ngrx-actions.const';
-import { CurrentProjectSetter } from '@anita/client/libs/projects-helpers/project-handlers/current-project-setter.class';
-import { SaveProjectSettingsInIndexedDB } from '@anita/client/libs/projects-helpers/project-handlers/save-project-settings-in-indexeddb.class';
-import { asyncForEach } from '@anita/client/libs/tools/tools';
-import { stateData } from '@anita/client/ng-services/state-data/state-data.constant';
+  } from 'app/data/model/project-info';
+import { DbConnector } from 'app/libs/db-connector/db-connector.class';
+import { FILE_HANDLES_PLUGIN } from 'app/libs/db-connector/plugins/file-handles/exporter.constant';
+import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
+import { getFileHandle, readFileHandleAsText } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper';
+import { CurrentProjectSetter } from 'app/libs/project-helpers/project-handlers/current-project-setter.class';
+import { SaveProjectSettingsInIndexedDB } from 'app/libs/project-helpers/project-handlers/save-project-settings-in-indexeddb.class';
+import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
+import { store } from 'app/libs/redux/state.store';
+import { asyncForEach } from 'app/libs/tools/tools';
 
 /**
  * Imports one or more existing project files, and then calls `SaveProjectSettingsInIndexedDB`.
@@ -91,7 +91,7 @@ export class ProjectFileImporter {
    * Dispatches the action to add the project to the list of projects
    */
   private dispatchProject(payload: ProjectSettings): void {
-    stateData.ngRxStore.dispatch(REDUCER_ACTIONS.addProjectToList({ payload }));
+    store.dispatch({ type: REDUX_ACTIONS.addProjectToList, payload });
   }
 
 }

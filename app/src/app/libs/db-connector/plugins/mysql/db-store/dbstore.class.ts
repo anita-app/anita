@@ -1,4 +1,4 @@
-import { DbConnectorInstance, DbStoreInterface, DsDbInitOptions } from '@anita/client/libs/db-connector/models/executers';
+import { DbConnectorInstance, DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers';
 import * as mysql from 'mysql';
 
 export class DbStore implements DbStoreInterface<mysql.Connection> {

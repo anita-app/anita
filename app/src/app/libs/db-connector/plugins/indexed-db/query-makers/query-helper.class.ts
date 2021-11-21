@@ -1,5 +1,5 @@
-import { AbstractModel } from '@anita/client/libs/db-connector/constants/ds.constant';
-import { NewWhere } from '@anita/client/libs/db-connector/plugins/indexed-db/query-makers/query-maker.class';
+import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { NewWhere } from 'app/libs/db-connector/plugins/indexed-db/query-makers/query-maker.class';
 
 export interface BetweenSearchParams {
   field: string;
@@ -104,7 +104,7 @@ export class QueryHelper {
         case '===':
           return item[field] === value;
         case '!=':
-          // tslint:disable-next-line:triple-equals
+          // eslint-disable-next-line eqeqeq
           return item[field] != value;
         case '>':
           return item[field] > value;
@@ -115,7 +115,7 @@ export class QueryHelper {
         case '<=':
           return item[field] <= value;
         default:
-          // tslint:disable-next-line:triple-equals
+          // eslint-disable-next-line eqeqeq
           return item[field] == value;
       }
     };

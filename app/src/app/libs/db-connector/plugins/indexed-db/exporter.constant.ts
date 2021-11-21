@@ -1,5 +1,5 @@
-import { DbObjects } from '@anita/client/libs/db-connector/models/executers';
-import { DbStore } from '@anita/client/libs/db-connector/plugins/indexed-db/db-store/dbstore.class';
+import { DbObjects } from 'app/libs/db-connector/models/executers';
+import { DbStore } from 'app/libs/db-connector/plugins/indexed-db/db-store/dbstore.class';
 import Dexie from 'dexie';
 import { DbDeletor } from './db-deletor/db-deletor.class';
 import { DbInsertor } from './db-insertor/db-insertor.class';

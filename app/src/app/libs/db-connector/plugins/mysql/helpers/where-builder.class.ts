@@ -1,4 +1,4 @@
-import { WhereArgs } from '@anita/client/libs/db-connector/plugins/mysql/helpers/query-maker.class';
+import { WhereArgs } from 'app/libs/db-connector/plugins/mysql/helpers/query-maker.class';
 
 /**
  * Builds where clauses for MySql query string

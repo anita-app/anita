@@ -1,6 +1,7 @@
-import { RESERVED_FIELDS } from '@anita/client/data/form-models/system-fields-for-sections.constant';
-import { FORM_COMPONENTS_CODES, OptionKeysModel } from '@anita/client/data/model/form-model-commons';
-import { FileSystemFileHandle } from '@anita/client/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
+import { RESERVED_FIELDS } from 'app/data/form-models/system-fields-for-sections.constant';
+import { FORM_COMPONENTS_CODES, OptionKeysModel } from 'app/data/model/form-model-commons';
+import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
+import { FormFieldsModel, SupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-fields/form-fields-model';
 
 /**
  * Reserved keys are needed to store system required properties.
@@ -41,6 +42,7 @@ export interface ProjectSettings {
   title: string;
   description: string;
   dateCreation: string;
+  lastModified?: string;
   encrypted?: boolean;
 }
 
@@ -52,34 +54,22 @@ export interface LocalProjectSettings extends ProjectSettings {
 }
 
 /**
- * Defines the properties of the system fields of a `Section`.
- *
- * @remarks
- * These fields are for the object to be stored in `sections.formModel[]` of the `AnitaUniversalDataStorage` store.
- */
-export interface SectionSystemFieldsProperties {
-  componentCode: FORM_COMPONENTS_CODES;
-  fieldName: string;
-}
-
-/**
  * Defines the properties of user defined fields of a `Section`
  *
  * @remarks
  * These fields are for the object to be stored in `sections.formModel[]` of the `AnitaUniversalDataStorage` store.
  */
-export interface SectionCustomFieldProperties extends SectionSystemFieldsProperties {
-  label: string;
+export interface SectionCustomFieldProperties {
+  componentCode: FORM_COMPONENTS_CODES;
+  fieldName: string;
+  label?: string;
   options?: Array<OptionKeysModel>;
   required?: boolean;
   externalLabel?: boolean;
-  validators?: {
-    required?: boolean;
-    requiredTrue?: boolean;
-    minLength?: number;
-    email?: boolean;
-  };
   value?: any;
+  width?: number;
+  [RESERVED_FIELDS.id]?: never;
+  [RESERVED_FIELDS.dateCreation]?: never;
 }
 
 /**
@@ -89,21 +79,31 @@ export interface SectionDetailsDeclaration {
   id: string;
   title: string;
   childOf?: Array<string>;
+  [RESERVED_FIELDS.dateCreation]?: never;
 }
 
 /**
  * Defines the full properties of a Section.
  */
 export interface Section extends SectionDetailsDeclaration {
-  formModel: Array<SectionSystemFieldsProperties | SectionCustomFieldProperties>;
+  formModel: Array<FormFieldsModel<SupportedFormsTypes>>;
+}
+
+/**
+ * Defines the properties of each parent to which a element is connected.
+ */
+export interface ParentInfoForDetailsView {
+  txt: string;
+  sectionId: string;
+  element: SectionElement;
 }
 
 /**
  * Defines the bare minimum fields of an `Element` of a `Section`.
  */
 export interface SectionElement {
-  [RESERVED_FIELDS.id]: string;
-  [RESERVED_FIELDS.dateCreation]: string;
+  [RESERVED_FIELDS.id]?: string;
+  [RESERVED_FIELDS.dateCreation]?: string;
   [RESERVED_FIELDS.createdBy]?: string;
   [RESERVED_FIELDS.parentsInfo]?: Array<string>;
   [RESERVED_FIELDS.lastModified]?: string;

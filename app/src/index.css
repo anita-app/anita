@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css");
+
+/**
+  * Ensure that the admin content area is full height, minus the navbar.
+  */
+.admin-container {
+  height: calc(100vh - 3.5rem);
+  overflow: hidden;
+}
+
+input[disabled],
+button[disabled],
+button[disabled]:hover {
+  @apply bg-gray-200;
+  @apply text-gray-700;
+  @apply opacity-50;
+  @apply cursor-not-allowed;
+}

@@ -1,7 +1,7 @@
-import { AbstractModel } from '@anita/client/libs/db-connector/constants/ds.constant';
-import { DataStructureBuilder } from '@anita/client/libs/db-connector/db-builder/data-structure-builder.class';
-import { SectionDefinition } from '@anita/client/libs/db-connector/db-builder/sez-definition';
-import { DbConnectorInstance, DbStoreInterface, DsDbInitOptions } from '@anita/client/libs/db-connector/models/executers';
+import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { DataStructureBuilder } from 'app/libs/db-connector/db-builder/data-structure-builder.class';
+import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition';
+import { DbConnectorInstance, DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers';
 import Dexie from 'dexie';
 
 /**

@@ -1,6 +1,6 @@
-import { AbstractModel } from '@anita/client/libs/db-connector/constants/ds.constant';
-import { DbConnectorInstance, Selector } from '@anita/client/libs/db-connector/models/executers';
-import { QueryMaker } from '@anita/client/libs/db-connector/plugins/indexed-db/query-makers/query-maker.class';
+import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { DbConnectorInstance, Selector } from 'app/libs/db-connector/models/executers';
+import { QueryMaker } from 'app/libs/db-connector/plugins/indexed-db/query-makers/query-maker.class';
 import Dexie from 'dexie';
 
 /**

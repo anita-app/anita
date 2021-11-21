@@ -1,4 +1,4 @@
-import { DbObjects } from '@anita/client/libs/db-connector/models/executers';
+import { DbObjects } from 'app/libs/db-connector/models/executers';
 import { Db } from 'mongodb';
 import { DbDeletor } from './db-deletor/db-deletor.class';
 import { DbInsertor } from './db-insertor/db-insertor.class';

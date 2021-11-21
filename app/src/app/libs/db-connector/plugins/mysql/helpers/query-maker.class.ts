@@ -1,6 +1,6 @@
-import { AbstractModel } from '@anita/client/libs/db-connector/constants/ds.constant';
-import { DbConnectorInstance } from '@anita/client/libs/db-connector/models/executers';
-import { Logger } from '@anita/client/libs/logger/logger.class';
+import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { DbConnectorInstance } from 'app/libs/db-connector/models/executers';
+import { Logger } from 'app/libs/logger/logger.class';
 import * as mysql from 'mysql';
 import * as squel from 'squel';
 

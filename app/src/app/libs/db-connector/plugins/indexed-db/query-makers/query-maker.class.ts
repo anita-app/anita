@@ -1,7 +1,7 @@
-import { AbstractModel } from '@anita/client/libs/db-connector/constants/ds.constant';
-import { DbConnectorInstance } from '@anita/client/libs/db-connector/models/executers';
-import { Filter4Dexie, QueryHelper, SuppoertedOperators } from '@anita/client/libs/db-connector/plugins/indexed-db/query-makers/query-helper.class';
-import { Logger } from '@anita/client/libs/logger/logger.class';
+import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { DbConnectorInstance } from 'app/libs/db-connector/models/executers';
+import { Filter4Dexie, QueryHelper, SuppoertedOperators } from 'app/libs/db-connector/plugins/indexed-db/query-makers/query-helper.class';
+import { Logger } from 'app/libs/logger/logger.class';
 import Dexie from 'dexie';
 import cloneDeep from 'lodash.clonedeep';
 

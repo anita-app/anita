@@ -1,9 +1,9 @@
-import { AnitaUniversalDataStorage, RESERVED_UDS_KEYS } from '@anita/client/data/model/project-info';
-import { DbConnectorInstance } from '@anita/client/libs/db-connector/models/executers';
-import { writeFile } from '@anita/client/libs/db-connector/plugins/file-handles/helpers/fs-helper';
-import { CurrentProjectSetter } from '@anita/client/libs/projects-helpers/project-handlers/current-project-setter.class';
-import { SaveProjectSettingsInIndexedDB } from '@anita/client/libs/projects-helpers/project-handlers/save-project-settings-in-indexeddb.class';
-import { ProjectsListLoader } from '@anita/client/libs/projects-helpers/projects-handlers/projects-list-loader.class';
+import { AnitaUniversalDataStorage, RESERVED_UDS_KEYS } from 'app/data/model/project-info';
+import { DbConnectorInstance } from 'app/libs/db-connector/models/executers';
+import { writeFile } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper';
+import { CurrentProjectSetter } from 'app/libs/project-helpers/project-handlers/current-project-setter.class';
+import { SaveProjectSettingsInIndexedDB } from 'app/libs/project-helpers/project-handlers/save-project-settings-in-indexeddb.class';
+import { ProjectsListLoader } from 'app/libs/projects-helpers/projects-handlers/projects-list-loader.class';
 
 /**
  * Saves the `AnitaUniversalDataStorage` to the file a file on disk by using the fileHandle stored in the IndexedDB, if found, or asking the user to pick a new file.

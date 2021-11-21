@@ -1,8 +1,8 @@
-import { RESERVED_FIELDS } from '@anita/client/data/form-models/system-fields-for-sections.constant';
-import { Section, SectionElement } from '@anita/client/data/model/project-info';
-import { AbstractModel } from '@anita/client/libs/db-connector/constants/ds.constant';
-import { SezBuilder } from '@anita/client/libs/db-connector/db-builder/sez-builder.class';
-import { SectionDefinition, SectionModel } from '@anita/client/libs/db-connector/db-builder/sez-definition';
+import { RESERVED_FIELDS } from 'app/data/form-models/system-fields-for-sections.constant';
+import { Section, SectionElement } from 'app/data/model/project-info';
+import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { SezBuilder } from 'app/libs/db-connector/db-builder/sez-builder.class';
+import { SectionDefinition, SectionModel } from 'app/libs/db-connector/db-builder/sez-definition';
 
 /**
  * Converts the abstract definition of a Section into a complete datastructure that can be processed by FormDataParserService

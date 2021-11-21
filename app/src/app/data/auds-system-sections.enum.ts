@@ -1,10 +1,10 @@
-import { auds_sections } from '@anita/client/data/sections/auds-sections.const';
-import { auds_settings } from '@anita/client/data/sections/auds-settings.const';
+import { auds_sections } from 'app/data/sections/auds-sections.const';
+import { auds_settings } from 'app/data/sections/auds-settings.const';
 
 /**
  * Identifies the table on which run the query with `db-connector`.
  */
-export const enum AUDS_SYSTEM_SECTIONS {
+export enum AUDS_SYSTEM_SECTIONS {
   auds_settings = 1,
   auds_sections
 }

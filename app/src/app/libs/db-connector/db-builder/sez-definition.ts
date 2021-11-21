@@ -12,7 +12,7 @@ export interface SectionDefinition<T> {
   fields?: Array<keyof T>;
   indexes?: Array<keyof T>;
   orderBy?: keyof T & string;
-  ownerIdentifier?: keyof T;
+  ownerIdentifier?: keyof T & string;
   childOf?: Array<SectionName>;
   parentsIdentifiers?: keyof T;
 }
@@ -26,5 +26,5 @@ export interface SectionModel<T> extends SectionDefinition<T> {
   fields: Array<keyof T>;
   indexes: Array<keyof T>;
   orderBy: keyof T & string;
-  ownerIdentifier: keyof T;
+  ownerIdentifier: keyof T & string;
 }

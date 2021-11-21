@@ -1,6 +1,6 @@
-import { FORM_COMPONENTS_CODES } from '@anita/client/data/model/form-model-commons';
-import { SectionElement } from '@anita/client/data/model/project-info';
-import { FormFieldsModel } from '@anita/client/ui/shared-components/forms-automator/form-fields/form-fields-model';
+import { FORM_COMPONENTS_CODES } from 'app/data/model/form-model-commons';
+import { SectionElement } from 'app/data/model/project-info';
+import { FormFieldsModel } from 'app/ui-react-components/shared-components/forms-automator/form-fields/form-fields-model';
 
 /**
  * Defines the fields name that are reserved for the functioning of Anita.

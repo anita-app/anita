@@ -3,8 +3,8 @@ import {
   DbConnectorInstance,
   DbStoreInterface,
   DsDbInitOptions
-  } from '@anita/client/libs/db-connector/models/executers';
-import { Logger } from '@anita/client/libs/logger/logger.class';
+  } from 'app/libs/db-connector/models/executers';
+import { Logger } from 'app/libs/logger/logger.class';
 import { Db, MongoClient } from 'mongodb';
 import { ConnectionStringMaker } from '../helpers/connection-string-maker.class';
 
@@ -44,7 +44,7 @@ export class DbStore implements DbStoreInterface<Db> {
   }
 
   private doConnect(resolve: (value?: unknown) => void): void {
-    MongoClient.connect(this.connData.connectionString, { useNewUrlParser: true }, (err, db: MongoClient) => {
+    MongoClient.connect(this.connData.connectionString, {}, (err, db: MongoClient) => {
 
       if (err) throw err;
 

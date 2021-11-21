@@ -1,8 +1,8 @@
-import { CLIENT_SECTIONS } from '@anita/client/data/client-sections.enum';
-import { dbInstances } from '@anita/client/data/db-instances.const';
-import { LocalProjectSettings } from '@anita/client/data/model/project-info';
-import { REDUCER_ACTIONS } from '@anita/client/libs/ng-rx/ngrx-actions.const';
-import { stateData } from '@anita/client/ng-services/state-data/state-data.constant';
+import { CLIENT_SECTIONS } from 'app/data/client-sections.enum';
+import { dbInstances } from 'app/data/db-instances.const';
+import { LocalProjectSettings } from 'app/data/model/project-info';
+import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
+import { store } from 'app/libs/redux/state.store';
 
 /**
  * Loads the list of projects on the current device
@@ -33,7 +33,7 @@ export class ProjectsListLoader {
    * Dispatchs the project list to the current state
    */
   private dispatchProjectList(payload: Array<LocalProjectSettings>): void {
-    stateData.ngRxStore.dispatch(REDUCER_ACTIONS.setProjectList({ payload }));
+    store.dispatch(({ type: REDUX_ACTIONS.setProjectList, payload }));
   }
 
 }

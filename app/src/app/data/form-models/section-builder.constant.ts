@@ -1,23 +1,19 @@
-import { RESERVED_FIELDS } from '@anita/client/data/form-models/system-fields-for-sections.constant';
-import { FORM_COMPONENTS_CODES, SELECTABLE_FORM_ELES } from '@anita/client/data/model/form-model-commons';
-import { SectionCustomFieldProperties, SectionDetailsDeclaration } from '@anita/client/data/model/project-info';
-import { IdCreator } from '@anita/client/libs/id-creator/id-creator.class';
-import { FormFieldsModel } from '@anita/client/ui/shared-components/forms-automator/form-fields/form-fields-model';
+import { RESERVED_FIELDS } from 'app/data/form-models/system-fields-for-sections.constant';
+import { FORM_COMPONENTS_CODES, SELECTABLE_FORM_ELES } from 'app/data/model/form-model-commons';
+import { SectionCustomFieldProperties, SectionDetailsDeclaration } from 'app/data/model/project-info';
+import { FormFieldsModel } from 'app/ui-react-components/shared-components/forms-automator/form-fields/form-fields-model';
 
-export const sectionDetails: Array<FormFieldsModel<SectionDetailsDeclaration>> = [
+export const sectionDetailsFormFieldsModel: Array<FormFieldsModel<SectionDetailsDeclaration>> = [
   {
     componentCode: FORM_COMPONENTS_CODES.hiddenInput,
-    fieldName: RESERVED_FIELDS.id,
-    value: () => IdCreator.random()
+    fieldName: RESERVED_FIELDS.id
   },
   {
     componentCode: FORM_COMPONENTS_CODES.basicInput,
     fieldName: 'title',
     type: 'text',
     label: 'Section name',
-    validators: {
-      required: true
-    }
+    required: true
   },
   {
     componentCode: FORM_COMPONENTS_CODES.childOfSelectorForSection,
@@ -37,9 +33,7 @@ const commonAddAndEditFields: Array<FormFieldsModel<SectionCustomFieldProperties
     type: 'text',
     label: 'Possible values',
     prerequisites: [{ componentCode: [FORM_COMPONENTS_CODES.basicSelect, FORM_COMPONENTS_CODES.basicRadio] }],
-    validators: {
-      required: true
-    }
+    required: true
   },
   {
     componentCode: FORM_COMPONENTS_CODES.basicCheckbox,
@@ -62,10 +56,8 @@ export const sectionFieldForNewItem: Array<FormFieldsModel<SectionCustomFieldPro
     fieldName: 'label',
     type: 'text',
     label: 'Field label',
-    validators: {
-      required: true
-    },
-    width: 'col-md-7'
+    required: true,
+    width: "7"
   },
   {
     componentCode: FORM_COMPONENTS_CODES.basicSelect,
@@ -73,20 +65,16 @@ export const sectionFieldForNewItem: Array<FormFieldsModel<SectionCustomFieldPro
     options: SELECTABLE_FORM_ELES,
     value: 1,
     label: 'Data type',
-    validators: {
-      required: true
-    },
-    width: 'col-md-3'
+    required: true,
+    width: "3"
   },
   {
     componentCode: FORM_COMPONENTS_CODES.basicInput,
     fieldName: 'fieldName',
     type: 'text',
-    label: 'Field identifier',
-    validators: {
-      required: true
-    },
-    width: 'col-md-2'
+    label: 'Identifier',
+    required: true,
+    width: "2"
   },
   ...commonAddAndEditFields
 ];
@@ -103,10 +91,8 @@ export const sectionFieldForEditing: Array<FormFieldsModel<SectionCustomFieldPro
     fieldName: 'label',
     type: 'text',
     label: 'Field label',
-    validators: {
-      required: true
-    },
-    width: 'col-md-7'
+    required: true,
+    width: "7"
   },
   {
     componentCode: FORM_COMPONENTS_CODES.basicSelect,
@@ -114,21 +100,17 @@ export const sectionFieldForEditing: Array<FormFieldsModel<SectionCustomFieldPro
     options: SELECTABLE_FORM_ELES,
     value: 1,
     label: 'Data type',
-    validators: {
-      required: true
-    },
-    width: 'col-md-3'
+    required: true,
+    width: "3"
   },
   {
     componentCode: FORM_COMPONENTS_CODES.basicInput,
     fieldName: 'fieldName',
     type: 'text',
-    label: 'Field identifier',
-    readonly: true,
-    validators: {
-      required: true
-    },
-    width: 'col-md-2'
+    label: 'Identifier',
+    disabled: true,
+    required: true,
+    width: "2"
   },
   ...commonAddAndEditFields
 ];

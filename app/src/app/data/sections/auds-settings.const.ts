@@ -1,5 +1,5 @@
-import { ProjectSettings, RESERVED_UDS_KEYS } from '@anita/client/data/model/project-info';
-import { SectionDefinition } from '@anita/client/libs/db-connector/db-builder/sez-definition';
+import { ProjectSettings, RESERVED_UDS_KEYS } from 'app/data/model/project-info';
+import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition';
 
 /**
  * Defines the table _settings and its fields for system data of the AnitaUniversalDataStorage structure.

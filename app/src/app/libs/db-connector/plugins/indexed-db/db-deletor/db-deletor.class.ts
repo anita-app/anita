@@ -1,8 +1,7 @@
-import { AbstractModel } from '@anita/client/libs/db-connector/constants/ds.constant';
-import { DbConnectorInstance, Deletor } from '@anita/client/libs/db-connector/models/executers';
-import { ChildDeletor } from '@anita/client/libs/db-connector/plugins/indexed-db/db-deletor/child-deletor.class';
-import { QueryMaker } from '@anita/client/libs/db-connector/plugins/indexed-db/query-makers/query-maker.class';
-import { Logger } from '@anita/client/libs/logger/logger.class';
+import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { DbConnectorInstance, Deletor } from 'app/libs/db-connector/models/executers';
+import { QueryMaker } from 'app/libs/db-connector/plugins/indexed-db/query-makers/query-maker.class';
+import { Logger } from 'app/libs/logger/logger.class';
 import Dexie from 'dexie';
 
 /**

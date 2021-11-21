@@ -1,26 +1,11 @@
-import { RESERVED_FIELDS } from '@anita/client/data/form-models/system-fields-for-sections.constant';
-import { AbstractModel } from '@anita/client/libs/db-connector/constants/ds.constant';
-import { CryptHelper } from '@anita/client/libs/db-connector/crypter/crypt-helper.class';
-import { stringCrypter } from '@anita/client/libs/db-connector/crypter/string-crypter.function';
-import { DbConnectorInstance } from '@anita/client/libs/db-connector/models/executers';
+import { RESERVED_FIELDS } from 'app/data/form-models/system-fields-for-sections.constant';
+import { CryptHelper } from 'app/libs/db-connector/crypter/crypt-helper.class';
+import { stringCrypter } from 'app/libs/db-connector/crypter/string-crypter.function';
 
 /**
  * Encrypts one element at a time.
  */
 export class Encrypter<E, DbTypes> extends CryptHelper<E, DbTypes> {
-
-  /**
-   * Creates an instance of Encrypter.
-   * @param section the section definition, needed to know which fields should be decrypted.
-   * @param element the element to be decrypted.
-   */
-  constructor(
-    dbConnector: DbConnectorInstance<DbTypes>,
-    section: keyof AbstractModel,
-    element: E
-  ) {
-    super(dbConnector, section, element);
-  }
 
   /**
    * Retrieves the key to encrypt and loops over all fields to decrypt.

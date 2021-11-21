@@ -1,6 +1,0 @@
-<div *ngIf="formData" [formGroup]="formData">
-  <nb-checkbox [formControlName]="formEle.fieldName" [id]="formEle.fieldName">
-    {{ (formEle.description) ? formEle.description : formEle.label }}</nb-checkbox>
-  <app-required-label *ngIf="formEle.validators && formEle.validators.requiredTrue"
-    [formEle]="formData.controls[formEle.fieldName]"></app-required-label>
-</div>

@@ -1,6 +1,6 @@
-import { AbstractModel } from '@anita/client/libs/db-connector/constants/ds.constant';
-import { Encrypter } from '@anita/client/libs/db-connector/crypter/encrypter.class';
-import { DbConnectorInstance, Insertor } from '@anita/client/libs/db-connector/models/executers';
+import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { Encrypter } from 'app/libs/db-connector/crypter/encrypter.class';
+import { DbConnectorInstance, Insertor } from 'app/libs/db-connector/models/executers';
 import { Db } from 'mongodb';
 
 /**
@@ -40,7 +40,7 @@ export class DbInsertor<E> implements Insertor<E> {
     if (this.dbConnector.options.encrypted)
       await this.handleEncryption();
 
-    await this.dbConnector.dbStore.db.collection(this.dbConnector.DS[this.section].table).insertOne(this.element);
+    await this.dbConnector.dbStore.db.collection(this.dbConnector.DS[this.section].name).insertOne(this.element);
   }
 
   /**

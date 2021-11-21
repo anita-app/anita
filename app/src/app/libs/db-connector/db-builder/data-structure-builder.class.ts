@@ -1,6 +1,6 @@
-import { AbstractModel } from '@anita/client/libs/db-connector/constants/ds.constant';
-import { SezBuilder } from '@anita/client/libs/db-connector/db-builder/sez-builder.class';
-import { SectionDefinition, SectionModel } from '@anita/client/libs/db-connector/db-builder/sez-definition';
+import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { SezBuilder } from 'app/libs/db-connector/db-builder/sez-builder.class';
+import { SectionDefinition, SectionModel } from 'app/libs/db-connector/db-builder/sez-definition';
 
 /**
  * Builds the data structure of the DB from the section definitions and returns it.

@@ -1,4 +1,0 @@
-<app-stepper-form *ngIf="stepper; else nostepper" [formModel]="formModel" [formData]="formData" [stepperDirection]="stepper"></app-stepper-form>
-<ng-template #nostepper>
-  <app-group-forms [formEles]="formModel" [formData]="formData"></app-group-forms>
-</ng-template>

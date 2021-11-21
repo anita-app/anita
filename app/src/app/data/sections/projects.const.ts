@@ -1,6 +1,6 @@
-import { RESERVED_FIELDS } from '@anita/client/data/form-models/system-fields-for-sections.constant';
-import { LocalProjectSettings } from '@anita/client/data/model/project-info';
-import { SectionDefinition } from '@anita/client/libs/db-connector/db-builder/sez-definition';
+import { RESERVED_FIELDS } from 'app/data/form-models/system-fields-for-sections.constant';
+import { LocalProjectSettings } from 'app/data/model/project-info';
+import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition';
 
 /**
  * Defines the table projects and its fields for the `indexedDb` plugin of `db-connector`.

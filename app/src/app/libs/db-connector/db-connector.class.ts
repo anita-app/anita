@@ -1,7 +1,7 @@
-import { AUDS_SYSTEM_SECTIONS_DEFINITIONS } from '@anita/client/data/auds-system-sections.enum';
-import { AbstractModel } from '@anita/client/libs/db-connector/constants/ds.constant';
-import { DataStructureBuilder } from '@anita/client/libs/db-connector/db-builder/data-structure-builder.class';
-import { SectionDefinition } from '@anita/client/libs/db-connector/db-builder/sez-definition';
+import { AUDS_SYSTEM_SECTIONS_DEFINITIONS } from 'app/data/auds-system-sections.enum';
+import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { DataStructureBuilder } from 'app/libs/db-connector/db-builder/data-structure-builder.class';
+import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition';
 import {
   DbConnectorInstance,
   DbObjects,
@@ -11,7 +11,7 @@ import {
   Insertor,
   Selector,
   Updator
-  } from '@anita/client/libs/db-connector/models/executers';
+  } from 'app/libs/db-connector/models/executers';
 
 /**
  *  Initialize `db-connector` for the given storage (MySQL, IndexedDB, etc.)

@@ -1,6 +1,6 @@
-import { LocalProjectSettings } from '@anita/client/data/model/project-info';
-import { AbstractModel } from '@anita/client/libs/db-connector/constants/ds.constant';
-import { SectionDefinition } from '@anita/client/libs/db-connector/db-builder/sez-definition';
+import { LocalProjectSettings } from 'app/data/model/project-info';
+import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition';
 import { ConnectionConfig } from 'mysql';
 
 export interface DbConnectorConstructable<DbTypes> {
@@ -93,6 +93,7 @@ interface InsertorConstructable<E, DbTypes> {
 /**
  * Defines the public interface that a Insertor instance must have
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface Insertor<E> {
   autoInsert(): Promise<void>;
 }

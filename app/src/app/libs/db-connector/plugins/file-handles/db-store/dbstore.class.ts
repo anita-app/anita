@@ -1,8 +1,8 @@
-import { DataStructureExtender } from '@anita/client/data/data-structure-extender.class';
-import { AnitaUniversalDataStorage, RESERVED_UDS_KEYS } from '@anita/client/data/model/project-info';
-import { DbConnectorInstance, DbStoreInterface, DsDbInitOptions } from '@anita/client/libs/db-connector/models/executers';
-import { fileHandleChecker } from '@anita/client/libs/db-connector/plugins/file-handles/helpers/file-handle-checker.function';
-import { readFileHandleAsText, verifyPermission } from '@anita/client/libs/db-connector/plugins/file-handles/helpers/fs-helper';
+import { DataStructureExtender } from 'app/data/data-structure-extender.class';
+import { AnitaUniversalDataStorage, RESERVED_UDS_KEYS } from 'app/data/model/project-info';
+import { DbConnectorInstance, DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers';
+import { fileHandleChecker } from 'app/libs/db-connector/plugins/file-handles/helpers/file-handle-checker.function';
+import { readFileHandleAsText } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper';
 
 export class DbStore implements DbStoreInterface<AnitaUniversalDataStorage> {
 

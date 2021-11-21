@@ -1,9 +1,9 @@
-import { AbstractModel } from '@anita/client/libs/db-connector/constants/ds.constant';
-import { Decrypter } from '@anita/client/libs/db-connector/crypter/decrypter.class';
-import { DbConnectorInstance, Selector } from '@anita/client/libs/db-connector/models/executers';
-import { executeQuery } from '@anita/client/libs/db-connector/plugins/mysql/helpers/execute-query.function';
-import { QueryMaker } from '@anita/client/libs/db-connector/plugins/mysql/helpers/query-maker.class';
-import { WhereBuilder } from '@anita/client/libs/db-connector/plugins/mysql/helpers/where-builder.class';
+import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { Decrypter } from 'app/libs/db-connector/crypter/decrypter.class';
+import { DbConnectorInstance, Selector } from 'app/libs/db-connector/models/executers';
+import { executeQuery } from 'app/libs/db-connector/plugins/mysql/helpers/execute-query.function';
+import { QueryMaker } from 'app/libs/db-connector/plugins/mysql/helpers/query-maker.class';
+import { WhereBuilder } from 'app/libs/db-connector/plugins/mysql/helpers/where-builder.class';
 import * as mysql from 'mysql';
 
 export class DbSelector<E> extends WhereBuilder<E> implements Selector<E> {

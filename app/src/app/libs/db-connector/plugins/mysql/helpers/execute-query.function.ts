@@ -1,4 +1,4 @@
-import { DbConnectorInstance } from '@anita/client/libs/db-connector/models/executers';
+import { DbConnectorInstance } from 'app/libs/db-connector/models/executers';
 import * as mysql from 'mysql';
 
 /**

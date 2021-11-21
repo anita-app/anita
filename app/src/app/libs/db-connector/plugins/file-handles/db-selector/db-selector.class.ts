@@ -1,7 +1,7 @@
-import { AnitaUniversalDataStorage } from '@anita/client/data/model/project-info';
-import { AbstractModel } from '@anita/client/libs/db-connector/constants/ds.constant';
-import { Decrypter } from '@anita/client/libs/db-connector/crypter/decrypter.class';
-import { DbConnectorInstance, Selector } from '@anita/client/libs/db-connector/models/executers';
+import { AnitaUniversalDataStorage } from 'app/data/model/project-info';
+import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { Decrypter } from 'app/libs/db-connector/crypter/decrypter.class';
+import { DbConnectorInstance, Selector } from 'app/libs/db-connector/models/executers';
 
 export class DbSelector<E> implements Selector<E> {
 
@@ -10,7 +10,7 @@ export class DbSelector<E> implements Selector<E> {
   constructor(
     private dbConnector: DbConnectorInstance<AnitaUniversalDataStorage>,
     private section: keyof AbstractModel,
-    private args?: Partial<E>
+    private args: Partial<E> = {}
   ) { }
 
   /**

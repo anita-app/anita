@@ -1,4 +1,4 @@
-import { SectionDefinition } from '@anita/client/libs/db-connector/db-builder/sez-definition';
+import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition';
 
 /**
  * Defines the table localSettings and its fields for the `indexedDb` plugin of `db-connector`
@@ -14,7 +14,7 @@ export const localSettings: SectionDefinition<LocalSettingsData<LOCAL_SETTINGS_K
  * Constant to uniquely identify values of local settings.
  * As of now there are no settings yet to save, so we keep `testData`.
  */
-export const enum LOCAL_SETTINGS_KEYS {
+export enum LOCAL_SETTINGS_KEYS {
   testData = 1
 }
 

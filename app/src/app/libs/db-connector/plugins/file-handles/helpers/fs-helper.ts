@@ -1,4 +1,4 @@
-import { FileSystemFileHandle, WindowFS } from '@anita/client/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
+import { FileSystemFileHandle, WindowFS } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
 
 declare const window: WindowFS;
 

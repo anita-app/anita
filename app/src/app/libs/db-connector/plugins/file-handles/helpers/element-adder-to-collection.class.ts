@@ -1,7 +1,7 @@
-import { AnitaUniversalDataStorage, SectionElement } from '@anita/client/data/model/project-info';
-import { AbstractModel } from '@anita/client/libs/db-connector/constants/ds.constant';
-import { DbConnectorInstance } from '@anita/client/libs/db-connector/models/executers';
-import { ProjectFileHandleSaver } from '@anita/client/libs/db-connector/plugins/file-handles/helpers/project-file-handle-saver.class';
+import { AnitaUniversalDataStorage, SectionElement } from 'app/data/model/project-info';
+import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { DbConnectorInstance } from 'app/libs/db-connector/models/executers';
+import { ProjectFileHandleSaver } from 'app/libs/db-connector/plugins/file-handles/helpers/project-file-handle-saver.class';
 
 export class ElementAdderToCollection<E> {
 

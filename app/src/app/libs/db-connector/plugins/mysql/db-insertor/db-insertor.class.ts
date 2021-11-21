@@ -1,8 +1,8 @@
-import { AbstractModel } from '@anita/client/libs/db-connector/constants/ds.constant';
-import { Encrypter } from '@anita/client/libs/db-connector/crypter/encrypter.class';
-import { DbConnectorInstance, Insertor } from '@anita/client/libs/db-connector/models/executers';
-import { executeQuery } from '@anita/client/libs/db-connector/plugins/mysql/helpers/execute-query.function';
-import { QueryMaker } from '@anita/client/libs/db-connector/plugins/mysql/helpers/query-maker.class';
+import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { Encrypter } from 'app/libs/db-connector/crypter/encrypter.class';
+import { DbConnectorInstance, Insertor } from 'app/libs/db-connector/models/executers';
+import { executeQuery } from 'app/libs/db-connector/plugins/mysql/helpers/execute-query.function';
+import { QueryMaker } from 'app/libs/db-connector/plugins/mysql/helpers/query-maker.class';
 import * as mysql from 'mysql';
 
 /**
