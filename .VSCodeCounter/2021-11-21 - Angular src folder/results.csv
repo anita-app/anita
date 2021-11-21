@@ -1,0 +1,243 @@
+"filename", "language", "JSON", "TypeScript", "SCSS", "Django Template", "XML", "comment", "blank", "total"
+"c:\Source\anita\app\src\app\app.module.ts", "TypeScript", 0, 45, 0, 0, 0, 0, 2, 47
+"c:\Source\anita\app\src\app\data\auds-system-sections.enum.ts", "TypeScript", 0, 7, 0, 0, 0, 6, 3, 16
+"c:\Source\anita\app\src\app\data\client-sections.enum.ts", "TypeScript", 0, 10, 0, 0, 0, 14, 4, 28
+"c:\Source\anita\app\src\app\data\data-structure-extender.class.ts", "TypeScript", 0, 38, 0, 0, 0, 24, 11, 73
+"c:\Source\anita\app\src\app\data\db-instances.const.ts", "TypeScript", 0, 11, 0, 0, 0, 0, 3, 14
+"c:\Source\anita\app\src\app\data\form-models\projects.constant.ts", "TypeScript", 0, 33, 0, 0, 0, 4, 2, 39
+"c:\Source\anita\app\src\app\data\form-models\section-builder.constant.ts", "TypeScript", 0, 114, 0, 0, 0, 16, 5, 135
+"c:\Source\anita\app\src\app\data\form-models\system-fields-for-sections.constant.ts", "TypeScript", 0, 20, 0, 0, 0, 9, 3, 32
+"c:\Source\anita\app\src\app\data\model\form-model-commons.ts", "TypeScript", 0, 81, 0, 0, 0, 30, 9, 120
+"c:\Source\anita\app\src\app\data\model\project-info.ts", "TypeScript", 0, 58, 0, 0, 0, 42, 12, 112
+"c:\Source\anita\app\src\app\data\sections\auds-sections.const.ts", "TypeScript", 0, 7, 0, 0, 0, 4, 2, 13
+"c:\Source\anita\app\src\app\data\sections\auds-settings.const.ts", "TypeScript", 0, 7, 0, 0, 0, 4, 2, 13
+"c:\Source\anita\app\src\app\data\sections\local-settings.const.ts", "TypeScript", 0, 17, 0, 0, 0, 20, 6, 43
+"c:\Source\anita\app\src\app\data\sections\projects.const.ts", "TypeScript", 0, 12, 0, 0, 0, 4, 2, 18
+"c:\Source\anita\app\src\app\libs\db-connector\constants\ds.constant.ts", "TypeScript", 0, 4, 0, 0, 0, 3, 2, 9
+"c:\Source\anita\app\src\app\libs\db-connector\crypter\crypt-helper.class.ts", "TypeScript", 0, 49, 0, 0, 0, 36, 17, 102
+"c:\Source\anita\app\src\app\libs\db-connector\crypter\decrypter.class.ts", "TypeScript", 0, 26, 0, 0, 0, 17, 8, 51
+"c:\Source\anita\app\src\app\libs\db-connector\crypter\encrypter.class.ts", "TypeScript", 0, 26, 0, 0, 0, 17, 8, 51
+"c:\Source\anita\app\src\app\libs\db-connector\crypter\options.constant.ts", "TypeScript", 0, 1, 0, 0, 0, 3, 1, 5
+"c:\Source\anita\app\src\app\libs\db-connector\crypter\string-crypter.function.ts", "TypeScript", 0, 5, 0, 0, 0, 7, 2, 14
+"c:\Source\anita\app\src\app\libs\db-connector\crypter\string-decrypter.function.ts", "TypeScript", 0, 5, 0, 0, 0, 7, 2, 14
+"c:\Source\anita\app\src\app\libs\db-connector\db-builder\data-structure-builder.class.ts", "TypeScript", 0, 30, 0, 0, 0, 19, 8, 57
+"c:\Source\anita\app\src\app\libs\db-connector\db-builder\default-values.constant.ts", "TypeScript", 0, 4, 0, 0, 0, 9, 4, 17
+"c:\Source\anita\app\src\app\libs\db-connector\db-builder\sez-builder.class.ts", "TypeScript", 0, 101, 0, 0, 0, 64, 21, 186
+"c:\Source\anita\app\src\app\libs\db-connector\db-builder\sez-definition.ts", "TypeScript", 0, 19, 0, 0, 0, 9, 3, 31
+"c:\Source\anita\app\src\app\libs\db-connector\db-connector.class.ts", "TypeScript", 0, 47, 0, 0, 0, 32, 14, 93
+"c:\Source\anita\app\src\app\libs\db-connector\models\executers.d.ts", "TypeScript", 0, 101, 0, 0, 0, 36, 18, 155
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\file-handles\db-deletor\db-deletor.class.ts", "TypeScript", 0, 17, 0, 0, 0, 12, 8, 37
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\file-handles\db-insertor\db-insertor.class.ts", "TypeScript", 0, 22, 0, 0, 0, 17, 7, 46
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\file-handles\db-selector\db-selector.class.ts", "TypeScript", 0, 45, 0, 0, 0, 26, 13, 84
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\file-handles\db-store\dbstore.class.ts", "TypeScript", 0, 42, 0, 0, 0, 21, 16, 79
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\file-handles\db-updator\db-updator.class.ts", "TypeScript", 0, 22, 0, 0, 0, 17, 7, 46
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\file-handles\exporter.constant.ts", "TypeScript", 0, 14, 0, 0, 0, 3, 2, 19
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\file-handles\helpers\element-adder-to-collection.class.ts", "TypeScript", 0, 30, 0, 0, 0, 17, 9, 56
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\file-handles\helpers\file-handle-checker.function.ts", "TypeScript", 0, 9, 0, 0, 0, 3, 4, 16
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\file-handles\helpers\file-system-access-api.d.ts", "TypeScript", 0, 76, 0, 0, 0, 1, 19, 96
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\file-handles\helpers\fs-helper.ts", "TypeScript", 0, 54, 0, 0, 0, 31, 9, 94
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\file-handles\helpers\project-file-handle-saver.class.ts", "TypeScript", 0, 25, 0, 0, 0, 24, 8, 57
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\indexed-db\db-deletor\child-deletor.class.ts", "TypeScript", 0, 33, 0, 0, 0, 25, 9, 67
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\indexed-db\db-deletor\db-deletor.class.ts", "TypeScript", 0, 22, 0, 0, 0, 11, 5, 38
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\indexed-db\db-insertor\db-insertor.class.ts", "TypeScript", 0, 17, 0, 0, 0, 11, 5, 33
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\indexed-db\db-selector\db-selector.class.ts", "TypeScript", 0, 44, 0, 0, 0, 33, 15, 92
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\indexed-db\db-store\dbstore.class.ts", "TypeScript", 0, 42, 0, 0, 0, 4, 19, 65
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\indexed-db\db-updator\db-updator.class.ts", "TypeScript", 0, 17, 0, 0, 0, 11, 5, 33
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\indexed-db\exporter.constant.ts", "TypeScript", 0, 14, 0, 0, 0, 3, 2, 19
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\indexed-db\query-makers\query-helper.class.ts", "TypeScript", 0, 96, 0, 0, 0, 23, 29, 148
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\indexed-db\query-makers\query-maker.class.ts", "TypeScript", 0, 113, 0, 0, 0, 63, 46, 222
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mongo-db\db-deletor\db-deletor.class.ts", "TypeScript", 0, 25, 0, 0, 0, 19, 8, 52
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mongo-db\db-insertor\db-insertor.class.ts", "TypeScript", 0, 25, 0, 0, 0, 21, 10, 56
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mongo-db\db-selector\db-selector.class.ts", "TypeScript", 0, 50, 0, 0, 0, 41, 21, 112
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mongo-db\db-store\dbstore.class.ts", "TypeScript", 0, 44, 0, 0, 0, 0, 16, 60
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mongo-db\db-updator\db-updator.class.ts", "TypeScript", 0, 48, 0, 0, 0, 41, 15, 104
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mongo-db\exporter.constant.ts", "TypeScript", 0, 14, 0, 0, 0, 3, 2, 19
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mongo-db\helpers\connection-string-maker.class.ts", "TypeScript", 0, 32, 0, 0, 0, 24, 12, 68
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mysql\db-deletor\db-deletor.class.ts", "TypeScript", 0, 22, 0, 0, 0, 14, 7, 43
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mysql\db-insertor\db-insertor.class.ts", "TypeScript", 0, 22, 0, 0, 0, 19, 6, 47
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mysql\db-selector\db-selector.class.ts", "TypeScript", 0, 41, 0, 0, 0, 26, 12, 79
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mysql\db-store\dbstore.class.ts", "TypeScript", 0, 26, 0, 0, 0, 3, 11, 40
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mysql\db-updator\db-updator.class.ts", "TypeScript", 0, 22, 0, 0, 0, 19, 6, 47
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mysql\exporter.constant.ts", "TypeScript", 0, 14, 0, 0, 0, 3, 2, 19
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mysql\helpers\execute-query.function.ts", "TypeScript", 0, 10, 0, 0, 0, 3, 2, 15
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mysql\helpers\query-maker.class.ts", "TypeScript", 0, 54, 0, 0, 0, 23, 13, 90
+"c:\Source\anita\app\src\app\libs\db-connector\plugins\mysql\helpers\where-builder.class.ts", "TypeScript", 0, 24, 0, 0, 0, 16, 8, 48
+"c:\Source\anita\app\src\app\libs\id-creator\id-creator.class.ts", "TypeScript", 0, 15, 0, 0, 0, 9, 11, 35
+"c:\Source\anita\app\src\app\libs\logger\logger.class.ts", "TypeScript", 0, 60, 0, 0, 0, 44, 27, 131
+"c:\Source\anita\app\src\app\libs\ng-rx\ngrx-actions.const.ts", "TypeScript", 0, 9, 0, 0, 0, 6, 2, 17
+"c:\Source\anita\app\src\app\libs\ng-rx\reducers.const.ts", "TypeScript", 0, 14, 0, 0, 0, 6, 3, 23
+"c:\Source\anita\app\src\app\libs\ng-rx\reducers\project.reducer.ts", "TypeScript", 0, 12, 0, 0, 0, 9, 4, 25
+"c:\Source\anita\app\src\app\libs\ng-rx\reducers\projects.reducer.ts", "TypeScript", 0, 18, 0, 0, 0, 9, 4, 31
+"c:\Source\anita\app\src\app\libs\ng-rx\reducers\sections-for-child-of-selector.reducer.ts", "TypeScript", 0, 24, 0, 0, 0, 11, 5, 40
+"c:\Source\anita\app\src\app\libs\projects-helpers\file-handle-helpers\project-file-importer.class.ts", "TypeScript", 0, 49, 0, 0, 0, 37, 12, 98
+"c:\Source\anita\app\src\app\libs\projects-helpers\project-handlers\current-project-setter.class.ts", "TypeScript", 0, 13, 0, 0, 0, 10, 5, 28
+"c:\Source\anita\app\src\app\libs\projects-helpers\project-handlers\project-deletor.class.ts", "TypeScript", 0, 19, 0, 0, 0, 16, 7, 42
+"c:\Source\anita\app\src\app\libs\projects-helpers\project-handlers\project-saver.class.ts", "TypeScript", 0, 46, 0, 0, 0, 0, 15, 61
+"c:\Source\anita\app\src\app\libs\projects-helpers\project-handlers\save-project-settings-in-indexeddb.class.ts", "TypeScript", 0, 27, 0, 0, 0, 24, 9, 60
+"c:\Source\anita\app\src\app\libs\projects-helpers\projects-handlers\projects-list-loader.class.ts", "TypeScript", 0, 18, 0, 0, 0, 15, 7, 40
+"c:\Source\anita\app\src\app\libs\projects-helpers\section-elements-handlers\element-saver.class.ts", "TypeScript", 0, 42, 0, 0, 0, 27, 13, 82
+"c:\Source\anita\app\src\app\libs\tools\find-first-user-defined-field.function.ts", "TypeScript", 0, 12, 0, 0, 0, 0, 6, 18
+"c:\Source\anita\app\src\app\libs\tools\find-section-by-id.function.ts", "TypeScript", 0, 4, 0, 0, 0, 0, 2, 6
+"c:\Source\anita\app\src\app\libs\tools\tools.ts", "TypeScript", 0, 11, 0, 0, 0, 11, 3, 25
+"c:\Source\anita\app\src\app\ng-services\app-routing\current-route.constant.ts", "TypeScript", 0, 35, 0, 0, 0, 6, 8, 49
+"c:\Source\anita\app\src\app\ng-services\app-routing\route-listener.service.ts", "TypeScript", 0, 47, 0, 0, 0, 24, 11, 82
+"c:\Source\anita\app\src\app\ng-services\guard-services\project-guard.service.ts", "TypeScript", 0, 22, 0, 0, 0, 3, 9, 34
+"c:\Source\anita\app\src\app\ng-services\guard-services\projects-guard.service.ts", "TypeScript", 0, 27, 0, 0, 0, 3, 9, 39
+"c:\Source\anita\app\src\app\ng-services\startupper\startupper.service.ts", "TypeScript", 0, 43, 0, 0, 0, 18, 11, 72
+"c:\Source\anita\app\src\app\ng-services\state-data\state-data.constant.ts", "TypeScript", 0, 9, 0, 0, 0, 5, 4, 18
+"c:\Source\anita\app\src\app\ng-services\state-data\state-data.service.ts", "TypeScript", 0, 15, 0, 0, 0, 6, 5, 26
+"c:\Source\anita\app\src\app\ui\app-component\app-component.module.ts", "TypeScript", 0, 15, 0, 0, 0, 0, 2, 17
+"c:\Source\anita\app\src\app\ui\app-component\app.component.html", "Django Template", 0, 0, 0, 5, 0, 0, 0, 5
+"c:\Source\anita\app\src\app\ui\app-component\app.component.scss", "SCSS", 0, 0, 18, 0, 0, 0, 1, 19
+"c:\Source\anita\app\src\app\ui\app-component\app.component.ts", "TypeScript", 0, 8, 0, 0, 0, 0, 2, 10
+"c:\Source\anita\app\src\app\ui\app-component\routes.contant.ts", "TypeScript", 0, 8, 0, 0, 0, 0, 6, 14
+"c:\Source\anita\app\src\app\ui\editor-mode.enum.ts", "TypeScript", 0, 4, 0, 0, 0, 0, 1, 5
+"c:\Source\anita\app\src\app\ui\routed-views\project\components\element-value-viewer\element-value-viewer.component.html", "Django Template", 0, 0, 0, 24, 0, 0, 0, 24
+"c:\Source\anita\app\src\app\ui\routed-views\project\components\element-value-viewer\element-value-viewer.component.ts", "TypeScript", 0, 34, 0, 0, 0, 0, 6, 40
+"c:\Source\anita\app\src\app\ui\routed-views\project\components\no-elements\no-elements.component.html", "Django Template", 0, 0, 0, 10, 0, 0, 0, 10
+"c:\Source\anita\app\src\app\ui\routed-views\project\components\no-elements\no-elements.component.ts", "TypeScript", 0, 20, 0, 0, 0, 0, 6, 26
+"c:\Source\anita\app\src\app\ui\routed-views\project\components\parent-info-viewer-and-link\parent-info-viewer-and-link.component.html", "Django Template", 0, 0, 0, 4, 0, 0, 0, 4
+"c:\Source\anita\app\src\app\ui\routed-views\project\components\parent-info-viewer-and-link\parent-info-viewer-and-link.component.ts", "TypeScript", 0, 36, 0, 0, 0, 0, 11, 47
+"c:\Source\anita\app\src\app\ui\routed-views\project\components\project-details\project-details.component.html", "Django Template", 0, 0, 0, 6, 0, 0, 0, 6
+"c:\Source\anita\app\src\app\ui\routed-views\project\components\project-details\project-details.component.ts", "TypeScript", 0, 10, 0, 0, 0, 0, 4, 14
+"c:\Source\anita\app\src\app\ui\routed-views\project\components\project-info\project-info.component.html", "Django Template", 0, 0, 0, 13, 0, 0, 0, 13
+"c:\Source\anita\app\src\app\ui\routed-views\project\components\project-info\project-info.component.ts", "TypeScript", 0, 17, 0, 0, 0, 0, 5, 22
+"c:\Source\anita\app\src\app\ui\routed-views\project\components\section-element-details\section-element-details.component.html", "Django Template", 0, 0, 0, 20, 0, 0, 0, 20
+"c:\Source\anita\app\src\app\ui\routed-views\project\components\section-element-details\section-element-details.component.scss", "SCSS", 0, 0, 3, 0, 0, 0, 0, 3
+"c:\Source\anita\app\src\app\ui\routed-views\project\components\section-element-details\section-element-details.component.ts", "TypeScript", 0, 54, 0, 0, 0, 5, 14, 73
+"c:\Source\anita\app\src\app\ui\routed-views\project\components\section-element-editor\component-code-to-name.class.ts", "TypeScript", 0, 26, 0, 0, 0, 0, 9, 35
+"c:\Source\anita\app\src\app\ui\routed-views\project\components\section-element-editor\parent-info-form-model-adder.class.ts", "TypeScript", 0, 46, 0, 0, 0, 0, 10, 56
+"c:\Source\anita\app\src\app\ui\routed-views\project\components\section-element-editor\section-element-editor.component.html", "Django Template", 0, 0, 0, 18, 0, 0, 0, 18
+"c:\Source\anita\app\src\app\ui\routed-views\project\components\section-element-editor\section-element-editor.component.ts", "TypeScript", 0, 82, 0, 0, 0, 4, 17, 103
+"c:\Source\anita\app\src\app\ui\routed-views\project\components\section-elements-list\elements-list\elements-list.component.html", "Django Template", 0, 0, 0, 31, 0, 0, 3, 34
+"c:\Source\anita\app\src\app\ui\routed-views\project\components\section-elements-list\elements-list\elements-list.component.scss", "SCSS", 0, 0, 14, 0, 0, 6, 1, 21
+"c:\Source\anita\app\src\app\ui\routed-views\project\components\section-elements-list\elements-list\elements-list.component.ts", "TypeScript", 0, 93, 0, 0, 0, 13, 18, 124
+"c:\Source\anita\app\src\app\ui\routed-views\project\components\section-elements-list\section-list.component.html", "Django Template", 0, 0, 0, 11, 0, 0, 0, 11
+"c:\Source\anita\app\src\app\ui\routed-views\project\components\section-elements-list\section-list.component.ts", "TypeScript", 0, 47, 0, 0, 0, 2, 12, 61
+"c:\Source\anita\app\src\app\ui\routed-views\project\helpers\get-parent-info-for-details-view.class.ts", "TypeScript", 0, 35, 0, 0, 0, 0, 7, 42
+"c:\Source\anita\app\src\app\ui\routed-views\project\pipes\first-user-defined-field.pipe.ts", "TypeScript", 0, 8, 0, 0, 0, 0, 4, 12
+"c:\Source\anita\app\src\app\ui\routed-views\project\pipes\section-by-id.pipe.ts", "TypeScript", 0, 8, 0, 0, 0, 3, 4, 15
+"c:\Source\anita\app\src\app\ui\routed-views\project\pipes\txt-by-field-value.pipe.ts", "TypeScript", 0, 13, 0, 0, 0, 3, 6, 22
+"c:\Source\anita\app\src\app\ui\routed-views\project\project-routes.constant.ts", "TypeScript", 0, 16, 0, 0, 0, 0, 7, 23
+"c:\Source\anita\app\src\app\ui\routed-views\project\project.module.ts", "TypeScript", 0, 62, 0, 0, 0, 0, 2, 64
+"c:\Source\anita\app\src\app\ui\routed-views\projects\components\no-projects\no-projects.component.html", "Django Template", 0, 0, 0, 11, 0, 0, 0, 11
+"c:\Source\anita\app\src\app\ui\routed-views\projects\components\no-projects\no-projects.component.ts", "TypeScript", 0, 37, 0, 0, 0, 0, 9, 46
+"c:\Source\anita\app\src\app\ui\routed-views\projects\components\project-editor\project-editor.component.html", "Django Template", 0, 0, 0, 24, 0, 0, 3, 27
+"c:\Source\anita\app\src\app\ui\routed-views\projects\components\project-editor\project-editor.component.ts", "TypeScript", 0, 77, 0, 0, 0, 4, 13, 94
+"c:\Source\anita\app\src\app\ui\routed-views\projects\components\project-editor\section-editor\section-editor.component.html", "Django Template", 0, 0, 0, 21, 0, 0, 6, 27
+"c:\Source\anita\app\src\app\ui\routed-views\projects\components\project-editor\section-editor\section-editor.component.ts", "TypeScript", 0, 85, 0, 0, 0, 6, 18, 109
+"c:\Source\anita\app\src\app\ui\routed-views\projects\components\projects-list\components\project-card\project-card.component.html", "Django Template", 0, 0, 0, 18, 0, 0, 0, 18
+"c:\Source\anita\app\src\app\ui\routed-views\projects\components\projects-list\components\project-card\project-card.component.scss", "SCSS", 0, 0, 0, 0, 0, 0, 1, 1
+"c:\Source\anita\app\src\app\ui\routed-views\projects\components\projects-list\components\project-card\project-card.component.ts", "TypeScript", 0, 19, 0, 0, 0, 0, 6, 25
+"c:\Source\anita\app\src\app\ui\routed-views\projects\components\projects-list\components\project-delete-confirm\project-delete-confirm.component.html", "Django Template", 0, 0, 0, 8, 0, 0, 0, 8
+"c:\Source\anita\app\src\app\ui\routed-views\projects\components\projects-list\components\project-delete-confirm\project-delete-confirm.component.ts", "TypeScript", 0, 23, 0, 0, 0, 0, 7, 30
+"c:\Source\anita\app\src\app\ui\routed-views\projects\components\projects-list\components\project-select-btn\project-select-btn.component.html", "Django Template", 0, 0, 0, 13, 0, 0, 0, 13
+"c:\Source\anita\app\src\app\ui\routed-views\projects\components\projects-list\components\project-select-btn\project-select-btn.component.scss", "SCSS", 0, 0, 0, 0, 0, 0, 1, 1
+"c:\Source\anita\app\src\app\ui\routed-views\projects\components\projects-list\components\project-select-btn\project-select-btn.component.ts", "TypeScript", 0, 36, 0, 0, 0, 0, 7, 43
+"c:\Source\anita\app\src\app\ui\routed-views\projects\components\projects-list\projects-list.component.html", "Django Template", 0, 0, 0, 27, 0, 0, 2, 29
+"c:\Source\anita\app\src\app\ui\routed-views\projects\components\projects-list\projects-list.component.scss", "SCSS", 0, 0, 6, 0, 0, 0, 1, 7
+"c:\Source\anita\app\src\app\ui\routed-views\projects\components\projects-list\projects-list.component.ts", "TypeScript", 0, 25, 0, 0, 0, 0, 7, 32
+"c:\Source\anita\app\src\app\ui\routed-views\projects\projects-routes.constant.ts", "TypeScript", 0, 13, 0, 0, 0, 0, 2, 15
+"c:\Source\anita\app\src\app\ui\routed-views\projects\projects.module.ts", "TypeScript", 0, 61, 0, 0, 0, 0, 2, 63
+"c:\Source\anita\app\src\app\ui\routed-views\projects\services\section-form-ele-generator.class.ts", "TypeScript", 0, 36, 0, 0, 0, 22, 9, 67
+"c:\Source\anita\app\src\app\ui\routed-views\projects\services\section-generator.class.ts", "TypeScript", 0, 64, 0, 0, 0, 44, 15, 123
+"c:\Source\anita\app\src\app\ui\shared-components\add-btn\add-btn.component.html", "Django Template", 0, 0, 0, 3, 0, 0, 0, 3
+"c:\Source\anita\app\src\app\ui\shared-components\add-btn\add-btn.component.scss", "SCSS", 0, 0, 4, 0, 0, 0, 0, 4
+"c:\Source\anita\app\src\app\ui\shared-components\add-btn\add-btn.component.ts", "TypeScript", 0, 24, 0, 0, 0, 0, 9, 33
+"c:\Source\anita\app\src\app\ui\shared-components\add-btn\add-button.module.ts", "TypeScript", 0, 20, 0, 0, 0, 0, 2, 22
+"c:\Source\anita\app\src\app\ui\shared-components\admin\@core\layout.service.ts", "TypeScript", 0, 18, 0, 0, 0, 0, 5, 23
+"c:\Source\anita\app\src\app\ui\shared-components\admin\@core\state.service.ts", "TypeScript", 0, 78, 0, 0, 0, 1, 16, 95
+"c:\Source\anita\app\src\app\ui\shared-components\admin\@theme\components\header\header.component.html", "Django Template", 0, 0, 0, 12, 0, 0, 0, 12
+"c:\Source\anita\app\src\app\ui\shared-components\admin\@theme\components\header\header.component.scss", "SCSS", 0, 0, 88, 0, 0, 79, 18, 185
+"c:\Source\anita\app\src\app\ui\shared-components\admin\@theme\components\header\header.component.ts", "TypeScript", 0, 38, 0, 0, 0, 0, 12, 50
+"c:\Source\anita\app\src\app\ui\shared-components\admin\@theme\layouts\sidebar-layout.component.html", "Django Template", 0, 0, 0, 21, 0, 0, 3, 24
+"c:\Source\anita\app\src\app\ui\shared-components\admin\@theme\layouts\sidebar-layout.component.scss", "SCSS", 0, 0, 135, 0, 0, 2, 39, 176
+"c:\Source\anita\app\src\app\ui\shared-components\admin\@theme\layouts\sidebar-layout.component.ts", "TypeScript", 0, 53, 0, 0, 0, 0, 7, 60
+"c:\Source\anita\app\src\app\ui\shared-components\admin\@theme\pipes\capitalize.pipe.ts", "TypeScript", 0, 9, 0, 0, 0, 0, 3, 12
+"c:\Source\anita\app\src\app\ui\shared-components\admin\@theme\pipes\number-with-commas.pipe.ts", "TypeScript", 0, 7, 0, 0, 0, 0, 3, 10
+"c:\Source\anita\app\src\app\ui\shared-components\admin\@theme\pipes\plural.pipe.ts", "TypeScript", 0, 12, 0, 0, 0, 0, 3, 15
+"c:\Source\anita\app\src\app\ui\shared-components\admin\@theme\pipes\round.pipe.ts", "TypeScript", 0, 7, 0, 0, 0, 0, 3, 10
+"c:\Source\anita\app\src\app\ui\shared-components\admin\@theme\pipes\timing.pipe.ts", "TypeScript", 0, 15, 0, 0, 0, 0, 4, 19
+"c:\Source\anita\app\src\app\ui\shared-components\admin\@theme\styles\bootstrap-rtl.scss", "SCSS", 0, 0, 183, 0, 0, 0, 11, 194
+"c:\Source\anita\app\src\app\ui\shared-components\admin\@theme\styles\font-size.scss", "SCSS", 0, 0, 3, 0, 0, 0, 1, 4
+"c:\Source\anita\app\src\app\ui\shared-components\admin\@theme\styles\styles.scss", "SCSS", 0, 0, 15, 0, 0, 6, 8, 29
+"c:\Source\anita\app\src\app\ui\shared-components\admin\@theme\styles\themes.scss", "SCSS", 0, 0, 69, 0, 0, 4, 17, 90
+"c:\Source\anita\app\src\app\ui\shared-components\admin\@theme\theme.module.ts", "TypeScript", 0, 85, 0, 0, 0, 0, 8, 93
+"c:\Source\anita\app\src\app\ui\shared-components\admin\admin-routes.constant.ts", "TypeScript", 0, 14, 0, 0, 0, 0, 5, 19
+"c:\Source\anita\app\src\app\ui\shared-components\admin\admin.component.ts", "TypeScript", 0, 43, 0, 0, 0, 0, 10, 53
+"c:\Source\anita\app\src\app\ui\shared-components\admin\admin.module.ts", "TypeScript", 0, 21, 0, 0, 0, 0, 2, 23
+"c:\Source\anita\app\src\app\ui\shared-components\admin\menu\main-menu-maker.class.ts", "TypeScript", 0, 47, 0, 0, 0, 0, 17, 64
+"c:\Source\anita\app\src\app\ui\shared-components\admin\menu\non-project-menu.constant.ts", "TypeScript", 0, 11, 0, 0, 0, 0, 3, 14
+"c:\Source\anita\app\src\app\ui\shared-components\alert\alert.component.html", "Django Template", 0, 0, 0, 5, 0, 0, 0, 5
+"c:\Source\anita\app\src\app\ui\shared-components\alert\alert.component.ts", "TypeScript", 0, 19, 0, 0, 0, 0, 9, 28
+"c:\Source\anita\app\src\app\ui\shared-components\alert\alert.module.ts", "TypeScript", 0, 13, 0, 0, 0, 0, 2, 15
+"c:\Source\anita\app\src\app\ui\shared-components\dialog-confirmer\dialog-confirmer.component.html", "Django Template", 0, 0, 0, 10, 0, 0, 0, 10
+"c:\Source\anita\app\src\app\ui\shared-components\dialog-confirmer\dialog-confirmer.component.ts", "TypeScript", 0, 17, 0, 0, 0, 0, 5, 22
+"c:\Source\anita\app\src\app\ui\shared-components\dialog-confirmer\dialog-confirmer.module.ts", "TypeScript", 0, 15, 0, 0, 0, 0, 2, 17
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-builder\form-builder.d.ts", "TypeScript", 0, 8, 0, 0, 0, 0, 2, 10
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-builder\form-builder.module.ts", "TypeScript", 0, 33, 0, 0, 0, 0, 2, 35
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-builder\form-fields-loaders\form-fields.component.ts", "TypeScript", 0, 44, 0, 0, 0, 0, 14, 58
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-builder\form-fields-loaders\form-fields.directive.ts", "TypeScript", 0, 9, 0, 0, 0, 1, 4, 14
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-builder\form-type-switcher\form-type-switcher.component.html", "Django Template", 0, 0, 0, 4, 0, 0, 0, 4
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-builder\form-type-switcher\form-type-switcher.component.ts", "TypeScript", 0, 15, 0, 0, 0, 0, 6, 21
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-builder\group-forms\group-forms.component.html", "Django Template", 0, 0, 0, 8, 0, 0, 0, 8
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-builder\group-forms\group-forms.component.ts", "TypeScript", 0, 18, 0, 0, 0, 0, 7, 25
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-builder\services\custom-validators.constant.ts", "TypeScript", 0, 13, 0, 0, 0, 0, 3, 16
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-builder\services\form-control-maker.class.ts", "TypeScript", 0, 89, 0, 0, 0, 0, 30, 119
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-builder\services\form-data-parser.service.ts", "TypeScript", 0, 68, 0, 0, 0, 0, 20, 88
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-builder\services\form-model-expander.class.ts", "TypeScript", 0, 44, 0, 0, 0, 0, 13, 57
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-builder\services\prerequisites-checker.class.ts", "TypeScript", 0, 31, 0, 0, 0, 0, 11, 42
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-builder\stepper-form\stepper-form.component.html", "Django Template", 0, 0, 0, 14, 0, 0, 0, 14
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-builder\stepper-form\stepper-form.component.ts", "TypeScript", 0, 29, 0, 0, 0, 0, 9, 38
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\abstract-element.d.ts", "TypeScript", 0, 3, 0, 0, 0, 0, 2, 5
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\basic-checkbox\basic-checkbox.component.html", "Django Template", 0, 0, 0, 6, 0, 0, 0, 6
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\basic-checkbox\basic-checkbox.component.ts", "TypeScript", 0, 14, 0, 0, 0, 0, 5, 19
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\basic-input\basic-input.component.html", "Django Template", 0, 0, 0, 14, 0, 0, 2, 16
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\basic-input\basic-input.component.ts", "TypeScript", 0, 18, 0, 0, 0, 6, 7, 31
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\basic-radio\basic-radio.component.html", "Django Template", 0, 0, 0, 13, 0, 0, 0, 13
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\basic-radio\basic-radio.component.ts", "TypeScript", 0, 23, 0, 0, 0, 0, 8, 31
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\basic-select\basic-select.component.html", "Django Template", 0, 0, 0, 14, 0, 0, 0, 14
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\basic-select\basic-select.component.scss", "SCSS", 0, 0, 7, 0, 0, 0, 1, 8
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\basic-select\basic-select.component.ts", "TypeScript", 0, 24, 0, 0, 0, 6, 9, 39
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\basic-textarea\basic-textarea.component.html", "Django Template", 0, 0, 0, 9, 0, 0, 0, 9
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\basic-textarea\basic-textarea.component.ts", "TypeScript", 0, 14, 0, 0, 0, 0, 5, 19
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\child-of-selector-for-section\child-of-selector-for-section.component.html", "Django Template", 0, 0, 0, 9, 0, 0, 0, 9
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\child-of-selector-for-section\child-of-selector-for-section.component.scss", "SCSS", 0, 0, 7, 0, 0, 0, 1, 8
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\child-of-selector-for-section\child-of-selector-for-section.component.ts", "TypeScript", 0, 50, 0, 0, 0, 0, 13, 63
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\date-picker\date-picker.component.html", "Django Template", 0, 0, 0, 14, 0, 0, 1, 15
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\date-picker\date-picker.component.ts", "TypeScript", 0, 19, 0, 0, 0, 0, 6, 25
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\date-time-picker\date-time-picker.component.html", "Django Template", 0, 0, 0, 14, 0, 0, 1, 15
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\date-time-picker\date-time-picker.component.ts", "TypeScript", 0, 19, 0, 0, 0, 0, 6, 25
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\form-fields-model.ts", "TypeScript", 0, 92, 0, 0, 0, 0, 14, 106
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\form-fields.module.ts", "TypeScript", 0, 82, 0, 0, 0, 0, 4, 86
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\hidden-input\hidden-input.component.html", "Django Template", 0, 0, 0, 3, 0, 0, 0, 3
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\hidden-input\hidden-input.component.ts", "TypeScript", 0, 14, 0, 0, 0, 0, 5, 19
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\options-maker\options-builder.constant.ts", "TypeScript", 0, 36, 0, 0, 0, 12, 5, 53
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\options-maker\options-maker.component.html", "Django Template", 0, 0, 0, 16, 0, 0, 0, 16
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\options-maker\options-maker.component.scss", "SCSS", 0, 0, 4, 0, 0, 0, 0, 4
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\options-maker\options-maker.component.ts", "TypeScript", 0, 59, 0, 0, 0, 1, 15, 75
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\parents-selector\parents-selector.component.html", "Django Template", 0, 0, 0, 10, 0, 0, 0, 10
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\parents-selector\parents-selector.component.scss", "SCSS", 0, 0, 7, 0, 0, 0, 1, 8
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\parents-selector\parents-selector.component.ts", "TypeScript", 0, 76, 0, 0, 0, 1, 16, 93
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\required-label\required-label.component.html", "Django Template", 0, 0, 0, 2, 0, 0, 0, 2
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\required-label\required-label.component.ts", "TypeScript", 0, 12, 0, 0, 0, 0, 5, 17
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\services\form-data-to-values-array.class.ts", "TypeScript", 0, 19, 0, 0, 0, 0, 8, 27
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\services\forms-array-validator.function.ts", "TypeScript", 0, 6, 0, 0, 0, 0, 2, 8
+"c:\Source\anita\app\src\app\ui\shared-components\forms-automator\form-fields\validator-checker.directive.ts", "TypeScript", 0, 55, 0, 0, 0, 1, 12, 68
+"c:\Source\anita\app\src\app\version.ts", "TypeScript", 0, 1, 0, 0, 0, 3, 2, 6
+"c:\Source\anita\app\src\assets\icons\favicon\browserconfig.xml", "XML", 0, 0, 0, 0, 9, 0, 1, 10
+"c:\Source\anita\app\src\assets\icons\favicon\safari-pinned-tab.svg", "XML", 0, 0, 0, 0, 32, 0, 1, 33
+"c:\Source\anita\app\src\assets\icons\favicon\site.webmanifest", "JSON", 19, 0, 0, 0, 0, 0, 0, 19
+"c:\Source\anita\app\src\assets\logo\logo_circle.svg", "XML", 0, 0, 0, 0, 11, 0, 0, 11
+"c:\Source\anita\app\src\assets\logo\logo_square.svg", "XML", 0, 0, 0, 0, 11, 0, 0, 11
+"c:\Source\anita\app\src\assets\manifest.json", "JSON", 473, 0, 0, 0, 0, 0, 0, 473
+"c:\Source\anita\app\src\environments\environment.prod.ts", "TypeScript", 0, 3, 0, 0, 0, 0, 1, 4
+"c:\Source\anita\app\src\environments\environment.ts", "TypeScript", 0, 3, 0, 0, 0, 10, 3, 16
+"c:\Source\anita\app\src\index.html", "Django Template", 0, 0, 0, 101, 0, 0, 20, 121
+"c:\Source\anita\app\src\main.ts", "TypeScript", 0, 9, 0, 0, 0, 0, 3, 12
+"c:\Source\anita\app\src\polyfills.ts", "TypeScript", 0, 1, 0, 0, 0, 69, 12, 82
+"c:\Source\anita\app\src\styles.scss", "SCSS", 0, 0, 135, 0, 0, 13, 29, 177
+"c:\Source\anita\app\src\tsconfig.app.json", "JSON", 14, 0, 0, 0, 0, 0, 1, 15
+"c:\Source\anita\app\src\tsconfig.spec.json", "JSON", 17, 0, 0, 0, 0, 0, 0, 17
+"c:\Source\anita\app\src\tslint.json", "JSON", 22, 0, 0, 0, 0, 0, 0, 22
+"Total", "-", 545, 5433, 698, 566, 63, 1693, 1596, 10594
