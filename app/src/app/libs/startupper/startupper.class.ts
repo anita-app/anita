@@ -36,7 +36,6 @@ export class Startupper {
    * Sets logger debug
    */
   private setLoggerDebug(): void {
-    console.log('setLoggerDebug ~ this.isReactDev()', this.isReactDev());
     Logger.debug = this.isReactDev();
   }
 
