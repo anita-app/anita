@@ -3,6 +3,7 @@ title: Porting Anita from Angular to React resulted in 20% less code
 description: How to port a complex Angular Progressive Web App, with offline capabilities and NgRx to React, step by step guide
 date: 2021-11-10
 author: ilDon
+slug: porting-anita-from-angular-to-react-resulted-in-20-less-code
 ---
 I started developing Anita in Angular because I had previously developed with it a form generator that could power the core parts of the app. Having years of experience also with React, though, I soon realized that Angular was slowing me down. So I decided to port Anita from Angular to React.
 
@@ -11,9 +12,9 @@ The whole project took under 10 days, in which I worked on it only in my spare t
 
 Let's see some stats, generated with [VS Code Counter](https://marketplace.visualstudio.com/items?itemName=uctakeoff.vscode-counter).
 
-Before porting, the Angular code base was:
+The Angular code base was:
 
-| language | files | code | comment |
+| language | files | code | comments |
 | :--- | ---: | ---: | ---: |
 | TypeScript | 176 | 5,433 | 1,583 |
 | Templates | 38 | 566 | 0 |
@@ -23,7 +24,7 @@ Excluding SCSS, the total lines of code of the Angular app, including the templa
 
 The React code base is:
 
-| language | files | code | comment |
+| language | files | code | comments |
 | :--- | ---: | ---: | ---: |
 | TypeScript | 111 | 3,149 | 1,448 |
 | TypeScript React | 56 | 1,767 | 31 |
@@ -38,9 +39,9 @@ Let's run the math:
 
 - Difference: -1.083 (-19.8443%)
 
-This is a huge improvement. This reduction is even more significant if we factor in the fact that in the Angular app we were using a UI library called [Nebular](https://akveo.github.io/nebular/), while in React the whole UI is custom-built with TailwindCSS. So in React we have a lot more DOM elements (-> lines of code) to render elements that in Angular were a 1 line import.
+This is a huge improvement. This reduction is even more significant if we consider that in the Angular app we were using a UI library called [Nebular](https://akveo.github.io/nebular/), while in React the whole UI is custom-built with [TailwindCSS](https://tailwindcss.com/). So in React we have a lot more DOM elements (`->` lines of code) to render elements that in Angular were a 1 line import.
 
-I believe that this result represents very well the difference between Angular and React. The Angular code base is bigger, and it's more complex, as we will see shortly. The React code base is smaller, and it's also simpler. While your mileage may vary, the above results are significant because both code bases have been entirely written by the same individual developer. So the design choices and the styling are very similar.
+While your mileage may vary, the above results are significant because both code bases have been entirely written by the same individual developer. So the design choices and the styling are very similar. I believe that this result represents very well the difference between Angular and React. The Angular code base is bigger, and it's more complex, as we will see shortly. The React code base is smaller, and it's also simpler. 
 
 ## Getting started
 
@@ -57,8 +58,6 @@ Let's run `yarn start` to check that everything works as expected:
 The only drawback of `create-react-app` is that it adds a lot of starter stuff to the project. Let's remove it.
 
 We don't need the `App` component, and its related files, and we can also clean up `index.tsx`:
-
-Cleaned version of `index.tsx`:
 
         import React from 'react';
         import ReactDOM from 'react-dom';
@@ -80,7 +79,7 @@ Deleted files:
 - App.test.tsx
 - App.tsx
 
-In an Angular project all static files are normally in the `app/src/assets` folder. In React the `assets` folder is normally placed in the public folder. Let's move `assets` there. As I like to keep my files organized, I think that this is already an improvement over Angular. Keeping the `assets` folder in `src` is counterintuitive, as it doesn't contain source files, but rather static files ready to be served to the users.
+In an Angular project all static files are normally in the `app/src/assets` folder. In React the `assets` folder is normally placed in the public folder. Let's move `assets` there. This fells already like an improvement over Angular. Keeping the `assets` folder in `src` is counterintuitive, as it doesn't contain source files, but rather static files ready to be served to the users.
 
 Now we can update `index.html` and `manifest.json` in `public`, add Anita icons, title, and description. We can also remove the starter files left there by `create-react-app`:
 
@@ -94,9 +93,9 @@ Now let's move to the code base.
 
 In the Angular project of Anita, we use absolute paths to simplify imports, with a custom prefix `@anita/client`. 
 
-For example, we use this statement: `import { MyModule } from '@anita/client/my.module';`, instead of this: `import { AppModule } from '../../../my.module';`.
+For example, we use this statement: `import { MyModule } from '@anita/client/my.module'`, instead of `import { AppModule } from '../../../my.module'`.
 
-To do so we need to use the `paths` key in `tsconfig.json`.
+This is achieved by properly configuring the `paths` in `tsconfig.json`.
 
     "CompilerOptions": {
         ...
@@ -108,9 +107,9 @@ To do so we need to use the `paths` key in `tsconfig.json`.
         ...
     }
 
-The advantage of this import method when developing Angular apps is that we avoid *import hell*. When the code base starts to grow, and you have relative imports, you start to see imports with very long paths to navigate up and down the code base. For example `../../../../../my.module.ts` is a long path to navigate the code base. `@anita/client/my.module` is certainly shorter and more readable. 
+The advantage of this import method when developing Angular apps is that we avoid *import hell*. When the code base starts to grow, with relative imports very long paths to navigate up and down the code base start to show up. For example `../../../../../my.module.ts` is a long path to navigate the code base. `@anita/client/my.module` is certainly shorter and more readable. 
 
-In addition, absolute paths are always the same, no matter were they are in the tree structure of the project, as they are relative to the root of the code base.
+In addition, absolute paths to a given file are always identical, no matter were they are in the tree structure of the project, as they are relative to the root of the code base.
 
 In the process of porting all code to React, this import strategy comes in very handy as we can move all code to the new project, and use `replace all` to update all imports at once.
 

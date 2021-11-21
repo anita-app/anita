@@ -4,6 +4,16 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.7.1",
+      "date": "2021-11-21",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "fixed typos"
+        }
+      ]
+    },
+    {
       "version": "0.7.0",
       "date": "2021-11-21",
       "items": [
