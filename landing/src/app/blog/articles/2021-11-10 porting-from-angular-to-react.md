@@ -1,46 +1,64 @@
 ---
-title: Porting an Angular app to React
+title: Porting Anita from Angular to React resulted in 20% less code
 description: How to port a complex Angular Progressive Web App, with offline capabilities and NgRx to React, step by step guide
 date: 2021-11-10
 author: ilDon
 ---
-Create new react app with `create-react-app`. We want PWA and TS
+I started developing Anita in Angular because I had previously developed with it a form generator that could power the core parts of the app. Having years of experience also with React, though, I soon realized that Angular was slowing me down. So I decided to port Anita from Angular to React.
+
+The whole project took under 10 days, in which I worked on it only in my spare time. I can easily say that it was well worth it as the code base, with the exact same functionalities, is now **20% smaller**.
+<!-- /preview -->
+
+Let's see some stats, generated with [VS Code Counter](https://marketplace.visualstudio.com/items?itemName=uctakeoff.vscode-counter).
+
+Before porting, the Angular code base was:
+
+| language | files | code | comment |
+| :--- | ---: | ---: | ---: |
+| TypeScript | 176 | 5,433 | 1,583 |
+| Templates | 38 | 566 | 0 |
+| SCSS | 18 | 698 | 110 |
+
+Excluding SCSS, the total lines of code of the Angular app, including the templates, was 5.999. I'm counting the templates as code because Angular adheres to the MVVM (Model, View, View Controller) pattern, which means that the templates are compiled into the JavaScript code. In short, in Angular, a template is a chunk of HTML with a special syntax to support some Angular features, like for loops ([see the docs](https://angular.io/guide/template-syntax)).
+
+The React code base is:
+
+| language | files | code | comment |
+| :--- | ---: | ---: | ---: |
+| TypeScript | 111 | 3,149 | 1,448 |
+| TypeScript React | 56 | 1,767 | 31 |
+| CSS | 1 | 16 | 3 |
+
+So, the total lines of code of the React app, including the templates, is 4.916.
+
+Let's run the math:
+
+- Angular total: 5.999
+- React total: 4.916
+
+- Difference: -1.083 (-19.8443%)
+
+This is a huge improvement. This reduction is even more significant if we factor in the fact that in the Angular app we were using a UI library called [Nebular](https://akveo.github.io/nebular/), while in React the whole UI is custom-built with TailwindCSS. So in React we have a lot more DOM elements (-> lines of code) to render elements that in Angular were a 1 line import.
+
+I believe that this result represents very well the difference between Angular and React. The Angular code base is bigger, and it's more complex, as we will see shortly. The React code base is smaller, and it's also simpler. While your mileage may vary, the above results are significant because both code bases have been entirely written by the same individual developer. So the design choices and the styling are very similar.
+
+## Getting started
+
+The quickest and easiest path for porting Anita is to start with a fresh new React app with [`create-react-app`](https://reactjs.org/docs/create-a-new-react-app.html).
+
+Since we want to keep the offline capabilities of the Angular app, and we want to use TypeScript, the command to create the React app is:
 
     npx create-react-app anita-react --template cra-template-pwa-typescript
 
-Check everything works: 
+Let's run `yarn start` to check that everything works as expected: 
 
-    2021-11-10-11_18_22 app initialized.png
+![React app initialized](/assets/images/blog/porting/2021-11-10_app_initialized.png)
 
-Clean index.ts and enable service worker
+The only drawback of `create-react-app` is that it adds a lot of starter stuff to the project. Let's remove it.
 
-Form
+We don't need the `App` component, and its related files, and we can also clean up `index.tsx`:
 
-        import React from 'react';
-        import ReactDOM from 'react-dom';
-        import './index.css';
-        import App from './App';
-        import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-        import reportWebVitals from './reportWebVitals';
-
-        ReactDOM.render(
-          <React.StrictMode>
-            <App />
-          </React.StrictMode>,
-          document.getElementById('root')
-        );
-
-        // If you want your app to work offline and load faster, you can change
-        // unregister() to register() below. Note this comes with some pitfalls.
-        // Learn more about service workers: https://cra.link/PWA
-        serviceWorkerRegistration.unregister();
-
-        // If you want to start measuring performance in your app, pass a function
-        // to log results (for example: reportWebVitals(console.log))
-        // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-        reportWebVitals();
-
-To
+Cleaned version of `index.tsx`:
 
         import React from 'react';
         import ReactDOM from 'react-dom';
@@ -56,27 +74,29 @@ To
 
         serviceWorkerRegistration.register();
 
-Delete files:
+Deleted files:
 
-        App.csss
-        App.test.tsx
-        App.tsx
+- App.csss
+- App.test.tsx
+- App.tsx
 
-Check everything works: 
+In an Angular project all static files are normally in the `app/src/assets` folder. In React the `assets` folder is normally placed in the public folder. Let's move `assets` there. As I like to keep my files organized, I think that this is already an improvement over Angular. Keeping the `assets` folder in `src` is counterintuitive, as it doesn't contain source files, but rather static files ready to be served to the users.
 
-    2021-11-10-11_18_22 app cleaned.png
+Now we can update `index.html` and `manifest.json` in `public`, add Anita icons, title, and description. We can also remove the starter files left there by `create-react-app`:
 
-Copy src/assets folder to public
+- public/favicon.ico
+- public/logo192.png
+- public/logo512.png
 
-Update manifest and index.html with new icons, title and description. Remove files
-
-    public/favicon.ico
-    public/logo192.png
-    public/logo512.png
+Now let's move to the code base.
 
 ## Absolute imports
 
-In Angular, we use `paths` in `tsconfig.json` to import files with absolute paths from `src/app` folder, with the prefix `@anita/client`:
+In the Angular project of Anita, we use absolute paths to simplify imports, with a custom prefix `@anita/client`. 
+
+For example, we use this statement: `import { MyModule } from '@anita/client/my.module';`, instead of this: `import { AppModule } from '../../../my.module';`.
+
+To do so we need to use the `paths` key in `tsconfig.json`.
 
     "CompilerOptions": {
         ...
@@ -88,32 +108,119 @@ In Angular, we use `paths` in `tsconfig.json` to import files with absolute path
         ...
     }
 
+The advantage of this import method when developing Angular apps is that we avoid *import hell*. When the code base starts to grow, and you have relative imports, you start to see imports with very long paths to navigate up and down the code base. For example `../../../../../my.module.ts` is a long path to navigate the code base. `@anita/client/my.module` is certainly shorter and more readable. 
 
-The advantage in general is that in this way we avoid import hell. In the process of porting all code to React, this comes in very handy as we can use absolute imports in the new code.
+In addition, absolute paths are always the same, no matter were they are in the tree structure of the project, as they are relative to the root of the code base.
 
-In React, however, we cannot use `paths` in `tsconfig.json` because we are using `create-react-app`. We can however use `baseUrl`, which allows us to import files with absolute paths from `src` folder:
+In the process of porting all code to React, this import strategy comes in very handy as we can move all code to the new project, and use `replace all` to update all imports at once.
+
+To do so we must use absolute paths also in the React app.
+
+In React, we cannot use `paths` in `tsconfig.json`. We can however use `baseUrl`, which allows us to import files with absolute paths from the specified base path. In our case we chose the `src` folder:
 
     "CompilerOptions": {
         ...
-        "baseUrl": "/"
+        "baseUrl": "src"
         ...
     }
 
-In this way, when porting the code we can simply replace all occurrences of `@anita/client` with `app` and we will be able to use the same absolute paths, as long as we retain the same folder hierarchy.
+With this configuration, we can import files with absolute paths from the root of the code base. So `./src/app/app.component` becomes `app/app.component`.
 
-## From Nebular to Tailwind
+In this way, when porting the code we can simply replace all occurrences of `@anita/client` with `app`, and all imports will work as they are, as long as we keep the same folder hierarchy. 
 
-Nebular great, but only for Angular, and over engineered and complicated for React.
+So let's move on to the project structure.
 
-Because we use Tailwind in landing, and Tailwind is a very good match for React we use it.
+## Project structure
 
-Installation as described here: https://tailwindcss.com/docs/guides/create-react-app
+To ease the transition from Angular to React, we keep a similar folder hierarchy. This will come in handy when we move all the code that can be simply dropped in the React project as is. 
 
-Only customization is theme colors, same as landing (create shared constant?)
+The structure of the Angular app was:
 
-Now lets' add some layout with Tailwind. Because we will have an admin panel as our main view, we an start from there. A simple example of a layout with a sidebar and a content area can be found here: https://codepen.io/chris__sev/pen/RwKWXpJ
+ - `src/app/`
+    - `data`: contains the data models
+    - `libs`: contains the libraries that are not Angular specific
+    - `ng-services`: contains Angular Services
+    - `ui`: contains the Angular UI elements, plus some Angular Services and Pipes needed for the UI 
 
-Let's try it in index.tsx, with some minor modifications to start the customization for Anita:
+In React we can have an even simpler structure:
+
+ - `src/app/`
+    - `anita-routes`: contains the routes of the app. We can place them here as they are no longer an Angular Service.
+    - `data`: contains the same data models of the Angular app
+    - `libs`: contains the libraries that were already used in the Angular app, and that can be ported to React as they are or with minimal changes
+    - `ui-react-components`: contains the React components
+
+## Setting up the UI: from Nebular to TailwindCSS
+
+As I mentioned, for building the UI of the Angular version of Anita I used [Nebular](https://akveo.github.io/nebular/) «*a customizable Angular UI library*». Nebular has been great for its purpose, but it's only for Angular, and for React would be an overkill.
+
+For a project like Anita I believe that [TaliwindCSS](https://tailwindcss.com/) is a much better alternative. As advertised on their landing page, TailwindCSS is «*a utility-first CSS framework packed with classes like flex, pt-4, text-center and rotate-90 that can be composed to build any design, directly in your markup*». If you build UIs, and you've never tried it, you should really give it a try. It's the most versatile UI framework you'll find. 
+
+
+Installing TailwindCSS for React is extremely easy thanks to the well outlined guide in the official docs of Tailwind, you can check them out [here](https://tailwindcss.com/docs/guides/create-react-app).
+
+We already use TailwindCSS for the landing page of Anita, so we can share in the app the same styles as the landing page. Basically all we need to do is to define the project colors in `tailwind.config.js`:
+
+    const colors = require('tailwindcss/colors')
+
+    module.exports = {
+      // Purges the final stylesheet of unused/un-optimized selectors, keeping only what is used in the app.
+      purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+      darkMode: false,
+      theme: {
+        colors: {
+          transparent: 'transparent',
+          current: 'currentColor',
+          black: colors.black,
+          white: colors.white,
+          rose: colors.rose,
+          pink: colors.pink,
+          fuchsia: colors.fuchsia,
+          purple: colors.purple,
+          violet: colors.violet,
+          indigo: colors.indigo,
+          blue: colors.blue,
+          'prussian-blue': {
+            DEFAULT: '#002346',
+            '50': '#2D96FF',
+            '100': '#1389FF',
+            '200': '#006FDF',
+            '300': '#0056AC',
+            '400': '#003C79',
+            '500': '#002346',
+            '600': '#002346',
+            '700': '#000f20',
+            '800': '#000e1f',
+            '900': '#000d1b'
+          },
+          sky: colors.sky,
+          cyan: colors.cyan,
+          teal: colors.teal,
+          emerald: colors.emerald,
+          green: colors.green,
+          lime: colors.lime,
+          yellow: colors.yellow,
+          amber: colors.amber,
+          orange: colors.orange,
+          red: colors.red,
+          warmGray: colors.warmGray,
+          trueGray: colors.trueGray,
+          gray: colors.gray,
+          coolGray: colors.coolGray,
+          blueGray: colors.blueGray
+        }
+      },
+      variants: {
+        extend: {},
+      },
+      plugins: [
+        require('@tailwindcss/forms')
+      ],
+    }
+
+Now lets' create some layouts with TailwindCSS. Because we will have an admin panel as our main view, we can start from there.
+
+Let's implement a very basic admin panel in `index.tsx`:
 
     ReactDOM.render(
       <React.StrictMode>
@@ -162,30 +269,20 @@ Let's try it in index.tsx, with some minor modifications to start the customizat
       document.getElementById('root')
     );
 
+Lets' test if TailwindCSS works and how our initial layout works:
 
-Lets' test if tailwind works and how our initial layout works:
-
-    2021-11-10-12_19_23 tailwind.png
+![Tailwind initialized](/assets/images/blog/porting/2021-11-10_tailwind.png)
 
 Good enough for now. Let's add some components to improve the layout.
 
-We will divide the layout in three sections:
-- Header
-- Sidebar
-- Content
+We can divide the layout in three sections:
+- `Header`
+- `Sidebar`
+- `Content`
 
-Each of these will be a component. They will be imported into a container component called AdminLayout and will be used in the index.tsx file.
+Each of these is a React component imported into a container component called `AdminLayout`:
 
-To ease the transition from Angular to React, we keep a similar folder hierarchy:
-
- - src/app/ui/admin-layout/admin-layout.tsx
- - src/app/ui/admin-layout/header.tsx
- - src/app/ui/admin-layout/sidebar.tsx
- - src/app/ui/admin-layout/content.tsx
-
- AdminLayout is the container component for the layout and it looks like this:
-
-    export const AdminLayout = (props: any) => (
+    export const AdminLayout = () => (
       <div>
         <Header />
 
@@ -216,14 +313,52 @@ To ease the transition from Angular to React, we keep a similar folder hierarchy
       </div>
     );
 
-For now, we keep the dummy text, we will add the actual content later. We will also take care of implementing the open/close functionality for the sidebar later. First we take care of state management. In this way as we port the app we can easily change the state and the layout will be updated.
-
+For now, we keep the placeholder text, we will add the actual content later. We will also take care of implementing the open/close functionality for the sidebar later. First we take care of state management.
 
 ## Porting state management from NgRx to Redux
 
-Because in the Angular app we use NgRx, which is essentially the same thing as Redux, to maintain the same state management logic we use Redux also in our React app.
+In the Angular version of Anita we used [`NgRx`](https://ngrx.io/), which «*provides reactive state management for Angular apps inspired by [`Redux`](https://redux.js.org/)*». As a matter of fact I decided to use NgRx precisely because it is very similar to Redux.
 
-First, let's add Redux and React-Redux to our project.
+This is very convenient when porting Anita from Angular to React. As we move the code to React we can easily change the calls to the store of `NgRx` to the one of `Redux`, and everything will "just work". Normally this wouldn't be easily achievable because `NgRx` in Angular is loaded as a [singleton Service](https://angular.io/guide/singleton-services). Singleton Services must be initialized by Angular and therefore their instances are only available inside Angular elements, such as Services and Components. 
+
+Thanks to a dirty trick I've been using for years, we can get around this problem. We can initialize the store of `NgRx` in a custom Service, and pass a reference to the initialized store to a constant that can be imported anywhere in the Angular app.
+
+Angular Services must be initialized in classes with the `@Injectable` decorator, like so:
+
+    export const stateData = {
+      ngRxStore: undefined
+    };
+    
+    @Injectable({
+      providedIn: 'root'
+    })
+    export class StateDataService {
+
+      constructor(
+        private store: Store<ReducerTypes>
+      ) {
+        this.initRedux();
+      }
+      
+      // This is the "dirty" trick
+      public initRedux(): void {
+        stateData.ngRxStore = this.store;
+      }
+
+    }
+
+There are two things to note here:
+
+- `private store: Store<ReducerTypes>` initalizes `NgRx` according to the logic governing [Angular singleton Services](https://angular.io/guide/singleton-services)
+- `stateData` is an Object on which we set the initialized store or `NgRx`.
+
+In JavaScript using `=` to assign an `Object` to another variable does not create a new `Object`. The `=` operator assigns to the variable a reference to the `Object` already in memory. This is why we use `stateData.ngRxStore = this.store`. We assign the store to `stateData.ngRxStore`. And because that is a mere reference to the original `Object`, accessing the properties of `stateData.ngRxStore`, such as `dispatch`, actually means accessing the Singleton Service of `NgRx` initialized by Angular.
+
+Now we can import `stateData` in any file and use it to access the store without having to initialize it. We can access the store from anywhere in the app without the need to Inject the `NgRx` Store in the constructor. Doing so we can keep most of the code as vanilla TypeScript/JavaScript and not as Angular Services. This is way most of the code of the Angular version of Anita was in the `libs` folder, and not in the `ng-services` one.
+
+This trick has proven to be quite useful in the past, and also in this case it is very convenient as we can transfer all non-angular code to React. All we need to do in the React app is to import the Redux `store` and replace `stateData.ngRxStore` with store. For example, in the `CurrentProjectSetter` class in `src/app/libs/project-helpers/project-handlers` we can now use `store.dispatch` instead of `stateData.ngRxStore.dispatch`. The rest of the code remains the same.
+
+To do so, however, we must first initialize Redux in the React app. Let's start by adding `redux` and `react-redux` to the React project:
 
     yarn add react-redux redux 
     
@@ -231,41 +366,24 @@ And the types:
 
     yarn add @types/react-redux --dev
 
-Converting an NgRx reducer to a Redux reducer is then quite straightforward.
+Converting `NgRx` reducers to `Redux` reducers is quite straightforward. Given the following `NgRx` reducer:
 
-Given the following NgRx reducer:
+    const projectState: SystemData = undefined;
 
-    /**
-    * The initial state of the container of the current project
-    */
-    export const projectState: SystemData = undefined;
-
-    /**
-    * Reducer actions for projectState
-    */
     const _projectReducer = createReducer(projectState,
       on(REDUCER_ACTIONS.setCurrentProject, (state, data) => {
         return data.payload;
       })
     );
 
-    /**
-    * Updates the projectState
-    */
     export function projectReducer(state: SystemData, action: typeof REDUCER_ACTIONS.setCurrentProject): any {
       return _projectReducer(state, action);
     }
 
-As a Redux reducer we can simply use the following:
+In React, we have the following:
 
-    /**
-    * The initial state of the container of the current project
-    */
     const projectState: SystemData = undefined;
 
-    /**
-    * Updates the projectState
-    */
     export const projectReducer = (state: SystemData = projectState, action: Action<REDUX_ACTIONS>): SystemData => {
       switch (action.type) {
         case REDUX_ACTIONS.setCurrentProject:
@@ -275,7 +393,7 @@ As a Redux reducer we can simply use the following:
       }
     }
 
-We can simplify the code as follows as we will create the reducer later on, before combining all our reducers:
+After porting all the reducers, we can create our `react-redux` store:
 
     const REDUCERS = {
       project: projectReducer,
@@ -287,43 +405,11 @@ We can simplify the code as follows as we will create the reducer later on, befo
 
     export const store = createStore(combinedReducers);
 
-Now we can reference the exported const `store` in our React app.
-
-In Angular we had a service that was responsible for handling the store:
-
-    /**
-      * Initializes ngRx and sets the pointer on `stateData` constant
-      */
-    @Injectable({
-      providedIn: 'root'
-    })
-    export class StateDataService {
-
-      constructor(
-        private store: Store<ReducerTypes>
-      ) { }
-
-      /**
-      * Sets the pointer to the ngRx store already loaded in memory on `stateData` constant
-      */
-      public initRedux(): void {
-        stateData.ngRxStore = this.store;
-      }
-
-    }
-
-There are two things to note here:
-
-- `private store: Store<ReducerTypes>` initalizes NgRx according to the logic governing [Angular singleton Services](https://angular.io/guide/singleton-services)
-- `stateData.ngRxStore` is a pointer to the store loaded in memory as a singleton
-
-For reasons that go beyond the scope of this post, when using NgRx in an Angular app I often set the store on a constant called `stateData`. In this way I can access the store from anywhere in the app without the need to Inject the store in the constructor. Doing so I can keep most of the code as vanilla TypeScript/JavaScript and not as an Angular Service. This trick has proven to be quite useful in the past, and also in this case it is quite convenient as we can more transfer all non-angular code unmodified to React, simply using the Redux `store` instead of `stateData.ngRxStore`.
+Now, after [providing the store as described in the docs](https://react-redux.js.org/api/provider), we can reference the exported const `store` in our React app.
 
 ## Routing
 
-### Angular
-
-In Angular, we use the Router to handle the routing:
+In Angular, we use [`@angular/router`](https://angular.io/api/router) to handle routing:
 
     export const routes: Routes = [
 
@@ -358,15 +444,17 @@ In Angular, we use the Router to handle the routing:
 
     ];
 
-### React
+In React, we use [`react-router`](https://reactrouter.com/) to handle routing. React Router is [by far the most popular routing library at this moment](https://openbase.com/categories/js/best-react-routing-libraries), and we don't want to be exotic with our router choice.
 
-In React, we use react-router to handle the routing. React-router is by far the most popular routing library at this moment, and we don't want to be exotic with our router choice.
+First, we need to install `react-router`. 
 
-First, we need to install react-router. Then, since we host our app on GitHub Pages, we need to use `HashRouter` instead of `BrowserRouter`. In this way we can use the `#` symbol to navigate between pages. To know more about this, check out my previous post on [hosting a PWA on GitHub Pages](https://anita-app.com/blog/articles/the-journey-of-anita-to-the-ultimate-bootstrapping-thanks-to-git-hub-pages.html), and the [React Router docs](https://reacttraining.com/react-router/web/guides/quick-start).
+    yarn add react-router-dom
 
-Since all views are rendered in the same place, the content area of the `AdminLayout` component is the place where we will render the router.
+Since Anita is hosted on GitHub Pages, we need to use `HashRouter` instead of `BrowserRouter`. In this way the routes of the app are prefixed with the `#` symbol. To know more about this, check out my previous post on [handling URLs of PWAs hosted on GitHub Pages](https://anita-app.com/blog/articles/the-journey-of-anita-to-the-ultimate-bootstrapping-thanks-to-git-hub-pages.html#handlingurlsofpwashostedongithubpages), and the [React Router docs](https://reacttraining.com/react-router/web/guides/quick-start).
 
-To keep things readable, all routes are defined in a separate React component `AniteRoutes`.
+Since all views are rendered in the same place, the content area of the `AdminLayout` component is the place where we render the router.
+
+To keep things readable, all routes are defined in a separate React component `AnitaRoutes`.
 
     import { HashRouter as Router } from 'react-router-dom';
 
@@ -384,7 +472,7 @@ To keep things readable, all routes are defined in a separate React component `A
       </Router>
     );
 
-In `AniteRoutes` we define all the routes:
+In `AnitaRoutes` we define all the routes:
 
     import { Navigate, Route, Routes } from 'react-router-dom';
 
@@ -404,7 +492,7 @@ In `AniteRoutes` we define all the routes:
       </Routes>
     )
 
-Notice how all routes are defined in a `ANITA_URLS` constant. This is because we want to keep the code as clean as possible, and we want to keep the routes as simple as possible.
+Notice how all routes are defined in the `ANITA_URLS` constant. This is because we want to keep the code as clean as possible, and we want to keep the routes as simple as possible.
 
     export const ANITA_URLS = {
     // PROJECTS
@@ -420,7 +508,7 @@ Notice how all routes are defined in a `ANITA_URLS` constant. This is because we
     projectSectionEleDetails: `/project/:${URL_PARAMS.projectId}/:${URL_PARAMS.sectionId}/details/:${URL_PARAMS.elementId}`,
   }
 
-As you can see, some portions of the routes are defined by other constants, `URL_PARAMS` and `EDITOR_MODE`. In this way we avoid typos, and we can easily change the routes in the future.
+As you can see, some portions of the routes are defined by other constants, `URL_PARAMS` and `EDITOR_MODE`. In this way we avoid typos, and we ensure that routes are consistent throughout the app.
 
 These two constants are pretty simple:
 
@@ -436,7 +524,7 @@ These two constants are pretty simple:
       edit: 'edit',
     }
 
-So, for example, the route `projectSectionEditEle`, is defined as:
+So, for example, the route `projectSectionEditEle`:
 
     /project/:${URL_PARAMS.projectId}/:${URL_PARAMS.sectionId}/${EDITOR_MODE.edit}/:${URL_PARAMS.elementId}
     
@@ -444,7 +532,7 @@ translates to:
 
     /project/:projectId/:sectionId/edit/:elementId
 
-Now we only need a way to generate the links to the routes. We can do that with a function that fills all `params` expected by a route. In our design, the function accepts a URL and an array of `params` and values to be replaced in the URL:
+Now we only need a way to generate the links to the routes. We can do that with a function that fills all `params` expected by a route. Given a URL, and an array of `params` and values, the function should automatically fill all `params` needed to properly generate the final URL:
 
     export function urlParamFiller(url: string, paramsToFill: Array<{ name: URL_PARAMS; value: string }>): string {
     
@@ -469,4 +557,98 @@ This function is used to generate the links to the routes, for example to genera
       <i className="bi-info-circle mr-2"></i>Project details
     </Link>
 
-This is a great example of one of the many ways in which React is much easier to use compared to Angular. Our Routes are mere strings concatenated with constants that we use to generate the links. And to avoid human mistakes, we use the `urlParamFiller` function to fill the route with its expected `params`. We don't need to specify a hierarchy of routes, although we could if we wanted with [nested routes](https://reactrouter.com/docs/en/v6/getting-started/overview#nested-routes). We can simply use `urlParamFiller` to set the `to` prop of the `Link` component, and we will navigate where we need to.
+This is a great example of one of the many ways in which React is much easier to use compared to Angular. Our routes are mere strings concatenated with constants that we use to generate the links. To avoid human mistakes, we use the `urlParamFiller` function to fill the route with its expected `params`. We don't need to specify a hierarchy of routes, although we could if we wanted with [nested routes](https://reactrouter.com/docs/en/v6/getting-started/overview#nested-routes). We can simply use concatenated string, delegate to `urlParamFiller` the task of building our full URLs, and we will be able to navigate wherever we need to.
+
+## Building the UI
+
+Comparing how we build the UI in Angular and React for Anita unfortunately is not so interesting as we use very different UI libraries.
+
+As I have mentioned above, in Angular, we used Nebular, a UI library based on Bootstrap 4, that comes equipped with a ton of pre-made UI components. In React, we use TailwindCSS, which provides the building blocks to create beautiful UI components, but does not ship with any pre-made components. So, we need to build our own.
+
+In short, we need to rebuild from scratch the whole UI of Anita. 
+
+One notable thing of the process is that in doing so we did not need to extrapolate much code from Angular components. A very important best practice that I always try to follow is to keep the UI and the code as separate as possible. When creating a new UI component, it is important to keep any logic of the app in the app's code, and not in the UI component. In Anita all such code is in the `src/app/libs` folder, both in the Angular and in the React version. In the components we import the `libs` classes and functions we need to make the app work.
+
+When comparing the Angular and React versions of Anita, we can also note that the Angular version is much more complex, because it has a lot more boilerplate.
+
+Let's look at one of the simplest components of the Angular app, the `AddBtnComponent`, which is composed of three files:
+
+1. `add-btn.component.ts`: the component itself
+2. `add-btn.component.html`: the HTML template of the component
+3. `add-btn.component.scss`: the styles of the component (omitted)
+
+`add-btn.component.ts`:
+
+    import ...
+
+    @Component({
+      selector: 'app-add-btn',
+      templateUrl: './add-btn.component.html',
+      styleUrls: ['./add-btn.component.scss']
+    })
+    export class AddBtnComponent {
+
+      @Input()
+      public url: string;
+
+      @Input()
+      public icon = 'plus-outline';
+
+      @Input()
+      public element: SectionElement;
+
+      constructor(
+        private router: Router
+      ) { }
+
+      public navigate(): void {
+        this.router.navigateByUrl(this.url, {
+          state: { element: this.element }
+        });
+
+      }
+
+    }
+
+`add-btn.component.html`:
+
+    <button *ngIf="url" nbButton shape="round" status="primary" size="giant" class="position-absolute shadow" (click)="navigate()">
+      <nb-icon [icon]="icon"></nb-icon> <!-- Nebular icon element -->
+    </button>
+
+
+The equivalent in React is a single file of 6 lines (`add-edit-element-button.component.tsx`):
+
+    export const AddEditElementButton = ({ icon, url }) => (
+        <Link to={url} className="absolute bottom-5 right-7 md:bottom-7 md:right-10 bg-prussian-blue-400 text-white text-xl shadow-xl rounded-3xl h-14 w-14 flex items-center justify-center">
+          <i className={icon}></i>
+        </Link>
+      )
+
+Since the [introduction of Hooks in React 16.8](https://reactjs.org/docs/hooks-intro.html), the boilerplate is close to zero. 
+
+I'll leave to the reader to decide what they prefer. All I can say is that the React version is quicker to write, and easier to maintain. Which, for a project like Anita, is a very good thing.
+
+## Final result
+
+Porting Anita to React has been a very fun project, that has been a great learning experience. Comparing how the same functionalities can be implemented with the two different frameworks gives a lot of perspective. I strongly believe that the result is a good one, and I hope that it will be a great help for other developers.
+
+And now some screenshots of the final project, which you can also try live by visiting the actual [Anita React app](https://anita-app.com/app):
+
+1. The initial page, without any project: 
+
+![Anita React app - no projects](/assets/images/blog/porting/2021-11-21_final_result.png)
+
+2. A view of an example project:
+
+![Anita React app - one project](/assets/images/blog/porting/2021-11-21_final_result_with_project.png)
+
+For comparison, the same views in the Angular version.
+
+1. The initial page, without any project: 
+
+![Anita Angular app - no projects](/assets/images/blog/porting/Anita_angular_no_projects.png)
+
+2. A view of an example project:
+
+![Anita Angular app - one project](/assets/images/blog/porting/Anita_angular_projects_list.png)
