@@ -7,6 +7,13 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.7.0] - 2021-11-21
+### Changed
+- complete rewrite of the entire app in React.
+- BREAKING CHANGE: renamed Option prop txt to label.
+- BREAKING CHANGE: removed the prop validators from FormModel and moved required to the main Object.
+- using TailwindCSS.
+
 ## [0.6.3] - 2021-11-09
 ### Added
 - added meta description to index.html.

@@ -4,6 +4,28 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.7.0",
+      "date": "2021-11-21",
+      "items": [
+        {
+          "type": "changed",
+          "value": "complete rewrite of the entire app in React"
+        },
+        {
+          "type": "changed",
+          "value": "BREAKING CHANGE: renamed Option prop txt to label"
+        },
+        {
+          "type": "changed",
+          "value": "BREAKING CHANGE: removed the prop validators from FormModel and moved required to the main Object"
+        },
+        {
+          "type": "changed",
+          "value": "using TailwindCSS"
+        }
+      ]
+    },
+    {
       "version": "0.6.3",
       "date": "2021-11-09",
       "items": [
