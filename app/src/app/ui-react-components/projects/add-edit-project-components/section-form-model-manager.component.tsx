@@ -7,13 +7,15 @@ import {
   IUpdateFormProjectUpdateFormModelDeleteOptionPayload,
   IUpdateFormProjectUpdateFormModelOfSectionPayload,
   IUpdateFormProjectUpdateFormModelOptionValuePayload
-  } from 'app/libs/redux/action.type';
+} from 'app/libs/redux/action.type';
 import { AnitaStore } from 'app/libs/redux/reducers.const';
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
 import { store } from 'app/libs/redux/state.store';
+import { cleanString } from 'app/libs/tools/tools';
 import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum';
 import { FormAutomator } from 'app/ui-react-components/shared-components/forms-automator/form-automator.component';
 import { FormAutomatorOnChangeValue, FormFieldsModel, SupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-fields/form-fields-model';
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 
@@ -23,7 +25,7 @@ interface ISectionFormModelManagerProps {
   element: FormFieldsModel<SupportedFormsTypes>;
 }
 
-const alreadyExists = (section: Section, fieldName: string): boolean => {
+const getAlreadyExists = (section: Section, fieldName: string): boolean => {
   if (!fieldName || !section) return false;
   return section.formModel.some(formElement => formElement.fieldName === fieldName);
 }
@@ -33,16 +35,19 @@ export const SectionFormModelManager = (props: ISectionFormModelManagerProps) =>
   const { indexSection, indexFormElement, element } = props;
 
   const params = useParams();
-  const sections = useSelector((state: AnitaStore) => state.formProject.original[RESERVED_UDS_KEYS._sections]);
-  const mode = params[URL_PARAMS.projectId] ? EDITOR_MODE.edit : EDITOR_MODE.add;
-  const formModelToUse = mode === EDITOR_MODE.edit && alreadyExists(sections[indexSection], element.fieldName) ? sectionFieldForEditing : sectionFieldForNewItem;
+  const section = useSelector((state: AnitaStore) => state.formProject.original[RESERVED_UDS_KEYS._sections][indexSection]);
+  const projectId = params[URL_PARAMS.projectId];
+  const mode = useMemo(() => projectId ? EDITOR_MODE.edit : EDITOR_MODE.add, [projectId]);
+  const alreadyExists = useMemo(() => getAlreadyExists(section, element.fieldName), [section, element.fieldName]);
+  const formModelToUse = useMemo(() => mode === EDITOR_MODE.edit && alreadyExists ? sectionFieldForEditing : sectionFieldForNewItem, [alreadyExists, mode]);
 
   const handleChange = (indexSection: number, indexFormElement: number, fieldName: string | number, value: FormAutomatorOnChangeValue) => {
+    const identifierAutoVal = fieldName === 'label' && !alreadyExists ? { 'fieldName': (typeof value === 'string') ? cleanString(value) : value } : {};
     store.dispatch({
       type: REDUX_ACTIONS.updateFormProjectUpdateFormModelOfSection, payload: {
         indexSection,
         indexFormElement,
-        formElement: { ...element, [fieldName]: value }
+        formElement: { ...element, ...identifierAutoVal, [fieldName]: value }
       } as IUpdateFormProjectUpdateFormModelOfSectionPayload
     });
   }

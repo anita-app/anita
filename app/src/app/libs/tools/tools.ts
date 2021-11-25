@@ -1,3 +1,25 @@
+// Removes non ascii characters from a string and replaces with ascii chars, plus replaces spaces with -
+export function cleanString(source: string): string {
+  let r = source.toLowerCase();
+  const non_asciis = {
+    a: '[àáâãäå]',
+    ae: 'æ',
+    c: 'ç',
+    e: '[èéêë]',
+    i: '[ìíîï]',
+    n: 'ñ',
+    o: '[òóôõö]',
+    oe: 'œ',
+    u: '[ùúûűü]',
+    y: '[ýÿ]'
+  };
+  for (const i in non_asciis)
+    r = r.replace(new RegExp(non_asciis[i], 'g'), i);
+
+  return r.replace(/\s/g, '-')
+    .replace(/[^\w-]/gi, '');
+}
+
 /**
  * Asyncs forEach. Unlike native JS forEach, this one awaits each callback to resolve befofore iterating to the next element of the array
  * @param array the array to loop
