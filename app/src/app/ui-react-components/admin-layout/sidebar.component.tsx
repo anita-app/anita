@@ -9,7 +9,7 @@ export const Sidebar = (props: { children: ReactNode }) => {
   const toggledClass = useSelector((store: AnitaStore) => store.layout.sidebar)
 
   return (
-    <div className="py-5">
+    <div className="py-5 z-10">
       <div className={`${toggledClass} sidebar h-full bg-white shadow rounded-sm text-prussian-blue-500 w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform md:relative md:translate-x-0 transition duration-200 ease-in-out`}>
         <nav>
           {props.children}
