@@ -4,6 +4,20 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.8.0",
+      "date": "2021-11-25",
+      "items": [
+        {
+          "type": "added",
+          "value": "Added switch mode in project editor to activate/deactivate advanced editing mode"
+        },
+        {
+          "type": "fixed",
+          "value": "new fields with options now correctly initialize"
+        }
+      ]
+    },
+    {
       "version": "0.7.1",
       "date": "2021-11-21",
       "items": [

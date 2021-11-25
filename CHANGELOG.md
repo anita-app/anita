@@ -7,6 +7,13 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.8.0] - 2021-11-25
+### Added
+- Added switch mode in project editor to activate/deactivate advanced editing mode.
+
+### Fixed
+- new fields with options now correctly initialize.
+
 ## [0.7.1] - 2021-11-21
 ### Fixed
 - fixed typos.
