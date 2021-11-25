@@ -11,7 +11,7 @@ export const OptionsMaker = (props: ICommonFormEleProps<FormFieldsModel<OptionKe
     return null;
 
   if (!element[formEle.fieldName] || !Array.isArray(element[formEle.fieldName]) || !element[formEle.fieldName].length)
-    element[formEle.fieldName] = Array.from(Array(2), () => ({ label: '', value: '' }));
+    element[formEle.fieldName] = Array.from(Array(2), (a, i) => ({ label: '', value: i + 1 }));
 
   return (
     <div className="mt-6 pl-10 py-4 bg-gray-50 rounded-lg">
