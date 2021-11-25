@@ -17,7 +17,7 @@ export const ProjectsNone = () => {
       <div className="p-4 lg:w-2/3 mx-auto">
         <div className="h-full bg-white shadow px-8 pt-16 pb-16 rounded-lg overflow-hidden text-center relative">
           <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">No projects found</h2>
-          <h1 className="title-font sm:text-2xl text-xl font-medium text-gray-900 mb-3">You do not have any Projects on this device yet</h1>
+          <h1 className="title-font sm:text-2xl text-xl font-medium text-gray-900 mb-3">You don't have any Projects on this device yet</h1>
           <p className="leading-relaxed mb-3">You can create a new project or import one from an existing project file.</p>
           <div className="flex flex-wrap mt-7">
             <a
