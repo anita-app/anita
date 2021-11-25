@@ -1,6 +1,6 @@
 {
   "name": "anita-app",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "private": false,
   "scripts": {
     "licenses": "npx license-checker --production --json --out ../landing/src/app/data-sources/app-packages.json",
