@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.8.2] - 2021-11-25
+### Changed
+- minor UI improvements.
+
 ## [0.8.1] - 2021-11-25
 ### Fixed
 - fixed TailwindCSS purging.
