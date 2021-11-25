@@ -43,7 +43,7 @@ export const FormProjectManager = () => {
       <div className="mt-5 p-4 bg-white rounded shadow">
         <FormAutomator formModel={PROJECT_EDITOR_FORM_MODELS_CONST[projectEditorMode].projectInfo as any} element={project[RESERVED_UDS_KEYS._settings][0]} handleChange={handleProjectChange} />
       </div>
-      <div className="px-3">
+      <div className="px-1 md:px-2 lg:px-3">
         {project[RESERVED_UDS_KEYS._sections].map((section, index) => <SectionManager key={section.id} section={section} sectionIndex={index} />)}
       </div>
       <div className="mt-5 p-4 bg-white rounded shadow">
