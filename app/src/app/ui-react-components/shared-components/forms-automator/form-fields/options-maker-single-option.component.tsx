@@ -17,21 +17,20 @@ import ReactTooltip from 'react-tooltip';
  * @param option the option to check
  * @returns the form model to use. We want different form models for adding and editing to disable fields that should not be altered.
  */
-function getCanEdit(section: Section, indexFormElement: number, value: string | number): boolean {
+function getCanEdit(section: Section, indexFormElement: number, value: any): boolean {
   if (!section || !section.formModel[indexFormElement] || !section.formModel[indexFormElement]['options'] || !section.formModel[indexFormElement]['options'].length)
     return true;
 
-  const exists = section.formModel[indexFormElement]['options'].some((opt: OptionKeysModel) => opt.value === value);
-  return !exists;
+  return !section.formModel[indexFormElement]['options'].some((opt: OptionKeysModel) => opt.value === value);
 }
 
 export const OptionsMakerSingleOption = (props: ICommonFormEleProps<FormFieldsModel<OptionKeysModel>>) => {
   const { formEle, element, handleOptionsChange, handleClickDeleteOption, indexSection, indexFormElement, index, optionElement } = props;
-  const sections = useSelector((store: AnitaStore) => store.formProject.original[RESERVED_UDS_KEYS._sections]);
+  const section = useSelector((store: AnitaStore) => store.formProject.original[RESERVED_UDS_KEYS._sections][indexSection]);
   const formModelToUse: Array<FormFieldsModel<any>> = useMemo(() => {
-    const canEdit = getCanEdit(sections[indexSection], indexFormElement, optionElement.value);
-    return canEdit ? optionsBuilderForEditing : optionsBuilderForAdding;
-  }, [sections, indexSection, indexFormElement, optionElement.value]);
+    const canEdit = getCanEdit(section, indexFormElement, optionElement.value);
+    return canEdit ? optionsBuilderForAdding : optionsBuilderForEditing;
+  }, [section, indexFormElement, optionElement.value]);
 
   return (
     <li>
