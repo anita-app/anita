@@ -49,16 +49,16 @@ export const FormProjectManager = () => {
       <div className="mt-5 p-4 bg-white rounded shadow">
         <div className="flex items-end flex-wrap">
           <button
-            className={`py-2 px-6 mr-3 ${SUCCESS_BTN_OUTLINE}`}
+            className={`w-full sm:w-auto py-2 px-6 sm:mr-3 ${SUCCESS_BTN_OUTLINE}`}
             onClick={handleClickAddSection}
           >Add section</button>
           <button
-            className="ml-auto py-2 px-6 bg-gray-200 font-semibold rounded hover:bg-gray-300 mr-3"
+            className="w-5/12 sm:w-auto sm:ml-auto py-2 px-6 bg-gray-200 font-semibold rounded hover:bg-gray-300 mr-3"
             onClick={() => navigate(-1)}
           >Cancel</button>
           <button
             disabled={Object.keys(validObj).some(key => validObj[key] === false)}
-            className="py-2 px-6 bg-prussian-blue-400 text-white font-semibold rounded hover:bg-prussian-blue-500 disabled:bg-gray-400 disabled:bg-opacity-40 disabled:cursor-not-allowed"
+            className="w-5/12 ml-auto sm:ml-0 mt-8 sm:mt-0 sm:w-auto py-2 px-6 bg-prussian-blue-400 text-white font-semibold rounded hover:bg-prussian-blue-500 disabled:bg-gray-400 disabled:bg-opacity-40 disabled:cursor-not-allowed"
             onClick={handleClickSave}
           >Save</button>
         </div>
