@@ -1,5 +1,5 @@
 import { URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
-import { sectionFieldForEditing, sectionFieldForNewItem } from 'app/data/form-models/section-builder.constant';
+import { PROJECT_EDITOR_FORM_MODELS_CONST } from 'app/data/form-models/project-editor-form-models.const';
 import { OptionKeysModel } from 'app/data/model/form-model-commons';
 import { RESERVED_UDS_KEYS, Section } from 'app/data/model/project-info';
 import {
@@ -7,7 +7,7 @@ import {
   IUpdateFormProjectUpdateFormModelDeleteOptionPayload,
   IUpdateFormProjectUpdateFormModelOfSectionPayload,
   IUpdateFormProjectUpdateFormModelOptionValuePayload
-} from 'app/libs/redux/action.type';
+  } from 'app/libs/redux/action.type';
 import { AnitaStore } from 'app/libs/redux/reducers.const';
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
 import { store } from 'app/libs/redux/state.store';
@@ -35,11 +35,16 @@ export const SectionFormModelManager = (props: ISectionFormModelManagerProps) =>
   const { indexSection, indexFormElement, element } = props;
 
   const params = useParams();
+  const projectEditorMode = useSelector((store: AnitaStore) => store.formProject.mode);
   const section = useSelector((state: AnitaStore) => state.formProject.original[RESERVED_UDS_KEYS._sections][indexSection]);
   const projectId = params[URL_PARAMS.projectId];
   const mode = useMemo(() => projectId ? EDITOR_MODE.edit : EDITOR_MODE.add, [projectId]);
-  const alreadyExists = useMemo(() => getAlreadyExists(section, element.fieldName), [section, element.fieldName]);
-  const formModelToUse = useMemo(() => mode === EDITOR_MODE.edit && alreadyExists ? sectionFieldForEditing : sectionFieldForNewItem, [alreadyExists, mode]);
+  const alreadyExists = getAlreadyExists(section, element.fieldName);
+  const formModelToUse = useMemo(() => mode === EDITOR_MODE.edit && alreadyExists ?
+    PROJECT_EDITOR_FORM_MODELS_CONST[projectEditorMode].sectionEles.existingItem :
+    PROJECT_EDITOR_FORM_MODELS_CONST[projectEditorMode].sectionEles.newItem,
+    [alreadyExists, mode, projectEditorMode]
+  );
 
   const handleChange = (indexSection: number, indexFormElement: number, fieldName: string | number, value: FormAutomatorOnChangeValue) => {
     const identifierAutoVal = fieldName === 'label' && !alreadyExists ? { 'fieldName': (typeof value === 'string') ? cleanString(value) : value } : {};

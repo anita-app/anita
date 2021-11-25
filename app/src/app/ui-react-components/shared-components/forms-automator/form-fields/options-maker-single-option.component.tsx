@@ -1,4 +1,4 @@
-import { optionsBuilderForAdding, optionsBuilderForEditing } from 'app/data/form-models/options-builder.constant';
+import { PROJECT_EDITOR_FORM_MODELS_CONST } from 'app/data/form-models/project-editor-form-models.const';
 import { OptionKeysModel } from 'app/data/model/form-model-commons';
 import { RESERVED_UDS_KEYS, Section } from 'app/data/model/project-info';
 import { AnitaStore } from 'app/libs/redux/reducers.const';
@@ -26,11 +26,14 @@ function getCanEdit(section: Section, indexFormElement: number, value: any): boo
 
 export const OptionsMakerSingleOption = (props: ICommonFormEleProps<FormFieldsModel<OptionKeysModel>>) => {
   const { formEle, element, handleOptionsChange, handleClickDeleteOption, indexSection, indexFormElement, index, optionElement } = props;
+  const projectEditorMode = useSelector((store: AnitaStore) => store.formProject.mode);
   const section = useSelector((store: AnitaStore) => store.formProject.original[RESERVED_UDS_KEYS._sections][indexSection]);
   const formModelToUse: Array<FormFieldsModel<any>> = useMemo(() => {
     const canEdit = getCanEdit(section, indexFormElement, optionElement.value);
-    return canEdit ? optionsBuilderForAdding : optionsBuilderForEditing;
-  }, [section, indexFormElement, optionElement.value]);
+    return canEdit ?
+      PROJECT_EDITOR_FORM_MODELS_CONST[projectEditorMode].optionEles.newItem :
+      PROJECT_EDITOR_FORM_MODELS_CONST[projectEditorMode].optionEles.newItem;
+  }, [section, indexFormElement, optionElement.value, projectEditorMode]);
 
   return (
     <li>

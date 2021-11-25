@@ -12,7 +12,7 @@ import { FormFieldsModel, SupportedFormsTypes } from 'app/ui-react-components/sh
 export type Action<T extends REDUX_ACTIONS> = T extends ActionsWithoutPayload ? ActionWithoutPayload :
   ActionWithPayload<T>;
 
-type ActionsWithoutPayload = REDUX_ACTIONS.updateFormProjectAddSection | REDUX_ACTIONS.toggleSidebar;
+type ActionsWithoutPayload = REDUX_ACTIONS.updateFormProjectAddSection | REDUX_ACTIONS.toggleSidebar | REDUX_ACTIONS.setProjectEditorMode;
 
 interface ActionWithPayload<T extends REDUX_ACTIONS> {
   type: T;
@@ -41,6 +41,7 @@ interface ActionsPayloads {
   [REDUX_ACTIONS.updateFormProjectUpdateFormModelAddOption]: IUpdateFormProjectUpdateFormModelAddOptionPayload;
   [REDUX_ACTIONS.updateFormProjectUpdateFormModelDeleteOption]: IUpdateFormProjectUpdateFormModelDeleteOptionPayload;
   [REDUX_ACTIONS.updateFormProjectUpdateFormModelOptionValue]: IUpdateFormProjectUpdateFormModelOptionValuePayload;
+  [REDUX_ACTIONS.setProjectEditorMode]: void;
   [REDUX_ACTIONS.toggleSidebar]: void;
   [REDUX_ACTIONS.updateFormProjectAddSection]: void;
   [REDUX_ACTIONS.resetSectionForChildOfSelector]: void;

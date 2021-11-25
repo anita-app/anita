@@ -45,12 +45,12 @@ const commonAddAndEditFields: Array<FormFieldsModel<SectionCustomFieldProperties
 
 /**
  * Defines the Form model to set the field properties of a `Section`.
- * All the values specified in each field of `sectionFieldForNewItem` are necessary for creating each field.
+ * All the values specified in each field of `sectionElesNewItemAdvanced` are necessary for creating each field.
  *
  * @remarks
- * For new fields only. Existing items must use `sectionFieldForEditing` as some properties can't be changed after the filed has been created.
+ * For new fields only. Existing items must use `sectionElesForEditingAdvanced` as some properties can't be changed after the filed has been created.
  */
-export const sectionFieldForNewItem: Array<FormFieldsModel<SectionCustomFieldProperties>> = [
+export const sectionElesNewItemAdvanced: Array<FormFieldsModel<SectionCustomFieldProperties>> = [
   {
     componentCode: FORM_COMPONENTS_CODES.basicInput,
     fieldName: 'label',
@@ -79,13 +79,38 @@ export const sectionFieldForNewItem: Array<FormFieldsModel<SectionCustomFieldPro
   ...commonAddAndEditFields
 ];
 
+export const sectionElesNewItemBasic: Array<FormFieldsModel<SectionCustomFieldProperties>> = [
+  {
+    componentCode: FORM_COMPONENTS_CODES.basicInput,
+    fieldName: 'label',
+    type: 'text',
+    label: 'Field label',
+    required: true,
+    width: "8"
+  },
+  {
+    componentCode: FORM_COMPONENTS_CODES.basicSelect,
+    fieldName: 'componentCode',
+    options: SELECTABLE_FORM_ELES,
+    value: 1,
+    label: 'Data type',
+    required: true,
+    width: "4"
+  },
+  {
+    componentCode: FORM_COMPONENTS_CODES.hiddenInput,
+    fieldName: 'fieldName'
+  },
+  ...commonAddAndEditFields
+];
+
 /**
  * Defines the Form model to edit the properties of an existing field of a `Section`.
  *
  * @remarks
- * For existing fields only, some properties can't be changed after the filed has been created. New items must use `sectionFieldForNewItem` instead.
+ * For existing fields only, some properties can't be changed after the filed has been created. New items must use `sectionElesNewItemAdvanced` instead.
  */
-export const sectionFieldForEditing: Array<FormFieldsModel<SectionCustomFieldProperties>> = [
+export const sectionElesForEditingAdvanced: Array<FormFieldsModel<SectionCustomFieldProperties>> = [
   {
     componentCode: FORM_COMPONENTS_CODES.basicInput,
     fieldName: 'label',
@@ -111,6 +136,31 @@ export const sectionFieldForEditing: Array<FormFieldsModel<SectionCustomFieldPro
     disabled: true,
     required: true,
     width: "2"
+  },
+  ...commonAddAndEditFields
+];
+
+export const sectionElesForEditingBasic: Array<FormFieldsModel<SectionCustomFieldProperties>> = [
+  {
+    componentCode: FORM_COMPONENTS_CODES.basicInput,
+    fieldName: 'label',
+    type: 'text',
+    label: 'Field label',
+    required: true,
+    width: "8"
+  },
+  {
+    componentCode: FORM_COMPONENTS_CODES.basicSelect,
+    fieldName: 'componentCode',
+    options: SELECTABLE_FORM_ELES,
+    value: 1,
+    label: 'Data type',
+    required: true,
+    width: "4"
+  },
+  {
+    componentCode: FORM_COMPONENTS_CODES.hiddenInput,
+    fieldName: 'fieldName'
   },
   ...commonAddAndEditFields
 ];

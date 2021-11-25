@@ -17,6 +17,7 @@ export enum REDUX_ACTIONS {
   unsetValidStateForEle,
   updateFormElement,
   setFormProject,
+  setProjectEditorMode,
   updateFormProjectSettings,
   updateFormProjectAddSection,
   updateFormProjectUpdateSection,

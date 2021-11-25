@@ -12,6 +12,7 @@ import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
 import { store } from 'app/libs/redux/state.store';
 import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum';
 import { FormProjectManager } from 'app/ui-react-components/projects/add-edit-project-components/form-project-manager.component';
+import { ProjectEditorModeToggle } from 'app/ui-react-components/projects/add-edit-project-components/project-editor-mode-toggle.component';
 import { Loader } from 'app/ui-react-components/shared-components/loader/loader.component';
 import { useEffect, useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
@@ -61,8 +62,11 @@ export const AddEditProject = () => {
 
   return (
     <span>
-      <div className="p-4 bg-white rounded shadow">
-        <h3 className="text-xl font-bold">{headerText}</h3>
+      <div className="p-4 bg-white rounded shadow flex">
+        <div>
+          <h3 className="text-xl font-bold">{headerText}</h3>
+        </div>
+        {project !== null && <ProjectEditorModeToggle />}
       </div>
       {project === null && <Loader />}
       {project !== null && <FormProjectManager />}
@@ -70,5 +74,3 @@ export const AddEditProject = () => {
   )
 
 };
-
-// {project !== null && <SaveElement sectionId={sectionId} />}

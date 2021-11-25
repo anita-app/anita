@@ -1,4 +1,4 @@
-import { sectionDetailsFormFieldsModel } from 'app/data/form-models/section-builder.constant';
+import { PROJECT_EDITOR_FORM_MODELS_CONST } from 'app/data/form-models/project-editor-form-models.const';
 import { RESERVED_FIELDS } from 'app/data/form-models/system-fields-for-sections.constant';
 import { RESERVED_UDS_KEYS, Section } from 'app/data/model/project-info';
 import { IUpdateFormProjectRemoveFieldFromSectionPayload, IUpdateFormProjectUpdateSectionPayload } from 'app/libs/redux/action.type';
@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux';
 
 export const SectionManager = ({ section, sectionIndex }: { section: Section, sectionIndex: number }) => {
 
+  const projectEditorMode = useSelector((store: AnitaStore) => store.formProject.mode);
   const sections = useSelector((store: AnitaStore) => store.formProject.project[RESERVED_UDS_KEYS._sections]);
   const customFields: Array<string> = section.formModel
     .map(formElement => Object.values(RESERVED_FIELDS).includes(formElement.fieldName) ? null : formElement.fieldName)
@@ -47,7 +48,7 @@ export const SectionManager = ({ section, sectionIndex }: { section: Section, se
       </div>
       <div className="pt-4">
         <FormAutomator
-          formModel={sectionDetailsFormFieldsModel as Array<FormFieldsModel<any>>}
+          formModel={PROJECT_EDITOR_FORM_MODELS_CONST[projectEditorMode].sectionInfo as Array<FormFieldsModel<any>>}
           element={section}
           handleChange={handleChange.bind(undefined, sectionIndex)}
           sectionId={section.id}
