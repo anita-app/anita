@@ -4,6 +4,7 @@ import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/proje
 import { RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info';
 import { CurrentProjectSetter } from 'app/libs/project-helpers/project-handlers/current-project-setter.class';
 import { ProjectSaver } from 'app/libs/project-helpers/project-handlers/project-saver.class';
+import { ProjectsListLoader } from 'app/libs/projects-helpers/projects-handlers/projects-list-loader.class';
 import { AnitaStore } from 'app/libs/redux/reducers.const';
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
 import { store } from 'app/libs/redux/state.store';
@@ -28,8 +29,9 @@ export const FormProjectManager = () => {
     store.dispatch({ type: REDUX_ACTIONS.updateFormProjectSettings, payload: { ...project[RESERVED_AUDS_KEYS._settings][0], [fieldName]: value } });
   }
 
-  const handleClickSave = () => {
-    new ProjectSaver(project as SystemData, mode).save();
+  const handleClickSave = async () => {
+    await new ProjectSaver(project as SystemData, mode).save();
+    await new ProjectsListLoader().load();
     new CurrentProjectSetter(project[RESERVED_AUDS_KEYS._settings], project[RESERVED_AUDS_KEYS._sections]).set();
     navigate(urlParamFiller(ANITA_URLS.projectDetails, [{ name: URL_PARAMS.projectId, value: project[RESERVED_AUDS_KEYS._settings][0].id }]));
   }

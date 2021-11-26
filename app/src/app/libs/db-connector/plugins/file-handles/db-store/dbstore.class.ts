@@ -3,6 +3,7 @@ import { DataStructureExtender } from 'app/data/system-local-db/data-structure-e
 import { DbConnectorInstance, DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers';
 import { fileHandleChecker } from 'app/libs/db-connector/plugins/file-handles/helpers/file-handle-checker.function';
 import { readFileHandleAsText } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper';
+import { SaveProjectSettingsInIndexedDB } from 'app/libs/project-helpers/project-handlers/save-project-settings-in-indexeddb.class';
 
 export class DbStore implements DbStoreInterface<AnitaUniversalDataStorage> {
 
@@ -34,11 +35,20 @@ export class DbStore implements DbStoreInterface<AnitaUniversalDataStorage> {
     // If the project already had a FileHandle, the data file already existed so we read it and load it
     if (this.options.projectInfo.fileHandle)
       await this.initializeExistingProject();
-    // Otherwise, we are inizializing a new project, so we store in memory the fileHandle, which will be sabed by ProjectFileHandleSaver when saving the project
+    // Otherwise, we are inizializing a new project, so we store in memory the fileHandle, which will be saved by postProjectCreation when saving the project
     else
       this.options.projectInfo.fileHandle = fileHandle;
 
     return this;
+  }
+
+  public async postProjectCreation(): Promise<void> {
+    await this.postProjectUpdate();
+    await this.initializeExistingProject();
+  }
+
+  public async postProjectUpdate(): Promise<void> {
+    await new SaveProjectSettingsInIndexedDB(this.dbConnector.dbStore.db[RESERVED_AUDS_KEYS._settings][0], { fileHandle: this.dbConnector.options.projectInfo.fileHandle }).save();
   }
 
   public close(): void {

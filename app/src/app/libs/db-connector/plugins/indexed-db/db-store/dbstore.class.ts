@@ -37,6 +37,10 @@ export class DbStore implements DbStoreInterface<Dexie> {
     return this;
   }
 
+  public async postProjectCreation(): Promise<void> {
+    // TODO
+  }
+
   public close(): void {
     // not needed in IndexedDB
   }

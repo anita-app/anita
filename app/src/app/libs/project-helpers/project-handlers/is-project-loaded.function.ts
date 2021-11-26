@@ -1,4 +1,4 @@
-import { dbInstances } from 'app/data/db-instances.const';
+import { dbInstances } from 'app/data/local-dbs/db-instances.const';
 
 export function isProjectLoaded(projectId: string): boolean {
   // The project has not been loaded yet

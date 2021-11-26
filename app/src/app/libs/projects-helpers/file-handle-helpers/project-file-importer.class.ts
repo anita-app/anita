@@ -1,4 +1,4 @@
-import { dbInstances } from 'app/data/db-instances.const';
+import { dbInstances } from 'app/data/local-dbs/db-instances.const';
 import {
   AnitaUniversalDataStorage,
   LocalProjectSettings,
@@ -69,7 +69,7 @@ export class ProjectFileImporter {
   private async processFileHandle(fileHandle: FileSystemFileHandle): Promise<void> {
     this.fileContents = await readFileHandleAsText(fileHandle);
     this.parseFileContents();
-    this.localProjectSettings = await new SaveProjectSettingsInIndexedDB(this.projectData[RESERVED_AUDS_KEYS._settings][0], fileHandle).save();
+    this.localProjectSettings = await new SaveProjectSettingsInIndexedDB(this.projectData[RESERVED_AUDS_KEYS._settings][0], { fileHandle }).save();
     this.dispatchProject(this.projectData[RESERVED_AUDS_KEYS._settings][0]);
   }
 

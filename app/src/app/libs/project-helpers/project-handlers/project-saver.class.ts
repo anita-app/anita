@@ -1,4 +1,4 @@
-import { dbInstances } from 'app/data/db-instances.const';
+import { dbInstances } from 'app/data/local-dbs/db-instances.const';
 import { RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info';
 import { DbConnector } from 'app/libs/db-connector/db-connector.class';
 import { FILE_HANDLES_PLUGIN } from 'app/libs/db-connector/plugins/file-handles/exporter.constant';
@@ -33,7 +33,7 @@ export class ProjectSaver {
     await this.saveSettings();
     await this.saveSections();
 
-    this.fileHandleOnlyActions();
+    await this.postSaveActions();
 
     return this.projectDataToSave;
   }
@@ -58,9 +58,14 @@ export class ProjectSaver {
     await asyncForEach(this.projectDataToSave[RESERVED_AUDS_KEYS._sections], async section => await dbInstances[this.projectDataToSave[RESERVED_AUDS_KEYS._settings][0].id].callInsertor(RESERVED_AUDS_KEYS._sections, section).autoInsert());
   }
 
-  private fileHandleOnlyActions(): Promise<void> {
-    if (this.mode === EDITOR_MODE.add)
-      return dbInstances[this.projectDataToSave[RESERVED_AUDS_KEYS._settings][0].id].dbStore['initializeExistingProject']();
+  private async postSaveActions(): Promise<void> {
+    if (this.mode === EDITOR_MODE.add) {
+      if (typeof dbInstances[this.projectDataToSave[RESERVED_AUDS_KEYS._settings][0].id].dbStore.postProjectCreation === 'function')
+        await dbInstances[this.projectDataToSave[RESERVED_AUDS_KEYS._settings][0].id].dbStore.postProjectCreation();
+    } else {
+      if (typeof dbInstances[this.projectDataToSave[RESERVED_AUDS_KEYS._settings][0].id].dbStore.postProjectUpdate === 'function')
+        await dbInstances[this.projectDataToSave[RESERVED_AUDS_KEYS._settings][0].id].dbStore.postProjectUpdate();
+    }
   }
 
 }

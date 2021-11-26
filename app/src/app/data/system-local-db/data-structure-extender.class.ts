@@ -16,7 +16,7 @@ export class DataStructureExtender {
    *
    * @see buildSectionDefinition
    */
-  private allSez: Array<SectionDefinition<SectionElement>> = [];
+  public allSez: Array<SectionDefinition<SectionElement>> = [];
 
   private datastructure: AbstractModel = {};
 

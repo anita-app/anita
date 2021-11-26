@@ -1,4 +1,4 @@
-import { dbInstances } from 'app/data/db-instances.const';
+import { dbInstances } from 'app/data/local-dbs/db-instances.const';
 import { CLIENT_SEZ_DEFINITIONS, previousVersions } from 'app/data/system-local-db/client-sections.enum';
 import { DbConnector } from 'app/libs/db-connector/db-connector.class';
 import { INDEXEDDB_PLUGIN } from 'app/libs/db-connector/plugins/indexed-db/exporter.constant';

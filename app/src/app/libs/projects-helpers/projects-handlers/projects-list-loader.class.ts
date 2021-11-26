@@ -1,4 +1,4 @@
-import { dbInstances } from 'app/data/db-instances.const';
+import { dbInstances } from 'app/data/local-dbs/db-instances.const';
 import { LocalProjectSettings } from 'app/data/project-structure/project-info';
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum';
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';

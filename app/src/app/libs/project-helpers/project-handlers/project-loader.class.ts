@@ -1,4 +1,4 @@
-import { dbInstances } from 'app/data/db-instances.const';
+import { dbInstances } from 'app/data/local-dbs/db-instances.const';
 import { LocalProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum';
 import { DbConnector } from 'app/libs/db-connector/db-connector.class';

@@ -1,8 +1,6 @@
-import { dbInstances } from 'app/data/db-instances.const';
+import { dbInstances } from 'app/data/local-dbs/db-instances.const';
 import { LocalProjectSettings, ProjectSettings } from 'app/data/project-structure/project-info';
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum';
-import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
-import cloneDeep from 'lodash.clonedeep';
 
 /**
  * Saves project's settings in IndexedDB.
@@ -21,16 +19,15 @@ export class SaveProjectSettingsInIndexedDB {
    */
   constructor(
     private projectSettings: ProjectSettings,
-    private fileHandle: FileSystemFileHandle
+    private localSettingAdditionalKeys: Pick<LocalProjectSettings, 'fileHandle' | 'sections'>
   ) { }
 
   /**
-   * Saves the project settings in IndexedDB with its fileHandle
+   * Saves the project settings in IndexedDB with its additional keys for handling local storage
    * @returns save 
    */
   public async save(): Promise<LocalProjectSettings> {
-    this.setProjectSettingsClone();
-    this.setFileHandleOnProjectSettingsClone();
+    this.setProjectSettingsCloneWithAdditionalKeys();
     this.doStoreProjectSettings();
 
     return this.copyOfProjectSettings;
@@ -39,15 +36,8 @@ export class SaveProjectSettingsInIndexedDB {
   /**
    * Deep clonse settings and then adds the fileHandle to prevent setting the fileHandle on the project data object
    */
-  private setProjectSettingsClone(): void {
-    this.copyOfProjectSettings = cloneDeep(this.projectSettings);
-  }
-
-  /**
-   * Sets the file handle on the project settings clone
-   */
-  private setFileHandleOnProjectSettingsClone(): void {
-    this.copyOfProjectSettings.fileHandle = this.fileHandle;
+  private setProjectSettingsCloneWithAdditionalKeys(): void {
+    this.copyOfProjectSettings = { ...this.projectSettings, ...this.localSettingAdditionalKeys };
   }
 
   /**

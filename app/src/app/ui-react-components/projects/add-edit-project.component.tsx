@@ -1,6 +1,6 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
-import { dbInstances } from 'app/data/db-instances.const';
-import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-storage-systems.enum';
+import { dbInstances } from 'app/data/local-dbs/db-instances.const';
+import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum';
 import {
   ProjectSettings,
   RESERVED_AUDS_KEYS,

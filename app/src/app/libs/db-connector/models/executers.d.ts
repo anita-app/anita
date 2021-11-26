@@ -78,6 +78,8 @@ interface DbStoreInterface<DbTypes> {
   db: DbTypes;
   initDB(): Promise<DbStoreInterface<DbTypes>>;
   close(): void;
+  postProjectCreation?(): Promise<void>;
+  postProjectUpdate?(): Promise<void>;
 }
 
 /**

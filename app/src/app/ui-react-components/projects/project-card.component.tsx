@@ -1,4 +1,4 @@
-import { dbInstances } from 'app/data/db-instances.const';
+import { dbInstances } from 'app/data/local-dbs/db-instances.const';
 import { ProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
 import { AnitaStore } from 'app/libs/redux/reducers.const';
 import { ProjectLoadedFooter } from 'app/ui-react-components/projects/project-card-components/project-loaded-footer.component';

@@ -1,4 +1,4 @@
-import { dbInstances } from 'app/data/db-instances.const';
+import { dbInstances } from 'app/data/local-dbs/db-instances.const';
 import { RESERVED_AUDS_KEYS, SectionElement, SystemData } from 'app/data/project-structure/project-info';
 import { findFirstUserDefinedField } from 'app/libs/tools/find-first-user-defined-field.function';
 import { findSectionById } from 'app/libs/tools/find-section-by-id.function';

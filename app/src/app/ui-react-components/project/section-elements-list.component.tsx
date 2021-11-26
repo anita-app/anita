@@ -1,5 +1,5 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
-import { dbInstances } from 'app/data/db-instances.const';
+import { dbInstances } from 'app/data/local-dbs/db-instances.const';
 import { RESERVED_AUDS_KEYS, SectionElement } from 'app/data/project-structure/project-info';
 import { isProjectLoaded } from 'app/libs/project-helpers/project-handlers/is-project-loaded.function';
 import { AnitaStore } from 'app/libs/redux/reducers.const';

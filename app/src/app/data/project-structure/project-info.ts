@@ -1,4 +1,4 @@
-import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-storage-systems.enum';
+import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum';
 import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant';
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
 import { FormFieldsModel, OptionKeysModel, SupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
@@ -49,10 +49,14 @@ export interface ProjectSettings {
 }
 
 /**
- * Info on Projects saved in IndexedDB to know what project are on the device.
+ * Info on Projects saved locally to know what project are on the device.
+ * 
+ * @property [fileHandle] - The file handle of the project file (only if the project is saved on the file system)
+ * @property [sections] - The sections of the project to load the IndexedDB database with Dexie
  */
 export interface LocalProjectSettings extends ProjectSettings {
   fileHandle?: FileSystemFileHandle;
+  sections?: Array<Section>
 }
 
 /**

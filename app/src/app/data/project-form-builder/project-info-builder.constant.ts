@@ -1,4 +1,4 @@
-import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-storage-systems.enum';
+import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum';
 import { ProjectSettings } from 'app/data/project-structure/project-info';
 import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant';
 import { FormFieldsModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';

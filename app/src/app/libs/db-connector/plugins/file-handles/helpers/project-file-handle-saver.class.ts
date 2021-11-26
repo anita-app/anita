@@ -1,13 +1,9 @@
-import { AnitaUniversalDataStorage, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
+import { AnitaUniversalDataStorage } from 'app/data/project-structure/project-info';
 import { DbConnectorInstance } from 'app/libs/db-connector/models/executers';
 import { writeFile } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper';
-import { CurrentProjectSetter } from 'app/libs/project-helpers/project-handlers/current-project-setter.class';
-import { SaveProjectSettingsInIndexedDB } from 'app/libs/project-helpers/project-handlers/save-project-settings-in-indexeddb.class';
-import { ProjectsListLoader } from 'app/libs/projects-helpers/projects-handlers/projects-list-loader.class';
 
 /**
- * Saves the `AnitaUniversalDataStorage` to the file a file on disk by using the fileHandle stored in the IndexedDB, if found, or asking the user to pick a new file.
- * It also calls `SaveProjectSettingsInIndexedDB` to store or overwrite the `LocalProjectSettings` in IndexedDB.
+ * Saves the `AnitaUniversalDataStorage` to the file a file on disk by using the fileHandle stored in this.dbConnector.options.projectInfo.fileHandle.
  *
  * @see SaveProjectSettingsInIndexedDB
  */
@@ -31,10 +27,7 @@ export class ProjectFileHandleSaver {
    */
   public async save(): Promise<void> {
     this.setData();
-    this.saveDataToDisk();
-    await new SaveProjectSettingsInIndexedDB(this.dbConnector.dbStore.db[RESERVED_AUDS_KEYS._settings][0], this.dbConnector.options.projectInfo.fileHandle).save();
-    await new CurrentProjectSetter(this.dbConnector.dbStore.db[RESERVED_AUDS_KEYS._settings], this.dbConnector.dbStore.db[RESERVED_AUDS_KEYS._sections]).set();
-    await new ProjectsListLoader().load();
+    await this.saveDataToDisk();
   }
 
   /**
@@ -49,8 +42,8 @@ export class ProjectFileHandleSaver {
    * 
    * @see writeFile
    */
-  private saveDataToDisk(): void {
-    writeFile(this.dbConnector.options.projectInfo.fileHandle, this.data);
+  private saveDataToDisk(): Promise<void> {
+    return writeFile(this.dbConnector.options.projectInfo.fileHandle, this.data);
   }
 
 }

@@ -1,4 +1,4 @@
-import { dbInstances } from 'app/data/db-instances.const';
+import { dbInstances } from 'app/data/local-dbs/db-instances.const';
 import {
   ParentInfoForDetailsView,
   RESERVED_AUDS_KEYS,
