@@ -1,5 +1,5 @@
 import { dbInstances } from 'app/data/db-instances.const';
-import { RESERVED_FIELDS } from 'app/data/form-models/system-fields-for-sections.constant';
+import { RESERVED_FIELDS } from 'app/data/form-models/reserved-fields.constant';
 import { SectionElement } from 'app/data/model/project-info';
 import { SectionModel } from 'app/libs/db-connector/db-builder/sez-definition';
 import { IdCreator } from 'app/libs/id-creator/id-creator.class';

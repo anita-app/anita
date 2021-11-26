@@ -1,4 +1,4 @@
-import { RESERVED_FIELDS } from 'app/data/form-models/system-fields-for-sections.constant';
+import { RESERVED_FIELDS } from 'app/data/form-models/reserved-fields.constant';
 
 /**
  * Default primary key if none is specified.

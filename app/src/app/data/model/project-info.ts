@@ -1,4 +1,4 @@
-import { RESERVED_FIELDS } from 'app/data/form-models/system-fields-for-sections.constant';
+import { RESERVED_FIELDS } from 'app/data/form-models/reserved-fields.constant';
 import { FORM_COMPONENTS_CODES, OptionKeysModel } from 'app/data/model/form-model-commons';
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
 import { FormFieldsModel, SupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-fields/form-fields-model';

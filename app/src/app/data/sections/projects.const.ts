@@ -1,4 +1,4 @@
-import { RESERVED_FIELDS } from 'app/data/form-models/system-fields-for-sections.constant';
+import { RESERVED_FIELDS } from 'app/data/form-models/reserved-fields.constant';
 import { LocalProjectSettings } from 'app/data/model/project-info';
 import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition';
 

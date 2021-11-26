@@ -1,4 +1,4 @@
-import { RESERVED_FIELDS } from 'app/data/form-models/system-fields-for-sections.constant';
+import { RESERVED_FIELDS } from 'app/data/form-models/reserved-fields.constant';
 import { Section, SectionElement } from 'app/data/model/project-info';
 import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
 import { SezBuilder } from 'app/libs/db-connector/db-builder/sez-builder.class';
