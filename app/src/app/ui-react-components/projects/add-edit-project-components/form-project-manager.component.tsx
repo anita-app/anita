@@ -1,7 +1,7 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
 import { urlParamFiller } from 'app/anita-routes/url-param-fillers.function';
-import { PROJECT_EDITOR_FORM_MODELS_CONST } from 'app/data/form-models/project-editor-form-models.const';
 import { RESERVED_UDS_KEYS, SystemData } from 'app/data/model/project-info';
+import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const';
 import { CurrentProjectSetter } from 'app/libs/project-helpers/project-handlers/current-project-setter.class';
 import { ProjectSaver } from 'app/libs/project-helpers/project-handlers/project-saver.class';
 import { AnitaStore } from 'app/libs/redux/reducers.const';
@@ -41,7 +41,7 @@ export const FormProjectManager = () => {
   return (
     <span>
       <div className="mt-5 p-4 bg-white rounded shadow">
-        <FormAutomator formModel={PROJECT_EDITOR_FORM_MODELS_CONST[projectEditorMode].projectInfo as any} element={project[RESERVED_UDS_KEYS._settings][0]} handleChange={handleProjectChange} />
+        <FormAutomator formModel={PROJECT_EDITOR_FORM_BUILDER[projectEditorMode].projectInfo as any} element={project[RESERVED_UDS_KEYS._settings][0]} handleChange={handleProjectChange} />
       </div>
       <div className="px-1 md:px-2 lg:px-3">
         {project[RESERVED_UDS_KEYS._sections].map((section, index) => <SectionManager key={section.id} section={section} sectionIndex={index} />)}

@@ -1,6 +1,6 @@
-import { PROJECT_EDITOR_MODE } from 'app/data/form-models/project-editor-form-models.const';
 import { OptionKeysModel } from 'app/data/model/form-model-commons';
 import { RESERVED_UDS_KEYS, SystemData } from 'app/data/model/project-info';
+import { PROJECT_EDITOR_MODE } from 'app/data/project-form-builder/project-editor-form-builder.const';
 import { IdCreator } from 'app/libs/id-creator/id-creator.class';
 import { Action } from 'app/libs/redux/action.type';
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';

@@ -1,6 +1,6 @@
-import { PROJECT_EDITOR_FORM_MODELS_CONST } from 'app/data/form-models/project-editor-form-models.const';
 import { RESERVED_UDS_KEYS, Section } from 'app/data/model/project-info';
 import { RESERVED_FIELDS } from 'app/data/model/reserved-fields.constant';
+import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const';
 import { IUpdateFormProjectRemoveFieldFromSectionPayload, IUpdateFormProjectUpdateSectionPayload } from 'app/libs/redux/action.type';
 import { AnitaStore } from 'app/libs/redux/reducers.const';
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
@@ -48,7 +48,7 @@ export const SectionManager = ({ section, sectionIndex }: { section: Section, se
       </div>
       <div className="pt-4">
         <FormAutomator
-          formModel={PROJECT_EDITOR_FORM_MODELS_CONST[projectEditorMode].sectionInfo as Array<FormFieldsModel<any>>}
+          formModel={PROJECT_EDITOR_FORM_BUILDER[projectEditorMode].sectionInfo as Array<FormFieldsModel<any>>}
           element={section}
           handleChange={handleChange.bind(undefined, sectionIndex)}
           sectionId={section.id}

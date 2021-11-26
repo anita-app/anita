@@ -1,7 +1,7 @@
 import { URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
-import { PROJECT_EDITOR_FORM_MODELS_CONST } from 'app/data/form-models/project-editor-form-models.const';
 import { OptionKeysModel } from 'app/data/model/form-model-commons';
 import { RESERVED_UDS_KEYS, Section } from 'app/data/model/project-info';
+import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const';
 import {
   IUpdateFormProjectUpdateFormModelAddOptionPayload,
   IUpdateFormProjectUpdateFormModelDeleteOptionPayload,
@@ -41,8 +41,8 @@ export const SectionFormModelManager = (props: ISectionFormModelManagerProps) =>
   const mode = useMemo(() => projectId ? EDITOR_MODE.edit : EDITOR_MODE.add, [projectId]);
   const alreadyExists = getAlreadyExists(section, element.fieldName);
   const formModelToUse = useMemo(() => mode === EDITOR_MODE.edit && alreadyExists ?
-    PROJECT_EDITOR_FORM_MODELS_CONST[projectEditorMode].sectionEles.existingItem :
-    PROJECT_EDITOR_FORM_MODELS_CONST[projectEditorMode].sectionEles.newItem,
+    PROJECT_EDITOR_FORM_BUILDER[projectEditorMode].sectionEles.existingItem :
+    PROJECT_EDITOR_FORM_BUILDER[projectEditorMode].sectionEles.newItem,
     [alreadyExists, mode, projectEditorMode]
   );
 

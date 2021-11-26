@@ -19,7 +19,7 @@ Total : 168 files,  4932 codes, 1482 comments, 1175 blanks, all 7589 lines
 | [app/src/app/data/data-structure-extender.class.ts](/app/src/app/data/data-structure-extender.class.ts) | TypeScript | 38 | 24 | 11 | 73 |
 | [app/src/app/data/db-instances.const.ts](/app/src/app/data/db-instances.const.ts) | TypeScript | 12 | 0 | 3 | 15 |
 | [app/src/app/data/form-models/options-builder.constant.ts](/app/src/app/data/form-models/options-builder.constant.ts) | TypeScript | 33 | 12 | 5 | 50 |
-| [app/src/app/data/form-models/project-form-fields-model.constant.ts](/app/src/app/data/form-models/project-form-fields-model.constant.ts) | TypeScript | 29 | 4 | 2 | 35 |
+| [app/src/app/data/form-models/project-info-builder.constant.ts](/app/src/app/data/form-models/project-info-builder.constant.ts) | TypeScript | 29 | 4 | 2 | 35 |
 | [app/src/app/data/form-models/section-builder.constant.ts](/app/src/app/data/form-models/section-builder.constant.ts) | TypeScript | 96 | 16 | 5 | 117 |
 | [app/src/app/data/model/reserved-fields.constant.ts](/app/src/app/data/model/reserved-fields.constant.ts) | TypeScript | 20 | 9 | 3 | 32 |
 | [app/src/app/data/model/form-model-commons.ts](/app/src/app/data/model/form-model-commons.ts) | TypeScript | 56 | 26 | 7 | 89 |

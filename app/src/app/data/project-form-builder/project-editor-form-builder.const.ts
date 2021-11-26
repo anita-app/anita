@@ -3,22 +3,22 @@ import {
   optionsBuilderForAddingBasic,
   optionsBuilderForEditingAdvanced,
   optionsBuilderForEditingBasic
-  } from 'app/data/form-models/options-builder.constant';
-import { projectFormFieldsModel } from 'app/data/form-models/project-form-fields-model.constant';
+  } from 'app/data/project-form-builder/options-builder.constant';
+import { projectFormFieldsModel } from 'app/data/project-form-builder/project-info-builder.constant';
 import {
-  sectionDetailsFormFieldsModel,
   sectionElesForEditingAdvanced,
   sectionElesForEditingBasic,
   sectionElesNewItemAdvanced,
   sectionElesNewItemBasic
-  } from 'app/data/form-models/section-builder.constant';
+  } from 'app/data/project-form-builder/section-fields-builder.constant';
+import { sectionDetailsFormFieldsModel } from 'app/data/project-form-builder/section-info-builder.constant';
 
 export enum PROJECT_EDITOR_MODE {
   advanced = 1,
   basic
 };
 
-export const PROJECT_EDITOR_FORM_MODELS_CONST = {
+export const PROJECT_EDITOR_FORM_BUILDER = {
   [PROJECT_EDITOR_MODE.advanced]: {
     projectInfo: projectFormFieldsModel,
     sectionInfo: sectionDetailsFormFieldsModel,

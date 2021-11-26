@@ -1,6 +1,6 @@
-import { PROJECT_EDITOR_FORM_MODELS_CONST } from 'app/data/form-models/project-editor-form-models.const';
 import { OptionKeysModel } from 'app/data/model/form-model-commons';
 import { RESERVED_UDS_KEYS, Section } from 'app/data/model/project-info';
+import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const';
 import { AnitaStore } from 'app/libs/redux/reducers.const';
 import { DANGER_BTN_OUTLINE } from 'app/ui-react-components/shared-components/buttons/buttons-layout-tw-classes.const';
 import { FormAutomator } from 'app/ui-react-components/shared-components/forms-automator/form-automator.component';
@@ -31,8 +31,8 @@ export const OptionsMakerSingleOption = (props: ICommonFormEleProps<FormFieldsMo
   const formModelToUse: Array<FormFieldsModel<any>> = useMemo(() => {
     const canEdit = getCanEdit(section, indexFormElement, optionElement.value);
     return canEdit ?
-      PROJECT_EDITOR_FORM_MODELS_CONST[projectEditorMode].optionEles.newItem :
-      PROJECT_EDITOR_FORM_MODELS_CONST[projectEditorMode].optionEles.newItem;
+      PROJECT_EDITOR_FORM_BUILDER[projectEditorMode].optionEles.newItem :
+      PROJECT_EDITOR_FORM_BUILDER[projectEditorMode].optionEles.newItem;
   }, [section, indexFormElement, optionElement.value, projectEditorMode]);
 
   return (
