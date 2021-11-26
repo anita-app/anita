@@ -38,7 +38,11 @@ export class DbStore implements DbStoreInterface<Dexie> {
   }
 
   public async postProjectCreation(): Promise<void> {
-    // TODO
+    // TODO Save in system indexedDB the project info with the DS
+  }
+
+  public async postProjectUpdate(): Promise<void> {
+    // TODO Update if needed the DS in the system indexedDB with previous versions
   }
 
   public close(): void {

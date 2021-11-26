@@ -47,6 +47,7 @@ export class ProjectSaver {
   }
 
   private async initDbInstance(): Promise<void> {
+    // TODO use DbInitializer class to pick the right dbStore
     dbInstances[this.projectDataToSave[RESERVED_AUDS_KEYS._settings][0].id] = await new DbConnector(FILE_HANDLES_PLUGIN, { projectInfo: this.projectDataToSave[RESERVED_AUDS_KEYS._settings][0] }).init();
   }
 
