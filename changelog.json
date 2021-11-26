@@ -5,6 +5,10 @@
     {
       "type": "changed",
       "value": "improved styling of form elements"
+    },
+    {
+      "type": "added",
+      "value": "added animations with animate.css"
     }
   ],
   "changes": [

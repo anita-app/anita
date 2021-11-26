@@ -1,3 +1,4 @@
+import 'animate.css';
 import { store } from 'app/libs/redux/state.store';
 import { Startupper } from 'app/libs/startupper/startupper.class';
 import { AdminLayout } from 'app/ui-react-components/admin-layout/admin-layout.component';
@@ -6,6 +7,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import './index.css';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+
 
 new Startupper().init();
 
