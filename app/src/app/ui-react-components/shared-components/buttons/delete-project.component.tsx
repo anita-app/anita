@@ -10,7 +10,7 @@ export const DeleteProjectButton = ({ project }: { project: ProjectSettings }) =
   const handleClickModal = () => {
     if (isModalOpen) {
       setAnimationClass('animate__fadeOut')
-      setTimeout(() => setIsModalOpen(false), 800);
+      setTimeout(() => setIsModalOpen(false), 500);
     } else {
       setAnimationClass('animate__fadeIn')
       setIsModalOpen(true)
@@ -33,7 +33,7 @@ export const DeleteProjectModal = ({ project, closeFn, animationClass }: { proje
     closeFn();
     // This timeout must be equal or greater than the one in closeFn.
     // Otherwise we would cause an update on an unmounted component.
-    setTimeout(() => new ProjectDeletor(project).delete(), 800);
+    setTimeout(() => new ProjectDeletor(project).delete(), 500);
   }
 
   return (
@@ -43,7 +43,7 @@ export const DeleteProjectModal = ({ project, closeFn, animationClass }: { proje
 
         <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
-        <div className={`animate__animated ${animationClass} animate__fast inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full`}>
+        <div className={`animate__animated ${animationClass} animate__faster inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full`}>
           <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
             <div className="sm:flex sm:items-start">
               <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
