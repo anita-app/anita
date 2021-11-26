@@ -1,4 +1,4 @@
-import { RESERVED_FIELDS } from 'app/data/form-models/reserved-fields.constant';
+import { RESERVED_FIELDS } from 'app/data/model/reserved-fields.constant';
 import { CryptHelper } from 'app/libs/db-connector/crypter/crypt-helper.class';
 import { stringDecrypter } from 'app/libs/db-connector/crypter/string-decrypter.function';
 

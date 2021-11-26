@@ -1,11 +1,11 @@
 import { dbInstances } from 'app/data/db-instances.const';
-import { RESERVED_FIELDS } from 'app/data/form-models/reserved-fields.constant';
 import {
   ParentInfoForDetailsView,
   RESERVED_UDS_KEYS,
   SectionElement,
   SystemData
   } from 'app/data/model/project-info';
+import { RESERVED_FIELDS } from 'app/data/model/reserved-fields.constant';
 import { findFirstUserDefinedField } from 'app/libs/tools/find-first-user-defined-field.function';
 import { findSectionById } from 'app/libs/tools/find-section-by-id.function';
 import { asyncForEach } from 'app/libs/tools/tools';

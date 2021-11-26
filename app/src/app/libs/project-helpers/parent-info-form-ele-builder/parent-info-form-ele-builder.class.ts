@@ -1,6 +1,6 @@
-import { RESERVED_FIELDS } from 'app/data/form-models/reserved-fields.constant';
 import { FORM_COMPONENTS_CODES, OptionKeysModel } from 'app/data/model/form-model-commons';
 import { Section, SectionElement } from 'app/data/model/project-info';
+import { RESERVED_FIELDS } from 'app/data/model/reserved-fields.constant';
 import { FormFieldsModel } from 'app/ui-react-components/shared-components/forms-automator/form-fields/form-fields-model';
 
 /**

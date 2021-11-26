@@ -1,6 +1,6 @@
 import { PROJECT_EDITOR_FORM_MODELS_CONST } from 'app/data/form-models/project-editor-form-models.const';
-import { RESERVED_FIELDS } from 'app/data/form-models/reserved-fields.constant';
 import { RESERVED_UDS_KEYS, Section } from 'app/data/model/project-info';
+import { RESERVED_FIELDS } from 'app/data/model/reserved-fields.constant';
 import { IUpdateFormProjectRemoveFieldFromSectionPayload, IUpdateFormProjectUpdateSectionPayload } from 'app/libs/redux/action.type';
 import { AnitaStore } from 'app/libs/redux/reducers.const';
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
