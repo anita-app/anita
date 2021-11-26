@@ -1,6 +1,6 @@
-import { RESERVED_UDS_KEYS, Section } from 'app/data/model/project-info';
-import { RESERVED_FIELDS } from 'app/data/model/reserved-fields.constant';
 import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const';
+import { RESERVED_AUDS_KEYS, Section } from 'app/data/project-structure/project-info';
+import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant';
 import { IUpdateFormProjectRemoveFieldFromSectionPayload, IUpdateFormProjectUpdateSectionPayload } from 'app/libs/redux/action.type';
 import { AnitaStore } from 'app/libs/redux/reducers.const';
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
@@ -8,13 +8,13 @@ import { store } from 'app/libs/redux/state.store';
 import { SectionFormModelManager } from 'app/ui-react-components/projects/add-edit-project-components/section-form-model-manager.component';
 import { DANGER_BTN_OUTLINE, SUCCESS_BTN_OUTLINE } from 'app/ui-react-components/shared-components/buttons/buttons-layout-tw-classes.const';
 import { FormAutomator } from 'app/ui-react-components/shared-components/forms-automator/form-automator.component';
-import { FormAutomatorOnChangeValue, FormFieldsModel } from 'app/ui-react-components/shared-components/forms-automator/form-fields/form-fields-model';
+import { FormAutomatorOnChangeValue, FormFieldsModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
 import { useSelector } from 'react-redux';
 
 export const SectionManager = ({ section, sectionIndex }: { section: Section, sectionIndex: number }) => {
 
   const projectEditorMode = useSelector((store: AnitaStore) => store.formProject.mode);
-  const sections = useSelector((store: AnitaStore) => store.formProject.project[RESERVED_UDS_KEYS._sections]);
+  const sections = useSelector((store: AnitaStore) => store.formProject.project[RESERVED_AUDS_KEYS._sections]);
   const customFields: Array<string> = section.formModel
     .map(formElement => Object.values(RESERVED_FIELDS).includes(formElement.fieldName) ? null : formElement.fieldName)
     .filter(fieldName => fieldName !== null);

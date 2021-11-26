@@ -1,6 +1,6 @@
-import { CLIENT_SECTIONS } from 'app/data/client-sections.enum';
 import { dbInstances } from 'app/data/db-instances.const';
-import { ProjectSettings } from 'app/data/model/project-info';
+import { ProjectSettings } from 'app/data/project-structure/project-info';
+import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum';
 import { ProjectsListLoader } from 'app/libs/projects-helpers/projects-handlers/projects-list-loader.class';
 
 /**

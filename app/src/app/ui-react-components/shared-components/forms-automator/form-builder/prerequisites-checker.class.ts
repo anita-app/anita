@@ -1,5 +1,4 @@
-import { Prerequisites } from 'app/data/model/form-model-commons';
-import { FormFieldsModel, SupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-fields/form-fields-model';
+import { FormFieldsModel, Prerequisites, SupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
 
 export class PrerequisitesChecker<ELEMENT extends Partial<SupportedFormsTypes>> {
 

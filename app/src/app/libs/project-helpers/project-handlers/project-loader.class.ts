@@ -1,6 +1,6 @@
-import { CLIENT_SECTIONS } from 'app/data/client-sections.enum';
 import { dbInstances } from 'app/data/db-instances.const';
-import { LocalProjectSettings, RESERVED_UDS_KEYS } from 'app/data/model/project-info';
+import { LocalProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
+import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum';
 import { DbConnector } from 'app/libs/db-connector/db-connector.class';
 import { FILE_HANDLES_PLUGIN } from 'app/libs/db-connector/plugins/file-handles/exporter.constant';
 import { CurrentProjectSetter } from 'app/libs/project-helpers/project-handlers/current-project-setter.class';
@@ -44,7 +44,7 @@ export class ProjectLoader {
    * Calls current project setter to load the current project in the Redux store
    */
   private callCurrentProjectSetter() {
-    new CurrentProjectSetter(dbInstances[this.projectId].dbStore.db[RESERVED_UDS_KEYS._settings], dbInstances[this.projectId].dbStore.db[RESERVED_UDS_KEYS._sections]).set();
+    new CurrentProjectSetter(dbInstances[this.projectId].dbStore.db[RESERVED_AUDS_KEYS._settings], dbInstances[this.projectId].dbStore.db[RESERVED_AUDS_KEYS._sections]).set();
   }
 
 }

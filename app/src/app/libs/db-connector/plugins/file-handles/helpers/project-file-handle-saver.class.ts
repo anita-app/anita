@@ -1,4 +1,4 @@
-import { AnitaUniversalDataStorage, RESERVED_UDS_KEYS } from 'app/data/model/project-info';
+import { AnitaUniversalDataStorage, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
 import { DbConnectorInstance } from 'app/libs/db-connector/models/executers';
 import { writeFile } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper';
 import { CurrentProjectSetter } from 'app/libs/project-helpers/project-handlers/current-project-setter.class';
@@ -32,8 +32,8 @@ export class ProjectFileHandleSaver {
   public async save(): Promise<void> {
     this.setData();
     this.saveDataToDisk();
-    await new SaveProjectSettingsInIndexedDB(this.dbConnector.dbStore.db[RESERVED_UDS_KEYS._settings][0], this.dbConnector.options.projectInfo.fileHandle).save();
-    await new CurrentProjectSetter(this.dbConnector.dbStore.db[RESERVED_UDS_KEYS._settings], this.dbConnector.dbStore.db[RESERVED_UDS_KEYS._sections]).set();
+    await new SaveProjectSettingsInIndexedDB(this.dbConnector.dbStore.db[RESERVED_AUDS_KEYS._settings][0], this.dbConnector.options.projectInfo.fileHandle).save();
+    await new CurrentProjectSetter(this.dbConnector.dbStore.db[RESERVED_AUDS_KEYS._settings], this.dbConnector.dbStore.db[RESERVED_AUDS_KEYS._sections]).set();
     await new ProjectsListLoader().load();
   }
 

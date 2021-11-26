@@ -1,16 +1,10 @@
 import {
-  FORM_COMPONENTS_CODES,
-  FormEleWidths,
-  InputTypes,
-  OptionKeysModel,
-  Prerequisites
-  } from 'app/data/model/form-model-commons';
-import {
   ProjectSettings,
   SectionCustomFieldProperties,
   SectionDetailsDeclaration,
   SectionElement
-  } from 'app/data/model/project-info';
+  } from 'app/data/project-structure/project-info';
+import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum';
 
 export type FormFieldsModel<T extends SupportedFormsTypes> = IBasicInput<T> | IBasicCheckbox<T> | IBasicSelect<T> | IBasicRadio<T> | IBasicTextarea<T> | IHiddenInput<T> | IOptionsMaker<T> | IDatePicker<T> | IDateTimePicker<T>;
 
@@ -27,11 +21,27 @@ export interface ICommonFormEleProps<T = FormFieldsModel<SupportedFormsTypes>> {
   [customProps: string]: any;
 }
 
+/**
+ * Defines the Object that contains the prerequisite necessary to show a field of a form.
+ * The key of the Object is the identifier of the field whose value must be checked.
+ * The value of each key is an Array of all the possible values that fulfill the prerequsite.
+ */
+export interface Prerequisites {
+  [fieldToCheckIdentifier: string]: Array<string | number | boolean>;
+}
+
 interface IHiddenInput<T> extends ICommonTypes<T> {
   componentCode: FORM_COMPONENTS_CODES.hiddenInput;
   required?: boolean;
   value?: string | (() => string);
 }
+
+/**
+ * Supported input types for @BasicInput
+ */
+type InputTypes = 'color' | 'date' | 'datetime-local' | 'email' | 'month' | 'number' | 'password' | 'range' | 'reset' | 'tel' | 'text' | 'time' | 'url' | 'week';
+
+
 interface IBasicInput<T> extends ICommonTypes<T> {
   componentCode: FORM_COMPONENTS_CODES.basicInput;
   type: InputTypes;
@@ -50,6 +60,23 @@ interface IBasicCheckbox<T> extends ICommonTypes<T> {
   value?: boolean;
   description?: string;
   required?: boolean
+}
+
+
+/**
+ * Defines the structure of possible choices to be selected in a Radio or Select html element.
+ */
+export interface OptionKeysModelGroup {
+  label: string;
+  options: Array<OptionKeysModel>;
+}
+
+/**
+ * Defines the structure of possible choices to be selected in a Radio or Select html element.
+ */
+export interface OptionKeysModel {
+  value: string | number;
+  label: string;
 }
 
 export interface IBasicRadio<T> extends ICommonTypes<T> {
@@ -92,6 +119,6 @@ interface ICommonTypes<T> {
   disabled?: boolean;
   readonly?: boolean;
   prerequisites?: Array<Prerequisites>;
-  width?: FormEleWidths;
+  width?: string;
   externalLabel?: boolean;
 }

@@ -1,5 +1,5 @@
-import { localSettings } from 'app/data/sections/local-settings.const';
-import { projects } from 'app/data/sections/projects.const';
+import { localSettings } from 'app/data/system-local-db/sections/local-settings.const';
+import { projects } from 'app/data/system-local-db/sections/projects.const';
 import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition';
 
 /**

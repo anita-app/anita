@@ -1,6 +1,6 @@
 import { dbInstances } from 'app/data/db-instances.const';
-import { SectionElement } from 'app/data/model/project-info';
-import { RESERVED_FIELDS } from 'app/data/model/reserved-fields.constant';
+import { SectionElement } from 'app/data/project-structure/project-info';
+import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant';
 import { SectionModel } from 'app/libs/db-connector/db-builder/sez-definition';
 import { IdCreator } from 'app/libs/id-creator/id-creator.class';
 import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum';

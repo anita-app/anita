@@ -1,15 +1,15 @@
 import { dbInstances } from 'app/data/db-instances.const';
 import {
   ParentInfoForDetailsView,
-  RESERVED_UDS_KEYS,
+  RESERVED_AUDS_KEYS,
   SectionElement,
   SystemData
-  } from 'app/data/model/project-info';
-import { RESERVED_FIELDS } from 'app/data/model/reserved-fields.constant';
+  } from 'app/data/project-structure/project-info';
+import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant';
 import { findFirstUserDefinedField } from 'app/libs/tools/find-first-user-defined-field.function';
 import { findSectionById } from 'app/libs/tools/find-section-by-id.function';
 import { asyncForEach } from 'app/libs/tools/tools';
-import { FormModel } from 'app/ui-react-components/shared-components/forms-automator/form-fields/form-fields-model';
+import { FormModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
 
 export class GetParentInfoForDetailsView {
 
@@ -18,7 +18,7 @@ export class GetParentInfoForDetailsView {
   constructor(
     private listOfParents: Array<string>,
     private projectId: string,
-    private sections: SystemData[RESERVED_UDS_KEYS._sections]
+    private sections: SystemData[RESERVED_AUDS_KEYS._sections]
   ) { }
 
   public async get(): Promise<Array<ParentInfoForDetailsView>> {

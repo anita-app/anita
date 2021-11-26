@@ -1,4 +1,4 @@
-import { AnitaUniversalDataStorage, SectionElement } from 'app/data/model/project-info';
+import { AnitaUniversalDataStorage, SectionElement } from 'app/data/project-structure/project-info';
 import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
 import { DbConnectorInstance } from 'app/libs/db-connector/models/executers';
 import { ProjectFileHandleSaver } from 'app/libs/db-connector/plugins/file-handles/helpers/project-file-handle-saver.class';

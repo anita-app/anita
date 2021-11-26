@@ -1,6 +1,6 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
 import { urlParamFiller } from 'app/anita-routes/url-param-fillers.function';
-import { RESERVED_UDS_KEYS } from 'app/data/model/project-info';
+import { RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
 import { AnitaStore } from 'app/libs/redux/reducers.const';
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
@@ -32,13 +32,13 @@ const ProjectMenu = () => {
     <div className="mt-3">
       <div className="block py-2.5 px-4">
         <p className="text-xs text-gray-600">Current project:</p>
-        <p>{project[RESERVED_UDS_KEYS._settings][0].title}</p>
+        <p>{project[RESERVED_AUDS_KEYS._settings][0].title}</p>
       </div>
       <div className="block py-2.5 px-4">
         <p className="text-xs text-gray-600">Project sections:</p>
       </div>
-      {project[RESERVED_UDS_KEYS._sections].map(section => {
-        const linkPath = urlParamFiller(ANITA_URLS.projectSectionElesList, [{ name: URL_PARAMS.projectId, value: project[RESERVED_UDS_KEYS._settings][0].id }, { name: URL_PARAMS.sectionId, value: section.id }]);
+      {project[RESERVED_AUDS_KEYS._sections].map(section => {
+        const linkPath = urlParamFiller(ANITA_URLS.projectSectionElesList, [{ name: URL_PARAMS.projectId, value: project[RESERVED_AUDS_KEYS._settings][0].id }, { name: URL_PARAMS.sectionId, value: section.id }]);
         return (<Link
           key={section.id}
           to={linkPath}

@@ -1,4 +1,4 @@
-import { AnitaUniversalDataStorage } from 'app/data/model/project-info';
+import { AnitaUniversalDataStorage } from 'app/data/project-structure/project-info';
 import { DbObjects } from 'app/libs/db-connector/models/executers';
 import { DbDeletor } from './db-deletor/db-deletor.class';
 import { DbInsertor } from './db-insertor/db-insertor.class';

@@ -1,4 +1,4 @@
-import { ICommonFormEleProps } from 'app/ui-react-components/shared-components/forms-automator/form-fields/form-fields-model';
+import { ICommonFormEleProps } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
 
 export const HiddenInput = ({ formEle, element, handleChange }: ICommonFormEleProps) => {
 

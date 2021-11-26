@@ -1,5 +1,5 @@
 import { dbInstances } from 'app/data/db-instances.const';
-import { ProjectSettings, RESERVED_UDS_KEYS } from 'app/data/model/project-info';
+import { ProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
 import { AnitaStore } from 'app/libs/redux/reducers.const';
 import { ProjectLoadedFooter } from 'app/ui-react-components/projects/project-card-components/project-loaded-footer.component';
 import { ProjectNotLoadedFooter } from 'app/ui-react-components/projects/project-card-components/project-not-loaded-footer.component';
@@ -25,7 +25,7 @@ export const ProjectCard = ({ project }: { project: ProjectSettings }) => {
           <DeleteProjectButton project={project} />
           {(
             projectState === null ||
-            projectState[RESERVED_UDS_KEYS._settings][0].id !== project.id ||
+            projectState[RESERVED_AUDS_KEYS._settings][0].id !== project.id ||
             dbInstances[project.id] === undefined
           ) ? <ProjectNotLoadedFooter project={project} /> : <ProjectLoadedFooter project={project} />}
         </CardFooterItemsEnd>

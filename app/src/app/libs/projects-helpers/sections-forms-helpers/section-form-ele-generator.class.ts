@@ -1,5 +1,5 @@
-import { FORM_COMPONENTS_CODES } from 'app/data/model/form-model-commons';
-import { SectionCustomFieldProperties } from 'app/data/model/project-info';
+import { SectionCustomFieldProperties } from 'app/data/project-structure/project-info';
+import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum';
 
 /**
  * Creates a section form element based on the information provided by the user when creating/editing a project

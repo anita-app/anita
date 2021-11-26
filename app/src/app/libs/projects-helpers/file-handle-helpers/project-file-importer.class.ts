@@ -3,8 +3,8 @@ import {
   AnitaUniversalDataStorage,
   LocalProjectSettings,
   ProjectSettings,
-  RESERVED_UDS_KEYS
-  } from 'app/data/model/project-info';
+  RESERVED_AUDS_KEYS
+  } from 'app/data/project-structure/project-info';
 import { DbConnector } from 'app/libs/db-connector/db-connector.class';
 import { FILE_HANDLES_PLUGIN } from 'app/libs/db-connector/plugins/file-handles/exporter.constant';
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
@@ -46,7 +46,7 @@ export class ProjectFileImporter {
     await this.askForFile();
     await this.processFileHandles();
     await this.initializeDb();
-    new CurrentProjectSetter(this.projectData[RESERVED_UDS_KEYS._settings], this.projectData[RESERVED_UDS_KEYS._sections]).set();
+    new CurrentProjectSetter(this.projectData[RESERVED_AUDS_KEYS._settings], this.projectData[RESERVED_AUDS_KEYS._sections]).set();
   }
 
   /**
@@ -69,8 +69,8 @@ export class ProjectFileImporter {
   private async processFileHandle(fileHandle: FileSystemFileHandle): Promise<void> {
     this.fileContents = await readFileHandleAsText(fileHandle);
     this.parseFileContents();
-    this.localProjectSettings = await new SaveProjectSettingsInIndexedDB(this.projectData[RESERVED_UDS_KEYS._settings][0], fileHandle).save();
-    this.dispatchProject(this.projectData[RESERVED_UDS_KEYS._settings][0]);
+    this.localProjectSettings = await new SaveProjectSettingsInIndexedDB(this.projectData[RESERVED_AUDS_KEYS._settings][0], fileHandle).save();
+    this.dispatchProject(this.projectData[RESERVED_AUDS_KEYS._settings][0]);
   }
 
   /**
@@ -84,7 +84,7 @@ export class ProjectFileImporter {
    * Initialize the DbConnector instance
    */
   private async initializeDb(): Promise<void> {
-    dbInstances[this.projectData[RESERVED_UDS_KEYS._settings][0].id] = await new DbConnector(FILE_HANDLES_PLUGIN, { projectInfo: this.localProjectSettings }).init();
+    dbInstances[this.projectData[RESERVED_AUDS_KEYS._settings][0].id] = await new DbConnector(FILE_HANDLES_PLUGIN, { projectInfo: this.localProjectSettings }).init();
   }
 
   /**

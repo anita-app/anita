@@ -1,4 +1,4 @@
-import { LocalProjectSettings, SectionDetailsDeclaration, SystemData } from 'app/data/model/project-info';
+import { LocalProjectSettings, SectionDetailsDeclaration, SystemData } from 'app/data/project-structure/project-info';
 import { formElementReducer, IFormElementState } from 'app/libs/redux/reducers/form-element.reducer';
 import { formElesValidStateReducer, IFormElesValidState } from 'app/libs/redux/reducers/form-eles-valid-state.reducer';
 import { formProjectReducer, IFormProjectState } from 'app/libs/redux/reducers/form-project.reducer';

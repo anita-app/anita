@@ -1,4 +1,4 @@
-import { AnitaUniversalDataStorage } from 'app/data/model/project-info';
+import { AnitaUniversalDataStorage } from 'app/data/project-structure/project-info';
 import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
 import { Decrypter } from 'app/libs/db-connector/crypter/decrypter.class';
 import { DbConnectorInstance, Selector } from 'app/libs/db-connector/models/executers';

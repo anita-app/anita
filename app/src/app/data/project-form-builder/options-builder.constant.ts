@@ -1,5 +1,5 @@
-import { FORM_COMPONENTS_CODES, OptionKeysModel } from 'app/data/model/form-model-commons';
-import { FormFieldsModel } from 'app/ui-react-components/shared-components/forms-automator/form-fields/form-fields-model';
+import { FormFieldsModel, OptionKeysModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
+import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum';
 
 const commonFieldsAdvanced: FormFieldsModel<OptionKeysModel> = {
   componentCode: FORM_COMPONENTS_CODES.basicInput,

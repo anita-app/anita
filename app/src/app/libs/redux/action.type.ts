@@ -5,9 +5,9 @@ import {
   SectionDetailsDeclaration,
   SectionElement,
   SystemData
-  } from 'app/data/model/project-info';
+  } from 'app/data/project-structure/project-info';
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
-import { FormFieldsModel, SupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-fields/form-fields-model';
+import { FormFieldsModel, SupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
 
 export type Action<T extends REDUX_ACTIONS> = T extends ActionsWithoutPayload ? ActionWithoutPayload :
   ActionWithPayload<T>;

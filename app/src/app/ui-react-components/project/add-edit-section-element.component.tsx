@@ -1,6 +1,6 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
 import { dbInstances } from 'app/data/db-instances.const';
-import { SectionElement } from 'app/data/model/project-info';
+import { SectionElement } from 'app/data/project-structure/project-info';
 import { isProjectLoaded } from 'app/libs/project-helpers/project-handlers/is-project-loaded.function';
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
 import { store } from 'app/libs/redux/state.store';

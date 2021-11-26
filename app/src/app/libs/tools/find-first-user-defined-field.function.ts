@@ -1,5 +1,5 @@
-import { RESERVED_FIELDS } from 'app/data/model/reserved-fields.constant';
-import { FormModel } from 'app/ui-react-components/shared-components/forms-automator/form-fields/form-fields-model';
+import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant';
+import { FormModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
 
 export function findFirstUserDefinedField(sectionFormModel: FormModel): number {
 

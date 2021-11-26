@@ -1,6 +1,6 @@
-import { CLIENT_SECTIONS } from 'app/data/client-sections.enum';
 import { dbInstances } from 'app/data/db-instances.const';
-import { LocalProjectSettings, ProjectSettings } from 'app/data/model/project-info';
+import { LocalProjectSettings, ProjectSettings } from 'app/data/project-structure/project-info';
+import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum';
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
 import cloneDeep from 'lodash.clonedeep';
 

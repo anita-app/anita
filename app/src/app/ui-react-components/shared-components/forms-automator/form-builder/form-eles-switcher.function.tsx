@@ -1,5 +1,6 @@
-import { FORM_COMPONENTS_CODES } from 'app/data/model/form-model-commons';
-import { SectionElement } from 'app/data/model/project-info';
+import { SectionElement } from 'app/data/project-structure/project-info';
+import { IBasicRadio, IBasicSelect, ICommonFormEleProps } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
+import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum';
 import { BasicCheckbox } from 'app/ui-react-components/shared-components/forms-automator/form-fields/basic-checkbox.component';
 import { BasicInput } from 'app/ui-react-components/shared-components/forms-automator/form-fields/basic-input.component';
 import { BasicRadio } from 'app/ui-react-components/shared-components/forms-automator/form-fields/basic-radio.component';
@@ -8,7 +9,6 @@ import { BasicTextarea } from 'app/ui-react-components/shared-components/forms-a
 import { ChildOfSelectorForSection } from 'app/ui-react-components/shared-components/forms-automator/form-fields/child-of-selector-for-section.component';
 import { DatePicker } from 'app/ui-react-components/shared-components/forms-automator/form-fields/date-picker.component';
 import { DateTimePicker } from 'app/ui-react-components/shared-components/forms-automator/form-fields/date-time-picker.component';
-import { IBasicRadio, IBasicSelect, ICommonFormEleProps } from 'app/ui-react-components/shared-components/forms-automator/form-fields/form-fields-model';
 import { HiddenInput } from 'app/ui-react-components/shared-components/forms-automator/form-fields/hidden-input.component';
 import { OptionsMaker } from 'app/ui-react-components/shared-components/forms-automator/form-fields/options-maker.component';
 import { ParentsSelector } from 'app/ui-react-components/shared-components/forms-automator/form-fields/parents-selector.component';

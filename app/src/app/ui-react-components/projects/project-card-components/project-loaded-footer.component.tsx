@@ -1,6 +1,6 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
 import { urlParamFiller } from 'app/anita-routes/url-param-fillers.function';
-import { ProjectSettings } from 'app/data/model/project-info';
+import { ProjectSettings } from 'app/data/project-structure/project-info';
 import { EditButton } from 'app/ui-react-components/shared-components/buttons/edit-project-button.component';
 import { Link } from 'react-router-dom';
 

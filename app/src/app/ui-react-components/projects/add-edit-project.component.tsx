@@ -2,10 +2,10 @@ import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
 import { dbInstances } from 'app/data/db-instances.const';
 import {
   ProjectSettings,
-  RESERVED_UDS_KEYS,
+  RESERVED_AUDS_KEYS,
   Section,
   SystemData
-  } from 'app/data/model/project-info';
+  } from 'app/data/project-structure/project-info';
 import { IdCreator } from 'app/libs/id-creator/id-creator.class';
 import { isProjectLoaded } from 'app/libs/project-helpers/project-handlers/is-project-loaded.function';
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
@@ -32,16 +32,16 @@ export const AddEditProject = () => {
     // in add mode, sets a new project
     if (mode === EDITOR_MODE.add)
       return setProject({
-        [RESERVED_UDS_KEYS._settings]: [{ id: IdCreator.random(), title: '', description: '', dateCreation: '' }],
-        [RESERVED_UDS_KEYS._sections]: [{ id: IdCreator.random(), title: '', formModel: [{} as any] }],
+        [RESERVED_AUDS_KEYS._settings]: [{ id: IdCreator.random(), title: '', description: '', dateCreation: '' }],
+        [RESERVED_AUDS_KEYS._sections]: [{ id: IdCreator.random(), title: '', formModel: [{} as any] }],
       });
 
     if (!isProjectLoaded(projectId) || !projectId)
       return setProject(undefined);
 
     const fetchEProject = async () => {
-      const _settings = await dbInstances[projectId].callSelector<ProjectSettings>(RESERVED_UDS_KEYS._settings).multiple();
-      const _sections = await dbInstances[projectId].callSelector<Section>(RESERVED_UDS_KEYS._sections).multiple();
+      const _settings = await dbInstances[projectId].callSelector<ProjectSettings>(RESERVED_AUDS_KEYS._settings).multiple();
+      const _sections = await dbInstances[projectId].callSelector<Section>(RESERVED_AUDS_KEYS._sections).multiple();
 
       if (isMounted)
         setProject({ _settings, _sections });

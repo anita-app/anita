@@ -1,4 +1,4 @@
-import { OptionKeysModel } from 'app/data/model/form-model-commons';
+import { OptionKeysModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
 /* eslint-disable eqeqeq */
 
 /**

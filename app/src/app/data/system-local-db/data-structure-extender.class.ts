@@ -1,5 +1,5 @@
-import { Section, SectionElement } from 'app/data/model/project-info';
-import { RESERVED_FIELDS } from 'app/data/model/reserved-fields.constant';
+import { Section, SectionElement } from 'app/data/project-structure/project-info';
+import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant';
 import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
 import { SezBuilder } from 'app/libs/db-connector/db-builder/sez-builder.class';
 import { SectionDefinition, SectionModel } from 'app/libs/db-connector/db-builder/sez-definition';

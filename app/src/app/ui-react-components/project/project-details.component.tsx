@@ -1,6 +1,6 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
 import { dbInstances } from 'app/data/db-instances.const';
-import { ProjectSettings, RESERVED_UDS_KEYS } from 'app/data/model/project-info';
+import { ProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
 import { isProjectLoaded } from 'app/libs/project-helpers/project-handlers/is-project-loaded.function';
 import { DeleteProjectButton } from 'app/ui-react-components/shared-components/buttons/delete-project.component';
 import { EditButton } from 'app/ui-react-components/shared-components/buttons/edit-project-button.component';
@@ -42,7 +42,7 @@ export const ProjectDetails = () => {
       if (!isProjectLoaded(projectId))
         return setElement(undefined);
 
-      const project = await dbInstances[projectId].callSelector<ProjectSettings>(RESERVED_UDS_KEYS._settings).single();
+      const project = await dbInstances[projectId].callSelector<ProjectSettings>(RESERVED_AUDS_KEYS._settings).single();
       if (isMounted)
         setElement(project);
     }

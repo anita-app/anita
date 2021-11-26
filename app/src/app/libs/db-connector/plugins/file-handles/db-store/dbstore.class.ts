@@ -1,5 +1,5 @@
-import { DataStructureExtender } from 'app/data/data-structure-extender.class';
-import { AnitaUniversalDataStorage, RESERVED_UDS_KEYS } from 'app/data/model/project-info';
+import { AnitaUniversalDataStorage, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
+import { DataStructureExtender } from 'app/data/system-local-db/data-structure-extender.class';
 import { DbConnectorInstance, DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers';
 import { fileHandleChecker } from 'app/libs/db-connector/plugins/file-handles/helpers/file-handle-checker.function';
 import { readFileHandleAsText } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper';
@@ -10,8 +10,8 @@ export class DbStore implements DbStoreInterface<AnitaUniversalDataStorage> {
    * Project data
    */
   public db: AnitaUniversalDataStorage = {
-    [RESERVED_UDS_KEYS._settings]: [],
-    [RESERVED_UDS_KEYS._sections]: []
+    [RESERVED_AUDS_KEYS._settings]: [],
+    [RESERVED_AUDS_KEYS._sections]: []
   };
 
   /**
@@ -72,7 +72,7 @@ export class DbStore implements DbStoreInterface<AnitaUniversalDataStorage> {
    * @see DataStructureExtender
    */
   private makedDS(): void {
-    this.dbConnector.DS = Object.assign(this.dbConnector.DS, new DataStructureExtender(this.db[RESERVED_UDS_KEYS._sections]).extend());
+    this.dbConnector.DS = Object.assign(this.dbConnector.DS, new DataStructureExtender(this.db[RESERVED_AUDS_KEYS._sections]).extend());
   }
 
 }

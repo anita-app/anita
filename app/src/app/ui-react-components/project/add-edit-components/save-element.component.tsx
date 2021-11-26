@@ -1,4 +1,4 @@
-import { RESERVED_UDS_KEYS } from 'app/data/model/project-info';
+import { RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
 import { ElementSaver } from 'app/libs/project-helpers/section-elements-handlers/element-saver.class';
 import { AnitaStore } from 'app/libs/redux/reducers.const';
 import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum';
@@ -14,7 +14,7 @@ export const SaveElement = ({ sectionId }: { sectionId: string }) => {
 
   const handleClick = async () => {
     const mode = element.id ? EDITOR_MODE.edit : EDITOR_MODE.add;
-    await new ElementSaver(project[RESERVED_UDS_KEYS._settings][0].id, sectionId, element, mode).save();
+    await new ElementSaver(project[RESERVED_AUDS_KEYS._settings][0].id, sectionId, element, mode).save();
     navigate(-1);
   }
 

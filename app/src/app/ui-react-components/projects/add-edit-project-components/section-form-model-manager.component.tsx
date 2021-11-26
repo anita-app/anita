@@ -1,7 +1,6 @@
 import { URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
-import { OptionKeysModel } from 'app/data/model/form-model-commons';
-import { RESERVED_UDS_KEYS, Section } from 'app/data/model/project-info';
 import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const';
+import { RESERVED_AUDS_KEYS, Section } from 'app/data/project-structure/project-info';
 import {
   IUpdateFormProjectUpdateFormModelAddOptionPayload,
   IUpdateFormProjectUpdateFormModelDeleteOptionPayload,
@@ -14,7 +13,12 @@ import { store } from 'app/libs/redux/state.store';
 import { cleanString } from 'app/libs/tools/tools';
 import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum';
 import { FormAutomator } from 'app/ui-react-components/shared-components/forms-automator/form-automator.component';
-import { FormAutomatorOnChangeValue, FormFieldsModel, SupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-fields/form-fields-model';
+import {
+  FormAutomatorOnChangeValue,
+  FormFieldsModel,
+  OptionKeysModel,
+  SupportedFormsTypes
+  } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
@@ -36,7 +40,7 @@ export const SectionFormModelManager = (props: ISectionFormModelManagerProps) =>
 
   const params = useParams();
   const projectEditorMode = useSelector((store: AnitaStore) => store.formProject.mode);
-  const section = useSelector((state: AnitaStore) => state.formProject.original[RESERVED_UDS_KEYS._sections][indexSection]);
+  const section = useSelector((state: AnitaStore) => state.formProject.original[RESERVED_AUDS_KEYS._sections][indexSection]);
   const projectId = params[URL_PARAMS.projectId];
   const mode = useMemo(() => projectId ? EDITOR_MODE.edit : EDITOR_MODE.add, [projectId]);
   const alreadyExists = getAlreadyExists(section, element.fieldName);

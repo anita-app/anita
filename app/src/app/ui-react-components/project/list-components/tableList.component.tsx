@@ -1,5 +1,5 @@
-import { SectionElement } from 'app/data/model/project-info';
-import { Section } from 'app/data/model/project-info';
+import { SectionElement } from 'app/data/project-structure/project-info';
+import { Section } from 'app/data/project-structure/project-info';
 import { TdWithLinkToDetails } from 'app/ui-react-components/project/list-components/td-with-link-to-details.component';
 import { customRenderPicker } from 'app/ui-react-components/project/values-renderers/custom-render-picker.component';
 import { useMemo } from 'react';

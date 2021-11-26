@@ -1,4 +1,4 @@
-import { ProjectSettings } from 'app/data/model/project-info';
+import { ProjectSettings } from 'app/data/project-structure/project-info';
 import { ProjectLoader } from 'app/libs/project-helpers/project-handlers/project-loader.class';
 
 export const ProjectNotLoadedFooter = ({ project }: { project: ProjectSettings }) => (

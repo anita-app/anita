@@ -1,4 +1,4 @@
-import { RESERVED_UDS_KEYS, Section } from 'app/data/model/project-info';
+import { RESERVED_AUDS_KEYS, Section } from 'app/data/project-structure/project-info';
 import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition';
 
 /**
@@ -6,7 +6,7 @@ import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definiti
  * This is needed to work on system sections with DbConnector.
  */
 export const auds_sections: SectionDefinition<Section> = {
-  name: RESERVED_UDS_KEYS._sections,
+  name: RESERVED_AUDS_KEYS._sections,
   pk: 'id',
   fields: ['title', 'childOf', 'formModel']
 };

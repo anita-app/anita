@@ -1,7 +1,7 @@
-import { FORM_COMPONENTS_CODES, OptionKeysModel } from 'app/data/model/form-model-commons';
-import { RESERVED_FIELDS } from 'app/data/model/reserved-fields.constant';
+import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant';
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
-import { FormFieldsModel, SupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-fields/form-fields-model';
+import { FormFieldsModel, OptionKeysModel, SupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
+import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum';
 
 /**
  * Reserved keys are needed to store system required properties.
@@ -9,7 +9,7 @@ import { FormFieldsModel, SupportedFormsTypes } from 'app/ui-react-components/sh
  * @remarks
  * Users can still pick any of these as section names as sections are stored using their system-generated `id` as key.
  */
-export enum RESERVED_UDS_KEYS {
+export enum RESERVED_AUDS_KEYS {
   _settings = '_settings',
   _sections = '_sections'
 }
@@ -23,8 +23,8 @@ export type AnitaUniversalDataStorage = SystemData & UserData;
  * Store for system required properties. Includes general settings and Sections declarations. The reserved keys define system required properties.
  */
 export type SystemData = {
-  [RESERVED_UDS_KEYS._settings]: Array<ProjectSettings>;
-  [RESERVED_UDS_KEYS._sections]: Array<Section>;
+  [RESERVED_AUDS_KEYS._settings]: Array<ProjectSettings>;
+  [RESERVED_AUDS_KEYS._sections]: Array<Section>;
 };
 
 /**

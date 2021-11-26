@@ -1,6 +1,6 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
 import { urlParamFiller } from 'app/anita-routes/url-param-fillers.function';
-import { ParentInfoForDetailsView, Section } from 'app/data/model/project-info';
+import { ParentInfoForDetailsView, Section } from 'app/data/project-structure/project-info';
 import { GetParentInfoForDetailsView } from 'app/libs/project-helpers/get-parent-info-for-details-view.class';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';

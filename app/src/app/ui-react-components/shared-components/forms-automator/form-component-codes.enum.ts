@@ -1,37 +1,4 @@
-/**
- * Defines the Object that contains the prerequisite necessary to show a field of a form.
- * The key of the Object is the identifier of the field whose value must be checked.
- * The value of each key is an Array of all the possible values that fulfill the prerequsite.
- */
-export interface Prerequisites {
-  [fieldToCheckIdentifier: string]: Array<string | number | boolean>;
-}
-
-/**
- * Supported input types.
- */
-export type InputTypes = 'color' | 'date' | 'datetime-local' | 'email' | 'hidden' | 'month' | 'number' | 'password' | 'range' | 'reset' | 'tel' | 'text' | 'time' | 'url' | 'week';
-
-/**
- * Supported css classes defining the width of each field of a row of a form.
- */
-export type FormEleWidths = string;
-
-/**
- * Defines the structure of possible choices to be selected in a Radio or Select html element.
- */
-export interface OptionKeysModelGroup {
-  label: string;
-  options: Array<OptionKeysModel>;
-}
-
-/**
- * Defines the structure of possible choices to be selected in a Radio or Select html element.
- */
-export interface OptionKeysModel {
-  value: string | number;
-  label: string;
-}
+import { OptionKeysModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
 
 /**
  * Values to identify the form component to dynamically load.
@@ -52,6 +19,7 @@ export enum FORM_COMPONENTS_CODES {
   childOfSelectorForSection = 10,
   parentsSelector = 11
 }
+
 
 /**
  * Defines the value of the Select element for picking the type of Component for a field.

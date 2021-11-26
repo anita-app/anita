@@ -1,6 +1,5 @@
-import { OptionKeysModel } from 'app/data/model/form-model-commons';
 import { SUCCESS_BTN_OUTLINE } from 'app/ui-react-components/shared-components/buttons/buttons-layout-tw-classes.const';
-import { FormFieldsModel, ICommonFormEleProps } from 'app/ui-react-components/shared-components/forms-automator/form-fields/form-fields-model';
+import { FormFieldsModel, ICommonFormEleProps, OptionKeysModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
 import { OptionsMakerSingleOption } from 'app/ui-react-components/shared-components/forms-automator/form-fields/options-maker-single-option.component';
 
 export const OptionsMaker = (props: ICommonFormEleProps<FormFieldsModel<OptionKeysModel>>) => {

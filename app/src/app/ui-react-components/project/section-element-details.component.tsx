@@ -1,7 +1,7 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
 import { urlParamFiller } from 'app/anita-routes/url-param-fillers.function';
 import { dbInstances } from 'app/data/db-instances.const';
-import { RESERVED_UDS_KEYS, SectionElement } from 'app/data/model/project-info';
+import { RESERVED_AUDS_KEYS, SectionElement } from 'app/data/project-structure/project-info';
 import { isProjectLoaded } from 'app/libs/project-helpers/project-handlers/is-project-loaded.function';
 import { AnitaStore } from 'app/libs/redux/reducers.const';
 import { findSectionById } from 'app/libs/tools/find-section-by-id.function';
@@ -10,7 +10,7 @@ import { ParentsLinkShower } from 'app/ui-react-components/project/details-compo
 import { customRenderPicker } from 'app/ui-react-components/project/values-renderers/custom-render-picker.component';
 import { AddEditElementButton } from 'app/ui-react-components/shared-components/buttons/add-edit-element-button.component';
 import { MainContentContainer } from 'app/ui-react-components/shared-components/common-ui-eles/main-content-container.component';
-import { FormFieldsModel } from 'app/ui-react-components/shared-components/forms-automator/form-fields/form-fields-model';
+import { FormFieldsModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
 import { Loader } from 'app/ui-react-components/shared-components/loader/loader.component';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -28,7 +28,7 @@ export const SectionElementDetails = () => {
   useEffect(() => {
     let isMounted = true;
     const fetchData = async () => {
-      if (!isProjectLoaded(projectId) || !projectId || !sectionId || !elementId || !project || project[RESERVED_UDS_KEYS._settings][0].id !== projectId)
+      if (!isProjectLoaded(projectId) || !projectId || !sectionId || !elementId || !project || project[RESERVED_AUDS_KEYS._settings][0].id !== projectId)
         return setElement(undefined);
 
       const element = await dbInstances[projectId].callSelector<SectionElement>(sectionId, { id: elementId }).single();
@@ -52,8 +52,8 @@ export const SectionElementDetails = () => {
 
   return (
     <MainContentContainer headerText="Details">
-      {(element === null) ? <Loader /> : <ElementValuesViewer element={element} formModels={findSectionById(project[RESERVED_UDS_KEYS._sections], sectionId).formModel as Array<FormFieldsModel<SectionElement>>} />}
-      {(element !== null && element.parentsInfo && Array.isArray(element.parentsInfo) && element.parentsInfo.length > 0) && <ParentsLinkShower projectId={projectId} parentsInfo={element.parentsInfo} sections={project[RESERVED_UDS_KEYS._sections]} />}
+      {(element === null) ? <Loader /> : <ElementValuesViewer element={element} formModels={findSectionById(project[RESERVED_AUDS_KEYS._sections], sectionId).formModel as Array<FormFieldsModel<SectionElement>>} />}
+      {(element !== null && element.parentsInfo && Array.isArray(element.parentsInfo) && element.parentsInfo.length > 0) && <ParentsLinkShower projectId={projectId} parentsInfo={element.parentsInfo} sections={project[RESERVED_AUDS_KEYS._sections]} />}
       {(element !== null && <AddEditElementButton projectId={projectId} sectionId={sectionId} elementId={elementId} mode={EDITOR_MODE.edit} />)}
     </MainContentContainer>
   )

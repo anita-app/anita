@@ -1,4 +1,4 @@
-import { Section } from 'app/data/model/project-info';
+import { Section } from 'app/data/project-structure/project-info';
 import { FieldSelector } from 'app/ui-react-components/shared-components/forms-automator/form-layout/field-selector.component';
 
 export interface IFormAutomatorProps {

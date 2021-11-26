@@ -1,5 +1,5 @@
-import { LocalProjectSettings } from 'app/data/model/project-info';
-import { RESERVED_FIELDS } from 'app/data/model/reserved-fields.constant';
+import { LocalProjectSettings } from 'app/data/project-structure/project-info';
+import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant';
 import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition';
 
 /**
