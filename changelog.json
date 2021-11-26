@@ -9,6 +9,10 @@
     {
       "type": "added",
       "value": "added animations with animate.css"
+    },
+    {
+      "type": "added",
+      "value": "added animation on modal close"
     }
   ],
   "changes": [
