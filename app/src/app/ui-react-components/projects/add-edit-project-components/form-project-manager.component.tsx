@@ -21,6 +21,7 @@ export const FormProjectManager = () => {
   const projectEditorMode = useSelector((store: AnitaStore) => store.formProject.mode);
   const project = useSelector((state: AnitaStore) => state.formProject.project);
   const validObj = useSelector((state: AnitaStore) => state.formElesValidState);
+  const mode: EDITOR_MODE = projectId ? EDITOR_MODE.edit : EDITOR_MODE.add;
   const navigate = useNavigate();
 
   const handleProjectChange = (fieldName: string | number, value: FormAutomatorOnChangeValue) => {
@@ -28,7 +29,6 @@ export const FormProjectManager = () => {
   }
 
   const handleClickSave = () => {
-    const mode: EDITOR_MODE = projectId ? EDITOR_MODE.edit : EDITOR_MODE.add;
     new ProjectSaver(project as SystemData, mode).save();
     new CurrentProjectSetter(project[RESERVED_AUDS_KEYS._settings], project[RESERVED_AUDS_KEYS._sections]).set();
     navigate(urlParamFiller(ANITA_URLS.projectDetails, [{ name: URL_PARAMS.projectId, value: project[RESERVED_AUDS_KEYS._settings][0].id }]));
@@ -38,10 +38,14 @@ export const FormProjectManager = () => {
     store.dispatch({ type: REDUX_ACTIONS.updateFormProjectAddSection });
   }
 
+  const projectFormModel = mode === EDITOR_MODE.add ?
+    PROJECT_EDITOR_FORM_BUILDER[projectEditorMode].projectInfo.newItem :
+    PROJECT_EDITOR_FORM_BUILDER[projectEditorMode].projectInfo.existingItem;
+
   return (
     <span>
       <div className="mt-5 p-4 bg-white rounded shadow">
-        <FormAutomator formModel={PROJECT_EDITOR_FORM_BUILDER[projectEditorMode].projectInfo as any} element={project[RESERVED_AUDS_KEYS._settings][0]} handleChange={handleProjectChange} />
+        <FormAutomator formModel={projectFormModel as any} element={project[RESERVED_AUDS_KEYS._settings][0]} handleChange={handleProjectChange} />
       </div>
       <div className="px-1 md:px-2 lg:px-3">
         {project[RESERVED_AUDS_KEYS._sections].map((section, index) => <SectionManager key={section.id} section={section} sectionIndex={index} />)}

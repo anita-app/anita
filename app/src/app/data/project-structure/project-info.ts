@@ -1,3 +1,4 @@
+import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-storage-systems.enum';
 import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant';
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
 import { FormFieldsModel, OptionKeysModel, SupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
@@ -42,6 +43,7 @@ export interface ProjectSettings {
   title: string;
   description: string;
   dateCreation: string;
+  localStorage: LOCAL_STORAGE_SYSTEMS;
   lastModified?: string;
   encrypted?: boolean;
 }

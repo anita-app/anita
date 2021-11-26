@@ -35,3 +35,7 @@ select.border-red-300:focus {
   border-width: 1px !important;
   border-bottom-width: 3px !important;
 }
+
+.msg-wrapper {
+  white-space: pre-wrap;
+}

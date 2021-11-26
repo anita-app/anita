@@ -4,7 +4,7 @@ import {
   optionsBuilderForEditingAdvanced,
   optionsBuilderForEditingBasic
   } from 'app/data/project-form-builder/options-builder.constant';
-import { projectFormFieldsModel } from 'app/data/project-form-builder/project-info-builder.constant';
+import { projectInfoForEditing, projectInfoNewItem } from 'app/data/project-form-builder/project-info-builder.constant';
 import {
   sectionElesForEditingAdvanced,
   sectionElesForEditingBasic,
@@ -20,7 +20,10 @@ export enum PROJECT_EDITOR_MODE {
 
 export const PROJECT_EDITOR_FORM_BUILDER = {
   [PROJECT_EDITOR_MODE.advanced]: {
-    projectInfo: projectFormFieldsModel,
+    projectInfo: {
+      newItem: projectInfoNewItem,
+      existingItem: projectInfoForEditing
+    },
     sectionInfo: sectionDetailsFormFieldsModel,
     sectionEles: {
       newItem: sectionElesNewItemAdvanced,
@@ -32,7 +35,10 @@ export const PROJECT_EDITOR_FORM_BUILDER = {
     }
   },
   [PROJECT_EDITOR_MODE.basic]: {
-    projectInfo: projectFormFieldsModel,
+    projectInfo: {
+      newItem: projectInfoNewItem,
+      existingItem: projectInfoForEditing
+    },
     sectionInfo: sectionDetailsFormFieldsModel,
     sectionEles: {
       newItem: sectionElesNewItemBasic,

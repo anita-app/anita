@@ -77,6 +77,8 @@ export interface OptionKeysModelGroup {
 export interface OptionKeysModel {
   value: string | number;
   label: string;
+  disabled?: boolean;
+  hint?: string;
 }
 
 export interface IBasicRadio<T> extends ICommonTypes<T> {
