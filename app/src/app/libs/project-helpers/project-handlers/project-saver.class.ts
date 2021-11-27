@@ -1,7 +1,6 @@
+import { DbInitializer } from 'app/data/local-dbs/db-initializer.class';
 import { dbInstances } from 'app/data/local-dbs/db-instances.const';
 import { RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info';
-import { DbConnector } from 'app/libs/db-connector/db-connector.class';
-import { FILE_HANDLES_PLUGIN } from 'app/libs/db-connector/plugins/file-handles/exporter.constant';
 import { SaveProjectSettingsInIndexedDB } from 'app/libs/project-helpers/project-handlers/save-project-settings-in-indexeddb.class';
 import { asyncForEach } from 'app/libs/tools/tools';
 import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum';
@@ -48,8 +47,7 @@ export class ProjectSaver {
   }
 
   private async initDbInstance(): Promise<void> {
-    // TODO use DbInitializer class to pick the right dbStore
-    dbInstances[this.projectDataToSave[RESERVED_AUDS_KEYS._settings][0].id] = await new DbConnector(FILE_HANDLES_PLUGIN, { projectInfo: this.projectDataToSave[RESERVED_AUDS_KEYS._settings][0] }).init();
+    await new DbInitializer(this.projectDataToSave[RESERVED_AUDS_KEYS._settings][0], this.projectDataToSave[RESERVED_AUDS_KEYS._sections]).init();
   }
 
   private async saveSettings(): Promise<void> {

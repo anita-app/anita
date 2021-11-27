@@ -8,18 +8,20 @@ import { INDEXEDDB_PLUGIN } from 'app/libs/db-connector/plugins/indexed-db/expor
 
 export class DbInitializer {
 
+  private projectId: string;
 
   constructor(
-    private projectId: string,
     private projectInfo: ProjectSettings,
     private projectSections: Array<Section>
-  ) { }
+  ) {
+    this.projectId = projectInfo.id;
+  }
 
   public async init(): Promise<void> {
     if (this.projectInfo.localStorage === LOCAL_STORAGE_SYSTEMS.fileSystem)
-      this.doFileSystem();
+      await this.doFileSystem();
     else
-      this.doIndexedDb();
+      await this.doIndexedDb();
   }
 
   private async doFileSystem(): Promise<void> {
@@ -34,7 +36,7 @@ export class DbInitializer {
       { previousVersions: [], indexedDbName: this.projectId },
       dsExpander.allSez,
       true
-    )
+    ).init();
   }
 
 }
