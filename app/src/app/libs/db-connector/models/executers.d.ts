@@ -1,4 +1,4 @@
-import { LocalProjectSettings } from 'app/data/project-structure/project-info';
+import { AdditionalInfoForLocalStorage, LocalProjectSettings } from 'app/data/project-structure/project-info';
 import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
 import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition';
 import { ConnectionConfig } from 'mysql';
@@ -63,7 +63,7 @@ export interface DsDbInitOptions {
   mongoDbConnectionData?: MongoDbConnectionData;
   mySqlConnectionConfig?: ConnectionConfig;
   indexedDbName?: string;
-  previousVersions?: Array<Array<SectionDefinition<any>>>;
+  previousVersions?: Array<Array<string>>;
   encrypted?: boolean;
   encryptionKeys?: { [userId: string]: string };
 }
@@ -79,8 +79,8 @@ interface DbStoreInterface<DbTypes> {
   db: DbTypes;
   initDB(): Promise<DbStoreInterface<DbTypes>>;
   close(): void;
-  postProjectCreation?(): Promise<void>;
-  postProjectUpdate?(): Promise<void>;
+  postProjectCreation?(args?: {}): Promise<AdditionalInfoForLocalStorage>;
+  postProjectUpdate?(args?: {}): Promise<AdditionalInfoForLocalStorage>;
 }
 
 /**

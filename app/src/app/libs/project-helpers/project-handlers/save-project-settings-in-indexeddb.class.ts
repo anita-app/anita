@@ -1,5 +1,5 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const';
-import { LocalProjectSettings, ProjectSettings } from 'app/data/project-structure/project-info';
+import { AdditionalInfoForLocalStorage, LocalProjectSettings, ProjectSettings } from 'app/data/project-structure/project-info';
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum';
 
 /**
@@ -19,7 +19,7 @@ export class SaveProjectSettingsInIndexedDB {
    */
   constructor(
     private projectSettings: ProjectSettings,
-    private localSettingAdditionalKeys: Pick<LocalProjectSettings, 'fileHandle' | 'sections'>
+    private localSettingAdditionalKeys: AdditionalInfoForLocalStorage
   ) { }
 
   /**

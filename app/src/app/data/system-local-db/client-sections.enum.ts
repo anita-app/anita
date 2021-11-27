@@ -1,6 +1,5 @@
 import { localSettings } from 'app/data/system-local-db/sections/local-settings.const';
 import { projects } from 'app/data/system-local-db/sections/projects.const';
-import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition';
 
 /**
  * Identifies the table on which run the query with `db-connector`.
@@ -17,7 +16,7 @@ export const CLIENT_SECTIONS = {
  * 
  * TODO with Dexie 3.x.x upgrading has been simplified, probably no longer needed.
  */
-export const previousVersions: Array<Array<SectionDefinition<any>>> = [
+export const previousVersions: Array<Array<string>> = [
   // insert here previous version on DB structure change
 ];
 

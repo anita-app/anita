@@ -1,9 +1,8 @@
-import { AnitaUniversalDataStorage, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
+import { AdditionalInfoForLocalStorage, AnitaUniversalDataStorage, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
 import { DataStructureExtender } from 'app/data/system-local-db/data-structure-extender.class';
 import { DbConnectorInstance, DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers';
 import { fileHandleChecker } from 'app/libs/db-connector/plugins/file-handles/helpers/file-handle-checker.function';
 import { readFileHandleAsText } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper';
-import { SaveProjectSettingsInIndexedDB } from 'app/libs/project-helpers/project-handlers/save-project-settings-in-indexeddb.class';
 
 export class DbStore implements DbStoreInterface<AnitaUniversalDataStorage> {
 
@@ -42,13 +41,13 @@ export class DbStore implements DbStoreInterface<AnitaUniversalDataStorage> {
     return this;
   }
 
-  public async postProjectCreation(): Promise<void> {
-    await this.postProjectUpdate();
+  public async postProjectCreation(): Promise<AdditionalInfoForLocalStorage> {
     await this.initializeExistingProject();
+    return { fileHandle: this.dbConnector.options.projectInfo.fileHandle };
   }
 
-  public async postProjectUpdate(): Promise<void> {
-    await new SaveProjectSettingsInIndexedDB(this.dbConnector.dbStore.db[RESERVED_AUDS_KEYS._settings][0], { fileHandle: this.dbConnector.options.projectInfo.fileHandle }).save();
+  public async postProjectUpdate(): Promise<AdditionalInfoForLocalStorage> {
+    return { fileHandle: this.dbConnector.options.projectInfo.fileHandle };
   }
 
   public close(): void {

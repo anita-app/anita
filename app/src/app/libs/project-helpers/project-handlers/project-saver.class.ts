@@ -2,6 +2,7 @@ import { dbInstances } from 'app/data/local-dbs/db-instances.const';
 import { RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info';
 import { DbConnector } from 'app/libs/db-connector/db-connector.class';
 import { FILE_HANDLES_PLUGIN } from 'app/libs/db-connector/plugins/file-handles/exporter.constant';
+import { SaveProjectSettingsInIndexedDB } from 'app/libs/project-helpers/project-handlers/save-project-settings-in-indexeddb.class';
 import { asyncForEach } from 'app/libs/tools/tools';
 import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum';
 
@@ -60,13 +61,11 @@ export class ProjectSaver {
   }
 
   private async postSaveActions(): Promise<void> {
-    if (this.mode === EDITOR_MODE.add) {
-      if (typeof dbInstances[this.projectDataToSave[RESERVED_AUDS_KEYS._settings][0].id].dbStore.postProjectCreation === 'function')
-        await dbInstances[this.projectDataToSave[RESERVED_AUDS_KEYS._settings][0].id].dbStore.postProjectCreation();
-    } else {
-      if (typeof dbInstances[this.projectDataToSave[RESERVED_AUDS_KEYS._settings][0].id].dbStore.postProjectUpdate === 'function')
-        await dbInstances[this.projectDataToSave[RESERVED_AUDS_KEYS._settings][0].id].dbStore.postProjectUpdate();
-    }
+    const methodName = this.mode === EDITOR_MODE.add ? 'postProjectCreation' : 'postProjectUpdate';
+    const payload = await dbInstances[this.projectDataToSave[RESERVED_AUDS_KEYS._settings][0].id].dbStore[methodName]?.(this.projectDataToSave) || {};
+
+    await new SaveProjectSettingsInIndexedDB(this.projectDataToSave[RESERVED_AUDS_KEYS._settings][0], payload).save();
+
   }
 
 }
