@@ -3,7 +3,6 @@ import { DbConnectorInstance } from 'app/libs/db-connector/models/executers';
 import { Filter4Dexie, QueryHelper, SuppoertedOperators } from 'app/libs/db-connector/plugins/indexed-db/query-makers/query-helper.class';
 import { Logger } from 'app/libs/logger/logger.class';
 import Dexie from 'dexie';
-import cloneDeep from 'lodash.clonedeep';
 
 export type NewWhere = [string, SuppoertedOperators, string | number];
 
@@ -137,11 +136,9 @@ export class QueryMaker<E> {
    * Inserts a new element using `put` method of Dexie
    */
   public async insert(): Promise<void> {
-    const copy = cloneDeep(this.element);
+    this.handleDebug('INSERT', 'WITH OBJECT', this.element);
 
-    this.handleDebug('INSERT', 'WITH OBJECT', copy);
-
-    await this.dbConnector.dbStore.db[this.table].put(copy);
+    await this.dbConnector.dbStore.db[this.table].put(this.element);
   }
 
   // UPDATE
@@ -151,11 +148,9 @@ export class QueryMaker<E> {
    */
   public async update(): Promise<void> {
 
-    const copy = cloneDeep(this.element);
+    this.handleDebug('UPDATE', 'WITH OBJECT', this.element);
 
-    this.handleDebug('UPDATE', 'WITH OBJECT', copy);
-
-    await this.dbConnector.dbStore.db[this.table].update(copy[this.dbConnector.DS[this.section].pk], copy);
+    await this.dbConnector.dbStore.db[this.table].update(this.element[this.dbConnector.DS[this.section].pk], this.element);
   }
 
   // COUNT
