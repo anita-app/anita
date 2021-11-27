@@ -37,10 +37,12 @@ export const AddEditProject = () => {
         [RESERVED_AUDS_KEYS._sections]: [{ id: IdCreator.random(), title: '', formModel: [{} as any] }],
       });
 
-    if (!isProjectLoaded(projectId) || !projectId)
-      return setProject(undefined);
 
     const fetchEProject = async () => {
+      const canProceed = await isProjectLoaded(projectId);
+      if (!projectId || !canProceed)
+        return setProject(undefined);
+
       const _settings = await dbInstances[projectId].callSelector<ProjectSettings>(RESERVED_AUDS_KEYS._settings).multiple();
       const _sections = await dbInstances[projectId].callSelector<Section>(RESERVED_AUDS_KEYS._sections).multiple();
 

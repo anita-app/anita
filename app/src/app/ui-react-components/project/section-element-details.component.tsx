@@ -28,7 +28,9 @@ export const SectionElementDetails = () => {
   useEffect(() => {
     let isMounted = true;
     const fetchData = async () => {
-      if (!isProjectLoaded(projectId) || !projectId || !sectionId || !elementId || !project || project[RESERVED_AUDS_KEYS._settings][0].id !== projectId)
+      const canProceed = await isProjectLoaded(projectId);
+
+      if (!projectId || !sectionId || !elementId || !project || !canProceed || project[RESERVED_AUDS_KEYS._settings][0].id !== projectId)
         return setElement(undefined);
 
       const element = await dbInstances[projectId].callSelector<SectionElement>(sectionId, { id: elementId }).single();

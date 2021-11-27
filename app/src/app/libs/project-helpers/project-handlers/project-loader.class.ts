@@ -14,7 +14,6 @@ export class ProjectLoader {
   /**
    * The project info of the project to load
    */
-  private projectInfo: LocalProjectSettings;
   private projectSettings: Array<ProjectSettings>;
   private projectSections: Array<Section>;
 
@@ -23,11 +22,13 @@ export class ProjectLoader {
    * @param projectId the id of the projct to load
    */
   constructor(
-    private projectId: string
+    private projectId: string,
+    private projectInfo?: LocalProjectSettings
   ) { }
 
   public async loadProject(): Promise<void> {
-    await this.setProjectInfoFromIndexedDB();
+    if (!this.projectInfo)
+      await this.setProjectInfoFromIndexedDB();
     await this.createNewInstanceOfDbConnectorForrProject();
     await this.loadProjectSettings();
     await this.loadProjectSections();

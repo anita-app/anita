@@ -38,8 +38,9 @@ export const ProjectDetails = () => {
     let isMounted = true;
 
     const loadProject = async () => {
+      const canProceed = await isProjectLoaded(projectId);
 
-      if (!isProjectLoaded(projectId))
+      if (!canProceed)
         return setElement(undefined);
 
       const project = await dbInstances[projectId].callSelector<ProjectSettings>(RESERVED_AUDS_KEYS._settings).single();

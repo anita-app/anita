@@ -9,6 +9,7 @@ import { TableList } from 'app/ui-react-components/project/list-components/table
 import { NoSectionData } from 'app/ui-react-components/project/no-section-data.component';
 import { AddEditElementButton } from 'app/ui-react-components/shared-components/buttons/add-edit-element-button.component';
 import { MainContentContainer } from 'app/ui-react-components/shared-components/common-ui-eles/main-content-container.component';
+import { Loader } from 'app/ui-react-components/shared-components/loader/loader.component';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, useParams } from 'react-router';
@@ -24,9 +25,10 @@ export const SectionElementsList = () => {
   useEffect(() => {
     let isMounted = true;
     const getSectionData = async () => {
+      const canProceed = await isProjectLoaded(projectId);
 
-      if (!isProjectLoaded(projectId))
-        return;
+      if (!canProceed)
+        return setSectionData(undefined);
 
       const data = await dbInstances[projectId].callSelector<SectionElement>(sectionId).multiple();
       if (isMounted)
@@ -39,13 +41,13 @@ export const SectionElementsList = () => {
     return () => { isMounted = false; };
   }, [sectionId, projectId]);
 
-  if (project === null)
+  if (sectionData === undefined)
     return <Navigate to={ANITA_URLS.projectsList} />;
 
-  const sectionInfo = findSectionById(project[RESERVED_AUDS_KEYS._sections], sectionId);
+  if (project === null || sectionData === null)
+    return <Loader />;
 
-  if (sectionData === null)
-    return <div>Loading...</div>;
+  const sectionInfo = findSectionById(project[RESERVED_AUDS_KEYS._sections], sectionId);
 
   if (sectionData.length === 0)
     return <NoSectionData sectionId={sectionId} sectionTitle={sectionInfo.title} projectId={projectId} />;

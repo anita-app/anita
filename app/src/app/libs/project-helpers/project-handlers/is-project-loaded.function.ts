@@ -1,12 +1,20 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const';
+import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum';
+import { LocalProjectSettings } from 'app/data/project-structure/project-info';
+import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum';
+import { ProjectLoader } from 'app/libs/project-helpers/project-handlers/project-loader.class';
 
-export function isProjectLoaded(projectId: string): boolean {
-  // The project has not been loaded yet
-  // For now we only suppor the FileSystem, which requires user input to load the project
-  // So we set the project to undefined and navigate to the project selection page
-  // TODO: once other storage types are supported, we can try to load the project
-  if (!dbInstances[projectId])
-    return false;
+export async function isProjectLoaded(projectId: string): Promise<boolean> {
 
-  return true;
+  if (typeof dbInstances?.[projectId]?.callSelector === 'function')
+    return true;
+
+  const projectInfo = await dbInstances.system.callSelector<LocalProjectSettings>(CLIENT_SECTIONS.projects, { id: projectId }).single();
+
+  if (projectInfo.localStorage === LOCAL_STORAGE_SYSTEMS.IndexedDB) {
+    await new ProjectLoader(projectId, projectInfo).loadProject();
+    return true;
+  }
+
+  return false;
 }

@@ -26,13 +26,16 @@ export const AddEditSectionElement = () => {
   useEffect(() => {
     let isMounted = true;
 
-    if (!isProjectLoaded(projectId) || !projectId || !sectionId)
-      return setElement(undefined);
-
-    if (mode === EDITOR_MODE.add)
-      return setElement({});
 
     const fetchElement = async () => {
+      const canProceed = await isProjectLoaded(projectId);
+
+      if (!projectId || !sectionId || !canProceed)
+        return setElement(undefined);
+
+      if (mode === EDITOR_MODE.add)
+        return setElement({});
+
       const element = await dbInstances[projectId].callSelector<SectionElement>(sectionId, { id: elementId }).single();
       if (isMounted)
         setElement(element);
