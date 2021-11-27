@@ -41,6 +41,9 @@ export class DbConnector<DbTypes> implements DbConnectorInstance<DbTypes> {
     if (this.allSez.length)
       this.DS = Object.assign(this.DS, new DataStructureBuilder(this.allSez).make());
 
+    if (this.options.DS)
+      this.DS = Object.assign(this.DS, this.options.DS);
+
     if (this.executers.dbStore)
       this.dbStore = await new this.executers.dbStore(this, this.options).initDB();
     else

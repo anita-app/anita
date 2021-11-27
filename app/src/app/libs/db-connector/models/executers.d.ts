@@ -57,13 +57,20 @@ export interface MongoDbConnectionData {
 
 /**
  * Options to initialize IndexedDB with Dexie
+ * TODO - auto detect the type of the storage facility and set the correct options types
  */
 export interface DsDbInitOptions {
+  // File System
   projectInfo?: LocalProjectSettings;
+  // MongoDb
   mongoDbConnectionData?: MongoDbConnectionData;
+  // MySQL
   mySqlConnectionConfig?: ConnectionConfig;
+  // IndexedDB
   indexedDbName?: string;
+  DS?: AbstractModel;
   previousVersions?: Array<Array<string>>;
+  // Encryption 
   encrypted?: boolean;
   encryptionKeys?: { [userId: string]: string };
 }

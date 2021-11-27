@@ -1,8 +1,12 @@
+import { DbInitializer } from 'app/data/local-dbs/db-initializer.class';
 import { dbInstances } from 'app/data/local-dbs/db-instances.const';
-import { LocalProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
+import {
+  LocalProjectSettings,
+  ProjectSettings,
+  RESERVED_AUDS_KEYS,
+  Section
+  } from 'app/data/project-structure/project-info';
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum';
-import { DbConnector } from 'app/libs/db-connector/db-connector.class';
-import { FILE_HANDLES_PLUGIN } from 'app/libs/db-connector/plugins/file-handles/exporter.constant';
 import { CurrentProjectSetter } from 'app/libs/project-helpers/project-handlers/current-project-setter.class';
 
 export class ProjectLoader {
@@ -11,6 +15,8 @@ export class ProjectLoader {
    * The project info of the project to load
    */
   private projectInfo: LocalProjectSettings;
+  private projectSettings: Array<ProjectSettings>;
+  private projectSections: Array<Section>;
 
   /**
    * Creates an instance of ProjectLoader
@@ -23,6 +29,8 @@ export class ProjectLoader {
   public async loadProject(): Promise<void> {
     await this.setProjectInfoFromIndexedDB();
     await this.createNewInstanceOfDbConnectorForrProject();
+    await this.loadProjectSettings();
+    await this.loadProjectSections();
     this.callCurrentProjectSetter();
   }
 
@@ -37,14 +45,28 @@ export class ProjectLoader {
    * Creates new instance of dbConnector for the project so it can be used in the app
    */
   private async createNewInstanceOfDbConnectorForrProject() {
-    dbInstances[this.projectId] = await new DbConnector(FILE_HANDLES_PLUGIN, { projectInfo: this.projectInfo }).init();
+    await new DbInitializer(this.projectInfo).init();
+  }
+
+  /**
+   * Loads project settings from the dbInstance
+   */
+  public async loadProjectSettings(): Promise<void> {
+    this.projectSettings = await dbInstances[this.projectId].callSelector<ProjectSettings>(RESERVED_AUDS_KEYS._settings).multiple();
+  }
+
+  /**
+   * Loads project sections from the dbInstance
+   */
+  public async loadProjectSections(): Promise<void> {
+    this.projectSections = await dbInstances[this.projectId].callSelector<Section>(RESERVED_AUDS_KEYS._sections).multiple();
   }
 
   /**
    * Calls current project setter to load the current project in the Redux store
    */
   private callCurrentProjectSetter() {
-    new CurrentProjectSetter(dbInstances[this.projectId].dbStore.db[RESERVED_AUDS_KEYS._settings], dbInstances[this.projectId].dbStore.db[RESERVED_AUDS_KEYS._sections]).set();
+    new CurrentProjectSetter(this.projectSettings, this.projectSections).set();
   }
 
 }
