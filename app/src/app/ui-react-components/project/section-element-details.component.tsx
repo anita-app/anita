@@ -30,7 +30,7 @@ export const SectionElementDetails = () => {
     const fetchData = async () => {
       const canProceed = await isProjectLoaded(projectId);
 
-      if (!projectId || !sectionId || !elementId || !project || !canProceed || project[RESERVED_AUDS_KEYS._settings][0].id !== projectId)
+      if (!projectId || !sectionId || !elementId || !canProceed)
         return setElement(undefined);
 
       const element = await dbInstances[projectId].callSelector<SectionElement>(sectionId, { id: elementId }).single();
@@ -54,7 +54,7 @@ export const SectionElementDetails = () => {
 
   return (
     <MainContentContainer headerText="Details">
-      {(element === null) ? <Loader /> : <ElementValuesViewer element={element} formModels={findSectionById(project[RESERVED_AUDS_KEYS._sections], sectionId).formModel as Array<FormFieldsModel<SectionElement>>} />}
+      {(element === null || project === null) ? <Loader /> : <ElementValuesViewer element={element} formModels={findSectionById(project[RESERVED_AUDS_KEYS._sections], sectionId).formModel as Array<FormFieldsModel<SectionElement>>} />}
       {(element !== null && element.parentsInfo && Array.isArray(element.parentsInfo) && element.parentsInfo.length > 0) && <ParentsLinkShower projectId={projectId} parentsInfo={element.parentsInfo} sections={project[RESERVED_AUDS_KEYS._sections]} />}
       {(element !== null && <AddEditElementButton projectId={projectId} sectionId={sectionId} elementId={elementId} mode={EDITOR_MODE.edit} />)}
     </MainContentContainer>
