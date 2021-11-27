@@ -138,10 +138,6 @@ export class QueryMaker<E> {
    */
   public async insert(): Promise<void> {
     const copy = cloneDeep(this.element);
-    for (const key in this.element)
-      if (!this.dbConnector.DS[this.section].fields.includes(key))
-        // tslint:disable-next-line:no-dynamic-delete
-        delete copy[key];
 
     this.handleDebug('INSERT', 'WITH OBJECT', copy);
 
@@ -156,13 +152,6 @@ export class QueryMaker<E> {
   public async update(): Promise<void> {
 
     const copy = cloneDeep(this.element);
-
-    for (const key in this.element)
-      if (!this.dbConnector.DS[this.section].fields.includes(key))
-        // tslint:disable-next-line:no-dynamic-delete
-        delete copy[key];
-      else if (!copy[key])
-        copy[key] = undefined;
 
     this.handleDebug('UPDATE', 'WITH OBJECT', copy);
 
