@@ -4,6 +4,7 @@ import { LocalProjectSettings, Section } from 'app/data/project-structure/projec
 import { DataStructureExtender } from 'app/data/system-local-db/data-structure-extender.class';
 import { DbConnector } from 'app/libs/db-connector/db-connector.class';
 import { FILE_HANDLES_PLUGIN } from 'app/libs/db-connector/plugins/file-handles/exporter.constant';
+import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
 import { INDEXEDDB_PLUGIN } from 'app/libs/db-connector/plugins/indexed-db/exporter.constant';
 
 export class DbInitializer {
@@ -12,7 +13,9 @@ export class DbInitializer {
 
   constructor(
     private projectInfo: LocalProjectSettings,
-    private projectSections?: Array<Section>
+    private projectSections?: Array<Section>,
+    private fileHandle?: FileSystemFileHandle
+
   ) {
     this.projectId = projectInfo.id;
   }
@@ -25,6 +28,8 @@ export class DbInitializer {
   }
 
   private async doFileSystem(): Promise<void> {
+    if (this.fileHandle)
+      this.projectInfo = { ...this.projectInfo, fileHandle: this.fileHandle };
     dbInstances[this.projectId] = await new DbConnector(FILE_HANDLES_PLUGIN, { projectInfo: this.projectInfo }).init();
   }
 

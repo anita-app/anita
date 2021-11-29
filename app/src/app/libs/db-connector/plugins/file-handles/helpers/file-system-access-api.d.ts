@@ -79,7 +79,7 @@ interface OpenFilePickerOptions {
 export interface WindowFS extends Window {
   chooseFileSystemEntries(options?: ChooseFileSystemEntriesOptions): Promise<FileSystemHandle | FileSystemHandle[]>;
   showSaveFilePicker(options?: SaveFilePickerOptions): Promise<FileSystemFileHandle>;
-  showOpenFilePicker(options?: { multiple: false; }): Promise<FileSystemFileHandle>;
+  showOpenFilePicker(options?: { multiple: false; }): Promise<Array<FileSystemFileHandle>>;
   showOpenFilePicker(options?: { multiple: true; }): Promise<Array<FileSystemFileHandle>>;
 }
 

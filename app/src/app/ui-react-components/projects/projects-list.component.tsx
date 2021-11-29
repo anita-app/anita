@@ -1,16 +1,13 @@
 import { ANITA_URLS } from 'app/anita-routes/anita-routes.constant';
-import { ProjectFileImporter } from 'app/libs/projects-helpers/file-handle-helpers/project-file-importer.class';
 import { ProjectsListLoader } from 'app/libs/projects-helpers/projects-handlers/projects-list-loader.class';
 import { AnitaStore } from 'app/libs/redux/reducers.const';
 import { ProjectCard } from 'app/ui-react-components/projects/project-card.component';
+import { ProjectImportButton } from 'app/ui-react-components/projects/project-importer-components/import-project-modal.component';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router';
 import { Link } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
-
-// Disabled rule as <a> and <button> would have different layouts
-/* eslint-disable jsx-a11y/anchor-is-valid */
 
 export const ProjectsList = () => {
 
@@ -47,15 +44,7 @@ export const ProjectsList = () => {
           </div>
           <div className="my-2">
 
-            <a data-tip data-for="importProject"
-              href="#"
-              onClick={() => new ProjectFileImporter().import()}
-              className="mx-2 my-2 text-white bg-prussian-blue-600 border-0 py-1 px-6 focus:outline-none hover:bg-prussian-blue-700 rounded font-bold text-sm"
-            ><i className="bi bi-arrow-bar-down"></i>
-            </a>
-            <ReactTooltip id="importProject" effect="solid">
-              <span>Import an existing project</span>
-            </ReactTooltip>
+            <ProjectImportButton />
 
 
             <Link data-tip data-for='createProject'

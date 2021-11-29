@@ -6,7 +6,7 @@ declare const window: WindowFS;
  * Open a handle to an existing file on the local file system.
  */
 export function getFileHandle(): Promise<Array<FileSystemFileHandle>> {
-  return window.showOpenFilePicker({ multiple: true }).then(handles => handles);
+  return window.showOpenFilePicker({ multiple: false }).then(handles => handles);
 }
 
 /**

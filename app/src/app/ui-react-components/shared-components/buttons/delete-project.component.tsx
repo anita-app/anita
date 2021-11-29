@@ -10,7 +10,7 @@ export const DeleteProjectButton = ({ project }: { project: ProjectSettings }) =
   const handleClickModal = () => {
     if (isModalOpen) {
       setAnimationClass('animate__fadeOut')
-      setTimeout(() => setIsModalOpen(false), 500);
+      setTimeout(() => setIsModalOpen(false), 800);
     } else {
       setAnimationClass('animate__fadeIn')
       setIsModalOpen(true)
@@ -33,7 +33,7 @@ export const DeleteProjectModal = ({ project, closeFn, animationClass }: { proje
     closeFn();
     // This timeout must be equal or greater than the one in closeFn.
     // Otherwise we would cause an update on an unmounted component.
-    setTimeout(() => new ProjectDeletor(project).delete(), 500);
+    setTimeout(() => new ProjectDeletor(project).delete(), 800);
   }
 
   return (
@@ -43,7 +43,7 @@ export const DeleteProjectModal = ({ project, closeFn, animationClass }: { proje
 
         <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
-        <div className={`animate__animated ${animationClass} animate__faster inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full`}>
+        <div className={`animate__animated ${animationClass} animate__fast inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full`}>
           <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
             <div className="sm:flex sm:items-start">
               <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
@@ -63,10 +63,10 @@ export const DeleteProjectModal = ({ project, closeFn, animationClass }: { proje
             </div>
           </div>
           <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-            <button onClick={handleClickDelete} type="button" className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
+            <button onClick={handleClickDelete} type="button" className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-0 focus:bg-red-900 sm:ml-3 sm:w-auto sm:text-sm">
               Delete
             </button>
-            <button onClick={closeFn} type="button" className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+            <button onClick={closeFn} type="button" className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-0 focus:bg-gray-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
               Cancel
             </button>
           </div>
