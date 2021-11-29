@@ -54,10 +54,8 @@ export class ProjectDataImporter {
   }
 
   private async saveDataToDb(): Promise<any> {
-    for (const section in this.projectData) {
-      console.log('saveDataToDb ~ this.projectData[section]', this.projectData[section]);
+    for (const section in this.projectData)
       await dbInstances[this.projectData[RESERVED_AUDS_KEYS._settings][0].id].callInsertor(section, this.projectData[section]).autoInsert();
-    }
   }
 
   /**
