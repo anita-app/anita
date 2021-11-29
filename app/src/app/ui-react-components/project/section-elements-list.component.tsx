@@ -49,6 +49,9 @@ export const SectionElementsList = () => {
 
   const sectionInfo = findSectionById(project[RESERVED_AUDS_KEYS._sections], sectionId);
 
+  if (!sectionInfo)
+    return null;
+
   if (sectionData.length === 0)
     return <NoSectionData sectionId={sectionId} sectionTitle={sectionInfo.title} projectId={projectId} />;
 

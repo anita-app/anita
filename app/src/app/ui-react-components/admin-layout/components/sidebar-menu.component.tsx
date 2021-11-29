@@ -2,6 +2,7 @@ import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
 import { urlParamFiller } from 'app/anita-routes/url-param-fillers.function';
 import { RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
 import { AnitaStore } from 'app/libs/redux/reducers.const';
+import { ProjectPicker } from 'app/ui-react-components/admin-layout/components/project-picker.component';
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -30,9 +31,8 @@ const ProjectMenu = () => {
 
   return (
     <div className="mt-3">
-      <div className="block py-2.5 px-4">
-        <p className="text-xs text-gray-600">Current project:</p>
-        <p>{project?.[RESERVED_AUDS_KEYS._settings][0]?.title}</p>
+      <div className="block py-2.5 px-1">
+        <ProjectPicker project={project} />
       </div>
       <div className="block py-2.5 px-4">
         <p className="text-xs text-gray-600">Project sections:</p>

@@ -3,6 +3,7 @@ import { CLIENT_SEZ_DEFINITIONS, previousVersions } from 'app/data/system-local-
 import { DbConnector } from 'app/libs/db-connector/db-connector.class';
 import { INDEXEDDB_PLUGIN } from 'app/libs/db-connector/plugins/indexed-db/exporter.constant';
 import { Logger } from 'app/libs/logger/logger.class';
+import { ProjectsListLoader } from 'app/libs/projects-helpers/projects-handlers/projects-list-loader.class';
 import React from 'react';
 
 export class Startupper {
@@ -16,6 +17,7 @@ export class Startupper {
     Logger.info('Anita web app.');
     await this.initSystemIndexedDb(this.systemDbName);
     this.setLoggerDebug();
+    this.loadProjectList();
   }
 
   /**
@@ -37,6 +39,13 @@ export class Startupper {
    */
   private setLoggerDebug(): void {
     Logger.debug = this.isReactDev();
+  }
+
+  /**
+   * We need to load the project list for the project selector
+   */
+  private loadProjectList(): void {
+    new ProjectsListLoader().load();
   }
 
 }

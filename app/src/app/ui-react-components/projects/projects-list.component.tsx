@@ -13,7 +13,7 @@ export const ProjectsList = () => {
 
   const [hasLoaded, setHasLoaded] = useState(false);
   const projects = useSelector((state: AnitaStore) => state.projects);
-  const projectsLenght = Array.isArray(projects) ? projects.length : 0;
+  const projectsLenght = projects?.length || 0;
 
   useEffect(() => {
     let isMounted = true;
