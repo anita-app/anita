@@ -27,10 +27,10 @@ As we move forward we will make available our current roadmap, as of now our nex
 Our goal for version 1.0.0 is to implement the following:
 
 - [X] support for child elements to link to parent elements of parent sections;
+- [X] support for saving data locally in the browser's IndexedDB (with [Dexie.js](https://dexie.org/));
 - [ ] possibility to exclude certain sections from the main menu: useful for child sections to be displayed only as a subsection of a parent element;
 - [ ] addition of a tab view for child sections;
 - [ ] Anita templates (at least one example template); 
-- [ ] support for saving data locally in the browser's IndexedDB (with [Dexie.js](https://dexie.org/));
 - [ ] support for synchronization of locally stored data with one or more remote databases connected directly to the PWA, without intermediaries (serverless/no-server). Priority development for (in order of priority):
   - [ ] [DexieCloud](https://dexie.org/cloud/)
   - [ ] MongoDB
