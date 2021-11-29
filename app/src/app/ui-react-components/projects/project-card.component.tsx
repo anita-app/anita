@@ -19,7 +19,7 @@ export const ProjectCard = ({ project }: { project: ProjectSettings }) => {
         <p className="text-lg mb-3">{project.description}</p>
 
         <p className="text-gray-600 text-xs">Created on:</p>
-        <p className="text-md">{dateFormat('yyyy/MM/dd, at hh:mm', new Date(project.dateCreation))}</p>
+        <p className="text-md">{dateFormat('yyyy/MM/dd, at hh:mm', new Date(project.createdAt))}</p>
 
         <CardFooterItemsEnd>
           <DeleteProjectButton project={project} />

@@ -73,8 +73,8 @@ export class DbUpdator<E> implements Updator<E> {
     this.query = {
       $set: this.element
     };
-    if (this.dbConnector.DS[this.section].fields.includes(RESERVED_FIELDS.lastModified))
-      this.query.$currentDate = { lastModified: true };
+    if (this.dbConnector.DS[this.section].fields.includes(RESERVED_FIELDS.updatedAt))
+      this.query.$currentDate = { updatedAt: true };
   }
 
   /**

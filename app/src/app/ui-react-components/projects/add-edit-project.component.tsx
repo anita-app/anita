@@ -33,7 +33,7 @@ export const AddEditProject = () => {
     // in add mode, sets a new project
     if (mode === EDITOR_MODE.add)
       return setProject({
-        [RESERVED_AUDS_KEYS._settings]: [{ id: IdCreator.random(), title: '', description: '', dateCreation: '', localStorage: LOCAL_STORAGE_SYSTEMS.IndexedDB }],
+        [RESERVED_AUDS_KEYS._settings]: [{ id: IdCreator.random(), title: '', description: '', createdAt: '', localStorage: LOCAL_STORAGE_SYSTEMS.IndexedDB }],
         [RESERVED_AUDS_KEYS._sections]: [{ id: IdCreator.random(), title: '', formModel: [{} as any] }],
       });
 

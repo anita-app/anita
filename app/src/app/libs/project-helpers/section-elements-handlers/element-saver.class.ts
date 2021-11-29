@@ -34,13 +34,13 @@ export class ElementSaver {
   public async save(): Promise<SectionElement> {
     this.setSectionModel();
     this.checkAndSetPk();
-    this.setDateCreation();
+    this.setcreatedAt();
     this.deleteEmptyProps();
 
     if (this.mode === EDITOR_MODE.add)
       await dbInstances[this.projectId].callInsertor(this.sectionId, this.element).autoInsert();
     else {
-      this.setLastModifiedValueIfInEditMode();
+      this.setupdatedAtValueIfInEditMode();
       await dbInstances[this.projectId].callUpdator(this.sectionId, this.element).autoUpdate();
     }
 
@@ -73,19 +73,19 @@ export class ElementSaver {
   }
 
   /**
-   * Checks if `dateCreation` value is set, if not one is created.
+   * Checks if `createdAt` value is set, if not one is created.
    */
-  private setDateCreation(): void {
-    if (this.sectionModelInDS.fields.includes(RESERVED_FIELDS.dateCreation) && !this.element[RESERVED_FIELDS.dateCreation])
-      this.element[RESERVED_FIELDS.dateCreation] = new Date(new Date().toUTCString()).toISOString();
+  private setcreatedAt(): void {
+    if (this.sectionModelInDS.fields.includes(RESERVED_FIELDS.createdAt) && !this.element[RESERVED_FIELDS.createdAt])
+      this.element[RESERVED_FIELDS.createdAt] = new Date(new Date().toUTCString()).toISOString();
   }
 
   /**
-   * Sets the lastModified value if in edit mode
+   * Sets the updatedAt value if in edit mode
    */
-  private setLastModifiedValueIfInEditMode(): void {
-    if (this.sectionModelInDS.fields.includes(RESERVED_FIELDS.lastModified))
-      this.element[RESERVED_FIELDS.lastModified] = new Date(new Date().toUTCString()).toISOString();
+  private setupdatedAtValueIfInEditMode(): void {
+    if (this.sectionModelInDS.fields.includes(RESERVED_FIELDS.updatedAt))
+      this.element[RESERVED_FIELDS.updatedAt] = new Date(new Date().toUTCString()).toISOString();
   }
 
 }

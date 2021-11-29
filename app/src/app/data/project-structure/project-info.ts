@@ -43,9 +43,9 @@ export interface ProjectSettings {
   id: string;
   title: string;
   description: string;
-  dateCreation: string;
+  createdAt: string;
   localStorage: LOCAL_STORAGE_SYSTEMS;
-  lastModified?: string;
+  updatedAt?: string;
   encrypted?: boolean;
 }
 
@@ -82,7 +82,7 @@ export interface SectionCustomFieldProperties {
   value?: any;
   width?: number;
   [RESERVED_FIELDS.id]?: never;
-  [RESERVED_FIELDS.dateCreation]?: never;
+  [RESERVED_FIELDS.createdAt]?: never;
 }
 
 /**
@@ -92,7 +92,7 @@ export interface SectionDetailsDeclaration {
   id: string;
   title: string;
   childOf?: Array<string>;
-  [RESERVED_FIELDS.dateCreation]?: never;
+  [RESERVED_FIELDS.createdAt]?: never;
 }
 
 /**
@@ -116,9 +116,9 @@ export interface ParentInfoForDetailsView {
  */
 export interface SectionElement {
   [RESERVED_FIELDS.id]?: string;
-  [RESERVED_FIELDS.dateCreation]?: string;
+  [RESERVED_FIELDS.createdAt]?: string;
   [RESERVED_FIELDS.createdBy]?: string;
   [RESERVED_FIELDS.parentsInfo]?: Array<string>;
-  [RESERVED_FIELDS.lastModified]?: string;
+  [RESERVED_FIELDS.updatedAt]?: string;
   [key: string]: any;
 }

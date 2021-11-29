@@ -15,7 +15,7 @@ const commonFieldsForProjectInfo: Array<FormFieldsModel<ProjectSettings>> = [{
 },
 {
   componentCode: FORM_COMPONENTS_CODES.hiddenInput,
-  fieldName: RESERVED_FIELDS.dateCreation
+  fieldName: RESERVED_FIELDS.createdAt
 },
 {
   componentCode: FORM_COMPONENTS_CODES.basicInput,

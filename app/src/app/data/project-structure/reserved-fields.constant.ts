@@ -4,8 +4,8 @@
  */
 export enum RESERVED_FIELDS {
   id = 'id',
-  dateCreation = 'dateCreation',
+  createdAt = 'createdAt',
   parentsInfo = 'parentsInfo',
-  lastModified = 'lastModified',
+  updatedAt = 'updatedAt',
   createdBy = 'createdBy'
 }

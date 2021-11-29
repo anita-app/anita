@@ -12,6 +12,6 @@ export const projects: SectionDefinition<LocalProjectSettings> = {
     'title',
     'fileHandle',
     'description',
-    RESERVED_FIELDS.dateCreation
+    RESERVED_FIELDS.createdAt
   ]
 };

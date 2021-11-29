@@ -21,10 +21,10 @@ export class ProjectSaver {
     this.projectDataToSave[RESERVED_AUDS_KEYS._settings] = this.project[RESERVED_AUDS_KEYS._settings].concat();
     this.projectDataToSave[RESERVED_AUDS_KEYS._sections] = this.project[RESERVED_AUDS_KEYS._sections].concat();
 
-    this.setDateCreation();
+    this.setcreatedAt();
 
     if (this.mode === EDITOR_MODE.edit)
-      this.setLastModified();
+      this.setupdatedAt();
 
     if (!dbInstances[this.projectDataToSave[RESERVED_AUDS_KEYS._settings][0].id])
       await this.initDbInstance();
@@ -37,12 +37,12 @@ export class ProjectSaver {
     return this.projectDataToSave;
   }
 
-  private setDateCreation(): void {
-    this.projectDataToSave[RESERVED_AUDS_KEYS._settings][0].dateCreation = new Date(new Date().toUTCString()).toISOString();
+  private setcreatedAt(): void {
+    this.projectDataToSave[RESERVED_AUDS_KEYS._settings][0].createdAt = new Date(new Date().toUTCString()).toISOString();
   }
 
-  private setLastModified(): void {
-    this.projectDataToSave[RESERVED_AUDS_KEYS._settings][0].lastModified = new Date(new Date().toUTCString()).toISOString();
+  private setupdatedAt(): void {
+    this.projectDataToSave[RESERVED_AUDS_KEYS._settings][0].updatedAt = new Date(new Date().toUTCString()).toISOString();
   }
 
   private async initDbInstance(): Promise<void> {

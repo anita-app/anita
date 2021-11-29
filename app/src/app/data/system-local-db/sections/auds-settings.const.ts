@@ -8,5 +8,5 @@ import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definiti
 export const auds_settings: SectionDefinition<ProjectSettings> = {
   name: RESERVED_AUDS_KEYS._settings,
   pk: 'id',
-  fields: ['title', 'dateCreation', 'description']
+  fields: ['title', 'createdAt', 'description']
 };
