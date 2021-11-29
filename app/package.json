@@ -16,6 +16,7 @@
     "crypto-es": "^1.2.7",
     "date-format": "^3.0.0",
     "dexie": "^3.0.3",
+    "file-dialog": "^0.0.8",
     "history": "5",
     "lodash.clonedeep": "^4.5.0",
     "lodash.uniqueid": "^4.0.1",

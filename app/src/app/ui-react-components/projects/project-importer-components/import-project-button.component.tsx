@@ -30,7 +30,11 @@ export const ImportProjectButton = ({ btnType = 'icon' }: { btnType?: 'icon' | '
       setAnimationClass('animate__fadeOut')
       setTimeout(() => setIsModalOpen(false), 500);
     } else {
-      const { project, fileHandle } = await new ProjectFileImporter().import()
+      const { project, fileHandle } = await new ProjectFileImporter().import() || {};
+
+      if (!project)
+        return;
+
       setAnimationClass('animate__fadeIn')
       setIsModalOpen(true)
       setProjectData(project);
