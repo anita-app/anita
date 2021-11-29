@@ -91,7 +91,7 @@ Total : 168 files,  4932 codes, 1482 comments, 1175 blanks, all 7589 lines
 | [app/src/app/libs/project-helpers/project-handlers/save-project-settings-in-indexeddb.class.ts](/app/src/app/libs/project-helpers/project-handlers/save-project-settings-in-indexeddb.class.ts) | TypeScript | 27 | 24 | 9 | 60 |
 | [app/src/app/libs/project-helpers/section-elements-handlers/element-saver.class.ts](/app/src/app/libs/project-helpers/section-elements-handlers/element-saver.class.ts) | TypeScript | 48 | 30 | 14 | 92 |
 | [app/src/app/libs/project-helpers/txt-by-field-value.function.ts](/app/src/app/libs/project-helpers/txt-by-field-value.function.ts) | TypeScript | 7 | 5 | 5 | 17 |
-| [app/src/app/libs/projects-helpers/file-handle-helpers/project-file-importer.class.ts](/app/src/app/libs/projects-helpers/file-handle-helpers/project-file-importer.class.ts) | TypeScript | 49 | 37 | 12 | 98 |
+| [app/src/app/libs/projects-helpers/file-handle-helpers/project-data-importer.class.ts](/app/src/app/libs/projects-helpers/file-handle-helpers/project-data-importer.class.ts) | TypeScript | 49 | 37 | 12 | 98 |
 | [app/src/app/libs/projects-helpers/projects-handlers/projects-list-loader.class.ts](/app/src/app/libs/projects-helpers/projects-handlers/projects-list-loader.class.ts) | TypeScript | 18 | 15 | 7 | 40 |
 | [app/src/app/libs/projects-helpers/sections-forms-helpers/section-form-ele-generator.class.ts](/app/src/app/libs/projects-helpers/sections-forms-helpers/section-form-ele-generator.class.ts) | TypeScript | 29 | 22 | 9 | 60 |
 | [app/src/app/libs/redux/action.type.ts](/app/src/app/libs/redux/action.type.ts) | TypeScript | 74 | 0 | 12 | 86 |

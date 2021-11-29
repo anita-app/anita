@@ -3,8 +3,8 @@ import { projectInfoNewItem } from 'app/data/project-form-builder/project-info-b
 import { AnitaUniversalDataStorage, ProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
 import { CurrentProjectSetter } from 'app/libs/project-helpers/project-handlers/current-project-setter.class';
-import { ProjectFileDataImporter } from 'app/libs/projects-helpers/file-handle-helpers/project-file-data-importer.class';
-import { ProjectFileImporter } from 'app/libs/projects-helpers/file-handle-helpers/project-file-importer.class';
+import { ProjectDataImporter } from 'app/libs/projects-helpers/project-importers/project-data-importer.class';
+import { ProjectFileImporter } from 'app/libs/projects-helpers/project-importers/project-file-importer.class';
 import { AnitaStore } from 'app/libs/redux/reducers.const';
 import { FormAutomator } from 'app/ui-react-components/shared-components/forms-automator/form-automator.component';
 import { FormAutomatorOnChangeValue, FormFieldsModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
@@ -30,7 +30,7 @@ export const ImportProjectButton = ({ btnType = 'icon' }: { btnType?: 'icon' | '
       setAnimationClass('animate__fadeOut')
       setTimeout(() => setIsModalOpen(false), 500);
     } else {
-      const { project, fileHandle } = await new ProjectFileDataImporter().import()
+      const { project, fileHandle } = await new ProjectFileImporter().import()
       setAnimationClass('animate__fadeIn')
       setIsModalOpen(true)
       setProjectData(project);
@@ -41,7 +41,7 @@ export const ImportProjectButton = ({ btnType = 'icon' }: { btnType?: 'icon' | '
 
   const handleClickImport = async () => {
     projectData[RESERVED_AUDS_KEYS._settings][0] = projectSettings;
-    await new ProjectFileImporter(projectData, projectFileHandle).import();
+    await new ProjectDataImporter(projectData, projectFileHandle).import();
     handleClickModal();
     new CurrentProjectSetter(projectData[RESERVED_AUDS_KEYS._settings], projectData[RESERVED_AUDS_KEYS._sections]).set();
     setTimeout(() => navigate(ANITA_URLS.projectsList), 500);

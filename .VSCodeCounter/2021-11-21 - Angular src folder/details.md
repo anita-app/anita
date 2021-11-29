@@ -81,7 +81,7 @@ Total : 241 files,  7305 codes, 1693 comments, 1596 blanks, all 10594 lines
 | [app/src/app/libs/ng-rx/reducers/project.reducer.ts](/app/src/app/libs/ng-rx/reducers/project.reducer.ts) | TypeScript | 12 | 9 | 4 | 25 |
 | [app/src/app/libs/ng-rx/reducers/projects.reducer.ts](/app/src/app/libs/ng-rx/reducers/projects.reducer.ts) | TypeScript | 18 | 9 | 4 | 31 |
 | [app/src/app/libs/ng-rx/reducers/sections-for-child-of-selector.reducer.ts](/app/src/app/libs/ng-rx/reducers/sections-for-child-of-selector.reducer.ts) | TypeScript | 24 | 11 | 5 | 40 |
-| [app/src/app/libs/projects-helpers/file-handle-helpers/project-file-importer.class.ts](/app/src/app/libs/projects-helpers/file-handle-helpers/project-file-importer.class.ts) | TypeScript | 49 | 37 | 12 | 98 |
+| [app/src/app/libs/projects-helpers/file-handle-helpers/project-data-importer.class.ts](/app/src/app/libs/projects-helpers/file-handle-helpers/project-data-importer.class.ts) | TypeScript | 49 | 37 | 12 | 98 |
 | [app/src/app/libs/projects-helpers/project-handlers/current-project-setter.class.ts](/app/src/app/libs/projects-helpers/project-handlers/current-project-setter.class.ts) | TypeScript | 13 | 10 | 5 | 28 |
 | [app/src/app/libs/projects-helpers/project-handlers/project-deletor.class.ts](/app/src/app/libs/projects-helpers/project-handlers/project-deletor.class.ts) | TypeScript | 19 | 16 | 7 | 42 |
 | [app/src/app/libs/projects-helpers/project-handlers/project-saver.class.ts](/app/src/app/libs/projects-helpers/project-handlers/project-saver.class.ts) | TypeScript | 46 | 0 | 15 | 61 |

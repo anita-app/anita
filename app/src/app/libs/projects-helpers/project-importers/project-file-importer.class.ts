@@ -9,7 +9,7 @@ import { getFileHandle, readFileHandleAsText } from 'app/libs/db-connector/plugi
  * @see SaveProjectSettingsInIndexedDB
  * @see CurrentProjectSetter
  */
-export class ProjectFileDataImporter {
+export class ProjectFileImporter {
 
   /**
    * List of FileSystemFileHandle for each project to import

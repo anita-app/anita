@@ -79,7 +79,7 @@
 "c:\Source\anita\app\src\app\libs\project-helpers\project-handlers\save-project-settings-in-indexeddb.class.ts", "TypeScript", 0, 27, 0, 24, 9, 60
 "c:\Source\anita\app\src\app\libs\project-helpers\section-elements-handlers\element-saver.class.ts", "TypeScript", 0, 48, 0, 30, 14, 92
 "c:\Source\anita\app\src\app\libs\project-helpers\txt-by-field-value.function.ts", "TypeScript", 0, 7, 0, 5, 5, 17
-"c:\Source\anita\app\src\app\libs\projects-helpers\file-handle-helpers\project-file-importer.class.ts", "TypeScript", 0, 49, 0, 37, 12, 98
+"c:\Source\anita\app\src\app\libs\projects-helpers\file-handle-helpers\project-data-importer.class.ts", "TypeScript", 0, 49, 0, 37, 12, 98
 "c:\Source\anita\app\src\app\libs\projects-helpers\projects-handlers\projects-list-loader.class.ts", "TypeScript", 0, 18, 0, 15, 7, 40
 "c:\Source\anita\app\src\app\libs\projects-helpers\sections-forms-helpers\section-form-ele-generator.class.ts", "TypeScript", 0, 29, 0, 22, 9, 60
 "c:\Source\anita\app\src\app\libs\redux\action.type.ts", "TypeScript", 0, 74, 0, 0, 12, 86

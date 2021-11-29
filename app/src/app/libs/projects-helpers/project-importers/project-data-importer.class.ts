@@ -14,7 +14,7 @@ import { store } from 'app/libs/redux/state.store';
  * @see SaveProjectSettingsInIndexedDB
  * @see CurrentProjectSetter
  */
-export class ProjectFileImporter {
+export class ProjectDataImporter {
 
   /**
    * 
