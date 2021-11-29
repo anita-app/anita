@@ -7,6 +7,14 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.10.0] - 2021-11-29
+### Added
+- added project picker in sidebar.
+- in mobile now the sidebar closes if the app background is touched.
+
+### Changed
+- breaking changes: renamed dateCreation and lastModified to createdAt and updatedAt.
+
 ## [0.9.0] - 2021-11-29
 ### Added
 - added animations with animate.css.
