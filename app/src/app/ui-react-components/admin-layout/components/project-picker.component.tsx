@@ -39,7 +39,7 @@ export const ProjectPicker = ({ project }: { project: SystemData }) => {
 
 
         {dropdownOpen && (<div className="absolute left-0 mt-2 w-60 bg-white rounded-md overflow-hidden shadow-xl z-20 border border-bg-500">
-          {projects?.length > 0 && (<div className="block py-2.5 px-4 text-sm bg-gray-100 text-gray-600">Projects on this device</div>)}
+          {projects?.length > 1 && (<div className="block py-2.5 px-4 text-sm bg-gray-100 text-gray-600">Projects on this device</div>)}
           {projects?.map(projectFromList => {
             if (project[RESERVED_AUDS_KEYS._settings][0].id === projectFromList.id) return null;
             return (

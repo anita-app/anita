@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.10.1] - 2021-11-29
+### Fixed
+- improved project picker layout.
+
 ## [0.10.0] - 2021-11-29
 ### Added
 - added project picker in sidebar.

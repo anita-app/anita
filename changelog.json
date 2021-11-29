@@ -4,6 +4,16 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.10.1",
+      "date": "2021-11-29",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "improved project picker layout"
+        }
+      ]
+    },
+    {
       "version": "0.10.0",
       "date": "2021-11-29",
       "items": [
