@@ -1,6 +1,7 @@
 import { AnitaUniversalDataStorage } from 'app/data/project-structure/project-info';
 import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
 import { DbConnectorInstance, Deletor } from 'app/libs/db-connector/models/executers';
+import { ProjectFileHandleSaver } from 'app/libs/db-connector/plugins/file-handles/helpers/project-file-handle-saver.class';
 
 /**
  * Implements deletor for MySql
@@ -26,9 +27,15 @@ export class DbDeletor<E> implements Deletor<E> {
     if (!Object.keys(this.args).length)
       return 'Fatal error: trying to delete without any parameter';
 
-    // TODO
+    const indexElement = this.dbConnector.dbStore.db[this.section].findIndex(ele => ele.id === this.args['id']);
+    // Remove the element from the collection
+    this.dbConnector.dbStore.db[this.section].splice(indexElement, 1);
+    await new ProjectFileHandleSaver(this.dbConnector).save();
+  }
 
-    return;
+  public async clearSection(): Promise<void> {
+    this.dbConnector.dbStore.db[this.section].length = 0;
+    await new ProjectFileHandleSaver(this.dbConnector).save();
   }
 
 }

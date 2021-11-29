@@ -1,7 +1,7 @@
 import { AdditionalInfoForLocalStorage, RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info';
 import { DataStructureExtender } from 'app/data/system-local-db/data-structure-extender.class';
 import { DbConnectorInstance, DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers';
-import Dexie from 'dexie';
+import Dexie, { Version } from 'dexie';
 
 /**
  * Implementation of DbStore for IndexedDB with Dexie.
@@ -38,30 +38,50 @@ export class DbStore implements DbStoreInterface<Dexie> {
   }
 
   public async postProjectUpdate(project: SystemData): Promise<AdditionalInfoForLocalStorage> {
-    const newSections = Object.keys(project[RESERVED_AUDS_KEYS._sections]);
+    const newSections = Object.keys(project).concat(project[RESERVED_AUDS_KEYS._sections].map(section => section.id));
     const oldSections = Object.keys(this.dbConnector.DS);
 
     // Check if any section in oldSections has been deleted, or if any section in newSections has been added
     const sectionsToDelete = oldSections.filter(section => !newSections.includes(section));
     const sectionsToAdd = newSections.filter(section => !oldSections.includes(section));
+    console.log('postProjectUpdate ~ newSections', newSections);
+    console.log('postProjectUpdate ~ oldSections', oldSections);
+    console.log('postProjectUpdate ~ sectionsToDelete', sectionsToDelete);
+    console.log('postProjectUpdate ~ sectionsToAdd', sectionsToAdd);
 
     // If there are sections to delete or to add, we push a new array to previousVersions
     // We don't need to store the new sections as Dexie from v.3.0.0 on, will automatically create the new tables
     if (sectionsToDelete.length > 0 || sectionsToAdd.length > 0) {
+
       this.options.previousVersions.push(sectionsToDelete.concat());
-      this.dbConnector.DS = new DataStructureExtender(project[RESERVED_AUDS_KEYS._sections]).extend();
+
+      // We need to delete the sections that are not in the DS anymore
+      sectionsToDelete.forEach(section => {
+        delete this.dbConnector.DS[section];
+      });
+
+      // We need to add the sections that have been added to the DS
+      if (sectionsToAdd.length > 0) {
+        const newSections = project[RESERVED_AUDS_KEYS._sections].filter(section => sectionsToAdd.includes(section.id));
+        Object.assign(this.dbConnector.DS, new DataStructureExtender(newSections).extend());
+      }
 
       // We need to rebuild the database, see https://dexie.org/docs/Dexie/Dexie.close()
       this.close();
+      console.log('1');
       this.handlePreviousVersion();
+      console.log('2');
       this.buildDb();
+      console.log('3');
+      await this.db.open()
+      console.log('4');
     }
 
     return this.makeDexieInfoForUpgrade();
   }
 
   public close(): void {
-    this.db.close()
+    return this.db.close()
   }
 
   public onProjectDeleted(): Promise<void> {
@@ -89,7 +109,7 @@ export class DbStore implements DbStoreInterface<Dexie> {
     );
   }
 
-  private buildDb(): void {
+  private buildDb(): Version {
     const version = this.options.previousVersions?.length + 1 || 1;
     const tables = {};
 
@@ -100,7 +120,7 @@ export class DbStore implements DbStoreInterface<Dexie> {
     // See https://dexie.org/docs/Tutorial/Understanding-the-basics#deleting-tables
     this.deletedSections.forEach(section => tables[section] = null);
 
-    this.db.version(version).stores(tables);
+    return this.db.version(version).stores(tables);
   }
 
 }

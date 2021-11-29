@@ -2,7 +2,6 @@ import { DbInitializer } from 'app/data/local-dbs/db-initializer.class';
 import { dbInstances } from 'app/data/local-dbs/db-instances.const';
 import { RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info';
 import { SaveProjectSettingsInIndexedDB } from 'app/libs/project-helpers/project-handlers/save-project-settings-in-indexeddb.class';
-import { asyncForEach } from 'app/libs/tools/tools';
 import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum';
 
 export class ProjectSaver {
@@ -55,7 +54,8 @@ export class ProjectSaver {
   }
 
   private async saveSections(): Promise<void> {
-    await asyncForEach(this.projectDataToSave[RESERVED_AUDS_KEYS._sections], async section => await dbInstances[this.projectDataToSave[RESERVED_AUDS_KEYS._settings][0].id].callInsertor(RESERVED_AUDS_KEYS._sections, section).autoInsert());
+    await dbInstances[this.projectDataToSave[RESERVED_AUDS_KEYS._settings][0].id].callDeletor(RESERVED_AUDS_KEYS._sections).clearSection();
+    await dbInstances[this.projectDataToSave[RESERVED_AUDS_KEYS._settings][0].id].callInsertor(RESERVED_AUDS_KEYS._sections, this.projectDataToSave[RESERVED_AUDS_KEYS._sections]).autoInsert();
   }
 
   private async postSaveActions(): Promise<void> {

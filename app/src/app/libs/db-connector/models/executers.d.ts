@@ -20,7 +20,7 @@ export interface DbConnectorInstance<DbTypes> {
   callInsertor<E>(section: keyof AbstractModel, element: E): Insertor<E>;
   callSelector<E>(section: keyof AbstractModel, args?: Partial<E>): Selector<E>;
   callUpdator<E>(section: keyof AbstractModel, element: Partial<E>): Updator<E>;
-  callDeletor<E>(section: keyof AbstractModel, args: Partial<E>): Deletor<E>;
+  callDeletor<E>(section: keyof AbstractModel, args?: Partial<E>): Deletor<E>;
 }
 
 /**
@@ -163,4 +163,5 @@ interface DeletorConstructable<E, DbTypes> {
  */
 interface Deletor<E> {
   autoDelete(): Promise<void>;
+  clearSection(): Promise<void>;
 }

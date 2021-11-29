@@ -33,4 +33,9 @@ export class DbDeletor<E> implements Deletor<E> {
       Logger.error('Error in autoDelete', 'No PK value was found on the element');
   }
 
+  public async clearSection(): Promise<void> {
+    await new QueryMaker(this.dbConnector, this.section)
+      .clearTable();
+  }
+
 }

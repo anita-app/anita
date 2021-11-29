@@ -48,4 +48,8 @@ export class DbDeletor<E> implements Deletor<E> {
     Logger.error('Trying to call deleteMany with zero arguments, aborting autoDelete');
   }
 
+  public async clearSection(): Promise<void> {
+    // TODO
+  }
+
 }

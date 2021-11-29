@@ -39,4 +39,8 @@ export class DbDeletor<E> extends WhereBuilder<E> implements Deletor<E> {
     return res;
   }
 
+  public async clearSection(): Promise<void> {
+    // TODO
+  }
+
 }
