@@ -25,7 +25,7 @@ export class ElementAdderToCollection<E> {
       for (const element of this.elements)
         this.processElement(element);
     } else {
-      this.processElement(this.element);
+      this.processElement(this.elements);
     }
     await new ProjectFileHandleSaver(this.dbConnector).save();
   }
