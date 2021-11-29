@@ -21,7 +21,9 @@ export class DbInitializer {
   }
 
   public async init(): Promise<void> {
-    if (this.projectInfo.localStorage === LOCAL_STORAGE_SYSTEMS.fileSystem)
+    // Relaxed equality check, because localStorage prop is a string
+    // eslint-disable-next-line eqeqeq
+    if (this.projectInfo.localStorage == LOCAL_STORAGE_SYSTEMS.fileSystem)
       await this.doFileSystem();
     else
       await this.doIndexedDb();

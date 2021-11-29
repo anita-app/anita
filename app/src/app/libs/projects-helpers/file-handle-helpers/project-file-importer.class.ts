@@ -35,7 +35,9 @@ export class ProjectFileImporter {
     await this.setLocalProjectSettings();
     this.dispatchProject(this.projectData[RESERVED_AUDS_KEYS._settings][0]);
 
-    if (this.projectData[RESERVED_AUDS_KEYS._settings][0].localStorage === LOCAL_STORAGE_SYSTEMS.IndexedDB)
+    // Relaxed equality check, because in the form the localStorage data is stored as a string
+    // eslint-disable-next-line eqeqeq
+    if (this.projectData[RESERVED_AUDS_KEYS._settings][0].localStorage == LOCAL_STORAGE_SYSTEMS.IndexedDB)
       await this.saveDataToDb();
   }
 
@@ -53,8 +55,8 @@ export class ProjectFileImporter {
 
   private async saveDataToDb(): Promise<any> {
     for (const section in this.projectData) {
-      // TODO
-      // await dbInstances[this.projectData[RESERVED_AUDS_KEYS._settings][0].id].callInsertor(section, this.projectData[section]).autoInsert();}
+      console.log('saveDataToDb ~ this.projectData[section]', this.projectData[section]);
+      await dbInstances[this.projectData[RESERVED_AUDS_KEYS._settings][0].id].callInsertor(section, this.projectData[section]).autoInsert();
     }
   }
 

@@ -88,6 +88,7 @@ interface DbStoreInterface<DbTypes> {
   close(): void;
   postProjectCreation?(args?: {}): Promise<AdditionalInfoForLocalStorage>;
   postProjectUpdate?(args?: {}): Promise<AdditionalInfoForLocalStorage>;
+  onProjectDeleted?(): Promise<void>;
 }
 
 /**
@@ -97,7 +98,7 @@ interface InsertorConstructable<E, DbTypes> {
   new(
     dbConnector: DbConnectorInstance<DbTypes>,
     section: keyof AbstractModel,
-    element: E
+    element: Array<E> | E
   ): Insertor<E>;
 }
 /**

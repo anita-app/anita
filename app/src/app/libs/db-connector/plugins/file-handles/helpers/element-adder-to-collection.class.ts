@@ -6,7 +6,7 @@ import { ProjectFileHandleSaver } from 'app/libs/db-connector/plugins/file-handl
 export class ElementAdderToCollection<E> {
 
   private index: number;
-
+  protected element: Partial<E>;
   /**
    * Creates an instance of db ElementAdderToCollection.
    * @param dbConnector the instance of DbConnector from which ElementAdderToCollection is called
@@ -16,14 +16,32 @@ export class ElementAdderToCollection<E> {
   constructor(
     protected dbConnector: DbConnectorInstance<AnitaUniversalDataStorage>,
     protected section: keyof AbstractModel,
-    protected element: Partial<E>
+    protected elements: Array<Partial<E>> | Partial<E>
   ) { }
 
   protected async save(): Promise<void> {
     this.setSectionStore();
+    if (this.elements instanceof Array) {
+      for (const element of this.elements)
+        this.processElement(element);
+    } else {
+      this.processElement(this.element);
+    }
+    await new ProjectFileHandleSaver(this.dbConnector).save();
+  }
+
+  /**
+   * Sets an ampty array is the project did not have one already
+   */
+  private setSectionStore(): void {
+    if (!this.dbConnector.dbStore.db[this.section])
+      this.dbConnector.dbStore.db[this.section] = [];
+  }
+
+  private processElement(element: Partial<E>): void {
+    this.element = element;
     this.checkIfElementInStoreAndSetIndex();
     this.addToStore();
-    await new ProjectFileHandleSaver(this.dbConnector).save();
   }
 
   /**
@@ -35,14 +53,6 @@ export class ElementAdderToCollection<E> {
     const elements = this.dbConnector.dbStore.db[this.section] as Array<SectionElement>;
     const check = elements.findIndex(ele => this.element[this.dbConnector.DS[this.section].pk] === ele[this.dbConnector.DS[this.section].pk]);
     this.index = (check >= 0) ? check : elements.length;
-  }
-
-  /**
-   * Sets an ampty array is the project did not have one already
-   */
-  private setSectionStore(): void {
-    if (!this.dbConnector.dbStore.db[this.section])
-      this.dbConnector.dbStore.db[this.section] = [];
   }
 
   /**

@@ -64,6 +64,10 @@ export class DbStore implements DbStoreInterface<Dexie> {
     this.db.close()
   }
 
+  public onProjectDeleted(): Promise<void> {
+    return this.dbConnector.dbStore.db.delete();
+  }
+
   private makeDexieInfoForUpgrade(): AdditionalInfoForLocalStorage {
     return { dexieInfoForUpgrade: { previousVersions: this.options.previousVersions, DS: this.dbConnector.DS } };
   }

@@ -17,13 +17,27 @@ export class DbInsertor<E> implements Insertor<E> {
   constructor(
     private dbConnector: DbConnectorInstance<Dexie>,
     private section: keyof AbstractModel,
-    private element: E
+    private element: Array<E> | E
   ) { }
 
   /**
    * Makes sure that all necessary fields are set and performs the insert
    */
   public autoInsert(): Promise<void> {
+    if (this.element instanceof Array) {
+      return this.insertMany();
+    } else {
+      return this.insertOne();
+    }
+  }
+
+  private insertMany(): Promise<void> {
+    const table = this.dbConnector.DS[this.section].name;
+    return this.dbConnector.dbStore.db[table].bulkPut(this.element);
+  }
+
+
+  private insertOne(): Promise<void> {
     return new QueryMaker(this.dbConnector, this.section, this.element)
       .insert()
       .catch(err => { Logger.error('Error in autoinsert: ', err); });

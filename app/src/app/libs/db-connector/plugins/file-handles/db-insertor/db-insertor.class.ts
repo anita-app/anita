@@ -23,7 +23,12 @@ export class DbInsertor<E> extends ElementAdderToCollection<E> implements Insert
    * @see Encrypter
    */
   private async handleEncryption(): Promise<void> {
-    await new Encrypter(this.dbConnector, this.section, this.element).do();
+    if (this.elements instanceof Array) {
+      for (const element of this.elements)
+        await new Encrypter(this.dbConnector, this.section, element).do();
+    } else {
+      await new Encrypter(this.dbConnector, this.section, this.elements).do();
+    }
   }
 
 }

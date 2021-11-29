@@ -4,15 +4,17 @@ import { LocalProjectSettings } from 'app/data/project-structure/project-info';
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum';
 import { ProjectLoader } from 'app/libs/project-helpers/project-handlers/project-loader.class';
 
-export async function isProjectLoaded(projectId: string): Promise<boolean> {
+export async function isProjectLoaded(projectId: string, setProject = true): Promise<boolean> {
 
   if (typeof dbInstances?.[projectId]?.callSelector === 'function')
     return true;
 
   const projectInfo = await dbInstances.system.callSelector<LocalProjectSettings>(CLIENT_SECTIONS.projects, { id: projectId }).single();
 
-  if (projectInfo.localStorage === LOCAL_STORAGE_SYSTEMS.IndexedDB) {
-    await new ProjectLoader(projectId, projectInfo).loadProject();
+  // Relaxed equality check, because localStorage prop is a string
+  // eslint-disable-next-line eqeqeq
+  if (projectInfo.localStorage == LOCAL_STORAGE_SYSTEMS.IndexedDB) {
+    await new ProjectLoader(projectId, projectInfo, setProject).loadProject();
     return true;
   }
 

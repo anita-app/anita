@@ -9,6 +9,7 @@ export enum REDUX_ACTIONS {
   setProjectList,
   // PROJECT
   setCurrentProject,
+  resetCurrentProject,
   // SECTIONS_FOR_CHILD_OF_SELECTOR
   addSectionForChildOfSelector,
   resetSectionForChildOfSelector,
