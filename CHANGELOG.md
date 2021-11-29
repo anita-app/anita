@@ -7,6 +7,15 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.9.0] - 2021-11-29
+### Added
+- added animations with animate.css.
+- added animation on modal close.
+- added support for IndexedDB.
+
+### Changed
+- improved styling of form elements.
+
 ## [0.8.2] - 2021-11-25
 ### Changed
 - minor UI improvements.
