@@ -31,6 +31,7 @@ const ProjectMenu = () => {
 
   return (
     <div className="mt-3">
+
       <div className="block py-2.5 px-1">
         <ProjectPicker project={project} />
       </div>
@@ -47,6 +48,7 @@ const ProjectMenu = () => {
         </Link>)
       }
       )}
+
     </div>
   )
 

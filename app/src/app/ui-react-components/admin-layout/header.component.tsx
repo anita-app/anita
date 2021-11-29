@@ -1,8 +1,12 @@
+import { AnitaStore } from 'app/libs/redux/reducers.const';
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
 import { store } from 'app/libs/redux/state.store';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 export const Header = () => {
+
+  const sidebarHideClass = useSelector((store: AnitaStore) => store.layout.sidebar)
 
   const handleClickSidebar = () => {
     store.dispatch({ type: REDUX_ACTIONS.toggleSidebar });
@@ -26,6 +30,8 @@ export const Header = () => {
       </div>
 
       <div className="visible md:hidden">&#160;</div>
+
+      {sidebarHideClass === '' && (<div onClick={handleClickSidebar} className="absolute inset-0 h-full w-full z-10 md:hidden"></div>)}
 
     </div>
   )
