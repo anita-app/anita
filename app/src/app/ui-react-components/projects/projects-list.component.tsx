@@ -2,7 +2,7 @@ import { ANITA_URLS } from 'app/anita-routes/anita-routes.constant';
 import { ProjectsListLoader } from 'app/libs/projects-helpers/projects-handlers/projects-list-loader.class';
 import { AnitaStore } from 'app/libs/redux/reducers.const';
 import { ProjectCard } from 'app/ui-react-components/projects/project-card.component';
-import { ProjectImportButton } from 'app/ui-react-components/projects/project-importer-components/import-project-modal.component';
+import { ImportProjectButton } from 'app/ui-react-components/projects/project-importer-components/import-project-button.component';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router';
@@ -43,10 +43,7 @@ export const ProjectsList = () => {
             <h1 className="title-font text-md font-medium text-gray-900">Projects on this device</h1>
           </div>
           <div className="my-2">
-
-            <ProjectImportButton />
-
-
+            <ImportProjectButton />
             <Link data-tip data-for='createProject'
               to={ANITA_URLS.projectAdd}
               className="mx-2 my-2 text-white bg-prussian-blue-400 border-0 py-1 px-6 focus:outline-none hover:bg-gray-400 rounded font-bold text-sm"
@@ -55,8 +52,6 @@ export const ProjectsList = () => {
             <ReactTooltip id="createProject" effect="solid">
               <span>Create a new project</span>
             </ReactTooltip>
-
-
           </div>
         </div>
       </div>

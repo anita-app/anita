@@ -1,5 +1,5 @@
 import { ANITA_URLS } from 'app/anita-routes/anita-routes.constant';
-import { ProjectImportButton } from 'app/ui-react-components/projects/project-importer-components/import-project-modal.component';
+import { ImportProjectButton } from 'app/ui-react-components/projects/project-importer-components/import-project-button.component';
 import { Link } from 'react-router-dom';
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
@@ -15,7 +15,7 @@ export const ProjectsNone = () => {
           <h1 className="title-font sm:text-2xl text-xl font-medium text-gray-900 mb-3">You don't have any Projects on this device yet</h1>
           <p className="leading-relaxed mb-3">You can create a new project or import one from an existing project file.</p>
           <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-2 mt-7">
-            <ProjectImportButton btnType="text" />
+            <ImportProjectButton btnType="text" />
             <Link
               to={ANITA_URLS.projectAdd}
               className="w-full flex flex-wrap content-center justify-center mt-4 bg-gray-200 border-0 py-3 px-8 focus:outline-none hover:bg-gray-400 rounded font-bold text-sm"
