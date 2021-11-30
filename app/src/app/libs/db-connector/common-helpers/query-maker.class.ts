@@ -3,7 +3,7 @@ import { DbConnectorInstance } from 'app/libs/db-connector/models/executers';
 import { Logger } from 'app/libs/logger/logger.class';
 import * as mysql from 'mysql';
 import { Database } from 'sql.js';
-import * as squel from 'squel';
+import squel from 'squel';
 
 export interface WhereArgs {
   field: string;
@@ -14,7 +14,7 @@ export interface WhereArgs {
 /**
  * Prepares queries to be executed on a MySql DB
  */
-export class QueryMaker<S> {
+export class QueryMaker {
 
   /**
    * Creates an instance of query maker.

@@ -1,6 +1,6 @@
 import { DsDbInitOptions } from 'app/libs/db-connector/models/executers';
-import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
-import { getNewFileHandle, verifyPermission } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper';
+import { FileSystemDirectoryHandle, FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
+import { getDirectoryHandle, getNewFileHandle, verifyPermission } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper';
 
 /**
  * Uses the fileHandle stored in IndexedDB, if any, or asks for a new one 
@@ -15,5 +15,18 @@ export async function fileHandleChecker(
 
   await verifyPermission(options.projectInfo.fileHandle, true);
   return options.projectInfo.fileHandle;
+
+}
+
+export async function dirHandleChecker(
+  options: DsDbInitOptions,
+  description?: string,
+  accept?: { [mimeType: string]: Array<string> }
+): Promise<FileSystemDirectoryHandle> {
+  if (!options.projectInfo.fileHandle)
+    return await getDirectoryHandle();
+
+  await verifyPermission(options.projectInfo.fileHandle, true);
+  return options.projectInfo.fileHandle as any as FileSystemDirectoryHandle;
 
 }

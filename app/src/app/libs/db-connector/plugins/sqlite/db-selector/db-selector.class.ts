@@ -56,7 +56,6 @@ export class DbSelector<E> extends WhereBuilder<E> implements Selector<E> {
   private async doSelect(): Promise<void> {
     const query: string = new QueryMaker(this.dbConnector, this.section).select(this.whereArgs);
     const res = await executeQueryWithReturn(this.dbConnector.dbStore.db, query);
-    console.log('doSelect ~ res', res);
 
     if (!res.length) {
       this.results = [];

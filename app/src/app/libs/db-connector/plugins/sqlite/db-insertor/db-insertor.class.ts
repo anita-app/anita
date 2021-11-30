@@ -2,14 +2,17 @@ import { QueryMaker } from 'app/libs/db-connector/common-helpers/query-maker.cla
 import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
 import { Encrypter } from 'app/libs/db-connector/crypter/encrypter.class';
 import { DbConnectorInstance, Insertor } from 'app/libs/db-connector/models/executers';
+import { FileSystemDirectoryHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
 import { executeQueryNoReturn } from 'app/libs/db-connector/plugins/sqlite/helpers/execute-query-no-return.function';
 import { schemaExporter } from 'app/libs/db-connector/plugins/sqlite/helpers/schema-exporter.function';
+import { cloneDeep } from 'lodash';
 import { Database } from 'sql.js';
 
 /**
  * Implements insertor for MySql
  */
 export class DbInsertor<E> implements Insertor<E> {
+  protected elements: Array<Partial<E>> | Partial<E>
 
   /**
    * Creates an instance of db ElementAdderToCollection.
@@ -20,13 +23,19 @@ export class DbInsertor<E> implements Insertor<E> {
   constructor(
     protected dbConnector: DbConnectorInstance<Database>,
     protected section: keyof AbstractModel,
-    protected elements: Array<Partial<E>> | Partial<E>
-  ) { }
+    elements: Array<Partial<E>> | Partial<E>
+  ) {
+    // We need to cloneDeep as we don't want to modify the original elements when converting props to json
+    this.elements = cloneDeep(elements);
+  }
 
   /**
    * Adds an element to the collection
    */
   public async autoInsert(): Promise<void> {
+
+
+
     if (this.dbConnector.options.encrypted)
       await this.handleEncryption();
 
@@ -41,7 +50,7 @@ export class DbInsertor<E> implements Insertor<E> {
       await this.insert(this.elements);
     }
 
-    await schemaExporter(this.dbConnector.dbStore.db, this.dbConnector.options.projectInfo.fileHandle);
+    await schemaExporter(this.dbConnector.dbStore.db, this.dbConnector.options.projectInfo.fileHandle as any as FileSystemDirectoryHandle);
   }
 
   private async insert(element: Partial<E>): Promise<void> {

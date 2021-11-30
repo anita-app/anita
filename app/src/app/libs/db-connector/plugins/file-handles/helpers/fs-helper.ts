@@ -1,4 +1,9 @@
-import { FileSystemFileHandle, FileSystemWriteChunkType, WindowFS } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
+import {
+  FileSystemDirectoryHandle,
+  FileSystemFileHandle,
+  FileSystemWriteChunkType,
+  WindowFS
+  } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
 
 declare const window: WindowFS;
 
@@ -7,6 +12,13 @@ declare const window: WindowFS;
  */
 export function getFileHandle(): Promise<Array<FileSystemFileHandle>> {
   return window.showOpenFilePicker({ multiple: false }).then(handles => handles);
+}
+
+/**
+ * Open a handle to an existing file on the local file system.
+ */
+export function getDirectoryHandle(): Promise<FileSystemDirectoryHandle> {
+  return window.showDirectoryPicker().then(handles => handles);
 }
 
 /**
@@ -20,7 +32,8 @@ export async function readFileHandleAsText(fileHandle: FileSystemFileHandle): Pr
 /**
  * Reads the file content from a fileHandle and returns it as a Uint8Array.
  */
-export async function readFileAsUint8Array(fileHandle: FileSystemFileHandle): Promise<Uint8Array> {
+export async function readFileAsUint8Array(dirHandle: FileSystemDirectoryHandle): Promise<Uint8Array> {
+  const fileHandle = await dirHandle.getFileHandle('test.db', { create: true });
   const file = await fileHandle.getFile();
   const arrayBuffer = await file.arrayBuffer();
   return new Uint8Array(arrayBuffer);

@@ -1,9 +1,10 @@
 import { AdditionalInfoForLocalStorage, Section } from 'app/data/project-structure/project-info';
 import { DataStructureExtender } from 'app/data/system-local-db/data-structure-extender.class';
 import { auds_sections } from 'app/data/system-local-db/sections/auds-sections.const';
+import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
 import { DbConnectorInstance, DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers';
-import { fileHandleChecker } from 'app/libs/db-connector/plugins/file-handles/helpers/file-handle-checker.function';
-import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
+import { dirHandleChecker } from 'app/libs/db-connector/plugins/file-handles/helpers/file-handle-checker.function';
+import { FileSystemDirectoryHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
 import { readFileAsUint8Array } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper';
 import { executeQueryWithReturn } from 'app/libs/db-connector/plugins/sqlite/helpers/execute-query-with-return.function';
 import { SchemaCreator } from 'app/libs/db-connector/plugins/sqlite/helpers/schema-creator.class';
@@ -12,6 +13,11 @@ import { serializer } from 'app/libs/db-connector/plugins/sqlite/helpers/seriali
 import { Database } from 'sql.js';
 import initSqlJs from 'sql.js';
 
+/** 
+ * With sqlite we need to use the FileSystemDirectoryHandle to create the database file
+ * Using the FileSystemFileHandle would result in the following error when updating the DB file after the first time:
+ * "An operation that depends on state cached in an interface object was made but the state had changed since it was read from disk."
+ */
 export class DbStore implements DbStoreInterface<Database> {
 
   /**
@@ -26,7 +32,8 @@ export class DbStore implements DbStoreInterface<Database> {
 
   constructor(
     private dbConnector: DbConnectorInstance<Database>,
-    private options: DsDbInitOptions
+    private options: DsDbInitOptions,
+    private DS: AbstractModel
   ) { }
 
   public async initDB(): Promise<DbStoreInterface<Database>> {
@@ -34,7 +41,7 @@ export class DbStore implements DbStoreInterface<Database> {
     if (!this.options.projectInfo)
       throw new Error('No projectInfo passed to DbConnector.\nTo retrieve a project from a local file, pass the an Object of type LocalProjectSettings as value of projectInfo to the options of DbConnector');
 
-    const fileHandle = await fileHandleChecker(this.options, 'SQLite Project Database', { 'application/x-sqlite3': ['.db'] });
+    const fileHandle = await dirHandleChecker(this.options, 'SQLite Project Database', { 'application/x-sqlite3': ['.db'] });
 
     // If the project already had a FileHandle, the data file already existed so we read it and load it
     if (this.options.projectInfo.fileHandle)
@@ -47,11 +54,12 @@ export class DbStore implements DbStoreInterface<Database> {
   }
 
   public async postProjectCreation(): Promise<AdditionalInfoForLocalStorage> {
-    return { fileHandle: this.dbConnector.options.projectInfo.fileHandle };
+    await this.makeDSFromDB();
+    return { fileHandle: this.options.projectInfo.fileHandle };
   }
 
   public async postProjectUpdate(): Promise<AdditionalInfoForLocalStorage> {
-    return { fileHandle: this.dbConnector.options.projectInfo.fileHandle };
+    return { fileHandle: this.options.projectInfo.fileHandle };
   }
 
   public close(): void {
@@ -61,23 +69,21 @@ export class DbStore implements DbStoreInterface<Database> {
   public async initializeExistingProject(): Promise<void> {
     await this.doReadFile();
     await this.loadDB(this.contents);
-    const res = this.db.exec("SELECT * FROM _sections");
-    console.log('openDatabase ~ res', res);
-    this.makeDSFromDB();
+    await this.makeDSFromDB();
   }
 
-  private async onProjectCreation(fileHandle: FileSystemFileHandle): Promise<void> {
+  private async onProjectCreation(fileHandle: FileSystemDirectoryHandle): Promise<void> {
     Object.assign(this.options.projectInfo, { fileHandle });
     await this.loadDB();
-    await new SchemaCreator(this, this.dbConnector.DS).createSchema();
-    await schemaExporter(this.db, this.options.projectInfo.fileHandle);
+    await new SchemaCreator(this, this.DS).createSchema();
+    await schemaExporter(this.db, this.options.projectInfo.fileHandle as any as FileSystemDirectoryHandle);
   }
 
   /**
    * Loads file from disk using the fileHandle retrieved from IndexedDB
    */
   private async doReadFile(): Promise<void> {
-    this.contents = await readFileAsUint8Array(this.options.projectInfo.fileHandle);
+    this.contents = await readFileAsUint8Array(this.options.projectInfo.fileHandle as any as FileSystemDirectoryHandle);
   }
 
   /**
@@ -94,7 +100,7 @@ export class DbStore implements DbStoreInterface<Database> {
         section[field] = JSON.parse(section[field]);
       });
     });
-    Object.assign(this.dbConnector.DS, new DataStructureExtender(sections).extend());
+    Object.assign(this.DS, new DataStructureExtender(sections).extend());
   }
 
   private async loadDB(contents?: Uint8Array): Promise<void> {
