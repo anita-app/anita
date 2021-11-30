@@ -3,7 +3,6 @@ import { ProjectsListLoader } from 'app/libs/projects-helpers/projects-handlers/
 import { AnitaStore } from 'app/libs/redux/reducers.const';
 import { ProjectCard } from 'app/ui-react-components/projects/project-card.component';
 import { ImportProjectButton } from 'app/ui-react-components/projects/project-importer-components/import-project-button.component';
-import { TsxSqlite } from 'app/ui-react-components/projects/test-sqlite';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router';
@@ -57,7 +56,6 @@ export const ProjectsList = () => {
         </div>
       </div>
       <div className="p-1 md:w-full">
-        <TsxSqlite />
         {projects.map((project, index) => (<ProjectCard key={project.id} project={project} />))}
       </div>
     </div>
