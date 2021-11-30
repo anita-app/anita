@@ -2,7 +2,7 @@ import { AdditionalInfoForLocalStorage, Section } from 'app/data/project-structu
 import { DataStructureExtender } from 'app/data/system-local-db/data-structure-extender.class';
 import { auds_sections } from 'app/data/system-local-db/sections/auds-sections.const';
 import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
-import { DbConnectorInstance, DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers';
+import { DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers';
 import { dirHandleChecker } from 'app/libs/db-connector/plugins/file-handles/helpers/file-handle-checker.function';
 import { FileSystemDirectoryHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
 import { readFileAsUint8Array } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper';
@@ -31,7 +31,6 @@ export class DbStore implements DbStoreInterface<Database> {
   private contents: Uint8Array;
 
   constructor(
-    private dbConnector: DbConnectorInstance<Database>,
     private options: DsDbInitOptions,
     private DS: AbstractModel
   ) { }

@@ -45,7 +45,7 @@ export class DbConnector<DbTypes> implements DbConnectorInstance<DbTypes> {
       this.DS = Object.assign(this.DS, this.options.DS);
 
     if (this.executers.dbStore)
-      this.dbStore = await new this.executers.dbStore(this, this.options).initDB();
+      this.dbStore = await new this.executers.dbStore(this.options, this.DS).initDB();
     else
       throw new Error('No dbStore passed to DbConnector. To initialize DbConnector, you must pass a valid dbStore');
 

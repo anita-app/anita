@@ -77,8 +77,8 @@ export interface DsDbInitOptions {
 
 interface DbStoreConstructable<DbTypes> {
   new(
-    dbConnector: DbConnectorInstance<DbTypes>,
-    options: DsDbInitOptions
+    options: DsDbInitOptions,
+    DS: AbstractModel
   ): DbStoreInterface<DbTypes>
 }
 

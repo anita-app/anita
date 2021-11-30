@@ -1,9 +1,5 @@
-import {
-  DbConnectionData,
-  DbConnectorInstance,
-  DbStoreInterface,
-  DsDbInitOptions
-  } from 'app/libs/db-connector/models/executers';
+import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { DbConnectionData, DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers';
 import { Logger } from 'app/libs/logger/logger.class';
 import { Db, MongoClient } from 'mongodb';
 import { ConnectionStringMaker } from '../helpers/connection-string-maker.class';
@@ -19,8 +15,8 @@ export class DbStore implements DbStoreInterface<Db> {
   };
 
   constructor(
-    private dbConnector: DbConnectorInstance<Db>,
-    private options: DsDbInitOptions = {}
+    private options: DsDbInitOptions = {},
+    private DS: AbstractModel
   ) { }
 
   public async initDB(): Promise<DbStoreInterface<Db>> {
