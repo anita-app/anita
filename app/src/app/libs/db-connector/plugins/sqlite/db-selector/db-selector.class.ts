@@ -3,17 +3,18 @@ import { WhereBuilder } from 'app/libs/db-connector/common-helpers/where-builder
 import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
 import { Decrypter } from 'app/libs/db-connector/crypter/decrypter.class';
 import { DbConnectorInstance, Selector } from 'app/libs/db-connector/models/executers';
-import { executeQuery } from 'app/libs/db-connector/plugins/mysql/helpers/execute-query.function';
-import * as mysql from 'mysql';
+import { executeQueryWithReturn } from 'app/libs/db-connector/plugins/sqlite/helpers/execute-query-with-return.function';
+import { serializer } from 'app/libs/db-connector/plugins/sqlite/helpers/serializer.function';
+import { Database } from 'sql.js';
 
 export class DbSelector<E> extends WhereBuilder<E> implements Selector<E> {
 
   private results: Array<any>;
 
   constructor(
-    private dbConnector: DbConnectorInstance<mysql.Connection>,
+    private dbConnector: DbConnectorInstance<Database>,
     private section: keyof AbstractModel,
-    args?: Partial<E>
+    args: Partial<E> = {}
   ) {
     super(args);
   }
@@ -47,20 +48,35 @@ export class DbSelector<E> extends WhereBuilder<E> implements Selector<E> {
    * @see multiple
    */
   public async count(): Promise<number> {
+    // TODO improve with COUNT(*)
     await this.multiple();
     return this.results.length;
   }
 
-  /**
-   * Builds the query with QueryMaker and runs it with executeQuery
-   * 
-   * @see QueryMaker
-   * @see executeQuery
-   */
   private async doSelect(): Promise<void> {
     const query: string = new QueryMaker(this.dbConnector, this.section).select(this.whereArgs);
-    this.results = await executeQuery(this.dbConnector, query);
-    await this.handleDecryption();
+    const res = await executeQueryWithReturn(this.dbConnector.dbStore.db, query);
+    console.log('doSelect ~ res', res);
+
+    if (!res.length) {
+      this.results = [];
+      return;
+    }
+
+    this.results = serializer<E>(res[0].columns, res[0].values);
+
+    if (this.dbConnector.options.encrypted)
+      await this.handleDecryption();
+    if (this.dbConnector.DS[this.section].jsonFields?.length)
+      this.parseJsonFields();
+  }
+
+  private parseJsonFields(): void {
+    this.results.forEach((element: Object) => {
+      for (const prop in element)
+        if (this.dbConnector.DS[this.section].jsonFields.includes(prop))
+          element[prop] = JSON.parse(element[prop]);
+    });
   }
 
   /**

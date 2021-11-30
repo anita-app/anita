@@ -6,6 +6,7 @@ import { DbConnector } from 'app/libs/db-connector/db-connector.class';
 import { FILE_HANDLES_PLUGIN } from 'app/libs/db-connector/plugins/file-handles/exporter.constant';
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
 import { INDEXEDDB_PLUGIN } from 'app/libs/db-connector/plugins/indexed-db/exporter.constant';
+import { SQLITE_PLUGIN } from 'app/libs/db-connector/plugins/sqlite/exporter.constant';
 
 export class DbInitializer {
 
@@ -21,10 +22,13 @@ export class DbInitializer {
   }
 
   public async init(): Promise<void> {
-    // Relaxed equality check, because localStorage prop is a string
+    // Relaxed equality check, because localStorage prop might be a string in some storage systems
     // eslint-disable-next-line eqeqeq
     if (this.projectInfo.localStorage == LOCAL_STORAGE_SYSTEMS.fileSystem)
       await this.doFileSystem();
+    // eslint-disable-next-line eqeqeq
+    else if (this.projectInfo.localStorage == LOCAL_STORAGE_SYSTEMS.SQLite)
+      await this.doSQLite();
     else
       await this.doIndexedDb();
   }
@@ -33,6 +37,22 @@ export class DbInitializer {
     if (this.fileHandle)
       this.projectInfo = { ...this.projectInfo, fileHandle: this.fileHandle };
     dbInstances[this.projectId] = await new DbConnector(FILE_HANDLES_PLUGIN, { projectInfo: this.projectInfo }).init();
+  }
+
+  private async doSQLite(): Promise<void> {
+    if (this.fileHandle)
+      this.projectInfo = { ...this.projectInfo, fileHandle: this.fileHandle };
+
+    let dsExpander;
+    if (this.projectSections) {
+      dsExpander = new DataStructureExtender(this.projectSections);
+      dsExpander.extend();
+    }
+    dbInstances[this.projectId] = await new DbConnector(
+      SQLITE_PLUGIN,
+      { projectInfo: this.projectInfo },
+      dsExpander?.allSez
+    ).init();
   }
 
   private async doIndexedDb(): Promise<void> {

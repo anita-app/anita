@@ -40,7 +40,7 @@ interface FileSystemDirectoryHandle extends FileSystemHandle {
   removeEntry(name: string, options?: FileSystemRemoveOptions): Promise<void>;
 }
 
-type FileSystemWriteChunkType = BufferSource | Blob | string;
+export type FileSystemWriteChunkType = BufferSource | Blob | string;
 
 interface FileSystemWritableFileStream {
   write(contents: FileSystemWriteChunkType): Promise<undefined>;

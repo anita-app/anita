@@ -36,6 +36,7 @@ export class DataStructureBuilder {
       this.allSez,
       sezParams.name,
       sezParams.fields,
+      sezParams.jsonFields,
       sezParams.pk,
       sezParams.indexes,
       sezParams.orderBy,

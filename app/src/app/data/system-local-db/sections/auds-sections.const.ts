@@ -8,5 +8,6 @@ import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definiti
 export const auds_sections: SectionDefinition<Section> = {
   name: RESERVED_AUDS_KEYS._sections,
   pk: 'id',
-  fields: ['title', 'childOf', 'formModel']
+  fields: ['title'],
+  jsonFields: ['childOf', 'formModel'],
 };

@@ -1,4 +1,4 @@
-import { FileSystemFileHandle, WindowFS } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
+import { FileSystemFileHandle, FileSystemWriteChunkType, WindowFS } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
 
 declare const window: WindowFS;
 
@@ -18,14 +18,27 @@ export async function readFileHandleAsText(fileHandle: FileSystemFileHandle): Pr
 }
 
 /**
+ * Reads the file content from a fileHandle and returns it as a Uint8Array.
+ */
+export async function readFileAsUint8Array(fileHandle: FileSystemFileHandle): Promise<Uint8Array> {
+  const file = await fileHandle.getFile();
+  const arrayBuffer = await file.arrayBuffer();
+  return new Uint8Array(arrayBuffer);
+}
+
+/**
  * Create a handle to a new (text) file on the local file system.
  */
-export function getNewFileHandle(name: string = ''): Promise<FileSystemFileHandle> {
+export function getNewFileHandle(
+  name: string = '',
+  description: string = 'Anita project data file',
+  accept: { [mimeType: string]: Array<string> } = { 'application/json': ['.json'] }
+): Promise<FileSystemFileHandle> {
   const opts = {
     types: [{
       name,
-      description: 'Anita project data file',
-      accept: { 'application/json': ['.json'] }
+      description,
+      accept
     }]
   };
   return window.showSaveFilePicker(opts);
@@ -60,7 +73,7 @@ function _readFileLegacy(file: any): Promise<string> {
 /**
  * Writes the contents to disk.
  */
-export async function writeFile(fileHandle: FileSystemFileHandle, contents: string): Promise<void> {
+export async function writeFile(fileHandle: FileSystemFileHandle, contents: FileSystemWriteChunkType): Promise<void> {
   // For Chrome 83 and later.
   // Create a FileSystemWritableFileStream to write to.
   const writable = await fileHandle.createWritable();

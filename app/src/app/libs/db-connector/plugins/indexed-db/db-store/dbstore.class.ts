@@ -44,10 +44,6 @@ export class DbStore implements DbStoreInterface<Dexie> {
     // Check if any section in oldSections has been deleted, or if any section in newSections has been added
     const sectionsToDelete = oldSections.filter(section => !newSections.includes(section));
     const sectionsToAdd = newSections.filter(section => !oldSections.includes(section));
-    console.log('postProjectUpdate ~ newSections', newSections);
-    console.log('postProjectUpdate ~ oldSections', oldSections);
-    console.log('postProjectUpdate ~ sectionsToDelete', sectionsToDelete);
-    console.log('postProjectUpdate ~ sectionsToAdd', sectionsToAdd);
 
     // If there are sections to delete or to add, we push a new array to previousVersions
     // We don't need to store the new sections as Dexie from v.3.0.0 on, will automatically create the new tables
