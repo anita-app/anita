@@ -37,6 +37,16 @@ export class QueryMaker {
     return obj.toString();
   }
 
+  public count(whereArgs: Array<WhereArgs> = []): string {
+    const obj = squel
+      .select({ autoQuoteTableNames: true, autoQuoteFieldNames: false })
+      .field('COUNT(*) as count')
+      .from(this.dbConnector.DS[this.section].name);
+    if (whereArgs.length)
+      whereArgs.forEach(whereArg => obj.where(`${whereArg.field} ${whereArg.operator} ?`, whereArg.value));
+    return obj.toString();
+  }
+
   /**
    * Builds the `INSERT` query
    */

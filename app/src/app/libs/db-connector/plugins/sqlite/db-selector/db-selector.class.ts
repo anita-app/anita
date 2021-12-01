@@ -48,12 +48,17 @@ export class DbSelector<E> extends WhereBuilder<E> implements Selector<E> {
    * @see multiple
    */
   public async count(): Promise<number> {
-    // TODO improve with COUNT(*)
-    await this.multiple();
-    return this.results.length;
+    const query: string = new QueryMaker(this.dbConnector, this.section).count(this.whereArgs);
+    const res = await executeQueryWithReturn(this.dbConnector.dbStore.db, query);
+
+    if (!res.length)
+      return 0;
+
+    return res[0].values[0][0];
   }
 
   private async doSelect(): Promise<void> {
+    this.count();
     const query: string = new QueryMaker(this.dbConnector, this.section).select(this.whereArgs);
     const res = await executeQueryWithReturn(this.dbConnector.dbStore.db, query);
 
