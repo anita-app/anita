@@ -12,11 +12,13 @@
     "do-no-run-this-deploy-directly": "npm run build"
   },
   "dependencies": {
+    "showdown": "^1.9.1",
     "tailwindcss": "^2.2.16"
   },
   "devDependencies": {
     "@types/autoprefixer": "^10.2.0",
     "@types/clean-css": "^4.2.5",
+    "@types/showdown": "^1.9.4",
     "@types/tailwindcss": "^2.2.1",
     "autoprefixer": "^10.3.7",
     "postcss": "^8.3.9",
