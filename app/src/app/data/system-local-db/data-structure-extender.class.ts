@@ -41,7 +41,8 @@ export class DataStructureExtender {
   private buildSectionDefinition(section: Section): void {
     const sezDefinition: SectionDefinition<SectionElement> = {
       name: section.id,
-      fields: Object.values(RESERVED_FIELDS)
+      fields: Object.values(RESERVED_FIELDS),
+      jsonFields: [RESERVED_FIELDS.parentsInfo]
     };
     section.formModel.forEach(field => {
       sezDefinition.fields.push(field.fieldName);

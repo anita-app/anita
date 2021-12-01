@@ -86,14 +86,16 @@ export class QueryMaker {
    * Builds the `UPDATE` query
    */
   public update(): string {
-    const obj = squel.update({ autoQuoteTableNames: true, autoQuoteFieldNames: true }).table(this.dbConnector.DS[this.section].name);
     const element = { ...this.element };
 
     for (const prop in element)
       if (prop !== this.dbConnector.DS[this.section].pk) {
         this.fieldsRemoverIfThereIsNoColumn(element, prop);
-        obj.set(prop, element[prop]);
       }
+    const obj = squel
+      .update({ autoQuoteTableNames: true, autoQuoteFieldNames: true })
+      .table(this.dbConnector.DS[this.section].name)
+      .setFields(element);
     const pk = this.dbConnector.DS[this.section].pk as string;
     obj.where(`${pk} = ?`, element[this.dbConnector.DS[this.section].pk]);
 
