@@ -1,6 +1,7 @@
 import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
 import { DbConnectorInstance } from 'app/libs/db-connector/models/executers';
 import { Logger } from 'app/libs/logger/logger.class';
+import { cloneDeep } from 'lodash';
 import * as mysql from 'mysql';
 import { Database } from 'sql.js';
 import squel from 'squel';
@@ -24,7 +25,7 @@ export class QueryMaker {
   constructor(
     private dbConnector: DbConnectorInstance<mysql.Connection | Database>,
     private section: keyof AbstractModel,
-    private element?: Object
+    private element?: Object | Array<Object>
   ) { }
 
   /**
@@ -51,13 +52,33 @@ export class QueryMaker {
    * Builds the `INSERT` query
    */
   public insert(): string {
+    if (this.element instanceof Array)
+      return this.insertMany();
+    else
+      return this.insertOne();
+  }
+
+  private insertOne(): string {
     const element = { ...this.element };
     for (const prop in element)
       this.fieldsRemoverIfThereIsNoColumn(element, prop);
 
     return squel.insert({ autoQuoteTableNames: true, autoQuoteFieldNames: true })
       .into(this.dbConnector.DS[this.section].name)
-      .setFieldsRows([element])
+      .setFields(element)
+      .toString();
+  }
+
+  private insertMany(): string {
+    const elements = cloneDeep(this.element) as Array<Object>;
+    elements.forEach(element => {
+      for (const prop in element)
+        this.fieldsRemoverIfThereIsNoColumn(element, prop);
+    });
+
+    return squel.insert({ autoQuoteTableNames: true, autoQuoteFieldNames: true })
+      .into(this.dbConnector.DS[this.section].name)
+      .setFieldsRows(elements)
       .toString();
   }
 

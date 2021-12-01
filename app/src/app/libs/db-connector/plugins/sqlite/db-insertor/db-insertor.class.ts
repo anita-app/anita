@@ -33,29 +33,16 @@ export class DbInsertor<E> implements Insertor<E> {
    * Adds an element to the collection
    */
   public async autoInsert(): Promise<void> {
-
-
-
     if (this.dbConnector.options.encrypted)
       await this.handleEncryption();
 
     if (this.dbConnector.DS[this.section].jsonFields?.length)
       this.handleJsonFields();
 
-    if (this.elements instanceof Array) {
-      // TODO: handle multiple elements with one query
-      for (const element of this.elements)
-        await this.insert(element);
-    } else {
-      await this.insert(this.elements);
-    }
+    const query: string = new QueryMaker(this.dbConnector, this.section, this.elements).insert();
+    await executeQueryNoReturn(this.dbConnector, query);
 
     await schemaExporter(this.dbConnector.dbStore.db, this.dbConnector.options.projectInfo.fileHandle as any as FileSystemDirectoryHandle);
-  }
-
-  private async insert(element: Partial<E>): Promise<void> {
-    const query: string = new QueryMaker(this.dbConnector, this.section, element).insert();
-    await executeQueryNoReturn(this.dbConnector, query);
   }
 
   private handleJsonFields(): void {
