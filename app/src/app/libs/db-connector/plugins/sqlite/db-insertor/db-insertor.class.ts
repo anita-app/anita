@@ -42,7 +42,10 @@ export class DbInsertor<E> implements Insertor<E> {
     const query: string = new QueryMaker(this.dbConnector, this.section, this.elements).insert();
     await executeQueryNoReturn(this.dbConnector, query);
 
-    await schemaExporter(this.dbConnector.dbStore.db, this.dbConnector.options.projectInfo.fileHandle as any as FileSystemDirectoryHandle);
+    await schemaExporter(
+      this.dbConnector.dbStore.db,
+      this.dbConnector.options.projectInfo.fileHandle as any as FileSystemDirectoryHandle,
+      this.dbConnector.options.projectInfo.id);
   }
 
   private handleJsonFields(): void {

@@ -43,7 +43,11 @@ export class DbUpdator<E> implements Updator<E> {
 
     executeQueryNoReturn(this.dbConnector, query.join(';'));
 
-    await schemaExporter(this.dbConnector.dbStore.db, this.dbConnector.options.projectInfo.fileHandle as any as FileSystemDirectoryHandle);
+    await schemaExporter(
+      this.dbConnector.dbStore.db,
+      this.dbConnector.options.projectInfo.fileHandle as any as FileSystemDirectoryHandle,
+      this.dbConnector.options.projectInfo.id
+    );
 
   }
 

@@ -11,14 +11,14 @@ declare const window: WindowFS;
  * Open a handle to an existing file on the local file system.
  */
 export function getFileHandle(): Promise<Array<FileSystemFileHandle>> {
-  return window.showOpenFilePicker({ multiple: false }).then(handles => handles);
+  return window.showOpenFilePicker({ multiple: false });
 }
 
 /**
  * Open a handle to an existing file on the local file system.
  */
 export function getDirectoryHandle(): Promise<FileSystemDirectoryHandle> {
-  return window.showDirectoryPicker().then(handles => handles);
+  return window.showDirectoryPicker();
 }
 
 /**
@@ -32,8 +32,8 @@ export async function readFileHandleAsText(fileHandle: FileSystemFileHandle): Pr
 /**
  * Reads the file content from a fileHandle and returns it as a Uint8Array.
  */
-export async function readFileAsUint8Array(dirHandle: FileSystemDirectoryHandle): Promise<Uint8Array> {
-  const fileHandle = await dirHandle.getFileHandle('test.db', { create: true });
+export async function readDirFileAsUint8Array(dirHandle: FileSystemDirectoryHandle, fileName: string): Promise<Uint8Array> {
+  const fileHandle = await dirHandle.getFileHandle(fileName, { create: true });
   const file = await fileHandle.getFile();
   const arrayBuffer = await file.arrayBuffer();
   return new Uint8Array(arrayBuffer);

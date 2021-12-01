@@ -36,7 +36,10 @@ export class DbDeletor<E> extends WhereBuilder<E> implements Deletor<E> {
     const query: string = new QueryMaker(this.dbConnector, this.section).delete(this.whereArgs);
     await executeQueryNoReturn(this.dbConnector, query);
 
-    await schemaExporter(this.dbConnector.dbStore.db, this.dbConnector.options.projectInfo.fileHandle as any as FileSystemDirectoryHandle);
+    await schemaExporter(
+      this.dbConnector.dbStore.db,
+      this.dbConnector.options.projectInfo.fileHandle as any as FileSystemDirectoryHandle,
+      this.dbConnector.options.projectInfo.id);
 
   }
 

@@ -5,7 +5,7 @@ import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
 import { DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers';
 import { dirHandleChecker } from 'app/libs/db-connector/plugins/file-handles/helpers/file-handle-checker.function';
 import { FileSystemDirectoryHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
-import { readFileAsUint8Array } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper';
+import { readDirFileAsUint8Array } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper';
 import { executeQueryWithReturn } from 'app/libs/db-connector/plugins/sqlite/helpers/execute-query-with-return.function';
 import { SchemaCreator } from 'app/libs/db-connector/plugins/sqlite/helpers/schema-creator.class';
 import { schemaExporter } from 'app/libs/db-connector/plugins/sqlite/helpers/schema-exporter.function';
@@ -75,14 +75,19 @@ export class DbStore implements DbStoreInterface<Database> {
     Object.assign(this.options.projectInfo, { fileHandle });
     await this.loadDB();
     await new SchemaCreator(this, this.DS).createSchema();
-    await schemaExporter(this.db, this.options.projectInfo.fileHandle as any as FileSystemDirectoryHandle);
+    await schemaExporter(
+      this.db,
+      this.options.projectInfo.fileHandle as any as FileSystemDirectoryHandle,
+      this.options.projectInfo.id
+    );
   }
 
   /**
    * Loads file from disk using the fileHandle retrieved from IndexedDB
    */
   private async doReadFile(): Promise<void> {
-    this.contents = await readFileAsUint8Array(this.options.projectInfo.fileHandle as any as FileSystemDirectoryHandle);
+    const fileName = `${this.options.projectInfo.id}.db`;
+    this.contents = await readDirFileAsUint8Array(this.options.projectInfo.fileHandle as any as FileSystemDirectoryHandle, fileName);
   }
 
   /**
@@ -104,7 +109,7 @@ export class DbStore implements DbStoreInterface<Database> {
 
   private async loadDB(contents?: Uint8Array): Promise<void> {
     const SQL = await initSqlJs({
-      locateFile: () => '/assets/sql-wasm.wasm'
+      locateFile: () => `${process.env.PUBLIC_URL}/assets/sql-wasm.wasm`
     });
     this.db = new SQL.Database(contents);
   }
