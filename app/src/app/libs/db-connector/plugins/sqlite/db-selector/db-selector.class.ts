@@ -1,7 +1,7 @@
 import { QueryMaker } from 'app/libs/db-connector/common-helpers/query-maker.class';
 import { WhereBuilder } from 'app/libs/db-connector/common-helpers/where-builder.class';
-import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
 import { Decrypter } from 'app/libs/db-connector/crypter/decrypter.class';
+import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
 import { DbConnectorInstance, Selector } from 'app/libs/db-connector/models/executers';
 import { executeQueryWithReturn } from 'app/libs/db-connector/plugins/sqlite/helpers/execute-query-with-return.function';
 import { serializer } from 'app/libs/db-connector/plugins/sqlite/helpers/serializer.function';

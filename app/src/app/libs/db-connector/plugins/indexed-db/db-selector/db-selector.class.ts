@@ -1,4 +1,4 @@
-import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
 import { DbConnectorInstance, Selector } from 'app/libs/db-connector/models/executers';
 import { QueryMaker } from 'app/libs/db-connector/plugins/indexed-db/query-makers/query-maker.class';
 import Dexie from 'dexie';

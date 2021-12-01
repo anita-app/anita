@@ -1,4 +1,4 @@
-import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
 import { DbStore } from 'app/libs/db-connector/plugins/sqlite/db-store/dbstore.class';
 
 export class SchemaCreator {

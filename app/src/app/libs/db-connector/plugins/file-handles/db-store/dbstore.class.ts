@@ -1,6 +1,6 @@
 import { AdditionalInfoForLocalStorage, AnitaUniversalDataStorage, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
 import { DataStructureExtender } from 'app/data/system-local-db/data-structure-extender.class';
-import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
 import { DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers';
 import { fileHandleChecker } from 'app/libs/db-connector/plugins/file-handles/helpers/file-handle-checker.function';
 import { readFileHandleAsText } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper';

@@ -1,4 +1,4 @@
-import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
 import { DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers';
 import * as mysql from 'mysql';
 

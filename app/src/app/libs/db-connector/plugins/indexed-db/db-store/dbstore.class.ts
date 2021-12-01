@@ -1,6 +1,6 @@
 import { AdditionalInfoForLocalStorage, RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info';
 import { DataStructureExtender } from 'app/data/system-local-db/data-structure-extender.class';
-import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
 import { DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers';
 import Dexie, { Version } from 'dexie';
 

@@ -1,6 +1,6 @@
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum';
 import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant';
-import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
 import { FormFieldsModel, OptionKeysModel, SupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
 import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum';

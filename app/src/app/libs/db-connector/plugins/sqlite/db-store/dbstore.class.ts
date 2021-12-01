@@ -1,7 +1,7 @@
 import { AdditionalInfoForLocalStorage, Section } from 'app/data/project-structure/project-info';
 import { DataStructureExtender } from 'app/data/system-local-db/data-structure-extender.class';
 import { auds_sections } from 'app/data/system-local-db/sections/auds-sections.const';
-import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
 import { DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers';
 import { dirHandleChecker } from 'app/libs/db-connector/plugins/file-handles/helpers/file-handle-checker.function';
 import { FileSystemDirectoryHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';

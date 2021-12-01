@@ -1,6 +1,6 @@
 import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant';
-import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
 import { Encrypter } from 'app/libs/db-connector/crypter/encrypter.class';
+import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
 import { DbConnectorInstance, Updator } from 'app/libs/db-connector/models/executers';
 import { Db } from 'mongodb';
 

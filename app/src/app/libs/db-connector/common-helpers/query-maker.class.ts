@@ -1,4 +1,4 @@
-import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
 import { DbConnectorInstance } from 'app/libs/db-connector/models/executers';
 import { Logger } from 'app/libs/logger/logger.class';
 import { cloneDeep } from 'lodash';

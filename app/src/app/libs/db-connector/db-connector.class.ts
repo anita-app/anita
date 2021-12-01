@@ -1,7 +1,7 @@
 import { AUDS_SYSTEM_SECTIONS_DEFINITIONS } from 'app/data/system-local-db/auds-system-sections.enum';
-import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
 import { DataStructureBuilder } from 'app/libs/db-connector/db-builder/data-structure-builder.class';
 import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition';
+import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
 import {
   DbConnectorInstance,
   DbObjects,

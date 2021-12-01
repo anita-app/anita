@@ -1,6 +1,6 @@
 import { AdditionalInfoForLocalStorage, LocalProjectSettings } from 'app/data/project-structure/project-info';
-import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
 import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition';
+import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
 import { ConnectionConfig } from 'mysql';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 

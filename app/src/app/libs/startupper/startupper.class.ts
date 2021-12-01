@@ -25,6 +25,7 @@ export class Startupper {
    */
   private async initSystemIndexedDb(indexedDbName: string): Promise<void> {
     dbInstances.system = await new DbConnector(INDEXEDDB_PLUGIN, { previousVersions, indexedDbName }, CLIENT_SEZ_DEFINITIONS, false).init();
+    console.log('initSystemIndexedDb ~ dbInstances.system', dbInstances.system);
   }
 
   /**

@@ -1,6 +1,6 @@
 import { QueryMaker } from 'app/libs/db-connector/common-helpers/query-maker.class';
-import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
 import { Encrypter } from 'app/libs/db-connector/crypter/encrypter.class';
+import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
 import { DbConnectorInstance, Updator } from 'app/libs/db-connector/models/executers';
 import { executeQuery } from 'app/libs/db-connector/plugins/mysql/helpers/execute-query.function';
 import * as mysql from 'mysql';

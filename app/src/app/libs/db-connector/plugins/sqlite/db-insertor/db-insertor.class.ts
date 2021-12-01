@@ -1,6 +1,6 @@
 import { QueryMaker } from 'app/libs/db-connector/common-helpers/query-maker.class';
-import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
 import { Encrypter } from 'app/libs/db-connector/crypter/encrypter.class';
+import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
 import { DbConnectorInstance, Insertor } from 'app/libs/db-connector/models/executers';
 import { FileSystemDirectoryHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
 import { executeQueryNoReturn } from 'app/libs/db-connector/plugins/sqlite/helpers/execute-query-no-return.function';

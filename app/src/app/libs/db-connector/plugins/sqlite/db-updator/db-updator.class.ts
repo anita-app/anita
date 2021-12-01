@@ -1,5 +1,5 @@
-import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
 import { Encrypter } from 'app/libs/db-connector/crypter/encrypter.class';
+import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
 import { DbConnectorInstance, Updator } from 'app/libs/db-connector/models/executers';
 import { Database } from 'sql.js';
 
