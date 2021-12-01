@@ -33,14 +33,14 @@ interface FileSystemRemoveOptions {
 }
 
 interface FileSystemDirectoryHandle extends FileSystemHandle {
-  getFile(name: string, options?: FileSystemGetFileOptions): Promise<FileSystemFileHandle>;
+  getFileHandle(name, options?: { create: boolean }): Promise<FileSystemFileHandle>;
   getDirectory(name: string, options?: FileSystemGetDirectoryOptions): Promise<FileSystemDirectoryHandle>;
   // getEntries(): AsyncIterableIterator<FileSystemHandle>;
   getEntries(): any;
   removeEntry(name: string, options?: FileSystemRemoveOptions): Promise<void>;
 }
 
-type FileSystemWriteChunkType = BufferSource | Blob | string;
+export type FileSystemWriteChunkType = BufferSource | Blob | string;
 
 interface FileSystemWritableFileStream {
   write(contents: FileSystemWriteChunkType): Promise<undefined>;
@@ -81,6 +81,7 @@ export interface WindowFS extends Window {
   showSaveFilePicker(options?: SaveFilePickerOptions): Promise<FileSystemFileHandle>;
   showOpenFilePicker(options?: { multiple: false; }): Promise<Array<FileSystemFileHandle>>;
   showOpenFilePicker(options?: { multiple: true; }): Promise<Array<FileSystemFileHandle>>;
+  showDirectoryPicker(options?: { id: string, startIn: string }): Promise<FileSystemDirectoryHandle>
 }
 
 type SystemDirectoryType = "sandbox";
@@ -92,5 +93,3 @@ interface GetSystemDirectoryOptions {
 interface FileSystemDirectoryHandleConstructor {
   getSystemDirectory(options: GetSystemDirectoryOptions): Promise<FileSystemDirectoryHandle>;
 }
-
-declare var FileSystemDirectoryHandle: FileSystemDirectoryHandleConstructor;

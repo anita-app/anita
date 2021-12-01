@@ -29,6 +29,7 @@ export class ProjectSaver {
     if (!dbInstances[this.projectDataToSave[RESERVED_AUDS_KEYS._settings][0].id])
       await this.initDbInstance();
 
+
     await this.saveSettings();
     await this.saveSections();
 

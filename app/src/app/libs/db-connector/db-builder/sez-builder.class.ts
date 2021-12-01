@@ -27,7 +27,8 @@ export class SezBuilder<T> {
   constructor(
     private allSez: Array<SectionDefinition<any>>,
     private name: SectionName,
-    private fields: Array<keyof T> = [],
+    private fields: Array<keyof T & string> = [],
+    private jsonFields: Array<keyof T & string> = [],
     private pk: keyof T & string = DEFAULT_PK as keyof T & string,
     private indexes: Array<keyof T> = [DEFAULT_PK] as Array<keyof T>,
     private orderBy: keyof T & string = DEFAULT_PK as keyof T & string,
@@ -43,6 +44,7 @@ export class SezBuilder<T> {
     this.addPkToFields();
     this.addPkToIndexes();
     this.addSpecialFieldsToFields('indexes');
+    this.addSpecialFieldsToFields('jsonFields');
     this.setOwnerIdentifier();
     this.checkOrderByExists();
     this.checkRelations();
@@ -70,7 +72,7 @@ export class SezBuilder<T> {
   /**
    * Adds the fields specified in `indexes` to the fields, if not already included.
    */
-  private addSpecialFieldsToFields(scope: 'indexes'): void {
+  private addSpecialFieldsToFields(scope: 'indexes' | 'jsonFields'): void {
     this[scope].forEach(fieldName => {
       if (!this.fields.includes(fieldName))
         this.fields.push(fieldName);
@@ -166,7 +168,8 @@ export class SezBuilder<T> {
       indexes: this.indexes,
       orderBy: this.orderBy,
       fields: this.fields,
-      ownerIdentifier: this.ownerIdentifier
+      ownerIdentifier: this.ownerIdentifier,
+      jsonFields: this.jsonFields
     };
     this.addChildOf();
   }

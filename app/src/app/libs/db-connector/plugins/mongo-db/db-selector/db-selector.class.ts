@@ -1,5 +1,5 @@
-import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
 import { Decrypter } from 'app/libs/db-connector/crypter/decrypter.class';
+import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
 import { DbConnectorInstance, Selector } from 'app/libs/db-connector/models/executers';
 import { Db } from 'mongodb';
 

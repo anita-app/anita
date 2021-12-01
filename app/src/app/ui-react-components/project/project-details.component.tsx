@@ -1,7 +1,9 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
 import { dbInstances } from 'app/data/local-dbs/db-instances.const';
+import { availableSystems } from 'app/data/project-form-builder/project-info-builder.constant';
 import { ProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
 import { isProjectLoaded } from 'app/libs/project-helpers/project-handlers/is-project-loaded.function';
+import { txtByFieldValue } from 'app/libs/project-helpers/txt-by-field-value.function';
 import { DeleteProjectButton } from 'app/ui-react-components/shared-components/buttons/delete-project.component';
 import { EditButton } from 'app/ui-react-components/shared-components/buttons/edit-project-button.component';
 import { CardFooterItemsEnd } from 'app/ui-react-components/shared-components/common-ui-eles/card-footer-items-end.component';
@@ -18,7 +20,10 @@ const LoadedProject = ({ project }: { project: ProjectSettings }) => (
     <p className="text-lg mb-3">{project.description}</p>
 
     <p className="text-gray-600 text-xs">Created on:</p>
-    <p className="text-md">{dateFormat('yyyy/MM/dd, at hh:mm', new Date(project.createdAt))}</p>
+    <p className="text-md mb-3">{dateFormat('yyyy/MM/dd, at hh:mm', new Date(project.createdAt))}</p>
+
+    <p className="text-gray-600 text-xs">Storage method:</p>
+    <p className="text-md">{txtByFieldValue(availableSystems, project.localStorage)}</p>
 
     <CardFooterItemsEnd>
       <DeleteProjectButton project={project} />

@@ -43,7 +43,7 @@ export const ProjectPicker = ({ project }: { project: SystemData }) => {
           {projects?.map(projectFromList => {
             if (project[RESERVED_AUDS_KEYS._settings][0].id === projectFromList.id) return null;
             return (
-              <button className="w-full block text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => handleClick(loadProject(projectFromList.id))}>{projectFromList.title}</button>)
+              <button key={projectFromList.id} className="w-full block text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => handleClick(loadProject(projectFromList.id))}>{projectFromList.title}</button>)
           })}
           <div className="block py-2.5 px-4 text-sm bg-gray-100 text-gray-600">Actions</div>
           <button className="w-full block text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => handleClick(goToDetails(project[RESERVED_AUDS_KEYS._settings][0].id))}>Go to the details of this project</button>

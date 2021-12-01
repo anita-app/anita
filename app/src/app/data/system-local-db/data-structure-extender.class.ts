@@ -1,8 +1,8 @@
 import { Section, SectionElement } from 'app/data/project-structure/project-info';
 import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant';
-import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
 import { SezBuilder } from 'app/libs/db-connector/db-builder/sez-builder.class';
 import { SectionDefinition, SectionModel } from 'app/libs/db-connector/db-builder/sez-definition';
+import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
 
 /**
  * Converts the abstract definition of a Section into a complete datastructure that can be processed by FormDataParserService
@@ -41,7 +41,8 @@ export class DataStructureExtender {
   private buildSectionDefinition(section: Section): void {
     const sezDefinition: SectionDefinition<SectionElement> = {
       name: section.id,
-      fields: Object.values(RESERVED_FIELDS)
+      fields: Object.values(RESERVED_FIELDS),
+      jsonFields: [RESERVED_FIELDS.parentsInfo]
     };
     section.formModel.forEach(field => {
       sezDefinition.fields.push(field.fieldName);

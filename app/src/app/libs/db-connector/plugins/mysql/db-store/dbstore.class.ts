@@ -1,12 +1,13 @@
-import { DbConnectorInstance, DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers';
+import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
+import { DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers';
 import * as mysql from 'mysql';
 
 export class DbStore implements DbStoreInterface<mysql.Connection> {
   public db: mysql.Connection;
 
   constructor(
-    private dbConnector: DbConnectorInstance<mysql.Connection>,
-    private options: DsDbInitOptions
+    private options: DsDbInitOptions,
+    private DS: AbstractModel
   ) { }
 
   public async initDB(): Promise<DbStoreInterface<mysql.Connection>> {

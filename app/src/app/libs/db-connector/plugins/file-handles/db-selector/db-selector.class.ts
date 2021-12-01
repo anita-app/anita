@@ -1,6 +1,6 @@
 import { AnitaUniversalDataStorage } from 'app/data/project-structure/project-info';
-import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
 import { Decrypter } from 'app/libs/db-connector/crypter/decrypter.class';
+import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
 import { DbConnectorInstance, Selector } from 'app/libs/db-connector/models/executers';
 
 export class DbSelector<E> implements Selector<E> {

@@ -1,5 +1,5 @@
 import { AnitaUniversalDataStorage } from 'app/data/project-structure/project-info';
-import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
+import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
 import { DbConnectorInstance, Deletor } from 'app/libs/db-connector/models/executers';
 import { ProjectFileHandleSaver } from 'app/libs/db-connector/plugins/file-handles/helpers/project-file-handle-saver.class';
 

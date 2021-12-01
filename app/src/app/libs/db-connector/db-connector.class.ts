@@ -1,7 +1,7 @@
 import { AUDS_SYSTEM_SECTIONS_DEFINITIONS } from 'app/data/system-local-db/auds-system-sections.enum';
-import { AbstractModel } from 'app/libs/db-connector/constants/ds.constant';
 import { DataStructureBuilder } from 'app/libs/db-connector/db-builder/data-structure-builder.class';
 import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition';
+import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
 import {
   DbConnectorInstance,
   DbObjects,
@@ -45,7 +45,7 @@ export class DbConnector<DbTypes> implements DbConnectorInstance<DbTypes> {
       this.DS = Object.assign(this.DS, this.options.DS);
 
     if (this.executers.dbStore)
-      this.dbStore = await new this.executers.dbStore(this, this.options).initDB();
+      this.dbStore = await new this.executers.dbStore(this.options, this.DS).initDB();
     else
       throw new Error('No dbStore passed to DbConnector. To initialize DbConnector, you must pass a valid dbStore');
 
