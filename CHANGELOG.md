@@ -7,6 +7,11 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.11.0] - 2021-12-01
+### Added
+- added support for the delete function.
+- added sqlite support in the PWA app.
+
 ## [0.10.1] - 2021-11-29
 ### Fixed
 - improved project picker layout.
