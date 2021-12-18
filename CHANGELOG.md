@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.11.1] - 2021-12-18
+### Changed
+- improved UI of project picker.
+
 ## [0.11.0] - 2021-12-01
 ### Added
 - added support for the delete function.
