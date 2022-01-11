@@ -24,6 +24,56 @@ export const sectionDetailsFormFieldsModel: Array<FormFieldsModel<SectionDetails
   }
 ];
 
+const allFieldsExceptBasicInput = Object.entries(FORM_COMPONENTS_CODES).map(([key, value]) => value).filter(value => value !== FORM_COMPONENTS_CODES.basicInput && typeof value === 'number')
+
+const labelsForBasicAndAdvanced = (sizeWithoutInputType: number, sizeWithtInputType: number): Array<FormFieldsModel<SectionCustomFieldProperties>> => [
+  {
+    componentCode: FORM_COMPONENTS_CODES.basicInput,
+    fieldName: 'label',
+    type: InputSupportedTypes.text,
+    label: 'Field label',
+    required: true,
+    width: sizeWithoutInputType.toString(),
+    prerequisites: [{
+      componentCode: [undefined, "", ...allFieldsExceptBasicInput],
+    }]
+  },
+  {
+    componentCode: FORM_COMPONENTS_CODES.basicInput,
+    fieldName: 'label',
+    type: InputSupportedTypes.text,
+    label: 'Field label',
+    required: true,
+    width: sizeWithtInputType.toString(),
+    prerequisites: [{ componentCode: [FORM_COMPONENTS_CODES.basicInput] }]
+
+  },
+]
+
+const componentSelectorForBasicAndAdvanced = (size: number): FormFieldsModel<SectionCustomFieldProperties> => ({
+  componentCode: FORM_COMPONENTS_CODES.basicSelect,
+  fieldName: 'componentCode',
+  options: SELECTABLE_FORM_ELES,
+  value: 1,
+  label: 'Data type',
+  required: true,
+  width: size.toString()
+})
+
+/**
+ * Shows the select options for the type of Input element
+ */
+const inputTypeSelector: FormFieldsModel<SectionCustomFieldProperties> = {
+  componentCode: FORM_COMPONENTS_CODES.basicSelect,
+  fieldName: 'inputType',
+  options: INPUT_SUPPORTED_TYPES,
+  value: InputSupportedTypes.text,
+  label: 'Content type',
+  required: false,
+  width: "2",
+  prerequisites: [{ componentCode: [FORM_COMPONENTS_CODES.basicInput] }]
+}
+
 /**
  * Defines common fields that are used both when creating and editing fields of a `Section`.
  */
@@ -31,20 +81,10 @@ const commonAddAndEditFields: Array<FormFieldsModel<SectionCustomFieldProperties
   {
     componentCode: FORM_COMPONENTS_CODES.optionsMaker,
     fieldName: 'options',
-    type: 'text',
+    type: InputSupportedTypes.text,
     label: 'Possible values',
     prerequisites: [{ componentCode: [FORM_COMPONENTS_CODES.basicSelect, FORM_COMPONENTS_CODES.basicRadio] }],
     required: true
-  },
-  {
-    componentCode: FORM_COMPONENTS_CODES.basicSelect,
-    fieldName: 'inputType',
-    options: INPUT_SUPPORTED_TYPES,
-    value: InputSupportedTypes.text,
-    label: 'Content type',
-    required: false,
-    width: "2",
-    prerequisites: [{ componentCode: [FORM_COMPONENTS_CODES.basicInput] }]
   },
   {
     componentCode: FORM_COMPONENTS_CODES.basicCheckbox,
@@ -62,23 +102,9 @@ const commonAddAndEditFields: Array<FormFieldsModel<SectionCustomFieldProperties
  * For new fields only. Existing items must use `sectionElesForEditingAdvanced` as some properties can't be changed after the filed has been created.
  */
 export const sectionElesNewItemAdvanced: Array<FormFieldsModel<SectionCustomFieldProperties>> = [
-  {
-    componentCode: FORM_COMPONENTS_CODES.basicInput,
-    fieldName: 'label',
-    type: InputSupportedTypes.text,
-    label: 'Field label',
-    required: true,
-    width: "7"
-  },
-  {
-    componentCode: FORM_COMPONENTS_CODES.basicSelect,
-    fieldName: 'componentCode',
-    options: SELECTABLE_FORM_ELES,
-    value: 1,
-    label: 'Data type',
-    required: true,
-    width: "3"
-  },
+  ...labelsForBasicAndAdvanced(7, 5),
+  componentSelectorForBasicAndAdvanced(3),
+  inputTypeSelector,
   {
     componentCode: FORM_COMPONENTS_CODES.basicInput,
     fieldName: 'fieldName',
@@ -91,23 +117,9 @@ export const sectionElesNewItemAdvanced: Array<FormFieldsModel<SectionCustomFiel
 ];
 
 export const sectionElesNewItemBasic: Array<FormFieldsModel<SectionCustomFieldProperties>> = [
-  {
-    componentCode: FORM_COMPONENTS_CODES.basicInput,
-    fieldName: 'label',
-    type: InputSupportedTypes.text,
-    label: 'Field label',
-    required: true,
-    width: "8"
-  },
-  {
-    componentCode: FORM_COMPONENTS_CODES.basicSelect,
-    fieldName: 'componentCode',
-    options: SELECTABLE_FORM_ELES,
-    value: 1,
-    label: 'Data type',
-    required: true,
-    width: "4"
-  },
+  ...labelsForBasicAndAdvanced(8, 6),
+  componentSelectorForBasicAndAdvanced(4),
+  inputTypeSelector,
   {
     componentCode: FORM_COMPONENTS_CODES.hiddenInput,
     fieldName: 'fieldName'
@@ -122,23 +134,9 @@ export const sectionElesNewItemBasic: Array<FormFieldsModel<SectionCustomFieldPr
  * For existing fields only, some properties can't be changed after the filed has been created. New items must use `sectionElesNewItemAdvanced` instead.
  */
 export const sectionElesForEditingAdvanced: Array<FormFieldsModel<SectionCustomFieldProperties>> = [
-  {
-    componentCode: FORM_COMPONENTS_CODES.basicInput,
-    fieldName: 'label',
-    type: InputSupportedTypes.text,
-    label: 'Field label',
-    required: true,
-    width: "7"
-  },
-  {
-    componentCode: FORM_COMPONENTS_CODES.basicSelect,
-    fieldName: 'componentCode',
-    options: SELECTABLE_FORM_ELES,
-    value: 1,
-    label: 'Data type',
-    required: true,
-    width: "3"
-  },
+  ...labelsForBasicAndAdvanced(7, 5),
+  componentSelectorForBasicAndAdvanced(3),
+  inputTypeSelector,
   {
     componentCode: FORM_COMPONENTS_CODES.basicInput,
     fieldName: 'fieldName',
@@ -152,23 +150,9 @@ export const sectionElesForEditingAdvanced: Array<FormFieldsModel<SectionCustomF
 ];
 
 export const sectionElesForEditingBasic: Array<FormFieldsModel<SectionCustomFieldProperties>> = [
-  {
-    componentCode: FORM_COMPONENTS_CODES.basicInput,
-    fieldName: 'label',
-    type: InputSupportedTypes.text,
-    label: 'Field label',
-    required: true,
-    width: "8"
-  },
-  {
-    componentCode: FORM_COMPONENTS_CODES.basicSelect,
-    fieldName: 'componentCode',
-    options: SELECTABLE_FORM_ELES,
-    value: 1,
-    label: 'Data type',
-    required: true,
-    width: "4"
-  },
+  ...labelsForBasicAndAdvanced(8, 6),
+  componentSelectorForBasicAndAdvanced(4),
+  inputTypeSelector,
   {
     componentCode: FORM_COMPONENTS_CODES.hiddenInput,
     fieldName: 'fieldName'

@@ -1,16 +1,21 @@
-import { AnitaStore } from 'app/libs/redux/reducers.const';
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
-import { store } from 'app/libs/redux/state.store';
-import { ICommonFormEleProps } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
-import { FORM_ELEMENTS_CSS_CLASSES, FORM_ELEMENTS_CSS_CLASSES_ERR } from 'app/ui-react-components/shared-components/forms-automator/form-layout/fom-elements-css-classes.const';
-import { FormEleContainer } from 'app/ui-react-components/shared-components/forms-automator/form-layout/form-ele-container.component';
-import { FormElementLabel } from 'app/ui-react-components/shared-components/forms-automator/form-layout/form-element-label.component';
-import { ValidatorsContainer } from 'app/ui-react-components/shared-components/forms-automator/validators/validators-container.component';
-import uniqueId from 'lodash/uniqueId';
-import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { AnitaStore } from 'app/libs/redux/reducers.const'
+import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
+import { store } from 'app/libs/redux/state.store'
+import { ICommonFormEleProps } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
+import { FORM_ELEMENTS_CSS_CLASSES, FORM_ELEMENTS_CSS_CLASSES_ERR } from 'app/ui-react-components/shared-components/forms-automator/form-layout/fom-elements-css-classes.const'
+import { FormEleContainer } from 'app/ui-react-components/shared-components/forms-automator/form-layout/form-ele-container.component'
+import { FormElementLabel } from 'app/ui-react-components/shared-components/forms-automator/form-layout/form-element-label.component'
+import { ValidatorsContainer } from 'app/ui-react-components/shared-components/forms-automator/validators/validators-container.component'
+import uniqueId from 'lodash/uniqueId'
+import {
+  memo,
+  useEffect,
+  useRef,
+  useState
+  } from 'react'
+import { useSelector } from 'react-redux'
 
-export const BasicTextarea = ({ formEle, element, handleChange }: ICommonFormEleProps) => {
+export const BasicTextarea = memo(function BasicTextarea({ formEle, element, handleChange }: ICommonFormEleProps) {
 
   const [touched, setTouched] = useState(false);
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))
@@ -41,4 +46,4 @@ export const BasicTextarea = ({ formEle, element, handleChange }: ICommonFormEle
       <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} />
     </FormEleContainer>
   )
-};
+});

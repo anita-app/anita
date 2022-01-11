@@ -1,4 +1,4 @@
-import { FormFieldsModel, Prerequisites, SupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
+import { FormFieldsModel, Prerequisites, SupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 
 export class PrerequisitesChecker<ELEMENT extends Partial<SupportedFormsTypes>> {
 
@@ -27,11 +27,12 @@ export class PrerequisitesChecker<ELEMENT extends Partial<SupportedFormsTypes>> 
   }
 
   private checkPrerequisites(prereq: Prerequisites): void {
-    for (const key in prereq)
+    for (const key in prereq) {
       // We use a relaxed equality check here, because the value can be a string or a number
       // eslint-disable-next-line eqeqeq
-      if (this.objValues[key] && (prereq[key].filter(prereqValue => prereqValue == this.objValues[key]).length > 0))
+      if (prereq[key].filter(prereqValue => prereqValue == this.objValues[key]).length > 0)
         this.setIsIntegrated();
+    }
   }
 
   private setIsIntegrated(): void {

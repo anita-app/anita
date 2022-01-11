@@ -55,6 +55,7 @@ interface IBasicCheckbox<T> extends ICommonTypes<T> {
   value?: boolean;
   description?: string;
   required?: boolean
+  type?: never
 }
 
 
@@ -93,7 +94,7 @@ export interface IBasicSelect<T> extends ICommonTypes<T> {
 interface IOptionsMaker<T> extends ICommonTypes<T> {
   componentCode: FORM_COMPONENTS_CODES.optionsMaker;
   value?: string | number;
-  type: 'text';
+  type: InputSupportedTypes.text;
   required?: boolean;
 }
 
@@ -118,4 +119,5 @@ interface ICommonTypes<T> {
   prerequisites?: Array<Prerequisites>;
   width?: string;
   externalLabel?: boolean;
+  type?: never | InputSupportedTypes
 }

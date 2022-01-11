@@ -34,13 +34,15 @@ export const BasicInput = memo(function BasicInput({ formEle, element, handleCha
   if (element[formEle.fieldName] === undefined || element[formEle.fieldName] === null)
     element[formEle.fieldName] = '';
 
+
+  console.log('BasicInput ~ formEle', formEle)
   return (
     <FormEleContainer width={width}>
-      <FormElementLabel label={formEle['label']} />
+      <FormElementLabel label={formEle.label} />
       <input
         key={formEle.fieldName}
         name={formEle.fieldName}
-        type="text"
+        type={formEle?.['inputType'] || 'text'}
         placeholder={formEle['label']}
         disabled={formEle.disabled ? formEle.disabled : false}
         required={formEle.required ? formEle.required : false}
@@ -52,6 +54,4 @@ export const BasicInput = memo(function BasicInput({ formEle, element, handleCha
       <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} />
     </FormEleContainer>
   )
-}, (prevProps, nextProps) => {
-  return prevProps.element[prevProps.formEle.fieldName] === nextProps.element[prevProps.formEle.fieldName];
 });

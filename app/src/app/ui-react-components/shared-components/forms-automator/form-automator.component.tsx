@@ -1,5 +1,5 @@
-import { Section } from 'app/data/project-structure/project-info';
-import { FieldSelector } from 'app/ui-react-components/shared-components/forms-automator/form-layout/field-selector.component';
+import { Section } from 'app/data/project-structure/project-info'
+import { FieldSelector } from 'app/ui-react-components/shared-components/forms-automator/form-layout/field-selector.component'
 
 export interface IFormAutomatorProps {
   formModel: Section['formModel'];
@@ -13,8 +13,8 @@ export const FormAutomator = (props: IFormAutomatorProps) => {
 
   return (
     <span>
-      {props.formModel.map((formEle) => (
-        <FieldSelector key={formEle.fieldName} formEle={formEle} {...props} />
+      {props.formModel.map((formEle, index) => (
+        <FieldSelector key={formEle.fieldName + index.toString()} formEle={formEle} {...props} />
       ))}
     </span>
   )
