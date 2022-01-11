@@ -3,8 +3,9 @@ import {
   SectionCustomFieldProperties,
   SectionDetailsDeclaration,
   SectionElement
-  } from 'app/data/project-structure/project-info';
-import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum';
+  } from 'app/data/project-structure/project-info'
+import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum'
+import { InputSupportedTypes } from 'app/ui-react-components/shared-components/forms-automator/input-supported-types.const'
 
 export type FormFieldsModel<T extends SupportedFormsTypes> = IBasicInput<T> | IBasicCheckbox<T> | IBasicSelect<T> | IBasicRadio<T> | IBasicTextarea<T> | IHiddenInput<T> | IOptionsMaker<T> | IDatePicker<T> | IDateTimePicker<T>;
 
@@ -36,15 +37,9 @@ interface IHiddenInput<T> extends ICommonTypes<T> {
   value?: string | (() => string);
 }
 
-/**
- * Supported input types for @BasicInput
- */
-type InputTypes = 'color' | 'date' | 'datetime-local' | 'email' | 'month' | 'number' | 'password' | 'range' | 'reset' | 'tel' | 'text' | 'time' | 'url' | 'week';
-
-
 interface IBasicInput<T> extends ICommonTypes<T> {
   componentCode: FORM_COMPONENTS_CODES.basicInput;
-  type: InputTypes;
+  type: InputSupportedTypes;
   value?: string;
   required?: boolean;
 }

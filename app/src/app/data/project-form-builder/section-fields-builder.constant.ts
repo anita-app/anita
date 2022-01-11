@@ -1,7 +1,8 @@
-import { SectionCustomFieldProperties, SectionDetailsDeclaration } from 'app/data/project-structure/project-info';
-import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant';
-import { FormFieldsModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
-import { FORM_COMPONENTS_CODES, SELECTABLE_FORM_ELES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum';
+import { SectionCustomFieldProperties, SectionDetailsDeclaration } from 'app/data/project-structure/project-info'
+import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant'
+import { FormFieldsModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
+import { FORM_COMPONENTS_CODES, SELECTABLE_FORM_ELES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum'
+import { InputSupportedTypes } from 'app/ui-react-components/shared-components/forms-automator/input-supported-types.const'
 
 export const sectionDetailsFormFieldsModel: Array<FormFieldsModel<SectionDetailsDeclaration>> = [
   {
@@ -11,7 +12,7 @@ export const sectionDetailsFormFieldsModel: Array<FormFieldsModel<SectionDetails
   {
     componentCode: FORM_COMPONENTS_CODES.basicInput,
     fieldName: 'title',
-    type: 'text',
+    type: InputSupportedTypes.text,
     label: 'Section name',
     required: true
   },
@@ -54,7 +55,7 @@ export const sectionElesNewItemAdvanced: Array<FormFieldsModel<SectionCustomFiel
   {
     componentCode: FORM_COMPONENTS_CODES.basicInput,
     fieldName: 'label',
-    type: 'text',
+    type: InputSupportedTypes.text,
     label: 'Field label',
     required: true,
     width: "7"
@@ -71,7 +72,7 @@ export const sectionElesNewItemAdvanced: Array<FormFieldsModel<SectionCustomFiel
   {
     componentCode: FORM_COMPONENTS_CODES.basicInput,
     fieldName: 'fieldName',
-    type: 'text',
+    type: InputSupportedTypes.text,
     label: 'Identifier',
     required: true,
     width: "2"
@@ -83,7 +84,7 @@ export const sectionElesNewItemBasic: Array<FormFieldsModel<SectionCustomFieldPr
   {
     componentCode: FORM_COMPONENTS_CODES.basicInput,
     fieldName: 'label',
-    type: 'text',
+    type: InputSupportedTypes.text,
     label: 'Field label',
     required: true,
     width: "8"
@@ -114,7 +115,7 @@ export const sectionElesForEditingAdvanced: Array<FormFieldsModel<SectionCustomF
   {
     componentCode: FORM_COMPONENTS_CODES.basicInput,
     fieldName: 'label',
-    type: 'text',
+    type: InputSupportedTypes.text,
     label: 'Field label',
     required: true,
     width: "7"
@@ -131,7 +132,7 @@ export const sectionElesForEditingAdvanced: Array<FormFieldsModel<SectionCustomF
   {
     componentCode: FORM_COMPONENTS_CODES.basicInput,
     fieldName: 'fieldName',
-    type: 'text',
+    type: InputSupportedTypes.text,
     label: 'Identifier',
     disabled: true,
     required: true,
@@ -144,7 +145,7 @@ export const sectionElesForEditingBasic: Array<FormFieldsModel<SectionCustomFiel
   {
     componentCode: FORM_COMPONENTS_CODES.basicInput,
     fieldName: 'label',
-    type: 'text',
+    type: InputSupportedTypes.text,
     label: 'Field label',
     required: true,
     width: "8"
