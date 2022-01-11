@@ -1,8 +1,8 @@
-import { AdditionalInfoForLocalStorage, RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info';
-import { DataStructureExtender } from 'app/data/system-local-db/data-structure-extender.class';
-import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
-import { DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers';
-import Dexie, { Version } from 'dexie';
+import { AdditionalInfoForLocalStorage, RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info'
+import { DataStructureExtender } from 'app/data/system-local-db/data-structure-extender.class'
+import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
+import { DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers'
+import Dexie, { Version } from 'dexie'
 
 /**
  * Implementation of DbStore for IndexedDB with Dexie.
@@ -65,13 +65,9 @@ export class DbStore implements DbStoreInterface<Dexie> {
 
       // We need to rebuild the database, see https://dexie.org/docs/Dexie/Dexie.close()
       this.close();
-      console.log('1');
       this.handlePreviousVersion();
-      console.log('2');
       this.buildDb();
-      console.log('3');
-      await this.db.open()
-      console.log('4');
+      await this.db.open();
     }
 
     return this.makeDexieInfoForUpgrade();

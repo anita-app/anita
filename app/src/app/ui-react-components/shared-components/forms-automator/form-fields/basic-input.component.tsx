@@ -34,8 +34,6 @@ export const BasicInput = memo(function BasicInput({ formEle, element, handleCha
   if (element[formEle.fieldName] === undefined || element[formEle.fieldName] === null)
     element[formEle.fieldName] = '';
 
-
-  console.log('BasicInput ~ formEle', formEle)
   return (
     <FormEleContainer width={width}>
       <FormElementLabel label={formEle.label} />
