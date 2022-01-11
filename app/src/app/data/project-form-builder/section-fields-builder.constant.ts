@@ -2,7 +2,7 @@ import { SectionCustomFieldProperties, SectionDetailsDeclaration } from 'app/dat
 import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant'
 import { FormFieldsModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES, SELECTABLE_FORM_ELES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum'
-import { InputSupportedTypes } from 'app/ui-react-components/shared-components/forms-automator/input-supported-types.const'
+import { INPUT_SUPPORTED_TYPES, InputSupportedTypes } from 'app/ui-react-components/shared-components/forms-automator/input-supported-types.const'
 
 export const sectionDetailsFormFieldsModel: Array<FormFieldsModel<SectionDetailsDeclaration>> = [
   {
@@ -35,6 +35,16 @@ const commonAddAndEditFields: Array<FormFieldsModel<SectionCustomFieldProperties
     label: 'Possible values',
     prerequisites: [{ componentCode: [FORM_COMPONENTS_CODES.basicSelect, FORM_COMPONENTS_CODES.basicRadio] }],
     required: true
+  },
+  {
+    componentCode: FORM_COMPONENTS_CODES.basicSelect,
+    fieldName: 'inputType',
+    options: INPUT_SUPPORTED_TYPES,
+    value: InputSupportedTypes.text,
+    label: 'Content type',
+    required: false,
+    width: "2",
+    prerequisites: [{ componentCode: [FORM_COMPONENTS_CODES.basicInput] }]
   },
   {
     componentCode: FORM_COMPONENTS_CODES.basicCheckbox,
