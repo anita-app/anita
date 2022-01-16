@@ -1,9 +1,9 @@
 import { IValidStateForEle } from 'app/libs/redux/action.type'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
-import { RequiredField } from 'app/ui-react-components/shared-components/forms-automator/validators/required-field.component'
-import { SUPPORTED_VALIDATORS } from 'app/ui-react-components/shared-components/forms-automator/validators/supported-validators.enum'
-import { IValidatorsConatinerProps, IValidatorsState } from 'app/ui-react-components/shared-components/forms-automator/validators/validators'
+import { IValidatorsConatinerProps, IValidatorsState } from 'app/ui-react-components/shared-components/forms-automator/form-validation/validators'
+import { RequiredField } from 'app/ui-react-components/shared-components/forms-automator/form-validation/validators/required-field.component'
+import { SUPPORTED_VALIDATORS } from 'app/ui-react-components/shared-components/forms-automator/form-validation/validators/supported-validators.enum'
 import { memo, useState } from 'react'
 
 export const ValidatorsContainer = memo(function ValidatorsContainer(props: IValidatorsConatinerProps) {

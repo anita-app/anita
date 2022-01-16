@@ -5,8 +5,8 @@ import { calcWidth } from 'app/ui-react-components/shared-components/forms-autom
 import { FORM_ELEMENTS_CSS_CLASSES, FORM_ELEMENTS_CSS_CLASSES_ERR } from 'app/ui-react-components/shared-components/forms-automator/form-layout/fom-elements-css-classes.const'
 import { FormEleContainer } from 'app/ui-react-components/shared-components/forms-automator/form-layout/form-ele-container.component'
 import { FormElementLabel } from 'app/ui-react-components/shared-components/forms-automator/form-layout/form-element-label.component'
+import { ValidatorsContainer } from 'app/ui-react-components/shared-components/forms-automator/form-validation/validators-container.component'
 import { useValidators } from 'app/ui-react-components/shared-components/forms-automator/hooks/use-validators.hook'
-import { ValidatorsContainer } from 'app/ui-react-components/shared-components/forms-automator/validators/validators-container.component'
 import uniqueId from 'lodash/uniqueId'
 import {
   memo,

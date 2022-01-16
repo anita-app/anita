@@ -1,4 +1,4 @@
-import { IValidatorsProps } from 'app/ui-react-components/shared-components/forms-automator/validators/validators'
+import { IValidatorsProps } from 'app/ui-react-components/shared-components/forms-automator/form-validation/validators'
 import { memo, useEffect } from 'react'
 
 export const RequiredField = memo(function RequiredField({ formEle, element, touched, updateValidatorState }: IValidatorsProps) {
