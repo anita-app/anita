@@ -16,7 +16,7 @@ export const UrlFormat = memo(function TelephoneNumber({ formEle, element, updat
   if (isValidUrl || !value)
     return null
 
-  return (<div className="ml-1 text-red-600 text-xs italic  d-block-inline">Invalid address. Should start with 'http://' or 'https://'</div>);
+  return (<div className="ml-1 text-red-600 text-xs italic  d-block-inline">Invalid address (must start with 'http://' or 'https://')</div>);
 
 }, (prevProps, nextProps) => {
   return prevProps.element[prevProps.formEle.fieldName] === nextProps.element[nextProps.formEle.fieldName]

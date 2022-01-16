@@ -6,7 +6,6 @@ export const TelephoneNumber = memo(function TelephoneNumber({ formEle, element,
 
   const value = element[formEle.fieldName];
   const isValidTelephonenumber = /^\+?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4,})$/.test(value);
-  console.log('isValidTelephonenumber', isValidTelephonenumber)
 
   useEffect(() => {
     updateValidatorState(SUPPORTED_VALIDATORS.telephoneNumber, isValidTelephonenumber);

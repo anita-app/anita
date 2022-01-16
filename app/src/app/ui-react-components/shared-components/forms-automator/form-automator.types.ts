@@ -119,5 +119,5 @@ interface ICommonTypes<T> {
   prerequisites?: Array<Prerequisites>;
   width?: string;
   externalLabel?: boolean;
-  type?: never | InputSupportedTypes
+  type?: never | InputSupportedTypes;
 }
