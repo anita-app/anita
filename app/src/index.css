@@ -39,3 +39,46 @@ select.border-red-300:focus {
 .msg-wrapper {
   white-space: pre-wrap;
 }
+
+/**
+  * Scrollbar
+  */
+
+ /* Works on Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: theme('colors.prussian-blue.400') transparent;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+.main-scrollbar::-webkit-scrollbar {
+  width: 10px !important;
+  height: 10px !important;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: theme('colors.prussian-blue.400');
+  border-radius: 20px;
+  border: 3px solid transparent;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: theme('colors.prussian-blue.500');
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background-color: theme('colors.prussian-blue.600');
+}
+
+.main-scrollbar::-webkit-scrollbar-thumb {
+  border: 3px solid theme('colors.gray.100') !important;
+}
