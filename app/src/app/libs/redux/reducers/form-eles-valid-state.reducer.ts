@@ -1,5 +1,5 @@
-import { Action } from 'app/libs/redux/action.type';
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
+import { Action } from 'app/libs/redux/action.type'
+import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 
 export interface IFormElesValidState {
   [formEleUniqueId: string]: boolean;
@@ -19,10 +19,7 @@ export const formElesValidStateReducer = (state: IFormElesValidState = initialSt
       return { ...state, [action.payload.formEleId]: action.payload.valid };
     case REDUX_ACTIONS.unsetValidStateForEle:
       const copyState = { ...state };
-      Object.keys(copyState).forEach(key => {
-        if (key.startsWith(action.payload))
-          delete copyState[key];
-      });
+      delete copyState[action.payload];
       return copyState;
     default:
       return state;

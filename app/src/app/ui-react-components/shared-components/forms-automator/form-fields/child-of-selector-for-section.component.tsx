@@ -7,6 +7,7 @@ import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { IBasicSelect, ICommonFormEleProps } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import { FormEleContainer } from 'app/ui-react-components/shared-components/forms-automator/form-layout/form-ele-container.component'
 import { FormElementLabel } from 'app/ui-react-components/shared-components/forms-automator/form-layout/form-element-label.component'
+import { useValidators } from 'app/ui-react-components/shared-components/forms-automator/hooks/use-validators.hook'
 import { ValidatorsContainer } from 'app/ui-react-components/shared-components/forms-automator/validators/validators-container.component'
 import uniqueId from 'lodash/uniqueId'
 import {
@@ -25,8 +26,7 @@ export const ChildOfSelectorForSection = memo(function ChildOfSelectorForSection
 
   const [touched, setTouched] = useState(false);
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))
-  const validStore = useSelector((store: AnitaStore) => store.formElesValidState);
-  const isInValid = Object.keys(validStore).some(key => key.startsWith(fieldId) && validStore[key] === false);
+  const isInValid = useValidators(fieldId)
 
   useEffect(() => {
     return () => {
