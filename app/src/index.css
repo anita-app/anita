@@ -57,8 +57,8 @@ select.border-red-300:focus {
 }
 
 .main-scrollbar::-webkit-scrollbar {
-  width: 10px !important;
-  height: 10px !important;
+  width: 11px !important;
+  height: 11px !important;
 }
 
 *::-webkit-scrollbar-track {
