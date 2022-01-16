@@ -2,7 +2,7 @@ import { SectionCustomFieldProperties, SectionDetailsDeclaration } from 'app/dat
 import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant'
 import { FormFieldsModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES, SELECTABLE_FORM_ELES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum'
-import { INPUT_SUPPORTED_TYPES, InputSupportedTypes } from 'app/ui-react-components/shared-components/forms-automator/input-supported-types.const'
+import { INPUT_SUPPORTED_TYPES_OPTIONS, InputSupportedTypes } from 'app/ui-react-components/shared-components/forms-automator/input-supported-types.const'
 
 export const sectionDetailsFormFieldsModel: Array<FormFieldsModel<SectionDetailsDeclaration>> = [
   {
@@ -65,8 +65,8 @@ const componentSelectorForBasicAndAdvanced = (size: number): FormFieldsModel<Sec
  */
 const inputTypeSelector: FormFieldsModel<SectionCustomFieldProperties> = {
   componentCode: FORM_COMPONENTS_CODES.basicSelect,
-  fieldName: 'inputType',
-  options: INPUT_SUPPORTED_TYPES,
+  fieldName: 'type',
+  options: INPUT_SUPPORTED_TYPES_OPTIONS,
   value: InputSupportedTypes.text,
   label: 'Content type',
   required: false,

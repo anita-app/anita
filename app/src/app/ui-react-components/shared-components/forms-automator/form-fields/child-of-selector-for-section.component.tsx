@@ -26,7 +26,7 @@ export const ChildOfSelectorForSection = memo(function ChildOfSelectorForSection
 
   const [touched, setTouched] = useState(false);
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))
-  const isInValid = useValidators(fieldId)
+  const [isValid, setIsValidForField] = useValidators(fieldId)
 
   useEffect(() => {
     return () => {
@@ -75,11 +75,11 @@ export const ChildOfSelectorForSection = memo(function ChildOfSelectorForSection
       isMulti
       name={formEle.fieldName}
       options={selectOptions as any}
-      className={isInValid && touched ? "border border-red-600 rounded" : ""}
+      className={!isValid && touched ? "border border-red-600 rounded" : ""}
       onChange={handleChangeInChildOfSelectorForSection}
       onBlur={() => setTouched(true)}
     />
-    <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} />
+    <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} setIsValidForField={setIsValidForField} />
   </FormEleContainer>
   )
 }, (prevProps, nextProps) => {

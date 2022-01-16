@@ -1,8 +1,20 @@
-import { AnitaStore } from 'app/libs/redux/reducers.const'
-import { useSelector } from 'react-redux'
+import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
+import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
+import { useState } from 'react'
 
-export const useValidators = (fieldId): boolean => {
-  const validStore = useSelector((store: AnitaStore) => store.formElesValidState[fieldId]);
-  const isInValid = validStore === false
-  return isInValid;
+export const useValidators = (fieldId): [boolean, ((isValid: boolean) => void)] => {
+
+  const [isValid, setIsValid] = useState(true)
+
+  const setIsValidForField = (isValid) => {
+    setIsValid(isValid)
+    storeDispatcher({
+      type: REDUX_ACTIONS.setValidStateForEle, payload: {
+        formEleId: fieldId,
+        valid: isValid
+      }
+    });
+  }
+
+  return [isValid, setIsValidForField];
 }

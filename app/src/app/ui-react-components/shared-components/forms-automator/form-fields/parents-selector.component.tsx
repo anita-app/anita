@@ -27,7 +27,7 @@ export const ParentsSelector = memo(function ParentsSelector({ formEle, element,
 
   const [touched, setTouched] = useState(false);
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))
-  const isInValid = useValidators(fieldId)
+  const [isValid, setIsValidForField] = useValidators(fieldId)
 
   useEffect(() => {
     return () => {
@@ -68,11 +68,11 @@ export const ParentsSelector = memo(function ParentsSelector({ formEle, element,
       isMulti
       name={formEle.fieldName}
       options={selectOptions as any}
-      className={isInValid && touched ? "border border-red-600 rounded" : ""}
+      className={!isValid && touched ? "border border-red-600 rounded" : ""}
       onChange={handleChangeInParentsSelector}
       onBlur={() => setTouched(true)}
     />
-    <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} />
+    <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} setIsValidForField={setIsValidForField} />
   </FormEleContainer>
   )
 }, (prevProps, nextProps) => {

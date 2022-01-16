@@ -17,7 +17,7 @@ export const BasicCheckbox = memo(function BasicCheckbox({ formEle, element, han
 
   const [touched, setTouched] = useState(false);
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))
-  const isInValid = useValidators(fieldId)
+  const [isValid, setIsValidForField] = useValidators(fieldId)
 
   useEffect(() => {
     return () => {
@@ -34,11 +34,11 @@ export const BasicCheckbox = memo(function BasicCheckbox({ formEle, element, han
         name={formEle.fieldName}
         type="checkbox"
         checked={(Reflect.has(element, formEle.fieldName) && typeof element[formEle.fieldName] === 'boolean') ? element[formEle.fieldName] : false}
-        className={`rounded mt-3 ${isInValid && touched ? "text-red-600 border border-red-600" : "text-prussian-blue-500"}`}
+        className={`rounded mt-3 ${!isValid && touched ? "text-red-600 border border-red-600" : "text-prussian-blue-500"}`}
         onChange={event => handleChange(formEle.fieldName, event.target.checked)}
         onBlur={() => setTouched(true)}
       />
-      <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} />
+      <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} setIsValidForField={setIsValidForField} />
     </FormEleContainer>
   )
 }, (prevProps, nextProps) => {

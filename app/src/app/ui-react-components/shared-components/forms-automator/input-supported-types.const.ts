@@ -16,7 +16,7 @@ export enum InputSupportedTypes {
   week = 'week'
 }
 
-export const INPUT_SUPPORTED_TYPES: Array<OptionKeysModel> = [
+export const INPUT_SUPPORTED_TYPES_OPTIONS: Array<OptionKeysModel> = [
   {
     value: InputSupportedTypes.color,
     label: 'Color'

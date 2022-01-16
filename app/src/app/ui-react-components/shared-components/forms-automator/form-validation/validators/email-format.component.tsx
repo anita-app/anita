@@ -2,19 +2,22 @@ import { SUPPORTED_VALIDATORS } from 'app/ui-react-components/shared-components/
 import { IValidatorsProps } from 'app/ui-react-components/shared-components/forms-automator/form-validation/validators'
 import { memo, useEffect } from 'react'
 
-export const RequiredField = memo(function RequiredField({ formEle, element, touched, updateValidatorState }: IValidatorsProps) {
+export const EmailFormat = memo(function EmailFormat({ formEle, element, updateValidatorState }: IValidatorsProps) {
 
   const value = element[formEle.fieldName];
+  // eslint-disable-next-line no-useless-escape
+  const isValidEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value);
+  console.log('EmailFormat ~ isValidEmail', isValidEmail)
 
   useEffect(() => {
-    updateValidatorState(SUPPORTED_VALIDATORS.required, value !== '' && value !== undefined && value !== null);
+    updateValidatorState(SUPPORTED_VALIDATORS.emailFormat, isValidEmail);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
-  if (value || !touched)
-    return (<div className="ml-1 text-xs italic text-gray-400">Required</div>);
+  if (isValidEmail || !value)
+    return null
 
-  return (<div className="ml-1 text-red-600 text-xs italic">This field is required</div>);
+  return (<div className="ml-1 text-red-600 text-xs italic">Invalid Email</div>);
 
 }, (prevProps, nextProps) => {
   return prevProps.element[prevProps.formEle.fieldName] === nextProps.element[nextProps.formEle.fieldName]

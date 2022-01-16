@@ -19,7 +19,7 @@ export const BasicInput = memo(function BasicInput({ formEle, element, handleCha
 
   const [touched, setTouched] = useState(false);
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))
-  const isInValid = useValidators(fieldId)
+  const [isValid, setIsValidForField] = useValidators(fieldId)
 
   useEffect(() => {
     return () => {
@@ -38,16 +38,16 @@ export const BasicInput = memo(function BasicInput({ formEle, element, handleCha
       <input
         key={formEle.fieldName}
         name={formEle.fieldName}
-        type={formEle?.['inputType'] || 'text'}
+        type={formEle?.type || 'text'}
         placeholder={formEle['label']}
         disabled={formEle.disabled ? formEle.disabled : false}
         required={formEle.required ? formEle.required : false}
-        className={`w-full ${isInValid && touched ? FORM_ELEMENTS_CSS_CLASSES_ERR : FORM_ELEMENTS_CSS_CLASSES}`}
+        className={`w-full ${!isValid && touched ? FORM_ELEMENTS_CSS_CLASSES_ERR : FORM_ELEMENTS_CSS_CLASSES}`}
         value={element[formEle.fieldName]}
         onChange={event => handleChange(formEle.fieldName, event.target.value)}
         onBlur={() => setTouched(true)}
       />
-      <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} />
+      <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} setIsValidForField={setIsValidForField} />
     </FormEleContainer>
   )
 }, (prevProps, nextProps) => {

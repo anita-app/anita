@@ -19,7 +19,7 @@ export const DatePicker = memo(function DatePicker({ formEle, element, handleCha
 
   const [touched, setTouched] = useState(false);
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))
-  const isInValid = useValidators(fieldId)
+  const [isValid, setIsValidForField] = useValidators(fieldId)
 
   useEffect(() => {
     return () => {
@@ -37,12 +37,12 @@ export const DatePicker = memo(function DatePicker({ formEle, element, handleCha
         name={formEle.fieldName}
         type="date"
         placeholder={formEle['label']}
-        className={`w-full ${isInValid && touched ? FORM_ELEMENTS_CSS_CLASSES_ERR : FORM_ELEMENTS_CSS_CLASSES}`}
+        className={`w-full ${!isValid && touched ? FORM_ELEMENTS_CSS_CLASSES_ERR : FORM_ELEMENTS_CSS_CLASSES}`}
         value={dateFormat("yyyy-MM-ddThh:mm:ss", new Date(element[formEle.fieldName]))}
         onChange={event => handleChange(formEle.fieldName, event.target.value)}
         onBlur={() => setTouched(true)}
       />
-      <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} />
+      <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} setIsValidForField={setIsValidForField} />
     </FormEleContainer>
   );
 }, (prevProps, nextProps) => {

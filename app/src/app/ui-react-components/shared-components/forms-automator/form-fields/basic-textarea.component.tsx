@@ -18,7 +18,7 @@ export const BasicTextarea = memo(function BasicTextarea({ formEle, element, han
 
   const [touched, setTouched] = useState(false);
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))
-  const isInValid = useValidators(fieldId)
+  const [isValid, setIsValidForField] = useValidators(fieldId)
 
   useEffect(() => {
     return () => {
@@ -36,12 +36,12 @@ export const BasicTextarea = memo(function BasicTextarea({ formEle, element, han
       <FormElementLabel label={formEle['label']} />
       <textarea
         name={formEle.fieldName}
-        className={`w-full ${isInValid && touched ? FORM_ELEMENTS_CSS_CLASSES_ERR : FORM_ELEMENTS_CSS_CLASSES}`}
+        className={`w-full ${!isValid && touched ? FORM_ELEMENTS_CSS_CLASSES_ERR : FORM_ELEMENTS_CSS_CLASSES}`}
         value={element[formEle.fieldName]}
         onChange={event => handleChange(formEle.fieldName, event.target.value)}
         onBlur={() => setTouched(true)}
       />
-      <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} />
+      <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} setIsValidForField={setIsValidForField} />
     </FormEleContainer>
   )
 }, (prevProps, nextProps) => {

@@ -1,3 +1,4 @@
 export enum SUPPORTED_VALIDATORS {
-  requied = 1,
+  required = 1,
+  emailFormat,
 }

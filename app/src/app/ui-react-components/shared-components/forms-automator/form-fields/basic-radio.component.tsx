@@ -21,7 +21,7 @@ export const BasicRadio = memo(function BasicRadio({ formEle, element, handleCha
 
   const [touched, setTouched] = useState(false);
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))
-  const isInValid = useValidators(fieldId)
+  const [isValid, setIsValidForField] = useValidators(fieldId)
 
   useEffect(() => {
     return () => {
@@ -50,7 +50,7 @@ export const BasicRadio = memo(function BasicRadio({ formEle, element, handleCha
                 name={formEle.fieldName}
                 checked={element[formEle.fieldName] == option.value}
                 disabled={option.disabled || formEle.disabled ? true : false}
-                className={`${isInValid && touched ? "bg-red-600 text-red-600" : "bg-gray-200 text-prussian-blue-500"} mr-2 border-transparent focus:border-gray-500 focus:text-prussian-blue-600 focus:ring-prussian-blue-600`}
+                className={`${!isValid && touched ? "bg-red-600 text-red-600" : "bg-gray-200 text-prussian-blue-500"} mr-2 border-transparent focus:border-gray-500 focus:text-prussian-blue-600 focus:ring-prussian-blue-600`}
                 onChange={event => handleChange(formEle.fieldName, event.target['value'])}
                 onBlur={() => setTouched(true)}
               />
@@ -67,7 +67,7 @@ export const BasicRadio = memo(function BasicRadio({ formEle, element, handleCha
           )
         })}
       </div>
-      <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} />
+      <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} setIsValidForField={setIsValidForField} />
     </FormEleContainer>
   )
 }, (prevProps, nextProps) => {

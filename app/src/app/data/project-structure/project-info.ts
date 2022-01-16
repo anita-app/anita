@@ -75,7 +75,7 @@ export interface LocalProjectSettings extends ProjectSettings, AdditionalInfoFor
  */
 export interface SectionCustomFieldProperties {
   componentCode: FORM_COMPONENTS_CODES;
-  inputType?: InputSupportedTypes;
+  type?: InputSupportedTypes;
   fieldName: string;
   label?: string;
   options?: Array<OptionKeysModel>;
