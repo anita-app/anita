@@ -30,6 +30,10 @@ export const ProjectPicker = ({ project }: { project: SystemData }) => {
     navigate(urlParamFiller(ANITA_URLS.projectDetails, [{ name: URL_PARAMS.projectId, value: projectId }]));
   }
 
+  const goToEditProject = (projectId: string) => {
+    navigate(urlParamFiller(ANITA_URLS.projectEdit, [{ name: URL_PARAMS.projectId, value: projectId }]));
+  }
+
   return (
     <div ref={dropDownRef}>
       <p className="text-xs text-gray-600 pl-2">Current project:</p>
@@ -53,6 +57,10 @@ export const ProjectPicker = ({ project }: { project: SystemData }) => {
             <button className="w-full block text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => handleClick(goToDetails(project[RESERVED_AUDS_KEYS._settings][0].id))}>
               <i className="bi-info-circle mr-2"></i>
               Go to the details of the project
+            </button>
+            <button className="w-full block text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => handleClick(goToEditProject(project[RESERVED_AUDS_KEYS._settings][0].id))}>
+              <i className="bi-pencil mr-2"></i>
+              Edit the current project
             </button>
             <button className="w-full block text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => handleClick(navigate(ANITA_URLS.projectsList))}>
               <i className="bi-files mr-2"></i>
