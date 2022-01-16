@@ -5,7 +5,7 @@ export const MainContentContainer = ({ children, headerText }: { children: React
       <h3 className="text-xl font-bold">{headerText}</h3>
       <hr className="mt-4" />
     </div> : null}
-    <div className="pt-4 overflow-y-auto">
+    <div className="pt-4 pb-4 overflow-y-auto">
       {children}
     </div>
   </div>
