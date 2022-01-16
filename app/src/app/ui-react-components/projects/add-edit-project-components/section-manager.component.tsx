@@ -1,14 +1,14 @@
 import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const'
 import { RESERVED_AUDS_KEYS, Section } from 'app/data/project-structure/project-info'
 import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant'
-import { IUpdateFormProjectRemoveFieldFromSectionPayload, IUpdateFormProjectUpdateSectionPayload } from 'app/libs/redux/action.type'
+import { IUpdateFormProjectRemoveFieldFromSectionPayload } from 'app/libs/redux/action.type'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { SectionFormModelManager } from 'app/ui-react-components/projects/add-edit-project-components/section-form-model-manager.component'
 import { DANGER_BTN_OUTLINE, SUCCESS_BTN_OUTLINE } from 'app/ui-react-components/shared-components/buttons/buttons-layout-tw-classes.const'
 import { FormAutomator } from 'app/ui-react-components/shared-components/forms-automator/form-automator.component'
-import { FormAutomatorOnChangeValue, FormFieldsModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
+import { FormFieldsModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import { useSelector } from 'react-redux'
 
 export const SectionManager = ({ section, sectionIndex }: { section: Section, sectionIndex: number }) => {
@@ -19,12 +19,9 @@ export const SectionManager = ({ section, sectionIndex }: { section: Section, se
     .map(formElement => Object.values(RESERVED_FIELDS).includes(formElement.fieldName) ? null : formElement.fieldName)
     .filter(fieldName => fieldName !== null);
 
-  const handleChange = (index: number, fieldName: string | number, value: FormAutomatorOnChangeValue) => {
+  const handleChange = (index: number, fieldName: keyof Section, value: Section[keyof Section]) => {
     storeDispatcher({
-      type: REDUX_ACTIONS.updateFormProjectUpdateSection, payload: {
-        section: { ...section, [fieldName]: value },
-        index
-      } as IUpdateFormProjectUpdateSectionPayload
+      type: REDUX_ACTIONS.updateFormProjectUpdateSection, payload: { fieldName, value, index }
     });
   }
 

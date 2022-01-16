@@ -17,7 +17,7 @@ export const FormElementManager = ({ sectionId }: { sectionId: string }) => {
   const element = useSelector((store: AnitaStore) => store.formElement.element);
 
   const handleChange = (fieldName: string | number, value: FormAutomatorOnChangeValue) => {
-    storeDispatcher({ type: REDUX_ACTIONS.updateFormElementKey, payload: { fieldName: fieldName, value } });
+    storeDispatcher({ type: REDUX_ACTIONS.updateFormElementKey, payload: { fieldName, value } });
   }
 
   return (

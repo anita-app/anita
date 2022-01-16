@@ -1,10 +1,10 @@
-import { PROJECT_EDITOR_MODE } from 'app/data/project-form-builder/project-editor-form-builder.const';
-import { RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info';
-import { IdCreator } from 'app/libs/id-creator/id-creator.class';
-import { Action } from 'app/libs/redux/action.type';
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
-import { OptionKeysModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
-import cloneDeep from 'lodash.clonedeep';
+import { PROJECT_EDITOR_MODE } from 'app/data/project-form-builder/project-editor-form-builder.const'
+import { RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info'
+import { IdCreator } from 'app/libs/id-creator/id-creator.class'
+import { Action } from 'app/libs/redux/action.type'
+import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
+import { OptionKeysModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
+import cloneDeep from 'lodash.clonedeep'
 
 export interface IFormProjectState {
   original: Partial<SystemData>;
@@ -46,7 +46,7 @@ export const formProjectReducer = (state: IFormProjectState = formElementState, 
         original: state.original, mode: state.mode,
         project: {
           ...state.project,
-          [RESERVED_AUDS_KEYS._settings]: [{ ...action.payload }]
+          [RESERVED_AUDS_KEYS._settings]: [{ ...state.project[RESERVED_AUDS_KEYS._settings][0], [action.payload.fieldName]: action.payload.value }]
         }
       };
     case REDUX_ACTIONS.updateFormProjectAddSection:
@@ -63,7 +63,8 @@ export const formProjectReducer = (state: IFormProjectState = formElementState, 
       };
     case REDUX_ACTIONS.updateFormProjectUpdateSection:
       const copy3 = { original: state.original, mode: state.mode, project: { ...state.project } };
-      copy3.project[RESERVED_AUDS_KEYS._sections][action.payload.index] = { ...action.payload.section };
+      const originalSection = copy3.project[RESERVED_AUDS_KEYS._sections][action.payload.index];
+      copy3.project[RESERVED_AUDS_KEYS._sections][action.payload.index] = { ...originalSection, [action.payload.fieldName]: action.payload.value };
       return copy3;
     case REDUX_ACTIONS.updateFormProjectUpdateFormModelOfSection:
       const copy4 = { original: state.original, mode: state.mode, project: { ...state.project } };
