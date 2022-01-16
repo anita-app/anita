@@ -1,10 +1,16 @@
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export const useValidators = (fieldId): [boolean, ((isValid: boolean) => void)] => {
 
   const [isValid, setIsValid] = useState(true)
+
+  useEffect(() => {
+    return () => {
+      storeDispatcher({ type: REDUX_ACTIONS.unsetValidStateForEle, payload: fieldId });
+    }
+  }, [fieldId]);
 
   const setIsValidForField = (isValid) => {
     setIsValid(isValid)

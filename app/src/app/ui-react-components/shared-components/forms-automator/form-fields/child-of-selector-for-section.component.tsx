@@ -2,8 +2,6 @@ import { RESERVED_AUDS_KEYS, SectionElement } from 'app/data/project-structure/p
 import { parentInfoObjToString } from 'app/libs/project-helpers/parent-info-form-ele-builder/parent-info-obj-to-string.function'
 import { Option, parentInfoStringToObj } from 'app/libs/project-helpers/parent-info-form-ele-builder/parent-info-string-to-obj.function'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
-import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { IBasicSelect, ICommonFormEleProps } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import { FormEleContainer } from 'app/ui-react-components/shared-components/forms-automator/form-layout/form-ele-container.component'
 import { FormElementLabel } from 'app/ui-react-components/shared-components/forms-automator/form-layout/form-element-label.component'
@@ -27,12 +25,6 @@ export const ChildOfSelectorForSection = memo(function ChildOfSelectorForSection
   const [touched, setTouched] = useState(false);
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))
   const [isValid, setIsValidForField] = useValidators(fieldId)
-
-  useEffect(() => {
-    return () => {
-      storeDispatcher({ type: REDUX_ACTIONS.unsetValidStateForEle, payload: fieldId });
-    }
-  }, [fieldId]);
 
   useEffect(() => {
     let isMounted = true;

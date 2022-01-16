@@ -1,18 +1,11 @@
 import { SectionElement } from 'app/data/project-structure/project-info'
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
-import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { IBasicRadio, ICommonFormEleProps } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import { FormEleContainer } from 'app/ui-react-components/shared-components/forms-automator/form-layout/form-ele-container.component'
 import { FormElementLabel } from 'app/ui-react-components/shared-components/forms-automator/form-layout/form-element-label.component'
 import { ValidatorsContainer } from 'app/ui-react-components/shared-components/forms-automator/form-validation/validators-container.component'
 import { useValidators } from 'app/ui-react-components/shared-components/forms-automator/hooks/use-validators.hook'
 import uniqueId from 'lodash/uniqueId'
-import {
-  memo,
-  useEffect,
-  useRef,
-  useState
-  } from 'react'
+import { memo, useRef, useState } from 'react'
 import ReactTooltip from 'react-tooltip'
 
 /* eslint-disable eqeqeq */
@@ -23,17 +16,10 @@ export const BasicRadio = memo(function BasicRadio({ formEle, element, handleCha
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))
   const [isValid, setIsValidForField] = useValidators(fieldId)
 
-  useEffect(() => {
-    return () => {
-      storeDispatcher({ type: REDUX_ACTIONS.unsetValidStateForEle, payload: fieldId });
-    }
-  }, [fieldId]);
-
   const width = formEle['width'] ? formEle['width'] : "w-full";
 
   if (!element[formEle.fieldName] && formEle.value)
     element[formEle.fieldName] = formEle.value;
-
 
   // We use relaxed equal (==) here because the value of the radio button might be a string or a number.
   return (

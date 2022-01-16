@@ -1,5 +1,3 @@
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
-import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { ICommonFormEleProps } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import { calcWidth } from 'app/ui-react-components/shared-components/forms-automator/form-builder/calc-width.function'
 import { FORM_ELEMENTS_CSS_CLASSES, FORM_ELEMENTS_CSS_CLASSES_ERR } from 'app/ui-react-components/shared-components/forms-automator/form-layout/fom-elements-css-classes.const'
@@ -9,24 +7,13 @@ import { ValidatorsContainer } from 'app/ui-react-components/shared-components/f
 import { useValidators } from 'app/ui-react-components/shared-components/forms-automator/hooks/use-validators.hook'
 import * as dateFormat from 'date-format'
 import uniqueId from 'lodash/uniqueId'
-import {
-  memo,
-  useEffect,
-  useRef,
-  useState
-  } from 'react'
+import { memo, useRef, useState } from 'react'
 
 export const DateTimePicker = memo(function DateTimePicker({ formEle, element, handleChange }: ICommonFormEleProps) {
 
   const [touched, setTouched] = useState(false);
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))
   const [isValid, setIsValidForField] = useValidators(fieldId)
-
-  useEffect(() => {
-    return () => {
-      storeDispatcher({ type: REDUX_ACTIONS.unsetValidStateForEle, payload: fieldId });
-    }
-  }, [fieldId]);
 
   const width = formEle['width'] ? calcWidth(formEle['width']) : "w-full";
 
