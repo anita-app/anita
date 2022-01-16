@@ -2,6 +2,8 @@ import { SUPPORTED_VALIDATORS } from 'app/ui-react-components/shared-components/
 import { IValidatorsConatinerProps, IValidatorsState } from 'app/ui-react-components/shared-components/forms-automator/form-validation/validators'
 import { EmailFormat } from 'app/ui-react-components/shared-components/forms-automator/form-validation/validators/email-format.component'
 import { RequiredField } from 'app/ui-react-components/shared-components/forms-automator/form-validation/validators/required-field.component'
+import { TelephoneNumber } from 'app/ui-react-components/shared-components/forms-automator/form-validation/validators/telephone-number.component'
+import { UrlFormat } from 'app/ui-react-components/shared-components/forms-automator/form-validation/validators/url-format.component'
 import { InputSupportedTypes } from 'app/ui-react-components/shared-components/forms-automator/input-supported-types.const'
 import { memo, useState } from 'react'
 
@@ -29,10 +31,16 @@ export const ValidatorsContainer = memo(function ValidatorsContainer(props: IVal
   if (props.formEle?.type === InputSupportedTypes.email)
     validators.push(<EmailFormat key="email-validator" updateValidatorState={updateValidatorState} {...props} />)
 
+  if (props.formEle?.type === InputSupportedTypes.tel)
+    validators.push(<TelephoneNumber key="telephone-validator" updateValidatorState={updateValidatorState} {...props} />)
+
+  if (props.formEle?.type === InputSupportedTypes.url)
+    validators.push(<UrlFormat key="url-validator" updateValidatorState={updateValidatorState} {...props} />)
+
   return (
-    <span>
+    <div className="flex">
       {validators}
-    </span>
+    </div>
   );
 }, (prevProps, nextProps) => {
   return prevProps.element[prevProps.formEle.fieldName] === nextProps.element[nextProps.formEle.fieldName]

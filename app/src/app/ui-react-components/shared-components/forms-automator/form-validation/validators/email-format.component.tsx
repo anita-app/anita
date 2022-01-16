@@ -7,7 +7,6 @@ export const EmailFormat = memo(function EmailFormat({ formEle, element, updateV
   const value = element[formEle.fieldName];
   // eslint-disable-next-line no-useless-escape
   const isValidEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value);
-  console.log('EmailFormat ~ isValidEmail', isValidEmail)
 
   useEffect(() => {
     updateValidatorState(SUPPORTED_VALIDATORS.emailFormat, isValidEmail);
@@ -17,7 +16,7 @@ export const EmailFormat = memo(function EmailFormat({ formEle, element, updateV
   if (isValidEmail || !value)
     return null
 
-  return (<div className="ml-1 text-red-600 text-xs italic">Invalid Email</div>);
+  return (<div className="ml-1 text-red-600 text-xs italic  d-block-inline">Invalid Email</div>);
 
 }, (prevProps, nextProps) => {
   return prevProps.element[prevProps.formEle.fieldName] === nextProps.element[nextProps.formEle.fieldName]

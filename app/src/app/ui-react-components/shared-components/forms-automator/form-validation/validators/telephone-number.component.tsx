@@ -2,19 +2,21 @@ import { SUPPORTED_VALIDATORS } from 'app/ui-react-components/shared-components/
 import { IValidatorsProps } from 'app/ui-react-components/shared-components/forms-automator/form-validation/validators'
 import { memo, useEffect } from 'react'
 
-export const RequiredField = memo(function RequiredField({ formEle, element, touched, updateValidatorState }: IValidatorsProps) {
+export const TelephoneNumber = memo(function TelephoneNumber({ formEle, element, updateValidatorState }: IValidatorsProps) {
 
   const value = element[formEle.fieldName];
+  const isValidTelephonenumber = /^\+?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4,})$/.test(value);
+  console.log('isValidTelephonenumber', isValidTelephonenumber)
 
   useEffect(() => {
-    updateValidatorState(SUPPORTED_VALIDATORS.required, value !== '' && value !== undefined && value !== null);
+    updateValidatorState(SUPPORTED_VALIDATORS.telephoneNumber, isValidTelephonenumber);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
-  if (value || !touched)
-    return (<div className="ml-1 text-xs italic text-gray-400 d-block-inline">Required</div>);
+  if (isValidTelephonenumber || !value)
+    return null
 
-  return (<div className="ml-1 text-red-600 text-xs italic">This field is required</div>);
+  return (<div className="ml-1 text-red-600 text-xs italic  d-block-inline">Invalid telephone number</div>);
 
 }, (prevProps, nextProps) => {
   return prevProps.element[prevProps.formEle.fieldName] === nextProps.element[nextProps.formEle.fieldName]
