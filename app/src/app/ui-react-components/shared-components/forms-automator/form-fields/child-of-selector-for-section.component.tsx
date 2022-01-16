@@ -9,11 +9,16 @@ import { FormEleContainer } from 'app/ui-react-components/shared-components/form
 import { FormElementLabel } from 'app/ui-react-components/shared-components/forms-automator/form-layout/form-element-label.component'
 import { ValidatorsContainer } from 'app/ui-react-components/shared-components/forms-automator/validators/validators-container.component'
 import uniqueId from 'lodash/uniqueId'
-import { useEffect, useRef, useState } from 'react'
+import {
+  memo,
+  useEffect,
+  useRef,
+  useState
+  } from 'react'
 import { useSelector } from 'react-redux'
 import Select, { MultiValue } from 'react-select'
 
-export const ChildOfSelectorForSection = ({ formEle, element, handleChange, sectionId }: ICommonFormEleProps<IBasicSelect<SectionElement>>) => {
+export const ChildOfSelectorForSection = memo(function ChildOfSelectorForSection({ formEle, element, handleChange, sectionId }: ICommonFormEleProps<IBasicSelect<SectionElement>>) {
 
   const currentEditedProjectSections = useSelector((state: AnitaStore) => state.formProject.project[RESERVED_AUDS_KEYS._sections]);
   const [selectOptions, setSelectOptions] = useState<Array<Option>>([]);
@@ -77,4 +82,6 @@ export const ChildOfSelectorForSection = ({ formEle, element, handleChange, sect
     <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} />
   </FormEleContainer>
   )
-};
+}, (prevProps, nextProps) => {
+  return prevProps.element[prevProps.formEle.fieldName] === nextProps.element[nextProps.formEle.fieldName]
+});

@@ -7,13 +7,18 @@ import { FormEleContainer } from 'app/ui-react-components/shared-components/form
 import { FormElementLabel } from 'app/ui-react-components/shared-components/forms-automator/form-layout/form-element-label.component'
 import { ValidatorsContainer } from 'app/ui-react-components/shared-components/forms-automator/validators/validators-container.component'
 import uniqueId from 'lodash/uniqueId'
-import { useEffect, useRef, useState } from 'react'
+import {
+  memo,
+  useEffect,
+  useRef,
+  useState
+  } from 'react'
 import { useSelector } from 'react-redux'
 import ReactTooltip from 'react-tooltip'
 
 /* eslint-disable eqeqeq */
 
-export const BasicRadio = ({ formEle, element, handleChange }: ICommonFormEleProps<IBasicRadio<SectionElement>>) => {
+export const BasicRadio = memo(function BasicRadio({ formEle, element, handleChange }: ICommonFormEleProps<IBasicRadio<SectionElement>>) {
 
   const [touched, setTouched] = useState(false);
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))
@@ -67,4 +72,6 @@ export const BasicRadio = ({ formEle, element, handleChange }: ICommonFormElePro
       <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} />
     </FormEleContainer>
   )
-};
+}, (prevProps, nextProps) => {
+  return prevProps.element[prevProps.formEle.fieldName] == nextProps.element[nextProps.formEle.fieldName]
+});

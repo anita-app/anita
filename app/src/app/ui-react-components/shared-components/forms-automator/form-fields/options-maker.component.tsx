@@ -1,8 +1,9 @@
-import { SUCCESS_BTN_OUTLINE } from 'app/ui-react-components/shared-components/buttons/buttons-layout-tw-classes.const';
-import { FormFieldsModel, ICommonFormEleProps, OptionKeysModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
-import { OptionsMakerSingleOption } from 'app/ui-react-components/shared-components/forms-automator/form-fields/options-maker-single-option.component';
+import { SUCCESS_BTN_OUTLINE } from 'app/ui-react-components/shared-components/buttons/buttons-layout-tw-classes.const'
+import { FormFieldsModel, ICommonFormEleProps, OptionKeysModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
+import { OptionsMakerSingleOption } from 'app/ui-react-components/shared-components/forms-automator/form-fields/options-maker-single-option.component'
+import { memo } from 'react'
 
-export const OptionsMaker = (props: ICommonFormEleProps<FormFieldsModel<OptionKeysModel>>) => {
+export const OptionsMaker = memo(function OptionsMaker(props: ICommonFormEleProps<FormFieldsModel<OptionKeysModel>>) {
 
   const { formEle, element, handleOptionsChange, handleClickAddOption } = props;
 
@@ -32,4 +33,4 @@ export const OptionsMaker = (props: ICommonFormEleProps<FormFieldsModel<OptionKe
       }
     </div>
   )
-};
+});

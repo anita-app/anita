@@ -9,10 +9,15 @@ import { FormElementLabel } from 'app/ui-react-components/shared-components/form
 import { ValidatorsContainer } from 'app/ui-react-components/shared-components/forms-automator/validators/validators-container.component'
 import * as dateFormat from 'date-format'
 import uniqueId from 'lodash/uniqueId'
-import { useEffect, useRef, useState } from 'react'
+import {
+  memo,
+  useEffect,
+  useRef,
+  useState
+  } from 'react'
 import { useSelector } from 'react-redux'
 
-export const DateTimePicker = ({ formEle, element, handleChange }: ICommonFormEleProps) => {
+export const DateTimePicker = memo(function DateTimePicker({ formEle, element, handleChange }: ICommonFormEleProps) {
 
   const [touched, setTouched] = useState(false);
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))
@@ -43,4 +48,6 @@ export const DateTimePicker = ({ formEle, element, handleChange }: ICommonFormEl
       <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} />
     </FormEleContainer>
   );
-};
+}, (prevProps, nextProps) => {
+  return prevProps.element[prevProps.formEle.fieldName] === nextProps.element[nextProps.formEle.fieldName]
+});

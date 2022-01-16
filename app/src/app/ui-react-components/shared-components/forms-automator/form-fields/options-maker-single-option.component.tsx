@@ -1,12 +1,12 @@
-import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const';
-import { RESERVED_AUDS_KEYS, Section } from 'app/data/project-structure/project-info';
-import { AnitaStore } from 'app/libs/redux/reducers.const';
-import { DANGER_BTN_OUTLINE } from 'app/ui-react-components/shared-components/buttons/buttons-layout-tw-classes.const';
-import { FormAutomator } from 'app/ui-react-components/shared-components/forms-automator/form-automator.component';
-import { FormFieldsModel, ICommonFormEleProps, OptionKeysModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
-import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import ReactTooltip from 'react-tooltip';
+import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const'
+import { RESERVED_AUDS_KEYS, Section } from 'app/data/project-structure/project-info'
+import { AnitaStore } from 'app/libs/redux/reducers.const'
+import { DANGER_BTN_OUTLINE } from 'app/ui-react-components/shared-components/buttons/buttons-layout-tw-classes.const'
+import { FormAutomator } from 'app/ui-react-components/shared-components/forms-automator/form-automator.component'
+import { FormFieldsModel, ICommonFormEleProps, OptionKeysModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
+import { memo, useMemo } from 'react'
+import { useSelector } from 'react-redux'
+import ReactTooltip from 'react-tooltip'
 
 /**
  * Checks if the OptionKeysModel was already in the section before we started editing.
@@ -23,7 +23,7 @@ function getCanEdit(section: Section, indexFormElement: number, value: any): boo
   return !section.formModel[indexFormElement]['options'].some((opt: OptionKeysModel) => opt.value === value);
 }
 
-export const OptionsMakerSingleOption = (props: ICommonFormEleProps<FormFieldsModel<OptionKeysModel>>) => {
+export const OptionsMakerSingleOption = memo(function OptionsMakerSingleOption(props: ICommonFormEleProps<FormFieldsModel<OptionKeysModel>>) {
   const { formEle, element, handleOptionsChange, handleClickDeleteOption, indexSection, indexFormElement, index, optionElement } = props;
   const projectEditorMode = useSelector((store: AnitaStore) => store.formProject.mode);
   const section = useSelector((store: AnitaStore) => store.formProject.original[RESERVED_AUDS_KEYS._sections][indexSection]);
@@ -52,4 +52,4 @@ export const OptionsMakerSingleOption = (props: ICommonFormEleProps<FormFieldsMo
       </div>}
     </li>
   )
-};
+});

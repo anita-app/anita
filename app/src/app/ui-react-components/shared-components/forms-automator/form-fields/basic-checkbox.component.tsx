@@ -6,10 +6,15 @@ import { FormEleContainer } from 'app/ui-react-components/shared-components/form
 import { FormElementLabel } from 'app/ui-react-components/shared-components/forms-automator/form-layout/form-element-label.component'
 import { ValidatorsContainer } from 'app/ui-react-components/shared-components/forms-automator/validators/validators-container.component'
 import uniqueId from 'lodash/uniqueId'
-import { useEffect, useRef, useState } from 'react'
+import {
+  memo,
+  useEffect,
+  useRef,
+  useState
+  } from 'react'
 import { useSelector } from 'react-redux'
 
-export const BasicCheckbox = ({ formEle, element, handleChange }: ICommonFormEleProps) => {
+export const BasicCheckbox = memo(function BasicCheckbox({ formEle, element, handleChange }: ICommonFormEleProps) {
 
   const [touched, setTouched] = useState(false);
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))
@@ -38,4 +43,6 @@ export const BasicCheckbox = ({ formEle, element, handleChange }: ICommonFormEle
       <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} />
     </FormEleContainer>
   )
-};
+}, (prevProps, nextProps) => {
+  return prevProps.element[prevProps.formEle.fieldName] === nextProps.element[nextProps.formEle.fieldName]
+});

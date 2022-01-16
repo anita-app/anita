@@ -46,4 +46,6 @@ export const BasicTextarea = memo(function BasicTextarea({ formEle, element, han
       <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} />
     </FormEleContainer>
   )
+}, (prevProps, nextProps) => {
+  return prevProps.element[prevProps.formEle.fieldName] === nextProps.element[nextProps.formEle.fieldName]
 });

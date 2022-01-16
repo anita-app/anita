@@ -9,10 +9,15 @@ import { FormEleContainer } from 'app/ui-react-components/shared-components/form
 import { FormElementLabel } from 'app/ui-react-components/shared-components/forms-automator/form-layout/form-element-label.component'
 import { ValidatorsContainer } from 'app/ui-react-components/shared-components/forms-automator/validators/validators-container.component'
 import uniqueId from 'lodash/uniqueId'
-import { useEffect, useRef, useState } from 'react'
+import {
+  memo,
+  useEffect,
+  useRef,
+  useState
+  } from 'react'
 import { useSelector } from 'react-redux'
 
-export const BasicSelect = ({ formEle, element, handleChange }: ICommonFormEleProps<IBasicSelect<SectionElement>>) => {
+export const BasicSelect = memo(function BasicSelect({ formEle, element, handleChange }: ICommonFormEleProps<IBasicSelect<SectionElement>>) {
 
   const [touched, setTouched] = useState(false);
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))
@@ -47,4 +52,6 @@ export const BasicSelect = ({ formEle, element, handleChange }: ICommonFormElePr
       <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} />
     </FormEleContainer>
   )
-};
+}, (prevProps, nextProps) => {
+  return prevProps.element[prevProps.formEle.fieldName] === nextProps.element[nextProps.formEle.fieldName]
+});

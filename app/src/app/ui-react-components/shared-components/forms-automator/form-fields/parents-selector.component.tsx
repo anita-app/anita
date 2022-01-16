@@ -10,11 +10,16 @@ import { FormEleContainer } from 'app/ui-react-components/shared-components/form
 import { FormElementLabel } from 'app/ui-react-components/shared-components/forms-automator/form-layout/form-element-label.component'
 import { ValidatorsContainer } from 'app/ui-react-components/shared-components/forms-automator/validators/validators-container.component'
 import uniqueId from 'lodash/uniqueId'
-import { useEffect, useRef, useState } from 'react'
+import {
+  memo,
+  useEffect,
+  useRef,
+  useState
+  } from 'react'
 import { useSelector } from 'react-redux'
 import Select, { MultiValue } from 'react-select'
 
-export const ParentsSelector = ({ formEle, element, handleChange }: ICommonFormEleProps<IBasicSelect<SectionElement>>) => {
+export const ParentsSelector = memo(function ParentsSelector({ formEle, element, handleChange }: ICommonFormEleProps<IBasicSelect<SectionElement>>) {
 
   const [selectOptions, setSelectOptions] = useState<Array<OptionKeysModelGroup>>([]);
   const project = useSelector((state: AnitaStore) => state.project);
@@ -70,4 +75,7 @@ export const ParentsSelector = ({ formEle, element, handleChange }: ICommonFormE
     <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} />
   </FormEleContainer>
   )
-};
+}, (prevProps, nextProps) => {
+  return prevProps.element[prevProps.formEle.fieldName] === nextProps.element[nextProps.formEle.fieldName] &&
+    prevProps.formEle.options === nextProps.formEle.options
+});
