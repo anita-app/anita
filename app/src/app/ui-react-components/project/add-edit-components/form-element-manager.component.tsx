@@ -1,12 +1,12 @@
-import { RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
-import { ParentInfoFormEleBuilder } from 'app/libs/project-helpers/parent-info-form-ele-builder/parent-info-form-ele-builder.class';
-import { AnitaStore } from 'app/libs/redux/reducers.const';
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
-import { store } from 'app/libs/redux/state.store';
-import { findSectionById } from 'app/libs/tools/find-section-by-id.function';
-import { FormAutomator } from 'app/ui-react-components/shared-components/forms-automator/form-automator.component';
-import { FormAutomatorOnChangeValue } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
-import { useSelector } from 'react-redux';
+import { RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info'
+import { ParentInfoFormEleBuilder } from 'app/libs/project-helpers/parent-info-form-ele-builder/parent-info-form-ele-builder.class'
+import { AnitaStore } from 'app/libs/redux/reducers.const'
+import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
+import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
+import { findSectionById } from 'app/libs/tools/find-section-by-id.function'
+import { FormAutomator } from 'app/ui-react-components/shared-components/forms-automator/form-automator.component'
+import { FormAutomatorOnChangeValue } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
+import { useSelector } from 'react-redux'
 
 export const FormElementManager = ({ sectionId }: { sectionId: string }) => {
 
@@ -17,7 +17,7 @@ export const FormElementManager = ({ sectionId }: { sectionId: string }) => {
   const element = useSelector((store: AnitaStore) => store.formElement.element);
 
   const handleChange = (fieldName: string | number, value: FormAutomatorOnChangeValue) => {
-    store.dispatch({ type: REDUX_ACTIONS.updateFormElement, payload: { ...element, [fieldName]: value } });
+    storeDispatcher({ type: REDUX_ACTIONS.updateFormElementKey, payload: { fieldName: fieldName, value } });
   }
 
   return (

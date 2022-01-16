@@ -1,15 +1,15 @@
-import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const';
-import { RESERVED_AUDS_KEYS, Section } from 'app/data/project-structure/project-info';
-import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant';
-import { IUpdateFormProjectRemoveFieldFromSectionPayload, IUpdateFormProjectUpdateSectionPayload } from 'app/libs/redux/action.type';
-import { AnitaStore } from 'app/libs/redux/reducers.const';
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
-import { store } from 'app/libs/redux/state.store';
-import { SectionFormModelManager } from 'app/ui-react-components/projects/add-edit-project-components/section-form-model-manager.component';
-import { DANGER_BTN_OUTLINE, SUCCESS_BTN_OUTLINE } from 'app/ui-react-components/shared-components/buttons/buttons-layout-tw-classes.const';
-import { FormAutomator } from 'app/ui-react-components/shared-components/forms-automator/form-automator.component';
-import { FormAutomatorOnChangeValue, FormFieldsModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
-import { useSelector } from 'react-redux';
+import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const'
+import { RESERVED_AUDS_KEYS, Section } from 'app/data/project-structure/project-info'
+import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant'
+import { IUpdateFormProjectRemoveFieldFromSectionPayload, IUpdateFormProjectUpdateSectionPayload } from 'app/libs/redux/action.type'
+import { AnitaStore } from 'app/libs/redux/reducers.const'
+import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
+import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
+import { SectionFormModelManager } from 'app/ui-react-components/projects/add-edit-project-components/section-form-model-manager.component'
+import { DANGER_BTN_OUTLINE, SUCCESS_BTN_OUTLINE } from 'app/ui-react-components/shared-components/buttons/buttons-layout-tw-classes.const'
+import { FormAutomator } from 'app/ui-react-components/shared-components/forms-automator/form-automator.component'
+import { FormAutomatorOnChangeValue, FormFieldsModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
+import { useSelector } from 'react-redux'
 
 export const SectionManager = ({ section, sectionIndex }: { section: Section, sectionIndex: number }) => {
 
@@ -20,7 +20,7 @@ export const SectionManager = ({ section, sectionIndex }: { section: Section, se
     .filter(fieldName => fieldName !== null);
 
   const handleChange = (index: number, fieldName: string | number, value: FormAutomatorOnChangeValue) => {
-    store.dispatch({
+    storeDispatcher({
       type: REDUX_ACTIONS.updateFormProjectUpdateSection, payload: {
         section: { ...section, [fieldName]: value },
         index
@@ -29,15 +29,15 @@ export const SectionManager = ({ section, sectionIndex }: { section: Section, se
   }
 
   const handleClickAddField = () => {
-    store.dispatch({ type: REDUX_ACTIONS.updateFormProjectAddFieldToSection, payload: sectionIndex });
+    storeDispatcher({ type: REDUX_ACTIONS.updateFormProjectAddFieldToSection, payload: sectionIndex });
   }
 
   const handleClickDeleteSection = () => {
-    store.dispatch({ type: REDUX_ACTIONS.updateFormProjectRemoveSection, payload: sectionIndex });
+    storeDispatcher({ type: REDUX_ACTIONS.updateFormProjectRemoveSection, payload: sectionIndex });
   }
 
   const handleClickDeleteField = (fieldIndex: number) => {
-    store.dispatch({ type: REDUX_ACTIONS.updateFormProjectRemoveFieldFromSection, payload: { sectionIndex, fieldIndex } as IUpdateFormProjectRemoveFieldFromSectionPayload });
+    storeDispatcher({ type: REDUX_ACTIONS.updateFormProjectRemoveFieldFromSection, payload: { sectionIndex, fieldIndex } as IUpdateFormProjectRemoveFieldFromSectionPayload });
   }
 
   return (

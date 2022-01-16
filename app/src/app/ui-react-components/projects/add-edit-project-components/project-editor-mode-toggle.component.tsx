@@ -1,10 +1,10 @@
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
-import { store } from 'app/libs/redux/state.store';
-import './project-editor-mode-toggle.component.css';
+import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
+import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
+import './project-editor-mode-toggle.component.css'
 export const ProjectEditorModeToggle = () => {
 
   const handleChangeProjectEditorMode = () => {
-    store.dispatch({ type: REDUX_ACTIONS.setProjectEditorMode });
+    storeDispatcher({ type: REDUX_ACTIONS.setProjectEditorMode });
   };
 
   return (

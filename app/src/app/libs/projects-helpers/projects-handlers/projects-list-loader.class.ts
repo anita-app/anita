@@ -1,8 +1,8 @@
-import { dbInstances } from 'app/data/local-dbs/db-instances.const';
-import { LocalProjectSettings } from 'app/data/project-structure/project-info';
-import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum';
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
-import { store } from 'app/libs/redux/state.store';
+import { dbInstances } from 'app/data/local-dbs/db-instances.const'
+import { LocalProjectSettings } from 'app/data/project-structure/project-info'
+import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
+import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
+import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 
 /**
  * Loads the list of projects on the current device
@@ -33,7 +33,7 @@ export class ProjectsListLoader {
    * Dispatchs the project list to the current state
    */
   private dispatchProjectList(payload: Array<LocalProjectSettings>): void {
-    store.dispatch(({ type: REDUX_ACTIONS.setProjectList, payload }));
+    storeDispatcher(({ type: REDUX_ACTIONS.setProjectList, payload }));
   }
 
 }

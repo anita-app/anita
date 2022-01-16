@@ -5,9 +5,9 @@ import {
   SectionDetailsDeclaration,
   SectionElement,
   SystemData
-  } from 'app/data/project-structure/project-info';
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
-import { FormFieldsModel, SupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
+  } from 'app/data/project-structure/project-info'
+import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
+import { FormFieldsModel, SupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 
 export type Action<T extends REDUX_ACTIONS> = T extends ActionsWithoutPayload ? ActionWithoutPayload :
   ActionWithPayload<T>;
@@ -29,6 +29,7 @@ interface ActionsPayloads {
   [REDUX_ACTIONS.setCurrentProject]: SystemData;
   [REDUX_ACTIONS.addSectionForChildOfSelector]: SectionDetailsDeclaration;
   [REDUX_ACTIONS.updateFormElement]: SectionElement;
+  [REDUX_ACTIONS.updateFormElementKey]: { fieldName: keyof SectionElement, value: SectionElement[keyof SectionElement] };
   [REDUX_ACTIONS.setFormProject]: SystemData;
   [REDUX_ACTIONS.updateFormProjectSettings]: ProjectSettings;
   [REDUX_ACTIONS.setValidStateForEle]: IValidStateForEle;

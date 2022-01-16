@@ -1,17 +1,17 @@
-import { RESERVED_AUDS_KEYS, SectionElement } from 'app/data/project-structure/project-info';
-import { parentInfoObjToString } from 'app/libs/project-helpers/parent-info-form-ele-builder/parent-info-obj-to-string.function';
-import { Option, parentInfoStringToObj } from 'app/libs/project-helpers/parent-info-form-ele-builder/parent-info-string-to-obj.function';
-import { AnitaStore } from 'app/libs/redux/reducers.const';
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
-import { store } from 'app/libs/redux/state.store';
-import { IBasicSelect, ICommonFormEleProps } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
-import { FormEleContainer } from 'app/ui-react-components/shared-components/forms-automator/form-layout/form-ele-container.component';
-import { FormElementLabel } from 'app/ui-react-components/shared-components/forms-automator/form-layout/form-element-label.component';
-import { ValidatorsContainer } from 'app/ui-react-components/shared-components/forms-automator/validators/validators-container.component';
-import uniqueId from 'lodash/uniqueId';
-import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
-import Select, { MultiValue } from 'react-select';
+import { RESERVED_AUDS_KEYS, SectionElement } from 'app/data/project-structure/project-info'
+import { parentInfoObjToString } from 'app/libs/project-helpers/parent-info-form-ele-builder/parent-info-obj-to-string.function'
+import { Option, parentInfoStringToObj } from 'app/libs/project-helpers/parent-info-form-ele-builder/parent-info-string-to-obj.function'
+import { AnitaStore } from 'app/libs/redux/reducers.const'
+import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
+import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
+import { IBasicSelect, ICommonFormEleProps } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
+import { FormEleContainer } from 'app/ui-react-components/shared-components/forms-automator/form-layout/form-ele-container.component'
+import { FormElementLabel } from 'app/ui-react-components/shared-components/forms-automator/form-layout/form-element-label.component'
+import { ValidatorsContainer } from 'app/ui-react-components/shared-components/forms-automator/validators/validators-container.component'
+import uniqueId from 'lodash/uniqueId'
+import { useEffect, useRef, useState } from 'react'
+import { useSelector } from 'react-redux'
+import Select, { MultiValue } from 'react-select'
 
 export const ChildOfSelectorForSection = ({ formEle, element, handleChange, sectionId }: ICommonFormEleProps<IBasicSelect<SectionElement>>) => {
 
@@ -25,7 +25,7 @@ export const ChildOfSelectorForSection = ({ formEle, element, handleChange, sect
 
   useEffect(() => {
     return () => {
-      store.dispatch({ type: REDUX_ACTIONS.unsetValidStateForEle, payload: fieldId });
+      storeDispatcher({ type: REDUX_ACTIONS.unsetValidStateForEle, payload: fieldId });
     }
   }, [fieldId]);
 

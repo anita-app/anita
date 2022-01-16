@@ -1,27 +1,27 @@
-import { URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
-import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const';
-import { RESERVED_AUDS_KEYS, Section } from 'app/data/project-structure/project-info';
+import { URL_PARAMS } from 'app/anita-routes/anita-routes.constant'
+import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const'
+import { RESERVED_AUDS_KEYS, Section } from 'app/data/project-structure/project-info'
 import {
   IUpdateFormProjectUpdateFormModelAddOptionPayload,
   IUpdateFormProjectUpdateFormModelDeleteOptionPayload,
   IUpdateFormProjectUpdateFormModelOfSectionPayload,
   IUpdateFormProjectUpdateFormModelOptionValuePayload
-  } from 'app/libs/redux/action.type';
-import { AnitaStore } from 'app/libs/redux/reducers.const';
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
-import { store } from 'app/libs/redux/state.store';
-import { cleanString } from 'app/libs/tools/tools';
-import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum';
-import { FormAutomator } from 'app/ui-react-components/shared-components/forms-automator/form-automator.component';
+  } from 'app/libs/redux/action.type'
+import { AnitaStore } from 'app/libs/redux/reducers.const'
+import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
+import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
+import { cleanString } from 'app/libs/tools/tools'
+import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum'
+import { FormAutomator } from 'app/ui-react-components/shared-components/forms-automator/form-automator.component'
 import {
   FormAutomatorOnChangeValue,
   FormFieldsModel,
   OptionKeysModel,
   SupportedFormsTypes
-  } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
-import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { useParams } from 'react-router';
+  } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
+import { useMemo } from 'react'
+import { useSelector } from 'react-redux'
+import { useParams } from 'react-router'
 
 interface ISectionFormModelManagerProps {
   indexSection: number;
@@ -52,7 +52,7 @@ export const SectionFormModelManager = (props: ISectionFormModelManagerProps) =>
 
   const handleChange = (indexSection: number, indexFormElement: number, fieldName: string | number, value: FormAutomatorOnChangeValue) => {
     const identifierAutoVal = fieldName === 'label' && !alreadyExists ? { 'fieldName': (typeof value === 'string') ? cleanString(value) : value } : {};
-    store.dispatch({
+    storeDispatcher({
       type: REDUX_ACTIONS.updateFormProjectUpdateFormModelOfSection, payload: {
         indexSection,
         indexFormElement,
@@ -62,7 +62,7 @@ export const SectionFormModelManager = (props: ISectionFormModelManagerProps) =>
   }
 
   const handleOptionsChange = (indexSection: number, indexFormElement: number, indexOptions: number, optionElement: OptionKeysModel, fieldName: string | number, value: FormAutomatorOnChangeValue) => {
-    store.dispatch({
+    storeDispatcher({
       type: REDUX_ACTIONS.updateFormProjectUpdateFormModelOptionValue, payload: {
         indexSection,
         indexFormElement,
@@ -73,7 +73,7 @@ export const SectionFormModelManager = (props: ISectionFormModelManagerProps) =>
   }
 
   const handleClickAddOption = (indexSection: number, indexFormElement: number) => {
-    store.dispatch({
+    storeDispatcher({
       type: REDUX_ACTIONS.updateFormProjectUpdateFormModelAddOption, payload: {
         indexSection,
         indexFormElement
@@ -82,7 +82,7 @@ export const SectionFormModelManager = (props: ISectionFormModelManagerProps) =>
   }
 
   const handleClickDeleteOption = (indexSection: number, indexFormElement: number, indexOptions: number) => {
-    store.dispatch({
+    storeDispatcher({
       type: REDUX_ACTIONS.updateFormProjectUpdateFormModelDeleteOption, payload: {
         indexSection,
         indexFormElement,

@@ -1,20 +1,20 @@
-import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
-import { urlParamFiller } from 'app/anita-routes/url-param-fillers.function';
-import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const';
-import { RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info';
-import { CurrentProjectSetter } from 'app/libs/project-helpers/project-handlers/current-project-setter.class';
-import { ProjectSaver } from 'app/libs/project-helpers/project-handlers/project-saver.class';
-import { ProjectsListLoader } from 'app/libs/projects-helpers/projects-handlers/projects-list-loader.class';
-import { AnitaStore } from 'app/libs/redux/reducers.const';
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
-import { store } from 'app/libs/redux/state.store';
-import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum';
-import { SectionManager } from 'app/ui-react-components/projects/add-edit-project-components/section-manager.component';
-import { SUCCESS_BTN_OUTLINE } from 'app/ui-react-components/shared-components/buttons/buttons-layout-tw-classes.const';
-import { FormAutomator } from 'app/ui-react-components/shared-components/forms-automator/form-automator.component';
-import { FormAutomatorOnChangeValue } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
-import { useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router';
+import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant'
+import { urlParamFiller } from 'app/anita-routes/url-param-fillers.function'
+import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const'
+import { RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info'
+import { CurrentProjectSetter } from 'app/libs/project-helpers/project-handlers/current-project-setter.class'
+import { ProjectSaver } from 'app/libs/project-helpers/project-handlers/project-saver.class'
+import { ProjectsListLoader } from 'app/libs/projects-helpers/projects-handlers/projects-list-loader.class'
+import { AnitaStore } from 'app/libs/redux/reducers.const'
+import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
+import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
+import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum'
+import { SectionManager } from 'app/ui-react-components/projects/add-edit-project-components/section-manager.component'
+import { SUCCESS_BTN_OUTLINE } from 'app/ui-react-components/shared-components/buttons/buttons-layout-tw-classes.const'
+import { FormAutomator } from 'app/ui-react-components/shared-components/forms-automator/form-automator.component'
+import { FormAutomatorOnChangeValue } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
+import { useSelector } from 'react-redux'
+import { useNavigate, useParams } from 'react-router'
 
 export const FormProjectManager = () => {
 
@@ -26,7 +26,7 @@ export const FormProjectManager = () => {
   const navigate = useNavigate();
 
   const handleProjectChange = (fieldName: string | number, value: FormAutomatorOnChangeValue) => {
-    store.dispatch({ type: REDUX_ACTIONS.updateFormProjectSettings, payload: { ...project[RESERVED_AUDS_KEYS._settings][0], [fieldName]: value } });
+    storeDispatcher({ type: REDUX_ACTIONS.updateFormProjectSettings, payload: { ...project[RESERVED_AUDS_KEYS._settings][0], [fieldName]: value } });
   }
 
   const handleClickSave = async () => {
@@ -37,7 +37,7 @@ export const FormProjectManager = () => {
   }
 
   const handleClickAddSection = () => {
-    store.dispatch({ type: REDUX_ACTIONS.updateFormProjectAddSection });
+    storeDispatcher({ type: REDUX_ACTIONS.updateFormProjectAddSection });
   }
 
   const projectFormModel = mode === EDITOR_MODE.add ?

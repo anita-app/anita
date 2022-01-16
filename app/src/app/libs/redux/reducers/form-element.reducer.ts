@@ -1,6 +1,6 @@
-import { SectionElement } from 'app/data/project-structure/project-info';
-import { Action } from 'app/libs/redux/action.type';
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
+import { SectionElement } from 'app/data/project-structure/project-info'
+import { Action } from 'app/libs/redux/action.type'
+import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 
 export interface IFormElementState {
   element: SectionElement | undefined | null;
@@ -21,6 +21,10 @@ export const formElementReducer = (state: IFormElementState = formElementState, 
     case REDUX_ACTIONS.updateFormElement:
       return {
         element: { ...action.payload }
+      }
+    case REDUX_ACTIONS.updateFormElementKey:
+      return {
+        element: { ...state.element, [action.payload.fieldName]: action.payload.value }
       }
     default:
       return state;

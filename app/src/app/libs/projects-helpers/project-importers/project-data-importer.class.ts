@@ -1,11 +1,11 @@
-import { DbInitializer } from 'app/data/local-dbs/db-initializer.class';
-import { dbInstances } from 'app/data/local-dbs/db-instances.const';
-import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum';
-import { AnitaUniversalDataStorage, ProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
-import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
-import { SaveProjectSettingsInIndexedDB } from 'app/libs/project-helpers/project-handlers/save-project-settings-in-indexeddb.class';
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
-import { store } from 'app/libs/redux/state.store';
+import { DbInitializer } from 'app/data/local-dbs/db-initializer.class'
+import { dbInstances } from 'app/data/local-dbs/db-instances.const'
+import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
+import { AnitaUniversalDataStorage, ProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info'
+import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api'
+import { SaveProjectSettingsInIndexedDB } from 'app/libs/project-helpers/project-handlers/save-project-settings-in-indexeddb.class'
+import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
+import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 
 /**
  * Imports one project file, and then calls `SaveProjectSettingsInIndexedDB`.
@@ -62,7 +62,7 @@ export class ProjectDataImporter {
    * Dispatches the action to add the project to the list of projects
    */
   private dispatchProject(payload: ProjectSettings): void {
-    store.dispatch({ type: REDUX_ACTIONS.addProjectToList, payload });
+    storeDispatcher({ type: REDUX_ACTIONS.addProjectToList, payload });
   }
 
 }

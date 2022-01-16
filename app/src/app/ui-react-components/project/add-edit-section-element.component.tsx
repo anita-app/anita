@@ -1,16 +1,16 @@
-import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
-import { dbInstances } from 'app/data/local-dbs/db-instances.const';
-import { SectionElement } from 'app/data/project-structure/project-info';
-import { isProjectLoaded } from 'app/libs/project-helpers/project-handlers/is-project-loaded.function';
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
-import { store } from 'app/libs/redux/state.store';
-import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum';
-import { FormElementManager } from 'app/ui-react-components/project/add-edit-components/form-element-manager.component';
-import { SaveElement } from 'app/ui-react-components/project/add-edit-components/save-element.component';
-import { MainContentContainer } from 'app/ui-react-components/shared-components/common-ui-eles/main-content-container.component';
-import { Loader } from 'app/ui-react-components/shared-components/loader/loader.component';
-import { useEffect, useState } from 'react';
-import { Navigate, useParams } from 'react-router-dom';
+import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant'
+import { dbInstances } from 'app/data/local-dbs/db-instances.const'
+import { SectionElement } from 'app/data/project-structure/project-info'
+import { isProjectLoaded } from 'app/libs/project-helpers/project-handlers/is-project-loaded.function'
+import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
+import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
+import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum'
+import { FormElementManager } from 'app/ui-react-components/project/add-edit-components/form-element-manager.component'
+import { SaveElement } from 'app/ui-react-components/project/add-edit-components/save-element.component'
+import { MainContentContainer } from 'app/ui-react-components/shared-components/common-ui-eles/main-content-container.component'
+import { Loader } from 'app/ui-react-components/shared-components/loader/loader.component'
+import { useEffect, useState } from 'react'
+import { Navigate, useParams } from 'react-router-dom'
 
 export const AddEditSectionElement = () => {
 
@@ -52,7 +52,7 @@ export const AddEditSectionElement = () => {
 
   const headerText = mode === EDITOR_MODE.add ? 'Add Element' : 'Edit Element';
 
-  store.dispatch({ type: REDUX_ACTIONS.updateFormElement, payload: element });
+  storeDispatcher({ type: REDUX_ACTIONS.updateFormElement, payload: element });
 
   return (
     <MainContentContainer headerText={headerText}>

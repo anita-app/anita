@@ -1,6 +1,6 @@
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
-import { store } from 'app/libs/redux/state.store'
+import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { ICommonFormEleProps } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import { calcWidth } from 'app/ui-react-components/shared-components/forms-automator/form-builder/calc-width.function'
 import { FORM_ELEMENTS_CSS_CLASSES, FORM_ELEMENTS_CSS_CLASSES_ERR } from 'app/ui-react-components/shared-components/forms-automator/form-layout/fom-elements-css-classes.const'
@@ -25,7 +25,7 @@ export const BasicInput = memo(function BasicInput({ formEle, element, handleCha
 
   useEffect(() => {
     return () => {
-      store.dispatch({ type: REDUX_ACTIONS.unsetValidStateForEle, payload: fieldId });
+      storeDispatcher({ type: REDUX_ACTIONS.unsetValidStateForEle, payload: fieldId });
     }
   }, [fieldId]);
 

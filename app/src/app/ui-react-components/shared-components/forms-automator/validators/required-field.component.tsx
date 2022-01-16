@@ -1,15 +1,15 @@
-import { IValidStateForEle } from 'app/libs/redux/action.type';
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
-import { store } from 'app/libs/redux/state.store';
-import { IValidatorsConatinerProps } from 'app/ui-react-components/shared-components/forms-automator/validators/validators';
-import { useEffect } from 'react';
+import { IValidStateForEle } from 'app/libs/redux/action.type'
+import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
+import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
+import { IValidatorsConatinerProps } from 'app/ui-react-components/shared-components/forms-automator/validators/validators'
+import { useEffect } from 'react'
 
 export const RequiredField = ({ formEle, element, fieldId, touched }: IValidatorsConatinerProps) => {
 
   const value = element[formEle.fieldName];
 
   useEffect(() => {
-    store.dispatch({
+    storeDispatcher({
       type: REDUX_ACTIONS.setValidStateForEle, payload: {
         formEleId: `${fieldId}-required`,
         valid: value !== '' && value !== undefined && value !== null
