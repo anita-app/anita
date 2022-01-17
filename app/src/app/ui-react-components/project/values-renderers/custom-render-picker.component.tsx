@@ -32,14 +32,11 @@ export const customRenderPicker = (formModel: FormFieldsModel<SupportedFormsType
     case FORM_COMPONENTS_CODES.dateTimePicker:
       return FormattedDateTime;
     default:
-      console.log('customRenderPicker ~ default')
-      console.log('customRenderPicker ~ formModel', formModel)
       return BasicText
   }
 }
 
 const handleInputType = (type: InputSupportedTypes) => {
-  console.log('handleInputType ~ type', type)
   switch (type) {
     case InputSupportedTypes.color:
       return Color;
