@@ -5,6 +5,7 @@
   "scripts": {
     "licenses": "npx license-checker --production --json --out ../landing/src/app/data-sources/app-packages.json",
     "start": "cross-env BROWSER=none craco start",
+    "start-mac": "export NODE_OPTIONS=--openssl-legacy-provider; cross-env BROWSER=none craco start",
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject"
@@ -55,7 +56,6 @@
     "@testing-library/user-event": "^12.1.10",
     "@types/jest": "^26.0.15",
     "@types/lodash.clonedeep": "^4.5.6",
-    "@types/mongodb": "^4.0.7",
     "@types/mysql": "^2.15.19",
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
