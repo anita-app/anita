@@ -13,7 +13,7 @@ import { Url } from 'app/ui-react-components/project/values-renderers/url.compon
 import { Week } from 'app/ui-react-components/project/values-renderers/week.component'
 import { FormFieldsModel, SupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum'
-import { InputSupportedTypes } from 'app/ui-react-components/shared-components/forms-automator/input-supported-types.const'
+import { DateInputSupportedTypes, DateTimeInputSupportedTypes, TextInputSupportedTypes } from 'app/ui-react-components/shared-components/forms-automator/input-supported-types.const'
 
 export const customRenderPicker = (formModel: FormFieldsModel<SupportedFormsTypes>) => {
   const componentCode = typeof formModel.componentCode === 'string' ? parseInt(formModel.componentCode, 10) : formModel.componentCode;
@@ -36,32 +36,32 @@ export const customRenderPicker = (formModel: FormFieldsModel<SupportedFormsType
   }
 }
 
-const handleInputType = (type: InputSupportedTypes) => {
+const handleInputType = (type: TextInputSupportedTypes | DateInputSupportedTypes | DateTimeInputSupportedTypes) => {
   switch (type) {
-    case InputSupportedTypes.color:
+    case TextInputSupportedTypes.color:
       return Color;
-    case InputSupportedTypes.date:
+    case DateInputSupportedTypes.date:
       return FormattedDate;
-    case InputSupportedTypes.datetimeLocal:
+    case DateTimeInputSupportedTypes.datetimeLocal:
       return FormattedDateTime;
-    case InputSupportedTypes.month:
+    case DateInputSupportedTypes.month:
       return Month;
-    case InputSupportedTypes.week:
+    case DateInputSupportedTypes.week:
       return Week;
-    case InputSupportedTypes.time:
+    case DateTimeInputSupportedTypes.time:
       return BasicText;
-    case InputSupportedTypes.email:
+    case TextInputSupportedTypes.email:
       return Email;
-    case InputSupportedTypes.tel:
+    case TextInputSupportedTypes.tel:
       return Tel;
-    case InputSupportedTypes.url:
+    case TextInputSupportedTypes.url:
       return Url;
-    case InputSupportedTypes.password:
+    case TextInputSupportedTypes.password:
       return Password;
-    case InputSupportedTypes.range:
+    case TextInputSupportedTypes.range:
       return Percentage;
-    case InputSupportedTypes.number:
-    case InputSupportedTypes.text:
+    case TextInputSupportedTypes.number:
+    case TextInputSupportedTypes.text:
     default:
       return BasicText;
   }

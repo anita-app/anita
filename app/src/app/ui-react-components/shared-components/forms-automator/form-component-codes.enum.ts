@@ -1,4 +1,4 @@
-import { OptionKeysModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
+import { OptionKeysModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 
 /**
  * Values to identify the form component to dynamically load.
@@ -51,6 +51,6 @@ export const SELECTABLE_FORM_ELES: Array<OptionKeysModel> = [
   },
   {
     value: FORM_COMPONENTS_CODES.dateTimePicker,
-    label: 'Date & time picker'
+    label: 'Date & time'
   }
 ];

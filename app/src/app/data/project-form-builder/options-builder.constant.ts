@@ -1,11 +1,11 @@
 import { FormFieldsModel, OptionKeysModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum'
-import { InputSupportedTypes } from 'app/ui-react-components/shared-components/forms-automator/input-supported-types.const'
+import { TextInputSupportedTypes } from 'app/ui-react-components/shared-components/forms-automator/input-supported-types.const'
 
 const commonFieldsAdvanced: FormFieldsModel<OptionKeysModel> = {
   componentCode: FORM_COMPONENTS_CODES.basicInput,
   fieldName: 'label',
-  type: InputSupportedTypes.text,
+  type: TextInputSupportedTypes.text,
   label: 'Label',
   required: true,
   width: "8"
@@ -14,7 +14,7 @@ const commonFieldsAdvanced: FormFieldsModel<OptionKeysModel> = {
 const commonFieldsBasic: FormFieldsModel<OptionKeysModel> = {
   componentCode: FORM_COMPONENTS_CODES.basicInput,
   fieldName: 'label',
-  type: InputSupportedTypes.text,
+  type: TextInputSupportedTypes.text,
   label: 'Label',
   required: true,
   width: "11"
@@ -30,7 +30,7 @@ export const optionsBuilderForAddingAdvanced: Array<FormFieldsModel<OptionKeysMo
   {
     componentCode: FORM_COMPONENTS_CODES.basicInput,
     fieldName: 'value',
-    type: InputSupportedTypes.text,
+    type: TextInputSupportedTypes.text,
     label: 'Value',
     required: true,
     width: "3"
@@ -56,7 +56,7 @@ export const optionsBuilderForEditingAdvanced: Array<FormFieldsModel<OptionKeysM
   {
     componentCode: FORM_COMPONENTS_CODES.basicInput,
     fieldName: 'value',
-    type: InputSupportedTypes.text,
+    type: TextInputSupportedTypes.text,
     label: 'Value',
     disabled: true,
     required: true,

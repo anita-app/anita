@@ -5,7 +5,7 @@ import {
   SectionElement
   } from 'app/data/project-structure/project-info'
 import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum'
-import { InputSupportedTypes } from 'app/ui-react-components/shared-components/forms-automator/input-supported-types.const'
+import { TextInputSupportedTypes } from 'app/ui-react-components/shared-components/forms-automator/input-supported-types.const'
 
 export type FormFieldsModel<T extends SupportedFormsTypes> = IBasicInput<T> | IBasicCheckbox<T> | IBasicSelect<T> | IBasicRadio<T> | IBasicTextarea<T> | IHiddenInput<T> | IOptionsMaker<T> | IDatePicker<T> | IDateTimePicker<T>;
 
@@ -39,7 +39,7 @@ interface IHiddenInput<T> extends ICommonTypes<T> {
 
 interface IBasicInput<T> extends ICommonTypes<T> {
   componentCode: FORM_COMPONENTS_CODES.basicInput;
-  type: InputSupportedTypes;
+  type: TextInputSupportedTypes;
   value?: string;
   required?: boolean;
 }
@@ -94,7 +94,7 @@ export interface IBasicSelect<T> extends ICommonTypes<T> {
 interface IOptionsMaker<T> extends ICommonTypes<T> {
   componentCode: FORM_COMPONENTS_CODES.optionsMaker;
   value?: string | number;
-  type: InputSupportedTypes.text;
+  type: TextInputSupportedTypes.text;
   required?: boolean;
 }
 
@@ -119,5 +119,5 @@ interface ICommonTypes<T> {
   prerequisites?: Array<Prerequisites>;
   width?: string;
   externalLabel?: boolean;
-  type?: never | InputSupportedTypes;
+  type?: never | TextInputSupportedTypes;
 }

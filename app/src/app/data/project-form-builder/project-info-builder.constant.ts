@@ -3,7 +3,7 @@ import { ProjectSettings } from 'app/data/project-structure/project-info'
 import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant'
 import { FormFieldsModel, OptionKeysModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum'
-import { InputSupportedTypes } from 'app/ui-react-components/shared-components/forms-automator/input-supported-types.const'
+import { TextInputSupportedTypes } from 'app/ui-react-components/shared-components/forms-automator/input-supported-types.const'
 
 
 const hintFileSystem = 'The Project is saved in a file on your computer in JSON. Data is updated automatically every time you make any change.\nYou can chose the name and the location of the file when you click "Save" at the bottom of this form.';
@@ -22,7 +22,7 @@ const commonFieldsForProjectInfo: Array<FormFieldsModel<ProjectSettings>> = [{
 {
   componentCode: FORM_COMPONENTS_CODES.basicInput,
   fieldName: 'title',
-  type: InputSupportedTypes.text,
+  type: TextInputSupportedTypes.text,
   value: '',
   label: 'Project',
   required: true
