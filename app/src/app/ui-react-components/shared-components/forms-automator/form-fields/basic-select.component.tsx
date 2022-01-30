@@ -18,7 +18,13 @@ export const BasicSelect = memo(function BasicSelect({ formEle, element, handleC
 
   const width = formEle['width'] ? calcWidth(formEle['width']) : "w-full";
 
-  useSetDefaultValue(element, formEle.value, formEle.fieldName, handleChange)
+  // check that the value of element[formEle.fieldName] is a value in formEle.options
+  // Use a relaxed equality check to consider numbers and strings the same
+  // eslint-disable-next-line eqeqeq
+  const isValidOptionsValue = element[formEle.fieldName] && formEle.options.some(option => option.value == element[formEle.fieldName])
+  const currentValueIfValidOrNull = isValidOptionsValue ? element[formEle.fieldName] : null
+
+  useSetDefaultValue(currentValueIfValidOrNull, formEle.value, formEle.fieldName, handleChange)
 
   return (
     <FormEleContainer width={width}>
@@ -41,5 +47,14 @@ export const BasicSelect = memo(function BasicSelect({ formEle, element, handleC
     </FormEleContainer>
   )
 }, (prevProps, nextProps) => {
-  return prevProps.element[prevProps.formEle.fieldName] === nextProps.element[nextProps.formEle.fieldName]
+  let prereqisiteValuesAreEqual = true
+  if (prevProps.formEle?.prerequisites?.length) {
+    const propsToCheck = prevProps.formEle?.prerequisites.map(prerequisite => Object.keys(prerequisite)).flat().filter((value, index, array) => array.indexOf(value) === index);
+    propsToCheck.forEach(prop => {
+      if (prevProps.element[prop] !== nextProps.element[prop]) {
+        prereqisiteValuesAreEqual = false;
+      }
+    })
+  }
+  return prevProps.element[prevProps.formEle.fieldName] === nextProps.element[nextProps.formEle.fieldName] && prereqisiteValuesAreEqual;
 });
