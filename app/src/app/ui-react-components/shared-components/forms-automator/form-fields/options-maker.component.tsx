@@ -18,7 +18,7 @@ export const OptionsMaker = memo(function OptionsMaker(props: ICommonFormEleProp
       <p className="-ml-5 font-semibold mb-1">Choices</p>
       <ol className="list-decimal">
         {element[formEle.fieldName].map((optionElement: OptionKeysModel, index) =>
-          <OptionsMakerSingleOption key={index} index={index} optionElement={optionElement} {...props} />
+          <OptionsMakerSingleOption key={`${optionElement.value}-${index}`} index={index} optionElement={optionElement} {...props} />
         )}
       </ol>
       {(typeof handleClickAddOption === 'function') &&

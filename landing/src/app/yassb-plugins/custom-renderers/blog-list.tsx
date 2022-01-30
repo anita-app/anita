@@ -1,9 +1,9 @@
-import React from 'react';
-import { renderToStaticMarkup } from 'react-dom/server';
-import showdown from 'showdown';
-import { FilePathsForPublicFileList, Renderer, RendererProps } from 'yassb-web';
-import { sortBlogsByDate } from './sort-blogs-by-date';
-import { DateFormatter } from '../custom-directives/date-formatter-directive.class';
+import React from 'react'
+import { renderToStaticMarkup } from 'react-dom/server'
+import showdown from 'showdown'
+import { FilePathsForPublicFileList, Renderer, RendererProps } from 'yassb-web'
+import { sortBlogsByDate } from './sort-blogs-by-date'
+import { DateFormatter } from '../custom-directives/date-formatter-directive.class'
 
 export const blogList: Renderer = ({ source, lang, options, frontMatterStore }: RendererProps<Array<FilePathsForPublicFileList>>): string => {
   const divs = [];
@@ -19,7 +19,7 @@ export const blogList: Renderer = ({ source, lang, options, frontMatterStore }: 
     previewContent = previewContent.replace(/<\/?p>/g, '');
     if (frontMatterStore[filePaths.absolutePath])
       divs.push(
-        <div key={index} className={mainDivClass}>
+        <div key={filePaths.absolutePath} className={mainDivClass}>
           <h3>
             <a className="text-lg font-bold" href={filePaths.absoluteUrl}>{frontMatterStore[filePaths.absolutePath].title}</a>
           </h3>

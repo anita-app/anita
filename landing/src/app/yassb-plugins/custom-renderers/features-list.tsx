@@ -1,7 +1,7 @@
-import React from 'react';
-import { renderToStaticMarkup } from 'react-dom/server';
-import { Converter } from 'showdown';
-import { Renderer, RendererProps } from 'yassb-web';
+import React from 'react'
+import { renderToStaticMarkup } from 'react-dom/server'
+import { Converter } from 'showdown'
+import { Renderer, RendererProps } from 'yassb-web'
 
 interface FeaturesList {
   label: string;
@@ -21,7 +21,7 @@ export const featuresList: Renderer = ({ source, lang, options }: RendererProps<
     section.data.forEach((feature, index) => {
       const featureText = new Converter().makeHtml(feature).replace(/<\/?p[^>]*>/g, '').replace(/<\/?code[^>]*>/g, '');
       featuresList.push(
-        <div key={index} className="mb-2">
+        <div key={encodeURIComponent(featureText)} className="mb-2">
           <span className="text-prussian-blue-600 bg-prussian-blue-200 w-4 h-4 mr-2 rounded-full inline-flex items-center justify-center">
             <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" className="w-3 h-3" viewBox="0 0 24 24">
               <path d="M20 6L9 17l-5-5"></path>
@@ -32,7 +32,7 @@ export const featuresList: Renderer = ({ source, lang, options }: RendererProps<
       )
     });
     sectionEles.push(
-      <nav key={index} className="flex flex-col sm:items-start sm:text-left text-center items-center -mb-1">{...featuresList}</nav>
+      <nav key={encodeURIComponent(JSON.stringify(sectionEles))} className="flex flex-col sm:items-start sm:text-left text-center items-center -mb-1">{...featuresList}</nav>
     );
     const sectionContainer = <div key={section} className="p-4 lg:w-1/4 sm:w-1/2 w-full">{...sectionEles}</div>;
     mainContainer.push(sectionContainer);

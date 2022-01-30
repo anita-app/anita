@@ -32,7 +32,7 @@ export const BasicSelect = memo(function BasicSelect({ formEle, element, handleC
         {!formEle.value && <option value="">Chose one</option>}
         {formEle.options.map((option, index) => (
           <option
-            key={index}
+            key={`${option.value}-${index}`}
             value={option.value}
           >{option.label}</option>)
         )}
