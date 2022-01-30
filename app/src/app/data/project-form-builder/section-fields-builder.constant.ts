@@ -54,7 +54,7 @@ const componentSelectorForBasicAndAdvanced = (size: number): FormFieldsModel<Sec
   componentCode: FORM_COMPONENTS_CODES.basicSelect,
   fieldName: 'componentCode',
   options: SELECTABLE_FORM_ELES,
-  value: 1,
+  value: SELECTABLE_FORM_ELES[0].value,
   label: 'Data type',
   required: true,
   width: size.toString()
