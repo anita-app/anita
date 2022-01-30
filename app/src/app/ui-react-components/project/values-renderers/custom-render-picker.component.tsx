@@ -19,6 +19,8 @@ export const customRenderPicker = (formModel: FormFieldsModel<SupportedFormsType
   const componentCode = typeof formModel.componentCode === 'string' ? parseInt(formModel.componentCode, 10) : formModel.componentCode;
   switch (componentCode) {
     case FORM_COMPONENTS_CODES.basicInput:
+    case FORM_COMPONENTS_CODES.datePicker:
+    case FORM_COMPONENTS_CODES.dateTimePicker:
       return handleInputType(formModel.type)
     case FORM_COMPONENTS_CODES.basicTextarea:
       return BasicText;
@@ -27,10 +29,6 @@ export const customRenderPicker = (formModel: FormFieldsModel<SupportedFormsType
       return TextFromOptionsByValue.bind(null, formModel['options']);
     case FORM_COMPONENTS_CODES.basicCheckbox:
       return CheckBoxAsCheck;
-    case FORM_COMPONENTS_CODES.datePicker:
-      return FormattedDate;
-    case FORM_COMPONENTS_CODES.dateTimePicker:
-      return FormattedDateTime;
     default:
       return BasicText
   }
