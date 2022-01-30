@@ -1,9 +1,9 @@
 import { PROJECT_EDITOR_MODE } from 'app/data/project-form-builder/project-editor-form-builder.const'
-import { RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info'
+import { RESERVED_AUDS_KEYS, SectionCustomFieldProperties, SystemData } from 'app/data/project-structure/project-info'
 import { IdCreator } from 'app/libs/id-creator/id-creator.class'
 import { Action } from 'app/libs/redux/action.type'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
-import { OptionKeysModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
+import { FormFieldsModel, OptionKeysModel, SupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import cloneDeep from 'lodash.clonedeep'
 
 export interface IFormProjectState {
@@ -61,41 +61,45 @@ export const formProjectReducer = (state: IFormProjectState = formElementState, 
           })
         }
       };
-    case REDUX_ACTIONS.updateFormProjectUpdateSection:
-      const copy3 = { original: state.original, mode: state.mode, project: { ...state.project } };
-      const originalSection = copy3.project[RESERVED_AUDS_KEYS._sections][action.payload.index];
-      copy3.project[RESERVED_AUDS_KEYS._sections][action.payload.index] = { ...originalSection, [action.payload.fieldName]: action.payload.value };
-      return copy3;
-    case REDUX_ACTIONS.updateFormProjectUpdateFormModelOfSection:
-      const copy4 = { original: state.original, mode: state.mode, project: { ...state.project } };
-      copy4.project[RESERVED_AUDS_KEYS._sections][action.payload.indexSection].formModel[action.payload.indexFormElement] = { ...action.payload.formElement };
-      return copy4;
-    case REDUX_ACTIONS.updateFormProjectAddFieldToSection:
-      const copy5 = { original: state.original, mode: state.mode, project: { ...state.project } };
-      copy5.project[RESERVED_AUDS_KEYS._sections][action.payload].formModel.push({} as any);
-      return copy5;
-    case REDUX_ACTIONS.updateFormProjectRemoveFieldFromSection:
-      const copy6 = { original: state.original, mode: state.mode, project: { ...state.project } };
-      copy6.project[RESERVED_AUDS_KEYS._sections][action.payload.sectionIndex].formModel.splice(action.payload.fieldIndex, 1);
-      return copy6;
-    case REDUX_ACTIONS.updateFormProjectRemoveSection:
-      const copy7 = { original: state.original, mode: state.mode, project: { ...state.project } };
-      copy7.project[RESERVED_AUDS_KEYS._sections].splice(action.payload, 1);
-      return copy7;
-    case REDUX_ACTIONS.updateFormProjectUpdateFormModelAddOption:
-      const copy8 = { original: state.original, mode: state.mode, project: { ...state.project } };
-      const defaultValue = copy8.project[RESERVED_AUDS_KEYS._sections][action.payload.indexSection].formModel[action.payload.indexFormElement]['options'].length + 1;
-      copy8.project[RESERVED_AUDS_KEYS._sections][action.payload.indexSection].formModel[action.payload.indexFormElement]['options'].push({ label: "", value: defaultValue } as OptionKeysModel);
-      return copy8;
-    case REDUX_ACTIONS.updateFormProjectUpdateFormModelDeleteOption:
-      const copy9 = { original: state.original, mode: state.mode, project: { ...state.project } };
-      copy9.project[RESERVED_AUDS_KEYS._sections][action.payload.indexSection].formModel[action.payload.indexFormElement]['options'].splice(action.payload.indexOptions, 1);
-      return copy9;
-    case REDUX_ACTIONS.updateFormProjectUpdateFormModelOptionValue:
-      const copy10 = { original: state.original, mode: state.mode, project: { ...state.project } };
-      copy10.project[RESERVED_AUDS_KEYS._sections][action.payload.indexSection].formModel[action.payload.indexFormElement]['options'][action.payload.indexOptions] = action.payload.formElement;
-      return copy10;
-    default:
+    case REDUX_ACTIONS.updateFormProjectUpdateSection: {
+      const stateCopy = { original: state.original, mode: state.mode, project: { ...state.project } };
+      const originalSection = stateCopy.project[RESERVED_AUDS_KEYS._sections][action.payload.index];
+      stateCopy.project[RESERVED_AUDS_KEYS._sections][action.payload.index] = { ...originalSection, [action.payload.fieldName]: action.payload.value };
+      return stateCopy;
+    } case REDUX_ACTIONS.updateFormProjectUpdateFormModelOfSection: {
+      const stateCopy = { original: state.original, mode: state.mode, project: { ...state.project } };
+      const elementReference = stateCopy.project[RESERVED_AUDS_KEYS._sections][action.payload.indexSection].formModel[action.payload.indexFormElement] as unknown as SectionCustomFieldProperties;
+      const newElement = { ...elementReference, [action.payload.fieldName]: action.payload.value };
+      if (action.payload.identifierAutoVal)
+        newElement.fieldName = action.payload.identifierAutoVal;
+      stateCopy.project[RESERVED_AUDS_KEYS._sections][action.payload.indexSection].formModel[action.payload.indexFormElement] = newElement as unknown as FormFieldsModel<SupportedFormsTypes>;
+      return stateCopy;
+    } case REDUX_ACTIONS.updateFormProjectAddFieldToSection: {
+      const stateCopy = { original: state.original, mode: state.mode, project: { ...state.project } };
+      stateCopy.project[RESERVED_AUDS_KEYS._sections][action.payload].formModel.push({} as any);
+      return stateCopy;
+    } case REDUX_ACTIONS.updateFormProjectRemoveFieldFromSection: {
+      const stateCopy = { original: state.original, mode: state.mode, project: { ...state.project } };
+      stateCopy.project[RESERVED_AUDS_KEYS._sections][action.payload.sectionIndex].formModel.splice(action.payload.fieldIndex, 1);
+      return stateCopy;
+    } case REDUX_ACTIONS.updateFormProjectRemoveSection: {
+      const stateCopy = { original: state.original, mode: state.mode, project: { ...state.project } };
+      stateCopy.project[RESERVED_AUDS_KEYS._sections].splice(action.payload, 1);
+      return stateCopy;
+    } case REDUX_ACTIONS.updateFormProjectUpdateFormModelAddOption: {
+      const stateCopy = { original: state.original, mode: state.mode, project: { ...state.project } };
+      const defaultValue = stateCopy.project[RESERVED_AUDS_KEYS._sections][action.payload.indexSection].formModel[action.payload.indexFormElement]['options'].length + 1;
+      stateCopy.project[RESERVED_AUDS_KEYS._sections][action.payload.indexSection].formModel[action.payload.indexFormElement]['options'].push({ label: "", value: defaultValue } as OptionKeysModel);
+      return stateCopy;
+    } case REDUX_ACTIONS.updateFormProjectUpdateFormModelDeleteOption: {
+      const stateCopy = { original: state.original, mode: state.mode, project: { ...state.project } };
+      stateCopy.project[RESERVED_AUDS_KEYS._sections][action.payload.indexSection].formModel[action.payload.indexFormElement]['options'].splice(action.payload.indexOptions, 1);
+      return stateCopy;
+    } case REDUX_ACTIONS.updateFormProjectUpdateFormModelOptionValue: {
+      const stateCopy = { original: state.original, mode: state.mode, project: { ...state.project } };
+      stateCopy.project[RESERVED_AUDS_KEYS._sections][action.payload.indexSection].formModel[action.payload.indexFormElement]['options'][action.payload.indexOptions] = action.payload.formElement;
+      return stateCopy;
+    } default:
       return state;
   }
 }

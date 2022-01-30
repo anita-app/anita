@@ -61,9 +61,11 @@ export interface IUpdateFormProjectUpdateSectionPayload {
 }
 
 export interface IUpdateFormProjectUpdateFormModelOfSectionPayload {
-  formElement: FormFieldsModel<SupportedFormsTypes>,
   indexFormElement: number;
   indexSection: number;
+  fieldName: keyof FormFieldsModel<SupportedFormsTypes>;
+  value: FormFieldsModel<SupportedFormsTypes>[keyof FormFieldsModel<SupportedFormsTypes>];
+  identifierAutoVal: string | null;
 }
 
 export interface IUpdateFormProjectRemoveFieldFromSectionPayload {
