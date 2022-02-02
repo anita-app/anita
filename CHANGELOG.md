@@ -7,6 +7,17 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.12.0] - 2022-02-02
+### Added
+- new types supported (color, time, week, month, email, url, tel, etc.).
+
+### Changed
+- improved scrollbars.
+- improved performance of forms.
+
+### Fixed
+- large tables now scrollable instead of overflowing.
+
 ## [0.11.1] - 2021-12-18
 ### Changed
 - improved UI of project picker.

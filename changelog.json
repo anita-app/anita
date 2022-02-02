@@ -4,6 +4,28 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.12.0",
+      "date": "2022-02-02",
+      "items": [
+        {
+          "type": "added",
+          "value": "new types supported (color, time, week, month, email, url, tel, etc.)"
+        },
+        {
+          "type": "changed",
+          "value": "improved scrollbars"
+        },
+        {
+          "type": "fixed",
+          "value": "large tables now scrollable instead of overflowing"
+        },
+        {
+          "type": "changed",
+          "value": "improved performance of forms"
+        }
+      ]
+    },
+    {
       "version": "0.11.1",
       "date": "2021-12-18",
       "items": [
