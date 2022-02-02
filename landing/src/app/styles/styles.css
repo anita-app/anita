@@ -212,6 +212,10 @@ article tbody tr {
   @apply mb-2;
 }
 
+article p img {
+  margin: 0 auto;
+}
+
 @media (min-width: 1024px) {
   article table {
     @apply shadow-lg;
