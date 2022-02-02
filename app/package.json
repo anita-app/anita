@@ -4,7 +4,7 @@
   "private": false,
   "scripts": {
     "licenses": "npx license-checker --production --json --out ../landing/src/app/data-sources/app-packages.json",
-    "start": "cross-env BROWSER=none craco start",
+    "start": "set NODE_OPTIONS=--openssl-legacy-provider && cross-env BROWSER=none craco start",
     "start-mac": "export NODE_OPTIONS=--openssl-legacy-provider; cross-env BROWSER=none craco start",
     "build": "craco build",
     "test": "craco test",
@@ -64,7 +64,7 @@
     "@types/sqlite3": "^3.1.7",
     "autoprefixer": "9",
     "cross-env": "^7.0.3",
-    "postcss": "7",
+    "postcss": "^8.4.6",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
     "yarn": "^1.22.17"
   },
