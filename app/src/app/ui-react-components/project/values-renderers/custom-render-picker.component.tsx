@@ -19,9 +19,11 @@ export const customRenderPicker = (formModel: FormFieldsModel<SupportedFormsType
   const componentCode = typeof formModel.componentCode === 'string' ? parseInt(formModel.componentCode, 10) : formModel.componentCode;
   switch (componentCode) {
     case FORM_COMPONENTS_CODES.basicInput:
-    case FORM_COMPONENTS_CODES.datePicker:
-    case FORM_COMPONENTS_CODES.dateTimePicker:
       return handleInputType(formModel.type)
+    case FORM_COMPONENTS_CODES.datePicker:
+      return handleDateType(formModel.type)
+    case FORM_COMPONENTS_CODES.dateTimePicker:
+      return handleDateTimeType(formModel.type)
     case FORM_COMPONENTS_CODES.basicTextarea:
       return BasicText;
     case FORM_COMPONENTS_CODES.basicSelect:
@@ -38,16 +40,6 @@ const handleInputType = (type: TextInputSupportedTypes | DateInputSupportedTypes
   switch (type) {
     case TextInputSupportedTypes.color:
       return Color;
-    case DateInputSupportedTypes.date:
-      return FormattedDate;
-    case DateTimeInputSupportedTypes.datetimeLocal:
-      return FormattedDateTime;
-    case DateInputSupportedTypes.month:
-      return Month;
-    case DateInputSupportedTypes.week:
-      return Week;
-    case DateTimeInputSupportedTypes.time:
-      return BasicText;
     case TextInputSupportedTypes.email:
       return Email;
     case TextInputSupportedTypes.tel:
@@ -62,5 +54,27 @@ const handleInputType = (type: TextInputSupportedTypes | DateInputSupportedTypes
     case TextInputSupportedTypes.text:
     default:
       return BasicText;
+  }
+}
+
+const handleDateType = (type: TextInputSupportedTypes | DateInputSupportedTypes | DateTimeInputSupportedTypes) => {
+  switch (type) {
+    case DateInputSupportedTypes.month:
+      return Month;
+    case DateInputSupportedTypes.week:
+      return Week;
+    case DateInputSupportedTypes.date:
+    default:
+      return FormattedDate;
+  }
+}
+
+const handleDateTimeType = (type: TextInputSupportedTypes | DateInputSupportedTypes | DateTimeInputSupportedTypes) => {
+  switch (type) {
+    case DateTimeInputSupportedTypes.time:
+      return BasicText;
+    case DateTimeInputSupportedTypes.datetimeLocal:
+    default:
+      return FormattedDateTime;
   }
 }
