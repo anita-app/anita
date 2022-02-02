@@ -1,12 +1,12 @@
 {
   "name": "anita-app",
-  "version": "0.11.1",
+  "version": "0.12.0",
   "private": false,
   "scripts": {
     "licenses": "npx license-checker --production --json --out ../landing/src/app/data-sources/app-packages.json",
     "start": "set NODE_OPTIONS=--openssl-legacy-provider && cross-env BROWSER=none craco start",
     "start-mac": "export NODE_OPTIONS=--openssl-legacy-provider; cross-env BROWSER=none craco start",
-    "build": "craco build",
+    "build": "set NODE_OPTIONS=--openssl-legacy-provider && craco build",
     "test": "craco test",
     "eject": "react-scripts eject"
   },
