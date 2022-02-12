@@ -1,7 +1,7 @@
-import { AdditionalInfoForLocalStorage, LocalProjectSettings } from 'app/data/project-structure/project-info';
-import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition';
-import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
-import { ConnectionConfig } from 'mysql';
+import { AdditionalInfoForLocalStorage, LocalProjectSettings } from 'app/data/project-structure/project-info'
+import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition'
+import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
+import { ConnectionConfig } from 'mysql'
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 export interface DbConnectorConstructable<DbTypes> {
@@ -36,34 +36,22 @@ export interface DbObjects<E, DbTypes> {
 
 
 /**
- * Db connection data of a connected instance of MongoDB
+ * Db connection data of a connected instance of Deta Base
  */
-export interface DbConnectionData {
-  connectionString: string;
-  dbName: string;
+export interface DetaConnectionData {
+  projectKey: string;
+  projectId: string;
 }
-
-/**
- * Connection details to connect to an instance of MongoDB
- */
-export interface MongoDbConnectionData {
-  username: string;
-  password: string;
-  dbName: string;
-  url: Array<string>;
-  params?: string;
-}
-
 
 /**
  * Options to initialize IndexedDB with Dexie
  * TODO - auto detect the type of the storage facility and set the correct options types
  */
 export interface DsDbInitOptions {
+  // Deta
+  detaConnectionData: DetaConnectionData;
   // File System
   projectInfo?: LocalProjectSettings;
-  // MongoDb
-  mongoDbConnectionData?: MongoDbConnectionData;
   // MySQL
   mySqlConnectionConfig?: ConnectionConfig;
   // IndexedDB
