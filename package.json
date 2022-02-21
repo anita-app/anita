@@ -1,6 +1,6 @@
 {
   "name": "anita-manager",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "scripts": {
     "licenses-landing": "cd landing && npm run licenses",
     "licenses-app": "cd app && npm run licenses",

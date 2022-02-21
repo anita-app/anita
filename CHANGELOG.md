@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.12.1] - 2022-02-22
+### Fixed
+- form components parsing.
+
 ## [0.12.0] - 2022-02-02
 ### Added
 - new types supported (color, time, week, month, email, url, tel, etc.).
