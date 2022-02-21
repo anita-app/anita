@@ -1,6 +1,7 @@
 import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 import { DbConnectorInstance, Selector } from 'app/libs/db-connector/models/executers'
 import Base from 'deta/dist/types/base'
+import { CompositeType } from 'deta/dist/types/types/basic'
 
 /**
  * Implements selector for Deta Base
@@ -50,7 +51,7 @@ export class DbSelector<E> implements Selector<E> {
    * Executes the select command
    */
   private async executeSelect(): Promise<void> {
-    this.data = await this.dbConnector.dbStore.db.fetch(this.args) as unknown as Array<E>;
+    this.data = await this.dbConnector.dbStore.db.fetch(this.args as unknown as CompositeType) as unknown as Array<E>;
   }
 
 }

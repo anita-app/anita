@@ -2,6 +2,7 @@ import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.cons
 import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 import { DbConnectorInstance, Updator } from 'app/libs/db-connector/models/executers'
 import Base from 'deta/dist/types/base'
+import { ObjectType } from 'deta/dist/types/types/basic'
 
 /**
  * Implements updator for IndexedDb
@@ -27,7 +28,7 @@ export class DbUpdator<E> implements Updator<E> {
     element['key'] = element[RESERVED_FIELDS.id];
     element['section'] = this.section;
     element['projectId'] = this.dbConnector.options.detaConnectionData.projectId;
-    return this.dbConnector.dbStore.db.update(element, this.element[RESERVED_FIELDS.id]);
+    return this.dbConnector.dbStore.db.update(element as unknown as ObjectType, this.element[RESERVED_FIELDS.id]);
   }
 
 }

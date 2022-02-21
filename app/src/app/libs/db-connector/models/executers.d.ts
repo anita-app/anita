@@ -49,7 +49,7 @@ export interface DetaConnectionData {
  */
 export interface DsDbInitOptions {
   // Deta
-  detaConnectionData: DetaConnectionData;
+  detaConnectionData?: DetaConnectionData;
   // File System
   projectInfo?: LocalProjectSettings;
   // MySQL
