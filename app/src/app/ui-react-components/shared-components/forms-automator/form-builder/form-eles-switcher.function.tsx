@@ -12,7 +12,8 @@ import { OptionsMaker } from 'app/ui-react-components/shared-components/forms-au
 import { ParentsSelector } from 'app/ui-react-components/shared-components/forms-automator/form-fields/parents-selector.component'
 
 export function formElesSwitcher(key: string, componentCode: FORM_COMPONENTS_CODES, props: ICommonFormEleProps) {
-  switch (componentCode) {
+  const codaAsInt = typeof componentCode === 'number' ? componentCode : parseInt(componentCode, 10)
+  switch (codaAsInt) {
     case FORM_COMPONENTS_CODES.hiddenInput:
       return <HiddenInput key={key} {...props} />
     case FORM_COMPONENTS_CODES.basicInput:

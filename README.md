@@ -32,6 +32,6 @@ Our goal for version 1.0.0 is to implement the following:
 - [ ] addition of a tab view for child sections;
 - [ ] Anita templates (at least one example template); 
 - [ ] support for synchronization of locally stored data with one or more remote databases connected directly to the PWA, without intermediaries (serverless/no-server). Priority development for (in order of priority):
+  - [ ] [Deta Base](https://www.deta.sh/)
   - [ ] [DexieCloud](https://dexie.org/cloud/)
-  - [ ] MongoDB
   - [ ] MySQL

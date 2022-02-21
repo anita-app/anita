@@ -16,7 +16,6 @@ export class ProjectSaver {
   ) { }
 
   public async save(): Promise<SystemData> {
-    console.log('save ~ this.projectDataToSave[RESERVED_AUDS_KEYS._sections]', this.project[RESERVED_AUDS_KEYS._sections])
 
     this.setcreatedAt();
 
