@@ -5,7 +5,7 @@ import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
 import { DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers';
 import { dirHandleChecker } from 'app/libs/db-connector/plugins/file-handles/helpers/file-handle-checker.function';
 import { FileSystemDirectoryHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
-import { readDirFileAsUint8Array } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper';
+import { FsHelper } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper';
 import { executeQueryWithReturn } from 'app/libs/db-connector/plugins/sqlite/helpers/execute-query-with-return.function';
 import { SchemaCreator } from 'app/libs/db-connector/plugins/sqlite/helpers/schema-creator.class';
 import { schemaExporter } from 'app/libs/db-connector/plugins/sqlite/helpers/schema-exporter.function';
@@ -87,7 +87,7 @@ export class DbStore implements DbStoreInterface<Database> {
    */
   private async doReadFile(): Promise<void> {
     const fileName = `${this.options.projectInfo.id}.db`;
-    this.contents = await readDirFileAsUint8Array(this.options.projectInfo.fileHandle as any as FileSystemDirectoryHandle, fileName);
+    this.contents = await FsHelper.readDirFileAsUint8Array(this.options.projectInfo.fileHandle as any as FileSystemDirectoryHandle, fileName);
   }
 
   /**

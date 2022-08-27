@@ -40,7 +40,7 @@ export const DeleteProjectButton = ({ project }: { project: ProjectSettings }) =
 
   return (
     <span>
-      <button onClick={handleClickModal} className="px-4 py-2 text-red-700 inline-flex items-center md:mb-2 lg:mb-0 rounded bg-red-700 bg-opacity-10 hover:bg-opacity-20 text-sm">
+      <button onClick={handleClickModal} className="px-4 py-2 text-red-700 inline-flex items-center rounded bg-red-700 bg-opacity-10 hover:bg-opacity-20 text-sm">
         <i className="bi-trash"></i><span className="ml-2 hidden lg:inline-block">Delete project</span>
       </button>
       {isModalOpen && <Modal

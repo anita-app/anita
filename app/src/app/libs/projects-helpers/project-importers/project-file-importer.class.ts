@@ -1,6 +1,6 @@
 import { AnitaUniversalDataStorage } from 'app/data/project-structure/project-info';
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
-import { getFileHandle, readFileHandleAsText } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper';
+import { FsHelper } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper';
 import fileDialog from 'file-dialog';
 
 /**
@@ -45,9 +45,9 @@ export class ProjectFileImporter {
    * Asks for user permission to open a file with File System Access API
    */
   private async askForFileHandle(): Promise<void> {
-    const fileHandles = await getFileHandle();
+    const fileHandles = await FsHelper.getFileHandle();
     this.fileHandle = fileHandles[0];
-    this.fileContents = await readFileHandleAsText(this.fileHandle);
+    this.fileContents = await FsHelper.readFileHandleAsText(this.fileHandle);
   }
 
   /**

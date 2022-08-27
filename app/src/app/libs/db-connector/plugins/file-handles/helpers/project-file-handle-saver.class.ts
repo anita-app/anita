@@ -1,6 +1,6 @@
 import { AnitaUniversalDataStorage } from 'app/data/project-structure/project-info';
 import { DbConnectorInstance } from 'app/libs/db-connector/models/executers';
-import { writeFile } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper';
+import { FsHelper } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper';
 
 /**
  * Saves the `AnitaUniversalDataStorage` to the file a file on disk by using the fileHandle stored in this.dbConnector.options.projectInfo.fileHandle.
@@ -43,7 +43,7 @@ export class ProjectFileHandleSaver {
    * @see writeFile
    */
   private saveDataToDisk(): Promise<void> {
-    return writeFile(this.dbConnector.options.projectInfo.fileHandle, this.data);
+    return FsHelper.writeFile(this.dbConnector.options.projectInfo.fileHandle, this.data);
   }
 
 }

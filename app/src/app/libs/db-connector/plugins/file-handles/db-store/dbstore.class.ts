@@ -3,7 +3,7 @@ import { DataStructureExtender } from 'app/data/system-local-db/data-structure-e
 import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
 import { DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers';
 import { fileHandleChecker } from 'app/libs/db-connector/plugins/file-handles/helpers/file-handle-checker.function';
-import { readFileHandleAsText } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper';
+import { FsHelper } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper';
 
 export class DbStore implements DbStoreInterface<AnitaUniversalDataStorage> {
 
@@ -65,7 +65,7 @@ export class DbStore implements DbStoreInterface<AnitaUniversalDataStorage> {
    * Loads file from disk using the fileHandle retrieved from IndexedDB
    */
   private async doReadFile(): Promise<void> {
-    this.contents = await readFileHandleAsText(this.options.projectInfo.fileHandle);
+    this.contents = await FsHelper.readFileHandleAsText(this.options.projectInfo.fileHandle);
   }
 
   /**

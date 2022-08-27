@@ -6,6 +6,7 @@ import { isProjectLoaded } from 'app/libs/project-helpers/project-handlers/is-pr
 import { txtByFieldValue } from 'app/libs/project-helpers/txt-by-field-value.function';
 import { DeleteProjectButton } from 'app/ui-react-components/shared-components/buttons/delete-project.component';
 import { EditButton } from 'app/ui-react-components/shared-components/buttons/edit-project-button.component';
+import { ExportButton } from 'app/ui-react-components/shared-components/buttons/export-project-button.component';
 import { CardFooterItemsEnd } from 'app/ui-react-components/shared-components/common-ui-eles/card-footer-items-end.component';
 import { Loader } from 'app/ui-react-components/shared-components/loader/loader.component';
 import * as dateFormat from 'date-format';
@@ -27,7 +28,10 @@ const LoadedProject = ({ project }: { project: ProjectSettings }) => (
 
     <CardFooterItemsEnd>
       <DeleteProjectButton project={project} />
-      <EditButton project={project} />
+      <div className="ml-auto">
+        <ExportButton />
+        <EditButton project={project} />
+      </div>
     </CardFooterItemsEnd>
 
   </div>
