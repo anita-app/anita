@@ -5,8 +5,8 @@ import { isProjectLoaded } from 'app/libs/project-helpers/project-handlers/is-pr
 import { AnitaStore } from 'app/libs/redux/reducers.const';
 import { findSectionById } from 'app/libs/tools/find-section-by-id.function';
 import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum';
-import { TableList } from 'app/ui-react-components/project/list-components/tableList.component';
-import { NoSectionData } from 'app/ui-react-components/project/no-section-data.component';
+import { ProjectTableList } from 'app/ui-react-components/project/table-list/project-table-list.component';
+import { NoSectionData } from 'app/ui-react-components/project/project-no-section-data.component';
 import { AddEditElementButton } from 'app/ui-react-components/shared-components/buttons/add-edit-element-button.component';
 import { MainContentContainer } from 'app/ui-react-components/shared-components/common-ui-eles/main-content-container.component';
 import { Loader } from 'app/ui-react-components/shared-components/loader/loader.component';
@@ -57,7 +57,7 @@ export const SectionElementsList = () => {
 
   return (
     <MainContentContainer headerText={sectionInfo.title}>
-      <TableList sectionInfo={sectionInfo} sectionData={sectionData} />
+      <ProjectTableList sectionInfo={sectionInfo} sectionData={sectionData} />
       <AddEditElementButton projectId={projectId} sectionId={sectionId} mode={EDITOR_MODE.add} />
     </MainContentContainer>
   )

@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import ReactTooltip from 'react-tooltip';
 
-export const DeleteSectionElementButton = ({ projectId, sectionId, elementId }: { projectId: string, sectionId: string, elementId: string }) => {
+export const ProjectDeleteSectionElementButton = ({ projectId, sectionId, elementId }: { projectId: string, sectionId: string, elementId: string }) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [animationClass, setAnimationClass] = useState('animate__fadeIn');

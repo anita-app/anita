@@ -6,8 +6,8 @@ import { isProjectLoaded } from 'app/libs/project-helpers/project-handlers/is-pr
 import { AnitaStore } from 'app/libs/redux/reducers.const';
 import { findSectionById } from 'app/libs/tools/find-section-by-id.function';
 import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum';
-import { DeleteSectionElementButton } from 'app/ui-react-components/project/details-components/delete-section-element-button.component';
-import { ParentsLinkShower } from 'app/ui-react-components/project/details-components/parents-link-shower.component';
+import { ProjectDeleteSectionElementButton } from 'app/ui-react-components/project/details/project-delete-section-element-button.component';
+import { ProjectParentsLinkShower } from 'app/ui-react-components/project/details/project-parents-link-shower.component';
 import { customRenderPicker } from 'app/ui-react-components/project/values-renderers/custom-render-picker.component';
 import { AddEditElementButton } from 'app/ui-react-components/shared-components/buttons/add-edit-element-button.component';
 import { MainContentContainer } from 'app/ui-react-components/shared-components/common-ui-eles/main-content-container.component';
@@ -56,9 +56,9 @@ export const SectionElementDetails = () => {
   return (
     <MainContentContainer headerText="Details">
       {(element === null || project === null) ? <Loader /> : <ElementValuesViewer element={element} formModels={findSectionById(project[RESERVED_AUDS_KEYS._sections], sectionId).formModel as Array<FormFieldsModel<SectionElement>>} />}
-      {(element !== null && element.parentsInfo && Array.isArray(element.parentsInfo) && element.parentsInfo.length > 0) && <ParentsLinkShower projectId={projectId} parentsInfo={element.parentsInfo} sections={project[RESERVED_AUDS_KEYS._sections]} />}
+      {(element !== null && element.parentsInfo && Array.isArray(element.parentsInfo) && element.parentsInfo.length > 0) && <ProjectParentsLinkShower projectId={projectId} parentsInfo={element.parentsInfo} sections={project[RESERVED_AUDS_KEYS._sections]} />}
       {(element !== null && (<div>
-        <DeleteSectionElementButton projectId={projectId} sectionId={sectionId} elementId={elementId} />
+        <ProjectDeleteSectionElementButton projectId={projectId} sectionId={sectionId} elementId={elementId} />
         <AddEditElementButton projectId={projectId} sectionId={sectionId} elementId={elementId} mode={EDITOR_MODE.edit} />
       </div>
       )

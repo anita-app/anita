@@ -5,8 +5,8 @@ import { isProjectLoaded } from 'app/libs/project-helpers/project-handlers/is-pr
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum'
-import { FormElementManager } from 'app/ui-react-components/project/add-edit-components/form-element-manager.component'
-import { SaveElement } from 'app/ui-react-components/project/add-edit-components/save-element.component'
+import { ProjectFormElementManager } from 'app/ui-react-components/project/add-edit/project-form-element-manager.component'
+import { ProjectSaveElement } from 'app/ui-react-components/project/add-edit/project-save-element.component'
 import { MainContentContainer } from 'app/ui-react-components/shared-components/common-ui-eles/main-content-container.component'
 import { Loader } from 'app/ui-react-components/shared-components/loader/loader.component'
 import { useEffect, useState } from 'react'
@@ -57,8 +57,8 @@ export const AddEditSectionElement = () => {
   return (
     <MainContentContainer headerText={headerText}>
       {element === null && <Loader />}
-      {element !== null && <FormElementManager sectionId={sectionId} />}
-      {element !== null && <SaveElement sectionId={sectionId} />}
+      {element !== null && <ProjectFormElementManager sectionId={sectionId} />}
+      {element !== null && <ProjectSaveElement sectionId={sectionId} />}
     </MainContentContainer>
   )
 

@@ -3,7 +3,7 @@ import { urlParamFiller } from 'app/anita-routes/url-param-fillers.function'
 import { ReactNode } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-export const TdWithLinkToDetails = ({ children, tdProps, elementId }: { children: ReactNode, tdProps: {}, elementId: string }) => {
+export const ProjectTableListTdWithLinkToDetails = ({ children, tdProps, elementId }: { children: ReactNode, tdProps: {}, elementId: string }) => {
 
   const navigation = useNavigate();
   const params = useParams();

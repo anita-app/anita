@@ -1,6 +1,6 @@
 import { SectionElement } from 'app/data/project-structure/project-info';
 import { Section } from 'app/data/project-structure/project-info';
-import { TdWithLinkToDetails } from 'app/ui-react-components/project/list-components/td-with-link-to-details.component';
+import { ProjectTableListTdWithLinkToDetails } from 'app/ui-react-components/project/table-list/project-table-list-td-with-link-to-details.component';
 import { customRenderPicker } from 'app/ui-react-components/project/values-renderers/custom-render-picker.component';
 import { useMemo } from 'react';
 import { useSortBy, useTable } from 'react-table';
@@ -30,7 +30,7 @@ const useSectionInfo = (sectionInfo: Section) => {
 }
 
 
-export const TableList = ({ sectionInfo, sectionData }: { sectionInfo: Section; sectionData: Array<SectionElement> }) => {
+export const ProjectTableList = ({ sectionInfo, sectionData }: { sectionInfo: Section; sectionData: Array<SectionElement> }) => {
   const columns = useSectionInfo(sectionInfo);
 
   const {
@@ -74,9 +74,9 @@ export const TableList = ({ sectionInfo, sectionData }: { sectionInfo: Section; 
                     // TODO No Link to details for checkbox
                     // Apply the cell props
                     return (
-                      <TdWithLinkToDetails key={`${cell.column.id}${cell.row.id}`} tdProps={cell.getCellProps()} elementId={cell.row.original.id}>
+                      <ProjectTableListTdWithLinkToDetails key={`${cell.column.id}${cell.row.id}`} tdProps={cell.getCellProps()} elementId={cell.row.original.id}>
                         {cell.render('Cell')}
-                      </TdWithLinkToDetails>
+                      </ProjectTableListTdWithLinkToDetails>
                     )
                   })}
               </tr>

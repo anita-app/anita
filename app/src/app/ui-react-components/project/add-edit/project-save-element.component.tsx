@@ -5,7 +5,7 @@ import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-export const SaveElement = ({ sectionId }: { sectionId: string }) => {
+export const ProjectSaveElement = ({ sectionId }: { sectionId: string }) => {
 
   const project = useSelector((state: AnitaStore) => state.project);
   const element = useSelector((state: AnitaStore) => state.formElement.element);
