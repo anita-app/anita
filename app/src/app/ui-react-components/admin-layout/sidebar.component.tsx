@@ -4,7 +4,11 @@ import { ReactNode } from 'react';
 import { useSelector } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
 
-export const Sidebar = (props: { children: ReactNode }) => {
+interface ISidebarProps {
+  children: ReactNode
+}
+
+export const Sidebar: React.FC<ISidebarProps> = (props) => {
 
   const toggledClass = useSelector((store: AnitaStore) => store.layout.sidebar)
 

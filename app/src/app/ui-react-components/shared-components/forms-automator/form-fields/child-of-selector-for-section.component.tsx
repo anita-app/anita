@@ -17,7 +17,7 @@ import {
 import { useSelector } from 'react-redux'
 import Select, { MultiValue } from 'react-select'
 
-export const ChildOfSelectorForSection = memo(function ChildOfSelectorForSection({ formEle, element, handleChange, sectionId }: ICommonFormEleProps<IBasicSelect<SectionElement>>) {
+export const ChildOfSelectorForSection: React.FC<ICommonFormEleProps<IBasicSelect<SectionElement>>> = memo(function ChildOfSelectorForSection({ formEle, element, handleChange, sectionId }: ICommonFormEleProps<IBasicSelect<SectionElement>>) {
 
   const currentEditedProjectSections = useSelector((state: AnitaStore) => state.formProject.project[RESERVED_AUDS_KEYS._sections]);
   const [selectOptions, setSelectOptions] = useState<Array<Option>>([]);

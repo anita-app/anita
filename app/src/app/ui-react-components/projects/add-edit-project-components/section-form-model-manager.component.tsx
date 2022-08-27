@@ -34,7 +34,7 @@ const getAlreadyExists = (section: Section, fieldName: string): boolean => {
   return section.formModel.some(formElement => formElement.fieldName === fieldName);
 }
 
-export const SectionFormModelManager = (props: ISectionFormModelManagerProps) => {
+export const SectionFormModelManager: React.FC<ISectionFormModelManagerProps> = (props) => {
 
   const { indexSection, indexFormElement, element } = props;
 

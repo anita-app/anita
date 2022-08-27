@@ -1,3 +1,7 @@
 import * as dateFormat from 'date-format';
 
-export const FormattedDate = ({ value }: { value: string }) => value ? dateFormat('yyyy/MM/dd', new Date(value)) : null;
+interface IFormattedDateProps {
+  value: string
+}
+
+export const FormattedDate: React.FC<IFormattedDateProps> = ({ value }) => value ? <>{dateFormat('yyyy/MM/dd', new Date(value))}</> : null;

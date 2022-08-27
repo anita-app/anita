@@ -3,7 +3,7 @@ import { formElesSwitcher } from 'app/ui-react-components/shared-components/form
 import { PrerequisitesChecker } from 'app/ui-react-components/shared-components/forms-automator/form-builder/prerequisites-checker.class'
 import { useMemo } from 'react'
 
-export const FieldSelector = (props: ICommonFormEleProps) => {
+export const FieldSelector: React.FC<ICommonFormEleProps> = (props: ICommonFormEleProps) => {
 
   const shouldRender = useMemo(() => new PrerequisitesChecker(
     props.formEle, props.element

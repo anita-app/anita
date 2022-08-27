@@ -9,7 +9,7 @@ import { Navigate } from 'react-router';
 import { Link } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
 
-export const ProjectsList = () => {
+export const ProjectsList: React.FC = () => {
 
   const [hasLoaded, setHasLoaded] = useState(false);
   const projects = useSelector((state: AnitaStore) => state.projects);

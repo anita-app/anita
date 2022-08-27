@@ -20,7 +20,7 @@ export const nonProjectRoutes: Array<{ to: string; txt: string, icon: string }> 
   { to: ANITA_URLS.projectsList, txt: 'Projects', icon: 'bi-files' }
 ];
 
-const ProjectMenu = () => {
+const ProjectMenu: React.FC = () => {
 
   const project = useSelector((state: AnitaStore) => state.project);
   const location = useLocation();

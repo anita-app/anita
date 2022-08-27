@@ -12,7 +12,7 @@ import { Loader } from 'app/ui-react-components/shared-components/loader/loader.
 import { useEffect, useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 
-export const AddEditSectionElement = () => {
+export const AddEditSectionElement: React.FC = () => {
 
   const params = useParams();
   const mode = params[URL_PARAMS.elementId] ? EDITOR_MODE.edit : EDITOR_MODE.add;

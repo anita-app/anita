@@ -4,7 +4,11 @@ import { ProjectSettings } from 'app/data/project-structure/project-info';
 import { Link } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
 
-export const EditButton = ({ project }: { project: ProjectSettings }) => (
+interface IEditButtonProps {
+  project: ProjectSettings
+}
+
+export const EditButton: React.FC<IEditButtonProps> = ({ project }) => (
   <Link
     to={urlParamFiller(ANITA_URLS.projectEdit, [{ name: URL_PARAMS.projectId, value: project.id }])}
     className="px-4 py-3 text-gray-800 mr-3 inline-flex items-center ml-auto leading-none text-sm bg-gray-100 hover:bg-gray-200 rounded"

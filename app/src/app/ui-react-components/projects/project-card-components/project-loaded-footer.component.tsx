@@ -5,7 +5,11 @@ import { EditButton } from 'app/ui-react-components/shared-components/buttons/ed
 import { ExportButton } from 'app/ui-react-components/shared-components/buttons/export-project-button.component';
 import { Link } from 'react-router-dom';
 
-export const ProjectLoadedFooter = ({ project }: { project: ProjectSettings }) => (
+interface IProjectLoadedFooterProps {
+  project: ProjectSettings
+}
+
+export const ProjectLoadedFooter: React.FC<IProjectLoadedFooterProps> = ({ project }) => (
   <div className="ml-auto">
     <ExportButton />
     <EditButton project={project} />

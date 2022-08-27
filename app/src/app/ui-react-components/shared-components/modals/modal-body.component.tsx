@@ -1,6 +1,10 @@
 import { ReactNode } from 'react';
 
-export const ModalBody = ({ children }: { children: ReactNode }) => (
+interface IModalBodyProps {
+  children: ReactNode
+}
+
+export const ModalBody: React.FC<IModalBodyProps> = ({ children }) => (
   <div className="mt-2">
     {children}
   </div>

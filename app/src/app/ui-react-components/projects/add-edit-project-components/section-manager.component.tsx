@@ -11,7 +11,12 @@ import { FormAutomator } from 'app/ui-react-components/shared-components/forms-a
 import { FormFieldsModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import { useSelector } from 'react-redux'
 
-export const SectionManager = ({ section, sectionIndex }: { section: Section, sectionIndex: number }) => {
+interface ISectionManagerProps {
+  section: Section
+  sectionIndex: number
+}
+
+export const SectionManager: React.FC<ISectionManagerProps> = ({ section, sectionIndex }) => {
 
   const projectEditorMode = useSelector((store: AnitaStore) => store.formProject.mode);
   const sections = useSelector((store: AnitaStore) => store.formProject.project[RESERVED_AUDS_KEYS._sections]);

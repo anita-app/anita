@@ -8,7 +8,11 @@ import { FormAutomator } from 'app/ui-react-components/shared-components/forms-a
 import { FormAutomatorOnChangeValue } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import { useSelector } from 'react-redux'
 
-export const ProjectFormElementManager = ({ sectionId }: { sectionId: string }) => {
+interface IProjectFormElementManagerProps {
+  sectionId: string
+}
+
+export const ProjectFormElementManager: React.FC<IProjectFormElementManagerProps> = ({ sectionId }) => {
 
   const project = useSelector((state: AnitaStore) => state.project);
   const sections = project[RESERVED_AUDS_KEYS._sections];

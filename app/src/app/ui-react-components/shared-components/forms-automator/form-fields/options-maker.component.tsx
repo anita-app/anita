@@ -3,7 +3,7 @@ import { FormFieldsModel, ICommonFormEleProps, OptionKeysModel } from 'app/ui-re
 import { OptionsMakerSingleOption } from 'app/ui-react-components/shared-components/forms-automator/form-fields/options-maker-single-option.component'
 import { memo } from 'react'
 
-export const OptionsMaker = memo(function OptionsMaker(props: ICommonFormEleProps<FormFieldsModel<OptionKeysModel>>) {
+export const OptionsMaker: React.FC<ICommonFormEleProps<FormFieldsModel<OptionKeysModel>>> = memo(function OptionsMaker(props: ICommonFormEleProps<FormFieldsModel<OptionKeysModel>>) {
 
   const { formEle, element, handleOptionsChange, handleClickAddOption } = props;
 

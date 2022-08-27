@@ -2,7 +2,7 @@ import { SUPPORTED_VALIDATORS } from 'app/ui-react-components/shared-components/
 import { IValidatorsProps } from 'app/ui-react-components/shared-components/forms-automator/form-validation/validators'
 import { memo, useEffect } from 'react'
 
-export const EmailFormat = memo(function EmailFormat({ formEle, element, updateValidatorState }: IValidatorsProps) {
+export const EmailFormat: React.FC<IValidatorsProps> = memo(function EmailFormat({ formEle, element, updateValidatorState }: IValidatorsProps) {
 
   const value = element[formEle.fieldName];
   // eslint-disable-next-line no-useless-escape

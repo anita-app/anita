@@ -8,7 +8,11 @@ import { CardFooterItemsEnd } from 'app/ui-react-components/shared-components/co
 import * as dateFormat from 'date-format';
 import { useSelector } from 'react-redux';
 
-export const ProjectCard = ({ project }: { project: ProjectSettings }) => {
+interface IProjectCardProps {
+  project: ProjectSettings
+}
+
+export const ProjectCard: React.FC<IProjectCardProps> = ({ project }) => {
 
   const projectState = useSelector((state: AnitaStore) => state.project);
 

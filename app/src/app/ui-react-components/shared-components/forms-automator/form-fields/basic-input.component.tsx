@@ -8,7 +8,7 @@ import { useValidators } from 'app/ui-react-components/shared-components/forms-a
 import uniqueId from 'lodash/uniqueId'
 import { memo, useRef, useState } from 'react'
 
-export const BasicInput = memo(function BasicInput({ formEle, element, handleChange }: ICommonFormEleProps) {
+export const BasicInput: React.FC<ICommonFormEleProps> = memo(function BasicInput({ formEle, element, handleChange }: ICommonFormEleProps) {
 
   const [touched, setTouched] = useState(false);
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))

@@ -10,7 +10,7 @@ import ReactTooltip from 'react-tooltip'
 
 /* eslint-disable eqeqeq */
 
-export const BasicRadio = memo(function BasicRadio({ formEle, element, handleChange }: ICommonFormEleProps<IBasicRadio<SectionElement>>) {
+export const BasicRadio: React.FC<ICommonFormEleProps<IBasicRadio<SectionElement>>> = memo(function BasicRadio({ formEle, element, handleChange }: ICommonFormEleProps<IBasicRadio<SectionElement>>) {
 
   const [touched, setTouched] = useState(false);
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))

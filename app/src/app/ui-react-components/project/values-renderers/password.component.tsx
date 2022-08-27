@@ -1,6 +1,10 @@
 import { useState } from 'react'
 
-export const Password = ({ value }) => {
+interface IPasswordProps {
+  value: string
+}
+
+export const Password: React.FC<IPasswordProps> = ({ value }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   if (!value) return null;

@@ -17,7 +17,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, useParams } from 'react-router-dom';
 
-export const SectionElementDetails = () => {
+export const SectionElementDetails: React.FC = () => {
 
   const [element, setElement] = useState<SectionElement>(null);
   const project = useSelector((state: AnitaStore) => state.project);

@@ -7,7 +7,7 @@ import { UrlFormat } from 'app/ui-react-components/shared-components/forms-autom
 import { TextInputSupportedTypes } from 'app/ui-react-components/shared-components/forms-automator/input-supported-types.const'
 import { memo, useState } from 'react'
 
-export const ValidatorsContainer = memo(function ValidatorsContainer(props: IValidatorsConatinerProps) {
+export const ValidatorsContainer: React.FC<IValidatorsConatinerProps> = memo(function ValidatorsContainer(props: IValidatorsConatinerProps) {
 
   const validators = [];
   const setFieldValidatorsState = useState<IValidatorsState>({})[1];

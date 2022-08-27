@@ -1,1 +1,5 @@
-export const CheckBoxAsCheck = ({ value }: { value: boolean }) => value ? '✓' : null;
+interface ICheckBoxAsCheckProps {
+  value: boolean
+}
+
+export const CheckBoxAsCheck: React.FC<ICheckBoxAsCheckProps> = ({ value }) => value ? <>✓</> : null

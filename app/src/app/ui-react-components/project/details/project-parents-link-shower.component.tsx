@@ -5,7 +5,13 @@ import { GetParentInfoForDetailsView } from 'app/libs/project-helpers/get-parent
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export const ProjectParentsLinkShower = ({ projectId, parentsInfo, sections }: { projectId: string, parentsInfo: Array<string>, sections: Array<Section> }) => {
+interface IProjectParentsLinkShowerProps {
+  projectId: string
+  parentsInfo: Array<string>
+  sections: Array<Section>
+}
+
+export const ProjectParentsLinkShower: React.FC<IProjectParentsLinkShowerProps> = ({ projectId, parentsInfo, sections }) => {
 
   const [parents, setParents] = useState<Array<ParentInfoForDetailsView>>([]);
 

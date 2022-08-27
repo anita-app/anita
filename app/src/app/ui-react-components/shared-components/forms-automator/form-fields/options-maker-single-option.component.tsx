@@ -23,7 +23,7 @@ function getCanEdit(section: Section, indexFormElement: number, value: any): boo
   return !section.formModel[indexFormElement]['options'].some((opt: OptionKeysModel) => opt.value === value);
 }
 
-export const OptionsMakerSingleOption = memo(function OptionsMakerSingleOption(props: ICommonFormEleProps<FormFieldsModel<OptionKeysModel>>) {
+export const OptionsMakerSingleOption: React.FC<ICommonFormEleProps<FormFieldsModel<OptionKeysModel>>> = memo(function OptionsMakerSingleOption(props: ICommonFormEleProps<FormFieldsModel<OptionKeysModel>>) {
   const { formEle, element, handleOptionsChange, handleClickDeleteOption, indexSection, indexFormElement, index, optionElement } = props;
   const projectEditorMode = useSelector((store: AnitaStore) => store.formProject.mode);
   const section = useSelector((store: AnitaStore) => store.formProject.original[RESERVED_AUDS_KEYS._sections][indexSection]);

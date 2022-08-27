@@ -8,7 +8,11 @@ import React, { useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
-export const ProjectPicker = ({ project }: { project: SystemData }) => {
+interface IProjectPickerProps {
+  project: SystemData
+}
+
+export const ProjectPicker: React.FC<IProjectPickerProps> = ({ project }) => {
 
   const projects = useSelector((store: AnitaStore) => store.projects);
   const navigate = useNavigate();

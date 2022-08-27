@@ -2,7 +2,7 @@ import { SUPPORTED_VALIDATORS } from 'app/ui-react-components/shared-components/
 import { IValidatorsProps } from 'app/ui-react-components/shared-components/forms-automator/form-validation/validators'
 import { memo, useEffect } from 'react'
 
-export const UrlFormat = memo(function TelephoneNumber({ formEle, element, updateValidatorState }: IValidatorsProps) {
+export const UrlFormat: React.FC<IValidatorsProps> = memo(function TelephoneNumber({ formEle, element, updateValidatorState }: IValidatorsProps) {
 
   const value = element[formEle.fieldName];
   // see https://stackoverflow.com/questions/8667070/javascript-regular-expression-to-validate-url

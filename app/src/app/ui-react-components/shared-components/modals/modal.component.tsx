@@ -4,7 +4,7 @@ import { ModalFooter } from 'app/ui-react-components/shared-components/modals/mo
 import { ModalHeader } from 'app/ui-react-components/shared-components/modals/modal-header.component';
 import { ReactNode } from 'react';
 
-interface IModal {
+interface IModalProps {
   title: string;
   actionText: string;
   type: keyof typeof bgClasses;
@@ -29,7 +29,7 @@ const bgClasses = {
   }
 };
 
-export const Modal = ({ title, children, type, actionText, icon, handleClickAction, closeFn, animationClass, disableAction = false }: IModal) => {
+export const Modal: React.FC<IModalProps> = ({ title, children, type, actionText, icon, handleClickAction, closeFn, animationClass, disableAction = false }) => {
 
   return (
     <div className="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">

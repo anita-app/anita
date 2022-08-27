@@ -18,7 +18,7 @@ import {
 import { useSelector } from 'react-redux'
 import Select, { MultiValue } from 'react-select'
 
-export const ParentsSelector = memo(function ParentsSelector({ formEle, element, handleChange }: ICommonFormEleProps<IBasicSelect<SectionElement>>) {
+export const ParentsSelector: React.FC<ICommonFormEleProps<IBasicSelect<SectionElement>>> = memo(function ParentsSelector({ formEle, element, handleChange }: ICommonFormEleProps<IBasicSelect<SectionElement>>) {
 
   const [selectOptions, setSelectOptions] = useState<Array<OptionKeysModelGroup>>([]);
   const project = useSelector((state: AnitaStore) => state.project);

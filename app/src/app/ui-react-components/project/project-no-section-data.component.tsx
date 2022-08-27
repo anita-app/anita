@@ -2,7 +2,13 @@ import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
 import { urlParamFiller } from 'app/anita-routes/url-param-fillers.function';
 import { Link } from 'react-router-dom';
 
-export const NoSectionData = ({ sectionTitle, sectionId, projectId }: { sectionTitle: string, sectionId: string, projectId: string }) => (
+interface INoSectionDataProps {
+  sectionTitle: string
+  sectionId: string
+  projectId: string
+}
+
+export const NoSectionData: React.FC<INoSectionDataProps> = ({ sectionTitle, sectionId, projectId }) => (
   <div className="container px-5 py-24 mx-auto">
     <div className="p-4 lg:w-2/3 mx-auto">
       <div className="h-full bg-white shadow px-8 pt-16 pb-16 rounded-lg overflow-hidden text-center relative">

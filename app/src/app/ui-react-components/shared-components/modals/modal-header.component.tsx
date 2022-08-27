@@ -1,6 +1,10 @@
 import { ReactNode } from 'react';
 
-export const ModalHeader = ({ children }: { children: ReactNode }) => (
+interface IModalHeaderProps {
+  children: ReactNode
+}
+
+export const ModalHeader: React.FC<IModalHeaderProps> = ({ children }) => (
   <h3 className="text-lg leading-6 font-medium text-gray-900" id="modal-title">
     {children}
   </h3>

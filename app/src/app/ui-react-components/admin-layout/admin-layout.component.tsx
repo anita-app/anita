@@ -5,7 +5,7 @@ import { Header } from 'app/ui-react-components/admin-layout/header.component';
 import { Sidebar } from 'app/ui-react-components/admin-layout/sidebar.component';
 import { HashRouter as Router } from 'react-router-dom';
 
-export const AdminLayout = () => (
+export const AdminLayout: React.FC = () => (
   <Router>
     <Header />
     <div className="relative admin-container flex">

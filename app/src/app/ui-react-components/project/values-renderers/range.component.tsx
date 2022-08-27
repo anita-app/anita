@@ -1,1 +1,5 @@
-export const Percentage = ({ value }) => value ? <span>{value}%</span> : null;
+interface IPercentageProps {
+  value: string
+}
+
+export const Percentage: React.FC<IPercentageProps> = ({ value }) => value ? <>{value}%</> : null

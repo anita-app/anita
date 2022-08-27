@@ -15,7 +15,7 @@ import { FormAutomator } from 'app/ui-react-components/shared-components/forms-a
 import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router'
 
-export const FormProjectManager = () => {
+export const FormProjectManager: React.FC = () => {
 
   const { projectId } = useParams<URL_PARAMS>();
   const projectEditorMode = useSelector((store: AnitaStore) => store.formProject.mode);

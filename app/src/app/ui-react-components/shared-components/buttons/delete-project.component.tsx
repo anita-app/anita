@@ -9,7 +9,11 @@ import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 
-export const DeleteProjectButton = ({ project }: { project: ProjectSettings }) => {
+interface IDeleteProjectButtonProps {
+  project: ProjectSettings
+}
+
+export const DeleteProjectButton: React.FC<IDeleteProjectButtonProps> = ({ project }) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [animationClass, setAnimationClass] = useState('animate__fadeIn');

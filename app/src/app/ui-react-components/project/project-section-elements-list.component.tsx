@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, useParams } from 'react-router';
 
-export const SectionElementsList = () => {
+export const SectionElementsList: React.FC = () => {
 
   const params = useParams();
   const projectId = params[URL_PARAMS.projectId];

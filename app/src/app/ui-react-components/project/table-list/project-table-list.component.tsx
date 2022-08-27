@@ -29,8 +29,12 @@ const useSectionInfo = (sectionInfo: Section) => {
   return colsToShoww;
 }
 
+interface IProjectTableListProps {
+  sectionInfo: Section
+  sectionData: Array<SectionElement>
+}
 
-export const ProjectTableList = ({ sectionInfo, sectionData }: { sectionInfo: Section; sectionData: Array<SectionElement> }) => {
+export const ProjectTableList: React.FC<IProjectTableListProps> = ({ sectionInfo, sectionData }) => {
   const columns = useSectionInfo(sectionInfo);
 
   const {

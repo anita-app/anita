@@ -13,7 +13,11 @@ import * as dateFormat from 'date-format';
 import { useEffect, useState } from 'react';
 import { Navigate, useParams } from 'react-router';
 
-const LoadedProject = ({ project }: { project: ProjectSettings }) => (
+interface ILoadedProjectProps {
+  project: ProjectSettings
+}
+
+const LoadedProject: React.FC<ILoadedProjectProps> = ({ project }) => (
   <div className="p-6">
     <h1 className="title-font text-lg font-medium text-gray-900 mb-3">{project.title}</h1>
 
@@ -37,7 +41,7 @@ const LoadedProject = ({ project }: { project: ProjectSettings }) => (
   </div>
 )
 
-export const ProjectDetails = () => {
+export const ProjectDetails: React.FC = () => {
 
   const urlParams = useParams();
   const projectId = urlParams[URL_PARAMS.projectId];

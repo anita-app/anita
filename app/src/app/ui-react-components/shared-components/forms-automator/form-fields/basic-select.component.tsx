@@ -10,7 +10,7 @@ import { useValidators } from 'app/ui-react-components/shared-components/forms-a
 import uniqueId from 'lodash/uniqueId'
 import { memo, useRef, useState } from 'react'
 
-export const BasicSelect = memo(function BasicSelect({ formEle, element, handleChange }: ICommonFormEleProps<IBasicSelect<SectionElement>>) {
+export const BasicSelect: React.FC<ICommonFormEleProps<IBasicSelect<SectionElement>>> = memo(function BasicSelect({ formEle, element, handleChange }: ICommonFormEleProps<IBasicSelect<SectionElement>>) {
 
   const [touched, setTouched] = useState(false);
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))

@@ -9,7 +9,7 @@ export interface IFormAutomatorProps {
 
 }
 
-export const FormAutomator = (props: IFormAutomatorProps) => {
+export const FormAutomator: React.FC<IFormAutomatorProps> = (props) => {
 
   return (
     <span>

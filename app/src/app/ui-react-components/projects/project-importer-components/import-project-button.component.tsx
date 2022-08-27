@@ -14,7 +14,11 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
 
-export const ImportProjectButton = ({ btnType = 'icon' }: { btnType?: 'icon' | 'text' }) => {
+interface IImportProjectButtonProps {
+  btnType?: 'icon' | 'text'
+}
+
+export const ImportProjectButton: React.FC<IImportProjectButtonProps> = ({ btnType = 'icon' }) => {
 
   const navigate = useNavigate();
   const validObj = useSelector((state: AnitaStore) => state.formElesValidState);

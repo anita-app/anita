@@ -1,3 +1,7 @@
-export const Month = ({ value }: { value: string }) => value
-  ? new Date(value).toLocaleString('default', { month: 'short', year: 'numeric' })
-  : null;
+interface IMonthProps {
+  value: string
+}
+
+export const Month: React.FC<IMonthProps> = ({ value }) => value
+  ? <>{new Date(value).toLocaleString('default', { month: 'short', year: 'numeric' })}</>
+  : null

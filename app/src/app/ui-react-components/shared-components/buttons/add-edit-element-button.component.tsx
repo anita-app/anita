@@ -19,7 +19,7 @@ interface IEditElementButtonProps {
 
 type IAddEditElementButtonProps = | IAddElementButtonProps | IEditElementButtonProps;
 
-export const AddEditElementButton = ({ projectId, sectionId, mode, elementId }: IAddEditElementButtonProps) => {
+export const AddEditElementButton: React.FC<IAddEditElementButtonProps> = ({ projectId, sectionId, mode, elementId }) => {
 
   const icon = mode === EDITOR_MODE.add ? 'bi-plus' : 'bi-pencil';
   const urlParamsToFill = [{ name: URL_PARAMS.projectId, value: projectId }, { name: URL_PARAMS.sectionId, value: sectionId }];

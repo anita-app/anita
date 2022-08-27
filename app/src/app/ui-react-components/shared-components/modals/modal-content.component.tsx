@@ -1,6 +1,11 @@
 import { ReactNode } from 'react';
 
-export const ModalContent = ({ children, icon }: { children: ReactNode, icon?: string }) => (
+interface IModalContentProps {
+  children: ReactNode
+  icon?: string
+}
+
+export const ModalContent: React.FC<IModalContentProps> = ({ children, icon }) => (
   <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
     <div className="sm:flex sm:items-start">
       {icon && (
