@@ -7,6 +7,13 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.13.0] - 2022-08-27
+### Added
+- export project to json.
+
+### Fixed
+- hover bg color.
+
 ## [0.12.1] - 2022-02-22
 ### Fixed
 - form components parsing.
