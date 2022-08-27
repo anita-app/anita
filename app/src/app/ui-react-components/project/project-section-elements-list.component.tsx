@@ -56,7 +56,10 @@ export const SectionElementsList: React.FC = () => {
     return <NoSectionData sectionId={sectionId} sectionTitle={sectionInfo.title} projectId={projectId} />;
 
   return (
-    <MainContentContainer headerText={sectionInfo.title}>
+    <MainContentContainer
+      headerText={sectionInfo.title}
+      headerRightComponent={<>ciao</>}
+    >
       <ProjectTableList sectionInfo={sectionInfo} sectionData={sectionData} />
       <AddEditElementButton projectId={projectId} sectionId={sectionId} mode={EDITOR_MODE.add} />
     </MainContentContainer>
