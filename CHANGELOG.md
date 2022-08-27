@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.13.1] - 2022-08-27
+### Fixed
+- deploy.
+
 ## [0.13.0] - 2022-08-27
 ### Added
 - export project to json.
