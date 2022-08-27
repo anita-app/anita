@@ -50,7 +50,7 @@ export const ProjectsList = () => {
             ><i className="bi bi-plus"></i>
             </Link>
             <ReactTooltip id="createProject" effect="solid">
-              <span>Create a new project</span>
+              Create a new project
             </ReactTooltip>
           </div>
         </div>

@@ -12,7 +12,7 @@ export const EditButton = ({ project }: { project: ProjectSettings }) => (
   >
     <i className="bi-pencil"></i> <span className="ml-2 hidden sm:inline-block">Edit Project</span>
     <ReactTooltip id="editProject" effect="solid">
-      <span>Edit project</span>
+      Edit project
     </ReactTooltip>
   </Link>
 )

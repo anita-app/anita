@@ -19,7 +19,7 @@ export const Sidebar = (props: { children: ReactNode }) => {
           <a className="ml-1" href="https://github.com/anita-app/anita/issues" target="_blank" rel="noreferrer">
             <i className="bi-bug" data-tip data-for="reportBug"></i>
             <ReactTooltip id="reportBug" effect="solid">
-              <span>Report a bug</span>
+              Report a bug
             </ReactTooltip>
           </a>
         </div>

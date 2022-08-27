@@ -47,7 +47,7 @@ export const OptionsMakerSingleOption = memo(function OptionsMakerSingleOption(p
           className={`w-full py-1 ${DANGER_BTN_OUTLINE}`}
         ><i className="bi-trash hidden lg:block"></i><span className="lg:hidden">Delete option {index + 1}</span></button>
         <ReactTooltip id={`deleteOption-${index}`} effect="solid">
-          <span>Delete option {index + 1}</span>
+          Delete option {index + 1}
         </ReactTooltip>
       </div>}
     </li>

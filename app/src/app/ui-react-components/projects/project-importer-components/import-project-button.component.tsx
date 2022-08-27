@@ -63,7 +63,7 @@ export const ImportProjectButton = ({ btnType = 'icon' }: { btnType?: 'icon' | '
       ><i className="bi bi-arrow-bar-down"></i>
       </button>
         <ReactTooltip id="importProject" effect="solid">
-          <span>Import an existing project</span>
+          Import an existing project
         </ReactTooltip></span>
       ) : (
         <button data-tip data-for="importProject"

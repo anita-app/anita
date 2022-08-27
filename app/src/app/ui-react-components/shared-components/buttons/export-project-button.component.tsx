@@ -9,7 +9,7 @@ export const ExportButton = () => (
   >
     <i className="bi bi-arrow-bar-up"></i>
     <ReactTooltip id="exportProject" effect="solid">
-      <span>Export project</span>
+      Export project
     </ReactTooltip>
   </button>
 )

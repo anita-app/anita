@@ -45,7 +45,7 @@ export const BasicRadio = memo(function BasicRadio({ formEle, element, handleCha
                 <span>
                   <sup><i className="ml-1 text-xs bi-info-circle" data-tip data-for={`${fieldId}${indexOption}`}></i></sup>
                   <ReactTooltip id={`${fieldId}${indexOption}`} effect="solid" data-multiline={true} className="msg-wrapper text-center">
-                    <span>{option.hint}</span>
+                    {option.hint}
                   </ReactTooltip>
                 </span>
               )}
