@@ -1,7 +1,6 @@
-import { RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
-import { ElementSaver } from 'app/libs/project-helpers/section-elements-handlers/element-saver.class';
+import { Manager } from 'app/libs/Manager/Manager.class';
+
 import { AnitaStore } from 'app/libs/redux/reducers.const';
-import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,14 +10,12 @@ interface IProjectSaveElementProps {
 
 export const ProjectSaveElement: React.FC<IProjectSaveElementProps> = ({ sectionId }) => {
 
-  const project = useSelector((state: AnitaStore) => state.project);
   const element = useSelector((state: AnitaStore) => state.formElement.element);
   const validObj = useSelector((state: AnitaStore) => state.formElesValidState);
   const navigate = useNavigate();
 
   const handleClick = async () => {
-    const mode = element.id ? EDITOR_MODE.edit : EDITOR_MODE.add;
-    await new ElementSaver(project[RESERVED_AUDS_KEYS._settings][0].id, sectionId, element, mode).save();
+    await Manager.getCurrentProject().getSectionById(sectionId).saveElement(element)
     navigate(-1);
   }
 

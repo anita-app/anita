@@ -1,7 +1,7 @@
 import { RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info';
 import { ProjectDeletor } from 'app/Models/Project/ProjectDeletor.class';
 import { ProjectExporter } from 'app/Models/Project/ProjectExporter.class';
-import { Section } from 'app/Models/Section.class';
+import { Section } from 'app/Models/Section/Section.class';
 
 export class Project {
 

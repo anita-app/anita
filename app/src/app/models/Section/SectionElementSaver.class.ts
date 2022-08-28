@@ -8,7 +8,7 @@ import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum';
 /**
  * Saves a new element in a section of the project, stores the project on disk and dispatches the changes to the current state
  */
-export class ElementSaver {
+export class SectionElementSaver {
 
   /**
    * Reference to section model in DS for easier access in code
