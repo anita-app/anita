@@ -1,7 +1,7 @@
 import {
   LocalProjectSettings,
   IProjectSettings,
-  Section,
+  ISection,
   SectionDetailsDeclaration,
   SectionElement,
   SystemData
@@ -55,8 +55,8 @@ export interface IValidStateForEle {
 }
 
 export interface IUpdateFormProjectUpdateSectionPayload {
-  fieldName: keyof Section;
-  value: Section[keyof Section];
+  fieldName: keyof ISection;
+  value: ISection[keyof ISection];
   index: number;
 }
 

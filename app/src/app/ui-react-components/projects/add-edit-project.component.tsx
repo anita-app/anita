@@ -4,11 +4,11 @@ import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.
 import {
   IProjectSettings,
   RESERVED_AUDS_KEYS,
-  Section,
+  ISection,
   SystemData
   } from 'app/data/project-structure/project-info'
 import { IdCreator } from 'app/libs/id-creator/id-creator.class'
-import { isProjectLoaded } from 'app/libs/project-helpers/project-handlers/is-project-loaded.function'
+import { Manager } from 'app/libs/Manager/Manager.class'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum'
@@ -39,12 +39,12 @@ export const AddEditProject: React.FC = () => {
 
 
     const fetchEProject = async () => {
-      const canProceed = await isProjectLoaded(projectId);
+      const canProceed = await Manager.isProjectLoaded(projectId);
       if (!projectId || !canProceed)
         return setProject(undefined);
 
       const _settings = await dbInstances[projectId].callSelector<IProjectSettings>(RESERVED_AUDS_KEYS._settings).multiple();
-      const _sections = await dbInstances[projectId].callSelector<Section>(RESERVED_AUDS_KEYS._sections).multiple();
+      const _sections = await dbInstances[projectId].callSelector<ISection>(RESERVED_AUDS_KEYS._sections).multiple();
 
       if (isMounted)
         setProject({ _settings, _sections });

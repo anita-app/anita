@@ -1,7 +1,7 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant'
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import { SectionElement } from 'app/data/project-structure/project-info'
-import { isProjectLoaded } from 'app/libs/project-helpers/project-handlers/is-project-loaded.function'
+import { Manager } from 'app/libs/Manager/Manager.class'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum'
@@ -28,7 +28,7 @@ export const AddEditSectionElement: React.FC = () => {
 
 
     const fetchElement = async () => {
-      const canProceed = await isProjectLoaded(projectId);
+      const canProceed = await Manager.isProjectLoaded(projectId);
 
       if (!projectId || !sectionId || !canProceed)
         return setElement(undefined);

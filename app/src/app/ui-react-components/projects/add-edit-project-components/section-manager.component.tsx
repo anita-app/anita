@@ -1,5 +1,5 @@
 import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const'
-import { RESERVED_AUDS_KEYS, Section } from 'app/data/project-structure/project-info'
+import { RESERVED_AUDS_KEYS, ISection } from 'app/data/project-structure/project-info'
 import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant'
 import { IUpdateFormProjectRemoveFieldFromSectionPayload } from 'app/libs/redux/action.type'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
@@ -12,7 +12,7 @@ import { FormFieldsModel } from 'app/ui-react-components/shared-components/forms
 import { useSelector } from 'react-redux'
 
 interface ISectionManagerProps {
-  section: Section
+  section: ISection
   sectionIndex: number
 }
 
@@ -24,7 +24,7 @@ export const SectionManager: React.FC<ISectionManagerProps> = ({ section, sectio
     .map(formElement => Object.values(RESERVED_FIELDS).includes(formElement.fieldName) ? null : formElement.fieldName)
     .filter(fieldName => fieldName !== null);
 
-  const handleChange = (index: number, fieldName: keyof Section, value: Section[keyof Section]) => {
+  const handleChange = (index: number, fieldName: keyof ISection, value: ISection[keyof ISection]) => {
     storeDispatcher({
       type: REDUX_ACTIONS.updateFormProjectUpdateSection, payload: { fieldName, value, index }
     });

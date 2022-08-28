@@ -1,5 +1,5 @@
-import { Section } from 'app/data/project-structure/project-info';
+import { ISection } from 'app/data/project-structure/project-info';
 
-export function findSectionById(sections: Array<Section>, toFindId: string): Section {
+export function findSectionById(sections: Array<ISection>, toFindId: string): ISection {
   return sections.find(section => section.id === toFindId);
 }

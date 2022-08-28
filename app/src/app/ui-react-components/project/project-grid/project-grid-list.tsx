@@ -1,10 +1,10 @@
-import { Section, SectionElement } from 'app/data/project-structure/project-info'
+import { ISection, SectionElement } from 'app/data/project-structure/project-info'
 import { ProjectGridListElement } from 'app/ui-react-components/project/project-grid/project-grid-list-element'
 import { findFirstFieldOfType, findFirstUserDefinedField } from 'app/libs/tools/find-first-user-defined-field.function';
 import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum';
 
 interface IProjectGridListProps {
-  sectionInfo: Section
+  sectionInfo: ISection
   sectionData: Array<SectionElement>
 }
 

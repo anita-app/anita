@@ -1,6 +1,6 @@
 import { URL_PARAMS } from 'app/anita-routes/anita-routes.constant'
 import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const'
-import { RESERVED_AUDS_KEYS, Section } from 'app/data/project-structure/project-info'
+import { RESERVED_AUDS_KEYS, ISection } from 'app/data/project-structure/project-info'
 import { autoGenerateFieldName } from 'app/libs/project-helpers/auto-generate-field-name.function'
 import {
   IUpdateFormProjectUpdateFormModelAddOptionPayload,
@@ -29,7 +29,7 @@ interface ISectionFormModelManagerProps {
   element: FormFieldsModel<SupportedFormsTypes>;
 }
 
-const getAlreadyExists = (section: Section, fieldName: string): boolean => {
+const getAlreadyExists = (section: ISection, fieldName: string): boolean => {
   if (!fieldName || !section) return false;
   return section.formModel.some(formElement => formElement.fieldName === fieldName);
 }

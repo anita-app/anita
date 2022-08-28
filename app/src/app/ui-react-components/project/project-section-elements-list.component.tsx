@@ -1,7 +1,6 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
 import { dbInstances } from 'app/data/local-dbs/db-instances.const';
 import { RESERVED_AUDS_KEYS, SectionElement } from 'app/data/project-structure/project-info';
-import { isProjectLoaded } from 'app/libs/project-helpers/project-handlers/is-project-loaded.function';
 import { AnitaStore } from 'app/libs/redux/reducers.const';
 import { findSectionById } from 'app/libs/tools/find-section-by-id.function';
 import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum';
@@ -15,6 +14,7 @@ import { useSelector } from 'react-redux';
 import { Navigate, useParams } from 'react-router';
 import { Tab } from '@headlessui/react'
 import { ProjectGridList } from 'app/ui-react-components/project/project-grid/project-grid-list';
+import { Manager } from 'app/libs/Manager/Manager.class';
 
 const SUPPORTED_VIEWS = ['list', 'grid']
 
@@ -34,7 +34,7 @@ export const SectionElementsList: React.FC = () => {
   useEffect(() => {
     let isMounted = true;
     const getSectionData = async () => {
-      const canProceed = await isProjectLoaded(projectId);
+      const canProceed = await Manager.isProjectLoaded(projectId);
 
       if (!canProceed)
         return setSectionData(undefined);

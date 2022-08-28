@@ -1,4 +1,4 @@
-import { Section, SectionElement } from 'app/data/project-structure/project-info';
+import { ISection, SectionElement } from 'app/data/project-structure/project-info';
 import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant';
 import { SezBuilder } from 'app/libs/db-connector/db-builder/sez-builder.class';
 import { SectionDefinition, SectionModel } from 'app/libs/db-connector/db-builder/sez-definition';
@@ -21,7 +21,7 @@ export class DataStructureExtender {
   private datastructure: AbstractModel = {};
 
   constructor(
-    private sections: Array<Section>
+    private sections: Array<ISection>
   ) { }
 
   /**
@@ -38,7 +38,7 @@ export class DataStructureExtender {
   /**
    * Builds a contant with the specifications of a Section starting from the structure defined by the user.
    */
-  private buildSectionDefinition(section: Section): void {
+  private buildSectionDefinition(section: ISection): void {
     const sezDefinition: SectionDefinition<SectionElement> = {
       name: section.id,
       fields: Object.values(RESERVED_FIELDS),

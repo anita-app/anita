@@ -1,4 +1,4 @@
-import { AdditionalInfoForLocalStorage, Section } from 'app/data/project-structure/project-info';
+import { AdditionalInfoForLocalStorage, ISection } from 'app/data/project-structure/project-info';
 import { DataStructureExtender } from 'app/data/system-local-db/data-structure-extender.class';
 import { auds_sections } from 'app/data/system-local-db/sections/auds-sections.const';
 import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
@@ -98,7 +98,7 @@ export class DbStore implements DbStoreInterface<Database> {
    */
   private async makeDSFromDB(): Promise<void> {
     const res = await executeQueryWithReturn(this.db, "SELECT * FROM _sections");
-    const sections = serializer<Section>(res[0].columns, res[0].values);
+    const sections = serializer<ISection>(res[0].columns, res[0].values);
     sections.forEach((section: any) => {
       auds_sections.jsonFields.forEach((field: string) => {
         section[field] = JSON.parse(section[field]);

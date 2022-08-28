@@ -1,5 +1,5 @@
 import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const'
-import { RESERVED_AUDS_KEYS, Section } from 'app/data/project-structure/project-info'
+import { RESERVED_AUDS_KEYS, ISection } from 'app/data/project-structure/project-info'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { DANGER_BTN_OUTLINE } from 'app/ui-react-components/shared-components/buttons/buttons-layout-tw-classes.const'
 import { FormAutomator } from 'app/ui-react-components/shared-components/forms-automator/form-automator.component'
@@ -16,7 +16,7 @@ import ReactTooltip from 'react-tooltip'
  * @param option the option to check
  * @returns the form model to use. We want different form models for adding and editing to disable fields that should not be altered.
  */
-function getCanEdit(section: Section, indexFormElement: number, value: any): boolean {
+function getCanEdit(section: ISection, indexFormElement: number, value: any): boolean {
   if (!section || !section.formModel[indexFormElement] || !section.formModel[indexFormElement]['options'] || !section.formModel[indexFormElement]['options'].length)
     return true;
 

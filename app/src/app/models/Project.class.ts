@@ -1,26 +1,24 @@
-import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum';
-import { IProjectSettings } from 'app/data/project-structure/project-info';
+import { RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info';
+import { Section } from 'app/models/Section.class';
 
-export class Project implements IProjectSettings {
+export class Project {
 
-  id: string;
-  title: string;
-  description: string;
-  createdAt: string;
-  localStorage: LOCAL_STORAGE_SYSTEMS;
-  updatedAt?: string;
-  encrypted?: boolean;
+  private settings: SystemData[RESERVED_AUDS_KEYS._settings][0]
+  private sectionsDefinitions: SystemData[RESERVED_AUDS_KEYS._sections]
+  private sections: { [key: string]: Section } = {}
 
   constructor(
-    private projectSettings: IProjectSettings
+    systemData: SystemData
   ) {
-    this.id = projectSettings.id;
-    this.title = projectSettings.title;
-    this.description = projectSettings.description;
-    this.createdAt = projectSettings.createdAt;
-    this.localStorage = projectSettings.localStorage;
-    this.updatedAt = projectSettings.updatedAt;
-    this.encrypted = projectSettings.encrypted;
+    this.settings = systemData[RESERVED_AUDS_KEYS._settings][0]
+    this.sectionsDefinitions = systemData[RESERVED_AUDS_KEYS._sections]
+  }
+
+  getSection = (sectionId: string): Section => {
+    if (!this.sections[sectionId]) {
+      this.sections[sectionId] = new Section(this.sectionsDefinitions.find(section => section.id === sectionId))
+    }
+    return this.sections[sectionId]
   }
 
 }

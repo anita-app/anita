@@ -2,7 +2,7 @@ import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
 import { dbInstances } from 'app/data/local-dbs/db-instances.const';
 import { availableSystems } from 'app/data/project-form-builder/project-info-builder.constant';
 import { IProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
-import { isProjectLoaded } from 'app/libs/project-helpers/project-handlers/is-project-loaded.function';
+import { Manager } from 'app/libs/Manager/Manager.class';
 import { txtByFieldValue } from 'app/libs/project-helpers/txt-by-field-value.function';
 import { DeleteProjectButton } from 'app/ui-react-components/shared-components/buttons/delete-project.component';
 import { EditButton } from 'app/ui-react-components/shared-components/buttons/edit-project-button.component';
@@ -51,7 +51,7 @@ export const ProjectDetails: React.FC = () => {
     let isMounted = true;
 
     const loadProject = async () => {
-      const canProceed = await isProjectLoaded(projectId);
+      const canProceed = await Manager.isProjectLoaded(projectId);
 
       if (!canProceed)
         return setElement(undefined);

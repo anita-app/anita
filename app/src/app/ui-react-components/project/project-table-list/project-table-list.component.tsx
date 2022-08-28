@@ -1,5 +1,5 @@
 import { SectionElement } from 'app/data/project-structure/project-info';
-import { Section } from 'app/data/project-structure/project-info';
+import { ISection } from 'app/data/project-structure/project-info';
 import { ProjectTableListTdWithLinkToDetails } from 'app/ui-react-components/project/project-table-list/project-table-list-td-with-link-to-details.component';
 import { customRenderPicker } from 'app/ui-react-components/project/project-values-renderers/custom-render-picker.component';
 import { useMemo } from 'react';
@@ -8,7 +8,7 @@ import { useSortBy, useTable } from 'react-table';
 /**
  * Builds the columns for the table with react-table looping through sectionInfo
  */
-const useSectionInfo = (sectionInfo: Section) => {
+const useSectionInfo = (sectionInfo: ISection) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const colsToShoww = useMemo(() => [], [sectionInfo.id, sectionInfo.formModel]);
   useMemo(
@@ -30,7 +30,7 @@ const useSectionInfo = (sectionInfo: Section) => {
 }
 
 interface IProjectTableListProps {
-  sectionInfo: Section
+  sectionInfo: ISection
   sectionData: Array<SectionElement>
 }
 

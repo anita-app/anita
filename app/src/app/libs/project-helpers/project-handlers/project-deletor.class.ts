@@ -1,7 +1,7 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const';
 import { IProjectSettings } from 'app/data/project-structure/project-info';
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum';
-import { isProjectLoaded } from 'app/libs/project-helpers/project-handlers/is-project-loaded.function';
+import { Manager } from 'app/libs/Manager/Manager.class';
 import { ProjectsListLoader } from 'app/libs/projects-helpers/projects-handlers/projects-list-loader.class';
 
 /**
@@ -34,7 +34,7 @@ export class ProjectDeletor {
   }
 
   private async callOnProjectDeleted(): Promise<void> {
-    const canProceed = await isProjectLoaded(this.project.id, false);
+    const canProceed = await Manager.isProjectLoaded(this.project.id, false);
     if (canProceed)
       await dbInstances[this.project.id].dbStore.onProjectDeleted?.();
   }

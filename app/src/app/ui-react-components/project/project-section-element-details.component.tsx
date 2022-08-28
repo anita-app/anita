@@ -2,7 +2,7 @@ import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
 import { urlParamFiller } from 'app/anita-routes/url-param-fillers.function';
 import { dbInstances } from 'app/data/local-dbs/db-instances.const';
 import { RESERVED_AUDS_KEYS, SectionElement } from 'app/data/project-structure/project-info';
-import { isProjectLoaded } from 'app/libs/project-helpers/project-handlers/is-project-loaded.function';
+import { Manager } from 'app/libs/Manager/Manager.class';
 import { AnitaStore } from 'app/libs/redux/reducers.const';
 import { findSectionById } from 'app/libs/tools/find-section-by-id.function';
 import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum';
@@ -29,7 +29,7 @@ export const SectionElementDetails: React.FC = () => {
   useEffect(() => {
     let isMounted = true;
     const fetchData = async () => {
-      const canProceed = await isProjectLoaded(projectId);
+      const canProceed = await Manager.isProjectLoaded(projectId);
 
       if (!projectId || !sectionId || !elementId || !canProceed)
         return setElement(undefined);

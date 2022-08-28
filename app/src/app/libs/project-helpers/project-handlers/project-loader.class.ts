@@ -4,7 +4,7 @@ import {
   LocalProjectSettings,
   IProjectSettings,
   RESERVED_AUDS_KEYS,
-  Section
+  ISection
   } from 'app/data/project-structure/project-info';
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum';
 import { CurrentProjectSetter } from 'app/libs/project-helpers/project-handlers/current-project-setter.class';
@@ -15,7 +15,7 @@ export class ProjectLoader {
    * The project info of the project to load
    */
   private projectSettings: Array<IProjectSettings>;
-  private projectSections: Array<Section>;
+  private projectSections: Array<ISection>;
 
   /**
    * Creates an instance of ProjectLoader
@@ -62,7 +62,7 @@ export class ProjectLoader {
    * Loads project sections from the dbInstance
    */
   public async loadProjectSections(): Promise<void> {
-    this.projectSections = await dbInstances[this.projectId].callSelector<Section>(RESERVED_AUDS_KEYS._sections).multiple();
+    this.projectSections = await dbInstances[this.projectId].callSelector<ISection>(RESERVED_AUDS_KEYS._sections).multiple();
   }
 
   /**

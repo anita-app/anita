@@ -27,7 +27,7 @@ export type AnitaUniversalDataStorage = SystemData & UserData;
  */
 export type SystemData = {
   [RESERVED_AUDS_KEYS._settings]: Array<IProjectSettings>;
-  [RESERVED_AUDS_KEYS._sections]: Array<Section>;
+  [RESERVED_AUDS_KEYS._sections]: Array<ISection>;
 };
 
 /**
@@ -100,7 +100,7 @@ export interface SectionDetailsDeclaration {
 /**
  * Defines the full properties of a Section.
  */
-export interface Section extends SectionDetailsDeclaration {
+export interface ISection extends SectionDetailsDeclaration {
   formModel: Array<FormFieldsModel<SupportedFormsTypes>>;
 }
 

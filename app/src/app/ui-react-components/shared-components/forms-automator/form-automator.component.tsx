@@ -1,8 +1,8 @@
-import { Section } from 'app/data/project-structure/project-info'
+import { ISection } from 'app/data/project-structure/project-info'
 import { FieldSelector } from 'app/ui-react-components/shared-components/forms-automator/form-layout/field-selector.component'
 
 export interface IFormAutomatorProps {
-  formModel: Section['formModel'];
+  formModel: ISection['formModel'];
   element: { [key: string]: any };
   handleChange: (...args: any) => void;
   [customProps: string]: any;

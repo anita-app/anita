@@ -21,10 +21,11 @@ export class CurrentProjectSetter {
    * Dispatches the action to set SystemData in state
    */
   public set(): void {
-    Manager.setCurrentProject(this.projectSettings.concat()[0])
+    const payload = { [RESERVED_AUDS_KEYS._settings]: this.projectSettings.concat(), [RESERVED_AUDS_KEYS._sections]: this.sectionsDefinitions.concat() }
+    Manager.setCurrentProject(payload)
     storeDispatcher(({
       type: REDUX_ACTIONS.setCurrentProject,
-      payload: { [RESERVED_AUDS_KEYS._settings]: this.projectSettings.concat(), [RESERVED_AUDS_KEYS._sections]: this.sectionsDefinitions.concat() }
+      payload
     }));
   }
 

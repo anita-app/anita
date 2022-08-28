@@ -1,6 +1,6 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const';
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum';
-import { LocalProjectSettings, Section } from 'app/data/project-structure/project-info';
+import { LocalProjectSettings, ISection } from 'app/data/project-structure/project-info';
 import { DataStructureExtender } from 'app/data/system-local-db/data-structure-extender.class';
 import { DbConnector } from 'app/libs/db-connector/db-connector.class';
 import { FILE_HANDLES_PLUGIN } from 'app/libs/db-connector/plugins/file-handles/exporter.constant';
@@ -14,7 +14,7 @@ export class DbInitializer {
 
   constructor(
     private projectInfo: LocalProjectSettings,
-    private projectSections?: Array<Section>,
+    private projectSections?: Array<ISection>,
     private fileHandle?: FileSystemFileHandle
 
   ) {
