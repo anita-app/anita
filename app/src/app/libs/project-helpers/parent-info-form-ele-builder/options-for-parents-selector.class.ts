@@ -1,9 +1,8 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const';
 import { RESERVED_AUDS_KEYS, SectionElement, SystemData } from 'app/data/project-structure/project-info';
-import { findFirstUserDefinedField } from 'app/libs/tools/find-first-user-defined-field.function';
-import { findSectionById } from 'app/libs/tools/find-section-by-id.function';
+import { Manager } from 'app/libs/Manager/Manager.class';
 import { asyncForEach } from 'app/libs/tools/tools';
-import { FormModel, OptionKeysModel, OptionKeysModelGroup } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
+import { OptionKeysModel, OptionKeysModelGroup } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
 
 export class OptionsForParentsSelector {
 
@@ -26,11 +25,11 @@ export class OptionsForParentsSelector {
 
   private createGroupOption(sectionId: string, sectionLabel: string, sectionEles: Array<SectionElement>): void {
     const options: Array<OptionKeysModel> = [];
-    const section = findSectionById(this.project[RESERVED_AUDS_KEYS._sections], sectionId);
-    const indexFirstUserFiield = findFirstUserDefinedField(section.formModel as FormModel);
+    const section = Manager.getCurrentProject().getSectionById(sectionId);
+    const formEle = Manager.getCurrentProject().getSectionById(section.id).getFirstUserDefinedField();
     sectionEles.forEach(ele => options.push({
       value: `${sectionId}|${ele.id}`,
-      label: ele[section.formModel[indexFirstUserFiield].fieldName]
+      label: ele[formEle.fieldName]
     }));
     this.optionsGroups.push({
       label: sectionLabel,

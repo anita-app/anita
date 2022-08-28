@@ -2,6 +2,7 @@ import { dbInstances } from 'app/data/local-dbs/db-instances.const';
 import { ISection, SectionElement } from 'app/data/project-structure/project-info';
 import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant';
 import { FormFieldsModel, SupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
+import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum';
 
 export class Section implements ISection {
   public id: string
@@ -25,7 +26,15 @@ export class Section implements ISection {
   }
 
   getElementById = (id: string): Promise<SectionElement> => {
-    return dbInstances[this.projectId].callSelector<SectionElement>(this.id, { id }).single();
+    return dbInstances[this.projectId].callSelector<SectionElement>(this.id, { [RESERVED_FIELDS.id]: id }).single();
+  }
+
+  getFirstUserDefinedField(): FormFieldsModel<SupportedFormsTypes> | undefined {
+    return this.formModel.find(formEle => !RESERVED_FIELDS[formEle.fieldName])
+  }
+
+  getFirstFieldOfType = (types: Array<FORM_COMPONENTS_CODES>): FormFieldsModel<SupportedFormsTypes> | undefined => {
+    return this.formModel.find(formEle => types.includes(parseInt(formEle.componentCode as unknown as string)))
   }
 
 }

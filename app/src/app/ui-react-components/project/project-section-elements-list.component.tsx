@@ -87,7 +87,7 @@ export const SectionElementsList: React.FC = () => {
             <ProjectTableList sectionInfo={sectionInfo} sectionData={sectionData} />
           </Tab.Panel>
           <Tab.Panel>
-            <ProjectGridList sectionInfo={sectionInfo} sectionData={sectionData} />
+            <ProjectGridList sectionId={sectionInfo.id} sectionData={sectionData} />
           </Tab.Panel>
         </Tab.Panels>
         <AddEditElementButton projectId={projectId} sectionId={sectionId} mode={EDITOR_MODE.add} />
