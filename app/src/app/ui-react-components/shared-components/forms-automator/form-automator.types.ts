@@ -4,6 +4,7 @@ import {
   SectionDetailsDeclaration,
   SectionElement
 } from 'app/data/project-structure/project-info'
+import { IOption } from 'app/Models/ParentElement/ParentElement.class'
 import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum'
 import { TextInputSupportedTypes } from 'app/ui-react-components/shared-components/forms-automator/input-supported-types.const'
 
@@ -38,10 +39,10 @@ interface IHiddenInput<T> extends ICommonTypes<T> {
 }
 
 interface IBasicInput<T> extends ICommonTypes<T> {
-  componentCode: FORM_COMPONENTS_CODES.basicInput;
-  type: TextInputSupportedTypes;
-  value?: string;
-  required?: boolean;
+  componentCode: FORM_COMPONENTS_CODES.basicInput
+  type: TextInputSupportedTypes
+  value?: string
+  required?: boolean
 }
 
 interface IBasicTextarea<T> extends ICommonTypes<T> {
@@ -110,13 +111,14 @@ interface IDateTimePicker<T> extends ICommonTypes<T> {
 }
 
 interface ICommonTypes<T> {
-  componentCode: FORM_COMPONENTS_CODES;
-  fieldName?: keyof T & string;
-  label?: string;
-  disabled?: boolean;
-  readonly?: boolean;
-  prerequisites?: Array<Prerequisites>;
-  width?: string;
-  externalLabel?: boolean;
-  type?: never | TextInputSupportedTypes;
+  componentCode: FORM_COMPONENTS_CODES
+  fieldName?: keyof T & string
+  label?: string
+  disabled?: boolean
+  readonly?: boolean
+  prerequisites?: Array<Prerequisites>
+  width?: string
+  externalLabel?: boolean
+  type?: never | TextInputSupportedTypes
+  options?: Array<IOption>
 }

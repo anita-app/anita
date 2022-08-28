@@ -1,6 +1,6 @@
-export interface IOption { value: string, label: string }
+export interface IOption { value: string | number, label: string }
 
-interface OptionKeysModelGroup {
+interface IOptionKeysModelGroup {
   label: string;
   options: Array<IOption>
 }
@@ -49,7 +49,7 @@ export class ParentElement {
    * @param parentsInfo the array of the info on the parent, composed by: `[sectionID]|[elementID]`
    * @param selectOptions the options for the react-select component
    */
-  public static infoStringToObjForOptionsGroup (parentsInfo: Array<string>, selectOptions: Array<OptionKeysModelGroup>): Array<IOption> {
+  public static infoStringToObjForOptionsGroup (parentsInfo: Array<string>, selectOptions: Array<IOptionKeysModelGroup>): Array<IOption> {
     const options = []
 
     if (!parentsInfo || !selectOptions) {

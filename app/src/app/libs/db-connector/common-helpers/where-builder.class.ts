@@ -35,7 +35,7 @@ export class WhereBuilder<E> {
   /**
    * Builds the where arguments for the given field, value and oeprator
    */
-  private addWhere (field: string, value: any, operator: string = '='): any {
+  private addWhere (field: string, value: any, operator = '='): any {
     const params: WhereArgs = {
       field,
       operator,

@@ -55,8 +55,8 @@ export class FsHelper {
    * Create a handle to a new (text) file on the local file system.
    */
   public static getNewFileHandle (
-    name: string = '',
-    description: string = 'Anita project data file',
+    name = '',
+    description = 'Anita project data file',
     accept: { [mimeType: string]: Array<string> } = { 'application/json': ['.json'] }
   ): Promise<FileSystemFileHandle> {
     const opts = {

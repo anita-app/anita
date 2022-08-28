@@ -2,7 +2,7 @@ import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 import { DbStore } from 'app/libs/db-connector/plugins/sqlite/db-store/dbstore.class'
 
 export class SchemaCreator {
-  private sql: string = ''
+  private sql = ''
 
   constructor (
     private dbStore: DbStore,

@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 import React from 'react'
 
-const baseStyleOfSidebarLinks: string = 'block py-2.5 px-4 transition duration-200 border-l-2 hover:border-prussian-blue-700 hover:text-prussian-blue-500 text-sm font-semibold'
+const baseStyleOfSidebarLinks = 'block py-2.5 px-4 transition duration-200 border-l-2 hover:border-prussian-blue-700 hover:text-prussian-blue-500 text-sm font-semibold'
 
 const addActiveClassNameToBaseStyle = (currentPath: string, linkPath: string): string => {
   if (currentPath === linkPath) {
