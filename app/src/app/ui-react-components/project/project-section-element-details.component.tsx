@@ -6,9 +6,9 @@ import { isProjectLoaded } from 'app/libs/project-helpers/project-handlers/is-pr
 import { AnitaStore } from 'app/libs/redux/reducers.const';
 import { findSectionById } from 'app/libs/tools/find-section-by-id.function';
 import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum';
-import { ProjectDeleteSectionElementButton } from 'app/ui-react-components/project/details/project-delete-section-element-button.component';
-import { ProjectParentsLinkShower } from 'app/ui-react-components/project/details/project-parents-link-shower.component';
-import { customRenderPicker } from 'app/ui-react-components/project/values-renderers/custom-render-picker.component';
+import { ProjectDeleteSectionElementButton } from 'app/ui-react-components/project/project-details/project-delete-section-element-button.component';
+import { ProjectParentsLinkShower } from 'app/ui-react-components/project/project-details/project-parents-link-shower.component';
+import { customRenderPicker } from 'app/ui-react-components/project/project-values-renderers/custom-render-picker.component';
 import { AddEditElementButton } from 'app/ui-react-components/shared-components/buttons/add-edit-element-button.component';
 import { MainContentContainer } from 'app/ui-react-components/shared-components/common-ui-eles/main-content-container.component';
 import { FormFieldsModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';

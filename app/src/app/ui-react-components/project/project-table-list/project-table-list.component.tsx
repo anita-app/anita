@@ -1,7 +1,7 @@
 import { SectionElement } from 'app/data/project-structure/project-info';
 import { Section } from 'app/data/project-structure/project-info';
-import { ProjectTableListTdWithLinkToDetails } from 'app/ui-react-components/project/table-list/project-table-list-td-with-link-to-details.component';
-import { customRenderPicker } from 'app/ui-react-components/project/values-renderers/custom-render-picker.component';
+import { ProjectTableListTdWithLinkToDetails } from 'app/ui-react-components/project/project-table-list/project-table-list-td-with-link-to-details.component';
+import { customRenderPicker } from 'app/ui-react-components/project/project-values-renderers/custom-render-picker.component';
 import { useMemo } from 'react';
 import { useSortBy, useTable } from 'react-table';
 
