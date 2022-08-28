@@ -1,6 +1,6 @@
 import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 import { DbConnectorInstance, Deletor } from 'app/libs/db-connector/models/executers'
-import { Logger } from 'app/libs/logger/logger.class'
+import { Logger } from 'app/libs/Logger/logger.class'
 import Base from 'deta/dist/types/base'
 
 /**

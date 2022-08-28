@@ -1,6 +1,6 @@
 import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
 import { DbConnectorInstance } from 'app/libs/db-connector/models/executers';
-import { Logger } from 'app/libs/logger/logger.class';
+import { Logger } from 'app/libs/Logger/logger.class';
 import { cloneDeep } from 'lodash';
 import * as mysql from 'mysql';
 import { Database } from 'sql.js';

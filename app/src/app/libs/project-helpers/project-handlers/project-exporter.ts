@@ -1,7 +1,7 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const';
 import { AnitaUniversalDataStorage, SectionElement } from 'app/data/project-structure/project-info';
 import { FsHelper } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper';
-import { Logger } from 'app/libs/logger/logger.class';
+import { Logger } from 'app/libs/Logger/logger.class';
 import { store } from 'app/libs/redux/state.store';
 
 export class ProjectExporter {

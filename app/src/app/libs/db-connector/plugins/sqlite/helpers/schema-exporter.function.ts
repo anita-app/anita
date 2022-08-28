@@ -1,5 +1,5 @@
 import { FileSystemDirectoryHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
-import { Logger } from 'app/libs/logger/logger.class';
+import { Logger } from 'app/libs/Logger/logger.class';
 import { Database } from 'sql.js';
 
 // We can't write in place to the db, see https://wicg.github.io/file-system-access/#api-filesystemdirectoryhandle-removeentry ISSUE 6

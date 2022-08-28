@@ -1,6 +1,6 @@
 import { DEFAULT_OWNER_IDENTIFIER, DEFAULT_PARENTS_IDENTIFIER, DEFAULT_PK } from 'app/libs/db-connector/db-builder/default-values.constant';
 import { SectionDefinition, SectionModel, SectionName } from 'app/libs/db-connector/db-builder/sez-definition';
-import { Logger } from 'app/libs/logger/logger.class';
+import { Logger } from 'app/libs/Logger/logger.class';
 
 /**
  * Builds a Section model

@@ -1,7 +1,7 @@
 import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
 import { DbConnectorInstance } from 'app/libs/db-connector/models/executers';
 import { Filter4Dexie, QueryHelper, SuppoertedOperators } from 'app/libs/db-connector/plugins/indexed-db/query-makers/query-helper.class';
-import { Logger } from 'app/libs/logger/logger.class';
+import { Logger } from 'app/libs/Logger/logger.class';
 import Dexie from 'dexie';
 
 export type NewWhere = [string, SuppoertedOperators, string | number];
