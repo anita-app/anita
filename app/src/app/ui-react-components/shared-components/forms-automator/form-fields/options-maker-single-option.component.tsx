@@ -3,7 +3,7 @@ import { RESERVED_AUDS_KEYS, ISection } from 'app/data/project-structure/project
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { DANGER_BTN_OUTLINE } from 'app/ui-react-components/shared-components/buttons/buttons-layout-tw-classes.const'
 import { FormAutomator } from 'app/ui-react-components/shared-components/forms-automator/form-automator.component'
-import { FormFieldsModel, ICommonFormEleProps, OptionKeysModel, SupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
+import { FormFieldsModel, IBasicSelect, ICommonFormEleProps, IOptionKeysModel, TSupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import React, { memo, useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import ReactTooltip from 'react-tooltip'
@@ -17,22 +17,22 @@ import ReactTooltip from 'react-tooltip'
  * @returns the form model to use. We want different form models for adding and editing to disable fields that should not be altered.
  */
 function getCanEdit (section: ISection, indexFormElement: number, value: string | number): boolean {
-  if (!section || !section.formModel[indexFormElement] || !section.formModel[indexFormElement].options || !section.formModel[indexFormElement].options.length) {
+  if (!section || !section.formModel[indexFormElement] || !(section.formModel[indexFormElement] as IBasicSelect<TSupportedFormsTypes>).options || !(section.formModel[indexFormElement] as IBasicSelect<TSupportedFormsTypes>).options.length) {
     return true
   }
 
-  return !section.formModel[indexFormElement].options.some((opt: OptionKeysModel) => opt.value === value)
+  return !(section.formModel[indexFormElement] as IBasicSelect<TSupportedFormsTypes>).options.some((opt: IOptionKeysModel) => opt.value === value)
 }
 
-export const OptionsMakerSingleOption: React.FC<ICommonFormEleProps<FormFieldsModel<OptionKeysModel>>> = memo(function OptionsMakerSingleOption (props: ICommonFormEleProps<FormFieldsModel<OptionKeysModel>>) {
+export const OptionsMakerSingleOption: React.FC<ICommonFormEleProps<FormFieldsModel<IOptionKeysModel>>> = memo(function OptionsMakerSingleOption (props: ICommonFormEleProps<FormFieldsModel<IOptionKeysModel>>) {
   const { formEle, element, handleOptionsChange, handleClickDeleteOption, indexSection, indexFormElement, index, optionElement } = props
   const projectEditorMode = useSelector((store: AnitaStore) => store.formProject.mode)
   const section = useSelector((store: AnitaStore) => store.formProject.original[RESERVED_AUDS_KEYS._sections][indexSection])
-  const formModelToUse: Array<FormFieldsModel<SupportedFormsTypes>> = useMemo(() => {
+  const formModelToUse: Array<FormFieldsModel<TSupportedFormsTypes>> = useMemo(() => {
     const canEdit = getCanEdit(section, indexFormElement, optionElement.value)
     return canEdit
-      ? [PROJECT_EDITOR_FORM_BUILDER[projectEditorMode].optionEles.newItem as unknown as FormFieldsModel<SupportedFormsTypes>]
-      : [PROJECT_EDITOR_FORM_BUILDER[projectEditorMode].optionEles.newItem as unknown as FormFieldsModel<SupportedFormsTypes>]
+      ? [PROJECT_EDITOR_FORM_BUILDER[projectEditorMode].optionEles.newItem as unknown as FormFieldsModel<TSupportedFormsTypes>]
+      : [PROJECT_EDITOR_FORM_BUILDER[projectEditorMode].optionEles.newItem as unknown as FormFieldsModel<TSupportedFormsTypes>]
   }, [section, indexFormElement, optionElement.value, projectEditorMode])
 
   return (

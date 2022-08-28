@@ -30,7 +30,7 @@ export class DbInsertor<E> implements Insertor<E> {
     return this.insertOne(this.element)
   }
 
-  private async insertMany (originalElements: Array<E>): Promise<void> {
+  private async insertMany (originalElements: Array<any>): Promise<void> {
     const elements = cloneDeep(originalElements)
     elements.forEach(element => {
       element.key = element[RESERVED_FIELDS.id]
@@ -40,7 +40,7 @@ export class DbInsertor<E> implements Insertor<E> {
     await this.dbConnector.dbStore.db.putMany(elements as unknown as Array<DetaType>)
   }
 
-  private async insertOne (originalElement: E): Promise<void> {
+  private async insertOne (originalElement: any): Promise<void> {
     const element = { ...originalElement }
     element.key = element[RESERVED_FIELDS.id]
     element.section = this.section

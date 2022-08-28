@@ -2,7 +2,7 @@ import { SectionElement } from 'app/data/project-structure/project-info'
 import { Manager } from 'app/libs/Manager/Manager.class'
 import { asyncForEach } from 'app/libs/tools/tools'
 import { Project } from 'app/Models/Project/Project.class'
-import { OptionKeysModel, OptionKeysModelGroup } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
+import { IOptionKeysModel, OptionKeysModelGroup } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 
 export class GetOptionsForParentsSelector {
   private optionsGroups: Array<OptionKeysModelGroup> = []
@@ -12,7 +12,7 @@ export class GetOptionsForParentsSelector {
   ) {
   }
 
-  public async buildOptions (options: Array<OptionKeysModel>): Promise<Array<OptionKeysModelGroup>> {
+  public async buildOptions (options: Array<IOptionKeysModel>): Promise<Array<OptionKeysModelGroup>> {
     await asyncForEach(options, async group => {
       const sectionEles = await this.project.getSectionById(group.value.toString()).getAllElements()
       if (sectionEles.length) {
@@ -24,7 +24,7 @@ export class GetOptionsForParentsSelector {
   }
 
   private createGroupOption (sectionId: string, sectionLabel: string, sectionEles: Array<SectionElement>): void {
-    const options: Array<OptionKeysModel> = []
+    const options: Array<IOptionKeysModel> = []
     const section = Manager.getCurrentProject().getSectionById(sectionId)
     const formEle = Manager.getCurrentProject().getSectionById(section.id).getFirstUserDefinedField()
     sectionEles.forEach(ele => options.push({

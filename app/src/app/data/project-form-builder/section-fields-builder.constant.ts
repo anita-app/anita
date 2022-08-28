@@ -1,4 +1,4 @@
-import { SectionCustomFieldProperties, SectionDetailsDeclaration } from 'app/data/project-structure/project-info'
+import { ISectionCustomFieldProperties, SectionDetailsDeclaration } from 'app/data/project-structure/project-info'
 import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant'
 import { FormFieldsModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES, SELECTABLE_FORM_ELES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum'
@@ -34,7 +34,7 @@ export const sectionDetailsFormFieldsModel: Array<FormFieldsModel<SectionDetails
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const allFieldsExceptBasicInput = Object.entries(FORM_COMPONENTS_CODES).map(([key, value]) => value).filter((value: FORM_COMPONENTS_CODES) => ![FORM_COMPONENTS_CODES.basicInput, FORM_COMPONENTS_CODES.datePicker, FORM_COMPONENTS_CODES.dateTimePicker].includes(value) && typeof value === 'number')
 
-const labelsForBasicAndAdvanced = (sizeWithoutInputType: number, sizeWithtInputType: number): Array<FormFieldsModel<SectionCustomFieldProperties>> => [
+const labelsForBasicAndAdvanced = (sizeWithoutInputType: number, sizeWithtInputType: number): Array<FormFieldsModel<ISectionCustomFieldProperties>> => [
   {
     componentCode: FORM_COMPONENTS_CODES.basicInput,
     fieldName: 'label',
@@ -58,7 +58,7 @@ const labelsForBasicAndAdvanced = (sizeWithoutInputType: number, sizeWithtInputT
   }
 ]
 
-const componentSelectorForBasicAndAdvanced = (size: number): FormFieldsModel<SectionCustomFieldProperties> => ({
+const componentSelectorForBasicAndAdvanced = (size: number): FormFieldsModel<ISectionCustomFieldProperties> => ({
   componentCode: FORM_COMPONENTS_CODES.basicSelect,
   fieldName: 'componentCode',
   options: SELECTABLE_FORM_ELES,
@@ -71,7 +71,7 @@ const componentSelectorForBasicAndAdvanced = (size: number): FormFieldsModel<Sec
 /**
  * Show the select options for the type of Input element
  */
-const inputTypeSelectors: Array<FormFieldsModel<SectionCustomFieldProperties>> = [
+const inputTypeSelectors: Array<FormFieldsModel<ISectionCustomFieldProperties>> = [
   {
     componentCode: FORM_COMPONENTS_CODES.basicSelect,
     fieldName: 'type',
@@ -107,7 +107,7 @@ const inputTypeSelectors: Array<FormFieldsModel<SectionCustomFieldProperties>> =
 /**
  * Defines common fields that are used both when creating and editing fields of a `Section`.
  */
-const commonAddAndEditFields: Array<FormFieldsModel<SectionCustomFieldProperties>> = [
+const commonAddAndEditFields: Array<FormFieldsModel<ISectionCustomFieldProperties>> = [
   {
     componentCode: FORM_COMPONENTS_CODES.optionsMaker,
     fieldName: 'options',
@@ -131,7 +131,7 @@ const commonAddAndEditFields: Array<FormFieldsModel<SectionCustomFieldProperties
  * @remarks
  * For new fields only. Existing items must use `sectionElesForEditingAdvanced` as some properties can't be changed after the filed has been created.
  */
-export const sectionElesNewItemAdvanced: Array<FormFieldsModel<SectionCustomFieldProperties>> = [
+export const sectionElesNewItemAdvanced: Array<FormFieldsModel<ISectionCustomFieldProperties>> = [
   ...labelsForBasicAndAdvanced(7, 5),
   componentSelectorForBasicAndAdvanced(3),
   ...inputTypeSelectors,
@@ -146,7 +146,7 @@ export const sectionElesNewItemAdvanced: Array<FormFieldsModel<SectionCustomFiel
   ...commonAddAndEditFields
 ]
 
-export const sectionElesNewItemBasic: Array<FormFieldsModel<SectionCustomFieldProperties>> = [
+export const sectionElesNewItemBasic: Array<FormFieldsModel<ISectionCustomFieldProperties>> = [
   ...labelsForBasicAndAdvanced(8, 6),
   componentSelectorForBasicAndAdvanced(4),
   ...inputTypeSelectors,
@@ -163,7 +163,7 @@ export const sectionElesNewItemBasic: Array<FormFieldsModel<SectionCustomFieldPr
  * @remarks
  * For existing fields only, some properties can't be changed after the filed has been created. New items must use `sectionElesNewItemAdvanced` instead.
  */
-export const sectionElesForEditingAdvanced: Array<FormFieldsModel<SectionCustomFieldProperties>> = [
+export const sectionElesForEditingAdvanced: Array<FormFieldsModel<ISectionCustomFieldProperties>> = [
   ...labelsForBasicAndAdvanced(7, 5),
   componentSelectorForBasicAndAdvanced(3),
   ...inputTypeSelectors,
@@ -179,7 +179,7 @@ export const sectionElesForEditingAdvanced: Array<FormFieldsModel<SectionCustomF
   ...commonAddAndEditFields
 ]
 
-export const sectionElesForEditingBasic: Array<FormFieldsModel<SectionCustomFieldProperties>> = [
+export const sectionElesForEditingBasic: Array<FormFieldsModel<ISectionCustomFieldProperties>> = [
   ...labelsForBasicAndAdvanced(8, 6),
   componentSelectorForBasicAndAdvanced(4),
   ...inputTypeSelectors,

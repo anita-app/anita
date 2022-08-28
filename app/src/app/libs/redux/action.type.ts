@@ -7,7 +7,7 @@ import {
   SystemData
 } from 'app/data/project-structure/project-info'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
-import { FormFieldsModel, SupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
+import { FormFieldsModel, TSupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 
 export type Action<T extends REDUX_ACTIONS> = T extends ActionsWithoutPayload ? ActionWithoutPayload :
   ActionWithPayload<T>;
@@ -63,8 +63,8 @@ export interface IUpdateFormProjectUpdateSectionPayload {
 export interface IUpdateFormProjectUpdateFormModelOfSectionPayload {
   indexFormElement: number;
   indexSection: number;
-  fieldName: keyof FormFieldsModel<SupportedFormsTypes>;
-  value: FormFieldsModel<SupportedFormsTypes>[keyof FormFieldsModel<SupportedFormsTypes>];
+  fieldName: keyof FormFieldsModel<TSupportedFormsTypes>;
+  value: FormFieldsModel<TSupportedFormsTypes>[keyof FormFieldsModel<TSupportedFormsTypes>];
   identifierAutoVal: string | null;
 }
 
@@ -85,7 +85,7 @@ export interface IUpdateFormProjectUpdateFormModelDeleteOptionPayload {
 }
 
 export interface IUpdateFormProjectUpdateFormModelOptionValuePayload {
-  formElement: FormFieldsModel<SupportedFormsTypes>;
+  formElement: FormFieldsModel<TSupportedFormsTypes>;
   indexFormElement: number;
   indexSection: number;
   indexOptions: number

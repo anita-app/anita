@@ -1,6 +1,6 @@
 import { ISection, SectionElement } from 'app/data/project-structure/project-info'
 import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant'
-import { FormFieldsModel, OptionKeysModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
+import { FormFieldsModel, IOptionKeysModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum'
 
 /**
@@ -10,7 +10,7 @@ import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components
  */
 export class ParentInfoFormEleBuilder {
   private parentInfoFormModel: FormFieldsModel<SectionElement>
-  private options: Array<OptionKeysModel> = []
+  private options: Array<IOptionKeysModel> = []
 
   constructor (
     private childOf: Array<string>,

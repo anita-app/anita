@@ -4,7 +4,7 @@ import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.cons
 import { ParentInfoFormEleBuilder } from 'app/Models/Section/ParentInfoFormEleBuilder.class'
 import { SectionElementSaver } from 'app/Models/Section/SectionElementSaver.class'
 import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum'
-import { FormFieldsModel, SupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
+import { FormFieldsModel, TSupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum'
 
 export class Section implements ISection {
@@ -12,7 +12,7 @@ export class Section implements ISection {
   public title: string
   public childOf?: Array<string>
   public [RESERVED_FIELDS.createdAt]?: never
-  public formModel: Array<FormFieldsModel<SupportedFormsTypes>>
+  public formModel: Array<FormFieldsModel<TSupportedFormsTypes>>
 
   constructor (
     private projectId: string,
@@ -34,11 +34,11 @@ export class Section implements ISection {
     return new SectionElementSaver(this.projectId, this.id, element, mode).save()
   }
 
-  public getFirstUserDefinedField (): FormFieldsModel<SupportedFormsTypes> | undefined {
+  public getFirstUserDefinedField (): FormFieldsModel<TSupportedFormsTypes> | undefined {
     return this.formModel.find(formEle => !RESERVED_FIELDS[formEle.fieldName])
   }
 
-  public getFirstFieldOfType = (types: Array<FORM_COMPONENTS_CODES>): FormFieldsModel<SupportedFormsTypes> | undefined => this.formModel.find(formEle => types.includes(parseInt(formEle.componentCode as unknown as string)))
+  public getFirstFieldOfType = (types: Array<FORM_COMPONENTS_CODES>): FormFieldsModel<TSupportedFormsTypes> | undefined => this.formModel.find(formEle => types.includes(parseInt(formEle.componentCode as unknown as string)))
 
   public getParentInfoFormEle = (): FormFieldsModel<SectionElement> => new ParentInfoFormEleBuilder(this.childOf, this.allSections).build()
 }

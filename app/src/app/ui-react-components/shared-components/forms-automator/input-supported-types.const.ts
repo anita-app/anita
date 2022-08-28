@@ -1,4 +1,4 @@
-import { OptionKeysModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
+import { IOptionKeysModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 
 export enum TextInputSupportedTypes {
   color = 'color',
@@ -22,7 +22,7 @@ export enum DateTimeInputSupportedTypes {
   time = 'time',
 }
 
-export const TEXT_INPUT_SUPPORTED_TYPES_OPTIONS: Array<OptionKeysModel> = [
+export const TEXT_INPUT_SUPPORTED_TYPES_OPTIONS: Array<IOptionKeysModel> = [
   {
     value: TextInputSupportedTypes.text,
     label: 'Text'
@@ -57,7 +57,7 @@ export const TEXT_INPUT_SUPPORTED_TYPES_OPTIONS: Array<OptionKeysModel> = [
   }
 ]
 
-export const DATE_INPUT_SUPPORTED_TYPES_OPTIONS: Array<OptionKeysModel> = [
+export const DATE_INPUT_SUPPORTED_TYPES_OPTIONS: Array<IOptionKeysModel> = [
   {
     value: DateInputSupportedTypes.date,
     label: 'Date'
@@ -72,7 +72,7 @@ export const DATE_INPUT_SUPPORTED_TYPES_OPTIONS: Array<OptionKeysModel> = [
   }
 ]
 
-export const DATE_TIME_INPUT_SUPPORTED_TYPES_OPTIONS: Array<OptionKeysModel> = [
+export const DATE_TIME_INPUT_SUPPORTED_TYPES_OPTIONS: Array<IOptionKeysModel> = [
   {
     value: DateTimeInputSupportedTypes.datetimeLocal,
     label: 'Date & time'

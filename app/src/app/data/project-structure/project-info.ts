@@ -2,7 +2,7 @@ import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.
 import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant'
 import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api'
-import { FormFieldsModel, OptionKeysModel, SupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
+import { FormFieldsModel, IOptionKeysModel, TSupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum'
 import { TextInputSupportedTypes } from 'app/ui-react-components/shared-components/forms-automator/input-supported-types.const'
 
@@ -73,12 +73,12 @@ export interface LocalProjectSettings extends IProjectSettings, AdditionalInfoFo
  * @remarks
  * These fields are for the object to be stored in `sections.formModel[]` of the `AnitaUniversalDataStorage` store.
  */
-export interface SectionCustomFieldProperties {
+export interface ISectionCustomFieldProperties {
   componentCode: FORM_COMPONENTS_CODES;
   type?: TextInputSupportedTypes;
   fieldName: string;
   label?: string;
-  options?: Array<OptionKeysModel>;
+  options?: Array<IOptionKeysModel>;
   required?: boolean;
   externalLabel?: boolean;
   value?: any;
@@ -101,7 +101,7 @@ export interface SectionDetailsDeclaration {
  * Defines the full properties of a Section.
  */
 export interface ISection extends SectionDetailsDeclaration {
-  formModel: Array<FormFieldsModel<SupportedFormsTypes>>;
+  formModel: Array<FormFieldsModel<TSupportedFormsTypes>>;
 }
 
 /**

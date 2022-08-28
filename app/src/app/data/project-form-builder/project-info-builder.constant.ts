@@ -1,7 +1,7 @@
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
 import { IProjectSettings } from 'app/data/project-structure/project-info'
 import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant'
-import { FormFieldsModel, OptionKeysModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
+import { FormFieldsModel, IOptionKeysModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum'
 import { TextInputSupportedTypes } from 'app/ui-react-components/shared-components/forms-automator/input-supported-types.const'
 
@@ -34,7 +34,7 @@ const commonFieldsForProjectInfo: Array<FormFieldsModel<IProjectSettings>> = [{
   required: true
 }]
 
-export const availableSystems: Array<OptionKeysModel> = [
+export const availableSystems: Array<IOptionKeysModel> = [
   {
     label: 'File system',
     value: LOCAL_STORAGE_SYSTEMS.fileSystem,

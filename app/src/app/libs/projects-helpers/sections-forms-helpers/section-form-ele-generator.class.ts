@@ -1,4 +1,4 @@
-import { SectionCustomFieldProperties } from 'app/data/project-structure/project-info'
+import { ISectionCustomFieldProperties } from 'app/data/project-structure/project-info'
 
 /**
  * Creates a section form element based on the information provided by the user when creating/editing a project
@@ -7,20 +7,20 @@ export class SectionFormEleGenerator {
   /**
    * The field element to return
    */
-  private fieldElement: SectionCustomFieldProperties
+  private fieldElement: ISectionCustomFieldProperties
 
   /**
    * Creates an instance of section form ele generator.
    * @param ele the details specified by the user
    */
   constructor (
-    private ele: SectionCustomFieldProperties
+    private ele: ISectionCustomFieldProperties
   ) { }
 
   /**
    * Sets mandatory field, adds options and sets the required validator
    */
-  public make (): SectionCustomFieldProperties {
+  public make (): ISectionCustomFieldProperties {
     this.setManadatory()
     this.setOptions()
     this.setRequiredValidator()

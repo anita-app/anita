@@ -20,20 +20,23 @@ export const ProjectPicker: React.FC<IProjectPickerProps> = ({ project }) => {
 
   useClickOutside(dropDownRef, () => setDropdownOpen(false))
 
-  const handleClick = () => {
+  const closeDropdown = () => {
     setDropdownOpen(!dropdownOpen)
   }
 
   const goToDetails = (projectId: string) => {
+    closeDropdown()
     navigate(urlParamFiller(ANITA_URLS.projectDetails, [{ name: URL_PARAMS.projectId, value: projectId }]))
   }
 
   const loadProject = async (projectId: string) => {
+    closeDropdown()
     await Manager.loadProjectById(projectId)
     goToDetails(projectId)
   }
 
   const goToEditProject = (projectId: string) => {
+    closeDropdown()
     navigate(urlParamFiller(ANITA_URLS.projectEdit, [{ name: URL_PARAMS.projectId, value: projectId }]))
   }
 
@@ -53,22 +56,22 @@ export const ProjectPicker: React.FC<IProjectPickerProps> = ({ project }) => {
             {projects?.map(projectFromList => {
               if (project[RESERVED_AUDS_KEYS._settings][0].id === projectFromList.id) return null
               return (
-                <button key={projectFromList.id} className="w-full block text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => handleClick(loadProject(projectFromList.id))}>{projectFromList.title}</button>)
+                <button key={projectFromList.id} className="w-full block text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => loadProject(projectFromList.id)}>{projectFromList.title}</button>)
             })}
             <div className="block py-2.5 px-4 text-sm bg-gray-100 text-gray-600">Actions</div>
-            <button className="w-full block text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => handleClick(goToDetails(project[RESERVED_AUDS_KEYS._settings][0].id))}>
+            <button className="w-full block text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => goToDetails(project[RESERVED_AUDS_KEYS._settings][0].id)}>
               <i className="bi-info-circle mr-2"></i>
               Go to the details of the project
             </button>
-            <button className="w-full block text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => handleClick(goToEditProject(project[RESERVED_AUDS_KEYS._settings][0].id))}>
+            <button className="w-full block text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => goToEditProject(project[RESERVED_AUDS_KEYS._settings][0].id)}>
               <i className="bi-pencil mr-2"></i>
               Edit the current project
             </button>
-            <button className="w-full block text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => handleClick(navigate(ANITA_URLS.projectsList))}>
+            <button className="w-full block text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => navigate(ANITA_URLS.projectsList)}>
               <i className="bi-files mr-2"></i>
               Go to the projects list
             </button>
-            <button className="w-full block text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => handleClick(navigate(ANITA_URLS.projectAdd))}>
+            <button className="w-full block text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => navigate(ANITA_URLS.projectAdd)}>
               <i className="bi-plus mr-2"></i>
               Create a new project
             </button>

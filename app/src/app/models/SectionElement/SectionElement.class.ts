@@ -1,5 +1,5 @@
 import { cleanString } from 'app/libs/tools/tools'
-import { OptionKeysModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
+import { IOptionKeysModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 
 export class SectionElement {
   public static autoGenerateFieldName (labelValue: string | number | boolean | Array<string>): string | null {
@@ -13,7 +13,7 @@ export class SectionElement {
     return cleanString(labelValue.toString())
   }
 
-  public static txtByFieldValue (options: Array<OptionKeysModel>, toFindId: string | number): string | null {
+  public static txtByFieldValue (options: Array<IOptionKeysModel>, toFindId: string | number): string | null {
     // We use relaxed equal (==) here because the value of the radio button might be a string or a number.
     // eslint-disable-next-line eqeqeq
     const optionToReturn = options.find(option => option.value == toFindId)

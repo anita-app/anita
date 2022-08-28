@@ -54,10 +54,10 @@ export const ParentsSelector: React.FC<ICommonFormEleProps<IBasicSelect<SectionE
   return (<FormEleContainer width="w-full">
     <FormElementLabel label={formEle.label} />
     <Select
-      defaultValue={ParentElement.infoStringToObjForOptionsGroup(element[formEle.fieldName], selectOptions)}
+      defaultValue={ParentElement.infoStringToObjForOptionsGroup(element[formEle.fieldName], selectOptions as any)}
       isMulti={true}
       name={formEle.fieldName}
-      options={selectOptions}
+      options={selectOptions as any}
       className={!isValid && touched ? 'border border-red-600 rounded' : ''}
       onChange={handleChangeInParentsSelector}
       onBlur={() => setTouched(true)}

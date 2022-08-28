@@ -12,7 +12,7 @@ import { Tel } from 'app/ui-react-components/project/project-values-renderers/te
 import { TextFromOptionsByValue } from 'app/ui-react-components/project/project-values-renderers/text-from-options-by-value.component'
 import { Url } from 'app/ui-react-components/project/project-values-renderers/url.component'
 import { Week } from 'app/ui-react-components/project/project-values-renderers/week.component'
-import { FormFieldsModel, SupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
+import { FormFieldsModel, TSupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum'
 import { DateInputSupportedTypes, DateTimeInputSupportedTypes, TextInputSupportedTypes } from 'app/ui-react-components/shared-components/forms-automator/input-supported-types.const'
 
@@ -59,7 +59,7 @@ const handleDateTimeType = (type: TextInputSupportedTypes | DateInputSupportedTy
   }
 }
 
-export const customRenderPicker = (formModel: FormFieldsModel<SupportedFormsTypes>) => {
+export const customRenderPicker = (formModel: FormFieldsModel<TSupportedFormsTypes>) => {
   const componentCode = typeof formModel.componentCode === 'string' ? parseInt(formModel.componentCode, 10) : formModel.componentCode
   switch (componentCode) {
     case FORM_COMPONENTS_CODES.basicInput:

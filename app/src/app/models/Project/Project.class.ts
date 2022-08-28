@@ -4,7 +4,7 @@ import { GetParentInfoForDetailsView } from 'app/Models/Project/GetParentInfoFor
 import { ProjectDeletor } from 'app/Models/Project/ProjectDeletor.class'
 import { ProjectExporter } from 'app/Models/Project/ProjectExporter.class'
 import { Section } from 'app/Models/Section/Section.class'
-import { OptionKeysModel, OptionKeysModelGroup } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
+import { IOptionKeysModel, OptionKeysModelGroup } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 
 export class Project {
   private settings: SystemData[RESERVED_AUDS_KEYS._settings][0]
@@ -48,5 +48,5 @@ export class Project {
 
   public getParentInfoForDetailsView = (listOfParents: Array<string>): Promise<Array<ParentInfoForDetailsView>> => new GetParentInfoForDetailsView(this, listOfParents).get()
 
-  public getOptionsForParentsSelector = (options: Array<OptionKeysModel>): Promise<Array<OptionKeysModelGroup>> => new GetOptionsForParentsSelector(this).buildOptions(options)
+  public getOptionsForParentsSelector = (options: Array<IOptionKeysModel>): Promise<Array<OptionKeysModelGroup>> => new GetOptionsForParentsSelector(this).buildOptions(options)
 }

@@ -1,4 +1,4 @@
-import { OptionKeysModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
+import { IOptionKeysModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 
 /**
  * Values to identify the form component to dynamically load.
@@ -23,7 +23,7 @@ export enum FORM_COMPONENTS_CODES {
 /**
  * Defines the value of the Select element for picking the type of Component for a field.
  */
-export const SELECTABLE_FORM_ELES: Array<OptionKeysModel> = [
+export const SELECTABLE_FORM_ELES: Array<IOptionKeysModel> = [
   {
     value: FORM_COMPONENTS_CODES.basicInput,
     label: 'Short text'

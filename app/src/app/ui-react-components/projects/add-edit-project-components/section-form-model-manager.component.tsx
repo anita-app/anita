@@ -16,8 +16,8 @@ import { FormAutomator } from 'app/ui-react-components/shared-components/forms-a
 import {
   FormAutomatorOnChangeValue,
   FormFieldsModel,
-  OptionKeysModel,
-  SupportedFormsTypes
+  IOptionKeysModel,
+  TSupportedFormsTypes
 } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import React, { useMemo } from 'react'
 import { useSelector } from 'react-redux'
@@ -26,7 +26,7 @@ import { useParams } from 'react-router'
 interface ISectionFormModelManagerProps {
   indexSection: number;
   indexFormElement: number;
-  element: FormFieldsModel<SupportedFormsTypes>;
+  element: FormFieldsModel<TSupportedFormsTypes>;
 }
 
 const getAlreadyExists = (section: ISection, fieldName: string): boolean => {
@@ -63,7 +63,7 @@ export const SectionFormModelManager: React.FC<ISectionFormModelManagerProps> = 
     })
   }
 
-  const handleOptionsChange = (indexSection: number, indexFormElement: number, indexOptions: number, optionElement: OptionKeysModel, fieldName: string | number, value: FormAutomatorOnChangeValue) => {
+  const handleOptionsChange = (indexSection: number, indexFormElement: number, indexOptions: number, optionElement: IOptionKeysModel, fieldName: string | number, value: FormAutomatorOnChangeValue) => {
     storeDispatcher({
       type: REDUX_ACTIONS.updateFormProjectUpdateFormModelOptionValue,
       payload: {

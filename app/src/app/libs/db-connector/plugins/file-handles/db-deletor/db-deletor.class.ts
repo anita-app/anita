@@ -26,7 +26,8 @@ export class DbDeletor<E> implements Deletor<E> {
       return 'Fatal error: trying to delete without any parameter'
     }
 
-    const indexElement = this.dbConnector.dbStore.db[this.section].findIndex(ele => ele.id === this.args.id)
+    // eslint-disable-next-line dot-notation
+    const indexElement = this.dbConnector.dbStore.db[this.section].findIndex(ele => ele.id === this.args['id'])
     // Remove the element from the collection
     this.dbConnector.dbStore.db[this.section].splice(indexElement, 1)
     await new ProjectFileHandleSaver(this.dbConnector).save()

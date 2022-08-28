@@ -16,7 +16,7 @@ export class DbUpdator<E> implements Updator<E> {
   constructor (
     private dbConnector: DbConnectorInstance<Base>,
     private section: keyof AbstractModel,
-    private element: Partial<E>
+    private element: Partial<any>
   ) { }
 
   /**

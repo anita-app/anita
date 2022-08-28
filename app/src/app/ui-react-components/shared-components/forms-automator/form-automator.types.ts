@@ -1,22 +1,21 @@
 import {
   IProjectSettings,
-  SectionCustomFieldProperties,
+  ISectionCustomFieldProperties,
   SectionDetailsDeclaration,
   SectionElement
 } from 'app/data/project-structure/project-info'
-import { IOption } from 'app/Models/ParentElement/ParentElement.class'
 import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum'
 import { TextInputSupportedTypes } from 'app/ui-react-components/shared-components/forms-automator/input-supported-types.const'
 
-export type FormFieldsModel<T extends SupportedFormsTypes> = IBasicInput<T> | IBasicCheckbox<T> | IBasicSelect<T> | IBasicRadio<T> | IBasicTextarea<T> | IHiddenInput<T> | IOptionsMaker<T> | IDatePicker<T> | IDateTimePicker<T>;
+export type FormFieldsModel<T extends TSupportedFormsTypes> = IBasicInput<T> | IBasicCheckbox<T> | IBasicSelect<T> | IBasicRadio<T> | IBasicTextarea<T> | IHiddenInput<T> | IOptionsMaker<T> | IDatePicker<T> | IDateTimePicker<T>;
 
-export type SupportedFormsTypes = IProjectSettings | SectionElement | SectionCustomFieldProperties | SectionDetailsDeclaration | OptionKeysModel;
+export type TSupportedFormsTypes = IProjectSettings | SectionElement | ISectionCustomFieldProperties | SectionDetailsDeclaration | IOptionKeysModel;
 
-export type FormModel<T = FormFieldsModel<SupportedFormsTypes>> = Array<T>;
+export type FormModel<T = FormFieldsModel<TSupportedFormsTypes>> = Array<T>;
 
 export type FormAutomatorOnChangeValue = string | number | boolean | Array<string>;
 
-export interface ICommonFormEleProps<T = FormFieldsModel<SupportedFormsTypes>> {
+export interface ICommonFormEleProps<T = FormFieldsModel<TSupportedFormsTypes>> {
   formEle: T;
   element: Partial<SectionElement>;
   handleChange: (fieldName: string, value: FormAutomatorOnChangeValue) => void;
@@ -64,29 +63,29 @@ interface IBasicCheckbox<T> extends ICommonTypes<T> {
  */
 export interface OptionKeysModelGroup {
   label: string;
-  options: Array<OptionKeysModel>;
+  options: Array<IOptionKeysModel>;
 }
 
 /**
  * Defines the structure of possible choices to be selected in a Radio or Select html element.
  */
-export interface OptionKeysModel {
-  value: string | number;
-  label: string;
+export interface IOptionKeysModel {
+  value?: string | number;
+  label?: string;
   disabled?: boolean;
   hint?: string;
 }
 
 export interface IBasicRadio<T> extends ICommonTypes<T> {
   componentCode: FORM_COMPONENTS_CODES.basicRadio;
-  options: Array<OptionKeysModel>;
+  options: Array<IOptionKeysModel>;
   value?: string | number;
   required?: boolean;
 }
 
 export interface IBasicSelect<T> extends ICommonTypes<T> {
   componentCode: FORM_COMPONENTS_CODES.basicSelect | FORM_COMPONENTS_CODES.childOfSelectorForSection | FORM_COMPONENTS_CODES.parentsSelector;
-  options: Array<OptionKeysModel>;
+  options: Array<IOptionKeysModel>;
   value?: string | number;
   required?: boolean;
 }
@@ -120,5 +119,4 @@ interface ICommonTypes<T> {
   width?: string
   externalLabel?: boolean
   type?: never | TextInputSupportedTypes
-  options?: Array<IOption>
 }

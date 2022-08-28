@@ -1,10 +1,10 @@
-import { FormFieldsModel, Prerequisites, SupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
+import { FormFieldsModel, Prerequisites, TSupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 
-export class PrerequisitesChecker<ELEMENT extends Partial<SupportedFormsTypes>> {
+export class PrerequisitesChecker<ELEMENT extends Partial<TSupportedFormsTypes>> {
   private isIntegrated = false
 
   constructor (
-    private formEle: FormFieldsModel<Partial<SupportedFormsTypes>>,
+    private formEle: FormFieldsModel<Partial<TSupportedFormsTypes>>,
     private objValues: Partial<ELEMENT>
   ) { }
 
