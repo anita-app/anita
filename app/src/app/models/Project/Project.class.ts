@@ -1,8 +1,10 @@
 import { IProjectSettings, ISection, ParentInfoForDetailsView, RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info';
+import { GetOptionsForParentsSelector } from 'app/Models/Project/GetOptionsForParentsSelector.class';
 import { GetParentInfoForDetailsView } from 'app/Models/Project/GetParentInfoForDetailsView.class';
 import { ProjectDeletor } from 'app/Models/Project/ProjectDeletor.class';
 import { ProjectExporter } from 'app/Models/Project/ProjectExporter.class';
 import { Section } from 'app/Models/Section/Section.class';
+import { OptionKeysModel, OptionKeysModelGroup } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
 
 export class Project {
 
@@ -42,13 +44,21 @@ export class Project {
   
   public getSectionById = (sectionId: string): Section => {
     if (!this.sections[sectionId]) {
-      this.sections[sectionId] = new Section(this.getId(), this.sectionsDefinitions.find(section => section.id === sectionId))
+      this.sections[sectionId] = new Section(
+        this.getId(),
+        this.getSectionsDefinitions(),
+        this.sectionsDefinitions.find(section => section.id === sectionId)
+      )
     }
     return this.sections[sectionId]
   }
 
   public getParentInfoForDetailsView = (listOfParents: Array<string>): Promise<Array<ParentInfoForDetailsView>> => {
     return new GetParentInfoForDetailsView(this,listOfParents).get();
+  }
+
+  public getOptionsForParentsSelector = (options: Array<OptionKeysModel>): Promise<Array<OptionKeysModelGroup>> => {
+    return new GetOptionsForParentsSelector(this).buildOptions(options);
   }
 
 }

@@ -1,5 +1,4 @@
 import { Manager } from 'app/libs/Manager/Manager.class'
-import { ParentInfoFormEleBuilder } from 'app/libs/project-helpers/parent-info-form-ele-builder/parent-info-form-ele-builder.class'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
@@ -14,7 +13,6 @@ interface IProjectFormElementManagerProps {
 export const ProjectFormElementManager: React.FC<IProjectFormElementManagerProps> = ({ sectionId }) => {
 
   const project = Manager.getCurrentProject()
-  const sections = project.getSectionsDefinitions()
   const section = project.getSectionById(sectionId);
 
   const element = useSelector((store: AnitaStore) => store.formElement.element);
@@ -26,7 +24,7 @@ export const ProjectFormElementManager: React.FC<IProjectFormElementManagerProps
   return (
     <form name="element-form">
       {section.childOf && section.childOf.length > 0 && <FormAutomator
-        formModel={[new ParentInfoFormEleBuilder(section.childOf, sections).build()]}
+        formModel={[section.getParentInfoFormEle()]}
         element={element}
         handleChange={handleChange} />
       }

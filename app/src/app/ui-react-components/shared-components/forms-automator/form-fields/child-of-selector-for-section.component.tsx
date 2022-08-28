@@ -1,7 +1,6 @@
 import { RESERVED_AUDS_KEYS, SectionElement } from 'app/data/project-structure/project-info'
-import { parentInfoObjToString } from 'app/libs/project-helpers/parent-info-form-ele-builder/parent-info-obj-to-string.function'
-import { Option, parentInfoStringToObj } from 'app/libs/project-helpers/parent-info-form-ele-builder/parent-info-string-to-obj.function'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
+import { IOption, ParentElement } from 'app/Models/ParentElement/ParentElement.class'
 import { IBasicSelect, ICommonFormEleProps } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import { FormEleContainer } from 'app/ui-react-components/shared-components/forms-automator/form-layout/form-ele-container.component'
 import { FormElementLabel } from 'app/ui-react-components/shared-components/forms-automator/form-layout/form-element-label.component'
@@ -20,7 +19,7 @@ import Select, { MultiValue } from 'react-select'
 export const ChildOfSelectorForSection: React.FC<ICommonFormEleProps<IBasicSelect<SectionElement>>> = memo(function ChildOfSelectorForSection({ formEle, element, handleChange, sectionId }: ICommonFormEleProps<IBasicSelect<SectionElement>>) {
 
   const currentEditedProjectSections = useSelector((state: AnitaStore) => state.formProject.project[RESERVED_AUDS_KEYS._sections]);
-  const [selectOptions, setSelectOptions] = useState<Array<Option>>([]);
+  const [selectOptions, setSelectOptions] = useState<Array<IOption>>([]);
 
   const [touched, setTouched] = useState(false);
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))
@@ -34,7 +33,7 @@ export const ChildOfSelectorForSection: React.FC<ICommonFormEleProps<IBasicSelec
       if (!Array.isArray(currentEditedProjectSections))
         return;
 
-      const selectableSections: Array<Option> = [];
+      const selectableSections: Array<IOption> = [];
       currentEditedProjectSections.forEach(sectionDec => {
         if (sectionDec.id !== sectionId)
           selectableSections.push({
@@ -51,8 +50,8 @@ export const ChildOfSelectorForSection: React.FC<ICommonFormEleProps<IBasicSelec
     return () => { isMounted = false };
   }, [currentEditedProjectSections, currentEditedProjectSections.length, sectionId]);
 
-  const handleChangeInChildOfSelectorForSection = (newValue: MultiValue<Option>) => {
-    handleChange(formEle.fieldName, parentInfoObjToString(newValue as Array<Option>));
+  const handleChangeInChildOfSelectorForSection = (newValue: MultiValue<IOption>) => {
+    handleChange(formEle.fieldName, ParentElement.infoObjectToString(newValue as Array<IOption>));
   }
 
   if (selectOptions.length === 0)
@@ -63,7 +62,7 @@ export const ChildOfSelectorForSection: React.FC<ICommonFormEleProps<IBasicSelec
   return (<FormEleContainer width="w-full">
     <FormElementLabel label={formEle['label']} />
     <Select
-      defaultValue={parentInfoStringToObj(element[formEle.fieldName], selectOptions as any)}
+      defaultValue={ParentElement.infoStringToObj(element[formEle.fieldName], selectOptions as any)}
       isMulti
       name={formEle.fieldName}
       options={selectOptions as any}

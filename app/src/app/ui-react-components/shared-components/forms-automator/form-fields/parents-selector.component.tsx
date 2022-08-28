@@ -1,8 +1,6 @@
 import { SectionElement } from 'app/data/project-structure/project-info'
-import { OptionsForParentsSelector } from 'app/libs/project-helpers/parent-info-form-ele-builder/options-for-parents-selector.class'
-import { parentInfoObjToString } from 'app/libs/project-helpers/parent-info-form-ele-builder/parent-info-obj-to-string.function'
-import { Option, parentInfoStringToObjForOptionsGroup } from 'app/libs/project-helpers/parent-info-form-ele-builder/parent-info-string-to-obj.function'
-import { AnitaStore } from 'app/libs/redux/reducers.const'
+import { Manager } from 'app/libs/Manager/Manager.class'
+import { IOption, ParentElement } from 'app/Models/ParentElement/ParentElement.class'
 import { IBasicSelect, ICommonFormEleProps, OptionKeysModelGroup } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import { FormEleContainer } from 'app/ui-react-components/shared-components/forms-automator/form-layout/form-ele-container.component'
 import { FormElementLabel } from 'app/ui-react-components/shared-components/forms-automator/form-layout/form-element-label.component'
@@ -15,14 +13,12 @@ import {
   useRef,
   useState
   } from 'react'
-import { useSelector } from 'react-redux'
 import Select, { MultiValue } from 'react-select'
 
 export const ParentsSelector: React.FC<ICommonFormEleProps<IBasicSelect<SectionElement>>> = memo(function ParentsSelector({ formEle, element, handleChange }: ICommonFormEleProps<IBasicSelect<SectionElement>>) {
 
   const [selectOptions, setSelectOptions] = useState<Array<OptionKeysModelGroup>>([]);
-  const project = useSelector((state: AnitaStore) => state.project);
-
+  
   const [touched, setTouched] = useState(false);
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))
   const [isValid, setIsValidForField] = useValidators(fieldId)
@@ -31,7 +27,7 @@ export const ParentsSelector: React.FC<ICommonFormEleProps<IBasicSelect<SectionE
     let isMounted = true;
 
     const getSelectOptions = async () => {
-      const options = await new OptionsForParentsSelector(project, formEle.options).buildOptions();
+      const options = await Manager.getCurrentProject().getOptionsForParentsSelector(formEle.options)
 
       if (isMounted)
         setSelectOptions(options);
@@ -42,10 +38,10 @@ export const ParentsSelector: React.FC<ICommonFormEleProps<IBasicSelect<SectionE
       getSelectOptions();
 
     return () => { isMounted = false };
-  }, [project, formEle.options]);
+  }, [formEle.options]);
 
-  const handleChangeInParentsSelector = (newValue: MultiValue<Option>) => {
-    handleChange(formEle.fieldName, parentInfoObjToString(newValue as Array<Option>));
+  const handleChangeInParentsSelector = (newValue: MultiValue<IOption>) => {
+    handleChange(formEle.fieldName, ParentElement.infoObjectToString(newValue as Array<IOption>));
   }
 
   if (selectOptions.length === 0)
@@ -56,7 +52,7 @@ export const ParentsSelector: React.FC<ICommonFormEleProps<IBasicSelect<SectionE
   return (<FormEleContainer width="w-full">
     <FormElementLabel label={formEle['label']} />
     <Select
-      defaultValue={parentInfoStringToObjForOptionsGroup(element[formEle.fieldName], selectOptions as any)}
+      defaultValue={ParentElement.infoStringToObjForOptionsGroup(element[formEle.fieldName], selectOptions as any)}
       isMulti
       name={formEle.fieldName}
       options={selectOptions as any}
@@ -67,7 +63,7 @@ export const ParentsSelector: React.FC<ICommonFormEleProps<IBasicSelect<SectionE
     <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} setIsValidForField={setIsValidForField} />
   </FormEleContainer>
   )
-}, (prevProps, nextProps) => {
-  return prevProps.element[prevProps.formEle.fieldName] === nextProps.element[nextProps.formEle.fieldName] &&
-    prevProps.formEle.options === nextProps.formEle.options
-});
+}, (prevProps, nextProps) => (
+  prevProps.element[prevProps.formEle.fieldName] === nextProps.element[nextProps.formEle.fieldName] &&
+  prevProps.formEle.options === nextProps.formEle.options
+))

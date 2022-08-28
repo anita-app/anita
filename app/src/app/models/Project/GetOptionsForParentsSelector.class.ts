@@ -1,21 +1,20 @@
-import { dbInstances } from 'app/data/local-dbs/db-instances.const';
-import { RESERVED_AUDS_KEYS, SectionElement, SystemData } from 'app/data/project-structure/project-info';
+import { SectionElement } from 'app/data/project-structure/project-info';
 import { Manager } from 'app/libs/Manager/Manager.class';
 import { asyncForEach } from 'app/libs/tools/tools';
+import { Project } from 'app/Models/Project/Project.class';
 import { OptionKeysModel, OptionKeysModelGroup } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
 
-export class OptionsForParentsSelector {
+export class GetOptionsForParentsSelector {
 
   private optionsGroups: Array<OptionKeysModelGroup> = [];
 
   constructor(
-    private project: SystemData,
-    private options: Array<OptionKeysModel>
+    private project: Project
   ) {
   }
-  public async buildOptions(): Promise<Array<OptionKeysModelGroup>> {
-    await asyncForEach(this.options, async group => {
-      const sectionEles = await dbInstances[this.project[RESERVED_AUDS_KEYS._settings][0].id].callSelector<SectionElement>(group.value).multiple();
+  public async buildOptions(options: Array<OptionKeysModel>): Promise<Array<OptionKeysModelGroup>> {
+    await asyncForEach(options, async group => {
+      const sectionEles = await this.project.getSectionById(group.value.toString()).getAllElements();
       if (sectionEles.length)
         this.createGroupOption(group.value as string, group.label, sectionEles);
     });
