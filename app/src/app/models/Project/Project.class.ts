@@ -1,5 +1,5 @@
 import { IProjectSettings, ISection, ParentInfoForDetailsView, RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info';
-import { GetParentInfoForDetailsView } from 'app/libs/project-helpers/GetParentInfoForDetailsView.class';
+import { GetParentInfoForDetailsView } from 'app/Models/Project/GetParentInfoForDetailsView.class';
 import { ProjectDeletor } from 'app/Models/Project/ProjectDeletor.class';
 import { ProjectExporter } from 'app/Models/Project/ProjectExporter.class';
 import { Section } from 'app/Models/Section/Section.class';
