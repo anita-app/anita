@@ -23,8 +23,7 @@ export class ProjectLoader {
    */
   constructor(
     private projectId: string,
-    private projectInfo?: LocalProjectSettings,
-    private setProject = true
+    private projectInfo?: LocalProjectSettings
   ) { }
 
   public async loadProject(): Promise<void> {
@@ -33,8 +32,7 @@ export class ProjectLoader {
     await this.createNewInstanceOfDbConnectorForrProject();
     await this.loadProjectSettings();
     await this.loadProjectSections();
-    if (this.setProject)
-      this.callCurrentProjectSetter();
+    this.callCurrentProjectSetter();
   }
 
   /**

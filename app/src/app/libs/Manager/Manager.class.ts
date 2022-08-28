@@ -10,6 +10,10 @@ export class Manager {
 
   private static currentProject: Project
 
+  public static async loadProjectById(projectId: string) {
+    return new ProjectLoader(projectId).loadProject()
+  }
+
   public static setCurrentProject(systemData: SystemData) {
     this.currentProject = new Project(systemData)
   }
@@ -36,7 +40,7 @@ export class Manager {
     }
   }
 
-  private static async isProjectLoaded(projectId: string, setProject = true): Promise<boolean> {
+  private static async isProjectLoaded(projectId: string): Promise<boolean> {
 
     if (typeof dbInstances?.[projectId]?.callSelector === 'function')
       return true;
@@ -46,7 +50,7 @@ export class Manager {
     // Relaxed equality check, because localStorage prop is a string
     // eslint-disable-next-line eqeqeq
     if (projectInfo.localStorage == LOCAL_STORAGE_SYSTEMS.IndexedDB) {
-      await new ProjectLoader(projectId, projectInfo, setProject).loadProject();
+      await new ProjectLoader(projectId, projectInfo).loadProject();
       return true;
     }
   

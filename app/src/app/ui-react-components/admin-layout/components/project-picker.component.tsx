@@ -1,7 +1,7 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant'
 import { urlParamFiller } from 'app/anita-routes/url-param-fillers.function'
 import { RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info'
-import { ProjectLoader } from 'app/libs/project-helpers/project-handlers/project-loader.class'
+import { Manager } from 'app/libs/Manager/Manager.class'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { useClickOutside } from 'app/ui-react-components/hooks/click-outside.hook'
 import React, { useRef, useState } from 'react'
@@ -26,7 +26,7 @@ export const ProjectPicker: React.FC<IProjectPickerProps> = ({ project }) => {
   }
 
   const loadProject = async (projectId: string) => {
-    await new ProjectLoader(projectId).loadProject()
+    await Manager.loadProjectById(projectId)
     goToDetails(projectId);
   }
 
