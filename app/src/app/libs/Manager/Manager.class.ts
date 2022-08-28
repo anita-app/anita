@@ -2,18 +2,24 @@ import { dbInstances } from 'app/data/local-dbs/db-instances.const';
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum';
 import { LocalProjectSettings, RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info'
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum';
-import { ProjectLoader } from 'app/libs/project-helpers/project-handlers/project-loader.class';
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
 import { store } from 'app/libs/redux/state.store'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function';
-import { Project } from 'app/models/Project.class'
+import { Project } from 'app/Models/Project/Project.class'
+import { ProjectLoader } from 'app/Models/Project/ProjectLoader.class';
+import { ProjectSaver } from 'app/Models/Project/ProjectSaver.class';
+import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum';
 
 export class Manager {
 
   private static currentProject: Project
 
-  public static async loadProjectById(projectId: string) {
+  public static loadProjectById(projectId: string): Promise<void> {
     return new ProjectLoader(projectId).loadProject()
+  }
+
+  public static saveProject = (systemData: SystemData, mode: EDITOR_MODE): Promise<SystemData> => {
+    return new ProjectSaver(systemData, mode).save();
   }
 
   public static setCurrentProject(systemData: SystemData) {

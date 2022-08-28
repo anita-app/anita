@@ -1,7 +1,7 @@
 import { DbInitializer } from 'app/data/local-dbs/db-initializer.class'
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import { RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info'
-import { SaveProjectSettingsInIndexedDB } from 'app/libs/project-helpers/project-handlers/save-project-settings-in-indexeddb.class'
+import { SaveProjectSettingsInIndexedDB } from 'app/Models/Project/SaveProjectSettingsInIndexedDB.class'
 import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum'
 
 export class ProjectSaver {
@@ -17,10 +17,11 @@ export class ProjectSaver {
 
   public async save(): Promise<SystemData> {
 
-    this.setcreatedAt();
-
     if (this.mode === EDITOR_MODE.edit)
       this.setupdatedAt();
+    else
+      this.setcreatedAt();
+      
 
     if (!dbInstances[this.project[RESERVED_AUDS_KEYS._settings][0].id])
       await this.initDbInstance();
