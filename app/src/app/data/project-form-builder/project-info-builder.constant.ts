@@ -1,5 +1,5 @@
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
-import { ProjectSettings } from 'app/data/project-structure/project-info'
+import { IProjectSettings } from 'app/data/project-structure/project-info'
 import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant'
 import { FormFieldsModel, OptionKeysModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum'
@@ -11,7 +11,7 @@ const hintFsNotSupported = 'Not supported in this browser.\nAvailable only on th
 const indexedDB = 'The Project is saved on your computer in the IndexedDB database of your Browser.\nYou can export data in a JSON file at any time.';
 const sqLite = 'The Project is saved on your computer in a SQLite database.\nThe database is stored in a file in your File System.';
 
-const commonFieldsForProjectInfo: Array<FormFieldsModel<ProjectSettings>> = [{
+const commonFieldsForProjectInfo: Array<FormFieldsModel<IProjectSettings>> = [{
   componentCode: FORM_COMPONENTS_CODES.hiddenInput,
   fieldName: RESERVED_FIELDS.id
 },
@@ -59,7 +59,7 @@ export const availableSystems: Array<OptionKeysModel> = [
  * Defines the Form model to set the field properties of `ProjectSettings`.
  * Empty project template used when creating new projects.
  */
-export const projectInfoNewItem: Array<FormFieldsModel<ProjectSettings>> = [
+export const projectInfoNewItem: Array<FormFieldsModel<IProjectSettings>> = [
   ...commonFieldsForProjectInfo,
   {
     componentCode: FORM_COMPONENTS_CODES.basicRadio,
@@ -71,7 +71,7 @@ export const projectInfoNewItem: Array<FormFieldsModel<ProjectSettings>> = [
   }
 ];
 
-export const projectInfoForEditing: Array<FormFieldsModel<ProjectSettings>> = [
+export const projectInfoForEditing: Array<FormFieldsModel<IProjectSettings>> = [
   ...commonFieldsForProjectInfo,
   {
     componentCode: FORM_COMPONENTS_CODES.basicRadio,

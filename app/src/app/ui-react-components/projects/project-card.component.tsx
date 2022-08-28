@@ -1,5 +1,5 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const';
-import { ProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
+import { IProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
 import { AnitaStore } from 'app/libs/redux/reducers.const';
 import { ProjectLoadedFooter } from 'app/ui-react-components/projects/project-card-components/project-loaded-footer.component';
 import { ProjectNotLoadedFooter } from 'app/ui-react-components/projects/project-card-components/project-not-loaded-footer.component';
@@ -9,7 +9,7 @@ import * as dateFormat from 'date-format';
 import { useSelector } from 'react-redux';
 
 interface IProjectCardProps {
-  project: ProjectSettings
+  project: IProjectSettings
 }
 
 export const ProjectCard: React.FC<IProjectCardProps> = ({ project }) => {

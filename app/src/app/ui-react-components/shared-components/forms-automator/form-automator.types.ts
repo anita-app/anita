@@ -1,5 +1,5 @@
 import {
-  ProjectSettings,
+  IProjectSettings,
   SectionCustomFieldProperties,
   SectionDetailsDeclaration,
   SectionElement
@@ -9,7 +9,7 @@ import { TextInputSupportedTypes } from 'app/ui-react-components/shared-componen
 
 export type FormFieldsModel<T extends SupportedFormsTypes> = IBasicInput<T> | IBasicCheckbox<T> | IBasicSelect<T> | IBasicRadio<T> | IBasicTextarea<T> | IHiddenInput<T> | IOptionsMaker<T> | IDatePicker<T> | IDateTimePicker<T>;
 
-export type SupportedFormsTypes = ProjectSettings | SectionElement | SectionCustomFieldProperties | SectionDetailsDeclaration | OptionKeysModel;
+export type SupportedFormsTypes = IProjectSettings | SectionElement | SectionCustomFieldProperties | SectionDetailsDeclaration | OptionKeysModel;
 
 export type FormModel<T = FormFieldsModel<SupportedFormsTypes>> = Array<T>;
 

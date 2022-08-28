@@ -2,7 +2,7 @@ import { DbInitializer } from 'app/data/local-dbs/db-initializer.class';
 import { dbInstances } from 'app/data/local-dbs/db-instances.const';
 import {
   LocalProjectSettings,
-  ProjectSettings,
+  IProjectSettings,
   RESERVED_AUDS_KEYS,
   Section
   } from 'app/data/project-structure/project-info';
@@ -14,7 +14,7 @@ export class ProjectLoader {
   /**
    * The project info of the project to load
    */
-  private projectSettings: Array<ProjectSettings>;
+  private projectSettings: Array<IProjectSettings>;
   private projectSections: Array<Section>;
 
   /**
@@ -55,7 +55,7 @@ export class ProjectLoader {
    * Loads project settings from the dbInstance
    */
   public async loadProjectSettings(): Promise<void> {
-    this.projectSettings = await dbInstances[this.projectId].callSelector<ProjectSettings>(RESERVED_AUDS_KEYS._settings).multiple();
+    this.projectSettings = await dbInstances[this.projectId].callSelector<IProjectSettings>(RESERVED_AUDS_KEYS._settings).multiple();
   }
 
   /**

@@ -1,6 +1,6 @@
 import { ANITA_URLS } from 'app/anita-routes/anita-routes.constant';
 import { projectInfoNewItem } from 'app/data/project-form-builder/project-info-builder.constant';
-import { AnitaUniversalDataStorage, ProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
+import { AnitaUniversalDataStorage, IProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
 import { CurrentProjectSetter } from 'app/libs/project-helpers/project-handlers/current-project-setter.class';
 import { ProjectDataImporter } from 'app/libs/projects-helpers/project-importers/project-data-importer.class';
@@ -27,7 +27,7 @@ export const ImportProjectButton: React.FC<IImportProjectButtonProps> = ({ btnTy
   const [animationClass, setAnimationClass] = useState('animate__fadeIn');
   const [projectData, setProjectData] = useState<AnitaUniversalDataStorage>(null);
   const [projectFileHandle, setProjectFileHandle] = useState<FileSystemFileHandle>();
-  const [projectSettings, setProjectSettings] = useState<ProjectSettings>(null);
+  const [projectSettings, setProjectSettings] = useState<IProjectSettings>(null);
 
   const handleClickModal = async () => {
     if (isModalOpen) {

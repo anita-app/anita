@@ -1,5 +1,5 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const';
-import { ProjectSettings } from 'app/data/project-structure/project-info';
+import { IProjectSettings } from 'app/data/project-structure/project-info';
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum';
 import { isProjectLoaded } from 'app/libs/project-helpers/project-handlers/is-project-loaded.function';
 import { ProjectsListLoader } from 'app/libs/projects-helpers/projects-handlers/projects-list-loader.class';
@@ -14,7 +14,7 @@ export class ProjectDeletor {
    * @param project the settings of the project to delete
    */
   constructor(
-    private project: ProjectSettings
+    private project: IProjectSettings
   ) { }
 
   /**
@@ -30,7 +30,7 @@ export class ProjectDeletor {
    * Performs the delete action on IndexedDB with db-connector
    */
   private async doDelete(): Promise<void> {
-    await dbInstances.system.callDeletor<ProjectSettings>(CLIENT_SECTIONS.projects, { id: this.project.id }).autoDelete();
+    await dbInstances.system.callDeletor<IProjectSettings>(CLIENT_SECTIONS.projects, { id: this.project.id }).autoDelete();
   }
 
   private async callOnProjectDeleted(): Promise<void> {

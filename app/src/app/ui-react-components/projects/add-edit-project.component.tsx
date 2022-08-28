@@ -2,7 +2,7 @@ import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant'
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
 import {
-  ProjectSettings,
+  IProjectSettings,
   RESERVED_AUDS_KEYS,
   Section,
   SystemData
@@ -43,7 +43,7 @@ export const AddEditProject: React.FC = () => {
       if (!projectId || !canProceed)
         return setProject(undefined);
 
-      const _settings = await dbInstances[projectId].callSelector<ProjectSettings>(RESERVED_AUDS_KEYS._settings).multiple();
+      const _settings = await dbInstances[projectId].callSelector<IProjectSettings>(RESERVED_AUDS_KEYS._settings).multiple();
       const _sections = await dbInstances[projectId].callSelector<Section>(RESERVED_AUDS_KEYS._sections).multiple();
 
       if (isMounted)

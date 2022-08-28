@@ -1,5 +1,5 @@
 import { ANITA_URLS } from 'app/anita-routes/anita-routes.constant'
-import { ProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info'
+import { IProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info'
 import { ProjectDeletor } from 'app/libs/project-helpers/project-handlers/project-deletor.class'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 
 interface IDeleteProjectButtonProps {
-  project: ProjectSettings
+  project: IProjectSettings
 }
 
 export const DeleteProjectButton: React.FC<IDeleteProjectButtonProps> = ({ project }) => {

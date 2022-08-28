@@ -1,8 +1,8 @@
-import { ProjectSettings } from 'app/data/project-structure/project-info';
+import { IProjectSettings } from 'app/data/project-structure/project-info';
 import { ProjectLoader } from 'app/libs/project-helpers/project-handlers/project-loader.class';
 
 interface IProjectNotLoadedFooterProps {
-  project: ProjectSettings
+  project: IProjectSettings
 }
 
 export const ProjectNotLoadedFooter: React.FC<IProjectNotLoadedFooterProps> = ({ project }) => (

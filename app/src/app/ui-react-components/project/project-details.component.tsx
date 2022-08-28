@@ -1,7 +1,7 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
 import { dbInstances } from 'app/data/local-dbs/db-instances.const';
 import { availableSystems } from 'app/data/project-form-builder/project-info-builder.constant';
-import { ProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
+import { IProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
 import { isProjectLoaded } from 'app/libs/project-helpers/project-handlers/is-project-loaded.function';
 import { txtByFieldValue } from 'app/libs/project-helpers/txt-by-field-value.function';
 import { DeleteProjectButton } from 'app/ui-react-components/shared-components/buttons/delete-project.component';
@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react';
 import { Navigate, useParams } from 'react-router';
 
 interface ILoadedProjectProps {
-  project: ProjectSettings
+  project: IProjectSettings
 }
 
 const LoadedProject: React.FC<ILoadedProjectProps> = ({ project }) => (
@@ -45,7 +45,7 @@ export const ProjectDetails: React.FC = () => {
 
   const urlParams = useParams();
   const projectId = urlParams[URL_PARAMS.projectId];
-  const [project, setElement] = useState<ProjectSettings>(null);
+  const [project, setElement] = useState<IProjectSettings>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -56,7 +56,7 @@ export const ProjectDetails: React.FC = () => {
       if (!canProceed)
         return setElement(undefined);
 
-      const project = await dbInstances[projectId].callSelector<ProjectSettings>(RESERVED_AUDS_KEYS._settings).single();
+      const project = await dbInstances[projectId].callSelector<IProjectSettings>(RESERVED_AUDS_KEYS._settings).single();
       if (isMounted)
         setElement(project);
     }

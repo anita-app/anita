@@ -1,6 +1,6 @@
 import {
   LocalProjectSettings,
-  ProjectSettings,
+  IProjectSettings,
   Section,
   SectionDetailsDeclaration,
   SectionElement,
@@ -31,7 +31,7 @@ interface ActionsPayloads {
   [REDUX_ACTIONS.updateFormElement]: SectionElement;
   [REDUX_ACTIONS.updateFormElementKey]: { fieldName: keyof SectionElement, value: SectionElement[keyof SectionElement] };
   [REDUX_ACTIONS.setFormProject]: SystemData;
-  [REDUX_ACTIONS.updateFormProjectSettings]: { fieldName: keyof ProjectSettings, value: ProjectSettings[keyof ProjectSettings] };
+  [REDUX_ACTIONS.updateFormProjectSettings]: { fieldName: keyof IProjectSettings, value: IProjectSettings[keyof IProjectSettings] };
   [REDUX_ACTIONS.setValidStateForEle]: IValidStateForEle;
   [REDUX_ACTIONS.unsetValidStateForEle]: string;
   [REDUX_ACTIONS.updateFormProjectUpdateSection]: IUpdateFormProjectUpdateSectionPayload;

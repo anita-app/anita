@@ -1,7 +1,7 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant'
 import { urlParamFiller } from 'app/anita-routes/url-param-fillers.function'
 import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const'
-import { ProjectSettings, RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info'
+import { IProjectSettings, RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info'
 import { CurrentProjectSetter } from 'app/libs/project-helpers/project-handlers/current-project-setter.class'
 import { ProjectSaver } from 'app/libs/project-helpers/project-handlers/project-saver.class'
 import { ProjectsListLoader } from 'app/libs/projects-helpers/projects-handlers/projects-list-loader.class'
@@ -24,7 +24,7 @@ export const FormProjectManager: React.FC = () => {
   const mode: EDITOR_MODE = projectId ? EDITOR_MODE.edit : EDITOR_MODE.add;
   const navigate = useNavigate();
 
-  const handleProjectChange = (fieldName: keyof ProjectSettings, value: ProjectSettings[keyof ProjectSettings]) => {
+  const handleProjectChange = (fieldName: keyof IProjectSettings, value: IProjectSettings[keyof IProjectSettings]) => {
     storeDispatcher({ type: REDUX_ACTIONS.updateFormProjectSettings, payload: { fieldName, value } });
   }
 

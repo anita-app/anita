@@ -26,7 +26,7 @@ export type AnitaUniversalDataStorage = SystemData & UserData;
  * Store for system required properties. Includes general settings and Sections declarations. The reserved keys define system required properties.
  */
 export type SystemData = {
-  [RESERVED_AUDS_KEYS._settings]: Array<ProjectSettings>;
+  [RESERVED_AUDS_KEYS._settings]: Array<IProjectSettings>;
   [RESERVED_AUDS_KEYS._sections]: Array<Section>;
 };
 
@@ -40,7 +40,7 @@ export type UserData = {
 /**
  * Defines the structure of the general information on a project.
  */
-export interface ProjectSettings {
+export interface IProjectSettings {
   id: string;
   title: string;
   description: string;
@@ -64,7 +64,7 @@ export interface AdditionalInfoForLocalStorage {
  * @property [fileHandle] - The file handle of the project file (only if the project is saved on the file system)
  * @property [sections] - The sections of the project to load the IndexedDB database with Dexie
  */
-export interface LocalProjectSettings extends ProjectSettings, AdditionalInfoForLocalStorage {
+export interface LocalProjectSettings extends IProjectSettings, AdditionalInfoForLocalStorage {
 }
 
 /**

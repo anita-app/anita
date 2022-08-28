@@ -1,4 +1,5 @@
 import { RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info'
+import { Manager } from 'app/libs/Manager/Manager.class';
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 
@@ -20,6 +21,7 @@ export class CurrentProjectSetter {
    * Dispatches the action to set SystemData in state
    */
   public set(): void {
+    Manager.setCurrentProject(this.projectSettings.concat()[0])
     storeDispatcher(({
       type: REDUX_ACTIONS.setCurrentProject,
       payload: { [RESERVED_AUDS_KEYS._settings]: this.projectSettings.concat(), [RESERVED_AUDS_KEYS._sections]: this.sectionsDefinitions.concat() }

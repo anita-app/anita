@@ -1,11 +1,11 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
 import { urlParamFiller } from 'app/anita-routes/url-param-fillers.function';
-import { ProjectSettings } from 'app/data/project-structure/project-info';
+import { IProjectSettings } from 'app/data/project-structure/project-info';
 import { Link } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
 
 interface IEditButtonProps {
-  project: ProjectSettings
+  project: IProjectSettings
 }
 
 export const EditButton: React.FC<IEditButtonProps> = ({ project }) => (
