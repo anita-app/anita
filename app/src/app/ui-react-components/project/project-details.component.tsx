@@ -2,7 +2,7 @@ import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
 import { availableSystems } from 'app/data/project-form-builder/project-info-builder.constant';
 import { IProjectSettings } from 'app/data/project-structure/project-info';
 import { Manager } from 'app/libs/Manager/Manager.class';
-import { txtByFieldValue } from 'app/libs/project-helpers/txt-by-field-value.function';
+import { SectionElement } from 'app/Models/SectionElement/SectionElement.class';
 import { DeleteProjectButton } from 'app/ui-react-components/shared-components/buttons/delete-project.component';
 import { EditButton } from 'app/ui-react-components/shared-components/buttons/edit-project-button.component';
 import { ExportButton } from 'app/ui-react-components/shared-components/buttons/export-project-button.component';
@@ -27,7 +27,7 @@ const LoadedProject: React.FC<ILoadedProjectProps> = ({ project }) => (
     <p className="text-md mb-3">{dateFormat('yyyy/MM/dd, at hh:mm', new Date(project.createdAt))}</p>
 
     <p className="text-gray-600 text-xs">Storage method:</p>
-    <p className="text-md">{txtByFieldValue(availableSystems, project.localStorage)}</p>
+    <p className="text-md">{SectionElement.txtByFieldValue(availableSystems, project.localStorage)}</p>
 
     <CardFooterItemsEnd>
       <DeleteProjectButton project={project} />
