@@ -1,7 +1,6 @@
 import { URL_PARAMS } from 'app/anita-routes/anita-routes.constant'
 import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const'
 import { RESERVED_AUDS_KEYS, ISection } from 'app/data/project-structure/project-info'
-import { autoGenerateFieldName } from 'app/libs/project-helpers/auto-generate-field-name.function'
 import {
   IUpdateFormProjectUpdateFormModelAddOptionPayload,
   IUpdateFormProjectUpdateFormModelDeleteOptionPayload,
@@ -11,6 +10,7 @@ import {
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
+import { SectionElement } from 'app/Models/SectionElement/SectionElement.class'
 import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum'
 import { FormAutomator } from 'app/ui-react-components/shared-components/forms-automator/form-automator.component'
 import {
@@ -51,7 +51,7 @@ export const SectionFormModelManager: React.FC<ISectionFormModelManagerProps> = 
   );
 
   const handleChange = (indexSection: number, indexFormElement: number, fieldName: string | number, value: FormAutomatorOnChangeValue) => {
-    const identifierAutoVal: string | null = fieldName === 'label' && !alreadyExists ? autoGenerateFieldName(value) : null;
+    const identifierAutoVal: string | null = fieldName === 'label' && !alreadyExists ? SectionElement.autoGenerateFieldName(value) : null;
     storeDispatcher({
       type: REDUX_ACTIONS.updateFormProjectUpdateFormModelOfSection, payload: {
         indexSection,

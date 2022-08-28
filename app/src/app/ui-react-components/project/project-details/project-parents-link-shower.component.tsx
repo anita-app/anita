@@ -1,7 +1,7 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
 import { urlParamFiller } from 'app/anita-routes/url-param-fillers.function';
 import { ParentInfoForDetailsView, ISection } from 'app/data/project-structure/project-info';
-import { GetParentInfoForDetailsView } from 'app/libs/project-helpers/get-parent-info-for-details-view.class';
+import { Manager } from 'app/libs/Manager/Manager.class';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -18,7 +18,7 @@ export const ProjectParentsLinkShower: React.FC<IProjectParentsLinkShowerProps> 
   useEffect(() => {
     let isMounted = true;
     const getParents = async () => {
-      const parents = await new GetParentInfoForDetailsView(parentsInfo, projectId, sections).get();
+      const parents = await Manager.getCurrentProject().getParentInfoForDetailsView(parentsInfo);
       if (isMounted) {
         setParents(parents);
       }
