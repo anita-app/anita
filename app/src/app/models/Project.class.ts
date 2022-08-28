@@ -1,5 +1,6 @@
 import { RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info';
 import { ProjectDeletor } from 'app/libs/project-helpers/project-handlers/project-deletor.class';
+import { ProjectExporter } from 'app/libs/project-helpers/project-handlers/project-exporter';
 import { Section } from 'app/models/Section.class';
 
 export class Project {
@@ -25,6 +26,13 @@ export class Project {
 
   getSectionsDefinitions = () => {
     return this.sectionsDefinitions
+  }
+
+  export = () => {
+    new ProjectExporter({
+      [RESERVED_AUDS_KEYS._settings]: [this.settings],
+      [RESERVED_AUDS_KEYS._sections]: this.sectionsDefinitions
+     }).export()
   }
 
   delete = async () => {
