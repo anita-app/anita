@@ -7,7 +7,7 @@ import {
   ISection
   } from 'app/data/project-structure/project-info';
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum';
-import { CurrentProjectSetter } from 'app/libs/project-helpers/project-handlers/current-project-setter.class';
+import { Manager } from 'app/libs/Manager/Manager.class';
 
 export class ProjectLoader {
 
@@ -67,7 +67,10 @@ export class ProjectLoader {
    * Calls current project setter to load the current project in the Redux store
    */
   private callCurrentProjectSetter() {
-    new CurrentProjectSetter(this.projectSettings, this.projectSections).set();
+    Manager.setCurrentProject({
+      [RESERVED_AUDS_KEYS._settings]: this.projectSettings,
+      [RESERVED_AUDS_KEYS._sections]: this.projectSections
+    })
   }
 
 }

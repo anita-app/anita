@@ -2,7 +2,7 @@ import { ANITA_URLS } from 'app/anita-routes/anita-routes.constant';
 import { projectInfoNewItem } from 'app/data/project-form-builder/project-info-builder.constant';
 import { AnitaUniversalDataStorage, IProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api';
-import { CurrentProjectSetter } from 'app/libs/project-helpers/project-handlers/current-project-setter.class';
+import { Manager } from 'app/libs/Manager/Manager.class';
 import { ProjectDataImporter } from 'app/libs/projects-helpers/project-importers/project-data-importer.class';
 import { ProjectFileImporter } from 'app/libs/projects-helpers/project-importers/project-file-importer.class';
 import { AnitaStore } from 'app/libs/redux/reducers.const';
@@ -51,7 +51,7 @@ export const ImportProjectButton: React.FC<IImportProjectButtonProps> = ({ btnTy
     projectData[RESERVED_AUDS_KEYS._settings][0] = projectSettings;
     await new ProjectDataImporter(projectData, projectFileHandle).import();
     handleClickModal();
-    new CurrentProjectSetter(projectData[RESERVED_AUDS_KEYS._settings], projectData[RESERVED_AUDS_KEYS._sections]).set();
+    Manager.setCurrentProject(projectData);
     setTimeout(() => navigate(ANITA_URLS.projectsList), 500);
   }
 

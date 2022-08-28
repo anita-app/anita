@@ -1,9 +1,11 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const';
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum';
-import { LocalProjectSettings, SystemData } from 'app/data/project-structure/project-info'
+import { LocalProjectSettings, RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info'
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum';
 import { ProjectLoader } from 'app/libs/project-helpers/project-handlers/project-loader.class';
+import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
 import { store } from 'app/libs/redux/state.store'
+import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function';
 import { Project } from 'app/models/Project.class'
 
 export class Manager {
@@ -15,7 +17,15 @@ export class Manager {
   }
 
   public static setCurrentProject(systemData: SystemData) {
-    this.currentProject = new Project(systemData)
+    const systemDataClone = {
+      [RESERVED_AUDS_KEYS._settings]: [{...systemData[RESERVED_AUDS_KEYS._settings][0]}],
+      [RESERVED_AUDS_KEYS._sections]: [...systemData[RESERVED_AUDS_KEYS._sections]]
+    }
+    this.currentProject = new Project(systemDataClone)
+    storeDispatcher(({
+      type: REDUX_ACTIONS.setCurrentProject,
+      payload: systemDataClone
+    }));
   }
 
   public static getCurrentProject() {
