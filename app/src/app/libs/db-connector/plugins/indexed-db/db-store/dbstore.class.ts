@@ -110,7 +110,9 @@ export class DbStore implements DbStoreInterface<Dexie> {
 
     // Removes the sections that are not in the DS anymore
     // See https://dexie.org/docs/Tutorial/Understanding-the-basics#deleting-tables
-    this.deletedSections.forEach(section => tables[section] = null)
+    this.deletedSections.forEach(section => {
+      tables[section] = null
+    })
 
     return this.db.version(version).stores(tables)
   }

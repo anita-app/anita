@@ -92,9 +92,7 @@ export class DbSelector<E> extends WhereBuilder<E> implements Selector<E> {
    * @see Decrypter
    */
   private async handleDecryption (): Promise<void> {
-    if (this.dbConnector.options.encrypted && this.results.length)
-    // tslint:disable-next-line:prefer-for-of
-    {
+    if (this.dbConnector.options.encrypted && this.results.length) {
       for (let i = 0; i < this.results.length; i++) {
         await new Decrypter(this.dbConnector, this.section, this.results[i]).do()
       }

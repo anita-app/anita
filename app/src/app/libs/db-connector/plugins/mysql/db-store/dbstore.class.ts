@@ -1,5 +1,6 @@
 import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 import { DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers'
+import { Logger } from 'app/libs/Logger/logger.class'
 import * as mysql from 'mysql'
 
 export class DbStore implements DbStoreInterface<mysql.Connection> {
@@ -12,7 +13,7 @@ export class DbStore implements DbStoreInterface<mysql.Connection> {
 
   public async initDB (): Promise<DbStoreInterface<mysql.Connection>> {
     if (!this.options.mySqlConnectionConfig) {
-      throw new Error('No mySqlConnectionConfig passed to DbConnector.\nTo initialize a MySQL connection, pass the an Object of type ConnectionConfig as value of mySqlConnectionConfig to the options')
+      throw new Error('No mySqlConnectionConfig passed to DbConnector.\nTo initialize a MySQL connection, pass an Object of type ConnectionConfig as value of mySqlConnectionConfig to the options')
     }
 
     this.db = mysql.createConnection(this.options.mySqlConnectionConfig)
@@ -27,6 +28,7 @@ export class DbStore implements DbStoreInterface<mysql.Connection> {
       // The connection is terminated gracefully
       // Ensures all previously enqueued queries are still
       // before sending a COM_QUIT packet to the MySQL server.
+      Logger.error(err?.message)
     })
   }
 

@@ -1,3 +1,4 @@
+/* eslint-disable new-cap */
 import { AUDS_SYSTEM_SECTIONS_DEFINITIONS } from 'app/data/system-local-db/auds-system-sections.enum'
 import { DataStructureBuilder } from 'app/libs/db-connector/db-builder/data-structure-builder.class'
 import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition'

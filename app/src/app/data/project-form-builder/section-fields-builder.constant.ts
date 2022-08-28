@@ -31,6 +31,7 @@ export const sectionDetailsFormFieldsModel: Array<FormFieldsModel<SectionDetails
   }
 ]
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const allFieldsExceptBasicInput = Object.entries(FORM_COMPONENTS_CODES).map(([key, value]) => value).filter((value: FORM_COMPONENTS_CODES) => ![FORM_COMPONENTS_CODES.basicInput, FORM_COMPONENTS_CODES.datePicker, FORM_COMPONENTS_CODES.dateTimePicker].includes(value) && typeof value === 'number')
 
 const labelsForBasicAndAdvanced = (sizeWithoutInputType: number, sizeWithtInputType: number): Array<FormFieldsModel<SectionCustomFieldProperties>> => [

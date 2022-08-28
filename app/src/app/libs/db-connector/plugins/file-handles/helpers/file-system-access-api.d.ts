@@ -2,6 +2,9 @@ interface FileSystemHandlePermissionDescriptor {
   writable?: boolean;
 }
 
+type PermissionState = 'denied' | 'granted' | 'prompt'
+type BufferSource = ArrayBufferView | ArrayBuffer
+
 export interface FileSystemHandle {
   kind: 'file' | 'directory';
   name: string;

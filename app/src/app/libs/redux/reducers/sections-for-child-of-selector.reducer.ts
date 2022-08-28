@@ -14,7 +14,7 @@ const sectionsForChildOfSelectorState: Array<SectionDetailsDeclaration> = []
  */
 export const sectionsForChildOfSelectorReducer = (state: Array<SectionDetailsDeclaration> = sectionsForChildOfSelectorState, action: Action<REDUX_ACTIONS>) => {
   switch (action.type) {
-    case REDUX_ACTIONS.addSectionForChildOfSelector:
+    case REDUX_ACTIONS.addSectionForChildOfSelector: {
       const editableState = state.concat()
 
       if (!editableState.length) {
@@ -25,8 +25,7 @@ export const sectionsForChildOfSelectorReducer = (state: Array<SectionDetailsDec
         editableState[position] = action.payload
       }
       return editableState
-
-    default:
+    } default:
       return state
   }
 }

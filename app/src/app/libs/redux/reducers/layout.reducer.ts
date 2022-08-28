@@ -17,11 +17,11 @@ const formElementState: ILayoutState = {
  */
 export const layoutReducer = (state: ILayoutState = formElementState, action: Action<REDUX_ACTIONS>): ILayoutState => {
   switch (action.type) {
-    case REDUX_ACTIONS.toggleSidebar:
+    case REDUX_ACTIONS.toggleSidebar: {
       const newState = { ...state }
       newState.sidebar = newState.sidebar === '-translate-x-full' ? '' : '-translate-x-full'
       return newState
-    default:
+    } default:
       return state
   }
 }

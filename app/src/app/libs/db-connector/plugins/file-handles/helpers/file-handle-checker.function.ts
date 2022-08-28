@@ -18,11 +18,7 @@ export async function fileHandleChecker (
   return options.projectInfo.fileHandle
 }
 
-export async function dirHandleChecker (
-  options: DsDbInitOptions,
-  description?: string,
-  accept?: { [mimeType: string]: Array<string> }
-): Promise<FileSystemDirectoryHandle> {
+export async function dirHandleChecker (options: DsDbInitOptions): Promise<FileSystemDirectoryHandle> {
   if (!options.projectInfo.fileHandle) {
     return await FsHelper.getDirectoryHandle()
   }

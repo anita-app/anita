@@ -1,6 +1,6 @@
 import { AdditionalInfoForLocalStorage, ISection } from 'app/data/project-structure/project-info'
 import { DataStructureExtender } from 'app/data/system-local-db/data-structure-extender.class'
-import { auds_sections } from 'app/data/system-local-db/sections/auds-sections.const'
+import { audsSections } from 'app/data/system-local-db/sections/auds-sections.const'
 import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 import { DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers'
 import { dirHandleChecker } from 'app/libs/db-connector/plugins/file-handles/helpers/file-handle-checker.function'
@@ -38,14 +38,13 @@ export class DbStore implements DbStoreInterface<Database> {
       throw new Error('No projectInfo passed to DbConnector.\nTo retrieve a project from a local file, pass the an Object of type LocalProjectSettings as value of projectInfo to the options of DbConnector')
     }
 
-    const fileHandle = await dirHandleChecker(this.options, 'SQLite Project Database', { 'application/x-sqlite3': ['.db'] })
+    const fileHandle = await dirHandleChecker(this.options)
 
     // If the project already had a FileHandle, the data file already existed so we read it and load it
     if (this.options.projectInfo.fileHandle) {
       await this.initializeExistingProject()
-    }
-    // Otherwise, we are inizializing a new project, so we store in memory the fileHandle, which will be saved by postProjectCreation when saving the project
-    else {
+    } else {
+      // Otherwise, we are inizializing a new project, so we store in memory the fileHandle, which will be saved by postProjectCreation when saving the project
       await this.onProjectCreation(fileHandle)
     }
 
@@ -100,7 +99,7 @@ export class DbStore implements DbStoreInterface<Database> {
     const res = await executeQueryWithReturn(this.db, 'SELECT * FROM _sections')
     const sections = serializer<ISection>(res[0].columns, res[0].values)
     sections.forEach((section: any) => {
-      auds_sections.jsonFields.forEach((field: string) => {
+      audsSections.jsonFields.forEach((field: string) => {
         section[field] = JSON.parse(section[field])
       })
     })

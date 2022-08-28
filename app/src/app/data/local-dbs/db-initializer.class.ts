@@ -25,9 +25,8 @@ export class DbInitializer {
     // eslint-disable-next-line eqeqeq
     if (this.projectInfo.localStorage == LOCAL_STORAGE_SYSTEMS.fileSystem) {
       await this.doFileSystem()
-    }
     // eslint-disable-next-line eqeqeq
-    else if (this.projectInfo.localStorage == LOCAL_STORAGE_SYSTEMS.SQLite) {
+    } else if (this.projectInfo.localStorage == LOCAL_STORAGE_SYSTEMS.SQLite) {
       await this.doSQLite()
     } else {
       await this.doIndexedDb()

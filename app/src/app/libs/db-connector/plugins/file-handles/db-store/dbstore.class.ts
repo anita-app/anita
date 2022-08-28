@@ -34,9 +34,8 @@ export class DbStore implements DbStoreInterface<AnitaUniversalDataStorage> {
     // If the project already had a FileHandle, the data file already existed so we read it and load it
     if (this.options.projectInfo.fileHandle) {
       await this.initializeExistingProject()
-    }
-    // Otherwise, we are inizializing a new project, so we store in memory the fileHandle, which will be saved by postProjectCreation when saving the project
-    else {
+    } else {
+      // Otherwise, we are inizializing a new project, so we store in memory the fileHandle, which will be saved by postProjectCreation when saving the project
       this.options.projectInfo.fileHandle = fileHandle
     }
 

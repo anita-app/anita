@@ -1,3 +1,4 @@
+import React from 'react'
 import { ANITA_URLS } from 'app/anita-routes/anita-routes.constant'
 import { AddEditSectionElement } from 'app/ui-react-components/project/project-add-edit-section-element.component'
 import { ProjectDetails } from 'app/ui-react-components/project/project-details.component'
