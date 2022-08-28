@@ -60,7 +60,7 @@ export interface AdditionalInfoForLocalStorage {
 
 /**
  * Info on Projects saved locally to know what project are on the device.
- * 
+ *
  * @property [fileHandle] - The file handle of the project file (only if the project is saved on the file system)
  * @property [sections] - The sections of the project to load the IndexedDB database with Dexie
  */

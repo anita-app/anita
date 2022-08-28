@@ -22,4 +22,4 @@ export const sectionDetailsFormFieldsModel: Array<FormFieldsModel<SectionDetails
     label: 'Parent sections:',
     options: []
   }
-];
+]

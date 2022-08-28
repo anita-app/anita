@@ -1,4 +1,4 @@
 export enum EDITOR_MODE {
-  add = "add",
-  edit = "edit"
+  add = 'add',
+  edit = 'edit'
 }

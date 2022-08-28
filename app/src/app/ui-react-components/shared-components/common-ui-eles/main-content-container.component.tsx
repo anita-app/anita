@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 
 interface IMainContentContainerProps {
   headerText?: string
@@ -8,9 +8,9 @@ interface IMainContentContainerProps {
 }
 
 export const MainContentContainer: React.FC<IMainContentContainerProps> = (props) => (
-  <div className={props.hasHeaderOnlyStyle ? '' : "p-4 bg-white rounded shadow"}>
+  <div className={props.hasHeaderOnlyStyle ? '' : 'p-4 bg-white rounded shadow'}>
     {props.headerText && (
-      <div className={props.hasHeaderOnlyStyle ? "p-4": ''}>
+      <div className={props.hasHeaderOnlyStyle ? 'p-4' : ''}>
         <div className="mt-3 flex justify-between">
           <h3 className="text-xl font-bold">{props.headerText}</h3>
           {props.headerRightComponent && props.headerRightComponent}

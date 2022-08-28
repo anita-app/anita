@@ -3,15 +3,15 @@ import {
   optionsBuilderForAddingBasic,
   optionsBuilderForEditingAdvanced,
   optionsBuilderForEditingBasic
-  } from 'app/data/project-form-builder/options-builder.constant';
-import { projectInfoForEditing, projectInfoNewItem } from 'app/data/project-form-builder/project-info-builder.constant';
+} from 'app/data/project-form-builder/options-builder.constant'
+import { projectInfoForEditing, projectInfoNewItem } from 'app/data/project-form-builder/project-info-builder.constant'
 import {
   sectionElesForEditingAdvanced,
   sectionElesForEditingBasic,
   sectionElesNewItemAdvanced,
   sectionElesNewItemBasic
-  } from 'app/data/project-form-builder/section-fields-builder.constant';
-import { sectionDetailsFormFieldsModel } from 'app/data/project-form-builder/section-info-builder.constant';
+} from 'app/data/project-form-builder/section-fields-builder.constant'
+import { sectionDetailsFormFieldsModel } from 'app/data/project-form-builder/section-info-builder.constant'
 
 export enum PROJECT_EDITOR_MODE {
   advanced = 1,
@@ -49,4 +49,4 @@ export const PROJECT_EDITOR_FORM_BUILDER = {
       existingItem: optionsBuilderForEditingBasic
     }
   }
-};
+}

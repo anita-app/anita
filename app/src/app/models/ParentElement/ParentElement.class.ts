@@ -6,17 +6,16 @@ interface OptionKeysModelGroup {
 }
 
 export class ParentElement {
-
   /**
    * Converts the options used by react-select to a string for storing it in the DB
    * We do not want to store the whole object, only the values, as the label might change.
    */
-  public static infoObjectToString(parentInfoObj: Array<IOption>): Array<string> {
-    const parentsInfo = [];
+  public static infoObjectToString (parentInfoObj: Array<IOption>): Array<string> {
+    const parentsInfo = []
     parentInfoObj.forEach(parentInfo => {
-      parentsInfo.push(parentInfo.value);
-    });
-    return parentsInfo;
+      parentsInfo.push(parentInfo.value)
+    })
+    return parentsInfo
   }
 
   /**
@@ -25,23 +24,23 @@ export class ParentElement {
    * @param parentsInfo the array of the info on the parent, composed by: `[sectionID]|[elementID]`
    * @param selectOptions the options for the react-select component
    */
-   public static infoStringToObj(parentsInfo: Array<string>, selectOptions: Array<IOption>): Array<IOption> {
-    const options = [];
+  public static infoStringToObj (parentsInfo: Array<string>, selectOptions: Array<IOption>): Array<IOption> {
+    const options = []
 
-    if (!parentsInfo || !selectOptions)
-      return options;
+    if (!parentsInfo || !selectOptions) {
+      return options
+    }
 
     parentsInfo.forEach(parentInfo => {
       // find the option by searching the options of the select element
-      const option = selectOptions.find(opt => opt.value === parentInfo);
+      const option = selectOptions.find(opt => opt.value === parentInfo)
 
-      if (!option) return;
+      if (!option) return
 
-      options.push(option);
-    });
+      options.push(option)
+    })
 
-
-    return options;
+    return options
   }
 
   /**
@@ -50,28 +49,27 @@ export class ParentElement {
    * @param parentsInfo the array of the info on the parent, composed by: `[sectionID]|[elementID]`
    * @param selectOptions the options for the react-select component
    */
-  public static infoStringToObjForOptionsGroup(parentsInfo: Array<string>, selectOptions: Array<OptionKeysModelGroup>): Array<IOption> {
-    const options = [];
+  public static infoStringToObjForOptionsGroup (parentsInfo: Array<string>, selectOptions: Array<OptionKeysModelGroup>): Array<IOption> {
+    const options = []
 
-    if (!parentsInfo || !selectOptions)
-      return options;
+    if (!parentsInfo || !selectOptions) {
+      return options
+    }
 
     parentsInfo.forEach(parentInfo => {
       // find the options group by recourevily searching the options by value
-      const group = selectOptions.find(group => group.options.find(opt => opt.value === parentInfo));
+      const group = selectOptions.find(group => group.options.find(opt => opt.value === parentInfo))
 
-      if (!group) return;
+      if (!group) return
 
       // find the option by searching the options of the group
-      const option = group.options.find(opt => opt.value === parentInfo);
+      const option = group.options.find(opt => opt.value === parentInfo)
 
-      if (!option) return;
+      if (!option) return
 
-      options.push(option);
-    });
+      options.push(option)
+    })
 
-
-    return options;
+    return options
   }
-
 }

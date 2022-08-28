@@ -1,11 +1,12 @@
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import './project-editor-mode-toggle.component.css'
-export const ProjectEditorModeToggle: React.FC = () => {
+import React from 'react'
 
+export const ProjectEditorModeToggle: React.FC = () => {
   const handleChangeProjectEditorMode = () => {
-    storeDispatcher({ type: REDUX_ACTIONS.setProjectEditorMode });
-  };
+    storeDispatcher({ type: REDUX_ACTIONS.setProjectEditorMode })
+  }
 
   return (
     <div className="ml-auto">

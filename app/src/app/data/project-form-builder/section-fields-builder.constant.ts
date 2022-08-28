@@ -9,7 +9,7 @@ import {
   DateTimeInputSupportedTypes,
   TEXT_INPUT_SUPPORTED_TYPES_OPTIONS,
   TextInputSupportedTypes
-  } from 'app/ui-react-components/shared-components/forms-automator/input-supported-types.const'
+} from 'app/ui-react-components/shared-components/forms-automator/input-supported-types.const'
 
 export const sectionDetailsFormFieldsModel: Array<FormFieldsModel<SectionDetailsDeclaration>> = [
   {
@@ -29,7 +29,7 @@ export const sectionDetailsFormFieldsModel: Array<FormFieldsModel<SectionDetails
     label: 'Parent sections:',
     options: []
   }
-];
+]
 
 const allFieldsExceptBasicInput = Object.entries(FORM_COMPONENTS_CODES).map(([key, value]) => value).filter((value: FORM_COMPONENTS_CODES) => ![FORM_COMPONENTS_CODES.basicInput, FORM_COMPONENTS_CODES.datePicker, FORM_COMPONENTS_CODES.dateTimePicker].includes(value) && typeof value === 'number')
 
@@ -42,7 +42,7 @@ const labelsForBasicAndAdvanced = (sizeWithoutInputType: number, sizeWithtInputT
     required: true,
     width: sizeWithoutInputType.toString(),
     prerequisites: [{
-      componentCode: [undefined, "", ...allFieldsExceptBasicInput],
+      componentCode: [undefined, '', ...allFieldsExceptBasicInput]
     }]
   },
   {
@@ -54,7 +54,7 @@ const labelsForBasicAndAdvanced = (sizeWithoutInputType: number, sizeWithtInputT
     width: sizeWithtInputType.toString(),
     prerequisites: [{ componentCode: [FORM_COMPONENTS_CODES.basicInput] }, { componentCode: [FORM_COMPONENTS_CODES.datePicker] }, { componentCode: [FORM_COMPONENTS_CODES.dateTimePicker] }]
 
-  },
+  }
 ]
 
 const componentSelectorForBasicAndAdvanced = (size: number): FormFieldsModel<SectionCustomFieldProperties> => ({
@@ -78,7 +78,7 @@ const inputTypeSelectors: Array<FormFieldsModel<SectionCustomFieldProperties>> =
     value: TextInputSupportedTypes.text,
     label: 'Content type',
     required: true,
-    width: "2",
+    width: '2',
     prerequisites: [{ componentCode: [FORM_COMPONENTS_CODES.basicInput] }]
   },
   {
@@ -88,7 +88,7 @@ const inputTypeSelectors: Array<FormFieldsModel<SectionCustomFieldProperties>> =
     value: DateInputSupportedTypes.date,
     label: 'Date format',
     required: true,
-    width: "2",
+    width: '2',
     prerequisites: [{ componentCode: [FORM_COMPONENTS_CODES.datePicker] }]
   },
   {
@@ -98,7 +98,7 @@ const inputTypeSelectors: Array<FormFieldsModel<SectionCustomFieldProperties>> =
     value: DateTimeInputSupportedTypes.datetimeLocal,
     label: 'Time format',
     required: true,
-    width: "2",
+    width: '2',
     prerequisites: [{ componentCode: [FORM_COMPONENTS_CODES.dateTimePicker] }]
   }
 ]
@@ -121,7 +121,7 @@ const commonAddAndEditFields: Array<FormFieldsModel<SectionCustomFieldProperties
     value: false,
     label: 'Required'
   }
-];
+]
 
 /**
  * Defines the Form model to set the field properties of a `Section`.
@@ -140,10 +140,10 @@ export const sectionElesNewItemAdvanced: Array<FormFieldsModel<SectionCustomFiel
     type: TextInputSupportedTypes.text,
     label: 'Identifier',
     required: true,
-    width: "2"
+    width: '2'
   },
   ...commonAddAndEditFields
-];
+]
 
 export const sectionElesNewItemBasic: Array<FormFieldsModel<SectionCustomFieldProperties>> = [
   ...labelsForBasicAndAdvanced(8, 6),
@@ -154,7 +154,7 @@ export const sectionElesNewItemBasic: Array<FormFieldsModel<SectionCustomFieldPr
     fieldName: 'fieldName'
   },
   ...commonAddAndEditFields
-];
+]
 
 /**
  * Defines the Form model to edit the properties of an existing field of a `Section`.
@@ -173,10 +173,10 @@ export const sectionElesForEditingAdvanced: Array<FormFieldsModel<SectionCustomF
     label: 'Identifier',
     disabled: true,
     required: true,
-    width: "2"
+    width: '2'
   },
   ...commonAddAndEditFields
-];
+]
 
 export const sectionElesForEditingBasic: Array<FormFieldsModel<SectionCustomFieldProperties>> = [
   ...labelsForBasicAndAdvanced(8, 6),
@@ -187,4 +187,4 @@ export const sectionElesForEditingBasic: Array<FormFieldsModel<SectionCustomFiel
     fieldName: 'fieldName'
   },
   ...commonAddAndEditFields
-];
+]

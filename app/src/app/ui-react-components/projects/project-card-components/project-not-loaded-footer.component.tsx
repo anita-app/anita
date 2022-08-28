@@ -1,5 +1,6 @@
-import { IProjectSettings } from 'app/data/project-structure/project-info';
-import { Manager } from 'app/libs/Manager/Manager.class';
+import { IProjectSettings } from 'app/data/project-structure/project-info'
+import { Manager } from 'app/libs/Manager/Manager.class'
+import React from 'react'
 
 interface IProjectNotLoadedFooterProps {
   project: IProjectSettings

@@ -1,3 +1,4 @@
+import React from 'react'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
@@ -5,11 +6,10 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 export const Header: React.FC = () => {
-
   const sidebarHideClass = useSelector((store: AnitaStore) => store.layout.sidebar)
 
   const handleClickSidebar = () => {
-    storeDispatcher({ type: REDUX_ACTIONS.toggleSidebar });
+    storeDispatcher({ type: REDUX_ACTIONS.toggleSidebar })
   }
 
   return (

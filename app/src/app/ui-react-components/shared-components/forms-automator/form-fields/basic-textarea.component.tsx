@@ -5,22 +5,22 @@ import { FormElementLabel } from 'app/ui-react-components/shared-components/form
 import { ValidatorsContainer } from 'app/ui-react-components/shared-components/forms-automator/form-validation/validators-container.component'
 import { useValidators } from 'app/ui-react-components/shared-components/forms-automator/hooks/use-validators.hook'
 import uniqueId from 'lodash/uniqueId'
-import { memo, useRef, useState } from 'react'
+import React, { memo, useRef, useState } from 'react'
 
-export const BasicTextarea: React.FC<ICommonFormEleProps> = memo(function BasicTextarea({ formEle, element, handleChange }: ICommonFormEleProps) {
-
-  const [touched, setTouched] = useState(false);
+export const BasicTextarea: React.FC<ICommonFormEleProps> = memo(function BasicTextarea ({ formEle, element, handleChange }: ICommonFormEleProps) {
+  const [touched, setTouched] = useState(false)
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))
   const [isValid, setIsValidForField] = useValidators(fieldId)
 
-  const width = formEle['width'] ? formEle['width'] : "w-full";
+  const width = formEle.width ? formEle.width : 'w-full'
 
-  if (element[formEle.fieldName] === undefined || element[formEle.fieldName] === null)
-    element[formEle.fieldName] = '';
+  if (element[formEle.fieldName] === undefined || element[formEle.fieldName] === null) {
+    element[formEle.fieldName] = ''
+  }
 
   return (
     <FormEleContainer width={width}>
-      <FormElementLabel label={formEle['label']} />
+      <FormElementLabel label={formEle.label} />
       <textarea
         name={formEle.fieldName}
         className={`w-full ${!isValid && touched ? FORM_ELEMENTS_CSS_CLASSES_ERR : FORM_ELEMENTS_CSS_CLASSES}`}
@@ -31,6 +31,4 @@ export const BasicTextarea: React.FC<ICommonFormEleProps> = memo(function BasicT
       <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} setIsValidForField={setIsValidForField} />
     </FormEleContainer>
   )
-}, (prevProps, nextProps) => {
-  return prevProps.element[prevProps.formEle.fieldName] === nextProps.element[nextProps.formEle.fieldName]
-});
+}, (prevProps, nextProps) => prevProps.element[prevProps.formEle.fieldName] === nextProps.element[nextProps.formEle.fieldName])

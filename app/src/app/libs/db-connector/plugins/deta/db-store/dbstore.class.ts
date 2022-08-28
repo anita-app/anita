@@ -8,37 +8,33 @@ import Deta from 'deta/dist/types/deta'
  * Implementation of DbStore for Deta Base.
  */
 export class DbStore implements DbStoreInterface<Base> {
-
-  public db: Base;
+  public db: Base
   private deta: Deta
 
-
-  constructor(
+  constructor (
     private options: DsDbInitOptions,
     private DS: AbstractModel
   ) { }
 
-  public async initDB(): Promise<DbStoreInterface<Base>> {
+  public async initDB (): Promise<DbStoreInterface<Base>> {
+    if (!this.options.detaConnectionData) {
+      throw Error('No connection data provided. Please provide a name for the database by setting the name on the property detaConnectionData in the options passed to DbConnector.')
+    }
 
-    if (!this.options.detaConnectionData)
-      throw Error('No connection data provided. Please provide a name for the database by setting the name on the property detaConnectionData in the options passed to DbConnector.');
-
-    this.setDeta();
-    this.setDb();
-    return this;
+    this.setDeta()
+    this.setDb()
+    return this
   }
 
-  public close(): void {
+  public close (): void {
     // not implemented
   }
 
-  private setDeta(): void {
-    this.deta = DetaFunction(this.options.detaConnectionData.projectKey);
-
+  private setDeta (): void {
+    this.deta = DetaFunction(this.options.detaConnectionData.projectKey)
   }
 
-  private setDb(): void {
-    this.db = this.deta.Base(this.options.detaConnectionData.projectId);
+  private setDb (): void {
+    this.db = this.deta.Base(this.options.detaConnectionData.projectId)
   }
-
 }

@@ -1,30 +1,29 @@
-import { ParentInfoForDetailsView } from 'app/data/project-structure/project-info';
-import { asyncForEach } from 'app/libs/tools/tools';
-import { Project } from 'app/Models/Project/Project.class';
+import { ParentInfoForDetailsView } from 'app/data/project-structure/project-info'
+import { asyncForEach } from 'app/libs/tools/tools'
+import { Project } from 'app/Models/Project/Project.class'
 
 export class GetParentInfoForDetailsView {
+  private parentInfoForDetailsView: Array<ParentInfoForDetailsView> = []
 
-  private parentInfoForDetailsView: Array<ParentInfoForDetailsView> = [];
-
-  constructor(
+  constructor (
     private project: Project,
     private listOfParents: Array<string>
   ) { }
 
-  public async get(): Promise<Array<ParentInfoForDetailsView>> {
-    await asyncForEach(this.listOfParents, async sectionIdElementId => await this.processElement(sectionIdElementId));
-    return this.parentInfoForDetailsView;
+  public async get (): Promise<Array<ParentInfoForDetailsView>> {
+    await asyncForEach(this.listOfParents, async sectionIdElementId => await this.processElement(sectionIdElementId))
+    return this.parentInfoForDetailsView
   }
 
-  private async processElement(sectionIdElementId: string): Promise<void> {
-    const arrInfo = sectionIdElementId.split('|');
-    const section = this.project.getSectionById(arrInfo[0]);
-    const element = await this.project.getSectionById(section.id).getElementById(arrInfo[1]);
-    const formEle = this.project.getSectionById(section.id).getFirstUserDefinedField();
+  private async processElement (sectionIdElementId: string): Promise<void> {
+    const arrInfo = sectionIdElementId.split('|')
+    const section = this.project.getSectionById(arrInfo[0])
+    const element = await this.project.getSectionById(section.id).getElementById(arrInfo[1])
+    const formEle = this.project.getSectionById(section.id).getFirstUserDefinedField()
     this.parentInfoForDetailsView.push({
       sectionId: arrInfo[0],
       element,
       txt: element[formEle.fieldName]
-    });
+    })
   }
 }

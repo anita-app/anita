@@ -13,29 +13,28 @@ interface IProjectPickerProps {
 }
 
 export const ProjectPicker: React.FC<IProjectPickerProps> = ({ project }) => {
+  const projects = useSelector((store: AnitaStore) => store.projects)
+  const navigate = useNavigate()
+  const [dropdownOpen, setDropdownOpen] = useState(false)
+  const dropDownRef = useRef<HTMLDivElement>(null)
 
-  const projects = useSelector((store: AnitaStore) => store.projects);
-  const navigate = useNavigate();
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropDownRef = useRef<HTMLDivElement>(null);
+  useClickOutside(dropDownRef, () => setDropdownOpen(false))
 
-  useClickOutside(dropDownRef, () => setDropdownOpen(false));
+  const handleClick = () => {
+    setDropdownOpen(!dropdownOpen)
+  }
 
-  const handleClick = (fn) => {
-    setDropdownOpen(!dropdownOpen);
+  const goToDetails = (projectId: string) => {
+    navigate(urlParamFiller(ANITA_URLS.projectDetails, [{ name: URL_PARAMS.projectId, value: projectId }]))
   }
 
   const loadProject = async (projectId: string) => {
     await Manager.loadProjectById(projectId)
-    goToDetails(projectId);
-  }
-
-  const goToDetails = (projectId: string) => {
-    navigate(urlParamFiller(ANITA_URLS.projectDetails, [{ name: URL_PARAMS.projectId, value: projectId }]));
+    goToDetails(projectId)
   }
 
   const goToEditProject = (projectId: string) => {
-    navigate(urlParamFiller(ANITA_URLS.projectEdit, [{ name: URL_PARAMS.projectId, value: projectId }]));
+    navigate(urlParamFiller(ANITA_URLS.projectEdit, [{ name: URL_PARAMS.projectId, value: projectId }]))
   }
 
   return (
@@ -48,12 +47,11 @@ export const ProjectPicker: React.FC<IProjectPickerProps> = ({ project }) => {
           <i className="bi-chevron-expand my-auto"></i>
         </button>
 
-
         {dropdownOpen && (
           <div className="absolute left-0 mt-2 w-64 bg-white rounded-md overflow-hidden shadow-xl z-20 border border-bg-500">
             {projects?.length > 1 && (<div className="block py-2.5 px-4 text-sm bg-gray-100 text-gray-600">Projects on this device</div>)}
             {projects?.map(projectFromList => {
-              if (project[RESERVED_AUDS_KEYS._settings][0].id === projectFromList.id) return null;
+              if (project[RESERVED_AUDS_KEYS._settings][0].id === projectFromList.id) return null
               return (
                 <button key={projectFromList.id} className="w-full block text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => handleClick(loadProject(projectFromList.id))}>{projectFromList.title}</button>)
             })}
@@ -78,6 +76,5 @@ export const ProjectPicker: React.FC<IProjectPickerProps> = ({ project }) => {
         )}
       </div >
     </div >
-  );
-
+  )
 }

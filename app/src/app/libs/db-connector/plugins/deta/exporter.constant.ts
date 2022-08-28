@@ -15,4 +15,4 @@ export const INDEXEDDB_PLUGIN: DbObjects<any, Base> = {
   updator: DbUpdator,
   deletor: DbDeletor,
   dbStore: DbStore
-};
+}

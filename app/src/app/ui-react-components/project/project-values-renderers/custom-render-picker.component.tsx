@@ -1,3 +1,4 @@
+import React from 'react'
 import { BasicText } from 'app/ui-react-components/project/project-values-renderers/basic-text.component'
 import { CheckBoxAsCheck } from 'app/ui-react-components/project/project-values-renderers/check-box-as-check.component'
 import { Color } from 'app/ui-react-components/project/project-values-renderers/color.component'
@@ -15,8 +16,51 @@ import { FormFieldsModel, SupportedFormsTypes } from 'app/ui-react-components/sh
 import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum'
 import { DateInputSupportedTypes, DateTimeInputSupportedTypes, TextInputSupportedTypes } from 'app/ui-react-components/shared-components/forms-automator/input-supported-types.const'
 
+const handleInputType = (type: TextInputSupportedTypes | DateInputSupportedTypes | DateTimeInputSupportedTypes) => {
+  switch (type) {
+    case TextInputSupportedTypes.color:
+      return Color
+    case TextInputSupportedTypes.email:
+      return Email
+    case TextInputSupportedTypes.tel:
+      return Tel
+    case TextInputSupportedTypes.url:
+      return Url
+    case TextInputSupportedTypes.password:
+      return Password
+    case TextInputSupportedTypes.range:
+      return Percentage
+    case TextInputSupportedTypes.number:
+    case TextInputSupportedTypes.text:
+    default:
+      return BasicText
+  }
+}
+
+const handleDateType = (type: TextInputSupportedTypes | DateInputSupportedTypes | DateTimeInputSupportedTypes) => {
+  switch (type) {
+    case DateInputSupportedTypes.month:
+      return Month
+    case DateInputSupportedTypes.week:
+      return Week
+    case DateInputSupportedTypes.date:
+    default:
+      return FormattedDate
+  }
+}
+
+const handleDateTimeType = (type: TextInputSupportedTypes | DateInputSupportedTypes | DateTimeInputSupportedTypes) => {
+  switch (type) {
+    case DateTimeInputSupportedTypes.time:
+      return BasicText
+    case DateTimeInputSupportedTypes.datetimeLocal:
+    default:
+      return FormattedDateTime
+  }
+}
+
 export const customRenderPicker = (formModel: FormFieldsModel<SupportedFormsTypes>) => {
-  const componentCode = typeof formModel.componentCode === 'string' ? parseInt(formModel.componentCode, 10) : formModel.componentCode;
+  const componentCode = typeof formModel.componentCode === 'string' ? parseInt(formModel.componentCode, 10) : formModel.componentCode
   switch (componentCode) {
     case FORM_COMPONENTS_CODES.basicInput:
       return handleInputType(formModel.type)
@@ -25,56 +69,14 @@ export const customRenderPicker = (formModel: FormFieldsModel<SupportedFormsType
     case FORM_COMPONENTS_CODES.dateTimePicker:
       return handleDateTimeType(formModel.type)
     case FORM_COMPONENTS_CODES.basicTextarea:
-      return BasicText;
+      return BasicText
     case FORM_COMPONENTS_CODES.basicSelect:
     case FORM_COMPONENTS_CODES.basicRadio:
-      return TextFromOptionsByValue.bind(null, formModel['options']);
+      // eslint-disable-next-line dot-notation
+      return TextFromOptionsByValue.bind(null, formModel['options'])
     case FORM_COMPONENTS_CODES.basicCheckbox:
-      return CheckBoxAsCheck;
+      return CheckBoxAsCheck
     default:
       return BasicText
-  }
-}
-
-const handleInputType = (type: TextInputSupportedTypes | DateInputSupportedTypes | DateTimeInputSupportedTypes) => {
-  switch (type) {
-    case TextInputSupportedTypes.color:
-      return Color;
-    case TextInputSupportedTypes.email:
-      return Email;
-    case TextInputSupportedTypes.tel:
-      return Tel;
-    case TextInputSupportedTypes.url:
-      return Url;
-    case TextInputSupportedTypes.password:
-      return Password;
-    case TextInputSupportedTypes.range:
-      return Percentage;
-    case TextInputSupportedTypes.number:
-    case TextInputSupportedTypes.text:
-    default:
-      return BasicText;
-  }
-}
-
-const handleDateType = (type: TextInputSupportedTypes | DateInputSupportedTypes | DateTimeInputSupportedTypes) => {
-  switch (type) {
-    case DateInputSupportedTypes.month:
-      return Month;
-    case DateInputSupportedTypes.week:
-      return Week;
-    case DateInputSupportedTypes.date:
-    default:
-      return FormattedDate;
-  }
-}
-
-const handleDateTimeType = (type: TextInputSupportedTypes | DateInputSupportedTypes | DateTimeInputSupportedTypes) => {
-  switch (type) {
-    case DateTimeInputSupportedTypes.time:
-      return BasicText;
-    case DateTimeInputSupportedTypes.datetimeLocal:
-    default:
-      return FormattedDateTime;
   }
 }

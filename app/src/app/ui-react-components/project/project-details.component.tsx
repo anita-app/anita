@@ -1,16 +1,16 @@
-import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
-import { availableSystems } from 'app/data/project-form-builder/project-info-builder.constant';
-import { IProjectSettings } from 'app/data/project-structure/project-info';
-import { Manager } from 'app/libs/Manager/Manager.class';
-import { SectionElement } from 'app/Models/SectionElement/SectionElement.class';
-import { DeleteProjectButton } from 'app/ui-react-components/shared-components/buttons/delete-project.component';
-import { EditButton } from 'app/ui-react-components/shared-components/buttons/edit-project-button.component';
-import { ExportButton } from 'app/ui-react-components/shared-components/buttons/export-project-button.component';
-import { CardFooterItemsEnd } from 'app/ui-react-components/shared-components/common-ui-eles/card-footer-items-end.component';
-import { Loader } from 'app/ui-react-components/shared-components/loader/loader.component';
-import * as dateFormat from 'date-format';
-import { useEffect, useState } from 'react';
-import { Navigate, useParams } from 'react-router';
+import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant'
+import { availableSystems } from 'app/data/project-form-builder/project-info-builder.constant'
+import { IProjectSettings } from 'app/data/project-structure/project-info'
+import { Manager } from 'app/libs/Manager/Manager.class'
+import { SectionElement } from 'app/Models/SectionElement/SectionElement.class'
+import { DeleteProjectButton } from 'app/ui-react-components/shared-components/buttons/delete-project.component'
+import { EditButton } from 'app/ui-react-components/shared-components/buttons/edit-project-button.component'
+import { ExportButton } from 'app/ui-react-components/shared-components/buttons/export-project-button.component'
+import { CardFooterItemsEnd } from 'app/ui-react-components/shared-components/common-ui-eles/card-footer-items-end.component'
+import { Loader } from 'app/ui-react-components/shared-components/loader/loader.component'
+import * as dateFormat from 'date-format'
+import React, { useEffect, useState } from 'react'
+import { Navigate, useParams } from 'react-router'
 
 interface ILoadedProjectProps {
   project: IProjectSettings
@@ -41,36 +41,38 @@ const LoadedProject: React.FC<ILoadedProjectProps> = ({ project }) => (
 )
 
 export const ProjectDetails: React.FC = () => {
-
-  const urlParams = useParams();
-  const projectId = urlParams[URL_PARAMS.projectId];
-  const [project, setElement] = useState<IProjectSettings>(null);
+  const urlParams = useParams()
+  const projectId = urlParams[URL_PARAMS.projectId]
+  const [project, setElement] = useState<IProjectSettings>(null)
 
   useEffect(() => {
-    let isMounted = true;
+    let isMounted = true
 
     const loadProject = async () => {
-      const project = await Manager.getProjectById(projectId);
+      const project = await Manager.getProjectById(projectId)
 
-      if (isMounted)
+      if (isMounted) {
         setElement(project?.getSettings())
+      }
     }
 
-    if (isMounted)
-      loadProject();
+    if (isMounted) {
+      loadProject()
+    }
 
-    return () => { isMounted = false; }
-
-  }, [projectId]);
+    return () => {
+      isMounted = false
+    }
+  }, [projectId])
 
   // If there is no DB instance loaded, for now we just redirect to the project list
-  if (project === undefined)
-    return <Navigate to={ANITA_URLS.projectsList} />;
+  if (project === undefined) {
+    return <Navigate to={ANITA_URLS.projectsList} />
+  }
 
   return (
-    <div className="relative border-2 border-gray-200 border-opacity-60 rounded bg-white" style={{ minHeight: "200px" }}>
+    <div className="relative border-2 border-gray-200 border-opacity-60 rounded bg-white" style={{ minHeight: '200px' }}>
       {(project === null) ? <Loader /> : <LoadedProject project={project} />}
     </div>
   )
-
 }

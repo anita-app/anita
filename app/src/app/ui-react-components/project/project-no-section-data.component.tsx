@@ -1,6 +1,7 @@
-import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
-import { urlParamFiller } from 'app/anita-routes/url-param-fillers.function';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant'
+import { urlParamFiller } from 'app/anita-routes/url-param-fillers.function'
+import { Link } from 'react-router-dom'
 
 interface INoSectionDataProps {
   sectionTitle: string
@@ -25,4 +26,4 @@ export const NoSectionData: React.FC<INoSectionDataProps> = ({ sectionTitle, sec
       </div>
     </div>
   </div>
-);
+)

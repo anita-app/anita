@@ -1,6 +1,6 @@
-import { LocalProjectSettings } from 'app/data/project-structure/project-info';
-import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant';
-import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition';
+import { LocalProjectSettings } from 'app/data/project-structure/project-info'
+import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant'
+import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition'
 
 /**
  * Defines the table projects and its fields for the `indexedDb` plugin of `db-connector`.
@@ -14,4 +14,4 @@ export const projects: SectionDefinition<LocalProjectSettings> = {
     'description',
     RESERVED_FIELDS.createdAt
   ]
-};
+}

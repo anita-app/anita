@@ -15,54 +15,54 @@ import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
  * @see CurrentProjectSetter
  */
 export class ProjectDataImporter {
-
   /**
-   * 
+   *
    * @param projectData The project data of the project to import
    * @param fileHandle FileSystemFileHandle of the project to import
    */
-  constructor(
+  constructor (
     private projectData: AnitaUniversalDataStorage,
     private fileHandle: FileSystemFileHandle
 
   ) { }
 
   /**
-   * Asks for the files to import and processes them, then sets the current project as the last one imported 
+   * Asks for the files to import and processes them, then sets the current project as the last one imported
    */
-  public async import(): Promise<void> {
-    await this.initializeDb();
-    await this.setLocalProjectSettings();
-    this.dispatchProject(this.projectData[RESERVED_AUDS_KEYS._settings][0]);
+  public async import (): Promise<void> {
+    await this.initializeDb()
+    await this.setLocalProjectSettings()
+    this.dispatchProject(this.projectData[RESERVED_AUDS_KEYS._settings][0])
 
     // Relaxed equality check, because in the form the localStorage data is stored as a string
     // eslint-disable-next-line eqeqeq
-    if (this.projectData[RESERVED_AUDS_KEYS._settings][0].localStorage == LOCAL_STORAGE_SYSTEMS.IndexedDB)
-      await this.saveDataToDb();
+    if (this.projectData[RESERVED_AUDS_KEYS._settings][0].localStorage == LOCAL_STORAGE_SYSTEMS.IndexedDB) {
+      await this.saveDataToDb()
+    }
   }
 
-  private async setLocalProjectSettings() {
-    const payload = await dbInstances[this.projectData[RESERVED_AUDS_KEYS._settings][0].id].dbStore.postProjectCreation?.(this.projectData) || {};
-    await new SaveProjectSettingsInIndexedDB(this.projectData[RESERVED_AUDS_KEYS._settings][0], payload).save();
+  private async setLocalProjectSettings () {
+    const payload = await dbInstances[this.projectData[RESERVED_AUDS_KEYS._settings][0].id].dbStore.postProjectCreation?.(this.projectData) || {}
+    await new SaveProjectSettingsInIndexedDB(this.projectData[RESERVED_AUDS_KEYS._settings][0], payload).save()
   }
 
   /**
    * Initialize the DbConnector instance
    */
-  private async initializeDb(): Promise<void> {
-    await new DbInitializer(this.projectData[RESERVED_AUDS_KEYS._settings][0], this.projectData[RESERVED_AUDS_KEYS._sections], this.fileHandle).init();
+  private async initializeDb (): Promise<void> {
+    await new DbInitializer(this.projectData[RESERVED_AUDS_KEYS._settings][0], this.projectData[RESERVED_AUDS_KEYS._sections], this.fileHandle).init()
   }
 
-  private async saveDataToDb(): Promise<any> {
-    for (const section in this.projectData)
-      await dbInstances[this.projectData[RESERVED_AUDS_KEYS._settings][0].id].callInsertor(section, this.projectData[section]).autoInsert();
+  private async saveDataToDb (): Promise<any> {
+    for (const section in this.projectData) {
+      await dbInstances[this.projectData[RESERVED_AUDS_KEYS._settings][0].id].callInsertor(section, this.projectData[section]).autoInsert()
+    }
   }
 
   /**
    * Dispatches the action to add the project to the list of projects
    */
-  private dispatchProject(payload: IProjectSettings): void {
-    storeDispatcher({ type: REDUX_ACTIONS.addProjectToList, payload });
+  private dispatchProject (payload: IProjectSettings): void {
+    storeDispatcher({ type: REDUX_ACTIONS.addProjectToList, payload })
   }
-
 }

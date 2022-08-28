@@ -49,18 +49,18 @@ interface FileSystemWritableFileStream {
   close(): Promise<void>;
 }
 
-type ChooseFileSystemEntriesType = "open-file" | "save-file" | "open-directory";
+type ChooseFileSystemEntriesType = 'open-file' | 'save-file' | 'open-directory';
 
 interface ChooseFileSystemEntriesOptionsAccepts {
   description: string;
-  mimeTypes: string[];
-  extensions: string[];
+  mimeTypes: Array<string>;
+  extensions: Array<string>;
 }
 
 interface ChooseFileSystemEntriesOptions {
   type?: ChooseFileSystemEntriesType;
   multiple?: boolean;
-  accepts?: ChooseFileSystemEntriesOptionsAccepts[];
+  accepts?: Array<ChooseFileSystemEntriesOptionsAccepts>;
   excludeAcceptAllOption?: boolean;
 }
 
@@ -77,14 +77,14 @@ interface OpenFilePickerOptions {
 }
 
 export interface WindowFS extends Window {
-  chooseFileSystemEntries(options?: ChooseFileSystemEntriesOptions): Promise<FileSystemHandle | FileSystemHandle[]>;
+  chooseFileSystemEntries(options?: ChooseFileSystemEntriesOptions): Promise<FileSystemHandle | Array<FileSystemHandle>>;
   showSaveFilePicker(options?: SaveFilePickerOptions): Promise<FileSystemFileHandle>;
   showOpenFilePicker(options?: { multiple: false; }): Promise<Array<FileSystemFileHandle>>;
   showOpenFilePicker(options?: { multiple: true; }): Promise<Array<FileSystemFileHandle>>;
   showDirectoryPicker(options?: { id: string, startIn: string }): Promise<FileSystemDirectoryHandle>
 }
 
-type SystemDirectoryType = "sandbox";
+type SystemDirectoryType = 'sandbox';
 
 interface GetSystemDirectoryOptions {
   type: SystemDirectoryType;

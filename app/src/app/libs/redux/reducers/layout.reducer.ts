@@ -1,8 +1,8 @@
-import { Action } from 'app/libs/redux/action.type';
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const';
+import { Action } from 'app/libs/redux/action.type'
+import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 
 export interface ILayoutState {
-  sidebar: "-translate-x-full" | "";
+  sidebar: '-translate-x-full' | '';
 }
 
 /**
@@ -10,7 +10,7 @@ export interface ILayoutState {
  */
 const formElementState: ILayoutState = {
   sidebar: '-translate-x-full'
-};
+}
 
 /**
  * Updates the projectState
@@ -18,10 +18,10 @@ const formElementState: ILayoutState = {
 export const layoutReducer = (state: ILayoutState = formElementState, action: Action<REDUX_ACTIONS>): ILayoutState => {
   switch (action.type) {
     case REDUX_ACTIONS.toggleSidebar:
-      const newState = { ...state };
-      newState.sidebar = newState.sidebar === '-translate-x-full' ? '' : '-translate-x-full';
-      return newState;
+      const newState = { ...state }
+      newState.sidebar = newState.sidebar === '-translate-x-full' ? '' : '-translate-x-full'
+      return newState
     default:
-      return state;
+      return state
   }
 }

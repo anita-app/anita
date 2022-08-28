@@ -9,7 +9,6 @@ export const useSetDefaultValue = <T extends string | number>(currentValue: T, d
   }, [currentValue, defaultValue, fieldName])
 }
 
-
 /*
 export const useSetDefaultValue = <T extends string | number>(element: SectionElement, formEle: IBasicSelect<SectionElement>, defaultValue: T, fieldName: string | number, valueSetter: (fieldName: string | number, value: T) => void) => {
   const isFirstCheckOfDefaultValue = useRef(true)

@@ -1,47 +1,40 @@
-import { IProjectSettings, ISection, ParentInfoForDetailsView, RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info';
-import { GetOptionsForParentsSelector } from 'app/Models/Project/GetOptionsForParentsSelector.class';
-import { GetParentInfoForDetailsView } from 'app/Models/Project/GetParentInfoForDetailsView.class';
-import { ProjectDeletor } from 'app/Models/Project/ProjectDeletor.class';
-import { ProjectExporter } from 'app/Models/Project/ProjectExporter.class';
-import { Section } from 'app/Models/Section/Section.class';
-import { OptionKeysModel, OptionKeysModelGroup } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
+import { IProjectSettings, ISection, ParentInfoForDetailsView, RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info'
+import { GetOptionsForParentsSelector } from 'app/Models/Project/GetOptionsForParentsSelector.class'
+import { GetParentInfoForDetailsView } from 'app/Models/Project/GetParentInfoForDetailsView.class'
+import { ProjectDeletor } from 'app/Models/Project/ProjectDeletor.class'
+import { ProjectExporter } from 'app/Models/Project/ProjectExporter.class'
+import { Section } from 'app/Models/Section/Section.class'
+import { OptionKeysModel, OptionKeysModelGroup } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 
 export class Project {
-
   private settings: SystemData[RESERVED_AUDS_KEYS._settings][0]
   private sectionsDefinitions: SystemData[RESERVED_AUDS_KEYS._sections]
   private sections: { [key: string]: Section } = {}
 
-  constructor(
+  constructor (
     systemData: SystemData
   ) {
     this.settings = systemData[RESERVED_AUDS_KEYS._settings][0]
     this.sectionsDefinitions = systemData[RESERVED_AUDS_KEYS._sections]
   }
 
-  public getId = (): string => {
-    return this.settings.id
-  }
+  public getId = (): string => this.settings.id
 
-  public getSettings = (): IProjectSettings => {
-    return this.settings
-  }
+  public getSettings = (): IProjectSettings => this.settings
 
-  public getSectionsDefinitions = (): Array<ISection> => {
-    return this.sectionsDefinitions
-  }
+  public getSectionsDefinitions = (): Array<ISection> => this.sectionsDefinitions
 
   public export = (): void => {
     new ProjectExporter({
       [RESERVED_AUDS_KEYS._settings]: [this.settings],
       [RESERVED_AUDS_KEYS._sections]: this.sectionsDefinitions
-     }).export()
+    }).export()
   }
 
   public delete = (): void => {
-    new ProjectDeletor(this.settings).delete();
+    new ProjectDeletor(this.settings).delete()
   }
-  
+
   public getSectionById = (sectionId: string): Section => {
     if (!this.sections[sectionId]) {
       this.sections[sectionId] = new Section(
@@ -53,12 +46,7 @@ export class Project {
     return this.sections[sectionId]
   }
 
-  public getParentInfoForDetailsView = (listOfParents: Array<string>): Promise<Array<ParentInfoForDetailsView>> => {
-    return new GetParentInfoForDetailsView(this,listOfParents).get();
-  }
+  public getParentInfoForDetailsView = (listOfParents: Array<string>): Promise<Array<ParentInfoForDetailsView>> => new GetParentInfoForDetailsView(this, listOfParents).get()
 
-  public getOptionsForParentsSelector = (options: Array<OptionKeysModel>): Promise<Array<OptionKeysModelGroup>> => {
-    return new GetOptionsForParentsSelector(this).buildOptions(options);
-  }
-
+  public getOptionsForParentsSelector = (options: Array<OptionKeysModel>): Promise<Array<OptionKeysModelGroup>> => new GetOptionsForParentsSelector(this).buildOptions(options)
 }

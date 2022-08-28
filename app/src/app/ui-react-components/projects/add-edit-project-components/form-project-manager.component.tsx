@@ -13,34 +13,34 @@ import { SUCCESS_BTN_OUTLINE } from 'app/ui-react-components/shared-components/b
 import { FormAutomator } from 'app/ui-react-components/shared-components/forms-automator/form-automator.component'
 import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router'
+import React from 'react'
 
 export const FormProjectManager: React.FC = () => {
-
-  const { projectId } = useParams<URL_PARAMS>();
-  const projectEditorMode = useSelector((store: AnitaStore) => store.formProject.mode);
-  const project = useSelector((state: AnitaStore) => state.formProject.project);
-  const validObj = useSelector((state: AnitaStore) => state.formElesValidState);
-  const mode: EDITOR_MODE = projectId ? EDITOR_MODE.edit : EDITOR_MODE.add;
-  const navigate = useNavigate();
+  const { projectId } = useParams<URL_PARAMS>()
+  const projectEditorMode = useSelector((store: AnitaStore) => store.formProject.mode)
+  const project = useSelector((state: AnitaStore) => state.formProject.project)
+  const validObj = useSelector((state: AnitaStore) => state.formElesValidState)
+  const mode: EDITOR_MODE = projectId ? EDITOR_MODE.edit : EDITOR_MODE.add
+  const navigate = useNavigate()
 
   const handleProjectChange = (fieldName: keyof IProjectSettings, value: IProjectSettings[keyof IProjectSettings]) => {
-    storeDispatcher({ type: REDUX_ACTIONS.updateFormProjectSettings, payload: { fieldName, value } });
+    storeDispatcher({ type: REDUX_ACTIONS.updateFormProjectSettings, payload: { fieldName, value } })
   }
 
   const handleClickSave = async () => {
     const systemData = await Manager.saveProject(project as SystemData, mode)
-    await new ProjectsListLoader().load();
-    Manager.setCurrentProject(systemData);
-    navigate(urlParamFiller(ANITA_URLS.projectDetails, [{ name: URL_PARAMS.projectId, value: project[RESERVED_AUDS_KEYS._settings][0].id }]));
+    await new ProjectsListLoader().load()
+    Manager.setCurrentProject(systemData)
+    navigate(urlParamFiller(ANITA_URLS.projectDetails, [{ name: URL_PARAMS.projectId, value: project[RESERVED_AUDS_KEYS._settings][0].id }]))
   }
 
   const handleClickAddSection = () => {
-    storeDispatcher({ type: REDUX_ACTIONS.updateFormProjectAddSection });
+    storeDispatcher({ type: REDUX_ACTIONS.updateFormProjectAddSection })
   }
 
-  const projectFormModel = mode === EDITOR_MODE.add ?
-    PROJECT_EDITOR_FORM_BUILDER[projectEditorMode].projectInfo.newItem :
-    PROJECT_EDITOR_FORM_BUILDER[projectEditorMode].projectInfo.existingItem;
+  const projectFormModel = mode === EDITOR_MODE.add
+    ? PROJECT_EDITOR_FORM_BUILDER[projectEditorMode].projectInfo.newItem
+    : PROJECT_EDITOR_FORM_BUILDER[projectEditorMode].projectInfo.existingItem
 
   return (
     <span>
@@ -55,16 +55,19 @@ export const FormProjectManager: React.FC = () => {
           <button
             className={`w-full sm:w-auto py-2 px-6 sm:mr-3 ${SUCCESS_BTN_OUTLINE}`}
             onClick={handleClickAddSection}
-          >Add section</button>
+          >Add section
+          </button>
           <button
             className="w-5/12 sm:w-auto sm:ml-auto py-2 px-6 bg-gray-200 font-semibold rounded hover:bg-gray-300 mr-3"
             onClick={() => navigate(-1)}
-          >Cancel</button>
+          >Cancel
+          </button>
           <button
             disabled={Object.keys(validObj).some(key => validObj[key] === false)}
             className="w-5/12 ml-auto sm:ml-0 mt-8 sm:mt-0 sm:w-auto py-2 px-6 bg-prussian-blue-400 text-white font-semibold rounded hover:bg-prussian-blue-500 disabled:bg-gray-400 disabled:bg-opacity-40 disabled:cursor-not-allowed"
             onClick={handleClickSave}
-          >Save</button>
+          >Save
+          </button>
         </div>
       </div>
     </span>

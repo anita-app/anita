@@ -10,8 +10,9 @@ import { ChildOfSelectorForSection } from 'app/ui-react-components/shared-compon
 import { HiddenInput } from 'app/ui-react-components/shared-components/forms-automator/form-fields/hidden-input.component'
 import { OptionsMaker } from 'app/ui-react-components/shared-components/forms-automator/form-fields/options-maker.component'
 import { ParentsSelector } from 'app/ui-react-components/shared-components/forms-automator/form-fields/parents-selector.component'
+import React from 'react'
 
-export function formElesSwitcher(key: string, componentCode: FORM_COMPONENTS_CODES, props: ICommonFormEleProps) {
+export function formElesSwitcher (key: string, componentCode: FORM_COMPONENTS_CODES, props: ICommonFormEleProps) {
   const codaAsInt = typeof componentCode === 'number' ? componentCode : parseInt(componentCode, 10)
   switch (codaAsInt) {
     case FORM_COMPONENTS_CODES.hiddenInput:

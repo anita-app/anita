@@ -20,7 +20,6 @@ export enum FORM_COMPONENTS_CODES {
   parentsSelector = 11
 }
 
-
 /**
  * Defines the value of the Select element for picking the type of Component for a field.
  */
@@ -53,4 +52,4 @@ export const SELECTABLE_FORM_ELES: Array<OptionKeysModel> = [
     value: FORM_COMPONENTS_CODES.dateTimePicker,
     label: 'Date & time'
   }
-];
+]

@@ -1,6 +1,6 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant'
 import { urlParamFiller } from 'app/anita-routes/url-param-fillers.function'
-import { ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 interface IProjectTableListTdWithLinkToDetailsProps {
@@ -10,15 +10,15 @@ interface IProjectTableListTdWithLinkToDetailsProps {
 }
 
 export const ProjectTableListTdWithLinkToDetails: React.FC<IProjectTableListTdWithLinkToDetailsProps> = ({ children, tdProps, elementId }) => {
-
-  const navigation = useNavigate();
-  const params = useParams();
+  const navigation = useNavigate()
+  const params = useParams()
 
   const handleClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
-    const target = e.target as HTMLElement;
+    const target = e.target as HTMLElement
     // if the target is a link, do nothing
-    if (target.tagName === 'A' || target.tagName === 'BUTTON')
-      return;
+    if (target.tagName === 'A' || target.tagName === 'BUTTON') {
+      return
+    }
     navigation(urlParamFiller(ANITA_URLS.projectSectionEleDetails, [
       { name: URL_PARAMS.projectId, value: params.projectId },
       { name: URL_PARAMS.sectionId, value: params.sectionId },
@@ -35,5 +35,4 @@ export const ProjectTableListTdWithLinkToDetails: React.FC<IProjectTableListTdWi
       {children}
     </td>
   )
-
 }

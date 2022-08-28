@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react'
 
 interface IModalContentProps {
   children: ReactNode
@@ -20,4 +20,4 @@ export const ModalContent: React.FC<IModalContentProps> = ({ children, icon }) =
       </div>
     </div>
   </div>
-);
+)

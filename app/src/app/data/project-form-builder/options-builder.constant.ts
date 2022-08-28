@@ -8,8 +8,8 @@ const commonFieldsAdvanced: FormFieldsModel<OptionKeysModel> = {
   type: TextInputSupportedTypes.text,
   label: 'Label',
   required: true,
-  width: "8"
-};
+  width: '8'
+}
 
 const commonFieldsBasic: FormFieldsModel<OptionKeysModel> = {
   componentCode: FORM_COMPONENTS_CODES.basicInput,
@@ -17,8 +17,8 @@ const commonFieldsBasic: FormFieldsModel<OptionKeysModel> = {
   type: TextInputSupportedTypes.text,
   label: 'Label',
   required: true,
-  width: "11"
-};
+  width: '11'
+}
 
 /**
  * Defines the Form model to create the options of a `select` or `radio` element.
@@ -33,10 +33,10 @@ export const optionsBuilderForAddingAdvanced: Array<FormFieldsModel<OptionKeysMo
     type: TextInputSupportedTypes.text,
     label: 'Value',
     required: true,
-    width: "3"
+    width: '3'
   },
   commonFieldsAdvanced
-];
+]
 
 export const optionsBuilderForAddingBasic: Array<FormFieldsModel<OptionKeysModel>> = [
   {
@@ -44,7 +44,7 @@ export const optionsBuilderForAddingBasic: Array<FormFieldsModel<OptionKeysModel
     fieldName: 'value'
   },
   commonFieldsBasic
-];
+]
 
 /**
  * Defines the Form model to edit the options of a `select` or `radio` element.
@@ -60,11 +60,11 @@ export const optionsBuilderForEditingAdvanced: Array<FormFieldsModel<OptionKeysM
     label: 'Value',
     disabled: true,
     required: true,
-    width: "3"
+    width: '3'
   },
   commonFieldsAdvanced
 
-];
+]
 export const optionsBuilderForEditingBasic: Array<FormFieldsModel<OptionKeysModel>> = [
   {
     componentCode: FORM_COMPONENTS_CODES.hiddenInput,
@@ -72,4 +72,4 @@ export const optionsBuilderForEditingBasic: Array<FormFieldsModel<OptionKeysMode
   },
   commonFieldsBasic
 
-];
+]

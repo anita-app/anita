@@ -5,31 +5,30 @@ import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { FormAutomator } from 'app/ui-react-components/shared-components/forms-automator/form-automator.component'
 import { FormAutomatorOnChangeValue } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import { useSelector } from 'react-redux'
+import React from 'react'
 
 interface IProjectFormElementManagerProps {
   sectionId: string
 }
 
 export const ProjectFormElementManager: React.FC<IProjectFormElementManagerProps> = ({ sectionId }) => {
-
   const project = Manager.getCurrentProject()
-  const section = project.getSectionById(sectionId);
+  const section = project.getSectionById(sectionId)
 
-  const element = useSelector((store: AnitaStore) => store.formElement.element);
+  const element = useSelector((store: AnitaStore) => store.formElement.element)
 
   const handleChange = (fieldName: string | number, value: FormAutomatorOnChangeValue) => {
-    storeDispatcher({ type: REDUX_ACTIONS.updateFormElementKey, payload: { fieldName, value } });
+    storeDispatcher({ type: REDUX_ACTIONS.updateFormElementKey, payload: { fieldName, value } })
   }
 
   return (
     <form name="element-form">
-      {section.childOf && section.childOf.length > 0 && <FormAutomator
+      {section.childOf && section.childOf.length > 0 && (<FormAutomator
         formModel={[section.getParentInfoFormEle()]}
         element={element}
-        handleChange={handleChange} />
-      }
+        handleChange={handleChange}
+                                                         />)}
       <FormAutomator formModel={section.formModel} element={element} handleChange={handleChange} />
     </form>
   )
-
-};
+}

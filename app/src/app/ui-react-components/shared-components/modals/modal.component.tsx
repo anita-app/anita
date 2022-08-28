@@ -1,8 +1,8 @@
-import { ModalBody } from 'app/ui-react-components/shared-components/modals/modal-body.component';
-import { ModalContent } from 'app/ui-react-components/shared-components/modals/modal-content.component';
-import { ModalFooter } from 'app/ui-react-components/shared-components/modals/modal-footer.component';
-import { ModalHeader } from 'app/ui-react-components/shared-components/modals/modal-header.component';
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react'
+import { ModalBody } from 'app/ui-react-components/shared-components/modals/modal-body.component'
+import { ModalContent } from 'app/ui-react-components/shared-components/modals/modal-content.component'
+import { ModalFooter } from 'app/ui-react-components/shared-components/modals/modal-footer.component'
+import { ModalHeader } from 'app/ui-react-components/shared-components/modals/modal-header.component'
 
 interface IModalProps {
   title: string;
@@ -20,18 +20,16 @@ const bgClasses = {
   confirm: {
     normal: 'bg-prussian-blue-500',
     hover: 'bg-prussian-blue-600',
-    focus: 'bg-prussian-blue-800',
+    focus: 'bg-prussian-blue-800'
   },
   alert: {
     normal: 'bg-red-600',
     hover: 'bg-red-700',
-    focus: 'bg-red-900',
+    focus: 'bg-red-900'
   }
-};
+}
 
-export const Modal: React.FC<IModalProps> = ({ title, children, type, actionText, icon, handleClickAction, closeFn, animationClass, disableAction = false }) => {
-
-  return (
+export const Modal: React.FC<IModalProps> = ({ title, children, type, actionText, icon, handleClickAction, closeFn, animationClass, disableAction = false }) => (
     <div className="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
       <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div className={`animate__animated ${animationClass} animate__faster fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity`} aria-hidden="true"></div>
@@ -63,5 +61,4 @@ export const Modal: React.FC<IModalProps> = ({ title, children, type, actionText
         </div>
       </div>
     </div>
-  )
-};
+)

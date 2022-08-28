@@ -6,6 +6,7 @@ module.exports = {
     node: true,
     mocha: true
   },
+  root: true,
   extends: [
     'standard',
     'plugin:react/recommended',
@@ -13,8 +14,6 @@ module.exports = {
     'plugin:react/recommended'
     // 'plugin:@typescript-eslint/recommended'
   ],
-  globals: {
-  },
   parser: '@typescript-eslint/parser',
   plugins: [
     '@typescript-eslint',
@@ -32,7 +31,7 @@ module.exports = {
     'import/first': 'off',
     '@typescript-eslint:disable:ordered-imports': 'off',
     'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': 'error',
+    '@typescript-eslint/no-unused-vars': ['error', { varsIgnorePattern: 'React' }],
     'no-useless-constructor': 'off',
     '@typescript-eslint/array-type': [2, { default: 'generic' }],
     '@typescript-eslint/explicit-member-accessibility': ['error', {
@@ -60,26 +59,6 @@ module.exports = {
     // TO BE EVALUATED
     // 'padding-line-between-statements': ['error', { blankLine: 'always', prev: 'block-like', next: 'return' }]
   },
-  overrides: [
-    {
-      files: ['./src/renderer/db/**/*.js'],
-      rules: {
-        camelcase: ['off', /^_.*/] // commands/utils exported names
-      }
-    },
-    {
-      files: ['./src/renderer/background/Tasks/Sync/*.js'],
-      rules: {
-        'new-cap': 'off' // cancelToken constructors
-      }
-    },
-    {
-      files: ['*.ts', '*.tsx'],
-      rules: {
-        'no-undef': 'off'
-      }
-    }
-  ],
   settings: {
     react: {
       version: 'detect'

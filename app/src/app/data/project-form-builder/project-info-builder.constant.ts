@@ -5,11 +5,10 @@ import { FormFieldsModel, OptionKeysModel } from 'app/ui-react-components/shared
 import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum'
 import { TextInputSupportedTypes } from 'app/ui-react-components/shared-components/forms-automator/input-supported-types.const'
 
-
-const hintFileSystem = 'The Project is saved in a file on your computer in JSON. Data is updated automatically every time you make any change.\nYou can chose the name and the location of the file when you click "Save" at the bottom of this form.';
-const hintFsNotSupported = 'Not supported in this browser.\nAvailable only on the Desktop version of Chrome, Edge and Opera.';
-const indexedDB = 'The Project is saved on your computer in the IndexedDB database of your Browser.\nYou can export data in a JSON file at any time.';
-const sqLite = 'The Project is saved on your computer in a SQLite database.\nThe database is stored in a file in your File System.';
+const hintFileSystem = 'The Project is saved in a file on your computer in JSON. Data is updated automatically every time you make any change.\nYou can chose the name and the location of the file when you click "Save" at the bottom of this form.'
+const hintFsNotSupported = 'Not supported in this browser.\nAvailable only on the Desktop version of Chrome, Edge and Opera.'
+const indexedDB = 'The Project is saved on your computer in the IndexedDB database of your Browser.\nYou can export data in a JSON file at any time.'
+const sqLite = 'The Project is saved on your computer in a SQLite database.\nThe database is stored in a file in your File System.'
 
 const commonFieldsForProjectInfo: Array<FormFieldsModel<IProjectSettings>> = [{
   componentCode: FORM_COMPONENTS_CODES.hiddenInput,
@@ -33,14 +32,14 @@ const commonFieldsForProjectInfo: Array<FormFieldsModel<IProjectSettings>> = [{
   value: '',
   label: 'Description',
   required: true
-}];
+}]
 
 export const availableSystems: Array<OptionKeysModel> = [
   {
     label: 'File system',
     value: LOCAL_STORAGE_SYSTEMS.fileSystem,
-    disabled: typeof window['showOpenFilePicker'] === 'undefined',
-    hint: typeof window['showOpenFilePicker'] === 'function' ? hintFileSystem : hintFsNotSupported
+    disabled: typeof window.showOpenFilePicker === 'undefined',
+    hint: typeof window.showOpenFilePicker === 'function' ? hintFileSystem : hintFsNotSupported
   },
   {
     label: 'Local database (IndexedDB)',
@@ -50,8 +49,8 @@ export const availableSystems: Array<OptionKeysModel> = [
   {
     label: 'Local database (SQLite)',
     value: LOCAL_STORAGE_SYSTEMS.SQLite,
-    disabled: typeof window['showOpenFilePicker'] === 'undefined',
-    hint: typeof window['showOpenFilePicker'] === 'function' ? sqLite : hintFsNotSupported
+    disabled: typeof window.showOpenFilePicker === 'undefined',
+    hint: typeof window.showOpenFilePicker === 'function' ? sqLite : hintFsNotSupported
   }
 ]
 
@@ -69,7 +68,7 @@ export const projectInfoNewItem: Array<FormFieldsModel<IProjectSettings>> = [
     required: true,
     options: availableSystems
   }
-];
+]
 
 export const projectInfoForEditing: Array<FormFieldsModel<IProjectSettings>> = [
   ...commonFieldsForProjectInfo,
@@ -82,4 +81,4 @@ export const projectInfoForEditing: Array<FormFieldsModel<IProjectSettings>> = [
     disabled: true,
     options: availableSystems
   }
-];
+]

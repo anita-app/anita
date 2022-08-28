@@ -4,7 +4,7 @@ import { Manager } from 'app/libs/Manager/Manager.class'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { Modal } from 'app/ui-react-components/shared-components/modals/modal.component'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router'
 
 interface IDeleteProjectButtonProps {
@@ -12,15 +12,14 @@ interface IDeleteProjectButtonProps {
 }
 
 export const DeleteProjectButton: React.FC<IDeleteProjectButtonProps> = ({ project }) => {
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [animationClass, setAnimationClass] = useState('animate__fadeIn');
-  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [animationClass, setAnimationClass] = useState('animate__fadeIn')
+  const navigate = useNavigate()
 
   const handleClickModal = () => {
     if (isModalOpen) {
       setAnimationClass('animate__fadeOut')
-      setTimeout(() => setIsModalOpen(false), 500);
+      setTimeout(() => setIsModalOpen(false), 500)
     } else {
       setAnimationClass('animate__fadeIn')
       setIsModalOpen(true)
@@ -28,15 +27,16 @@ export const DeleteProjectButton: React.FC<IDeleteProjectButtonProps> = ({ proje
   }
 
   const handleClickDelete = () => {
-    handleClickModal();
-    if (Manager.getCurrentProject().getId() === project.id)
-      storeDispatcher({ type: REDUX_ACTIONS.resetCurrentProject });
+    handleClickModal()
+    if (Manager.getCurrentProject().getId() === project.id) {
+      storeDispatcher({ type: REDUX_ACTIONS.resetCurrentProject })
+    }
     // This timeout must be equal or greater than the one in closeFn.
     // Otherwise we would cause an update on an unmounted component.
     setTimeout(() => {
       Manager.getCurrentProject().delete()
-      navigate(ANITA_URLS.projectsList);
-    }, 500);
+      navigate(ANITA_URLS.projectsList)
+    }, 500)
   }
 
   return (

@@ -1,3 +1,4 @@
+import React from 'react'
 import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant'
 import { urlParamFiller } from 'app/anita-routes/url-param-fillers.function'
 import { SectionElement } from 'app/data/project-structure/project-info'
@@ -13,9 +14,9 @@ const DESCRIPTION_MAX_LENGHT = 500
 const shortenDescription = (string: string) => string.length > DESCRIPTION_MAX_LENGHT ? string.slice(0, DESCRIPTION_MAX_LENGHT) + ' …' : string
 
 export const ProjectGridListElement: React.FC<IProjectGridListElementProps> = (props) => {
-  const navigation = useNavigate();
-  const params = useParams();
-  const handleClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+  const navigation = useNavigate()
+  const params = useParams()
+  const handleClick = () => {
     navigation(urlParamFiller(ANITA_URLS.projectSectionEleDetails, [
       { name: URL_PARAMS.projectId, value: params.projectId },
       { name: URL_PARAMS.sectionId, value: params.sectionId },
@@ -37,7 +38,7 @@ export const ProjectGridListElement: React.FC<IProjectGridListElementProps> = (p
                 <div className="bottom-0 h-10 pointer-events-none absolute inset-x-0 z-10 bg-gradient-to-b from-transparent to-white"></div>
               )}
             </>
-        )}
+          )}
         </div>
       </div>
     </div>

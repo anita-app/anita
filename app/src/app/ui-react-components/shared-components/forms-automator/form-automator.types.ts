@@ -3,7 +3,7 @@ import {
   SectionCustomFieldProperties,
   SectionDetailsDeclaration,
   SectionElement
-  } from 'app/data/project-structure/project-info'
+} from 'app/data/project-structure/project-info'
 import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum'
 import { TextInputSupportedTypes } from 'app/ui-react-components/shared-components/forms-automator/input-supported-types.const'
 
@@ -57,7 +57,6 @@ interface IBasicCheckbox<T> extends ICommonTypes<T> {
   required?: boolean
   type?: never
 }
-
 
 /**
  * Defines the structure of possible choices to be selected in a Radio or Select html element.

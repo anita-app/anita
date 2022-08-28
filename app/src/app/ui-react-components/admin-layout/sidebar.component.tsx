@@ -1,15 +1,14 @@
-import { AnitaStore } from 'app/libs/redux/reducers.const';
-import { appVersion } from 'app/version';
-import { ReactNode } from 'react';
-import { useSelector } from 'react-redux';
-import ReactTooltip from 'react-tooltip';
+import { AnitaStore } from 'app/libs/redux/reducers.const'
+import { appVersion } from 'app/version'
+import React, { ReactNode } from 'react'
+import { useSelector } from 'react-redux'
+import ReactTooltip from 'react-tooltip'
 
 interface ISidebarProps {
   children: ReactNode
 }
 
 export const Sidebar: React.FC<ISidebarProps> = (props) => {
-
   const toggledClass = useSelector((store: AnitaStore) => store.layout.sidebar)
 
   return (
@@ -21,7 +20,7 @@ export const Sidebar: React.FC<ISidebarProps> = (props) => {
         <div className="absolute bottom-1 text-xs text-gray-400">
           <p className="inline-block mr-1">v{appVersion}</p>|
           <a className="ml-1" href="https://github.com/anita-app/anita/issues" target="_blank" rel="noreferrer">
-            <i className="bi-bug" data-tip data-for="reportBug"></i>
+            <i className="bi-bug" data-tip={true} data-for="reportBug"></i>
             <ReactTooltip id="reportBug" effect="solid">
               Report a bug
             </ReactTooltip>

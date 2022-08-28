@@ -5,7 +5,7 @@ import {
   SectionDetailsDeclaration,
   SectionElement,
   SystemData
-  } from 'app/data/project-structure/project-info'
+} from 'app/data/project-structure/project-info'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { FormFieldsModel, SupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 

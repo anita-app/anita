@@ -10,6 +10,7 @@ import { DANGER_BTN_OUTLINE, SUCCESS_BTN_OUTLINE } from 'app/ui-react-components
 import { FormAutomator } from 'app/ui-react-components/shared-components/forms-automator/form-automator.component'
 import { FormFieldsModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import { useSelector } from 'react-redux'
+import React from 'react'
 
 interface ISectionManagerProps {
   section: ISection
@@ -17,29 +18,28 @@ interface ISectionManagerProps {
 }
 
 export const SectionManager: React.FC<ISectionManagerProps> = ({ section, sectionIndex }) => {
-
-  const projectEditorMode = useSelector((store: AnitaStore) => store.formProject.mode);
-  const sections = useSelector((store: AnitaStore) => store.formProject.project[RESERVED_AUDS_KEYS._sections]);
+  const projectEditorMode = useSelector((store: AnitaStore) => store.formProject.mode)
+  const sections = useSelector((store: AnitaStore) => store.formProject.project[RESERVED_AUDS_KEYS._sections])
   const customFields: Array<string> = section.formModel
     .map(formElement => Object.values(RESERVED_FIELDS).includes(formElement.fieldName) ? null : formElement.fieldName)
-    .filter(fieldName => fieldName !== null);
+    .filter(fieldName => fieldName !== null)
 
   const handleChange = (index: number, fieldName: keyof ISection, value: ISection[keyof ISection]) => {
     storeDispatcher({
       type: REDUX_ACTIONS.updateFormProjectUpdateSection, payload: { fieldName, value, index }
-    });
+    })
   }
 
   const handleClickAddField = () => {
-    storeDispatcher({ type: REDUX_ACTIONS.updateFormProjectAddFieldToSection, payload: sectionIndex });
+    storeDispatcher({ type: REDUX_ACTIONS.updateFormProjectAddFieldToSection, payload: sectionIndex })
   }
 
   const handleClickDeleteSection = () => {
-    storeDispatcher({ type: REDUX_ACTIONS.updateFormProjectRemoveSection, payload: sectionIndex });
+    storeDispatcher({ type: REDUX_ACTIONS.updateFormProjectRemoveSection, payload: sectionIndex })
   }
 
   const handleClickDeleteField = (fieldIndex: number) => {
-    storeDispatcher({ type: REDUX_ACTIONS.updateFormProjectRemoveFieldFromSection, payload: { sectionIndex, fieldIndex } as IUpdateFormProjectRemoveFieldFromSectionPayload });
+    storeDispatcher({ type: REDUX_ACTIONS.updateFormProjectRemoveFieldFromSection, payload: { sectionIndex, fieldIndex } as IUpdateFormProjectRemoveFieldFromSectionPayload })
   }
 
   return (
@@ -57,37 +57,44 @@ export const SectionManager: React.FC<ISectionManagerProps> = ({ section, sectio
         />
       </div>
       <h4 className="pl-2 font-bold mb-2 mt-6">Section element fields</h4>
-      {section.formModel.map((formElement, indexFormElement) =>
-        !customFields.includes(formElement.fieldName) ? null : (
+      {section.formModel.map((formElement, indexFormElement) => !customFields.includes(formElement.fieldName)
+        ? null
+        : (
           <div key={`${section.id}-${indexFormElement}`} className="border border-transparent hover:border-prussian-blue-500 shadow rounded mb-3 p-4">
             <SectionFormModelManager
               indexFormElement={indexFormElement}
               indexSection={sectionIndex}
               element={formElement}
             />
-            {customFields.length < 2 ? null : (
+            {customFields.length < 2
+              ? null
+              : (
               <div className="flex justify-end">
                 <button
                   onClick={handleClickDeleteField.bind(undefined, indexFormElement)}
-                  className={`text-sm py-1 px-3 ${DANGER_BTN_OUTLINE}`}>
+                  className={`text-sm py-1 px-3 ${DANGER_BTN_OUTLINE}`}
+                >
                   Delete field
                 </button>
               </div>
-            )}
+                )}
           </div>
-        )
+          )
       )}
       <div className="flex items-end mt-10 mb-1">
-        {(sections.length > 1) && <button onClick={handleClickDeleteSection}
-          className={`py-2 px-4 text-sm ${DANGER_BTN_OUTLINE}`}>
+        {(sections.length > 1) && (<button
+          onClick={handleClickDeleteSection}
+          className={`py-2 px-4 text-sm ${DANGER_BTN_OUTLINE}`}
+                                   >
           Delete section
-        </button>}
-        <button onClick={handleClickAddField}
-          className={`ml-auto py-2 px-4 text-sm ${SUCCESS_BTN_OUTLINE}`}>
+                                   </button>)}
+        <button
+          onClick={handleClickAddField}
+          className={`ml-auto py-2 px-4 text-sm ${SUCCESS_BTN_OUTLINE}`}
+        >
           Add field
         </button>
       </div>
     </div>
   )
-
 }

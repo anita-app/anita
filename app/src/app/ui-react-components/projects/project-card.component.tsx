@@ -1,20 +1,20 @@
-import { dbInstances } from 'app/data/local-dbs/db-instances.const';
-import { IProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
-import { AnitaStore } from 'app/libs/redux/reducers.const';
-import { ProjectLoadedFooter } from 'app/ui-react-components/projects/project-card-components/project-loaded-footer.component';
-import { ProjectNotLoadedFooter } from 'app/ui-react-components/projects/project-card-components/project-not-loaded-footer.component';
-import { DeleteProjectButton } from 'app/ui-react-components/shared-components/buttons/delete-project.component';
-import { CardFooterItemsEnd } from 'app/ui-react-components/shared-components/common-ui-eles/card-footer-items-end.component';
-import * as dateFormat from 'date-format';
-import { useSelector } from 'react-redux';
+import { dbInstances } from 'app/data/local-dbs/db-instances.const'
+import { IProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info'
+import { AnitaStore } from 'app/libs/redux/reducers.const'
+import { ProjectLoadedFooter } from 'app/ui-react-components/projects/project-card-components/project-loaded-footer.component'
+import { ProjectNotLoadedFooter } from 'app/ui-react-components/projects/project-card-components/project-not-loaded-footer.component'
+import { DeleteProjectButton } from 'app/ui-react-components/shared-components/buttons/delete-project.component'
+import { CardFooterItemsEnd } from 'app/ui-react-components/shared-components/common-ui-eles/card-footer-items-end.component'
+import * as dateFormat from 'date-format'
+import { useSelector } from 'react-redux'
+import React from 'react'
 
 interface IProjectCardProps {
   project: IProjectSettings
 }
 
 export const ProjectCard: React.FC<IProjectCardProps> = ({ project }) => {
-
-  const projectState = useSelector((state: AnitaStore) => state.project);
+  const projectState = useSelector((state: AnitaStore) => state.project)
 
   return (
     <div className=" mt-4 h-full border-2 border-gray-200 border-opacity-60 rounded-lg bg-white">
@@ -31,9 +31,10 @@ export const ProjectCard: React.FC<IProjectCardProps> = ({ project }) => {
             projectState === null ||
             projectState[RESERVED_AUDS_KEYS._settings][0].id !== project.id ||
             dbInstances[project.id] === undefined
-          ) ? <ProjectNotLoadedFooter project={project} /> : <ProjectLoadedFooter project={project} />}
+          )
+            ? <ProjectNotLoadedFooter project={project} />
+            : <ProjectLoadedFooter project={project} />}
         </CardFooterItemsEnd>
-
 
       </div>
     </div>
