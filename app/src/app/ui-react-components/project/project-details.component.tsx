@@ -1,7 +1,6 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
-import { dbInstances } from 'app/data/local-dbs/db-instances.const';
 import { availableSystems } from 'app/data/project-form-builder/project-info-builder.constant';
-import { IProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info';
+import { IProjectSettings } from 'app/data/project-structure/project-info';
 import { Manager } from 'app/libs/Manager/Manager.class';
 import { txtByFieldValue } from 'app/libs/project-helpers/txt-by-field-value.function';
 import { DeleteProjectButton } from 'app/ui-react-components/shared-components/buttons/delete-project.component';
@@ -51,14 +50,10 @@ export const ProjectDetails: React.FC = () => {
     let isMounted = true;
 
     const loadProject = async () => {
-      const canProceed = await Manager.isProjectLoaded(projectId);
+      const project = await Manager.getProjectById(projectId);
 
-      if (!canProceed)
-        return setElement(undefined);
-
-      const project = await dbInstances[projectId].callSelector<IProjectSettings>(RESERVED_AUDS_KEYS._settings).single();
       if (isMounted)
-        setElement(project);
+        setElement(project?.getSettings())
     }
 
     if (isMounted)

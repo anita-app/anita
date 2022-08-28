@@ -1,12 +1,6 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant'
-import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
-import {
-  IProjectSettings,
-  RESERVED_AUDS_KEYS,
-  ISection,
-  SystemData
-  } from 'app/data/project-structure/project-info'
+import {  RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info'
 import { IdCreator } from 'app/libs/id-creator/id-creator.class'
 import { Manager } from 'app/libs/Manager/Manager.class'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
@@ -39,12 +33,12 @@ export const AddEditProject: React.FC = () => {
 
 
     const fetchEProject = async () => {
-      const canProceed = await Manager.isProjectLoaded(projectId);
-      if (!projectId || !canProceed)
+      const project = await Manager.getProjectById(projectId);
+      if (!project)
         return setProject(undefined);
 
-      const _settings = await dbInstances[projectId].callSelector<IProjectSettings>(RESERVED_AUDS_KEYS._settings).multiple();
-      const _sections = await dbInstances[projectId].callSelector<ISection>(RESERVED_AUDS_KEYS._sections).multiple();
+      const _settings = [{...project.getSettings()}]
+      const _sections = [...project.getSectionsDefinitions()]
 
       if (isMounted)
         setProject({ _settings, _sections });

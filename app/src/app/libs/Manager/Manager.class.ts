@@ -21,8 +21,8 @@ export class Manager {
     return this.currentProject
   }
 
-  public static getProjectById = async (projectId: string, setProject = true): Promise<Project> => {
-    if (await this.isProjectLoaded(projectId)) {
+  public static getProjectById = async (projectId: string | undefined): Promise<Project | undefined> => {
+    if (projectId && await this.isProjectLoaded(projectId)) {
       return this.currentProject
     }
   }
@@ -36,7 +36,7 @@ export class Manager {
     }
   }
 
-  public static async isProjectLoaded(projectId: string, setProject = true): Promise<boolean> {
+  private static async isProjectLoaded(projectId: string, setProject = true): Promise<boolean> {
 
     if (typeof dbInstances?.[projectId]?.callSelector === 'function')
       return true;

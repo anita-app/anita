@@ -1,8 +1,5 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
-import { dbInstances } from 'app/data/local-dbs/db-instances.const';
-import { RESERVED_AUDS_KEYS, SectionElement } from 'app/data/project-structure/project-info';
-import { AnitaStore } from 'app/libs/redux/reducers.const';
-import { findSectionById } from 'app/libs/tools/find-section-by-id.function';
+import { SectionElement } from 'app/data/project-structure/project-info';
 import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum';
 import { ProjectTableList } from 'app/ui-react-components/project/project-table-list/project-table-list.component';
 import { NoSectionData } from 'app/ui-react-components/project/project-no-section-data.component';
@@ -10,7 +7,6 @@ import { AddEditElementButton } from 'app/ui-react-components/shared-components/
 import { MainContentContainer } from 'app/ui-react-components/shared-components/common-ui-eles/main-content-container.component';
 import { Loader } from 'app/ui-react-components/shared-components/loader/loader.component';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { Navigate, useParams } from 'react-router';
 import { Tab } from '@headlessui/react'
 import { ProjectGridList } from 'app/ui-react-components/project/project-grid/project-grid-list';
@@ -27,19 +23,18 @@ export const SectionElementsList: React.FC = () => {
   const params = useParams();
   const projectId = params[URL_PARAMS.projectId];
   const sectionId = params[URL_PARAMS.sectionId];
-  const project = useSelector((state: AnitaStore) => state.project);
   const [sectionData, setSectionData] = useState<Array<SectionElement>>(null);
   const [activeTab, setActiveTab] = useState<number>(1)
 
   useEffect(() => {
     let isMounted = true;
     const getSectionData = async () => {
-      const canProceed = await Manager.isProjectLoaded(projectId);
+      const project = await Manager.getProjectById(projectId);
 
-      if (!canProceed)
+      if (!project)
         return setSectionData(undefined);
 
-      const data = await dbInstances[projectId].callSelector<SectionElement>(sectionId).multiple();
+      const data = await project.getSectionById(sectionId).getAllElements()
       if (isMounted)
         setSectionData(data);
     }
@@ -53,10 +48,10 @@ export const SectionElementsList: React.FC = () => {
   if (sectionData === undefined)
     return <Navigate to={ANITA_URLS.projectsList} />;
 
-  if (project === null || sectionData === null)
+  if (sectionData === null)
     return <Loader />;
 
-  const sectionInfo = findSectionById(project[RESERVED_AUDS_KEYS._sections], sectionId);
+  const sectionInfo = Manager.getCurrentProject().getSectionById(sectionId);
 
   if (!sectionInfo)
     return null;

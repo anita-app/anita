@@ -1,10 +1,7 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant';
 import { urlParamFiller } from 'app/anita-routes/url-param-fillers.function';
-import { dbInstances } from 'app/data/local-dbs/db-instances.const';
-import { RESERVED_AUDS_KEYS, SectionElement } from 'app/data/project-structure/project-info';
+import { SectionElement } from 'app/data/project-structure/project-info';
 import { Manager } from 'app/libs/Manager/Manager.class';
-import { AnitaStore } from 'app/libs/redux/reducers.const';
-import { findSectionById } from 'app/libs/tools/find-section-by-id.function';
 import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum';
 import { ProjectDeleteSectionElementButton } from 'app/ui-react-components/project/project-details/project-delete-section-element-button.component';
 import { ProjectParentsLinkShower } from 'app/ui-react-components/project/project-details/project-parents-link-shower.component';
@@ -14,13 +11,11 @@ import { MainContentContainer } from 'app/ui-react-components/shared-components/
 import { FormFieldsModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types';
 import { Loader } from 'app/ui-react-components/shared-components/loader/loader.component';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { Navigate, useParams } from 'react-router-dom';
 
 export const SectionElementDetails: React.FC = () => {
 
   const [element, setElement] = useState<SectionElement>(null);
-  const project = useSelector((state: AnitaStore) => state.project);
   const params = useParams();
   const projectId = params[URL_PARAMS.projectId];
   const sectionId = params[URL_PARAMS.sectionId];
@@ -29,12 +24,12 @@ export const SectionElementDetails: React.FC = () => {
   useEffect(() => {
     let isMounted = true;
     const fetchData = async () => {
-      const canProceed = await Manager.isProjectLoaded(projectId);
+      const project = await Manager.getProjectById(projectId);
 
-      if (!projectId || !sectionId || !elementId || !canProceed)
+      if (!sectionId || !elementId || !project)
         return setElement(undefined);
 
-      const element = await dbInstances[projectId].callSelector<SectionElement>(sectionId, { id: elementId }).single();
+      const element = await project.getSectionById(sectionId).getElementById(elementId);
 
       if (isMounted)
         setElement(element);
@@ -44,7 +39,7 @@ export const SectionElementDetails: React.FC = () => {
       fetchData();
 
     return () => { isMounted = false };
-  }, [projectId, sectionId, elementId, project]);
+  }, [projectId, sectionId, elementId]);
 
   if (element === undefined) {
     if (projectId && sectionId)
@@ -55,8 +50,8 @@ export const SectionElementDetails: React.FC = () => {
 
   return (
     <MainContentContainer headerText="Details">
-      {(element === null || project === null) ? <Loader /> : <ElementValuesViewer element={element} formModels={findSectionById(project[RESERVED_AUDS_KEYS._sections], sectionId).formModel as Array<FormFieldsModel<SectionElement>>} />}
-      {(element !== null && element.parentsInfo && Array.isArray(element.parentsInfo) && element.parentsInfo.length > 0) && <ProjectParentsLinkShower projectId={projectId} parentsInfo={element.parentsInfo} sections={project[RESERVED_AUDS_KEYS._sections]} />}
+      {(element === null) ? <Loader /> : <ElementValuesViewer element={element} formModels={Manager.getCurrentProject().getSectionById(sectionId).formModel} />}
+      {(element !== null && element.parentsInfo && Array.isArray(element.parentsInfo) && element.parentsInfo.length > 0) && <ProjectParentsLinkShower projectId={projectId} parentsInfo={element.parentsInfo} sections={Manager.getCurrentProject().getSectionsDefinitions()} />}
       {(element !== null && (<div>
         <ProjectDeleteSectionElementButton projectId={projectId} sectionId={sectionId} elementId={elementId} />
         <AddEditElementButton projectId={projectId} sectionId={sectionId} elementId={elementId} mode={EDITOR_MODE.edit} />
