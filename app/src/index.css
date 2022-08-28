@@ -56,6 +56,10 @@ select.border-red-300:focus {
   height: 7px;
 }
 
+.main-scrollbar {
+  overflow: overlay !important;
+}
+
 .main-scrollbar::-webkit-scrollbar {
   width: 11px !important;
   height: 11px !important;
