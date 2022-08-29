@@ -45,7 +45,16 @@ module.exports = {
     'arrow-body-style': ['error', 'as-needed'],
     'implicit-arrow-linebreak': ['error', 'beside'],
     'brace-style': ['error', '1tbs', { allowSingleLine: false }],
-    'import/order': ['error', { groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object', 'type'] }],
+    'import/order': ['error', {
+      pathGroups: [
+        {
+          pattern: 'app/**',
+          group: 'internal',
+          position: 'after'
+        }
+      ],
+      groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object', 'type']
+    }],
     'react/jsx-wrap-multilines': ['error', { declaration: true, assignment: true, return: true, arrow: true, logical: true }],
     'react/jsx-closing-bracket-location': ['error'],
     'react/jsx-closing-tag-location': ['error'],
