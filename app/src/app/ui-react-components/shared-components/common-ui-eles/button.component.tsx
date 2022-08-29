@@ -16,6 +16,9 @@ interface IButtonWithTooltipProps {
   marginClassName?: string
   hasTooltip?: boolean
   tooltip?: string
+  className?: string
+  labelClassName?: string
+  tooltipContainerClassName?: string
 }
 
 enum LabelBreakpoints {
@@ -45,13 +48,13 @@ export const Button: React.FC<IButtonWithTooltipProps> = (props) => {
     <Component
       to={props.href ? props.href : null}
       onClick={props.onClick ? props.onClick : null}
-      className={`${padding} ${props.marginClassName ?? 'mr-3'} inline-flex items-center leading-none text-sm rounded ${textClassName} ${bgClassName}`}
+      className={`${props.className || ''} ${padding} ${props.marginClassName ?? 'mr-3'} inline-flex items-center leading-none text-sm rounded ${textClassName} ${bgClassName}`}
       data-tip={true}
       data-for={props.id}
     >
-      {!!props.icon && <i className={props.icon}></i>}<span className={`${props.icon ? 'ml-2' : ''} ${collapsable ? 'hidden' : ''} ${props.breakpoint ? LabelBreakpoints[props.breakpoint] : ''}`}>{props.label}</span>
+      {!!props.icon && <i className={props.icon}></i>}<span className={`${props.icon ? 'ml-2' : ''} ${collapsable ? 'hidden' : ''} ${props.breakpoint ? LabelBreakpoints[props.breakpoint] : ''} ${props.labelClassName || ''}`}>{props.label}</span>
       {props.hasTooltip && (
-        <span className={props.breakpoint ? TooltipBreakpoints[props.breakpoint] : ''}>
+        <span className={props.breakpoint ? TooltipBreakpoints[props.breakpoint] : props.tooltipContainerClassName || ''}>
           <ReactTooltip id={props.id} effect="solid">
             {props.tooltip || props.label}
           </ReactTooltip>

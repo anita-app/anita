@@ -1,12 +1,11 @@
 import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const'
 import { RESERVED_AUDS_KEYS, ISection } from 'app/data/project-structure/project-info'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
-import { DANGER_BTN_OUTLINE } from 'app/ui-react-components/shared-components/buttons/buttons-layout-tw-classes.const'
+import { Button } from 'app/ui-react-components/shared-components/common-ui-eles/button.component'
 import { FormAutomator } from 'app/ui-react-components/shared-components/forms-automator/form-automator.component'
 import { FormFieldsModel, IBasicSelect, ICommonFormEleProps, IOptionKeysModel, TSupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import React, { memo, useMemo } from 'react'
 import { useSelector } from 'react-redux'
-import ReactTooltip from 'react-tooltip'
 
 /**
  * Checks if the OptionKeysModel was already in the section before we started editing.
@@ -43,17 +42,22 @@ export const OptionsMakerSingleOption: React.FC<ICommonFormEleProps<FormFieldsMo
         handleChange={handleOptionsChange.bind(undefined, index, optionElement)}
       />
       {(typeof handleClickDeleteOption === 'function' && element[formEle.fieldName].length > 2) && (
-        <div className="inline-block w-full lg:w-1/12 px-2 lg:pl-1 lg:pr-3 lg:align-bottom mb-8">
-        <button
-          onClick={handleClickDeleteOption.bind(undefined, index)}
-          data-tip={true} data-for={`deleteOption-${index}`}
-          className={`w-full py-1 ${DANGER_BTN_OUTLINE}`}
-        ><i className="bi-trash hidden lg:block"></i><span className="lg:hidden">Delete option {index + 1}</span>
-        </button>
-        <ReactTooltip id={`deleteOption-${index}`} effect="solid">
-          Delete option {index + 1}
-        </ReactTooltip>
-        </div>)}
+        <div className="flex w-full px-2 lg:pl-1 lg:pr-3 lg:justify-end mb-8">
+          <Button
+            id={`deleteOption-${index + 1}`}
+            label={`Delete option ${index + 1}`}
+            icon="bi-trash"
+            status="danger"
+            fillStyle="outline"
+            hasTooltip={true}
+            onClick={handleClickDeleteOption.bind(undefined, index)}
+            marginClassName=''
+            className="w-full lg:w-12 justify-center"
+            labelClassName="lg:hidden"
+            tooltipContainerClassName="hidden lg:block"
+          />
+        </div>
+      )}
     </li>
   )
 })
