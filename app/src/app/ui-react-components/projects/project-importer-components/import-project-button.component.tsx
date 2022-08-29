@@ -68,8 +68,7 @@ export const ImportProjectButton: React.FC<IImportProjectButtonProps> = (props) 
         labelClassName={props.btnType === 'icon' ? 'hidden' : null}
         icon={props.btnType === 'icon' ? 'bi-arrow-bar-down' : null}
         onClick={handleClickModal}
-        marginClassName={props.btnType === 'text' ? 'mt-4' : ''}
-        type={props.btnType === 'text' ? 'primary' : 'secondary'}
+        type="secondary"
         size={props.btnType === 'text' ? 'lg' : 'sm'}
         className={props.btnType === 'text' ? 'w-full' : ''}
         hasTooltip={props.btnType === 'icon'}

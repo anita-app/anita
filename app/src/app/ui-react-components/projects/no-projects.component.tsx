@@ -1,7 +1,7 @@
 import React from 'react'
 import { ANITA_URLS } from 'app/anita-routes/anita-routes.constant'
 import { ImportProjectButton } from 'app/ui-react-components/projects/project-importer-components/import-project-button.component'
-import { Link } from 'react-router-dom'
+import { Button } from 'app/ui-react-components/shared-components/common-ui-eles/button.component'
 
 export const ProjectsNone: React.FC = () => (
   <div className="container px-0 md:px2 lg:px-5 pt-20 md:pt-24 mx-auto">
@@ -12,11 +12,14 @@ export const ProjectsNone: React.FC = () => (
         <p className="leading-relaxed mb-3">You can create a new project or import one from an existing project file.</p>
         <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-2 mt-7">
           <ImportProjectButton btnType="text" />
-          <Link
-            to={ANITA_URLS.projectAdd}
-            className="w-full flex flex-wrap content-center justify-center mt-4 bg-gray-200 border-0 py-3 px-8 focus:outline-none hover:bg-gray-400 rounded font-bold text-sm"
-          >Create a new project
-          </Link>
+          <Button
+            id="createProject"
+            label="Create a new project"
+            type="primary"
+            size="lg"
+            href={ANITA_URLS.projectAdd}
+            marginClassName="mt-4 lg:mt-0"
+          />
         </div>
       </div>
     </div>

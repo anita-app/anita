@@ -57,7 +57,7 @@ export const FormProjectManager: React.FC = () => {
             label="Add section"
             type="success"
             fill="outline"
-            className="w-full sm:w-auto justify-center"
+            className="w-full sm:w-auto"
             marginClassName=""
             onClick={handleClickAddSection}
           />
@@ -67,14 +67,14 @@ export const FormProjectManager: React.FC = () => {
               label="Cancel"
               marginClassName="mt-8 sm:mt-0 mr-3"
               type="secondary"
-              className="grow justify-center"
+              className="grow"
               onClick={() => navigate(-1)}
             />
             <Button
               id="save"
               label="Save"
               type="primary"
-              className="grow justify-center"
+              className="grow"
               marginClassName="mt-8 sm:mt-0"
               disabled={Object.keys(validObj).some(key => validObj[key] === false)}
               onClick={handleClickSave}
