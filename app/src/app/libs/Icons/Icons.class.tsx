@@ -2,7 +2,7 @@ import * as ionicons from 'ionicons/icons/index'
 import { IonIcon } from '@ionic/react'
 import React, { ReactElement } from 'react'
 import { IOption } from 'app/Models/ParentElement/ParentElement.class'
-import { TextTools } from 'app/libs/tools/TextTools.class'
+import { TextTools } from 'app/libs/Tools/TextTools.class'
 
 export class Icons {
   public static getIconsOptionsList (): Array<IOption> {

@@ -4,7 +4,7 @@ import { GetParentInfoForDetailsView } from 'app/Models/Project/GetParentInfoFor
 import { ProjectDeletor } from 'app/Models/Project/ProjectDeletor.class'
 import { ExportScope, ProjectExporter } from 'app/Models/Project/ProjectExporter.class'
 import { Section } from 'app/Models/Section/Section.class'
-import { IOptionKeysModel, OptionKeysModelGroup } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
+import { IOptionKeysModel, OptionKeysModelGroup } from 'app/Components/shared-components/forms-automator/form-automator.types'
 
 export class Project {
   private settings: SystemData[RESERVED_AUDS_KEYS._settings][0]

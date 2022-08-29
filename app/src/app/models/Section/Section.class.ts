@@ -3,9 +3,9 @@ import { ISection, SectionElement } from 'app/data/project-structure/project-inf
 import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant'
 import { ParentInfoFormEleBuilder } from 'app/Models/Section/ParentInfoFormEleBuilder.class'
 import { SectionElementSaver } from 'app/Models/Section/SectionElementSaver.class'
-import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum'
-import { FormFieldsModel, TSupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
-import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum'
+import { EDITOR_MODE } from 'app/Components/editor-mode.enum'
+import { FormFieldsModel, TSupportedFormsTypes } from 'app/Components/shared-components/forms-automator/form-automator.types'
+import { FORM_COMPONENTS_CODES } from 'app/Components/shared-components/forms-automator/form-component-codes.enum'
 
 export class Section implements ISection {
   public id: string

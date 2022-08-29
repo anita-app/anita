@@ -3,7 +3,7 @@ import { SectionElement } from 'app/data/project-structure/project-info'
 import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant'
 import { SectionModel } from 'app/libs/db-connector/db-builder/sez-definition'
 import { IdCreator } from 'app/libs/id-creator/id-creator.class'
-import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum'
+import { EDITOR_MODE } from 'app/Components/editor-mode.enum'
 
 /**
  * Saves a new element in a section of the project, stores the project on disk and dispatches the changes to the current state

@@ -2,9 +2,9 @@ import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.
 import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant'
 import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api'
-import { FormFieldsModel, IOptionKeysModel, TSupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
-import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum'
-import { TextInputSupportedTypes } from 'app/ui-react-components/shared-components/forms-automator/input-supported-types.const'
+import { FormFieldsModel, IOptionKeysModel, TSupportedFormsTypes } from 'app/Components/shared-components/forms-automator/form-automator.types'
+import { FORM_COMPONENTS_CODES } from 'app/Components/shared-components/forms-automator/form-component-codes.enum'
+import { TextInputSupportedTypes } from 'app/Components/shared-components/forms-automator/input-supported-types.const'
 
 /**
  * Reserved keys are needed to store system required properties.
