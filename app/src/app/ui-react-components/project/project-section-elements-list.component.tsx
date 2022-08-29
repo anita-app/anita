@@ -12,7 +12,7 @@ import { Tab } from '@headlessui/react'
 import { ProjectGridList } from 'app/ui-react-components/project/project-grid/project-grid-list'
 import { Manager } from 'app/libs/Manager/Manager.class'
 
-const SUPPORTED_VIEWS = ['list', 'grid']
+const SUPPORTED_VIEWS = ['table', 'grid']
 
 function classNames (...classes) {
   return classes.filter(Boolean).join(' ')
