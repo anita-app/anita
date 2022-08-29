@@ -59,7 +59,7 @@ export const AddEditSectionElement: React.FC = () => {
   storeDispatcher({ type: REDUX_ACTIONS.updateFormElement, payload: element })
 
   return (
-    <MainContentContainer headerText={headerText}>
+    <MainContentContainer headerText={headerText} overflowClassName="overflow-y-visible">
       {element === null && <Loader />}
       {element !== null && <ProjectFormElementManager sectionId={sectionId} />}
       {element !== null && <ProjectSaveElement sectionId={sectionId} />}

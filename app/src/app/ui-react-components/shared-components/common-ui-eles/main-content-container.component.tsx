@@ -4,6 +4,7 @@ interface IMainContentContainerProps {
   headerText?: string
   headerRightComponent?: ReactNode
   hasHeaderOnlyStyle?: boolean
+  overflowClassName?: string
   children: ReactNode
 }
 
@@ -18,7 +19,7 @@ export const MainContentContainer: React.FC<IMainContentContainerProps> = (props
         {!props.hasHeaderOnlyStyle && <hr className="mt-4" />}
       </div>
     )}
-    <div className="pt-4 pb-4 overflow-y-auto">
+    <div className={`pt-4 pb-4 ${props.overflowClassName ?? 'overflow-y-auto'}`}>
       {props.children}
     </div>
   </div>
