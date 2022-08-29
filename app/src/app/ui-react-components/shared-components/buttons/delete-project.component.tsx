@@ -48,8 +48,7 @@ export const DeleteProjectButton: React.FC<IDeleteProjectButtonProps> = ({ proje
         icon="bi-trash"
         onClick={handleClickModal}
         breakpoint={'lg'}
-        textColorClassName="text-red-700"
-        bgColorClassName="bg-red-700 bg-opacity-10 hover:bg-opacity-20"
+        status="danger"
         hasTooltip={true}
       />
       {isModalOpen && (

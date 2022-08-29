@@ -12,8 +12,7 @@ export const ProjectNotLoadedFooter: React.FC<IProjectNotLoadedFooterProps> = ({
     id="loadProject"
     label="Load project"
     onClick={() => Manager.loadProjectById(project.id)}
-    textColorClassName="text-white"
-    bgColorClassName="bg-green-500 hover:bg-green-600"
+    status="success"
     marginClassName=''
   />
 )

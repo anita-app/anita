@@ -2,7 +2,7 @@ import { IProjectSettings, ISection, ParentInfoForDetailsView, RESERVED_AUDS_KEY
 import { GetOptionsForParentsSelector } from 'app/Models/Project/GetOptionsForParentsSelector.class'
 import { GetParentInfoForDetailsView } from 'app/Models/Project/GetParentInfoForDetailsView.class'
 import { ProjectDeletor } from 'app/Models/Project/ProjectDeletor.class'
-import { ProjectExporter } from 'app/Models/Project/ProjectExporter.class'
+import { ExportScope, ProjectExporter } from 'app/Models/Project/ProjectExporter.class'
 import { Section } from 'app/Models/Section/Section.class'
 import { IOptionKeysModel, OptionKeysModelGroup } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 
@@ -24,11 +24,11 @@ export class Project {
 
   public getSectionsDefinitions = (): Array<ISection> => this.sectionsDefinitions
 
-  public export = (): void => {
+  public export = (scope: ExportScope): void => {
     new ProjectExporter({
       [RESERVED_AUDS_KEYS._settings]: [this.settings],
       [RESERVED_AUDS_KEYS._sections]: this.sectionsDefinitions
-    }).export()
+    }).export(scope)
   }
 
   public delete = (): void => {

@@ -1,3 +1,4 @@
+import { COLOR_SCHEME, TFillStyle, TStatus } from 'app/ui-react-components/shared-components/common-ui-eles/components.const'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
@@ -6,8 +7,8 @@ interface IButtonWithTooltipProps {
   id: string
   label: string
   icon?: string
-  textColorClassName?: string
-  bgColorClassName?: string
+  status: TStatus
+  fillStyle?: TFillStyle
   href?: string
   onClick?: () => void
   breakpoint?: 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
@@ -35,11 +36,14 @@ enum TooltipBreakpoints {
 export const Button: React.FC<IButtonWithTooltipProps> = (props) => {
   const Component = props.href ? Link : 'button'
   const collapsable = (props.hasTooltip || !!props.tooltip) && props.breakpoint
+  const fillStyle: TFillStyle = props.fillStyle ?? 'solid'
+  const bgClassName = COLOR_SCHEME[fillStyle].bg[props.status]
+  const textClassName = COLOR_SCHEME[fillStyle].text[props.status]
   return (
     <Component
       to={props.href ? props.href : null}
       onClick={props.onClick ? props.onClick : null}
-      className={`px-4 py-3 ${props.marginClassName ?? 'mr-3'} inline-flex items-center ml-auto leading-none text-sm rounded ${props.textColorClassName ?? 'text-gray-800'} ${props.bgColorClassName ?? 'bg-gray-100 hover:bg-gray-200'}`}
+      className={`px-4 py-3 ${props.marginClassName ?? 'mr-3'} inline-flex items-center ml-auto leading-none text-sm rounded ${textClassName} ${bgClassName}`}
       data-tip={true}
       data-for={props.id}
     >
