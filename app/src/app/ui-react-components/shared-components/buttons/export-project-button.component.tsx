@@ -25,12 +25,12 @@ export const ExportButton: React.FC = () => (
   <Dropdown
     id="exportProject"
     label="Export"
-    labelClassName="hidden md:inline-block"
+    labelClassName="hidden lg:inline-block"
     tooltip="Export"
-    tooltipClassName='md:hidden'
-    chevronClassName="hidden md:inline-block"
+    tooltipClassName='lg:hidden'
+    chevronClassName="hidden lg:inline-block"
     icon="bi-arrow-bar-up"
-    iconClassName="md:hidden"
+    iconClassName="lg:hidden"
     margin="mr-3"
     menuItems={exportMenuItems}
   />
