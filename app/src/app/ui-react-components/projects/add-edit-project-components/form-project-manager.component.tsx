@@ -9,11 +9,11 @@ import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum'
 import { SectionManager } from 'app/ui-react-components/projects/add-edit-project-components/section-manager.component'
-import { SUCCESS_BTN_OUTLINE } from 'app/ui-react-components/shared-components/buttons/buttons-layout-tw-classes.const'
 import { FormAutomator } from 'app/ui-react-components/shared-components/forms-automator/form-automator.component'
 import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router'
 import React from 'react'
+import { Button } from 'app/ui-react-components/shared-components/common-ui-eles/button.component'
 
 export const FormProjectManager: React.FC = () => {
   const { projectId } = useParams<URL_PARAMS>()
@@ -51,23 +51,35 @@ export const FormProjectManager: React.FC = () => {
         {project[RESERVED_AUDS_KEYS._sections].map((section, index) => <SectionManager key={section.id} section={section} sectionIndex={index} />)}
       </div>
       <div className="mt-5 p-4 bg-white rounded shadow">
-        <div className="flex items-end flex-wrap">
-          <button
-            className={`w-full sm:w-auto py-2 px-6 sm:mr-3 ${SUCCESS_BTN_OUTLINE}`}
+        <div className="flex sm:justify-between flex-wrap">
+          <Button
+            id="addSection"
+            label="Add section"
+            type="success"
+            fill="outline"
+            className="w-full sm:w-auto justify-center"
+            marginClassName=""
             onClick={handleClickAddSection}
-          >Add section
-          </button>
-          <button
-            className="w-5/12 sm:w-auto sm:ml-auto py-2 px-6 bg-gray-200 font-semibold rounded hover:bg-gray-300 mr-3"
-            onClick={() => navigate(-1)}
-          >Cancel
-          </button>
-          <button
-            disabled={Object.keys(validObj).some(key => validObj[key] === false)}
-            className="w-5/12 ml-auto sm:ml-0 mt-8 sm:mt-0 sm:w-auto py-2 px-6 bg-prussian-blue-400 text-white font-semibold rounded hover:bg-prussian-blue-500 disabled:bg-gray-400 disabled:bg-opacity-40 disabled:cursor-not-allowed"
-            onClick={handleClickSave}
-          >Save
-          </button>
+          />
+          <div className="w-full sm:w-auto grid grid-cols-2 gap-4">
+            <Button
+              id="cancel"
+              label="Cancel"
+              marginClassName="mt-8 sm:mt-0 mr-3"
+              type="secondary"
+              className="grow justify-center"
+              onClick={() => navigate(-1)}
+            />
+            <Button
+              id="save"
+              label="Save"
+              type="primary"
+              className="grow justify-center"
+              marginClassName="mt-8 sm:mt-0"
+              disabled={Object.keys(validObj).some(key => validObj[key] === false)}
+              onClick={handleClickSave}
+            />
+          </div>
         </div>
       </div>
     </span>
