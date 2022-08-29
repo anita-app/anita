@@ -55,8 +55,8 @@ export const Button: React.FC<IButtonWithTooltipProps> = (props) => {
       data-for={props.id}
       disabled={props.disabled ?? false}
     >
-      {!!props.icon && <i className={props.icon}></i>}<span className={`${props.icon ? 'ml-2' : ''} ${collapsable ? 'hidden' : ''} ${props.breakpoint ? LabelBreakpoints[props.breakpoint] : ''} ${props.labelClassName || ''}`}>{props.label}</span>
-      {props.hasTooltip && (
+      {!!props.icon && <i className={props.icon}></i>}<span className={`${props.icon ? 'ml-2' : ''} ${collapsable ? 'hidden' : ''} ${props.breakpoint ? LabelBreakpoints[props.breakpoint] : ''} ${props.labelClassName ?? ''}`}>{props.label}</span>
+      {(props.hasTooltip || props.tooltip) && (
         <span className={props.breakpoint ? TooltipBreakpoints[props.breakpoint] : props.tooltipContainerClassName || ''}>
           <ReactTooltip id={props.id} effect="solid">
             {props.tooltip || props.label}

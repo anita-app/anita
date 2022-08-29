@@ -6,6 +6,7 @@ import { Manager } from 'app/libs/Manager/Manager.class'
 import { ProjectDataImporter } from 'app/libs/projects-helpers/project-importers/project-data-importer.class'
 import { ProjectFileImporter } from 'app/libs/projects-helpers/project-importers/project-file-importer.class'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
+import { Button } from 'app/ui-react-components/shared-components/common-ui-eles/button.component'
 import { FormAutomator } from 'app/ui-react-components/shared-components/forms-automator/form-automator.component'
 import { FormAutomatorOnChangeValue, FormFieldsModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import { Modal } from 'app/ui-react-components/shared-components/modals/modal.component'
@@ -15,10 +16,10 @@ import { useNavigate } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
 
 interface IImportProjectButtonProps {
-  btnType?: 'icon' | 'text'
+  btnType: 'icon' | 'text'
 }
 
-export const ImportProjectButton: React.FC<IImportProjectButtonProps> = ({ btnType = 'icon' }) => {
+export const ImportProjectButton: React.FC<IImportProjectButtonProps> = (props) => {
   const navigate = useNavigate()
   const validObj = useSelector((state: AnitaStore) => state.formElesValidState)
 
@@ -61,27 +62,18 @@ export const ImportProjectButton: React.FC<IImportProjectButtonProps> = ({ btnTy
 
   return (
     <span>
-      {btnType === 'icon'
-        ? (<span><button
-            data-tip={true} data-for="importProject"
-            onClick={handleClickModal}
-            className="mx-2 my-2 text-white bg-prussian-blue-600 border-0 py-1 px-6 focus:outline-none hover:bg-prussian-blue-700 rounded font-bold text-sm"
-                 ><i className="bi bi-arrow-bar-down"></i>
-                 </button>
-        <ReactTooltip id="importProject" effect="solid">
-          Import an existing project
-        </ReactTooltip>
-           </span>
-          )
-        : (
-        <button
-          data-tip={true} data-for="importProject"
-          onClick={handleClickModal}
-          className="w-full mt-4 text-white bg-prussian-blue-400 border-0 py-3 px-8 focus:outline-none hover:bg-prussian-blue-500 rounded font-bold text-sm"
-        >
-          Import an existing project
-        </button>
-          )}
+      <Button
+        id="importProject"
+        label="Import an existing project"
+        labelClassName={props.btnType === 'icon' ? 'hidden' : null}
+        icon={props.btnType === 'icon' ? 'bi-arrow-bar-down' : null}
+        onClick={handleClickModal}
+        marginClassName={props.btnType === 'text' ? 'mt-4' : ''}
+        type={props.btnType === 'text' ? 'primary' : 'secondary'}
+        size={props.btnType === 'text' ? 'lg' : 'sm'}
+        className={props.btnType === 'text' ? 'w-full' : ''}
+        hasTooltip={props.btnType === 'icon'}
+      />
       {isModalOpen && (<Modal
         title="Import project"
         actionText="Import"

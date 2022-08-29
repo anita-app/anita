@@ -3,11 +3,10 @@ import { ProjectsListLoader } from 'app/libs/projects-helpers/projects-handlers/
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { ProjectCard } from 'app/ui-react-components/projects/project-card.component'
 import { ImportProjectButton } from 'app/ui-react-components/projects/project-importer-components/import-project-button.component'
+import { Button } from 'app/ui-react-components/shared-components/common-ui-eles/button.component'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router'
-import { Link } from 'react-router-dom'
-import ReactTooltip from 'react-tooltip'
 
 export const ProjectsList: React.FC = () => {
   const [hasLoaded, setHasLoaded] = useState(false)
@@ -34,7 +33,7 @@ export const ProjectsList: React.FC = () => {
   }
 
   if (!hasLoaded) {
-    return <span></span>
+    return null
   }
 
   return (
@@ -45,16 +44,17 @@ export const ProjectsList: React.FC = () => {
             <h1 className="title-font text-md font-medium text-gray-900">Projects on this device</h1>
           </div>
           <div className="my-2">
-            <ImportProjectButton />
-            <Link
-              data-tip={true} data-for='createProject'
-              to={ANITA_URLS.projectAdd}
-              className="mx-2 my-2 text-white bg-prussian-blue-400 border-0 py-1 px-6 focus:outline-none hover:bg-gray-400 rounded font-bold text-sm"
-            ><i className="bi bi-plus"></i>
-            </Link>
-            <ReactTooltip id="createProject" effect="solid">
-              Create a new project
-            </ReactTooltip>
+            <ImportProjectButton btnType="icon" />
+            <Button
+              id="createProject"
+              label="Create project"
+              labelClassName="hidden"
+              icon="bi-plus"
+              tooltip='Create a new project'
+              type="primary"
+              size="sm"
+              marginClassName="mx-3"
+            />
           </div>
         </div>
       </div>
