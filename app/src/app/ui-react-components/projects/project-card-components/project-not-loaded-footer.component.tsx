@@ -12,7 +12,7 @@ export const ProjectNotLoadedFooter: React.FC<IProjectNotLoadedFooterProps> = ({
     id="loadProject"
     label="Load project"
     onClick={() => Manager.loadProjectById(project.id)}
-    status="success"
+    type="success"
     marginClassName=''
   />
 )

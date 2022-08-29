@@ -47,8 +47,8 @@ export const OptionsMakerSingleOption: React.FC<ICommonFormEleProps<FormFieldsMo
             id={`deleteOption-${index + 1}`}
             label={`Delete option ${index + 1}`}
             icon="bi-trash"
-            status="danger"
-            fillStyle="outline"
+            type="danger"
+            fill="outline"
             hasTooltip={true}
             onClick={handleClickDeleteOption.bind(undefined, index)}
             marginClassName=''

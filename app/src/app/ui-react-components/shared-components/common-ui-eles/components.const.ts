@@ -1,4 +1,4 @@
-export type TStatus = 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'danger'
+export type TType = 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'danger'
 
 export enum SolidBg {
   primary = 'bg-prussian-blue-400 hover:bg-prussian-blue-500',
@@ -47,4 +47,4 @@ export const COLOR_SCHEME = {
   }
 }
 
-export type TFillStyle = keyof typeof COLOR_SCHEME
+export type TFill = keyof typeof COLOR_SCHEME

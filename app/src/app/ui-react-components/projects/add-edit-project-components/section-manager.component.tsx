@@ -71,8 +71,8 @@ export const SectionManager: React.FC<ISectionManagerProps> = ({ section, sectio
                 <Button
                   id="deleteField"
                   label="Delete field"
-                  status="danger"
-                  fillStyle="outline"
+                  type="danger"
+                  fill="outline"
                   size="sm"
                   onClick={handleClickDeleteField.bind(undefined, indexFormElement)}
                 />
@@ -86,16 +86,16 @@ export const SectionManager: React.FC<ISectionManagerProps> = ({ section, sectio
           <Button
             id="deleteSection"
             label="Delete section"
-            status="danger"
-            fillStyle="outline"
+            type="danger"
+            fill="outline"
             onClick={handleClickDeleteSection}
           />
         )}
         <Button
           id="addField"
           label="Add field"
-          status="success"
-          fillStyle="outline"
+          type="success"
+          fill="outline"
           onClick={handleClickAddField}
         />
       </div>

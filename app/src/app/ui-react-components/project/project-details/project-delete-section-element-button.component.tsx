@@ -45,8 +45,8 @@ export const ProjectDeleteSectionElementButton: React.FC<IProjectDeleteSectionEl
         id="deleteElement"
         label="Delete"
         icon="bi-trash"
-        status="danger"
-        fillStyle="outline"
+        type="danger"
+        fill="outline"
         onClick={handleClickModal}
         breakpoint="lg"
         hasTooltip={true}

@@ -1,4 +1,4 @@
-import { COLOR_SCHEME, TFillStyle, TStatus } from 'app/ui-react-components/shared-components/common-ui-eles/components.const'
+import { COLOR_SCHEME, TFill, TType } from 'app/ui-react-components/shared-components/common-ui-eles/components.const'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
@@ -7,8 +7,8 @@ interface IButtonWithTooltipProps {
   id: string
   label: string
   icon?: string
-  status: TStatus
-  fillStyle?: TFillStyle
+  type: TType
+  fill?: TFill
   href?: string
   onClick?: () => void
   breakpoint?: 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
@@ -40,9 +40,9 @@ enum TooltipBreakpoints {
 export const Button: React.FC<IButtonWithTooltipProps> = (props) => {
   const Component = props.href ? Link : 'button'
   const collapsable = (props.hasTooltip || !!props.tooltip) && props.breakpoint
-  const fillStyle: TFillStyle = props.fillStyle ?? 'solid'
-  const bgClassName = COLOR_SCHEME[fillStyle].bg[props.status]
-  const textClassName = COLOR_SCHEME[fillStyle].text[props.status]
+  const fillStyle: TFill = props.fill ?? 'solid'
+  const bgClassName = COLOR_SCHEME[fillStyle].bg[props.type]
+  const textClassName = COLOR_SCHEME[fillStyle].text[props.type]
   const padding = props.size === 'sm' ? 'py-1 px-3' : props.size === 'lg' ? 'py-3 px-6' : 'py-3 px-4'
   return (
     <Component
