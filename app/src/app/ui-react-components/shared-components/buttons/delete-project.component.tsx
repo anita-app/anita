@@ -3,6 +3,7 @@ import { IProjectSettings } from 'app/data/project-structure/project-info'
 import { Manager } from 'app/libs/Manager/Manager.class'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
+import { ButtonWithTooltip } from 'app/ui-react-components/shared-components/common-ui-eles/button-with-tooltip.component'
 import { Modal } from 'app/ui-react-components/shared-components/modals/modal.component'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router'
@@ -41,9 +42,15 @@ export const DeleteProjectButton: React.FC<IDeleteProjectButtonProps> = ({ proje
 
   return (
     <span>
-      <button onClick={handleClickModal} className="px-4 py-2 text-red-700 inline-flex items-center rounded bg-red-700 bg-opacity-10 hover:bg-opacity-20 text-sm">
-        <i className="bi-trash"></i><span className="ml-2 hidden lg:inline-block">Delete project</span>
-      </button>
+      <ButtonWithTooltip
+        id="deleteProject"
+        label="Delete Project"
+        icon="bi-trash"
+        onClick={handleClickModal}
+        breakpoint={'lg'}
+        textColorClassName="text-red-700"
+        bgColorClassName="bg-red-700 bg-opacity-10 hover:bg-opacity-20"
+      />
       {isModalOpen && (
         <Modal
           title="Delete Project"
