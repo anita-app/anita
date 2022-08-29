@@ -53,7 +53,6 @@ export const ProjectsList: React.FC = () => {
               tooltip='Create a new project'
               type="primary"
               size="sm"
-              marginClassName="mx-3"
             />
           </div>
         </div>

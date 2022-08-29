@@ -4,7 +4,6 @@ import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { ProjectLoadedFooter } from 'app/ui-react-components/projects/project-card-components/project-loaded-footer.component'
 import { ProjectNotLoadedFooter } from 'app/ui-react-components/projects/project-card-components/project-not-loaded-footer.component'
 import { DeleteProjectButton } from 'app/ui-react-components/shared-components/buttons/delete-project.component'
-import { CardFooterItemsEnd } from 'app/ui-react-components/shared-components/common-ui-eles/card-footer-items-end.component'
 import * as dateFormat from 'date-format'
 import { useSelector } from 'react-redux'
 import React from 'react'
@@ -25,7 +24,7 @@ export const ProjectCard: React.FC<IProjectCardProps> = ({ project }) => {
         <p className="text-gray-600 text-xs">Created on:</p>
         <p className="text-md">{dateFormat('yyyy/MM/dd, at hh:mm', new Date(project.createdAt))}</p>
 
-        <CardFooterItemsEnd>
+        <div className="flex justify-between flex-wrap mt-6">
           <DeleteProjectButton project={project} />
           {(
             projectState === null ||
@@ -34,7 +33,7 @@ export const ProjectCard: React.FC<IProjectCardProps> = ({ project }) => {
           )
             ? <ProjectNotLoadedFooter project={project} />
             : <ProjectLoadedFooter project={project} />}
-        </CardFooterItemsEnd>
+        </div>
 
       </div>
     </div>
