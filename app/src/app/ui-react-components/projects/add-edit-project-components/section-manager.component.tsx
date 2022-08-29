@@ -6,11 +6,12 @@ import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { SectionFormModelManager } from 'app/ui-react-components/projects/add-edit-project-components/section-form-model-manager.component'
-import { DANGER_BTN_OUTLINE, SUCCESS_BTN_OUTLINE } from 'app/ui-react-components/shared-components/buttons/buttons-layout-tw-classes.const'
+import { DANGER_BTN_OUTLINE } from 'app/ui-react-components/shared-components/buttons/buttons-layout-tw-classes.const'
 import { FormAutomator } from 'app/ui-react-components/shared-components/forms-automator/form-automator.component'
 import { FormFieldsModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import { useSelector } from 'react-redux'
 import React from 'react'
+import { Button } from 'app/ui-react-components/shared-components/common-ui-eles/button.component'
 
 interface ISectionManagerProps {
   section: ISection
@@ -81,19 +82,23 @@ export const SectionManager: React.FC<ISectionManagerProps> = ({ section, sectio
           </div>
           )
       )}
-      <div className="flex items-end mt-10 mb-1">
-        {(sections.length > 1) && (<button
-          onClick={handleClickDeleteSection}
-          className={`py-2 px-4 text-sm ${DANGER_BTN_OUTLINE}`}
-                                   >
-          Delete section
-                                   </button>)}
-        <button
+      <div className={`flex ${sections.length > 1 ? 'justify-between' : 'justify-end'} mt-10 mb-1`}>
+        {(sections.length > 1) && (
+          <Button
+            id="deleteSection"
+            label="Delete section"
+            status="danger"
+            fillStyle="outline"
+            onClick={handleClickDeleteSection}
+          />
+        )}
+        <Button
+          id="addField"
+          label="Add field"
+          status="success"
+          fillStyle="outline"
           onClick={handleClickAddField}
-          className={`ml-auto py-2 px-4 text-sm ${SUCCESS_BTN_OUTLINE}`}
-        >
-          Add field
-        </button>
+        />
       </div>
     </div>
   )
