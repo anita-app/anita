@@ -5,7 +5,7 @@ import ReactTooltip from 'react-tooltip'
 interface IButtonWithTooltipProps {
   id: string
   label: string
-  icon: string
+  icon?: string
   textColorClassName?: string
   bgColorClassName?: string
   href?: string
@@ -43,7 +43,7 @@ export const Button: React.FC<IButtonWithTooltipProps> = (props) => {
       data-tip={true}
       data-for={props.id}
     >
-      <i className={props.icon}></i> <span className={`ml-2 ${collapsable ? 'hidden' : ''} ${props.breakpoint ? LabelBreakpoints[props.breakpoint] : ''}`}>{props.label}</span>
+      {!!props.icon && <i className={props.icon}></i>}<span className={`${props.icon ? 'ml-2' : ''} ${collapsable ? 'hidden' : ''} ${props.breakpoint ? LabelBreakpoints[props.breakpoint] : ''}`}>{props.label}</span>
       {props.hasTooltip && (
         <span className={props.breakpoint ? TooltipBreakpoints[props.breakpoint] : ''}>
           <ReactTooltip id={props.id} effect="solid">
