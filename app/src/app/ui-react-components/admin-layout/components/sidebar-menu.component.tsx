@@ -6,6 +6,7 @@ import { ProjectPicker } from 'app/ui-react-components/admin-layout/components/p
 import { useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 import React from 'react'
+import { Manager } from 'app/libs/Manager/Manager.class'
 
 const baseStyleOfSidebarLinks = 'block py-2.5 px-4 transition duration-200 border-l-2 hover:border-prussian-blue-700 hover:text-prussian-blue-500 text-sm font-semibold'
 
@@ -25,7 +26,7 @@ const ProjectMenu: React.FC = () => {
   const location = useLocation()
 
   if (project === null) {
-    return <span></span>
+    return null
   }
 
   return (
@@ -37,14 +38,17 @@ const ProjectMenu: React.FC = () => {
       <div className="block py-2.5 px-4">
         <p className="text-xs text-gray-600">Project sections:</p>
       </div>
-      {project?.[RESERVED_AUDS_KEYS._sections]?.map(section => {
+      {Manager.getCurrentProject().getSectionsDefinitions().map(section => {
         const linkPath = urlParamFiller(ANITA_URLS.projectSectionElesList, [{ name: URL_PARAMS.projectId, value: project[RESERVED_AUDS_KEYS._settings][0].id }, { name: URL_PARAMS.sectionId, value: section.id }])
-        return (<Link
-          key={section.id}
-          to={linkPath}
-          className={addActiveClassNameToBaseStyle(location.pathname, linkPath)}
-                ><i className="bi-chevron-compact-right"></i><span className="ml-2">{section.title}</span>
-                </Link>)
+        return (
+          <Link
+            key={section.id}
+            to={linkPath}
+            className={addActiveClassNameToBaseStyle(location.pathname, linkPath)}
+          >
+            <i className="bi-chevron-compact-right"></i><span className="ml-2">{section.title}</span>
+          </Link>
+        )
       }
       )}
 
@@ -56,13 +60,16 @@ export const SidebarMenu = () => {
   const location = useLocation()
 
   return (
-    <div>{nonProjectRoutes.map(route => (<Link
-      key={route.to}
-      to={route.to}
-      className={addActiveClassNameToBaseStyle(location.pathname, route.to)}
-                                         ><i className={route.icon}></i><span className="ml-2">{route.txt}</span>
-                                         </Link>)
-    )}
+    <div>
+      {nonProjectRoutes.map(route => (
+        <Link
+          key={route.to}
+          to={route.to}
+          className={addActiveClassNameToBaseStyle(location.pathname, route.to)}
+        >
+          <i className={route.icon}></i><span className="ml-2">{route.txt}</span>
+        </Link>
+      ))}
       < ProjectMenu />
     </div>
   )

@@ -22,7 +22,7 @@ export class Project {
 
   public getSettings = (): IProjectSettings => this.settings
 
-  public getSectionsDefinitions = (): Array<ISection> => this.sectionsDefinitions
+  public getSectionsDefinitions = (): Array<ISection> => this.sectionsDefinitions || []
 
   public export = (scope: ExportScope): void => {
     new ProjectExporter({
