@@ -3,6 +3,7 @@ import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import React from 'react'
+import { Button } from 'app/ui-react-components/shared-components/common-ui-eles/button.component'
 
 interface IProjectSaveElementProps {
   sectionId: string
@@ -19,18 +20,20 @@ export const ProjectSaveElement: React.FC<IProjectSaveElementProps> = ({ section
   }
 
   return (
-    <div className="mt-6 mb-3 px-2 flex justify-end">
-      <button
-        className="py-2 px-6 bg-gray-200 font-semibold rounded hover:bg-gray-300 mr-3"
+    <div className="mt-6 flex justify-end">
+      <Button
+        id="cancel"
+        label="Cancel"
+        type="secondary"
         onClick={() => navigate(-1)}
-      >Cancel
-      </button>
-      <button
+      />
+      <Button
+        id="save"
+        label="Save"
+        type="primary"
         disabled={Object.keys(validObj).some(key => validObj[key] === false)}
-        className="py-2 px-6 bg-prussian-blue-400 text-white font-semibold rounded hover:bg-prussian-blue-500"
         onClick={handleClick}
-      >Save
-      </button>
+      />
     </div>
   )
 }
