@@ -1,5 +1,5 @@
 import { ParentInfoForDetailsView } from 'app/data/project-structure/project-info'
-import { asyncForEach } from 'app/libs/tools/tools'
+import { ArrayTools } from 'app/libs/tools/ArrayTools.class'
 import { Project } from 'app/Models/Project/Project.class'
 
 export class GetParentInfoForDetailsView {
@@ -11,7 +11,7 @@ export class GetParentInfoForDetailsView {
   ) { }
 
   public async get (): Promise<Array<ParentInfoForDetailsView>> {
-    await asyncForEach(this.listOfParents, async sectionIdElementId => await this.processElement(sectionIdElementId))
+    await ArrayTools.asyncForEach(this.listOfParents, async sectionIdElementId => await this.processElement(sectionIdElementId))
     return this.parentInfoForDetailsView
   }
 
