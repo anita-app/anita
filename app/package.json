@@ -11,6 +11,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@ionic/react": "^6.2.4",
     "add": "^2.0.6",
     "animate.css": "^4.1.1",
     "crypto-es": "^1.2.7",
@@ -19,6 +20,7 @@
     "dexie": "^3.0.3",
     "file-dialog": "^0.0.8",
     "history": "5",
+    "ionicons": "^6.0.3",
     "lodash.clonedeep": "^4.5.0",
     "lodash.uniqueid": "^4.0.1",
     "mysql": "^2.18.1",
