@@ -6,7 +6,6 @@ import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { SectionFormModelManager } from 'app/ui-react-components/projects/add-edit-project-components/section-form-model-manager.component'
-import { DANGER_BTN_OUTLINE } from 'app/ui-react-components/shared-components/buttons/buttons-layout-tw-classes.const'
 import { FormAutomator } from 'app/ui-react-components/shared-components/forms-automator/form-automator.component'
 import { FormFieldsModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
 import { useSelector } from 'react-redux'
@@ -67,18 +66,18 @@ export const SectionManager: React.FC<ISectionManagerProps> = ({ section, sectio
               indexSection={sectionIndex}
               element={formElement}
             />
-            {customFields.length < 2
-              ? null
-              : (
+            {customFields.length > 1 && (
               <div className="flex justify-end">
-                <button
+                <Button
+                  id="deleteField"
+                  label="Delete field"
+                  status="danger"
+                  fillStyle="outline"
+                  size="sm"
                   onClick={handleClickDeleteField.bind(undefined, indexFormElement)}
-                  className={`text-sm py-1 px-3 ${DANGER_BTN_OUTLINE}`}
-                >
-                  Delete field
-                </button>
+                />
               </div>
-                )}
+            )}
           </div>
           )
       )}

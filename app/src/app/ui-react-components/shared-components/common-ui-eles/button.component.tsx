@@ -12,6 +12,7 @@ interface IButtonWithTooltipProps {
   href?: string
   onClick?: () => void
   breakpoint?: 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
+  size?: 'sm' | 'md' | 'lg'
   marginClassName?: string
   hasTooltip?: boolean
   tooltip?: string
@@ -39,11 +40,12 @@ export const Button: React.FC<IButtonWithTooltipProps> = (props) => {
   const fillStyle: TFillStyle = props.fillStyle ?? 'solid'
   const bgClassName = COLOR_SCHEME[fillStyle].bg[props.status]
   const textClassName = COLOR_SCHEME[fillStyle].text[props.status]
+  const padding = props.size === 'sm' ? 'py-1 px-3' : props.size === 'lg' ? 'py-3 px-6' : 'py-3 px-4'
   return (
     <Component
       to={props.href ? props.href : null}
       onClick={props.onClick ? props.onClick : null}
-      className={`px-4 py-3 ${props.marginClassName ?? 'mr-3'} inline-flex items-center leading-none text-sm rounded ${textClassName} ${bgClassName}`}
+      className={`${padding} ${props.marginClassName ?? 'mr-3'} inline-flex items-center leading-none text-sm rounded ${textClassName} ${bgClassName}`}
       data-tip={true}
       data-for={props.id}
     >
