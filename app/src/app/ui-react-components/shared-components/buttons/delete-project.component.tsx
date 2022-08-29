@@ -3,7 +3,7 @@ import { IProjectSettings } from 'app/data/project-structure/project-info'
 import { Manager } from 'app/libs/Manager/Manager.class'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
-import { ButtonWithTooltip } from 'app/ui-react-components/shared-components/common-ui-eles/button-with-tooltip.component'
+import { Button } from 'app/ui-react-components/shared-components/common-ui-eles/button.component'
 import { Modal } from 'app/ui-react-components/shared-components/modals/modal.component'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router'
@@ -42,7 +42,7 @@ export const DeleteProjectButton: React.FC<IDeleteProjectButtonProps> = ({ proje
 
   return (
     <span>
-      <ButtonWithTooltip
+      <Button
         id="deleteProject"
         label="Delete Project"
         icon="bi-trash"
@@ -50,6 +50,7 @@ export const DeleteProjectButton: React.FC<IDeleteProjectButtonProps> = ({ proje
         breakpoint={'lg'}
         textColorClassName="text-red-700"
         bgColorClassName="bg-red-700 bg-opacity-10 hover:bg-opacity-20"
+        hasTooltip={true}
       />
       {isModalOpen && (
         <Modal
