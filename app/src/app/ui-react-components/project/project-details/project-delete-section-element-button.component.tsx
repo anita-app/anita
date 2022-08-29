@@ -1,7 +1,7 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/anita-routes/anita-routes.constant'
 import { urlParamFiller } from 'app/anita-routes/url-param-fillers.function'
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
-import { DANGER_BTN_OUTLINE } from 'app/ui-react-components/shared-components/buttons/buttons-layout-tw-classes.const'
+import { Button } from 'app/ui-react-components/shared-components/common-ui-eles/button.component'
 import { Modal } from 'app/ui-react-components/shared-components/modals/modal.component'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router'
@@ -41,10 +41,17 @@ export const ProjectDeleteSectionElementButton: React.FC<IProjectDeleteSectionEl
 
   return (
     <span>
-      <button data-tip={true} data-for="deleteElement" onClick={handleClickModal} className={`${DANGER_BTN_OUTLINE} mt-6 px-4 py-2`}>
-        <i className="bi-trash"></i>
-      </button>
-      <ReactTooltip id="deleteElement" effect="solid">Delete element</ReactTooltip>
+      <Button
+        id="deleteElement"
+        label="Delete"
+        icon="bi-trash"
+        status="danger"
+        fillStyle="outline"
+        onClick={handleClickModal}
+        breakpoint="lg"
+        hasTooltip={true}
+        marginClassName="mt-6"
+      />
       {isModalOpen && (<Modal
         title="Delete element"
         actionText="Delete"
