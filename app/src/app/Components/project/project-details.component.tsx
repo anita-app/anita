@@ -6,7 +6,7 @@ import { SectionElement } from 'app/Models/SectionElement/SectionElement.class'
 import { DeleteProjectButton } from 'app/Components/shared-components/buttons/delete-project.component'
 import { EditButton } from 'app/Components/shared-components/buttons/edit-project-button.component'
 import { ExportButton } from 'app/Components/shared-components/buttons/export-project-button.component'
-import { CardFooterItemsEnd } from 'app/Components/shared-components/common-ui-eles/card-footer-items-end.component'
+import { CardFooter } from 'app/Components/shared-components/common-ui-eles/card-footer.component'
 import { Loader } from 'app/Components/shared-components/loader/loader.component'
 import * as dateFormat from 'date-format'
 import React, { useEffect, useState } from 'react'
@@ -29,13 +29,13 @@ const LoadedProject: React.FC<ILoadedProjectProps> = ({ project }) => (
     <p className="text-gray-600 text-xs">Storage method:</p>
     <p className="text-md">{SectionElement.txtByFieldValue(availableSystems, project.localStorage)}</p>
 
-    <CardFooterItemsEnd>
+    <CardFooter>
       <DeleteProjectButton project={project} />
-      <div className="ml-auto">
+      <div className="flex items-end">
         <ExportButton />
         <EditButton project={project} />
       </div>
-    </CardFooterItemsEnd>
+    </CardFooter>
 
   </div>
 )

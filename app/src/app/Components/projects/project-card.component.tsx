@@ -7,6 +7,7 @@ import { DeleteProjectButton } from 'app/Components/shared-components/buttons/de
 import * as dateFormat from 'date-format'
 import { useSelector } from 'react-redux'
 import React from 'react'
+import { CardFooter } from 'app/Components/shared-components/common-ui-eles/card-footer.component'
 
 interface IProjectCardProps {
   project: IProjectSettings
@@ -24,7 +25,7 @@ export const ProjectCard: React.FC<IProjectCardProps> = ({ project }) => {
         <p className="text-gray-600 text-xs">Created on:</p>
         <p className="text-md">{dateFormat('yyyy/MM/dd, at hh:mm', new Date(project.createdAt))}</p>
 
-        <div className="flex justify-between flex-wrap mt-6">
+        <CardFooter>
           <DeleteProjectButton project={project} />
           {(
             projectState === null ||
@@ -33,7 +34,7 @@ export const ProjectCard: React.FC<IProjectCardProps> = ({ project }) => {
           )
             ? <ProjectNotLoadedFooter project={project} />
             : <ProjectLoadedFooter project={project} />}
-        </div>
+        </CardFooter>
 
       </div>
     </div>
