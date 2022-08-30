@@ -1,6 +1,6 @@
-import { FormFieldsModel, IOptionKeysModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
-import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum'
-import { TextInputSupportedTypes } from 'app/ui-react-components/shared-components/forms-automator/input-supported-types.const'
+import { FormFieldsModel, IOptionKeysModel } from 'app/Components/shared-components/forms-automator/form-automator.types'
+import { FORM_COMPONENTS_CODES } from 'app/Components/shared-components/forms-automator/form-component-codes.enum'
+import { TextInputSupportedTypes } from 'app/Components/shared-components/forms-automator/input-supported-types.const'
 
 const commonFieldsAdvanced: FormFieldsModel<IOptionKeysModel> = {
   componentCode: FORM_COMPONENTS_CODES.basicInput,

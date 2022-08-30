@@ -8,7 +8,7 @@ import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { Project } from 'app/Models/Project/Project.class'
 import { ProjectLoader } from 'app/Models/Project/ProjectLoader.class'
 import { ProjectSaver } from 'app/Models/Project/ProjectSaver.class'
-import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum'
+import { EDITOR_MODE } from 'app/Components/editor-mode.enum'
 
 export class Manager {
   private static currentProject: Project

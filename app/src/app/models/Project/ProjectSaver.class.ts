@@ -2,7 +2,7 @@ import { DbInitializer } from 'app/data/local-dbs/db-initializer.class'
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import { RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info'
 import { SaveProjectSettingsInIndexedDB } from 'app/Models/Project/SaveProjectSettingsInIndexedDB.class'
-import { EDITOR_MODE } from 'app/ui-react-components/editor-mode.enum'
+import { EDITOR_MODE } from 'app/Components/editor-mode.enum'
 
 export class ProjectSaver {
   constructor (

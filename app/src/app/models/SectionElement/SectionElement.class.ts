@@ -1,16 +1,16 @@
-import { cleanString } from 'app/libs/tools/tools'
-import { IOptionKeysModel } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
+import { TextTools } from 'app/libs/Tools/TextTools.class'
+import { IOptionKeysModel } from 'app/Components/shared-components/forms-automator/form-automator.types'
 
 export class SectionElement {
   public static autoGenerateFieldName (labelValue: string | number | boolean | Array<string>): string | null {
     if (!labelValue) {
       return null
     } else if (typeof labelValue === 'string') {
-      return cleanString(labelValue)
+      return TextTools.cleanString(labelValue)
     } else if (Array.isArray(labelValue)) {
-      return cleanString(labelValue.join('-'))
+      return TextTools.cleanString(labelValue.join('-'))
     }
-    return cleanString(labelValue.toString())
+    return TextTools.cleanString(labelValue.toString())
   }
 
   public static txtByFieldValue (options: Array<IOptionKeysModel>, toFindId: string | number): string | null {
