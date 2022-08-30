@@ -5,6 +5,7 @@ import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles
 import { FormFieldsModel, IOptionKeysModel, TSupportedFormsTypes } from 'app/Components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/Components/shared-components/forms-automator/form-component-codes.enum'
 import { TextInputSupportedTypes } from 'app/Components/shared-components/forms-automator/input-supported-types.const'
+import { TIconName } from 'app/libs/Icons/Icons.class'
 
 /**
  * Reserved keys are needed to store system required properties.
@@ -91,10 +92,11 @@ export interface ISectionCustomFieldProperties {
  * Defines the bare minimum properties of a `Section` of a Project.
  */
 export interface SectionDetailsDeclaration {
-  id: string;
-  title: string;
-  childOf?: Array<string>;
-  [RESERVED_FIELDS.createdAt]?: never;
+  id: string
+  title: string
+  icon?: TIconName
+  childOf?: Array<string>
+  [RESERVED_FIELDS.createdAt]?: never
 }
 
 /**

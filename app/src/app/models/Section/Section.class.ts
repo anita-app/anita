@@ -6,10 +6,12 @@ import { SectionElementSaver } from 'app/Models/Section/SectionElementSaver.clas
 import { EDITOR_MODE } from 'app/Components/editor-mode.enum'
 import { FormFieldsModel, TSupportedFormsTypes } from 'app/Components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/Components/shared-components/forms-automator/form-component-codes.enum'
+import { TIconName } from 'app/libs/Icons/Icons.class'
 
 export class Section implements ISection {
   public id: string
   public title: string
+  public icon?: TIconName
   public childOf?: Array<string>
   public [RESERVED_FIELDS.createdAt]?: never
   public formModel: Array<FormFieldsModel<TSupportedFormsTypes>>
@@ -17,12 +19,17 @@ export class Section implements ISection {
   constructor (
     private projectId: string,
     private allSections: Array<ISection>,
-    section: ISection
+    private sectionData: ISection
   ) {
-    this.id = section.id
-    this.title = section.title
-    this.childOf = section.childOf
-    this.formModel = section.formModel
+    this.id = sectionData.id
+    this.title = sectionData.title
+    this.icon = sectionData.icon || null
+    this.childOf = sectionData.childOf
+    this.formModel = sectionData.formModel
+  }
+
+  public getSectionIcon (): TIconName {
+    return this.icon || 'chevronForwardOutline'
   }
 
   public getAllElements = async (): Promise<Array<SectionElement>> => dbInstances[this.projectId].callSelector<SectionElement>(this.id).multiple()

@@ -3,6 +3,7 @@ import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.cons
 import { FormFieldsModel } from 'app/Components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/Components/shared-components/forms-automator/form-component-codes.enum'
 import { TextInputSupportedTypes } from 'app/Components/shared-components/forms-automator/input-supported-types.const'
+import { Icons } from 'app/libs/Icons/Icons.class'
 
 export const sectionDetailsFormFieldsModel: Array<FormFieldsModel<SectionDetailsDeclaration>> = [
   {
@@ -13,8 +14,17 @@ export const sectionDetailsFormFieldsModel: Array<FormFieldsModel<SectionDetails
     componentCode: FORM_COMPONENTS_CODES.basicInput,
     fieldName: 'title',
     type: TextInputSupportedTypes.text,
-    label: 'Section name',
-    required: true
+    label: 'Title',
+    required: true,
+    width: '9'
+  },
+  {
+    componentCode: FORM_COMPONENTS_CODES.basicSelect,
+    fieldName: 'icon',
+    label: 'Icon',
+    options: Icons.getIconsOptionsList(),
+    required: false,
+    width: '3'
   },
   {
     componentCode: FORM_COMPONENTS_CODES.childOfSelectorForSection,

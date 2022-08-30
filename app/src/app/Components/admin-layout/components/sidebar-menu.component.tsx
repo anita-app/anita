@@ -9,7 +9,7 @@ import React from 'react'
 import { Manager } from 'app/libs/Manager/Manager.class'
 import { Icons } from 'app/libs/Icons/Icons.class'
 
-const baseStyleOfSidebarLinks = 'flex items-center block py-2.5 px-4 transition duration-200 border-l-2 hover:border-prussian-blue-700 hover:text-prussian-blue-500 text-sm font-semibold'
+const baseStyleOfSidebarLinks = 'flex items-center block py-2.5 px-2 transition duration-200 border-l-2 hover:border-prussian-blue-700 hover:text-prussian-blue-500 text-sm font-semibold'
 
 const addActiveClassNameToBaseStyle = (currentPath: string, linkPath: string): string => {
   if (currentPath === linkPath) {
@@ -18,7 +18,7 @@ const addActiveClassNameToBaseStyle = (currentPath: string, linkPath: string): s
   return `${baseStyleOfSidebarLinks} border-transparent`
 }
 
-const ProjectMenu: React.FC = () => {
+export const SidebarMenu = () => {
   const project = useSelector((state: AnitaStore) => state.project)
   const location = useLocation()
 
@@ -28,13 +28,7 @@ const ProjectMenu: React.FC = () => {
 
   return (
     <div className="mt-3">
-
-      <div className="block py-2.5 px-1">
-        <ProjectPicker project={project} />
-      </div>
-      <div className="block py-2.5 px-4">
-        <p className="text-xs text-gray-600">Project sections:</p>
-      </div>
+      <ProjectPicker project={project} />
       {Manager.getCurrentProject().getSectionsDefinitions().map(section => {
         const linkPath = urlParamFiller(ANITA_URLS.projectSectionElesList, [{ name: URL_PARAMS.projectId, value: project[RESERVED_AUDS_KEYS._settings][0].id }, { name: URL_PARAMS.sectionId, value: section.id }])
         return (
@@ -43,7 +37,7 @@ const ProjectMenu: React.FC = () => {
             to={linkPath}
             className={addActiveClassNameToBaseStyle(location.pathname, linkPath)}
           >
-            {Icons.render('chevronForwardOutline')}<span className="ml-2">{section.title}</span>
+            {Icons.render(Manager.getCurrentProject().getSectionById(section.id).getSectionIcon())}<span className="ml-2">{section.title}</span>
           </Link>
         )
       }
@@ -52,9 +46,3 @@ const ProjectMenu: React.FC = () => {
     </div>
   )
 }
-
-export const SidebarMenu = () => (
-  <div>
-    < ProjectMenu />
-  </div>
-)

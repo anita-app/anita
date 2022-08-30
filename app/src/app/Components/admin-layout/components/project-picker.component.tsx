@@ -53,11 +53,10 @@ export const ProjectPicker: React.FC<IProjectPickerProps> = ({ project }) => {
   }
 
   return (
-    <div ref={dropDownRef}>
-      <p className="text-xs text-gray-600 pl-2">Current project:</p>
-
-      <div x-data="{ dropdownOpen: true }" className="relative">
-        <button onClick={() => toggleDropdown(dropdownOpen)} className="relative w-full flex justify-between text-left z-10 py-2 px-2 border-b hover:border-prussian-blue-700 focus:border-prussian-blue-700 focus:outline-none focus:bg-gray-200 focus:rounded active:bg-gray-300">
+    <div className="block py-2.5 px-1">
+      <p className="text-xs text-gray-400" style={{ fontVariant: 'small-caps' }}>project</p>
+      <div ref={dropDownRef} x-data="{ dropdownOpen: true }" className="relative">
+        <button onClick={() => toggleDropdown(dropdownOpen)} className="relative w-full flex justify-between text-left z-10 py-2 transition-all focus:px-2 hover:px-2 border-b hover:border-b-prussian-blue-700 hover:rounded focus:border-b-prussian-blue-700 active:border-b-prussian-blue-700 focus:outline-none hover:bg-gray-100 focus:bg-gray-200 focus:rounded active:bg-gray-300 active:rounded">
           <span>{project?.[RESERVED_AUDS_KEYS._settings][0]?.title}</span>
           {Icons.render('codeOutline', 'my-auto rotate-90')}
         </button>
