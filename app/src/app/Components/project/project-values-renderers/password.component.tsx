@@ -1,3 +1,4 @@
+import { Icons, TIconName } from 'app/libs/Icons/Icons.class'
 import React, { useState } from 'react'
 
 interface IPasswordProps {
@@ -9,17 +10,17 @@ export const Password: React.FC<IPasswordProps> = ({ value }) => {
 
   if (!value) return null
 
+  const icon: TIconName = showPassword ? 'eyeOffOutline' : 'eyeOutline'
+  const valueToShow = showPassword ? value : value.replace(/./g, '*')
   return (
     <>
-      {showPassword
-        ? value
-        : value.replace(/./g, '*')}
+      {valueToShow}
       <button
         type="button"
-        className={showPassword ? 'bi-eye-slash-fill ml-3' : 'bi-eye-fill ml-3'}
+        className="ml-3"
         onClick={() => setShowPassword(!showPassword)}
       >
-        <i />
+        {Icons.render(icon)}
       </button>
     </>
   )

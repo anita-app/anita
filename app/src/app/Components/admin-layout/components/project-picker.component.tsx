@@ -7,6 +7,7 @@ import { useClickOutside } from 'app/Components/hooks/click-outside.hook'
 import React, { useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { Icons } from 'app/libs/Icons/Icons.class'
 
 interface IProjectPickerProps {
   project: SystemData
@@ -45,9 +46,9 @@ export const ProjectPicker: React.FC<IProjectPickerProps> = ({ project }) => {
       <p className="text-xs text-gray-600 pl-2">Current project:</p>
 
       <div x-data="{ dropdownOpen: true }" className="relative">
-        <button onClick={() => setDropdownOpen(!dropdownOpen)} className="relative w-full flex justify-between text-left z-10 rounded py-2 px-3 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:bg-gray-300">
+        <button onClick={() => setDropdownOpen(!dropdownOpen)} className="relative w-full flex justify-between text-left z-10 py-2 px-2 border-b hover:border-prussian-blue-700 focus:border-prussian-blue-700 focus:outline-none focus:bg-gray-200 focus:rounded active:bg-gray-300">
           <span>{project?.[RESERVED_AUDS_KEYS._settings][0]?.title}</span>
-          <i className="bi-chevron-expand my-auto"></i>
+          {Icons.render('codeOutline', 'my-auto rotate-90')}
         </button>
 
         {dropdownOpen && (
@@ -59,20 +60,20 @@ export const ProjectPicker: React.FC<IProjectPickerProps> = ({ project }) => {
                 <button key={projectFromList.id} className="w-full block text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => loadProject(projectFromList.id)}>{projectFromList.title}</button>)
             })}
             <div className="block py-2.5 px-4 text-sm bg-gray-100 text-gray-600">Actions</div>
-            <button className="w-full block text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => goToDetails(project[RESERVED_AUDS_KEYS._settings][0].id)}>
-              <i className="bi-info-circle mr-2"></i>
-              Go to the details of the project
+            <button className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => goToDetails(project[RESERVED_AUDS_KEYS._settings][0].id)}>
+              {Icons.render('informationCircleOutline', 'mr-2')}
+              Project details
             </button>
-            <button className="w-full block text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => goToEditProject(project[RESERVED_AUDS_KEYS._settings][0].id)}>
-              <i className="bi-pencil mr-2"></i>
+            <button className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => goToEditProject(project[RESERVED_AUDS_KEYS._settings][0].id)}>
+              {Icons.render('createOutline', 'mr-2')}
               Edit the current project
             </button>
-            <button className="w-full block text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => navigate(ANITA_URLS.projectsList)}>
-              <i className="bi-files mr-2"></i>
+            <button className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => navigate(ANITA_URLS.projectsList)}>
+              {Icons.render('fileTrayStackedOutline', 'mr-2')}
               Go to the projects list
             </button>
-            <button className="w-full block text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => navigate(ANITA_URLS.projectAdd)}>
-              <i className="bi-plus mr-2"></i>
+            <button className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => navigate(ANITA_URLS.projectAdd)}>
+              {Icons.render('addOutline', 'mr-2')}
               Create a new project
             </button>
           </div>

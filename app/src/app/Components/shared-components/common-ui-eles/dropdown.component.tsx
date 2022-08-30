@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import ReactTooltip from 'react-tooltip'
+import { Icons, TIconName } from 'app/libs/Icons/Icons.class'
 
 function classNames (...classes) {
   return classes.filter(Boolean).join(' ')
@@ -18,7 +19,7 @@ interface IDropdown {
   menuItems: Array<IMenuItem>
   labelClassName?: string
   chevronClassName?: string
-  icon?: string
+  icon?: TIconName
   iconClassName?: string
   tooltip?: string
   tooltipClassName?: string
@@ -33,9 +34,9 @@ export const Dropdown: React.FC<IDropdown> = (props) => (
         data-tip={!!props.tooltip}
         data-for={props.id}
       >
-        {props.icon && <i className={`${props.icon} ${props.iconClassName ?? 'mr-2'}`}></i>}
+        {props.icon && Icons.render(props.icon, props.iconClassName ?? 'mr-2')}
         {!!props.label && <span className={props.labelClassName ?? ''}>{props.label}</span>}
-        <i className={`-mr-1 ml-2 w-5 bi bi-chevron-down ${props.chevronClassName ?? ''}`} aria-hidden="true" />
+        {Icons.render('chevronDownOutline', `-mr-1 ml-2 w-5 ${props.chevronClassName ?? ''}`)}
       </Menu.Button>
       {!!props.tooltip && (
         <span className={props.tooltipClassName}>

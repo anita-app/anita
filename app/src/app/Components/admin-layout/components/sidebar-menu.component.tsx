@@ -7,8 +7,9 @@ import { useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 import React from 'react'
 import { Manager } from 'app/libs/Manager/Manager.class'
+import { Icons } from 'app/libs/Icons/Icons.class'
 
-const baseStyleOfSidebarLinks = 'block py-2.5 px-4 transition duration-200 border-l-2 hover:border-prussian-blue-700 hover:text-prussian-blue-500 text-sm font-semibold'
+const baseStyleOfSidebarLinks = 'flex items-center block py-2.5 px-4 transition duration-200 border-l-2 hover:border-prussian-blue-700 hover:text-prussian-blue-500 text-sm font-semibold'
 
 const addActiveClassNameToBaseStyle = (currentPath: string, linkPath: string): string => {
   if (currentPath === linkPath) {
@@ -16,10 +17,6 @@ const addActiveClassNameToBaseStyle = (currentPath: string, linkPath: string): s
   }
   return `${baseStyleOfSidebarLinks} border-transparent`
 }
-
-export const nonProjectRoutes: Array<{ to: string; txt: string, icon: string }> = [
-  { to: ANITA_URLS.projectsList, txt: 'Projects', icon: 'bi-files' }
-]
 
 const ProjectMenu: React.FC = () => {
   const project = useSelector((state: AnitaStore) => state.project)
@@ -46,7 +43,7 @@ const ProjectMenu: React.FC = () => {
             to={linkPath}
             className={addActiveClassNameToBaseStyle(location.pathname, linkPath)}
           >
-            <i className="bi-chevron-compact-right"></i><span className="ml-2">{section.title}</span>
+            {Icons.render('chevronForwardOutline')}<span className="ml-2">{section.title}</span>
           </Link>
         )
       }
@@ -56,21 +53,8 @@ const ProjectMenu: React.FC = () => {
   )
 }
 
-export const SidebarMenu = () => {
-  const location = useLocation()
-
-  return (
-    <div>
-      {nonProjectRoutes.map(route => (
-        <Link
-          key={route.to}
-          to={route.to}
-          className={addActiveClassNameToBaseStyle(location.pathname, route.to)}
-        >
-          <i className={route.icon}></i><span className="ml-2">{route.txt}</span>
-        </Link>
-      ))}
-      < ProjectMenu />
-    </div>
-  )
-}
+export const SidebarMenu = () => (
+  <div>
+    < ProjectMenu />
+  </div>
+)

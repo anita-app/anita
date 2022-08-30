@@ -3,6 +3,7 @@ import { urlParamFiller } from 'app/libs/Routing/url-param-fillers.function'
 import { EDITOR_MODE } from 'app/Components/editor-mode.enum'
 import { Link } from 'react-router-dom'
 import React from 'react'
+import { Icons, TIconName } from 'app/libs/Icons/Icons.class'
 
 interface IAddElementButtonProps {
   projectId: string;
@@ -21,7 +22,7 @@ interface IEditElementButtonProps {
 type IAddEditElementButtonProps = | IAddElementButtonProps | IEditElementButtonProps;
 
 export const AddEditElementButton: React.FC<IAddEditElementButtonProps> = ({ projectId, sectionId, mode, elementId }) => {
-  const icon = mode === EDITOR_MODE.add ? 'bi-plus' : 'bi-pencil'
+  const icon: TIconName = mode === EDITOR_MODE.add ? 'addOutline' : 'createOutline'
   const urlParamsToFill = [{ name: URL_PARAMS.projectId, value: projectId }, { name: URL_PARAMS.sectionId, value: sectionId }]
 
   if (mode === EDITOR_MODE.edit) {
@@ -34,7 +35,7 @@ export const AddEditElementButton: React.FC<IAddEditElementButtonProps> = ({ pro
 
   return (
     <Link to={url} className="absolute bottom-5 right-7 md:bottom-7 md:right-10 bg-prussian-blue-400 text-white text-xl shadow-xl rounded-3xl h-14 w-14 flex items-center justify-center">
-      <i className={icon}></i>
+      {Icons.render(icon)}
     </Link>
   )
 }

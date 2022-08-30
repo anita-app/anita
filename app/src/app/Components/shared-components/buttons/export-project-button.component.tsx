@@ -30,7 +30,7 @@ export const ExportButton: React.FC = () => (
     tooltip="Export"
     tooltipClassName='lg:hidden'
     chevronClassName="hidden lg:inline-block"
-    icon="bi-arrow-bar-up"
+    icon="cloudDownloadOutline"
     iconClassName="lg:hidden"
     margin="mr-3"
     menuItems={exportMenuItems}

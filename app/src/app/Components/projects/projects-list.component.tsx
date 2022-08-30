@@ -39,7 +39,7 @@ export const ProjectsList: React.FC = () => {
   return (
     <div>
       <div className="md:w-full bg-white border-b-2 rounded border-white">
-        <div className="flex h-full border-t-2 border-prussian-blue-400 border-opacity-60 rounded justify-between">
+        <div className="flex items-center h-full border-t-2 border-prussian-blue-400 border-opacity-60 rounded justify-between">
           <div className="px-6 py-3">
             <h1 className="title-font text-md font-medium text-gray-900">Projects on this device</h1>
           </div>
@@ -49,7 +49,7 @@ export const ProjectsList: React.FC = () => {
               id="createProject"
               label="Create project"
               labelClassName="hidden"
-              icon="bi-plus"
+              icon="addOutline"
               tooltip='Create a new project'
               type="primary"
               size="sm"

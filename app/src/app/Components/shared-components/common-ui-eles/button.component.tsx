@@ -1,4 +1,5 @@
 import { COLOR_SCHEME, TFill, TType } from 'app/Components/shared-components/common-ui-eles/components.const'
+import { Icons, TIconName } from 'app/libs/Icons/Icons.class'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
@@ -6,7 +7,7 @@ import ReactTooltip from 'react-tooltip'
 interface IButtonWithTooltipProps {
   id: string
   label: string
-  icon?: string
+  icon?: TIconName
   type: TType
   fill?: TFill
   href?: string
@@ -55,7 +56,7 @@ export const Button: React.FC<IButtonWithTooltipProps> = (props) => {
       data-for={props.id}
       disabled={props.disabled ?? false}
     >
-      {!!props.icon && <i className={props.icon}></i>}<span className={`${props.icon ? 'ml-2' : ''} ${collapsable ? 'hidden' : ''} ${props.breakpoint ? LabelBreakpoints[props.breakpoint] : ''} ${props.labelClassName ?? ''}`}>{props.label}</span>
+      {!!props.icon && Icons.render(props.icon)}<span className={`${props.icon ? 'ml-2' : ''} ${collapsable ? 'hidden' : ''} ${props.breakpoint ? LabelBreakpoints[props.breakpoint] : ''} ${props.labelClassName ?? ''}`}>{props.label}</span>
       {(props.hasTooltip || props.tooltip) && (
         <span className={props.breakpoint ? TooltipBreakpoints[props.breakpoint] : props.tooltipContainerClassName || ''}>
           <ReactTooltip id={props.id} effect="solid">

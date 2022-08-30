@@ -66,24 +66,25 @@ export const ImportProjectButton: React.FC<IImportProjectButtonProps> = (props) 
         id="importProject"
         label="Import an existing project"
         labelClassName={props.btnType === 'icon' ? 'hidden' : null}
-        icon={props.btnType === 'icon' ? 'bi-arrow-bar-down' : null}
+        icon={props.btnType === 'icon' ? 'downloadOutline' : null}
         onClick={handleClickModal}
         type="secondary"
         size={props.btnType === 'text' ? 'lg' : 'sm'}
         className={props.btnType === 'text' ? 'w-full' : ''}
         hasTooltip={props.btnType === 'icon'}
       />
-      {isModalOpen && (<Modal
-        title="Import project"
-        actionText="Import"
-        type="confirm"
-        handleClickAction={handleClickImport}
-        closeFn={handleClickModal}
-        animationClass={animationClass}
-        disableAction={Object.keys(validObj).some(key => validObj[key] === false)}
-                       >
-        {projectSettings && <FormAutomator element={projectSettings} formModel={projectInfoNewItem as Array<FormFieldsModel<any>>} handleChange={handleProjectChange} />}
-                       </Modal>)}
+      {isModalOpen && (
+        <Modal
+          title="Import project"
+          actionText="Import"
+          type="confirm"
+          handleClickAction={handleClickImport}
+          closeFn={handleClickModal}
+          animationClass={animationClass}
+          disableAction={Object.keys(validObj).some(key => validObj[key] === false)}
+        >
+          {projectSettings && <FormAutomator element={projectSettings} formModel={projectInfoNewItem as Array<FormFieldsModel<any>>} handleChange={handleProjectChange} />}
+        </Modal>)}
     </span>
   )
 }

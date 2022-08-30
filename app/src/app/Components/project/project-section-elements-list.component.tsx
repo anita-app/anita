@@ -11,8 +11,9 @@ import { Navigate, useParams } from 'react-router'
 import { Tab } from '@headlessui/react'
 import { ProjectGridList } from 'app/Components/project/project-grid/project-grid-list'
 import { Manager } from 'app/libs/Manager/Manager.class'
+import { Icons, TIconName } from 'app/libs/Icons/Icons.class'
 
-const SUPPORTED_VIEWS = ['table', 'grid']
+const SUPPORTED_VIEWS: Array<TIconName> = ['/assets/icons/svg/table.svg', 'gridOutline']
 
 function classNames (...classes) {
   return classes.filter(Boolean).join(' ')
@@ -73,17 +74,18 @@ export const SectionElementsList: React.FC = () => {
         headerText={sectionInfo.title}
         hasHeaderOnlyStyle={activeTab === 1}
         headerRightComponent={(
-          <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1 w-20">
+          <Tab.List className="flex space-x-1 rounded-xl bg-prussian-blue-900/10 p-1 w-20">
             {SUPPORTED_VIEWS.map(view => (
               <Tab
                 key={view}
                 className={({ selected }) => classNames(
-                  'w-full rounded-lg text-sm font-medium leading-5',
+                  'flex items-center justify-center w-full rounded-lg text-sm font-medium leading-5',
                   selected
                     ? 'bg-white shadow'
                     : 'opacity- hover:bg-white/[0.12] hover:text-white'
                 )}
-              ><i className={`bi bi-${view}`}></i>
+              >
+                {Icons.render(view)}
               </Tab>
             ))}
           </Tab.List>

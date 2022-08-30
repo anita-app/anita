@@ -44,7 +44,7 @@ export const ProjectDeleteSectionElementButton: React.FC<IProjectDeleteSectionEl
       <Button
         id="deleteElement"
         label="Delete"
-        icon="bi-trash"
+        icon="trashOutline"
         type="danger"
         fill="outline"
         onClick={handleClickModal}
@@ -52,23 +52,25 @@ export const ProjectDeleteSectionElementButton: React.FC<IProjectDeleteSectionEl
         hasTooltip={true}
         marginClassName="mt-6"
       />
-      {isModalOpen && (<Modal
-        title="Delete element"
-        actionText="Delete"
-        type="alert"
-        handleClickAction={handleClickDelete}
-        closeFn={handleClickModal}
-        animationClass={animationClass}
-        icon="text-red-600 bi-exclamation-triangle"
-                       >
-        <p className="text-sm text-gray-500">
-          Are you sure you want to delete this element?
-        </p>
-        <p className="text-sm text-gray-500">
-          This action cannot be undone.
-        </p>
-
-                       </Modal>)}
+      {isModalOpen && (
+        <Modal
+          title="Delete element"
+          actionText="Delete"
+          type="alert"
+          handleClickAction={handleClickDelete}
+          closeFn={handleClickModal}
+          animationClass={animationClass}
+          icon="warningOutline"
+          iconClassName="text-red-600"
+        >
+          <p className="text-sm text-gray-500">
+            Are you sure you want to delete this element?
+          </p>
+          <p className="text-sm text-gray-500">
+            This action cannot be undone.
+          </p>
+        </Modal>
+      )}
     </span>
   )
 }

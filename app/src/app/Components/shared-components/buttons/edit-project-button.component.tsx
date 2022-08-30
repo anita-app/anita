@@ -12,7 +12,7 @@ export const EditButton: React.FC<IEditButtonProps> = ({ project }) => (
   <Button
     id="editProject"
     label="Edit Project"
-    icon="bi-pencil"
+    icon="createOutline"
     type="secondary"
     href={urlParamFiller(ANITA_URLS.projectEdit, [{ name: URL_PARAMS.projectId, value: project.id }])}
     hasTooltip={true}

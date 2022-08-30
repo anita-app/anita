@@ -45,7 +45,7 @@ export const DeleteProjectButton: React.FC<IDeleteProjectButtonProps> = ({ proje
       <Button
         id="deleteProject"
         label="Delete Project"
-        icon="bi-trash"
+        icon="trashOutline"
         onClick={handleClickModal}
         breakpoint={'lg'}
         type="danger"
@@ -59,7 +59,8 @@ export const DeleteProjectButton: React.FC<IDeleteProjectButtonProps> = ({ proje
           handleClickAction={handleClickDelete}
           closeFn={handleClickModal}
           animationClass={animationClass}
-          icon="text-red-600 bi-exclamation-triangle"
+          icon="warningOutline"
+          iconClassName="text-red-600"
         >
           <p className="text-sm text-gray-500">
             Are you sure you want to delete this project?<br /><br />All project data will be permanently removed from this device. This action cannot be undone.<br /><br />Data stored on other devices will not be affected.
