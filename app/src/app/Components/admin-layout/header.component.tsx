@@ -7,18 +7,20 @@ import { Link } from 'react-router-dom'
 
 export const Header: React.FC = () => {
   const sidebarHideClass = useSelector((store: AnitaStore) => store.layout.sidebar)
-
+  const project = useSelector((store: AnitaStore) => store.project)
   const handleClickSidebar = () => {
     storeDispatcher({ type: REDUX_ACTIONS.toggleSidebar })
   }
 
   return (
-    <div className="bg-white text-gray-700 flex h-14 shadow-md justify-between">
-      <button className="mobile-menu-button p-4 focus:outline-none  md:hidden" onClick={handleClickSidebar}>
-        <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
+    <div className={`bg-white text-gray-700 flex h-14 shadow-md ${project ? 'justify-between' : 'justify-center'}`}>
+      {!!project && (
+        <button className="mobile-menu-button p-4 focus:outline-none  md:hidden" onClick={handleClickSidebar}>
+          <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      )}
 
       <div className="relative flex items-center lg:w-auto lg:static md:pl-5 -ml-7 md:ml-0">
         <Link to="/" className="text-lg font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase">
