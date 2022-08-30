@@ -1,4 +1,6 @@
-export interface IOption { value: string | number, label: string }
+import { TIconName } from 'app/libs/Icons/Icons.class'
+
+export interface IOption { value: string | number, label: string, icon?: TIconName }
 
 interface IOptionKeysModelGroup {
   label: string;

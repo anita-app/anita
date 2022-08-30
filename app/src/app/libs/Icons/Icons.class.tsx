@@ -12,10 +12,11 @@ export class Icons {
   public static getIconsOptionsList (): Array<IOption> {
     return Object.keys(ionicons)
       .map(key => ({
-        label: TextTools.capitalizeFirstLetter(TextTools.camelToKebabCase(key).replace(/-/g, ' ')),
-        value: key
+        label: TextTools.capitalizeFirstLetter(TextTools.camelToKebabCase(key).replace(/-/g, ' ').replace(/outline/g, '').trim()),
+        value: key,
+        icon: key as TIconName
       }))
-      .filter(option => !option.value.endsWith('Sharp'))
+      .filter(option => option.value.endsWith('Outline'))
   }
 
   public static render = (iconName: TIconName, className: string = ''): ReactElement => {

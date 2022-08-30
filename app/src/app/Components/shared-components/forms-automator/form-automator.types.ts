@@ -6,6 +6,7 @@ import {
 } from 'app/data/project-structure/project-info'
 import { FORM_COMPONENTS_CODES } from 'app/Components/shared-components/forms-automator/form-component-codes.enum'
 import { TextInputSupportedTypes } from 'app/Components/shared-components/forms-automator/input-supported-types.const'
+import { TIconName } from 'app/libs/Icons/Icons.class'
 
 export type FormFieldsModel<T extends TSupportedFormsTypes> = IBasicInput<T> | IBasicCheckbox<T> | IBasicSelect<T> | IBasicRadio<T> | IBasicTextarea<T> | IHiddenInput<T> | IOptionsMaker<T> | IDatePicker<T> | IDateTimePicker<T>;
 
@@ -70,10 +71,11 @@ export interface OptionKeysModelGroup {
  * Defines the structure of possible choices to be selected in a Radio or Select html element.
  */
 export interface IOptionKeysModel {
-  value?: string | number;
-  label?: string;
-  disabled?: boolean;
-  hint?: string;
+  value?: string | number
+  label?: string
+  disabled?: boolean
+  hint?: string
+  icon?: TIconName
 }
 
 export interface IBasicRadio<T> extends ICommonTypes<T> {
