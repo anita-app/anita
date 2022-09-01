@@ -1,6 +1,7 @@
 import { DsDbInitOptions } from 'app/libs/db-connector/models/executers'
 import { FileSystemDirectoryHandle, FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api'
 import { FsHelper } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper'
+import { Logger } from 'app/libs/logger/logger.class'
 
 /**
  * Uses the fileHandle stored in IndexedDB, if any, or asks for a new one
@@ -14,6 +15,7 @@ export async function fileHandleChecker (
     return await FsHelper.getNewFileHandle(`anita-fh-${options.projectInfo.id}`, description, accept)
   }
 
+  Logger.info('[fileHandleChecker] verify permissions for fileHandle', options.projectInfo.fileHandle)
   await FsHelper.verifyPermission(options.projectInfo.fileHandle, true)
   return options.projectInfo.fileHandle
 }
