@@ -38,7 +38,7 @@ export class CryptHelper<E, DbTypes> {
   ) { }
 
   /**
-   * Returns the unencrypted key of the owner of the element, if an emcrypted key for the user was provided when initializing DbInit.
+   * Returns the unencrypted key of the owner of the element, if an encrypted key for the user was provided when initializing DbInit.
    */
   protected getUserKey (): string {
     this.setOwner()
