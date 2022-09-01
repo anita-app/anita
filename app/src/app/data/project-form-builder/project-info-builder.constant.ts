@@ -36,15 +36,15 @@ const commonFieldsForProjectInfo: Array<FormFieldsModel<IProjectSettings>> = [{
 
 export const availableSystems: Array<IOptionKeysModel> = [
   {
-    label: 'File system',
-    value: LOCAL_STORAGE_SYSTEMS.fileSystem,
-    disabled: typeof window.showOpenFilePicker === 'undefined',
-    hint: typeof window.showOpenFilePicker === 'function' ? hintFileSystem : hintFsNotSupported
-  },
-  {
-    label: 'Local database (IndexedDB)',
+    label: 'Internal database (IndexedDB)',
     value: LOCAL_STORAGE_SYSTEMS.IndexedDB,
     hint: indexedDB
+  },
+  {
+    label: 'Local database (JSON)',
+    value: LOCAL_STORAGE_SYSTEMS.json,
+    disabled: typeof window.showOpenFilePicker === 'undefined',
+    hint: typeof window.showOpenFilePicker === 'function' ? hintFileSystem : hintFsNotSupported
   },
   {
     label: 'Local database (SQLite)',
