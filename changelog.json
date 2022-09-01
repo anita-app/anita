@@ -4,6 +4,20 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.14.11",
+      "date": "2022-09-01",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "debug"
+        },
+        {
+          "type": "fixed",
+          "value": "deleting project"
+        }
+      ]
+    },
+    {
       "version": "0.14.10",
       "date": "2022-09-01",
       "items": [
