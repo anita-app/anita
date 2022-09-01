@@ -1,6 +1,6 @@
 {
   "name": "anita-app",
-  "version": "0.14.1",
+  "version": "0.14.2",
   "private": false,
   "scripts": {
     "eslint": "eslint \"src/**/*.?(ts|tsx)\" --fix",
