@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.14.12] - 2022-09-01
+### Changed
+- removed store method radio in edit mode.
+
 ## [0.14.11] - 2022-09-01
 ### Fixed
 - debug.

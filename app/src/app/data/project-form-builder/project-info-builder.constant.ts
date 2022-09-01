@@ -71,14 +71,5 @@ export const projectInfoNewItem: Array<FormFieldsModel<IProjectSettings>> = [
 ]
 
 export const projectInfoForEditing: Array<FormFieldsModel<IProjectSettings>> = [
-  ...commonFieldsForProjectInfo,
-  {
-    componentCode: FORM_COMPONENTS_CODES.basicRadio,
-    fieldName: 'localStorage',
-    value: LOCAL_STORAGE_SYSTEMS.IndexedDB,
-    label: 'Local storage',
-    required: true,
-    disabled: true,
-    options: availableSystems
-  }
+  ...commonFieldsForProjectInfo
 ]
