@@ -19,7 +19,6 @@ export const FormProjectManager: React.FC = () => {
   const { projectId } = useParams<URL_PARAMS>()
   const projectEditorMode = useSelector((store: AnitaStore) => store.formProject.mode)
   const project = useSelector((state: AnitaStore) => state.formProject.project)
-  console.log('project', project._settings[0])
   const validObj = useSelector((state: AnitaStore) => state.formElesValidState)
   const mode: EDITOR_MODE = projectId ? EDITOR_MODE.edit : EDITOR_MODE.add
   const navigate = useNavigate()

@@ -44,7 +44,6 @@ export const AddEditProject: React.FC = () => {
 
       if (isMounted) {
         storeDispatcher({ type: REDUX_ACTIONS.setFormProject, payload: { _settings, _sections } })
-        console.log('fetchEProject ~ _settings', _settings)
         setHasProject(true)
       }
     }

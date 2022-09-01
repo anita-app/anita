@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.14.15] - 2022-09-01
+### Fixed
+- reading id of null.
+
 ## [0.14.14] - 2022-09-01
 ### Fixed
 - debuggin.

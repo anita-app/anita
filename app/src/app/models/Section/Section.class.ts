@@ -19,7 +19,7 @@ export class Section implements ISection {
   constructor (
     private projectId: string,
     private allSections: Array<ISection>,
-    private sectionData: ISection
+    private sectionData: ISection = {} as ISection
   ) {
     this.id = sectionData.id
     this.title = sectionData.title
