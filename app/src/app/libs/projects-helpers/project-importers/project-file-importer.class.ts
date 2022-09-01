@@ -1,6 +1,6 @@
 import { AnitaUniversalDataStorage } from 'app/data/project-structure/project-info'
-import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api'
-import { FsHelper } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper'
+import { FileSystemFileHandle } from 'app/libs/DbConnector/plugins/file-handles/helpers/file-system-access-api'
+import { FsHelper } from 'app/libs/DbConnector/plugins/file-handles/helpers/fs-helper'
 import fileDialog from 'file-dialog'
 
 /**

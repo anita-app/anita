@@ -1,6 +1,6 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import { AnitaUniversalDataStorage, SectionElement } from 'app/data/project-structure/project-info'
-import { FsHelper } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper'
+import { FsHelper } from 'app/libs/DbConnector/plugins/file-handles/helpers/fs-helper'
 
 export enum ExportScope {
   all,

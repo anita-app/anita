@@ -1,8 +1,8 @@
 import { ISection, SectionElement } from 'app/data/project-structure/project-info'
 import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant'
-import { SezBuilder } from 'app/libs/db-connector/db-builder/sez-builder.class'
-import { SectionDefinition, SectionModel } from 'app/libs/db-connector/db-builder/sez-definition'
-import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
+import { SezBuilder } from 'app/libs/DbConnector/db-builder/sez-builder.class'
+import { SectionDefinition, SectionModel } from 'app/libs/DbConnector/db-builder/sez-definition'
+import { AbstractModel } from 'app/libs/DbConnector/models/abstract-model'
 
 /**
  * Converts the abstract definition of a Section into a complete datastructure that can be processed by FormDataParserService

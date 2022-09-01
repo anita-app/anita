@@ -1,7 +1,7 @@
 import { ANITA_URLS } from 'app/libs/Routing/anita-routes.constant'
 import { projectInfoNewItem } from 'app/data/project-form-builder/project-info-builder.constant'
 import { AnitaUniversalDataStorage, IProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info'
-import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api'
+import { FileSystemFileHandle } from 'app/libs/DbConnector/plugins/file-handles/helpers/file-system-access-api'
 import { Manager } from 'app/libs/Manager/Manager.class'
 import { ProjectDataImporter } from 'app/libs/projects-helpers/project-importers/project-data-importer.class'
 import { ProjectFileImporter } from 'app/libs/projects-helpers/project-importers/project-file-importer.class'
