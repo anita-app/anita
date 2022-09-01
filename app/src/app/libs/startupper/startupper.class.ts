@@ -4,6 +4,7 @@ import { DbConnector } from 'app/libs/db-connector/db-connector.class'
 import { INDEXEDDB_PLUGIN } from 'app/libs/db-connector/plugins/indexed-db/exporter.constant'
 import { Logger } from 'app/libs/logger/logger.class'
 import { ProjectsListLoader } from 'app/libs/projects-helpers/projects-handlers/projects-list-loader.class'
+import { appVersion } from 'app/version'
 import React from 'react'
 
 export class Startupper {
@@ -13,7 +14,7 @@ export class Startupper {
   private systemDbName = 'anitaDB'
 
   public async init (): Promise<void> {
-    Logger.info('Anita web app.')
+    Logger.info('Anita web app v. ', appVersion)
     await this.initSystemIndexedDb(this.systemDbName)
     this.setLoggerDebug()
     this.loadProjectList()
