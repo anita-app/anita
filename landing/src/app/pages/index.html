@@ -34,50 +34,51 @@
         </svg>
       </div>
     </div>
-    <section class="pb-20 bg-white -mt-24">
-      <div class="container mx-auto px-4">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-0 lg:gap-4">
-          <div class="w-full px-4 text-center">
-            <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
-              <div class="px-4 py-5 flex-auto">
-                <div class="text-white p-3 text-center inline-flex items-center justify-center w-16 h-14 mb-5 shadow-lg rounded-full bg-yellow-500">
-                  <i class="fas fa-file-export fa-2x"></i>
-                </div>
-                <h6 class="text-xl font-semibold">Portable</h6>
-                <p class="mt-2 mb-4 text-gray-600">
-                  Your data is stored on your computer and/or on a remote database of your choice: flexible, open & no lock-in. Stay independent from servers that will go away, soner or later.
-                </p>
-              </div>
+    <!-- Overlapping cards -->
+    <section class="relative z-10 mx-auto -mt-32 max-w-7xl px-4 pb-32 sm:px-6 lg:px-8" aria-labelledby="contact-heading">
+      <h2 class="sr-only" id="contact-heading">Contact us</h2>
+      <div class="grid grid-cols-1 gap-y-20 lg:grid-cols-3 lg:gap-y-0 lg:gap-x-8">
+        <div class="flex flex-col rounded-2xl bg-white shadow-xl">
+          <div class="relative flex-1 px-6 pt-16 pb-8 md:px-8">
+            <div class="absolute top-0 inline-block -translate-y-1/2 transform rounded-xl bg-blue-400 p-5 shadow-lg">
+              <i class="fas fa-file-export fa-lg text-white"></i>
             </div>
+            <h3 class="text-xl font-medium text-gray-900">Portable</h3>
+            <p class="mt-4 text-base text-gray-500">Your data is stored on your computer and/or on a remote database of your choice: flexible, open & no lock-in. Stay independent from servers that will go away, soner or later.</p>
           </div>
-          <div class="w-full px-4 text-center">
-            <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
-              <div class="px-4 py-5 flex-auto">
-                <div class="text-white p-3 text-center inline-flex items-center justify-center w-14 h-14 mb-5 shadow-lg rounded-full bg-blue-400">
-                  <i class="fas fa-shield-alt fa-2x"></i>
-                </div>
-                <h6 class="text-xl font-semibold">Secure</h6>
-                <p class="mt-2 mb-4 text-gray-600">
-                  There is no risk of a data breach like there is with cloud based solutions: Anita works fully offline and connects only to databases you trust. You keep your data where it's most safe, with you.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="w-full px-4 text-center">
-            <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
-              <div class="px-4 py-5 flex-auto">
-                <div class="text-white p-3 text-center inline-flex items-center justify-center w-16 h-14 mb-5 shadow-lg rounded-full bg-emerald-400">
-                  <i class="fas fa-user-shield fa-2x"></i>
-                </div>
-                <h6 class="text-xl font-semibold">Private</h6>
-                Anita is the privacy you want, the convenience you need. It fully works offline and syncs only to remote databases hosted where you want, if you so chose. So your data is never exposed to a third party: no more middlemen,
-                profiling
-                or
-                ads targeting.
-              </div>
-            </div>
+          <div class="rounded-bl-2xl rounded-br-2xl bg-gray-50 p-6 md:px-8">
+            <a href="/app" class="text-base font-medium text-prussian-blue-500 hover:text-prussian-blue-300">Get started<span aria-hidden="true"> &rarr;</span></a>
           </div>
         </div>
+
+        <div class="flex flex-col rounded-2xl bg-white shadow-xl">
+          <div class="relative flex-1 px-6 pt-16 pb-8 md:px-8">
+            <div class="absolute top-0 inline-block -translate-y-1/2 transform rounded-xl bg-blue-400 p-5 shadow-lg">
+              <i class="fas fa-shield-alt fa-lg text-white"></i>
+            </div>
+            <h3 class="text-xl font-medium text-gray-900">Secure</h3>
+            <p class="mt-4 text-base text-gray-500">There is no risk of a data breach like there is with cloud based solutions: Anita works fully offline and connects only to databases you trust. You keep your data where it's most safe, with you.</p>
+          </div>
+          <div class="rounded-bl-2xl rounded-br-2xl bg-gray-50 p-6 md:px-8">
+            <a href="/app" class="text-base font-medium text-prussian-blue-500 hover:text-prussian-blue-300">Get started<span aria-hidden="true"> &rarr;</span></a>
+          </div>
+        </div>
+
+        <div class="flex flex-col rounded-2xl bg-white shadow-xl">
+          <div class="relative flex-1 px-6 pt-16 pb-8 md:px-8">
+            <div class="absolute top-0 inline-block -translate-y-1/2 transform rounded-xl bg-blue-400 p-5 shadow-lg">
+              <i class="fas fa-user-shield fa-lg text-white"></i>
+            </div>
+            <h3 class="text-xl font-medium text-gray-900">Private</h3>
+            <p class="mt-4 text-base text-gray-500">
+              Anita is the privacy you want, the convenience you need. It fully works offline and syncs only to remote databases hosted where you want, if you so chose. So your data is never exposed to a third party: no more middlemen, profiling or ads targeting.
+            </p>
+          </div>
+          <div class="rounded-bl-2xl rounded-br-2xl bg-gray-50 p-6 md:px-8">
+            <a href="/app" class="text-base font-medium text-prussian-blue-500 hover:text-prussian-blue-300">Get started<span aria-hidden="true"> &rarr;</span></a>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- component="landing/features.component.html" -->
