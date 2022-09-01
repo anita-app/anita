@@ -23,15 +23,13 @@ export const Header: React.FC = () => {
       )}
 
       <div className="relative flex items-center lg:w-auto lg:static md:pl-5 -ml-7 md:ml-0">
-        <Link to="/" className="text-lg font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase">
+        <Link to="/" className={`text-lg font-bold leading-relaxed inline-block ${project ? 'mr-4' : 'translate-x-1/2 md:translate-x-0 md:mr-4'} py-2 whitespace-no-wrap uppercase`}>
           <img src={`${process.env.PUBLIC_URL}/assets/logo/logo_square.svg`} style={{ height: '30px', width: 'auto' }} alt="Anita" />
         </Link>
         <Link to="/" className="hidden md:inline-block mr-4 py-2 whitespace-no-wrap text-prussian-blue-400">
           <span className="text-md font-bold leading-relaxed uppercase">Anita</span><sup style={{ fontVariant: 'small-caps' }}>Beta</sup>
         </Link>
       </div>
-
-      <div className="visible md:hidden">&#160;</div>
 
       {sidebarHideClass === '' && (<div onClick={handleClickSidebar} className="absolute inset-0 h-full w-full z-10 md:hidden"></div>)}
 
