@@ -4,6 +4,16 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.14.12",
+      "date": "2022-09-01",
+      "items": [
+        {
+          "type": "changed",
+          "value": "removed store method radio in edit mode"
+        }
+      ]
+    },
+    {
       "version": "0.14.11",
       "date": "2022-09-01",
       "items": [
