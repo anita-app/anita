@@ -4,10 +4,18 @@ import {
   FileSystemWriteChunkType,
   WindowFS
 } from 'app/libs/DbConnector/plugins/file-handles/helpers/file-system-access-api'
+import { Logger } from 'app/libs/Logger/logger.class'
 
 declare const window: WindowFS
 
 export class FsHelper {
+
+  /**
+   * Number of retries to attempt to write to a file.
+   * Used to retry when the error is a state changed exception.
+   */
+  private static writeFileTries: number = 0
+
   /**
    * Creates a file on the fly and prompts the user to save it
    */
@@ -99,13 +107,28 @@ export class FsHelper {
    * Writes the contents to disk.
    */
   public static async writeFile (fileHandle: FileSystemFileHandle, contents: FileSystemWriteChunkType): Promise<void> {
-    // For Chrome 83 and later.
-    // Create a FileSystemWritableFileStream to write to.
-    const writable = await fileHandle.createWritable()
-    // Write the contents of the file to the stream.
-    await writable.write(contents)
-    // Close the file and write the contents to disk.
-    await writable.close()
+    this.writeFileTries = 0
+    await this.doWriteFile(fileHandle, contents)
+  }
+  
+  public static async doWriteFile(fileHandle: FileSystemFileHandle, contents: FileSystemWriteChunkType): Promise<void> {
+    this.writeFileTries++
+    try {
+      // For Chrome 83 and later.
+      // Create a FileSystemWritableFileStream to write to.
+      const writable = await fileHandle.createWritable()
+      // Write the contents of the file to the stream.
+      await writable.write(contents)
+      // Close the file and write the contents to disk.
+      await writable.close()
+    } catch (error: unknown) {
+      Logger.error('[FSHelper.writeFile]', (error as Error)?.message)
+      if ((error as Error)?.message?.includes('state cached in an interface object was made but the state had changed since it was read from disk')) {
+        if (this.writeFileTries < 3) {
+          await this.doWriteFile(fileHandle, contents)
+        }
+      }
+    }
   }
 
   /**
