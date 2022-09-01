@@ -4,6 +4,16 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.14.4",
+      "date": "2022-09-01",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "link to create new project"
+        }
+      ]
+    },
+    {
       "version": "0.14.3",
       "date": "2022-09-01",
       "items": [

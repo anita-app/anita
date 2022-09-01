@@ -24,7 +24,7 @@ export const SectionElementsList: React.FC = () => {
   const projectId = params[URL_PARAMS.projectId]
   const sectionId = params[URL_PARAMS.sectionId]
   const [sectionData, setSectionData] = useState<Array<SectionElement>>(null)
-  const [activeTab, setActiveTab] = useState<number>(1)
+  const [activeTab, setActiveTab] = useState<number>(0)
 
   useEffect(() => {
     let isMounted = true
