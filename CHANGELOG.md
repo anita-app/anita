@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.14.10] - 2022-09-01
+### Fixed
+- enabled debug.
+
 ## [0.14.9] - 2022-09-01
 ### Fixed
 - centered icon.
