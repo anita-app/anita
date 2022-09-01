@@ -38,9 +38,10 @@ export class ProjectLoader {
     }
     await this.createNewInstanceOfDbConnectorForProject()
 
+    Logger.info('[ProjectLoader.loadProject] projectId', this.projectId)
+    Logger.info('[ProjectLoader.loadProject] projectInfo', this.projectInfo)
+
     if (!dbInstances[this.projectId]) {
-      Logger.info('[ProjectLoader.loadProject] projectId', this.projectId)
-      Logger.info('[ProjectLoader.loadProject] projectInfo', this.projectInfo)
       throw new Error('[ProjectLoader.loadProject] dbInstance is not set')
     }
 
