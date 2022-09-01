@@ -12,7 +12,7 @@ export async function fileHandleChecker (
   accept?: { [mimeType: string]: Array<string> }
 ): Promise<FileSystemFileHandle> {
   Logger.info('[fileHandleChecker] verify permissions for fileHandle', options.projectInfo.fileHandle)
-  if (!options.projectInfo.fileHandle || !Object.keys(options.projectInfo.fileHandle).length) {
+  if (!options.projectInfo.fileHandle) {
     return await FsHelper.getNewFileHandle(`anita-fh-${options.projectInfo.id}`, description, accept)
   }
 

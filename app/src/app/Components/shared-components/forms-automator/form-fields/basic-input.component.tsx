@@ -33,6 +33,7 @@ export const BasicInput: React.FC<ICommonFormEleProps> = memo(function BasicInpu
         value={element[formEle.fieldName]}
         onChange={event => handleChange(formEle.fieldName, event.target.value)}
         onBlur={() => setTouched(true)}
+        autoComplete="off"
       />
       <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} setIsValidForField={setIsValidForField} />
     </FormEleContainer>

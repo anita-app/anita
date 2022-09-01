@@ -4,6 +4,70 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.14.16",
+      "date": "2022-09-02",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "loading data for non existing section"
+        }
+      ]
+    },
+    {
+      "version": "0.14.15",
+      "date": "2022-09-01",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "reading id of null"
+        }
+      ]
+    },
+    {
+      "version": "0.14.14",
+      "date": "2022-09-01",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "debuggin"
+        }
+      ]
+    },
+    {
+      "version": "0.14.13",
+      "date": "2022-09-01",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "debug"
+        }
+      ]
+    },
+    {
+      "version": "0.14.12",
+      "date": "2022-09-01",
+      "items": [
+        {
+          "type": "changed",
+          "value": "removed store method radio in edit mode"
+        }
+      ]
+    },
+    {
+      "version": "0.14.11",
+      "date": "2022-09-01",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "debug"
+        },
+        {
+          "type": "fixed",
+          "value": "deleting project"
+        }
+      ]
+    },
+    {
       "version": "0.14.10",
       "date": "2022-09-01",
       "items": [

@@ -32,7 +32,9 @@ export class ProjectDeletor {
   }
 
   private async callOnProjectDeleted (): Promise<void> {
-    await dbInstances[this.projectSettings.id].dbStore.onProjectDeleted?.()
+    if (dbInstances[this.projectSettings.id]) {
+      await dbInstances[this.projectSettings.id].dbStore.onProjectDeleted?.()
+    }
   }
 
   /**

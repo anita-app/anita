@@ -13,7 +13,7 @@ import { ProjectGridList } from 'app/components/project/project-grid/project-gri
 import { Manager } from 'app/libs/manager/Manager.class'
 import { Icons, TIconName } from 'app/libs/Icons/Icons.class'
 
-const SUPPORTED_VIEWS: Array<TIconName> = ['/assets/icons/svg/table.svg', 'gridOutline']
+const SUPPORTED_VIEWS: Array<TIconName> = [`${process.env.PUBLIC_URL}/assets/icons/svg/table.svg`, 'gridOutline']
 
 function classNames (...classes) {
   return classes.filter(Boolean).join(' ')
@@ -31,7 +31,7 @@ export const SectionElementsList: React.FC = () => {
     const getSectionData = async () => {
       const project = await Manager.getProjectById(projectId)
 
-      if (!project) {
+      if (!project || !project.getSectionById(sectionId)) {
         return setSectionData(undefined)
       }
 
@@ -79,10 +79,10 @@ export const SectionElementsList: React.FC = () => {
               <Tab
                 key={view}
                 className={({ selected }) => classNames(
-                  'flex items-center justify-center w-full rounded-lg text-sm font-medium leading-5',
+                  'flex items-center justify-center w-full rounded-lg text-sm font-medium leading-5 text-prussian-blue-700',
                   selected
                     ? 'bg-white shadow'
-                    : 'opacity- hover:bg-white/[0.12] hover:text-white'
+                    : 'hover:bg-white/[0.12] hover:text-prussian-blue-500'
                 )}
               >
                 {Icons.render(view)}
