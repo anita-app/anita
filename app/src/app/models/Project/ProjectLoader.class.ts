@@ -26,10 +26,21 @@ export class ProjectLoader {
   ) { }
 
   public async loadProject (): Promise<void> {
+    if (!this.projectId) {
+      throw new Error('[ProjectLoader.loadProject] projectId is not set')
+    }
     if (!this.projectInfo) {
       await this.setProjectInfoFromIndexedDB()
     }
-    await this.createNewInstanceOfDbConnectorForrProject()
+    if (!this.projectInfo) {
+      throw new Error('[ProjectLoader.loadProject] projectInfo is not set')
+    }
+    await this.createNewInstanceOfDbConnectorForProject()
+
+    if (!dbInstances[this.projectId]) {
+      throw new Error('[ProjectLoader.loadProject] dbInstance is not set')
+    }
+
     await this.loadProjectSettings()
     await this.loadProjectSections()
     this.callCurrentProjectSetter()
@@ -45,7 +56,7 @@ export class ProjectLoader {
   /**
    * Creates new instance of dbConnector for the project so it can be used in the app
    */
-  private async createNewInstanceOfDbConnectorForrProject () {
+  private async createNewInstanceOfDbConnectorForProject () {
     await new DbInitializer(this.projectInfo).init()
   }
 

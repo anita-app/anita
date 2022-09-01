@@ -23,8 +23,8 @@ export class DbInitializer {
   public async init (): Promise<void> {
     // Relaxed equality check, because localStorage prop might be a string in some storage systems
     // eslint-disable-next-line eqeqeq
-    if (this.projectInfo.localStorage == LOCAL_STORAGE_SYSTEMS.fileSystem) {
-      await this.doFileSystem()
+    if (this.projectInfo.localStorage == LOCAL_STORAGE_SYSTEMS.json) {
+      await this.doJson()
     // eslint-disable-next-line eqeqeq
     } else if (this.projectInfo.localStorage == LOCAL_STORAGE_SYSTEMS.SQLite) {
       await this.doSQLite()
@@ -33,7 +33,7 @@ export class DbInitializer {
     }
   }
 
-  private async doFileSystem (): Promise<void> {
+  private async doJson (): Promise<void> {
     if (this.fileHandle) {
       this.projectInfo = { ...this.projectInfo, fileHandle: this.fileHandle }
     }
