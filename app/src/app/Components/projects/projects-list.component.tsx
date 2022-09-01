@@ -49,6 +49,7 @@ export const ProjectsList: React.FC = () => {
               id="createProject"
               label="Create project"
               labelClassName="hidden"
+              href={ANITA_URLS.projectAdd}
               icon="addOutline"
               tooltip='Create a new project'
               type="primary"
