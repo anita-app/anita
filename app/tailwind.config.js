@@ -1,8 +1,7 @@
 const colors = require('tailwindcss/colors')
 
 module.exports = {
-  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
-  darkMode: false, // or 'media' or 'class'
+  content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   theme: {
     colors: {
       transparent: 'transparent',
@@ -39,11 +38,11 @@ module.exports = {
       amber: colors.amber,
       orange: colors.orange,
       red: colors.red,
-      warmGray: colors.warmGray,
-      trueGray: colors.trueGray,
+      stone: colors.stone,
+      neutral: colors.neutral,
       gray: colors.gray,
-      coolGray: colors.coolGray,
-      blueGray: colors.blueGray
+      gray: colors.gray,
+      slate: colors.slate
     }
   },
   variants: {

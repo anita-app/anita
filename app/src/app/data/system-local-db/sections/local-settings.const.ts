@@ -1,4 +1,4 @@
-import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition';
+import { SectionDefinition } from 'app/libs/DbConnector/db-builder/sez-definition'
 
 /**
  * Defines the table localSettings and its fields for the `indexedDb` plugin of `db-connector`
@@ -8,7 +8,7 @@ export const localSettings: SectionDefinition<LocalSettingsData<LOCAL_SETTINGS_K
   fields: [
     'data'
   ]
-};
+}
 
 /**
  * Constant to uniquely identify values of local settings.

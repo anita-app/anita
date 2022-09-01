@@ -8,16 +8,21 @@
     <div class="flex flex-wrap items-center md:justify-left justify-left">
       <div class="w-6/12 md:w-4/12">
         <button class="bg-white text-gray-900 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2" onclick="window.open('https://github.com/anita-app/anita','_blank')">
-          <i class="flex fab fa-github"></i>
+          <ion-icon name="logo-github" class="mt-1" style="width: 1.5em; height: 1.5em;"></ion-icon>
         </button>
       </div>
-      <div class="w-6/12 md:w-4/12 text-right md:text-center">
-        <div class="text-sm text-gray-600 font-semibold py-1">
-          Developed with <i class="far fa-heart text-red-800"></i> by humans & <a href="https://copilot.github.com/" target="_blank"><u>GitHub Copilot</u></a>,<br>made possible by <a href="/licenses.html"><u>open source</u></a>.
+      <div class="w-6/12 md:w-4/12 text-right md:text-center py-1">
+        <div class="flex justify-center text-sm text-gray-600 font-semibold">
+          Developed with <ion-icon name="heart-outline" class="text-red-800 self-end ml-1 mr-1" style="width: 1.2em; height: 1.2em;"></ion-icon> by humans & <a href="https://copilot.github.com/" target="_blank" class="ml-1"><u>GitHub Copilot</u></a>,
+        </div>
+        <div class="text-sm text-gray-600 font-semibold">
+          made possible by <a href="/licenses.html"><u>open source</u></a>.
         </div>
       </div>
     </div>
   </div>
   <!-- include-script-src -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   <script data-goatcounter="https://anita.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </footer>

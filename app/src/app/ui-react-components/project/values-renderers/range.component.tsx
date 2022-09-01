@@ -1,1 +1,0 @@
-export const Percentage = ({ value }) => value ? <span>{value}%</span> : null;

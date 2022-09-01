@@ -1,5 +1,5 @@
 import { AnitaUniversalDataStorage } from 'app/data/project-structure/project-info'
-import { DbConnectorInstance } from 'app/libs/db-connector/models/executers'
+import { DbConnectorInstance } from 'app/libs/DbConnector/models/executers'
 import Base from 'deta/dist/types/base'
 import Dexie from 'dexie'
 import * as mysql from 'mysql'
@@ -12,4 +12,4 @@ interface DbInstances {
 
 export const dbInstances: DbInstances = {
   system: undefined
-};
+}

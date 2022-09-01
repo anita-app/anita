@@ -1,7 +1,6 @@
 import { YassbConfig } from 'yassb-web';
 import { DateFormatterDirective } from '../src/app/yassb-plugins/custom-directives/date-formatter-directive.class';
 import { blogList } from '../src/app/yassb-plugins/custom-renderers/blog-list';
-import { featuresList } from '../src/app/yassb-plugins/custom-renderers/features-list';
 import { packagesList } from '../src/app/yassb-plugins/custom-renderers/packages-list';
 import { addDivToPreCode } from '../src/app/yassb-plugins/post-processors/add-div-to-pre-code.function';
 import { buildTailwind } from '../src/app/yassb-plugins/styles-parser/build-tailwind.function';
@@ -13,7 +12,6 @@ export default {
   },
   stylesParser: buildTailwind,
   customRenderers: {
-    featuresList: featuresList,
     blogList: blogList,
     packagesList: packagesList
   },
