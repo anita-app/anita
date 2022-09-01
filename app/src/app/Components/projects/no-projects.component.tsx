@@ -1,7 +1,7 @@
 import React from 'react'
-import { ANITA_URLS } from 'app/libs/Routing/anita-routes.constant'
-import { ImportProjectButton } from 'app/Components/projects/project-importer-components/import-project-button.component'
-import { Button } from 'app/Components/shared-components/common-ui-eles/button.component'
+import { ANITA_URLS } from 'app/libs/routing/anita-routes.constant'
+import { ImportProjectButton } from 'app/components/projects/project-importer-components/import-project-button.component'
+import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 
 export const ProjectsNone: React.FC = () => (
   <div className="container px-0 md:px2 lg:px-5 pt-20 md:pt-24 mx-auto">

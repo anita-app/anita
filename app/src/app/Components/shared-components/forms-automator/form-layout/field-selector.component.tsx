@@ -1,6 +1,6 @@
-import { ICommonFormEleProps } from 'app/Components/shared-components/forms-automator/form-automator.types'
-import { formElesSwitcher } from 'app/Components/shared-components/forms-automator/form-builder/form-eles-switcher.function'
-import { PrerequisitesChecker } from 'app/Components/shared-components/forms-automator/form-builder/prerequisites-checker.class'
+import { ICommonFormEleProps } from 'app/components/shared-components/forms-automator/form-automator.types'
+import { formElesSwitcher } from 'app/components/shared-components/forms-automator/form-builder/form-eles-switcher.function'
+import { PrerequisitesChecker } from 'app/components/shared-components/forms-automator/form-builder/prerequisites-checker.class'
 import React, { useMemo } from 'react'
 
 export const FieldSelector: React.FC<ICommonFormEleProps> = (props: ICommonFormEleProps) => {

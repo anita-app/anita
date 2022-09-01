@@ -1,6 +1,6 @@
 import { ParentInfoForDetailsView } from 'app/data/project-structure/project-info'
-import { ArrayTools } from 'app/libs/Tools/ArrayTools.class'
-import { Project } from 'app/Models/Project/Project.class'
+import { ArrayTools } from 'app/libs/tools/ArrayTools.class'
+import { Project } from 'app/models/Project/Project.class'
 
 export class GetParentInfoForDetailsView {
   private parentInfoForDetailsView: Array<ParentInfoForDetailsView> = []

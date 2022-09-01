@@ -1,5 +1,5 @@
-import { ICommonFormEleProps } from 'app/Components/shared-components/forms-automator/form-automator.types'
-import { SUPPORTED_VALIDATORS } from 'app/Components/shared-components/forms-automator/form-validation/supported-validators.enum'
+import { ICommonFormEleProps } from 'app/components/shared-components/forms-automator/form-automator.types'
+import { SUPPORTED_VALIDATORS } from 'app/components/shared-components/forms-automator/form-validation/supported-validators.enum'
 
 export type IValidatorsConatinerProps = Pick<ICommonFormEleProps, 'formEle' | 'element' | 'fieldId' | 'touched'> & {
   setIsValidForField: (isValid: boolean) => void

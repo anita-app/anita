@@ -1,9 +1,9 @@
-import { Manager } from 'app/libs/Manager/Manager.class'
+import { Manager } from 'app/libs/manager/Manager.class'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
-import { FormAutomator } from 'app/Components/shared-components/forms-automator/form-automator.component'
-import { FormAutomatorOnChangeValue } from 'app/Components/shared-components/forms-automator/form-automator.types'
+import { FormAutomator } from 'app/components/shared-components/forms-automator/form-automator.component'
+import { FormAutomatorOnChangeValue } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { useSelector } from 'react-redux'
 import React from 'react'
 

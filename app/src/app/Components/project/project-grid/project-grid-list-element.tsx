@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
-import { ANITA_URLS, URL_PARAMS } from 'app/libs/Routing/anita-routes.constant'
-import { urlParamFiller } from 'app/libs/Routing/url-param-fillers.function'
+import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
+import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
 import { SectionElement } from 'app/data/project-structure/project-info'
 import { useNavigate, useParams } from 'react-router-dom'
 

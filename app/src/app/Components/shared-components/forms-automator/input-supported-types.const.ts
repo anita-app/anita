@@ -1,4 +1,4 @@
-import { IOptionKeysModel } from 'app/Components/shared-components/forms-automator/form-automator.types'
+import { IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 
 export enum TextInputSupportedTypes {
   color = 'color',

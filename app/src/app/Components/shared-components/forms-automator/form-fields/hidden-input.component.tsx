@@ -1,4 +1,4 @@
-import { ICommonFormEleProps } from 'app/Components/shared-components/forms-automator/form-automator.types'
+import { ICommonFormEleProps } from 'app/components/shared-components/forms-automator/form-automator.types'
 import React, { memo } from 'react'
 
 export const HiddenInput: React.FC<ICommonFormEleProps> = memo(function HiddenInput ({ formEle, element, handleChange }: ICommonFormEleProps) {

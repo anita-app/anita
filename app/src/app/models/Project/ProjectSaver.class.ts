@@ -1,8 +1,8 @@
 import { DbInitializer } from 'app/data/local-dbs/db-initializer.class'
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import { RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info'
-import { SaveProjectSettingsInIndexedDB } from 'app/Models/Project/SaveProjectSettingsInIndexedDB.class'
-import { EDITOR_MODE } from 'app/Components/editor-mode.enum'
+import { SaveProjectSettingsInIndexedDB } from 'app/models/Project/SaveProjectSettingsInIndexedDB.class'
+import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 
 export class ProjectSaver {
   constructor (

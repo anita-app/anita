@@ -1,4 +1,4 @@
-import { URL_PARAMS } from 'app/libs/Routing/anita-routes.constant'
+import { URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const'
 import { RESERVED_AUDS_KEYS, ISection } from 'app/data/project-structure/project-info'
 import {
@@ -10,15 +10,15 @@ import {
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
-import { SectionElement } from 'app/Models/SectionElement/SectionElement.class'
-import { EDITOR_MODE } from 'app/Components/editor-mode.enum'
-import { FormAutomator } from 'app/Components/shared-components/forms-automator/form-automator.component'
+import { SectionElement } from 'app/models/SectionElement/SectionElement.class'
+import { EDITOR_MODE } from 'app/components/editor-mode.enum'
+import { FormAutomator } from 'app/components/shared-components/forms-automator/form-automator.component'
 import {
   FormAutomatorOnChangeValue,
   FormFieldsModel,
   IOptionKeysModel,
   TSupportedFormsTypes
-} from 'app/Components/shared-components/forms-automator/form-automator.types'
+} from 'app/components/shared-components/forms-automator/form-automator.types'
 import React, { useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'

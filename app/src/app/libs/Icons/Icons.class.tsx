@@ -1,9 +1,9 @@
 import * as ionicons from 'ionicons/icons/index'
 import { IonIcon } from '@ionic/react'
 import React, { ReactElement } from 'react'
-import { IOption } from 'app/Models/ParentElement/ParentElement.class'
-import { TextTools } from 'app/libs/Tools/TextTools.class'
-import { Logger } from 'app/libs/Logger/logger.class'
+import { IOption } from 'app/models/ParentElement/ParentElement.class'
+import { TextTools } from 'app/libs/tools/TextTools.class'
+import { Logger } from 'app/libs/logger/logger.class'
 
 export type TSVGIcons = '/assets/icons/svg/table.svg'
 export type TIconName = keyof typeof ionicons | TSVGIcons

@@ -1,4 +1,4 @@
-import { EDITOR_MODE } from 'app/Components/editor-mode.enum'
+import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 
 export enum URL_PARAMS {
   projectId = 'projectId',

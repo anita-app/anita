@@ -1,10 +1,10 @@
-import { ANITA_URLS, URL_PARAMS } from 'app/libs/Routing/anita-routes.constant'
-import { urlParamFiller } from 'app/libs/Routing/url-param-fillers.function'
+import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
+import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
 import { IProjectSettings } from 'app/data/project-structure/project-info'
-import { EditButton } from 'app/Components/shared-components/buttons/edit-project-button.component'
-import { ExportButton } from 'app/Components/shared-components/buttons/export-project-button.component'
+import { EditButton } from 'app/components/shared-components/buttons/edit-project-button.component'
+import { ExportButton } from 'app/components/shared-components/buttons/export-project-button.component'
 import React from 'react'
-import { Button } from 'app/Components/shared-components/common-ui-eles/button.component'
+import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 
 interface IProjectLoadedFooterProps {
   project: IProjectSettings

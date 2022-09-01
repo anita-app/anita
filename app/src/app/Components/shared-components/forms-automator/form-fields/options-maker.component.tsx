@@ -1,6 +1,6 @@
-import { Button } from 'app/Components/shared-components/common-ui-eles/button.component'
-import { FormFieldsModel, ICommonFormEleProps, IOptionKeysModel } from 'app/Components/shared-components/forms-automator/form-automator.types'
-import { OptionsMakerSingleOption } from 'app/Components/shared-components/forms-automator/form-fields/options-maker-single-option.component'
+import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
+import { FormFieldsModel, ICommonFormEleProps, IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
+import { OptionsMakerSingleOption } from 'app/components/shared-components/forms-automator/form-fields/options-maker-single-option.component'
 import React, { memo } from 'react'
 
 export const OptionsMaker: React.FC<ICommonFormEleProps<FormFieldsModel<IOptionKeysModel>>> = memo(function OptionsMaker (props: ICommonFormEleProps<FormFieldsModel<IOptionKeysModel>>) {

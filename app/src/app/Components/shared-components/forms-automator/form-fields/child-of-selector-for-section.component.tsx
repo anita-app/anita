@@ -1,11 +1,11 @@
 import { RESERVED_AUDS_KEYS, SectionElement } from 'app/data/project-structure/project-info'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
-import { IOption, ParentElement } from 'app/Models/ParentElement/ParentElement.class'
-import { IBasicSelect, ICommonFormEleProps } from 'app/Components/shared-components/forms-automator/form-automator.types'
-import { FormEleContainer } from 'app/Components/shared-components/forms-automator/form-layout/form-ele-container.component'
-import { FormElementLabel } from 'app/Components/shared-components/forms-automator/form-layout/form-element-label.component'
-import { ValidatorsContainer } from 'app/Components/shared-components/forms-automator/form-validation/validators-container.component'
-import { useValidators } from 'app/Components/shared-components/forms-automator/hooks/use-validators.hook'
+import { IOption, ParentElement } from 'app/models/ParentElement/ParentElement.class'
+import { IBasicSelect, ICommonFormEleProps } from 'app/components/shared-components/forms-automator/form-automator.types'
+import { FormEleContainer } from 'app/components/shared-components/forms-automator/form-layout/form-ele-container.component'
+import { FormElementLabel } from 'app/components/shared-components/forms-automator/form-layout/form-element-label.component'
+import { ValidatorsContainer } from 'app/components/shared-components/forms-automator/form-validation/validators-container.component'
+import { useValidators } from 'app/components/shared-components/forms-automator/hooks/use-validators.hook'
 import uniqueId from 'lodash/uniqueId'
 import React, {
   memo,

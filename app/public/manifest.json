@@ -3,7 +3,7 @@
   "short_name": "Anita",
   "description": "Anita is a private, no-server, powerful and fully customizable data management solution, open source and free of charge. With Anita you can organize any number of things you want to track, with one of our pre-configured Anita Templates or by defining your own custom data structure. Anita can handle many different data types, and can present your data in multiple useful ways.",
   "scope": "https://anita-app.com/app/",
-  "start_url": "/app/#/private/projects/list",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#002346",
@@ -467,7 +467,8 @@
     },
     {
       "src": "/app/assets/icons/ios/1024.png",
-      "sizes": "1024x1024"
+      "sizes": "1024x1024",
+      "purpose": "maskable"
     }
   ]
 }
