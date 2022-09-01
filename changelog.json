@@ -4,6 +4,16 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.14.3",
+      "date": "2022-09-01",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "installable pwa"
+        }
+      ]
+    },
+    {
       "version": "0.14.2",
       "date": "2022-09-01",
       "items": [
