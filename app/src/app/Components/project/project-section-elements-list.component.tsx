@@ -13,7 +13,7 @@ import { ProjectGridList } from 'app/components/project/project-grid/project-gri
 import { Manager } from 'app/libs/manager/Manager.class'
 import { Icons, TIconName } from 'app/libs/Icons/Icons.class'
 
-const SUPPORTED_VIEWS: Array<TIconName> = ['/assets/icons/svg/table.svg', 'gridOutline']
+const SUPPORTED_VIEWS: Array<TIconName> = [`${process.env.PUBLIC_URL}/assets/icons/svg/table.svg`, 'gridOutline']
 
 function classNames (...classes) {
   return classes.filter(Boolean).join(' ')

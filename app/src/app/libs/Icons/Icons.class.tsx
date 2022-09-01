@@ -5,7 +5,7 @@ import { IOption } from 'app/models/ParentElement/ParentElement.class'
 import { TextTools } from 'app/libs/tools/TextTools.class'
 import { Logger } from 'app/libs/logger/logger.class'
 
-export type TSVGIcons = '/assets/icons/svg/table.svg'
+export type TSVGIcons = `${string}/assets/icons/svg/table.svg`
 export type TIconName = keyof typeof ionicons | TSVGIcons
 
 export class Icons {

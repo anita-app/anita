@@ -29,13 +29,13 @@ export const DeleteProjectButton: React.FC<IDeleteProjectButtonProps> = ({ proje
 
   const handleClickDelete = () => {
     handleClickModal()
-    if (Manager.getCurrentProject().getId() === project.id) {
+    if (Manager.getCurrentProject()?.getId() === project.id) {
       storeDispatcher({ type: REDUX_ACTIONS.resetCurrentProject })
     }
     // This timeout must be equal or greater than the one in closeFn.
     // Otherwise we would cause an update on an unmounted component.
-    setTimeout(() => {
-      Manager.getCurrentProject().delete()
+    setTimeout(async () => {
+      (await Manager.getProjectById(project.id)).delete()
       navigate(ANITA_URLS.projectsList)
     }, 500)
   }

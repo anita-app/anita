@@ -1,6 +1,6 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
-import { LocalProjectSettings, RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info'
+import { IProjectSettings, LocalProjectSettings, RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info'
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { store } from 'app/libs/redux/state.store'
@@ -31,7 +31,7 @@ export class Manager {
     }))
   }
 
-  public static getCurrentProject () {
+  public static getCurrentProject (): Project | undefined {
     if (!this.currentProject) {
       this.loadCurrentProjectFromStore()
     }
@@ -42,14 +42,13 @@ export class Manager {
     if (projectId && await this.isProjectLoaded(projectId)) {
       return this.currentProject
     }
+    return new Project({ [RESERVED_AUDS_KEYS._settings]: [{ id: projectId } as IProjectSettings], [RESERVED_AUDS_KEYS._sections]: [] })
   }
 
   private static loadCurrentProjectFromStore () {
     const projectInStore = store.getState().project
     if (projectInStore) {
       this.currentProject = new Project(projectInStore)
-    } else {
-      throw new Error('No project in store')
     }
   }
 
