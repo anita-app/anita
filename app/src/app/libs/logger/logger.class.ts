@@ -125,6 +125,7 @@ export class Logger {
     if (Logger.debug === true) {
       console[methodName](...data)
     }
+    console[methodName](...data)
 
     return data.join('. ')
   }
