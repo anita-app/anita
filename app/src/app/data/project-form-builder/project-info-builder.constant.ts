@@ -1,9 +1,9 @@
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
 import { IProjectSettings } from 'app/data/project-structure/project-info'
 import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant'
-import { FormFieldsModel, IOptionKeysModel } from 'app/Components/shared-components/forms-automator/form-automator.types'
-import { FORM_COMPONENTS_CODES } from 'app/Components/shared-components/forms-automator/form-component-codes.enum'
-import { TextInputSupportedTypes } from 'app/Components/shared-components/forms-automator/input-supported-types.const'
+import { FormFieldsModel, IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
+import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
+import { TextInputSupportedTypes } from 'app/components/shared-components/forms-automator/input-supported-types.const'
 
 const hintFileSystem = 'The Project is saved in a file on your computer in JSON. Data is updated automatically every time you make any change.\nYou can chose the name and the location of the file when you click "Save" at the bottom of this form.'
 const hintFsNotSupported = 'Not supported in this browser.\nAvailable only on the Desktop version of Chrome, Edge and Opera.'

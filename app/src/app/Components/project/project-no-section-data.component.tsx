@@ -1,7 +1,7 @@
 import React from 'react'
-import { ANITA_URLS, URL_PARAMS } from 'app/libs/Routing/anita-routes.constant'
-import { urlParamFiller } from 'app/libs/Routing/url-param-fillers.function'
-import { Button } from 'app/Components/shared-components/common-ui-eles/button.component'
+import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
+import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
+import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 
 interface INoSectionDataProps {
   sectionTitle: string

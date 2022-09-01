@@ -1,5 +1,5 @@
 import { ISection } from 'app/data/project-structure/project-info'
-import { FieldSelector } from 'app/Components/shared-components/forms-automator/form-layout/field-selector.component'
+import { FieldSelector } from 'app/components/shared-components/forms-automator/form-layout/field-selector.component'
 import React from 'react'
 
 export interface IFormAutomatorProps {

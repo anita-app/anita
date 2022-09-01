@@ -1,9 +1,9 @@
-import { Manager } from 'app/libs/Manager/Manager.class'
+import { Manager } from 'app/libs/manager/Manager.class'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import React from 'react'
-import { Button } from 'app/Components/shared-components/common-ui-eles/button.component'
+import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 
 interface IProjectSaveElementProps {
   sectionId: string

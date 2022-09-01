@@ -1,10 +1,10 @@
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
 import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant'
-import { AbstractModel } from 'app/libs/DbConnector/models/abstract-model'
-import { FileSystemFileHandle } from 'app/libs/DbConnector/plugins/file-handles/helpers/file-system-access-api'
-import { FormFieldsModel, IOptionKeysModel, TSupportedFormsTypes } from 'app/Components/shared-components/forms-automator/form-automator.types'
-import { FORM_COMPONENTS_CODES } from 'app/Components/shared-components/forms-automator/form-component-codes.enum'
-import { TextInputSupportedTypes } from 'app/Components/shared-components/forms-automator/input-supported-types.const'
+import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
+import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api'
+import { FormFieldsModel, IOptionKeysModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
+import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
+import { TextInputSupportedTypes } from 'app/components/shared-components/forms-automator/input-supported-types.const'
 import { TIconName } from 'app/libs/Icons/Icons.class'
 
 /**

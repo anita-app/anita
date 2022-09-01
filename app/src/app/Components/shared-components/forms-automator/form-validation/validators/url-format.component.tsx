@@ -1,5 +1,5 @@
-import { SUPPORTED_VALIDATORS } from 'app/Components/shared-components/forms-automator/form-validation/supported-validators.enum'
-import { IValidatorsProps } from 'app/Components/shared-components/forms-automator/form-validation/validators'
+import { SUPPORTED_VALIDATORS } from 'app/components/shared-components/forms-automator/form-validation/supported-validators.enum'
+import { IValidatorsProps } from 'app/components/shared-components/forms-automator/form-validation/validators'
 import React, { memo, useEffect } from 'react'
 
 export const UrlFormat: React.FC<IValidatorsProps> = memo(function TelephoneNumber ({ formEle, element, updateValidatorState }: IValidatorsProps) {

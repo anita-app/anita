@@ -2,11 +2,11 @@ import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
 import { LocalProjectSettings, ISection } from 'app/data/project-structure/project-info'
 import { DataStructureExtender } from 'app/data/system-local-db/data-structure-extender.class'
-import { DbConnector } from 'app/libs/DbConnector/db-connector.class'
-import { FILE_HANDLES_PLUGIN } from 'app/libs/DbConnector/plugins/file-handles/exporter.constant'
-import { FileSystemFileHandle } from 'app/libs/DbConnector/plugins/file-handles/helpers/file-system-access-api'
-import { INDEXEDDB_PLUGIN } from 'app/libs/DbConnector/plugins/indexed-db/exporter.constant'
-import { SQLITE_PLUGIN } from 'app/libs/DbConnector/plugins/sqlite/exporter.constant'
+import { DbConnector } from 'app/libs/db-connector/db-connector.class'
+import { FILE_HANDLES_PLUGIN } from 'app/libs/db-connector/plugins/file-handles/exporter.constant'
+import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api'
+import { INDEXEDDB_PLUGIN } from 'app/libs/db-connector/plugins/indexed-db/exporter.constant'
+import { SQLITE_PLUGIN } from 'app/libs/db-connector/plugins/sqlite/exporter.constant'
 
 export class DbInitializer {
   private projectId: string

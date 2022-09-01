@@ -7,7 +7,7 @@ import {
   SystemData
 } from 'app/data/project-structure/project-info'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
-import { FormFieldsModel, TSupportedFormsTypes } from 'app/Components/shared-components/forms-automator/form-automator.types'
+import { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
 
 export type Action<T extends REDUX_ACTIONS> = T extends ActionsWithoutPayload ? ActionWithoutPayload :
   ActionWithPayload<T>;

@@ -1,6 +1,6 @@
 import { IProjectSettings } from 'app/data/project-structure/project-info'
-import { Manager } from 'app/libs/Manager/Manager.class'
-import { Button } from 'app/Components/shared-components/common-ui-eles/button.component'
+import { Manager } from 'app/libs/manager/Manager.class'
+import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import React from 'react'
 
 interface IProjectNotLoadedFooterProps {

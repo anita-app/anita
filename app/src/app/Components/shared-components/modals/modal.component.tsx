@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react'
-import { ModalBody } from 'app/Components/shared-components/modals/modal-body.component'
-import { ModalContent } from 'app/Components/shared-components/modals/modal-content.component'
-import { ModalFooter } from 'app/Components/shared-components/modals/modal-footer.component'
-import { ModalHeader } from 'app/Components/shared-components/modals/modal-header.component'
+import { ModalBody } from 'app/components/shared-components/modals/modal-body.component'
+import { ModalContent } from 'app/components/shared-components/modals/modal-content.component'
+import { ModalFooter } from 'app/components/shared-components/modals/modal-footer.component'
+import { ModalHeader } from 'app/components/shared-components/modals/modal-header.component'
 import { TIconName } from 'app/libs/Icons/Icons.class'
 
 interface IModalProps {

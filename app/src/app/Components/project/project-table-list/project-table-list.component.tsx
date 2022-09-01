@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { SectionElement, ISection } from 'app/data/project-structure/project-info'
-import { ProjectTableListTdWithLinkToDetails } from 'app/Components/project/project-table-list/project-table-list-td-with-link-to-details.component'
-import { customRenderPicker } from 'app/Components/project/project-values-renderers/custom-render-picker.component'
+import { ProjectTableListTdWithLinkToDetails } from 'app/components/project/project-table-list/project-table-list-td-with-link-to-details.component'
+import { customRenderPicker } from 'app/components/project/project-values-renderers/custom-render-picker.component'
 import { useSortBy, useTable } from 'react-table'
 
 /**

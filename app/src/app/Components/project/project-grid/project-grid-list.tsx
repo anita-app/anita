@@ -1,8 +1,8 @@
 import React from 'react'
 import { SectionElement } from 'app/data/project-structure/project-info'
-import { ProjectGridListElement } from 'app/Components/project/project-grid/project-grid-list-element'
-import { FORM_COMPONENTS_CODES } from 'app/Components/shared-components/forms-automator/form-component-codes.enum'
-import { Manager } from 'app/libs/Manager/Manager.class'
+import { ProjectGridListElement } from 'app/components/project/project-grid/project-grid-list-element'
+import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
+import { Manager } from 'app/libs/manager/Manager.class'
 
 interface IProjectGridListProps {
   sectionId: string

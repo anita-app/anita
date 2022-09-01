@@ -1,13 +1,13 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import { IProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
-import { ProjectLoadedFooter } from 'app/Components/projects/project-card-components/project-loaded-footer.component'
-import { ProjectNotLoadedFooter } from 'app/Components/projects/project-card-components/project-not-loaded-footer.component'
-import { DeleteProjectButton } from 'app/Components/shared-components/buttons/delete-project.component'
+import { ProjectLoadedFooter } from 'app/components/projects/project-card-components/project-loaded-footer.component'
+import { ProjectNotLoadedFooter } from 'app/components/projects/project-card-components/project-not-loaded-footer.component'
+import { DeleteProjectButton } from 'app/components/shared-components/buttons/delete-project.component'
 import * as dateFormat from 'date-format'
 import { useSelector } from 'react-redux'
 import React from 'react'
-import { CardFooter } from 'app/Components/shared-components/common-ui-eles/card-footer.component'
+import { CardFooter } from 'app/components/shared-components/common-ui-eles/card-footer.component'
 
 interface IProjectCardProps {
   project: IProjectSettings

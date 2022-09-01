@@ -1,8 +1,8 @@
 import { SectionElement } from 'app/data/project-structure/project-info'
-import { Manager } from 'app/libs/Manager/Manager.class'
-import { ArrayTools } from 'app/libs/Tools/ArrayTools.class'
-import { Project } from 'app/Models/Project/Project.class'
-import { IOptionKeysModel, OptionKeysModelGroup } from 'app/Components/shared-components/forms-automator/form-automator.types'
+import { Manager } from 'app/libs/manager/Manager.class'
+import { ArrayTools } from 'app/libs/tools/ArrayTools.class'
+import { Project } from 'app/models/Project/Project.class'
+import { IOptionKeysModel, OptionKeysModelGroup } from 'app/components/shared-components/forms-automator/form-automator.types'
 
 export class GetOptionsForParentsSelector {
   private optionsGroups: Array<OptionKeysModelGroup> = []

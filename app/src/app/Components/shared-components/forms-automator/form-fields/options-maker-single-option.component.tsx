@@ -1,9 +1,9 @@
 import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const'
 import { RESERVED_AUDS_KEYS, ISection } from 'app/data/project-structure/project-info'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
-import { Button } from 'app/Components/shared-components/common-ui-eles/button.component'
-import { FormAutomator } from 'app/Components/shared-components/forms-automator/form-automator.component'
-import { FormFieldsModel, IBasicSelect, ICommonFormEleProps, IOptionKeysModel, TSupportedFormsTypes } from 'app/Components/shared-components/forms-automator/form-automator.types'
+import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
+import { FormAutomator } from 'app/components/shared-components/forms-automator/form-automator.component'
+import { FormFieldsModel, IBasicSelect, ICommonFormEleProps, IOptionKeysModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
 import React, { memo, useMemo } from 'react'
 import { useSelector } from 'react-redux'
 

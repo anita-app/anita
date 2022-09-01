@@ -1,4 +1,4 @@
-import { COLOR_SCHEME, TFill, TType } from 'app/Components/shared-components/common-ui-eles/components.const'
+import { COLOR_SCHEME, TFill, TType } from 'app/components/shared-components/common-ui-eles/components.const'
 import { Icons, TIconName } from 'app/libs/Icons/Icons.class'
 import React from 'react'
 import { Link } from 'react-router-dom'

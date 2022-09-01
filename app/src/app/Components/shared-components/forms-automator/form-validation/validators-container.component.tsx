@@ -1,10 +1,10 @@
-import { SUPPORTED_VALIDATORS } from 'app/Components/shared-components/forms-automator/form-validation/supported-validators.enum'
-import { IValidatorsConatinerProps, IValidatorsState } from 'app/Components/shared-components/forms-automator/form-validation/validators'
-import { EmailFormat } from 'app/Components/shared-components/forms-automator/form-validation/validators/email-format.component'
-import { RequiredField } from 'app/Components/shared-components/forms-automator/form-validation/validators/required-field.component'
-import { TelephoneNumber } from 'app/Components/shared-components/forms-automator/form-validation/validators/telephone-number.component'
-import { UrlFormat } from 'app/Components/shared-components/forms-automator/form-validation/validators/url-format.component'
-import { TextInputSupportedTypes } from 'app/Components/shared-components/forms-automator/input-supported-types.const'
+import { SUPPORTED_VALIDATORS } from 'app/components/shared-components/forms-automator/form-validation/supported-validators.enum'
+import { IValidatorsConatinerProps, IValidatorsState } from 'app/components/shared-components/forms-automator/form-validation/validators'
+import { EmailFormat } from 'app/components/shared-components/forms-automator/form-validation/validators/email-format.component'
+import { RequiredField } from 'app/components/shared-components/forms-automator/form-validation/validators/required-field.component'
+import { TelephoneNumber } from 'app/components/shared-components/forms-automator/form-validation/validators/telephone-number.component'
+import { UrlFormat } from 'app/components/shared-components/forms-automator/form-validation/validators/url-format.component'
+import { TextInputSupportedTypes } from 'app/components/shared-components/forms-automator/input-supported-types.const'
 import React, { memo, useState } from 'react'
 
 export const ValidatorsContainer: React.FC<IValidatorsConatinerProps> = memo(function ValidatorsContainer (props: IValidatorsConatinerProps) {

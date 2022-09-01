@@ -7,7 +7,7 @@ import {
   ISection
 } from 'app/data/project-structure/project-info'
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
-import { Manager } from 'app/libs/Manager/Manager.class'
+import { Manager } from 'app/libs/manager/Manager.class'
 
 export class ProjectLoader {
   /**

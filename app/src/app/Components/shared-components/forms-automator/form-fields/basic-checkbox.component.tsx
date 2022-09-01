@@ -1,8 +1,8 @@
-import { ICommonFormEleProps } from 'app/Components/shared-components/forms-automator/form-automator.types'
-import { FormEleContainer } from 'app/Components/shared-components/forms-automator/form-layout/form-ele-container.component'
-import { FormElementLabel } from 'app/Components/shared-components/forms-automator/form-layout/form-element-label.component'
-import { ValidatorsContainer } from 'app/Components/shared-components/forms-automator/form-validation/validators-container.component'
-import { useValidators } from 'app/Components/shared-components/forms-automator/hooks/use-validators.hook'
+import { ICommonFormEleProps } from 'app/components/shared-components/forms-automator/form-automator.types'
+import { FormEleContainer } from 'app/components/shared-components/forms-automator/form-layout/form-ele-container.component'
+import { FormElementLabel } from 'app/components/shared-components/forms-automator/form-layout/form-element-label.component'
+import { ValidatorsContainer } from 'app/components/shared-components/forms-automator/form-validation/validators-container.component'
+import { useValidators } from 'app/components/shared-components/forms-automator/hooks/use-validators.hook'
 import uniqueId from 'lodash/uniqueId'
 import React, { memo, useRef, useState } from 'react'
 
