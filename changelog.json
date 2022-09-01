@@ -4,6 +4,24 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.14.0",
+      "date": "2022-09-01",
+      "items": [
+        {
+          "type": "added",
+          "value": "grid view"
+        },
+        {
+          "type": "added",
+          "value": "section icons"
+        },
+        {
+          "type": "changed",
+          "value": "ui improvements"
+        }
+      ]
+    },
+    {
       "version": "0.13.1",
       "date": "2022-08-27",
       "items": [

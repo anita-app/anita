@@ -7,6 +7,14 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.14.0] - 2022-09-01
+### Added
+- grid view.
+- section icons.
+
+### Changed
+- ui improvements.
+
 ## [0.13.1] - 2022-08-27
 ### Fixed
 - deploy.
