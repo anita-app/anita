@@ -11,20 +11,24 @@
 <body class="text-gray-800 antialiased">
   <!-- component="navbar/navbar.component.html" -->
   <main>
-    <div class="relative pt-16 pb-32 flex content-center items-center justify-center bg-prussian-blue-400 overflow-hidden" style="min-height: 65vh;">
-      <img src="/assets/images/abstract-table.png" class="absolute top-96 w-11/12 lg:w-10/12 md:visible invisible">
-      <div class="container relative mx-auto">
-        <div class="items-center flex flex-wrap">
-          <div class="w-full lg:w-8/12 px-4 mt-16 lg:mt-0 ml-auto mr-auto text-center">
-            <h1 class="text-white font-semibold text-5xl leading-tight tracking-wide">
-              All your data,<br />organized as you wish
-            </h1>
-            <p class="mt-4 text-3xl font-thin tracking-wider text-gray-300">
-              Anita is a private, powerful, and fully customizable open source data management solution.
-            </p>
-            <div class="mt-16 mb-16">
-              <!-- component="get-started.component.html" -->
+    <div class="relative flex content-center bg-gradient-to-r from-prussian-blue-400 to-prussian-blue-700 pt-20 lg:pt-40 pb-60">
+      <div class="mx-auto max-w-7xl lg:px-8">
+        <div class="lg:grid lg:grid-cols-2 lg:gap-12">
+          <div class="mx-auto max-w-md px-4 sm:max-w-2xl sm:px-6 sm:text-center lg:flex lg:items-center lg:px-0 lg:text-left">
+            <div class="lg:py-24">
+              <h1 class="mt-4 text-4xl font-bold tracking-tight text-white sm:mt-5 sm:text-6xl lg:mt-6 xl:text-6xl">
+                <span class="block">Organize everything,</span>
+                <span class="block bg-gradient-to-r from-teal-200 to-cyan-400 bg-clip-text pb-3 text-transparent sm:pb-5">and anything</span>
+              </h1>
+              <p class="text-base text-gray-300 sm:text-xl lg:text-lg xl:text-xl">Anita is a private, powerful, and fully customizable open source data management solution.</p>
+              <div class="mt-10 sm:mt-12">
+                <!-- component="get-started.component.html" -->
+              </div>
             </div>
+          </div>
+          <div class="mt-12 -mb-16 sm:-mb-48 hidden lg:relative lg:m-0 lg:flex justify-center">
+            <!-- Illustration taken from Lucid Illustrations: https://lucid.pixsellz.io/ -->
+            <img class="inset-y-0 h-auto w-full" src="/assets/images/svg/data-sync.svg" alt="">
           </div>
         </div>
       </div>
@@ -34,51 +38,11 @@
         </svg>
       </div>
     </div>
-    <section class="pb-20 bg-white -mt-24">
-      <div class="container mx-auto px-4">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-0 lg:gap-4">
-          <div class="w-full px-4 text-center">
-            <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
-              <div class="px-4 py-5 flex-auto">
-                <div class="text-white p-3 text-center inline-flex items-center justify-center w-16 h-14 mb-5 shadow-lg rounded-full bg-yellow-500">
-                  <i class="fas fa-file-export fa-2x"></i>
-                </div>
-                <h6 class="text-xl font-semibold">Portable</h6>
-                <p class="mt-2 mb-4 text-gray-600">
-                  Your data is stored on your computer and/or on a remote database of your choice: flexible, open & no lock-in. Stay independent from servers that will go away, soner or later.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="w-full px-4 text-center">
-            <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
-              <div class="px-4 py-5 flex-auto">
-                <div class="text-white p-3 text-center inline-flex items-center justify-center w-14 h-14 mb-5 shadow-lg rounded-full bg-blue-400">
-                  <i class="fas fa-shield-alt fa-2x"></i>
-                </div>
-                <h6 class="text-xl font-semibold">Secure</h6>
-                <p class="mt-2 mb-4 text-gray-600">
-                  There is no risk of a data breach like there is with cloud based solutions: Anita works fully offline and connects only to databases you trust. You keep your data where it's most safe, with you.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="w-full px-4 text-center">
-            <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
-              <div class="px-4 py-5 flex-auto">
-                <div class="text-white p-3 text-center inline-flex items-center justify-center w-16 h-14 mb-5 shadow-lg rounded-full bg-emerald-400">
-                  <i class="fas fa-user-shield fa-2x"></i>
-                </div>
-                <h6 class="text-xl font-semibold">Private</h6>
-                Anita is the privacy you want, the convenience you need. It fully works offline and syncs only to remote databases hosted where you want, if you so chose. So your data is never exposed to a third party: no more middlemen,
-                profiling
-                or
-                ads targeting.
-              </div>
-            </div>
-          </div>
-        </div>
-    </section>
+    
+    
+    <!-- component="landing/overlapping-cards.html" -->
+
+    <!-- component="landing/live-demo.html" -->
 
     <!-- component="landing/features.component.html" -->
 

@@ -1,13 +1,13 @@
 import {
   LocalProjectSettings,
-  ProjectSettings,
-  Section,
+  IProjectSettings,
+  ISection,
   SectionDetailsDeclaration,
   SectionElement,
   SystemData
-  } from 'app/data/project-structure/project-info'
+} from 'app/data/project-structure/project-info'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
-import { FormFieldsModel, SupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
+import { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
 
 export type Action<T extends REDUX_ACTIONS> = T extends ActionsWithoutPayload ? ActionWithoutPayload :
   ActionWithPayload<T>;
@@ -31,7 +31,7 @@ interface ActionsPayloads {
   [REDUX_ACTIONS.updateFormElement]: SectionElement;
   [REDUX_ACTIONS.updateFormElementKey]: { fieldName: keyof SectionElement, value: SectionElement[keyof SectionElement] };
   [REDUX_ACTIONS.setFormProject]: SystemData;
-  [REDUX_ACTIONS.updateFormProjectSettings]: { fieldName: keyof ProjectSettings, value: ProjectSettings[keyof ProjectSettings] };
+  [REDUX_ACTIONS.updateFormProjectSettings]: { fieldName: keyof IProjectSettings, value: IProjectSettings[keyof IProjectSettings] };
   [REDUX_ACTIONS.setValidStateForEle]: IValidStateForEle;
   [REDUX_ACTIONS.unsetValidStateForEle]: string;
   [REDUX_ACTIONS.updateFormProjectUpdateSection]: IUpdateFormProjectUpdateSectionPayload;
@@ -55,16 +55,16 @@ export interface IValidStateForEle {
 }
 
 export interface IUpdateFormProjectUpdateSectionPayload {
-  fieldName: keyof Section;
-  value: Section[keyof Section];
+  fieldName: keyof ISection;
+  value: ISection[keyof ISection];
   index: number;
 }
 
 export interface IUpdateFormProjectUpdateFormModelOfSectionPayload {
   indexFormElement: number;
   indexSection: number;
-  fieldName: keyof FormFieldsModel<SupportedFormsTypes>;
-  value: FormFieldsModel<SupportedFormsTypes>[keyof FormFieldsModel<SupportedFormsTypes>];
+  fieldName: keyof FormFieldsModel<TSupportedFormsTypes>;
+  value: FormFieldsModel<TSupportedFormsTypes>[keyof FormFieldsModel<TSupportedFormsTypes>];
   identifierAutoVal: string | null;
 }
 
@@ -85,7 +85,7 @@ export interface IUpdateFormProjectUpdateFormModelDeleteOptionPayload {
 }
 
 export interface IUpdateFormProjectUpdateFormModelOptionValuePayload {
-  formElement: FormFieldsModel<SupportedFormsTypes>;
+  formElement: FormFieldsModel<TSupportedFormsTypes>;
   indexFormElement: number;
   indexSection: number;
   indexOptions: number

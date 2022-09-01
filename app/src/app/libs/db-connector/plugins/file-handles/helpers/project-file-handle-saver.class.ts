@@ -1,6 +1,6 @@
-import { AnitaUniversalDataStorage } from 'app/data/project-structure/project-info';
-import { DbConnectorInstance } from 'app/libs/db-connector/models/executers';
-import { writeFile } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper';
+import { AnitaUniversalDataStorage } from 'app/data/project-structure/project-info'
+import { DbConnectorInstance } from 'app/libs/db-connector/models/executers'
+import { FsHelper } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper'
 
 /**
  * Saves the `AnitaUniversalDataStorage` to the file a file on disk by using the fileHandle stored in this.dbConnector.options.projectInfo.fileHandle.
@@ -8,42 +8,40 @@ import { writeFile } from 'app/libs/db-connector/plugins/file-handles/helpers/fs
  * @see SaveProjectSettingsInIndexedDB
  */
 export class ProjectFileHandleSaver {
-
   /**
    * The string data to sabe in the file on disk
    */
-  private data: string;
+  private data: string
 
   /**
    * Creates an instance of project file handle saver.
    * @param projectData full data of the project to be saved
    */
-  constructor(
+  constructor (
     private dbConnector: DbConnectorInstance<AnitaUniversalDataStorage>
   ) { }
 
   /**
    * Saves the project both on file and in IndexedDB
    */
-  public async save(): Promise<void> {
-    this.setData();
-    await this.saveDataToDisk();
+  public async save (): Promise<void> {
+    this.setData()
+    await this.saveDataToDisk()
   }
 
   /**
    * Converts the project data to string
    */
-  private setData(): void {
-    this.data = JSON.stringify(this.dbConnector.dbStore.db);
+  private setData (): void {
+    this.data = JSON.stringify(this.dbConnector.dbStore.db)
   }
 
   /**
    * Actually saves the data to disk by calling writeFile
-   * 
+   *
    * @see writeFile
    */
-  private saveDataToDisk(): Promise<void> {
-    return writeFile(this.dbConnector.options.projectInfo.fileHandle, this.data);
+  private saveDataToDisk (): Promise<void> {
+    return FsHelper.writeFile(this.dbConnector.options.projectInfo.fileHandle, this.data)
   }
-
 }

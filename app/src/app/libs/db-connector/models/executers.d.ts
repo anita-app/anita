@@ -34,7 +34,6 @@ export interface DbObjects<E, DbTypes> {
   dbStore?: DbStoreConstructable<DbTypes>
 }
 
-
 /**
  * Db connection data of a connected instance of Deta Base
  */
@@ -58,7 +57,7 @@ export interface DsDbInitOptions {
   indexedDbName?: string;
   DS?: AbstractModel;
   previousVersions?: Array<Array<string>>;
-  // Encryption 
+  // Encryption
   encrypted?: boolean;
   encryptionKeys?: { [userId: string]: string };
 }

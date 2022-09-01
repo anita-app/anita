@@ -2,9 +2,10 @@ import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.
 import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant'
 import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api'
-import { FormFieldsModel, OptionKeysModel, SupportedFormsTypes } from 'app/ui-react-components/shared-components/forms-automator/form-automator.types'
-import { FORM_COMPONENTS_CODES } from 'app/ui-react-components/shared-components/forms-automator/form-component-codes.enum'
-import { TextInputSupportedTypes } from 'app/ui-react-components/shared-components/forms-automator/input-supported-types.const'
+import { FormFieldsModel, IOptionKeysModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
+import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
+import { TextInputSupportedTypes } from 'app/components/shared-components/forms-automator/input-supported-types.const'
+import { TIconName } from 'app/libs/Icons/Icons.class'
 
 /**
  * Reserved keys are needed to store system required properties.
@@ -26,8 +27,8 @@ export type AnitaUniversalDataStorage = SystemData & UserData;
  * Store for system required properties. Includes general settings and Sections declarations. The reserved keys define system required properties.
  */
 export type SystemData = {
-  [RESERVED_AUDS_KEYS._settings]: Array<ProjectSettings>;
-  [RESERVED_AUDS_KEYS._sections]: Array<Section>;
+  [RESERVED_AUDS_KEYS._settings]: Array<IProjectSettings>;
+  [RESERVED_AUDS_KEYS._sections]: Array<ISection>;
 };
 
 /**
@@ -40,7 +41,7 @@ export type UserData = {
 /**
  * Defines the structure of the general information on a project.
  */
-export interface ProjectSettings {
+export interface IProjectSettings {
   id: string;
   title: string;
   description: string;
@@ -60,11 +61,11 @@ export interface AdditionalInfoForLocalStorage {
 
 /**
  * Info on Projects saved locally to know what project are on the device.
- * 
+ *
  * @property [fileHandle] - The file handle of the project file (only if the project is saved on the file system)
  * @property [sections] - The sections of the project to load the IndexedDB database with Dexie
  */
-export interface LocalProjectSettings extends ProjectSettings, AdditionalInfoForLocalStorage {
+export interface LocalProjectSettings extends IProjectSettings, AdditionalInfoForLocalStorage {
 }
 
 /**
@@ -73,12 +74,12 @@ export interface LocalProjectSettings extends ProjectSettings, AdditionalInfoFor
  * @remarks
  * These fields are for the object to be stored in `sections.formModel[]` of the `AnitaUniversalDataStorage` store.
  */
-export interface SectionCustomFieldProperties {
+export interface ISectionCustomFieldProperties {
   componentCode: FORM_COMPONENTS_CODES;
   type?: TextInputSupportedTypes;
   fieldName: string;
   label?: string;
-  options?: Array<OptionKeysModel>;
+  options?: Array<IOptionKeysModel>;
   required?: boolean;
   externalLabel?: boolean;
   value?: any;
@@ -91,17 +92,18 @@ export interface SectionCustomFieldProperties {
  * Defines the bare minimum properties of a `Section` of a Project.
  */
 export interface SectionDetailsDeclaration {
-  id: string;
-  title: string;
-  childOf?: Array<string>;
-  [RESERVED_FIELDS.createdAt]?: never;
+  id: string
+  title: string
+  icon?: TIconName
+  childOf?: Array<string>
+  [RESERVED_FIELDS.createdAt]?: never
 }
 
 /**
  * Defines the full properties of a Section.
  */
-export interface Section extends SectionDetailsDeclaration {
-  formModel: Array<FormFieldsModel<SupportedFormsTypes>>;
+export interface ISection extends SectionDetailsDeclaration {
+  formModel: Array<FormFieldsModel<TSupportedFormsTypes>>;
 }
 
 /**

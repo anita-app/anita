@@ -4,6 +4,162 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.14.11",
+      "date": "2022-09-01",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "debug"
+        },
+        {
+          "type": "fixed",
+          "value": "deleting project"
+        }
+      ]
+    },
+    {
+      "version": "0.14.10",
+      "date": "2022-09-01",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "enabled debug"
+        }
+      ]
+    },
+    {
+      "version": "0.14.9",
+      "date": "2022-09-01",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "centered icon"
+        }
+      ]
+    },
+    {
+      "version": "0.14.8",
+      "date": "2022-09-01",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "check if filehandle has content"
+        }
+      ]
+    },
+    {
+      "version": "0.14.7",
+      "date": "2022-09-01",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "log in production"
+        }
+      ]
+    },
+    {
+      "version": "0.14.6",
+      "date": "2022-09-01",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "debug info"
+        }
+      ]
+    },
+    {
+      "version": "0.14.5",
+      "date": "2022-09-01",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "error handling"
+        }
+      ]
+    },
+    {
+      "version": "0.14.4",
+      "date": "2022-09-01",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "link to create new project"
+        }
+      ]
+    },
+    {
+      "version": "0.14.3",
+      "date": "2022-09-01",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "installable pwa"
+        }
+      ]
+    },
+    {
+      "version": "0.14.2",
+      "date": "2022-09-01",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "manifest"
+        }
+      ]
+    },
+    {
+      "version": "0.14.1",
+      "date": "2022-09-01",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "manifest"
+        }
+      ]
+    },
+    {
+      "version": "0.14.0",
+      "date": "2022-09-01",
+      "items": [
+        {
+          "type": "added",
+          "value": "grid view"
+        },
+        {
+          "type": "added",
+          "value": "section icons"
+        },
+        {
+          "type": "changed",
+          "value": "ui improvements"
+        }
+      ]
+    },
+    {
+      "version": "0.13.1",
+      "date": "2022-08-27",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "deploy"
+        }
+      ]
+    },
+    {
+      "version": "0.13.0",
+      "date": "2022-08-27",
+      "items": [
+        {
+          "type": "added",
+          "value": "export project to json"
+        },
+        {
+          "type": "fixed",
+          "value": "hover bg color"
+        }
+      ]
+    },
+    {
       "version": "0.12.1",
       "date": "2022-02-22",
       "items": [

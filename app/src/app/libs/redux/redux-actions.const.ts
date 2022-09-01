@@ -30,4 +30,4 @@ export enum REDUX_ACTIONS {
   updateFormProjectUpdateFormModelAddOption,
   updateFormProjectUpdateFormModelDeleteOption,
   updateFormProjectUpdateFormModelOptionValue
-};
+}

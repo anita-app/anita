@@ -7,6 +7,70 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.14.11] - 2022-09-01
+### Fixed
+- debug.
+- deleting project.
+
+## [0.14.10] - 2022-09-01
+### Fixed
+- enabled debug.
+
+## [0.14.9] - 2022-09-01
+### Fixed
+- centered icon.
+
+## [0.14.8] - 2022-09-01
+### Fixed
+- check if filehandle has content.
+
+## [0.14.7] - 2022-09-01
+### Fixed
+- log in production.
+
+## [0.14.6] - 2022-09-01
+### Fixed
+- debug info.
+
+## [0.14.5] - 2022-09-01
+### Fixed
+- error handling.
+
+## [0.14.4] - 2022-09-01
+### Fixed
+- link to create new project.
+
+## [0.14.3] - 2022-09-01
+### Fixed
+- installable pwa.
+
+## [0.14.2] - 2022-09-01
+### Fixed
+- manifest.
+
+## [0.14.1] - 2022-09-01
+### Fixed
+- manifest.
+
+## [0.14.0] - 2022-09-01
+### Added
+- grid view.
+- section icons.
+
+### Changed
+- ui improvements.
+
+## [0.13.1] - 2022-08-27
+### Fixed
+- deploy.
+
+## [0.13.0] - 2022-08-27
+### Added
+- export project to json.
+
+### Fixed
+- hover bg color.
+
 ## [0.12.1] - 2022-02-22
 ### Fixed
 - form components parsing.

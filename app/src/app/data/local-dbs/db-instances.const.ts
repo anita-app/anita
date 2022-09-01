@@ -12,4 +12,4 @@ interface DbInstances {
 
 export const dbInstances: DbInstances = {
   system: undefined
-};
+}

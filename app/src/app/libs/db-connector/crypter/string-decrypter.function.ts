@@ -1,4 +1,4 @@
-import CryptoES from 'crypto-es';
+import CryptoES from 'crypto-es'
 
 /**
  * Decrypts a string
@@ -7,7 +7,7 @@ import CryptoES from 'crypto-es';
  * @param keyToUse the key to use for decryption
  * @return the decrypted string
  */
-export function stringDecrypter(value: string, keyToUse: string): string {
-  const decrypted = CryptoES.AES.decrypt(value, keyToUse);
-  return decrypted.toString();
+export function stringDecrypter (value: string, keyToUse: string): string {
+  const decrypted = CryptoES.AES.decrypt(value, keyToUse)
+  return decrypted.toString()
 }

@@ -1,20 +1,19 @@
-import { AbstractModel } from 'app/libs/db-connector/models/abstract-model';
-import { DbConnectorInstance, Updator } from 'app/libs/db-connector/models/executers';
-import { QueryMaker } from 'app/libs/db-connector/plugins/indexed-db/query-makers/query-maker.class';
-import { Logger } from 'app/libs/logger/logger.class';
-import Dexie from 'dexie';
+import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
+import { DbConnectorInstance, Updator } from 'app/libs/db-connector/models/executers'
+import { QueryMaker } from 'app/libs/db-connector/plugins/indexed-db/query-makers/query-maker.class'
+import { Logger } from 'app/libs/logger/logger.class'
+import Dexie from 'dexie'
 
 /**
  * Implements updator for IndexedDb
  */
 export class DbUpdator<E> implements Updator<E> {
-
   /**
    * Creates an instance of db updator.
    * @param section the section of the element to update
    * @param element the full element updated
    */
-  constructor(
+  constructor (
     private dbConnector: DbConnectorInstance<Dexie>,
     private section: keyof AbstractModel,
     private element: Partial<E>
@@ -23,10 +22,11 @@ export class DbUpdator<E> implements Updator<E> {
   /**
    * Calls `QueryMaker` and updates the element
    */
-  public autoUpdate(): Promise<void> {
+  public autoUpdate (): Promise<void> {
     return new QueryMaker(this.dbConnector, this.section, this.element)
       .update()
-      .catch(err => { Logger.error('Error in autoUpdate', err); });
+      .catch(err => {
+        Logger.error('Error in autoUpdate', err)
+      })
   }
-
 }

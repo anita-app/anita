@@ -11,7 +11,7 @@ export interface IFormElementState {
  */
 const formElementState: IFormElementState = {
   element: null
-};
+}
 
 /**
  * Updates the projectState
@@ -27,6 +27,6 @@ export const formElementReducer = (state: IFormElementState = formElementState, 
         element: { ...state.element, [action.payload.fieldName]: action.payload.value }
       }
     default:
-      return state;
+      return state
   }
 }

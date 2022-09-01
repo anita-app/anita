@@ -17,7 +17,7 @@ function updateChildPackage(folder, version) {
 
 function storeVersionInTsFile(folder, version) {
   const file = `./${folder}/src/app/version.ts`;
-  const contents = `/**\n * Auto generated file, do not edit.\n */\n\nexport const appVersion = '${version}';\n`;
+  const contents = `/**\n * Auto generated file, do not edit.\n */\n\nexport const appVersion = '${version}'\n`;
   fs.writeFileSync(file, contents);
 }
 

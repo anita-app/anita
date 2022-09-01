@@ -8,7 +8,7 @@ export interface IFormElesValidState {
 /**
  * The initial state of the form-eles-valid-state reducer
  */
-const initialState: IFormElesValidState = {};
+const initialState: IFormElesValidState = {}
 
 /**
  * The reducer function that sets the valid state of the form elements
@@ -16,12 +16,12 @@ const initialState: IFormElesValidState = {};
 export const formElesValidStateReducer = (state: IFormElesValidState = initialState, action: Action<REDUX_ACTIONS>): IFormElesValidState => {
   switch (action.type) {
     case REDUX_ACTIONS.setValidStateForEle:
-      return { ...state, [action.payload.formEleId]: action.payload.valid };
-    case REDUX_ACTIONS.unsetValidStateForEle:
-      const copyState = { ...state };
-      delete copyState[action.payload];
-      return copyState;
-    default:
-      return state;
+      return { ...state, [action.payload.formEleId]: action.payload.valid }
+    case REDUX_ACTIONS.unsetValidStateForEle: {
+      const copyState = { ...state }
+      delete copyState[action.payload]
+      return copyState
+    } default:
+      return state
   }
 }
