@@ -39,8 +39,9 @@ export const formProjectReducer = (state: IFormProjectState = formElementState, 
         mode: state.mode === PROJECT_EDITOR_MODE.basic ? PROJECT_EDITOR_MODE.advanced : PROJECT_EDITOR_MODE.basic
       }
     case REDUX_ACTIONS.setFormProject:
-      // Here we need a deep copy of the project to leave the source unchanged in case the user cancel the edits,
-      // and to "unlink" the Object set on the `project` key from the one set on the `original` key.
+      // Here we need:
+      // - a deep copy of the project to leave the source unchanged in case the user cancel the edits, and
+      // - to "unlink" the Object set on the `project` key from the one set on the `original` key.
       return { original: cloneDeep(action.payload), mode: state.mode, project: cloneDeep(action.payload) }
     case REDUX_ACTIONS.updateFormProjectSettings:
       return {

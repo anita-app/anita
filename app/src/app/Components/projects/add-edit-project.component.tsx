@@ -18,30 +18,34 @@ export const AddEditProject: React.FC = () => {
 
   const projectId = params[URL_PARAMS.projectId]
 
-  const [project, setProject] = useState<SystemData | null | undefined>(null)
+  const [hasProject, setHasProject] = useState<boolean | null | undefined>(null)
 
   useEffect(() => {
     let isMounted = true
 
     // in add mode, sets a new project
     if (mode === EDITOR_MODE.add) {
-      return setProject({
+      const newProjectSystemData: SystemData = {
         [RESERVED_AUDS_KEYS._settings]: [{ id: IdCreator.random(), title: '', description: '', createdAt: '', localStorage: LOCAL_STORAGE_SYSTEMS.IndexedDB }],
         [RESERVED_AUDS_KEYS._sections]: [{ id: IdCreator.random(), title: '', formModel: [{} as any] }]
-      })
+      }
+      storeDispatcher({ type: REDUX_ACTIONS.setFormProject, payload: newProjectSystemData })
+      return setHasProject(true)
     }
 
     const fetchEProject = async () => {
       const project = await Manager.getProjectById(projectId)
       if (!project) {
-        return setProject(undefined)
+        return setHasProject(undefined)
       }
 
       const _settings = [{ ...project.getSettings() }]
       const _sections = [...project.getSectionsDefinitions()]
 
       if (isMounted) {
-        setProject({ _settings, _sections })
+        storeDispatcher({ type: REDUX_ACTIONS.setFormProject, payload: { _settings, _sections } })
+        console.log('fetchEProject ~ _settings', _settings)
+        setHasProject(true)
       }
     }
 
@@ -54,13 +58,11 @@ export const AddEditProject: React.FC = () => {
     }
   }, [mode, projectId])
 
-  if (project === undefined) {
+  if (hasProject === undefined) {
     return <Navigate to={ANITA_URLS.projectsList} />
   }
 
   const headerText = mode === EDITOR_MODE.add ? 'Add Project' : 'Edit Project'
-
-  storeDispatcher({ type: REDUX_ACTIONS.setFormProject, payload: project })
 
   return (
     <span>
@@ -68,10 +70,10 @@ export const AddEditProject: React.FC = () => {
         <div>
           <h3 className="text-xl font-bold">{headerText}</h3>
         </div>
-        {project !== null && <ProjectEditorModeToggle />}
+        {hasProject !== null && <ProjectEditorModeToggle />}
       </div>
-      {project === null && <Loader />}
-      {project !== null && <FormProjectManager />}
+      {hasProject === null && <Loader />}
+      {hasProject !== null && <FormProjectManager />}
     </span>
   )
 }
