@@ -35,7 +35,7 @@ export const DeleteProjectButton: React.FC<IDeleteProjectButtonProps> = ({ proje
     // This timeout must be equal or greater than the one in closeFn.
     // Otherwise we would cause an update on an unmounted component.
     setTimeout(async () => {
-      (await Manager.getProjectById(project.id)).delete()
+      (await Manager.getProjectById(project.id, true)).delete()
       navigate(ANITA_URLS.projectsList)
     }, 500)
   }

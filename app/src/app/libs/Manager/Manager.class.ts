@@ -38,11 +38,13 @@ export class Manager {
     return this.currentProject
   }
 
-  public static getProjectById = async (projectId: string | undefined): Promise<Project | undefined> => {
+  public static getProjectById = async (projectId: string | undefined, initialize: boolean = false): Promise<Project | undefined> => {
     if (projectId && await this.isProjectLoaded(projectId)) {
       return this.currentProject
     }
-    return new Project({ [RESERVED_AUDS_KEYS._settings]: [{ id: projectId } as IProjectSettings], [RESERVED_AUDS_KEYS._sections]: [] })
+    if (initialize) {
+      return new Project({ [RESERVED_AUDS_KEYS._settings]: [{ id: projectId } as IProjectSettings], [RESERVED_AUDS_KEYS._sections]: [] })
+    }
   }
 
   private static loadCurrentProjectFromStore () {
