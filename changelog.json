@@ -4,6 +4,16 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.14.10",
+      "date": "2022-09-01",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "enabled debug"
+        }
+      ]
+    },
+    {
       "version": "0.14.9",
       "date": "2022-09-01",
       "items": [
