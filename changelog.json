@@ -4,6 +4,16 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.14.16",
+      "date": "2022-09-02",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "loading data for non existing section"
+        }
+      ]
+    },
+    {
       "version": "0.14.15",
       "date": "2022-09-01",
       "items": [

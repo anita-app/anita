@@ -27,7 +27,7 @@ export const AddEditSectionElement: React.FC = () => {
     const fetchElement = async () => {
       const project = await Manager.getProjectById(projectId)
 
-      if (!sectionId || !project) {
+      if (!sectionId || !project || !project.getSectionById(sectionId)) {
         return setElement(undefined)
       }
 

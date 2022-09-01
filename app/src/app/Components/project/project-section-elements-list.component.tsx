@@ -31,7 +31,7 @@ export const SectionElementsList: React.FC = () => {
     const getSectionData = async () => {
       const project = await Manager.getProjectById(projectId)
 
-      if (!project) {
+      if (!project || !project.getSectionById(sectionId)) {
         return setSectionData(undefined)
       }
 

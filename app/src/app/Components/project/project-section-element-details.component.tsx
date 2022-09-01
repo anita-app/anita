@@ -51,7 +51,7 @@ export const SectionElementDetails: React.FC = () => {
     const fetchData = async () => {
       const project = await Manager.getProjectById(projectId)
 
-      if (!sectionId || !elementId || !project) {
+      if (!sectionId || !elementId || !project || !project.getSectionById(sectionId)) {
         return setElement(undefined)
       }
 
