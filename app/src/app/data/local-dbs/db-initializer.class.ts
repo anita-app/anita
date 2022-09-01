@@ -7,6 +7,7 @@ import { FILE_HANDLES_PLUGIN } from 'app/libs/db-connector/plugins/file-handles/
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api'
 import { INDEXEDDB_PLUGIN } from 'app/libs/db-connector/plugins/indexed-db/exporter.constant'
 import { SQLITE_PLUGIN } from 'app/libs/db-connector/plugins/sqlite/exporter.constant'
+import { Logger } from 'app/libs/logger/logger.class'
 
 export class DbInitializer {
   private projectId: string
@@ -34,6 +35,7 @@ export class DbInitializer {
   }
 
   private async doJson (): Promise<void> {
+    Logger.info('[DbInitializer.doJson] Initializing JSON DB')
     if (this.fileHandle) {
       this.projectInfo = { ...this.projectInfo, fileHandle: this.fileHandle }
     }
@@ -41,6 +43,7 @@ export class DbInitializer {
   }
 
   private async doSQLite (): Promise<void> {
+    Logger.info('[DbInitializer.doJson] Initializing SQLite')
     if (this.fileHandle) {
       this.projectInfo = { ...this.projectInfo, fileHandle: this.fileHandle }
     }
@@ -58,6 +61,7 @@ export class DbInitializer {
   }
 
   private async doIndexedDb (): Promise<void> {
+    Logger.info('[DbInitializer.doJson] Initializing IndexedDB')
     if (this.projectSections) {
       const dsExpander = new DataStructureExtender(this.projectSections)
       dsExpander.extend()

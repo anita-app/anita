@@ -44,8 +44,12 @@ export class FsHelper {
    * Reads the file content from a fileHandle and returns it as a string.
    */
   public static async readFileHandleAsText (fileHandle: FileSystemFileHandle): Promise<string> {
-    const file = await fileHandle.getFile() as any // as any because .text not yet documented in TS
-    return file.text()
+    try {
+      const file = await fileHandle.getFile() as any // as any because .text not yet documented in TS
+      return file.text()
+    } catch (error: unknown) {
+      Logger.error('[FsHelper.readFileHandleAsText]', (error as Error)?.message)
+    }
   }
 
   /**

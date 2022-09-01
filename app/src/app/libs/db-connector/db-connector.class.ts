@@ -13,6 +13,7 @@ import {
   Selector,
   Updator
 } from 'app/libs/db-connector/models/executers'
+import { Logger } from 'app/libs/logger/logger.class'
 
 /**
  *  Initialize `db-connector` for the given storage (MySQL, IndexedDB, etc.)
@@ -46,6 +47,7 @@ export class DbConnector<DbTypes> implements DbConnectorInstance<DbTypes> {
       this.DS = Object.assign(this.DS, this.options.DS)
     }
 
+    Logger.info('[DbConnector.init] DS', this.DS)
     if (this.executers.dbStore) {
       this.dbStore = await new this.executers.dbStore(this.options, this.DS).initDB()
     } else {
