@@ -14,7 +14,7 @@ export class Startupper {
   private systemDbName = 'anitaDB'
 
   public async init (): Promise<void> {
-    Logger.info('Anita web app v. ', appVersion)
+    Logger.info('Anita web app v.', appVersion)
     await this.initSystemIndexedDb(this.systemDbName)
     this.setLoggerDebug()
     this.loadProjectList()
