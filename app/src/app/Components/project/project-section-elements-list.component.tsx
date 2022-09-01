@@ -79,10 +79,10 @@ export const SectionElementsList: React.FC = () => {
               <Tab
                 key={view}
                 className={({ selected }) => classNames(
-                  'flex items-center justify-center w-full rounded-lg text-sm font-medium leading-5',
+                  'flex items-center justify-center w-full rounded-lg text-sm font-medium leading-5 text-prussian-blue-700',
                   selected
                     ? 'bg-white shadow'
-                    : 'opacity- hover:bg-white/[0.12] hover:text-white'
+                    : 'hover:bg-white/[0.12] hover:text-prussian-blue-500'
                 )}
               >
                 {Icons.render(view)}
