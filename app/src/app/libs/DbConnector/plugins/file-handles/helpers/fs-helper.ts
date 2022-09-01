@@ -9,7 +9,6 @@ import { Logger } from 'app/libs/Logger/logger.class'
 declare const window: WindowFS
 
 export class FsHelper {
-
   /**
    * Number of retries to attempt to write to a file.
    * Used to retry when the error is a state changed exception.
@@ -110,8 +109,8 @@ export class FsHelper {
     this.writeFileTries = 0
     await this.doWriteFile(fileHandle, contents)
   }
-  
-  public static async doWriteFile(fileHandle: FileSystemFileHandle, contents: FileSystemWriteChunkType): Promise<void> {
+
+  public static async doWriteFile (fileHandle: FileSystemFileHandle, contents: FileSystemWriteChunkType): Promise<void> {
     this.writeFileTries++
     try {
       // For Chrome 83 and later.
