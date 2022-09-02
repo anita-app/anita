@@ -17,16 +17,16 @@ module.exports = {
       blue: colors.blue,
       'prussian-blue': {
         DEFAULT: '#002346',
-        '50': '#2D96FF',
-        '100': '#1389FF',
-        '200': '#006FDF',
-        '300': '#0056AC',
-        '400': '#003C79',
-        '500': '#002346',
-        '600': '#002346',
-        '700': '#000f20',
-        '800': '#000e1f',
-        '900': '#000d1b'
+        50: '#2D96FF',
+        100: '#1389FF',
+        200: '#006FDF',
+        300: '#0056AC',
+        400: '#003C79',
+        500: '#002346',
+        600: '#002346',
+        700: '#000f20',
+        800: '#000e1f',
+        900: '#000d1b'
       },
       sky: colors.sky,
       cyan: colors.cyan,
@@ -41,14 +41,13 @@ module.exports = {
       stone: colors.stone,
       neutral: colors.neutral,
       gray: colors.gray,
-      gray: colors.gray,
       slate: colors.slate
     }
   },
   variants: {
-    extend: {},
+    extend: {}
   },
   plugins: [
     require('@tailwindcss/forms')
-  ],
+  ]
 }
