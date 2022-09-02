@@ -9,7 +9,7 @@ export class SezBuilder<T> {
   /**
    * The section model
    */
-  private section: SectionModel<T>
+  private section!: SectionModel<T>
 
   /**
    * Creates an instance of sez builder.
@@ -75,8 +75,8 @@ export class SezBuilder<T> {
    */
   private addSpecialFieldsToFields (scope: 'indexes' | 'jsonFields'): void {
     this[scope].forEach(fieldName => {
-      if (!this.fields.includes(fieldName)) {
-        this.fields.push(fieldName)
+      if (!this.fields.includes(fieldName as keyof T & string)) {
+        this.fields.push(fieldName as keyof T & string)
       }
     })
   }
@@ -118,8 +118,8 @@ export class SezBuilder<T> {
    * @see checkRelationsExist
    */
   private loopAllRelations (): void {
-    this.childOf.forEach((sezName: SectionName) => this.checkRelationsExist(sezName))
-    if (!this.childOf.length) {
+    this.childOf?.forEach((sezName: SectionName) => this.checkRelationsExist(sezName))
+    if (!this.childOf?.length) {
       this.childOf = undefined
     }
   }
@@ -135,8 +135,10 @@ export class SezBuilder<T> {
       return
     }
 
-    const indexInScope = this.childOf.indexOf(sezName as string)
-    this.childOf.splice(indexInScope, 1)
+    const indexInScope = this.childOf?.indexOf(sezName as string) ?? -1
+    if (indexInScope >= 0) {
+      this.childOf!.splice(indexInScope, 1)
+    }
 
     Logger.error('Error in .childOf list', `Section '${sezName}' does not exist in the sections list and has hence been removed from the .childOf list`)
   }
@@ -178,7 +180,7 @@ export class SezBuilder<T> {
       indexes: this.indexes,
       orderBy: this.orderBy,
       fields: this.fields,
-      ownerIdentifier: this.ownerIdentifier,
+      ownerIdentifier: this.ownerIdentifier as keyof T & string,
       jsonFields: this.jsonFields
     }
     this.addChildOf()

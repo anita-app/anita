@@ -13,12 +13,16 @@ interface IProjectFormElementManagerProps {
 
 export const ProjectFormElementManager: React.FC<IProjectFormElementManagerProps> = ({ sectionId }) => {
   const project = Manager.getCurrentProject()
-  const section = project.getSectionById(sectionId)
+  const section = project?.getSectionById(sectionId)
 
   const element = useSelector((store: AnitaStore) => store.formElement.element)
 
   const handleChange = (fieldName: string | number, value: FormAutomatorOnChangeValue) => {
     storeDispatcher({ type: REDUX_ACTIONS.updateFormElementKey, payload: { fieldName, value } })
+  }
+
+  if (!section || !element) {
+    return null
   }
 
   return (
@@ -28,7 +32,7 @@ export const ProjectFormElementManager: React.FC<IProjectFormElementManagerProps
         element={element}
         handleChange={handleChange}
                                                          />)}
-      <FormAutomator formModel={section.formModel} element={element} handleChange={handleChange} />
+      <FormAutomator formModel={section?.formModel!} element={element!} handleChange={handleChange} />
     </form>
   )
 }

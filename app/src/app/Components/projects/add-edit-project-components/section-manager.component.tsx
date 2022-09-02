@@ -20,7 +20,7 @@ interface ISectionManagerProps {
 export const SectionManager: React.FC<ISectionManagerProps> = ({ section, sectionIndex }) => {
   const projectEditorMode = useSelector((store: AnitaStore) => store.formProject.mode)
   const sections = useSelector((store: AnitaStore) => store.formProject.project[RESERVED_AUDS_KEYS._sections])
-  const customFields: Array<string> = section.formModel
+  const customFields: Array<string | null> = section.formModel
     .map(formElement => Object.values(RESERVED_FIELDS).includes(formElement.fieldName) ? null : formElement.fieldName)
     .filter(fieldName => fieldName !== null)
 
@@ -81,8 +81,8 @@ export const SectionManager: React.FC<ISectionManagerProps> = ({ section, sectio
           </div>
           )
       )}
-      <div className={`flex ${sections.length > 1 ? 'justify-between' : 'justify-end'} mt-10 mb-1`}>
-        {(sections.length > 1) && (
+      <div className={`flex ${sections?.length! > 1 ? 'justify-between' : 'justify-end'} mt-10 mb-1`}>
+        {(sections?.length! > 1) && (
           <Button
             id="deleteSection"
             label="Delete section"

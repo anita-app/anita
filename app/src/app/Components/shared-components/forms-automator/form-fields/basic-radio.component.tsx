@@ -24,7 +24,7 @@ export const BasicRadio: React.FC<ICommonFormEleProps<IBasicRadio<SectionElement
   // We use relaxed equal (==) here because the value of the radio button might be a string or a number.
   return (
     <FormEleContainer key={formEle.fieldName} width={width}>
-      <FormElementLabel label={formEle.label} />
+      <FormElementLabel label={formEle.label!} />
       <div className="mt-2 pl-1">
         {formEle.options.map((option, indexOption) => (
             <div key={option.value} className="mb-2">

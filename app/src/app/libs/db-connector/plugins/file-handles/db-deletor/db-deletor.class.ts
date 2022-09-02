@@ -27,7 +27,7 @@ export class DbDeletor<E> implements Deletor<E> {
     }
 
     // eslint-disable-next-line dot-notation
-    const indexElement = this.dbConnector.dbStore.db[this.section].findIndex(ele => ele.id === this.args['id'])
+    const indexElement = this.dbConnector.dbStore.db[this.section].findIndex(ele => ele.id === this.args['id' as keyof E])
     // Remove the element from the collection
     this.dbConnector.dbStore.db[this.section].splice(indexElement, 1)
     await new ProjectFileHandleSaver(this.dbConnector).save()

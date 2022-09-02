@@ -4,8 +4,8 @@ import { DbConnectorInstance } from 'app/libs/db-connector/models/executers'
 import { ProjectFileHandleSaver } from 'app/libs/db-connector/plugins/file-handles/helpers/project-file-handle-saver.class'
 
 export class ElementAdderToCollection<E> {
-  private index: number
-  protected element: Partial<E>
+  private index!: number
+  protected element!: Partial<E>
   /**
    * Creates an instance of db ElementAdderToCollection.
    * @param dbConnector the instance of DbConnector from which ElementAdderToCollection is called
@@ -52,7 +52,7 @@ export class ElementAdderToCollection<E> {
    */
   protected checkIfElementInStoreAndSetIndex (): void {
     const elements = this.dbConnector.dbStore.db[this.section] as Array<SectionElement>
-    const check = elements.findIndex(ele => this.element[this.dbConnector.DS[this.section].pk] === ele[this.dbConnector.DS[this.section].pk])
+    const check = elements.findIndex(ele => this.element[this.dbConnector.DS[this.section].pk as keyof E] === ele[this.dbConnector.DS[this.section].pk])
     this.index = (check >= 0) ? check : elements.length
   }
 

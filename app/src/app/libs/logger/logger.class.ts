@@ -61,7 +61,7 @@ export class Logger {
   private static listFromObject (list: Object): string {
     let stringList = ''
     for (const key in list) {
-      stringList += `${Logger.spacesForListeles}${key}: ${Logger.formatValueForList(list[key])};`
+      stringList += `${Logger.spacesForListeles}${key}: ${Logger.formatValueForList(list[key as keyof typeof list])};`
     }
     return stringList
   }

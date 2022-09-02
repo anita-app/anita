@@ -14,9 +14,9 @@ export class CryptHelper<E, DbTypes> {
    * The key of the Object is the string concatenation of the user and the undecrypted key to avoid collisions between projects/users.
    */
   private static userKeys: { [keyIdentifier: string]: string } = {}
-  private owner: string
-  private undecryptedKey: string
-  private keyIdentifier: string
+  private owner: string | undefined
+  private undecryptedKey: string | undefined
+  private keyIdentifier: string | undefined
 
   /**
    * Encrypts the user key using the securePassEncrypter.
@@ -40,11 +40,16 @@ export class CryptHelper<E, DbTypes> {
   /**
    * Returns the unencrypted key of the owner of the element, if an encrypted key for the user was provided when initializing DbInit.
    */
-  protected getUserKey (): string {
+  protected getUserKey (): string | undefined {
     this.setOwner()
+
+    if (!this.owner) {
+      return undefined
+    }
+
     this.setUndecryptedKey()
 
-    if (!this.undecryptedKey) {
+    if (!this.undecryptedKey || !this.keyIdentifier) {
       return undefined
     }
 
@@ -70,14 +75,14 @@ export class CryptHelper<E, DbTypes> {
    * Sets the id of the owner of the element being processed.
    */
   private setOwner (): void {
-    this.owner = this.element[this.dbConnector.DS[this.section].ownerIdentifier]
+    this.owner = this.element[this.dbConnector.DS[this.section].ownerIdentifier as keyof E] as unknown as string
   }
 
   /**
    * Sets the undecrypted key of the owner if one was found in dbConnector.options, otherwise `undefined`
    */
   private setUndecryptedKey (): void {
-    this.undecryptedKey = (typeof this.dbConnector.options.encryptionKeys === 'object' && this.dbConnector.options.encryptionKeys[this.owner]) ? this.dbConnector.options.encryptionKeys[this.owner] : undefined
+    this.undecryptedKey = (typeof this.dbConnector.options.encryptionKeys === 'object' && this.dbConnector.options.encryptionKeys[this.owner!]) ? this.dbConnector.options.encryptionKeys[this.owner!] : undefined
   }
 
   /**
@@ -91,13 +96,13 @@ export class CryptHelper<E, DbTypes> {
    * Decrypts the user key using the securePassEncrypter.
    */
   private decryptUserKey (): void {
-    CryptHelper.userKeys[this.keyIdentifier] = stringDecrypter(this.undecryptedKey, securePassEncrypter)
+    CryptHelper.userKeys[this.keyIdentifier!] = stringDecrypter(this.undecryptedKey!, securePassEncrypter)
   }
 
   /**
    * Returns the user unencrypted key retrieving it from the store in memory.
    */
   private returnUserUnencryptedKey (): string {
-    return CryptHelper.userKeys[this.keyIdentifier]
+    return CryptHelper.userKeys[this.keyIdentifier!]
   }
 }

@@ -2,7 +2,7 @@ import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 import { DbConnectorInstance, Insertor } from 'app/libs/db-connector/models/executers'
 import { QueryMaker } from 'app/libs/db-connector/plugins/indexed-db/query-makers/query-maker.class'
 import { Logger } from 'app/libs/logger/logger.class'
-import Dexie from 'dexie'
+import Dexie, { Table } from 'dexie'
 
 /**
  * Implements insertor for IndexedDB
@@ -29,9 +29,9 @@ export class DbInsertor<E> implements Insertor<E> {
     return this.insertOne()
   }
 
-  private insertMany (): Promise<void> {
+  private async insertMany (): Promise<void> {
     const table = this.dbConnector.DS[this.section].name
-    return this.dbConnector.dbStore.db[table].bulkPut(this.element)
+    await (this.dbConnector.dbStore.db[table as keyof Dexie] as unknown as Table).bulkPut(this.element as Array<E>)
   }
 
   private insertOne (): Promise<void> {

@@ -10,9 +10,9 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "strict": false,
-    "strictPropertyInitialization": false,
-    "strictNullChecks": false,
+    "strict": true,
+    "strictPropertyInitialization": true,
+    "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "module": "esnext",
@@ -22,5 +22,8 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": "src"
-  }
+  },
+  "include": [
+    "src/**/*"
+  ]
 }

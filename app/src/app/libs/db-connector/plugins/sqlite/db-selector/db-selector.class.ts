@@ -8,7 +8,7 @@ import { serializer } from 'app/libs/db-connector/plugins/sqlite/helpers/seriali
 import { Database } from 'sql.js'
 
 export class DbSelector<E> extends WhereBuilder<E> implements Selector<E> {
-  private results: Array<any>
+  private results: Array<any> = []
 
   constructor (
     private dbConnector: DbConnectorInstance<Database>,
@@ -23,7 +23,7 @@ export class DbSelector<E> extends WhereBuilder<E> implements Selector<E> {
    *
    * @see doSelect
    */
-  public async single (): Promise<E> {
+  public async single (): Promise<E | void> {
     await this.doSelect()
 
     if (this.results.length) {
@@ -43,7 +43,7 @@ export class DbSelector<E> extends WhereBuilder<E> implements Selector<E> {
 
   /**
    * Counts elements calling multiple and then calling `Array.lenght`
-   * @see multiple
+   * @see this.multiple
    */
   public async count (): Promise<number> {
     const query: string = new QueryMaker(this.dbConnector, this.section).count(this.whereArgs)
@@ -77,10 +77,10 @@ export class DbSelector<E> extends WhereBuilder<E> implements Selector<E> {
   }
 
   private parseJsonFields (): void {
-    this.results.forEach((element: Object) => {
+    this.results.forEach((element: E) => {
       for (const prop in element) {
         if (this.dbConnector.DS[this.section].jsonFields.includes(prop)) {
-          element[prop] = JSON.parse(element[prop])
+          element[prop] = JSON.parse(element[prop] as unknown as string)
         }
       }
     })

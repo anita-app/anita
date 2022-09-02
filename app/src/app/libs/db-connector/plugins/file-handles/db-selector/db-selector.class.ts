@@ -4,7 +4,7 @@ import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 import { DbConnectorInstance, Selector } from 'app/libs/db-connector/models/executers'
 
 export class DbSelector<E> implements Selector<E> {
-  private results: Array<any>
+  private results: Array<any> = []
 
   constructor (
     private dbConnector: DbConnectorInstance<AnitaUniversalDataStorage>,
@@ -17,7 +17,7 @@ export class DbSelector<E> implements Selector<E> {
    *
    * @see doSelect
    */
-  public async single (): Promise<E> {
+  public async single (): Promise<E | void> {
     await this.doSelect()
 
     if (!this.results.length) {
@@ -32,7 +32,7 @@ export class DbSelector<E> implements Selector<E> {
     let res = true
     let counter = 0
     while (res && counter < keys.length) {
-      res = eleToCheck[keys[counter]] === this.args[keys[counter]]
+      res = eleToCheck[keys[counter] as keyof E] === this.args[keys[counter] as keyof E]
       counter++
     }
     return res

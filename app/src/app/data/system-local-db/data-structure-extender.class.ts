@@ -44,7 +44,7 @@ export class DataStructureExtender {
       jsonFields: [RESERVED_FIELDS.parentsInfo]
     }
     section.formModel.forEach(field => {
-      sezDefinition.fields.push(field.fieldName)
+      sezDefinition.fields!.push(field.fieldName)
     })
 
     this.allSez.push(sezDefinition)

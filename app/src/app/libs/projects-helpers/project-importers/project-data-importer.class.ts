@@ -1,7 +1,7 @@
 import { DbInitializer } from 'app/data/local-dbs/db-initializer.class'
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
-import { AnitaUniversalDataStorage, IProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info'
+import { AdditionalInfoForLocalStorage, AnitaUniversalDataStorage, IProjectSettings, LocalProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info'
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api'
 import { SaveProjectSettingsInIndexedDB } from 'app/models/Project/SaveProjectSettingsInIndexedDB.class'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
@@ -15,6 +15,8 @@ import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
  * @see CurrentProjectSetter
  */
 export class ProjectDataImporter {
+  private additionalInfoForLocalStorage!: AdditionalInfoForLocalStorage
+
   /**
    *
    * @param projectData The project data of the project to import
@@ -29,7 +31,7 @@ export class ProjectDataImporter {
   /**
    * Asks for the files to import and processes them, then sets the current project as the last one imported
    */
-  public async import (): Promise<void> {
+  public async import (): Promise<LocalProjectSettings> {
     await this.initializeDb()
     await this.setLocalProjectSettings()
     this.dispatchProject(this.projectData[RESERVED_AUDS_KEYS._settings][0])
@@ -39,11 +41,13 @@ export class ProjectDataImporter {
     if (this.projectData[RESERVED_AUDS_KEYS._settings][0].localStorage == LOCAL_STORAGE_SYSTEMS.IndexedDB) {
       await this.saveDataToDb()
     }
+
+    return { ...this.projectData[RESERVED_AUDS_KEYS._settings][0], ...this.additionalInfoForLocalStorage }
   }
 
   private async setLocalProjectSettings () {
-    const payload = await dbInstances[this.projectData[RESERVED_AUDS_KEYS._settings][0].id].dbStore.postProjectCreation?.(this.projectData) || {}
-    await new SaveProjectSettingsInIndexedDB(this.projectData[RESERVED_AUDS_KEYS._settings][0], payload).save()
+    this.additionalInfoForLocalStorage = await dbInstances[this.projectData[RESERVED_AUDS_KEYS._settings][0].id].dbStore.postProjectCreation?.(this.projectData) || {}
+    await new SaveProjectSettingsInIndexedDB(this.projectData[RESERVED_AUDS_KEYS._settings][0], this.additionalInfoForLocalStorage).save()
   }
 
   /**

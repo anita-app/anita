@@ -25,7 +25,7 @@ export class DbSelector<E> implements Selector<E> {
    */
   public async single (): Promise<E> {
     // not implemented
-    return this.multiple()?.[0]
+    return (await this.multiple())?.[0]
   }
 
   /**

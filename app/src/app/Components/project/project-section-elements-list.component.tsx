@@ -15,7 +15,7 @@ import { Icons, TIconName } from 'app/libs/Icons/Icons.class'
 
 const SUPPORTED_VIEWS: Array<TIconName> = [`${process.env.PUBLIC_URL}/assets/icons/svg/table.svg`, 'gridOutline']
 
-function classNames (...classes) {
+function classNames (...classes: Array<string>) {
   return classes.filter(Boolean).join(' ')
 }
 
@@ -23,7 +23,7 @@ export const SectionElementsList: React.FC = () => {
   const params = useParams()
   const projectId = params[URL_PARAMS.projectId]
   const sectionId = params[URL_PARAMS.sectionId]
-  const [sectionData, setSectionData] = useState<Array<SectionElement>>(null)
+  const [sectionData, setSectionData] = useState<Array<SectionElement> | undefined | null>(null)
   const [activeTab, setActiveTab] = useState<number>(0)
 
   useEffect(() => {
@@ -35,8 +35,8 @@ export const SectionElementsList: React.FC = () => {
         return setSectionData(undefined)
       }
 
-      const data = await project.getSectionById(sectionId).getAllElements()
-      if (isMounted) {
+      const data = await project.getSectionById(sectionId)?.getAllElements()
+      if (isMounted && data) {
         setSectionData(data)
       }
     }
@@ -58,14 +58,14 @@ export const SectionElementsList: React.FC = () => {
     return <Loader />
   }
 
-  const sectionInfo = Manager.getCurrentProject().getSectionById(sectionId)
+  const sectionInfo = Manager.getCurrentProject()?.getSectionById(sectionId)
 
   if (!sectionInfo) {
     return null
   }
 
   if (sectionData.length === 0) {
-    return <NoSectionData sectionId={sectionId} sectionTitle={sectionInfo.title} projectId={projectId} />
+    return <NoSectionData sectionId={sectionId!} sectionTitle={sectionInfo.title} projectId={projectId!} />
   }
 
   return (
@@ -99,7 +99,7 @@ export const SectionElementsList: React.FC = () => {
             <ProjectGridList sectionId={sectionInfo.id} sectionData={sectionData} />
           </Tab.Panel>
         </Tab.Panels>
-        <AddEditElementButton projectId={projectId} sectionId={sectionId} mode={EDITOR_MODE.add} />
+        <AddEditElementButton projectId={projectId!} sectionId={sectionId!} mode={EDITOR_MODE.add} />
       </MainContentContainer>
     </Tab.Group>
   )

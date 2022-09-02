@@ -7,14 +7,14 @@ import { executeQuery } from 'app/libs/db-connector/plugins/mysql/helpers/execut
 import * as mysql from 'mysql'
 
 export class DbSelector<E> extends WhereBuilder<E> implements Selector<E> {
-  private results: Array<any>
+  private results: Array<any> = []
 
   constructor (
     private dbConnector: DbConnectorInstance<mysql.Connection>,
     private section: keyof AbstractModel,
     args?: Partial<E>
   ) {
-    super(args)
+    super(args as any)
   }
 
   /**
@@ -22,7 +22,7 @@ export class DbSelector<E> extends WhereBuilder<E> implements Selector<E> {
    *
    * @see doSelect
    */
-  public async single (): Promise<E> {
+  public async single (): Promise<E | void> {
     await this.doSelect()
 
     if (this.results.length) {
@@ -42,7 +42,7 @@ export class DbSelector<E> extends WhereBuilder<E> implements Selector<E> {
 
   /**
    * Counts elements calling multiple and then calling `Array.lenght`
-   * @see multiple
+   * @see DbSelector.multiple
    */
   public async count (): Promise<number> {
     await this.multiple()

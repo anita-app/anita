@@ -35,9 +35,9 @@ export const AddEditSectionElement: React.FC = () => {
         return setElement({})
       }
 
-      const element = await project.getSectionById(sectionId)?.getElementById(elementId)
+      const element = await project.getSectionById(sectionId)?.getElementById(elementId!)
       if (isMounted) {
-        setElement(element)
+        setElement(element as SectionElement | undefined)
       }
     }
 
@@ -56,13 +56,13 @@ export const AddEditSectionElement: React.FC = () => {
 
   const headerText = mode === EDITOR_MODE.add ? 'Add Element' : 'Edit Element'
 
-  storeDispatcher({ type: REDUX_ACTIONS.updateFormElement, payload: element })
+  storeDispatcher({ type: REDUX_ACTIONS.updateFormElement, payload: element! })
 
   return (
     <MainContentContainer headerText={headerText} overflowClassName="overflow-y-visible">
       {element === null && <Loader />}
-      {element !== null && <ProjectFormElementManager sectionId={sectionId} />}
-      {element !== null && <ProjectSaveElement sectionId={sectionId} />}
+      {element !== null && <ProjectFormElementManager sectionId={sectionId!} />}
+      {element !== null && <ProjectSaveElement sectionId={sectionId!} />}
     </MainContentContainer>
   )
 }

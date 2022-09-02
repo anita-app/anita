@@ -3,7 +3,6 @@ import { projectInfoNewItem } from 'app/data/project-form-builder/project-info-b
 import { AnitaUniversalDataStorage, IProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info'
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api'
 import { Manager } from 'app/libs/manager/Manager.class'
-import { ProjectDataImporter } from 'app/libs/projects-helpers/project-importers/project-data-importer.class'
 import { ProjectFileImporter } from 'app/libs/projects-helpers/project-importers/project-file-importer.class'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
@@ -25,9 +24,9 @@ export const ImportProjectButton: React.FC<IImportProjectButtonProps> = (props) 
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [animationClass, setAnimationClass] = useState('animate__fadeIn')
-  const [projectData, setProjectData] = useState<AnitaUniversalDataStorage>(null)
+  const [projectData, setProjectData] = useState<AnitaUniversalDataStorage | null>(null)
   const [projectFileHandle, setProjectFileHandle] = useState<FileSystemFileHandle>()
-  const [projectSettings, setProjectSettings] = useState<IProjectSettings>(null)
+  const [projectSettings, setProjectSettings] = useState<IProjectSettings | null>(null)
 
   const handleClickModal = async () => {
     if (isModalOpen) {
@@ -49,15 +48,15 @@ export const ImportProjectButton: React.FC<IImportProjectButtonProps> = (props) 
   }
 
   const handleClickImport = async () => {
-    projectData[RESERVED_AUDS_KEYS._settings][0] = projectSettings
-    await new ProjectDataImporter(projectData, projectFileHandle).import()
+    projectData![RESERVED_AUDS_KEYS._settings][0] = projectSettings!
+    await Manager.importProject(projectData!, projectFileHandle!)
     handleClickModal()
-    Manager.setCurrentProject(projectData)
+    Manager.setCurrentProject(projectData!)
     setTimeout(() => navigate(ANITA_URLS.projectsList), 500)
   }
 
   const handleProjectChange = (fieldName: string | number, value: FormAutomatorOnChangeValue) => {
-    setProjectSettings({ ...projectSettings, [fieldName]: value })
+    setProjectSettings({ ...projectSettings!, [fieldName]: value })
   }
 
   return (
@@ -65,8 +64,8 @@ export const ImportProjectButton: React.FC<IImportProjectButtonProps> = (props) 
       <Button
         id="importProject"
         label="Import an existing project"
-        labelClassName={props.btnType === 'icon' ? 'hidden' : null}
-        icon={props.btnType === 'icon' ? 'downloadOutline' : null}
+        labelClassName={props.btnType === 'icon' ? 'hidden' : undefined}
+        icon={props.btnType === 'icon' ? 'downloadOutline' : undefined}
         onClick={handleClickModal}
         type="secondary"
         size={props.btnType === 'text' ? 'lg' : 'sm'}

@@ -29,9 +29,9 @@ export class Encrypter<E, DbTypes> extends CryptHelper<E, DbTypes> {
    * @param keyToUse the key to be used for encryption.
    * @param fieldName the key of the field to encrypt.
    */
-  private encrypt (keyToUse: string, fieldName: string): void {
+  private encrypt (keyToUse: string, fieldName: keyof E): void {
     if (this.element[fieldName]) {
-      this.element[fieldName] = stringCrypter(this.element[fieldName], keyToUse)
+      this.element[fieldName] = stringCrypter(this.element[fieldName] as unknown as string, keyToUse) as unknown as E[keyof E]
     }
   }
 }

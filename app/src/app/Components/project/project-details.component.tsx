@@ -43,7 +43,7 @@ const LoadedProject: React.FC<ILoadedProjectProps> = ({ project }) => (
 export const ProjectDetails: React.FC = () => {
   const urlParams = useParams()
   const projectId = urlParams[URL_PARAMS.projectId]
-  const [project, setElement] = useState<IProjectSettings>(null)
+  const [project, setElement] = useState<IProjectSettings | undefined | null>(null)
 
   useEffect(() => {
     let isMounted = true

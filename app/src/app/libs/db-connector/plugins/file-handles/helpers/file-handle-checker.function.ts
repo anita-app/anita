@@ -11,20 +11,20 @@ export async function fileHandleChecker (
   description?: string,
   accept?: { [mimeType: string]: Array<string> }
 ): Promise<FileSystemFileHandle> {
-  Logger.info('[fileHandleChecker] verify permissions for fileHandle', options.projectInfo.fileHandle)
-  if (!options.projectInfo.fileHandle) {
-    return await FsHelper.getNewFileHandle(`anita-fh-${options.projectInfo.id}`, description, accept)
+  Logger.info('[fileHandleChecker] verify permissions for fileHandle', options.projectInfo!.fileHandle)
+  if (!options.projectInfo!.fileHandle) {
+    return await FsHelper.getNewFileHandle(`anita-fh-${options.projectInfo!.id}`, description, accept)
   }
 
-  await FsHelper.verifyPermission(options.projectInfo.fileHandle, true)
-  return options.projectInfo.fileHandle
+  await FsHelper.verifyPermission(options.projectInfo!.fileHandle, true)
+  return options.projectInfo!.fileHandle
 }
 
 export async function dirHandleChecker (options: DsDbInitOptions): Promise<FileSystemDirectoryHandle> {
-  if (!options.projectInfo.fileHandle) {
+  if (!options.projectInfo!.fileHandle) {
     return await FsHelper.getDirectoryHandle()
   }
 
-  await FsHelper.verifyPermission(options.projectInfo.fileHandle, true)
-  return options.projectInfo.fileHandle as any as FileSystemDirectoryHandle
+  await FsHelper.verifyPermission(options.projectInfo!.fileHandle, true)
+  return options.projectInfo!.fileHandle as any as FileSystemDirectoryHandle
 }

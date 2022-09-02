@@ -37,8 +37,8 @@ export class DbDeletor<E> extends WhereBuilder<E> implements Deletor<E> {
 
     await schemaExporter(
       this.dbConnector.dbStore.db,
-      this.dbConnector.options.projectInfo.fileHandle as any as FileSystemDirectoryHandle,
-      this.dbConnector.options.projectInfo.id)
+      this.dbConnector.options.projectInfo!.fileHandle as any as FileSystemDirectoryHandle,
+      this.dbConnector.options.projectInfo!.id)
   }
 
   public async clearSection (): Promise<void> {

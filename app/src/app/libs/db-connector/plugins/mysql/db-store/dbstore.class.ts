@@ -4,7 +4,7 @@ import { Logger } from 'app/libs/logger/logger.class'
 import * as mysql from 'mysql'
 
 export class DbStore implements DbStoreInterface<mysql.Connection> {
-  public db: mysql.Connection
+  public db!: mysql.Connection
 
   constructor (
     private options: DsDbInitOptions,
@@ -24,11 +24,11 @@ export class DbStore implements DbStoreInterface<mysql.Connection> {
   }
 
   public close (): void {
-    this.db.end((err: mysql.MysqlError) => {
+    this.db.end((err: mysql.MysqlError | undefined) => {
       // The connection is terminated gracefully
       // Ensures all previously enqueued queries are still
       // before sending a COM_QUIT packet to the MySQL server.
-      Logger.error(err?.message)
+      Logger.error(err?.message || 'Connection closed')
     })
   }
 

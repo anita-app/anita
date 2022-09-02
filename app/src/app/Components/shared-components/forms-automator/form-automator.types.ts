@@ -8,18 +8,20 @@ import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-au
 import { TextInputSupportedTypes } from 'app/components/shared-components/forms-automator/input-supported-types.const'
 import { TIconName } from 'app/libs/Icons/Icons.class'
 
-export type FormFieldsModel<T extends TSupportedFormsTypes> = IBasicInput<T> | IBasicCheckbox<T> | IBasicSelect<T> | IBasicRadio<T> | IBasicTextarea<T> | IHiddenInput<T> | IOptionsMaker<T> | IDatePicker<T> | IDateTimePicker<T>;
+export type FormFieldsModel<T extends TSupportedFormsTypes = TSupportedFormsTypes> = IBasicInput<T> | IBasicCheckbox<T> | IBasicSelect<T> | IBasicRadio<T> | IBasicTextarea<T> | IHiddenInput<T> | IOptionsMaker<T> | IDatePicker<T> | IDateTimePicker<T>;
+
+export type TFormFieldWithOptions<T extends TSupportedFormsTypes = TSupportedFormsTypes> = FormFieldsModel<T> & { options: Array<IOptionKeysModel> };
 
 export type TSupportedFormsTypes = IProjectSettings | SectionElement | ISectionCustomFieldProperties | SectionDetailsDeclaration | IOptionKeysModel;
 
 export type FormModel<T = FormFieldsModel<TSupportedFormsTypes>> = Array<T>;
 
-export type FormAutomatorOnChangeValue = string | number | boolean | Array<string>;
+export type FormAutomatorOnChangeValue = string | number | boolean | Array<string> | null
 
 export interface ICommonFormEleProps<T = FormFieldsModel<TSupportedFormsTypes>> {
   formEle: T;
   element: Partial<SectionElement>;
-  handleChange: (fieldName: string, value: FormAutomatorOnChangeValue) => void;
+  handleChange: (fieldName: string | number, value: FormAutomatorOnChangeValue) => void;
   [customProps: string]: any;
 }
 
@@ -29,7 +31,7 @@ export interface ICommonFormEleProps<T = FormFieldsModel<TSupportedFormsTypes>> 
  * The value of each key is an Array of all the possible values that fulfill the prerequsite.
  */
 export interface Prerequisites {
-  [fieldToCheckIdentifier: string]: Array<string | number | boolean>;
+  [fieldToCheckIdentifier: string]: Array<string | number | boolean | undefined>;
 }
 
 interface IHiddenInput<T> extends ICommonTypes<T> {
@@ -113,7 +115,7 @@ interface IDateTimePicker<T> extends ICommonTypes<T> {
 
 interface ICommonTypes<T> {
   componentCode: FORM_COMPONENTS_CODES
-  fieldName?: keyof T & string
+  fieldName: keyof T & string
   label?: string
   disabled?: boolean
   readonly?: boolean

@@ -8,17 +8,17 @@ const exportMenuItems: Array<IMenuItem> = [
   {
     id: 'dataAndStructure',
     label: 'Data and Structure',
-    handleClick: () => Manager.getCurrentProject().export(ExportScope.all)
+    handleClick: () => Manager.getCurrentProject()!.export(ExportScope.all)
   },
   {
     id: 'dataOnly',
     label: 'Data Only',
-    handleClick: () => Manager.getCurrentProject().export(ExportScope.dataOnly)
+    handleClick: () => Manager.getCurrentProject()!.export(ExportScope.dataOnly)
   },
   {
     id: 'structureOnly',
     label: 'Structure Only',
-    handleClick: () => Manager.getCurrentProject().export(ExportScope.structureOnly)
+    handleClick: () => Manager.getCurrentProject()!.export(ExportScope.structureOnly)
   }
 ]
 

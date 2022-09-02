@@ -23,7 +23,7 @@ export class Section implements ISection {
   ) {
     this.id = sectionData.id
     this.title = sectionData.title
-    this.icon = sectionData.icon || null
+    this.icon = sectionData.icon || undefined
     this.childOf = sectionData.childOf
     this.formModel = sectionData.formModel
   }
@@ -34,7 +34,7 @@ export class Section implements ISection {
 
   public getAllElements = async (): Promise<Array<SectionElement>> => dbInstances[this.projectId].callSelector<SectionElement>(this.id).multiple()
 
-  public getElementById = (id: string): Promise<SectionElement> => dbInstances[this.projectId].callSelector<SectionElement>(this.id, { [RESERVED_FIELDS.id]: id }).single()
+  public getElementById = (id: string): Promise<SectionElement | void> => dbInstances[this.projectId].callSelector<SectionElement>(this.id, { [RESERVED_FIELDS.id]: id }).single()
 
   public saveElement = async (element: SectionElement): Promise<SectionElement> => {
     const mode = element.id ? EDITOR_MODE.edit : EDITOR_MODE.add
@@ -42,10 +42,10 @@ export class Section implements ISection {
   }
 
   public getFirstUserDefinedField (): FormFieldsModel<TSupportedFormsTypes> | undefined {
-    return this.formModel.find(formEle => !RESERVED_FIELDS[formEle.fieldName])
+    return this.formModel.find(formEle => !RESERVED_FIELDS[formEle.fieldName!])
   }
 
   public getFirstFieldOfType = (types: Array<FORM_COMPONENTS_CODES>): FormFieldsModel<TSupportedFormsTypes> | undefined => this.formModel.find(formEle => types.includes(parseInt(formEle.componentCode as unknown as string)))
 
-  public getParentInfoFormEle = (): FormFieldsModel<SectionElement> => new ParentInfoFormEleBuilder(this.childOf, this.allSections).build()
+  public getParentInfoFormEle = (): FormFieldsModel<SectionElement> => new ParentInfoFormEleBuilder(this.childOf ?? [], this.allSections).build()
 }

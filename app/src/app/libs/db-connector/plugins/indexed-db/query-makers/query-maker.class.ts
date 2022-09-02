@@ -2,7 +2,7 @@ import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 import { DbConnectorInstance } from 'app/libs/db-connector/models/executers'
 import { Filter4Dexie, QueryHelper, SuppoertedOperators } from 'app/libs/db-connector/plugins/indexed-db/query-makers/query-helper.class'
 import { Logger } from 'app/libs/logger/logger.class'
-import Dexie from 'dexie'
+import Dexie, { Table } from 'dexie'
 
 export type NewWhere = [string, SuppoertedOperators, string | number];
 
@@ -15,7 +15,7 @@ export class QueryMaker<E> {
   private collection
   private dexieFilters: Array<Filter4Dexie> = []
   private arrWhere: Array<NewWhere> = []
-  private orderBy: string
+  private orderBy: string | undefined
   private debug = false
 
   /**
@@ -29,7 +29,7 @@ export class QueryMaker<E> {
     private element?: E
   ) {
     this.table = this.dbConnector.DS[this.section].name
-    this.collection = this.dbConnector.dbStore.db[this.table]
+    this.collection = (this.dbConnector.dbStore.db[this.table as keyof Dexie] as unknown as Table)
   }
 
   /**
@@ -76,9 +76,9 @@ export class QueryMaker<E> {
    * Select with Dexie.get
    */
   private async dexieGet (): Promise<Array<E>> {
-    const objSearch = {}
-    objSearch[this.arrWhere[0][0]] = this.arrWhere[0][2]
-    const res = await this.dbConnector.dbStore.db[this.table].get(objSearch)
+    const objSearch: { [key: string]: string } = {}
+    objSearch[this.arrWhere[0][0]] = this.arrWhere[0][2] as string
+    const res = await (this.dbConnector.dbStore.db[this.table as keyof Dexie] as unknown as Table).get(objSearch)
     const eleToReturn = res ? [res] : []
     return eleToReturn
   }
@@ -88,7 +88,7 @@ export class QueryMaker<E> {
    */
   private async dexieWhere (): Promise<Array<E>> {
     const fieldNValues = QueryHelper.buildArrayFildsNValues(this.arrWhere)
-    return this.dbConnector.dbStore.db[this.table].where(fieldNValues).toArray()
+    return (this.dbConnector.dbStore.db[this.table as keyof Dexie] as unknown as Table).where(fieldNValues).toArray()
   }
 
   /**
@@ -96,7 +96,7 @@ export class QueryMaker<E> {
    */
   private async dexieBetween (): Promise<Array<E>> {
     const betweenSearchParams = QueryHelper.buildBetweenSearchParams(this.arrWhere)
-    return this.dbConnector.dbStore.db[this.table].where(betweenSearchParams.field)
+    return (this.dbConnector.dbStore.db[this.table as keyof Dexie] as unknown as Table).where(betweenSearchParams.field)
       .between(betweenSearchParams.lowerBound, betweenSearchParams.upperBound, betweenSearchParams.includeLower, betweenSearchParams.includeUpper)
       .toArray()
   }
@@ -105,7 +105,7 @@ export class QueryMaker<E> {
    * Gets entire collection with Dexie
    */
   private async dexieFullCollection (): Promise<Array<E>> {
-    return this.dbConnector.dbStore.db[this.table].toArray()
+    return (this.dbConnector.dbStore.db[this.table as keyof Dexie] as unknown as Table).toArray()
   }
 
   /**
@@ -115,7 +115,7 @@ export class QueryMaker<E> {
     this.arrWhere.forEach(arrWhere => this.dexieFilters.push(QueryHelper.buildFilter4Dexie(arrWhere))
     )
 
-    let allRecords = this.dbConnector.dbStore.db[this.table].toCollection()
+    let allRecords = (this.dbConnector.dbStore.db[this.table as keyof Dexie] as unknown as Table).toCollection()
     const filter = QueryHelper.chainFilters(this.dexieFilters, this.logic)
     allRecords = allRecords.and(filter)
 
@@ -136,7 +136,7 @@ export class QueryMaker<E> {
   public async insert (): Promise<void> {
     this.handleDebug('INSERT', 'WITH OBJECT', this.element)
 
-    await this.dbConnector.dbStore.db[this.table].put(this.element)
+    await (this.dbConnector.dbStore.db[this.table as keyof Dexie] as unknown as Table).put(this.element)
   }
 
   // UPDATE
@@ -147,7 +147,7 @@ export class QueryMaker<E> {
   public async update (): Promise<void> {
     this.handleDebug('UPDATE', 'WITH OBJECT', this.element)
 
-    await this.dbConnector.dbStore.db[this.table].update(this.element[this.dbConnector.DS[this.section].pk], this.element)
+    await (this.dbConnector.dbStore.db[this.table as keyof Dexie] as unknown as Table).update(this.element![this.dbConnector.DS[this.section].pk as keyof E], this.element!)
   }
 
   // COUNT
@@ -169,7 +169,7 @@ export class QueryMaker<E> {
 
     this.handleDebug('DELETE', 'WHERE', this.arrWhere)
 
-    await this.dbConnector.dbStore.db[this.table].where(fieldNValues).delete()
+    await (this.dbConnector.dbStore.db[this.table as keyof Dexie] as unknown as Table).where(fieldNValues).delete()
   }
 
   /**
@@ -178,7 +178,7 @@ export class QueryMaker<E> {
   public async clearDb (): Promise<void> {
     const promises = []
     for (const section in this.dbConnector.DS) {
-      if (this.dbConnector.DS[section].name) promises.push(this.dbConnector.dbStore.db[this.dbConnector.DS[section].name].clear())
+      if (this.dbConnector.DS[section].name) promises.push((this.dbConnector.dbStore.db[this.dbConnector.DS[section].name as keyof Dexie] as unknown as Table).clear())
     }
 
     await Promise.all(promises)
@@ -188,7 +188,7 @@ export class QueryMaker<E> {
    * Clears an entire table!!!
    */
   public async clearTable (): Promise<void> {
-    await this.dbConnector.dbStore.db[this.table].clear()
+    await (this.dbConnector.dbStore.db[this.table as keyof Dexie] as unknown as Table).clear()
   }
 
   /**

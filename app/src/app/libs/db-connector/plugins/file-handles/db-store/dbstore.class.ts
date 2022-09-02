@@ -17,7 +17,7 @@ export class DbStore implements DbStoreInterface<AnitaUniversalDataStorage> {
   /**
    * Contents of project file as string
    */
-  private contents: string
+  private contents: string = ''
 
   constructor (
     private options: DsDbInitOptions,
@@ -44,11 +44,11 @@ export class DbStore implements DbStoreInterface<AnitaUniversalDataStorage> {
 
   public async postProjectCreation (): Promise<AdditionalInfoForLocalStorage> {
     await this.initializeExistingProject()
-    return { fileHandle: this.options.projectInfo.fileHandle }
+    return { fileHandle: this.options.projectInfo!.fileHandle }
   }
 
   public async postProjectUpdate (): Promise<AdditionalInfoForLocalStorage> {
-    return { fileHandle: this.options.projectInfo.fileHandle }
+    return { fileHandle: this.options.projectInfo!.fileHandle }
   }
 
   public close (): void {
@@ -65,7 +65,7 @@ export class DbStore implements DbStoreInterface<AnitaUniversalDataStorage> {
    * Loads file from disk using the fileHandle retrieved from IndexedDB
    */
   private async doReadFile (): Promise<void> {
-    this.contents = await FsHelper.readFileHandleAsText(this.options.projectInfo.fileHandle)
+    this.contents = await FsHelper.readFileHandleAsText(this.options.projectInfo!.fileHandle!)
   }
 
   /**

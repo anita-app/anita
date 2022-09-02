@@ -29,7 +29,7 @@ export const SidebarMenu = () => {
   return (
     <div className="mt-3">
       <ProjectPicker project={project} />
-      {Manager.getCurrentProject().getSectionsDefinitions().map(section => {
+      {Manager.getCurrentProject()?.getSectionsDefinitions().map(section => {
         const linkPath = urlParamFiller(ANITA_URLS.projectSectionElesList, [{ name: URL_PARAMS.projectId, value: project[RESERVED_AUDS_KEYS._settings][0].id }, { name: URL_PARAMS.sectionId, value: section.id }])
         return (
           <Link
@@ -37,7 +37,7 @@ export const SidebarMenu = () => {
             to={linkPath}
             className={addActiveClassNameToBaseStyle(location.pathname, linkPath)}
           >
-            {Icons.render(Manager.getCurrentProject().getSectionById(section.id).getSectionIcon())}<span className="ml-2">{section.title}</span>
+            {Icons.render(Manager.getCurrentProject()?.getSectionById(section.id)?.getSectionIcon() || 'chevronForwardOutline')}<span className="ml-2">{section.title}</span>
           </Link>
         )
       }

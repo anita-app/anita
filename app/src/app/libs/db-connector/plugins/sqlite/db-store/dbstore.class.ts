@@ -21,12 +21,12 @@ export class DbStore implements DbStoreInterface<Database> {
   /**
    * Project data
    */
-  public db: Database
+  public db!: Database
 
   /**
    * Contents of project file as string
    */
-  private contents: Uint8Array
+  private contents: Uint8Array | undefined
 
   constructor (
     private options: DsDbInitOptions,
@@ -53,11 +53,11 @@ export class DbStore implements DbStoreInterface<Database> {
 
   public async postProjectCreation (): Promise<AdditionalInfoForLocalStorage> {
     await this.makeDSFromDB()
-    return { fileHandle: this.options.projectInfo.fileHandle }
+    return { fileHandle: this.options.projectInfo!.fileHandle }
   }
 
   public async postProjectUpdate (): Promise<AdditionalInfoForLocalStorage> {
-    return { fileHandle: this.options.projectInfo.fileHandle }
+    return { fileHandle: this.options.projectInfo!.fileHandle }
   }
 
   public close (): void {
@@ -71,13 +71,13 @@ export class DbStore implements DbStoreInterface<Database> {
   }
 
   private async onProjectCreation (fileHandle: FileSystemDirectoryHandle): Promise<void> {
-    Object.assign(this.options.projectInfo, { fileHandle })
+    Object.assign(this.options.projectInfo!, { fileHandle })
     await this.loadDB()
     await new SchemaCreator(this, this.DS).createSchema()
     await schemaExporter(
       this.db,
-      this.options.projectInfo.fileHandle as any as FileSystemDirectoryHandle,
-      this.options.projectInfo.id
+      this.options.projectInfo!.fileHandle as any as FileSystemDirectoryHandle,
+      this.options.projectInfo!.id
     )
   }
 
@@ -85,8 +85,8 @@ export class DbStore implements DbStoreInterface<Database> {
    * Loads file from disk using the fileHandle retrieved from IndexedDB
    */
   private async doReadFile (): Promise<void> {
-    const fileName = `${this.options.projectInfo.id}.db`
-    this.contents = await FsHelper.readDirFileAsUint8Array(this.options.projectInfo.fileHandle as any as FileSystemDirectoryHandle, fileName)
+    const fileName = `${this.options.projectInfo!.id}.db`
+    this.contents = await FsHelper.readDirFileAsUint8Array(this.options.projectInfo!.fileHandle as any as FileSystemDirectoryHandle, fileName)
   }
 
   /**
@@ -99,7 +99,7 @@ export class DbStore implements DbStoreInterface<Database> {
     const res = await executeQueryWithReturn(this.db, 'SELECT * FROM _sections')
     const sections = serializer<ISection>(res[0].columns, res[0].values)
     sections.forEach((section: any) => {
-      audsSections.jsonFields.forEach((field: string) => {
+      audsSections.jsonFields?.forEach((field: string) => {
         section[field] = JSON.parse(section[field])
       })
     })

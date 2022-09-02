@@ -18,7 +18,7 @@ export const OptionsMaker: React.FC<ICommonFormEleProps<FormFieldsModel<IOptionK
     <div className="mt-6 pl-10 py-4 bg-gray-50 rounded-lg">
       <p className="-ml-5 font-semibold mb-1">Choices</p>
       <ol className="list-decimal">
-        {element[formEle.fieldName].map((optionElement: IOptionKeysModel, index) => <OptionsMakerSingleOption key={`${optionElement.value}-${index}`} index={index} optionElement={optionElement} {...props} />
+        {element[formEle.fieldName].map((optionElement: IOptionKeysModel, index: number) => <OptionsMakerSingleOption key={`${optionElement.value}-${index}`} index={index} optionElement={optionElement} {...props} />
         )}
       </ol>
       {(typeof handleClickAddOption === 'function') &&

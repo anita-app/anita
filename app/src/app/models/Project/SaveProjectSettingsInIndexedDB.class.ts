@@ -9,7 +9,7 @@ export class SaveProjectSettingsInIndexedDB {
   /**
    * Copy of the settings of the project to be saved in IndexedDB
    */
-  private copyOfProjectSettings: LocalProjectSettings
+  private copyOfProjectSettings: LocalProjectSettings | undefined
 
   /**
    * Creates an instance of save project settings in indexed db.
@@ -29,7 +29,7 @@ export class SaveProjectSettingsInIndexedDB {
     this.setProjectSettingsCloneWithAdditionalKeys()
     this.doStoreProjectSettings()
 
-    return this.copyOfProjectSettings
+    return this.copyOfProjectSettings!
   }
 
   /**

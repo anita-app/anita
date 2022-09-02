@@ -17,9 +17,9 @@ export const ValidatorsContainer: React.FC<IValidatorsConatinerProps> = memo(fun
         return currentValue
       }
 
-      const newValue = { ...currentValue, [validatorName]: isValid }
+      const newValue: IValidatorsState = { ...currentValue, [validatorName]: isValid }
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const allValid = Object.keys(newValue).every(key => newValue[key])
+      const allValid = Object.keys(newValue).every(key => newValue[key as unknown as keyof IValidatorsState])
       props.setIsValidForField(allValid)
       return newValue
     })

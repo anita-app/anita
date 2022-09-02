@@ -8,8 +8,8 @@ import Deta from 'deta/dist/types/deta'
  * Implementation of DbStore for Deta Base.
  */
 export class DbStore implements DbStoreInterface<Base> {
-  public db: Base
-  private deta: Deta
+  public db!: Base
+  private deta!: Deta
 
   constructor (
     private options: DsDbInitOptions,
@@ -31,10 +31,10 @@ export class DbStore implements DbStoreInterface<Base> {
   }
 
   private setDeta (): void {
-    this.deta = DetaFunction(this.options.detaConnectionData.projectKey)
+    this.deta = DetaFunction(this.options.detaConnectionData!.projectKey)
   }
 
   private setDb (): void {
-    this.db = this.deta.Base(this.options.detaConnectionData.projectId)
+    this.db = this.deta.Base(this.options.detaConnectionData!.projectId)
   }
 }

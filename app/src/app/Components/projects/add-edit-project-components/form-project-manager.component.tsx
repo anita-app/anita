@@ -31,7 +31,7 @@ export const FormProjectManager: React.FC = () => {
     const systemData = await Manager.saveProject(project as SystemData, mode)
     await new ProjectsListLoader().load()
     Manager.setCurrentProject(systemData)
-    navigate(urlParamFiller(ANITA_URLS.projectDetails, [{ name: URL_PARAMS.projectId, value: project[RESERVED_AUDS_KEYS._settings][0].id }]))
+    navigate(urlParamFiller(ANITA_URLS.projectDetails, [{ name: URL_PARAMS.projectId, value: project[RESERVED_AUDS_KEYS._settings]![0].id }]))
   }
 
   const handleClickAddSection = () => {
@@ -45,10 +45,10 @@ export const FormProjectManager: React.FC = () => {
   return (
     <span>
       <div className="mt-5 p-4 bg-white rounded shadow">
-        <FormAutomator formModel={projectFormModel as any} element={project[RESERVED_AUDS_KEYS._settings][0]} handleChange={handleProjectChange} />
+        <FormAutomator formModel={projectFormModel as any} element={project[RESERVED_AUDS_KEYS._settings]![0]} handleChange={handleProjectChange} />
       </div>
       <div className="px-1 md:px-2 lg:px-3">
-        {project[RESERVED_AUDS_KEYS._sections].map((section, index) => <SectionManager key={section.id} section={section} sectionIndex={index} />)}
+        {project[RESERVED_AUDS_KEYS._sections]?.map((section, index) => <SectionManager key={section.id} section={section} sectionIndex={index} />)}
       </div>
       <div className="mt-5 p-4 bg-white rounded shadow">
         <div className="flex sm:justify-between flex-wrap">

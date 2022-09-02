@@ -8,7 +8,7 @@ import Dexie, { Version } from 'dexie'
  * Implementation of DbStore for IndexedDB with Dexie.
  */
 export class DbStore implements DbStoreInterface<Dexie> {
-  public db: Dexie
+  public db!: Dexie
   private deletedSections: Array<string> = []
 
   constructor (
@@ -49,7 +49,7 @@ export class DbStore implements DbStoreInterface<Dexie> {
     // If there are sections to delete or to add, we push a new array to previousVersions
     // We don't need to store the new sections as Dexie from v.3.0.0 on, will automatically create the new tables
     if (sectionsToDelete.length > 0 || sectionsToAdd.length > 0) {
-      this.options.previousVersions.push(sectionsToDelete.concat())
+      this.options.previousVersions!.push(sectionsToDelete.concat())
 
       // We need to delete the sections that are not in the DS anymore
       sectionsToDelete.forEach(section => {
@@ -81,18 +81,18 @@ export class DbStore implements DbStoreInterface<Dexie> {
   }
 
   private makeDexieInfoForUpgrade (): AdditionalInfoForLocalStorage {
-    return { dexieInfoForUpgrade: { previousVersions: this.options.previousVersions, DS: this.DS } }
+    return { dexieInfoForUpgrade: { previousVersions: this.options.previousVersions!, DS: this.DS } }
   }
 
   private setDb (): void {
-    this.db = new Dexie(this.options.indexedDbName)
+    this.db = new Dexie(this.options.indexedDbName!)
   }
 
   // Adds to deletedSections the sections that are not in the DS anymore
   // In buildDb we will delete the sections that are not in the DS anymore
   private handlePreviousVersion (): void {
     this.deletedSections = []
-    this.options.previousVersions.forEach(versionSezs => versionSezs.forEach(section => {
+    this.options.previousVersions?.forEach(versionSezs => versionSezs.forEach(section => {
       if (!this.DS[section]) {
         this.deletedSections.push(section)
       }
@@ -101,8 +101,8 @@ export class DbStore implements DbStoreInterface<Dexie> {
   }
 
   private buildDb (): Version {
-    const version = this.options.previousVersions?.length + 1 || 1
-    const tables = {}
+    const version = this.options.previousVersions?.length ? this.options.previousVersions.length + 1 : 1
+    const tables: { [key: string]: string | null} = {}
 
     for (const section in this.DS) {
       tables[this.DS[section].name] = this.DS[section].indexes.join()

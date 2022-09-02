@@ -7,7 +7,7 @@ export class SectionFormEleGenerator {
   /**
    * The field element to return
    */
-  private fieldElement: ISectionCustomFieldProperties
+  private fieldElement: ISectionCustomFieldProperties | undefined
 
   /**
    * Creates an instance of section form ele generator.
@@ -24,7 +24,7 @@ export class SectionFormEleGenerator {
     this.setManadatory()
     this.setOptions()
     this.setRequiredValidator()
-    return this.fieldElement
+    return this.fieldElement!
   }
 
   /**
@@ -43,7 +43,7 @@ export class SectionFormEleGenerator {
    */
   private setOptions (): void {
     if (this.ele.options) {
-      this.fieldElement.options = this.ele.options
+      this.fieldElement!.options = this.ele.options
     }
   }
 
@@ -52,7 +52,7 @@ export class SectionFormEleGenerator {
    */
   private setRequiredValidator (): void {
     if (this.ele.required) {
-      this.fieldElement.required = true
+      this.fieldElement!.required = true
     }
   }
 }

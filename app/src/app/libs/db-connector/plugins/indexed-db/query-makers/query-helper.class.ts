@@ -15,7 +15,7 @@ export interface FieldNValues {
   [index: string]: string | number;
 }
 
-export type Filter4Dexie = (item: Object) => boolean;
+export type Filter4Dexie = (item: { [key: string]: string | number}) => boolean;
 
 /**
  * Support methods to build queries with `QueryMaker` on IndexedDB with Dexie
@@ -103,7 +103,7 @@ export class QueryHelper {
     const field = filter[0]
     const operator = filter[1]
     const value = filter[2]
-    return (item): boolean => {
+    return (item: { [key: string]: string | number}): boolean => {
       switch (operator) {
         case '===':
           return item[field] === value

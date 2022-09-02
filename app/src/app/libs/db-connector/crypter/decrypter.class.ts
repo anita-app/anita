@@ -29,9 +29,9 @@ export class Decrypter<E, DbTypes> extends CryptHelper<E, DbTypes> {
    * @param keyToUse the key to be used for decryption.
    * @param fieldName the key of the field to decrypt.
    */
-  private decrypt (keyToUse: string, fieldName: string): void {
+  private decrypt (keyToUse: string, fieldName: keyof E): void {
     if (this.element[fieldName]) {
-      this.element[fieldName] = stringDecrypter(this.element[fieldName], keyToUse)
+      this.element[fieldName] = stringDecrypter(this.element[fieldName] as unknown as string, keyToUse) as unknown as E[keyof E]
     }
   }
 }

@@ -12,12 +12,12 @@ interface IProjectParentsLinkShowerProps {
 }
 
 export const ProjectParentsLinkShower: React.FC<IProjectParentsLinkShowerProps> = ({ projectId, parentsInfo, sections }) => {
-  const [parents, setParents] = useState<Array<ParentInfoForDetailsView>>([])
+  const [parents, setParents] = useState<Array<ParentInfoForDetailsView> | undefined>([])
 
   useEffect(() => {
     let isMounted = true
     const getParents = async () => {
-      const parents = await Manager.getCurrentProject().getParentInfoForDetailsView(parentsInfo)
+      const parents = await Manager.getCurrentProject()?.getParentInfoForDetailsView(parentsInfo)
       if (isMounted) {
         setParents(parents)
       }
@@ -35,16 +35,16 @@ export const ProjectParentsLinkShower: React.FC<IProjectParentsLinkShowerProps> 
   return (
     <div className="p-3 pt-0">
       <p className="text-sm text-gray-500 mb-2">Parent elements:</p>
-      {parents.map(parent => (
+      {parents?.map(parent => (
         <Button
-          id={parent.element.id}
+          id={parent.element.id!}
           label={parent.txt}
           type="secondary"
           size="sm"
           href={urlParamFiller(ANITA_URLS.projectSectionEleDetails, [
-            { name: URL_PARAMS.projectId, value: projectId },
-            { name: URL_PARAMS.sectionId, value: parent.sectionId },
-            { name: URL_PARAMS.elementId, value: parent.element.id }
+            { name: URL_PARAMS.projectId, value: projectId! },
+            { name: URL_PARAMS.sectionId, value: parent.sectionId! },
+            { name: URL_PARAMS.elementId, value: parent.element.id! }
           ])} key={parent.element.id}
           className="font-semibold"
         />

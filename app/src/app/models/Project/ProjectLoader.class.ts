@@ -14,8 +14,8 @@ export class ProjectLoader {
   /**
    * The project info of the project to load
    */
-  private projectSettings: Array<IProjectSettings>
-  private projectSections: Array<ISection>
+  private projectSettings: Array<IProjectSettings> = []
+  private projectSections: Array<ISection> = []
 
   /**
    * Creates an instance of ProjectLoader
@@ -23,7 +23,7 @@ export class ProjectLoader {
    */
   constructor (
     private projectId: string,
-    private projectInfo?: LocalProjectSettings
+    private projectInfo?: LocalProjectSettings | void
   ) { }
 
   public async loadProject (): Promise<void> {
@@ -61,7 +61,7 @@ export class ProjectLoader {
    * Creates new instance of dbConnector for the project so it can be used in the app
    */
   private async createNewInstanceOfDbConnectorForProject () {
-    await new DbInitializer(this.projectInfo).init()
+    await new DbInitializer(this.projectInfo!).init()
   }
 
   /**
