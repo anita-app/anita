@@ -42,7 +42,7 @@ export class DbSelector<E> extends WhereBuilder<E> implements Selector<E> {
 
   /**
    * Counts elements calling multiple and then calling `Array.lenght`
-   * @see multiple
+   * @see DbSelector.multiple
    */
   public async count (): Promise<number> {
     await this.multiple()

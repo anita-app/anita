@@ -51,7 +51,7 @@ export const ChildOfSelectorForSection: React.FC<ICommonFormEleProps<IBasicSelec
     return () => {
       isMounted = false
     }
-  }, [currentEditedProjectSections, currentEditedProjectSections.length, sectionId])
+  }, [currentEditedProjectSections, currentEditedProjectSections?.length, sectionId])
 
   const handleChangeInChildOfSelectorForSection = (newValue: MultiValue<IOption>) => {
     handleChange(formEle.fieldName, ParentElement.infoObjectToString(newValue as Array<IOption>))
@@ -64,7 +64,7 @@ export const ChildOfSelectorForSection: React.FC<ICommonFormEleProps<IBasicSelec
   // We uas as any because react-select does not export the values we'd like to use,
   // and the ones we define are not compatible.
   return (<FormEleContainer width="w-full">
-    <FormElementLabel label={formEle.label} />
+    <FormElementLabel label={formEle.label!} />
     <Select
       defaultValue={ParentElement.infoStringToObj(element[formEle.fieldName], selectOptions as any)}
       isMulti={true}

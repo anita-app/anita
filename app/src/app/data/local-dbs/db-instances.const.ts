@@ -6,10 +6,10 @@ import * as mysql from 'mysql'
 import { Database } from 'sql.js'
 
 interface DbInstances {
-  system: DbConnectorInstance<Dexie>;
-  [projectIdentifier: string]: DbConnectorInstance<Dexie | Base | mysql.Connection | AnitaUniversalDataStorage | Database>;
+  system: DbConnectorInstance<Dexie>
+  [projectIdentifier: string]: DbConnectorInstance<Dexie | Base | mysql.Connection | AnitaUniversalDataStorage | Database>
 }
 
 export const dbInstances: DbInstances = {
-  system: undefined
+  system: undefined as any
 }

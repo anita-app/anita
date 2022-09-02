@@ -28,12 +28,12 @@ export const BasicSelect: React.FC<ICommonFormEleProps<IBasicSelect<SectionEleme
   const currentValueIfValidOrNull = isValidOptionsValue ? element[formEle.fieldName] : null
   const selectedOption = formEle.options.find(option => option.value === currentValueIfValidOrNull) || null
 
-  useSetDefaultValue(currentValueIfValidOrNull, formEle.value, formEle.fieldName, handleChange)
+  useSetDefaultValue(currentValueIfValidOrNull, formEle.value!, formEle.fieldName, handleChange)
 
   const filteredOptions =
   query === ''
     ? formEle.options
-    : formEle.options.filter((option) => option.value.toString()
+    : formEle.options.filter((option) => option.value?.toString()
       .toLowerCase()
       .replace(/\s+/g, '')
       .includes(query.toLowerCase().replace(/\s+/g, ''))
@@ -51,7 +51,7 @@ export const BasicSelect: React.FC<ICommonFormEleProps<IBasicSelect<SectionEleme
 
   return (
     <FormEleContainer width={width}>
-      <FormElementLabel label={formEle.label} />
+      <FormElementLabel label={formEle.label!} />
       <Combobox value={selectedOption} onChange={handleSelected}>
         <div className="relative">
           <div className={`relative w-full cursor-default overflow-hidden bg-white text-left sm:text-sm ${isValid || ''}`}>
@@ -103,7 +103,7 @@ export const BasicSelect: React.FC<ICommonFormEleProps<IBasicSelect<SectionEleme
                               active ? 'text-white' : selected ? 'text-teal-500' : 'text-prussian-blue-600'
                             }`}
                           >
-                            {Icons.render(selected ? 'checkmark' : option.icon, 'h-5 w-5')}
+                            {Icons.render(selected ? 'checkmark' : option.icon!, 'h-5 w-5')}
                           </span>
                         )}
                         {(selected) && (

@@ -25,9 +25,9 @@ export const ParentsSelector: React.FC<ICommonFormEleProps<IBasicSelect<SectionE
     let isMounted = true
 
     const getSelectOptions = async () => {
-      const options = await Manager.getCurrentProject().getOptionsForParentsSelector(formEle.options)
+      const options = await Manager.getCurrentProject()?.getOptionsForParentsSelector(formEle.options)
 
-      if (isMounted) {
+      if (isMounted && options) {
         setSelectOptions(options)
       }
     }
@@ -52,7 +52,7 @@ export const ParentsSelector: React.FC<ICommonFormEleProps<IBasicSelect<SectionE
   // We uas as any because react-select does not export the values we'd like to use,
   // and the ones we define are not compatible.
   return (<FormEleContainer width="w-full">
-    <FormElementLabel label={formEle.label} />
+    <FormElementLabel label={formEle.label!} />
     <Select
       defaultValue={ParentElement.infoStringToObjForOptionsGroup(element[formEle.fieldName], selectOptions as any)}
       isMulti={true}

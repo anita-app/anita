@@ -62,7 +62,7 @@ export class QueryMaker {
   private insertOne (): string {
     const element = { ...this.element }
     for (const prop in element) {
-      this.fieldsRemoverIfThereIsNoColumn(element, prop)
+      this.fieldsRemoverIfThereIsNoColumn(element, prop as keyof Object)
     }
 
     return squel.insert({ autoQuoteTableNames: true, autoQuoteFieldNames: true })
@@ -75,7 +75,7 @@ export class QueryMaker {
     const elements = cloneDeep(this.element) as Array<Object>
     elements.forEach(element => {
       for (const prop in element) {
-        this.fieldsRemoverIfThereIsNoColumn(element, prop)
+        this.fieldsRemoverIfThereIsNoColumn(element, prop as keyof Object)
       }
     })
 
@@ -93,7 +93,7 @@ export class QueryMaker {
 
     for (const prop in element) {
       if (prop !== this.dbConnector.DS[this.section].pk) {
-        this.fieldsRemoverIfThereIsNoColumn(element, prop)
+        this.fieldsRemoverIfThereIsNoColumn(element, prop as keyof Object)
       }
     }
     const obj = squel
@@ -101,7 +101,7 @@ export class QueryMaker {
       .table(this.dbConnector.DS[this.section].name)
       .setFields(element)
     const pk = this.dbConnector.DS[this.section].pk as string
-    obj.where(`${pk} = ?`, element[this.dbConnector.DS[this.section].pk])
+    obj.where(`${pk} = ?`, element[this.dbConnector.DS[this.section].pk as keyof Object])
 
     return obj.toString()
   }
@@ -120,7 +120,7 @@ export class QueryMaker {
   /**
    * Removes properties for which there is not a column in DB
    */
-  private fieldsRemoverIfThereIsNoColumn (element: Object, prop: string): void {
+  private fieldsRemoverIfThereIsNoColumn (element: Object, prop: keyof Object): void {
     if (!this.dbConnector.DS[this.section].fields.includes(prop)) {
       delete element[prop]
       Logger.warn(`WARNING: field ${prop} removed because no corresponding column was found in the schema.`)

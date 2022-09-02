@@ -35,7 +35,7 @@ export class DbInsertor<E> implements Insertor<E> {
     elements.forEach(element => {
       element.key = element[RESERVED_FIELDS.id]
       element.section = this.section
-      element.projectId = this.dbConnector.options.detaConnectionData.projectId
+      element.projectId = this.dbConnector.options.detaConnectionData!.projectId
     })
     await this.dbConnector.dbStore.db.putMany(elements as unknown as Array<DetaType>)
   }
@@ -44,7 +44,7 @@ export class DbInsertor<E> implements Insertor<E> {
     const element = { ...originalElement }
     element.key = element[RESERVED_FIELDS.id]
     element.section = this.section
-    element.projectId = this.dbConnector.options.detaConnectionData.projectId
+    element.projectId = this.dbConnector.options.detaConnectionData!.projectId
     await this.dbConnector.dbStore.db.put(element as unknown as ObjectType)
   }
 }

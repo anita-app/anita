@@ -3,7 +3,7 @@ import { Menu, Transition } from '@headlessui/react'
 import ReactTooltip from 'react-tooltip'
 import { Icons, TIconName } from 'app/libs/Icons/Icons.class'
 
-function classNames (...classes) {
+function classNames (...classes: Array<string>) {
   return classes.filter(Boolean).join(' ')
 }
 

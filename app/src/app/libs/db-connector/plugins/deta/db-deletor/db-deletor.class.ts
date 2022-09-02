@@ -23,8 +23,8 @@ export class DbDeletor<E> implements Deletor<E> {
    * Perform the delete action on the given element.
    */
   public async autoDelete (): Promise<void> {
-    if (this.args[this.dbConnector.DS[this.section].pk]) {
-      const key = this.args[this.dbConnector.DS[this.section].pk]
+    const key = this.args[this.dbConnector.DS[this.section].pk as keyof E] as unknown as string
+    if (key) {
       await this.dbConnector.dbStore.db.delete(key)
     } else {
       Logger.error('Error in autoDelete', 'No PK value was found on the element')

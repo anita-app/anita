@@ -26,7 +26,7 @@ function getCanEdit (section: ISection, indexFormElement: number, value: string 
 export const OptionsMakerSingleOption: React.FC<ICommonFormEleProps<FormFieldsModel<IOptionKeysModel>>> = memo(function OptionsMakerSingleOption (props: ICommonFormEleProps<FormFieldsModel<IOptionKeysModel>>) {
   const { formEle, element, handleOptionsChange, handleClickDeleteOption, indexSection, indexFormElement, index, optionElement } = props
   const projectEditorMode = useSelector((store: AnitaStore) => store.formProject.mode)
-  const section = useSelector((store: AnitaStore) => store.formProject.original[RESERVED_AUDS_KEYS._sections][indexSection])
+  const section = useSelector((store: AnitaStore) => store.formProject.original[RESERVED_AUDS_KEYS._sections]![indexSection])
   const formModelToUse: Array<FormFieldsModel<TSupportedFormsTypes>> = useMemo(() => {
     const canEdit = getCanEdit(section, indexFormElement, optionElement.value)
     return canEdit

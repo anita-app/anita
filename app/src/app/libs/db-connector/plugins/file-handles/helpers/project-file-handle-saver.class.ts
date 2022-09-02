@@ -11,7 +11,7 @@ export class ProjectFileHandleSaver {
   /**
    * The string data to sabe in the file on disk
    */
-  private data: string
+  private data: string = ''
 
   /**
    * Creates an instance of project file handle saver.
@@ -39,9 +39,9 @@ export class ProjectFileHandleSaver {
   /**
    * Actually saves the data to disk by calling writeFile
    *
-   * @see writeFile
+   * @see FsHelper.writeFile
    */
   private saveDataToDisk (): Promise<void> {
-    return FsHelper.writeFile(this.dbConnector.options.projectInfo.fileHandle, this.data)
+    return FsHelper.writeFile(this.dbConnector.options.projectInfo!.fileHandle!, this.data)
   }
 }

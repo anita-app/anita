@@ -25,9 +25,9 @@ export const ImportProjectButton: React.FC<IImportProjectButtonProps> = (props) 
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [animationClass, setAnimationClass] = useState('animate__fadeIn')
-  const [projectData, setProjectData] = useState<AnitaUniversalDataStorage>(null)
+  const [projectData, setProjectData] = useState<AnitaUniversalDataStorage | null>(null)
   const [projectFileHandle, setProjectFileHandle] = useState<FileSystemFileHandle>()
-  const [projectSettings, setProjectSettings] = useState<IProjectSettings>(null)
+  const [projectSettings, setProjectSettings] = useState<IProjectSettings | null>(null)
 
   const handleClickModal = async () => {
     if (isModalOpen) {
@@ -49,15 +49,15 @@ export const ImportProjectButton: React.FC<IImportProjectButtonProps> = (props) 
   }
 
   const handleClickImport = async () => {
-    projectData[RESERVED_AUDS_KEYS._settings][0] = projectSettings
-    await new ProjectDataImporter(projectData, projectFileHandle).import()
+    projectData![RESERVED_AUDS_KEYS._settings][0] = projectSettings!
+    await new ProjectDataImporter(projectData!, projectFileHandle!).import()
     handleClickModal()
-    Manager.setCurrentProject(projectData)
+    Manager.setCurrentProject(projectData!)
     setTimeout(() => navigate(ANITA_URLS.projectsList), 500)
   }
 
   const handleProjectChange = (fieldName: string | number, value: FormAutomatorOnChangeValue) => {
-    setProjectSettings({ ...projectSettings, [fieldName]: value })
+    setProjectSettings({ ...projectSettings!, [fieldName]: value })
   }
 
   return (
@@ -65,8 +65,8 @@ export const ImportProjectButton: React.FC<IImportProjectButtonProps> = (props) 
       <Button
         id="importProject"
         label="Import an existing project"
-        labelClassName={props.btnType === 'icon' ? 'hidden' : null}
-        icon={props.btnType === 'icon' ? 'downloadOutline' : null}
+        labelClassName={props.btnType === 'icon' ? 'hidden' : undefined}
+        icon={props.btnType === 'icon' ? 'downloadOutline' : undefined}
         onClick={handleClickModal}
         type="secondary"
         size={props.btnType === 'text' ? 'lg' : 'sm'}

@@ -49,6 +49,7 @@ export class FsHelper {
       return file.text()
     } catch (error: unknown) {
       Logger.error('[FsHelper.readFileHandleAsText]', (error as Error)?.message)
+      return ''
     }
   }
 
@@ -99,7 +100,7 @@ export class FsHelper {
     return new Promise(resolve => {
       const reader = new FileReader()
       reader.addEventListener('loadend', e => {
-        const text = e.target.result
+        const text = e.target!.result
         resolve(text as string)
       })
       reader.readAsText(file)

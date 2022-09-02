@@ -22,11 +22,11 @@ export class DbUpdator<E> implements Updator<E> {
   /**
    * Calls `QueryMaker` and updates the element
    */
-  public autoUpdate (): Promise<void> {
+  public async autoUpdate (): Promise<void> {
     const element = { ...this.element }
     element.key = element[RESERVED_FIELDS.id]
     element.section = this.section
-    element.projectId = this.dbConnector.options.detaConnectionData.projectId
-    return this.dbConnector.dbStore.db.update(element as unknown as ObjectType, this.element[RESERVED_FIELDS.id])
+    element.projectId = this.dbConnector.options.detaConnectionData!.projectId
+    await this.dbConnector.dbStore.db.update(element as unknown as ObjectType, this.element[RESERVED_FIELDS.id])
   }
 }

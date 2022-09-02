@@ -49,8 +49,8 @@ export const Button: React.FC<IButtonWithTooltipProps> = (props) => {
 
   return (
     <Component
-      to={props.href ? props.href : null}
-      onClick={props.onClick ? props.onClick : null}
+      to={props.href ? props.href : undefined as any}
+      onClick={props.onClick ? props.onClick : undefined}
       className={`inline-flex items-center justify-center ${props.className || ''} ${padding} ${props.marginClassName ?? 'mr-3'} leading-none text-sm rounded ${textClassName} ${bgClassName}`}
       data-tip={true}
       data-for={props.id}

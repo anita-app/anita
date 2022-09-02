@@ -26,7 +26,7 @@ export const AddEditElementButton: React.FC<IAddEditElementButtonProps> = ({ pro
   const urlParamsToFill = [{ name: URL_PARAMS.projectId, value: projectId }, { name: URL_PARAMS.sectionId, value: sectionId }]
 
   if (mode === EDITOR_MODE.edit) {
-    urlParamsToFill.push({ name: URL_PARAMS.elementId, value: elementId })
+    urlParamsToFill.push({ name: URL_PARAMS.elementId, value: elementId as string })
   }
 
   const urlToFill = mode === EDITOR_MODE.add ? ANITA_URLS.projectSectionAddEle : ANITA_URLS.projectSectionEditEle

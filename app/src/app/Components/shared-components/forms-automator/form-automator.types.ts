@@ -16,12 +16,12 @@ export type TSupportedFormsTypes = IProjectSettings | SectionElement | ISectionC
 
 export type FormModel<T = FormFieldsModel<TSupportedFormsTypes>> = Array<T>;
 
-export type FormAutomatorOnChangeValue = string | number | boolean | Array<string>;
+export type FormAutomatorOnChangeValue = string | number | boolean | Array<string> | null
 
 export interface ICommonFormEleProps<T = FormFieldsModel<TSupportedFormsTypes>> {
   formEle: T;
   element: Partial<SectionElement>;
-  handleChange: (fieldName: string, value: FormAutomatorOnChangeValue) => void;
+  handleChange: (fieldName: string | number, value: FormAutomatorOnChangeValue) => void;
   [customProps: string]: any;
 }
 
@@ -31,7 +31,7 @@ export interface ICommonFormEleProps<T = FormFieldsModel<TSupportedFormsTypes>> 
  * The value of each key is an Array of all the possible values that fulfill the prerequsite.
  */
 export interface Prerequisites {
-  [fieldToCheckIdentifier: string]: Array<string | number | boolean>;
+  [fieldToCheckIdentifier: string]: Array<string | number | boolean | undefined>;
 }
 
 interface IHiddenInput<T> extends ICommonTypes<T> {

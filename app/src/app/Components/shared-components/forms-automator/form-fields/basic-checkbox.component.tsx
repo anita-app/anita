@@ -15,7 +15,7 @@ export const BasicCheckbox: React.FC<ICommonFormEleProps> = memo(function BasicC
 
   return (
     <FormEleContainer width={width}>
-      <FormElementLabel label={formEle.label} />
+      <FormElementLabel label={formEle.label!} />
       <input
         key={formEle.fieldName}
         name={formEle.fieldName}

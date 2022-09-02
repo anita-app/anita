@@ -24,7 +24,7 @@ import { Logger } from 'app/libs/logger/logger.class'
  * @param [addSystemSections=true] whether to automatically build the data structure for system sections (`_settings` and `_sections`)
  */
 export class DbConnector<DbTypes> implements DbConnectorInstance<DbTypes> {
-  public dbStore: DbStoreInterface<DbTypes>
+  public dbStore!: DbStoreInterface<DbTypes>
   public DS: AbstractModel = {}
 
   constructor (
