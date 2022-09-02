@@ -12,7 +12,7 @@ export class SectionElementSaver {
   /**
    * Reference to section model in DS for easier access in code
    */
-  private sectionModelInDS: SectionModel<SectionElement>
+  private sectionModelInDS: SectionModel<SectionElement> | undefined
 
   /**
    * Creates an instance of element saver.
@@ -57,8 +57,8 @@ export class SectionElementSaver {
    * Checks if a `pk` value is set, if not one is created.
    */
   private checkAndSetPk (): void {
-    if (!this.element[this.sectionModelInDS.pk]) {
-      this.element[this.sectionModelInDS.pk] = IdCreator.make(this.sectionModelInDS.name)
+    if (!this.element[this.sectionModelInDS!.pk]) {
+      this.element[this.sectionModelInDS!.pk] = IdCreator.make(this.sectionModelInDS!.name)
     }
   }
 
@@ -77,7 +77,7 @@ export class SectionElementSaver {
    * Checks if `createdAt` value is set, if not one is created.
    */
   private setcreatedAt (): void {
-    if (this.sectionModelInDS.fields.includes(RESERVED_FIELDS.createdAt) && !this.element[RESERVED_FIELDS.createdAt]) {
+    if (this.sectionModelInDS?.fields.includes(RESERVED_FIELDS.createdAt) && !this.element[RESERVED_FIELDS.createdAt]) {
       this.element[RESERVED_FIELDS.createdAt] = new Date(new Date().toUTCString()).toISOString()
     }
   }
@@ -86,7 +86,7 @@ export class SectionElementSaver {
    * Sets the updatedAt value if in edit mode
    */
   private setupdatedAtValueIfInEditMode (): void {
-    if (this.sectionModelInDS.fields.includes(RESERVED_FIELDS.updatedAt)) {
+    if (this.sectionModelInDS?.fields.includes(RESERVED_FIELDS.updatedAt)) {
       this.element[RESERVED_FIELDS.updatedAt] = new Date(new Date().toUTCString()).toISOString()
     }
   }

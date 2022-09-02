@@ -18,12 +18,15 @@ export class GetParentInfoForDetailsView {
   private async processElement (sectionIdElementId: string): Promise<void> {
     const arrInfo = sectionIdElementId.split('|')
     const section = this.project.getSectionById(arrInfo[0])
-    const element = await this.project.getSectionById(section.id).getElementById(arrInfo[1])
-    const formEle = this.project.getSectionById(section.id).getFirstUserDefinedField()
+    if (!section) {
+      return
+    }
+    const element = await section.getElementById(arrInfo[1])
+    const formEle = section.getFirstUserDefinedField()
     this.parentInfoForDetailsView.push({
       sectionId: arrInfo[0],
       element,
-      txt: element[formEle.fieldName]
+      txt: element[formEle?.fieldName!]
     })
   }
 }

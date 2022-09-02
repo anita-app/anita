@@ -9,7 +9,7 @@ import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-au
  * @see ParentsSelector
  */
 export class ParentInfoFormEleBuilder {
-  private parentInfoFormModel: FormFieldsModel<SectionElement>
+  private parentInfoFormModel: FormFieldsModel<SectionElement> | undefined
   private options: Array<IOptionKeysModel> = []
 
   constructor (
@@ -21,13 +21,15 @@ export class ParentInfoFormEleBuilder {
   public build (): FormFieldsModel<SectionElement> {
     this.setOptions()
     this.setParentSelector()
-    return this.parentInfoFormModel
+    return this.parentInfoFormModel!
   }
 
   private setOptions (): void {
     this.childOf.forEach(sectionName => {
-      const sectionInfo = this.sections.find(section => section.id === sectionName)
-      this.options.push({ value: sectionName, label: sectionInfo.title })
+      const sectionInfo = this.sections?.find(section => section.id === sectionName)
+      if (sectionInfo) {
+        this.options.push({ value: sectionName, label: sectionInfo.title })
+      }
     })
   }
 

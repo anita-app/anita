@@ -19,12 +19,12 @@ export class Icons {
       .filter(option => option.value.endsWith('Outline'))
   }
 
-  public static render = (iconName: TIconName, className: string = ''): ReactElement => {
-    if (!iconName.endsWith('.svg') && !ionicons[iconName]) {
+  public static render = (iconName: TIconName, className: string = ''): ReactElement | null => {
+    if (!iconName.endsWith('.svg') && !ionicons[iconName as keyof typeof ionicons]) {
       Logger.error(`[Icons.render] Icon '${iconName}' not found`)
       return null
     }
-    const icon = iconName.endsWith('.svg') ? iconName : ionicons[iconName]
+    const icon = iconName.endsWith('.svg') ? iconName : ionicons[iconName as keyof typeof ionicons]
     return <IonIcon icon={icon} className={className} />
   }
 }

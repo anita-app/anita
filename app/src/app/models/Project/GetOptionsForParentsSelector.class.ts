@@ -13,10 +13,10 @@ export class GetOptionsForParentsSelector {
   }
 
   public async buildOptions (options: Array<IOptionKeysModel>): Promise<Array<OptionKeysModelGroup>> {
-    await ArrayTools.asyncForEach(options, async group => {
-      const sectionEles = await this.project.getSectionById(group.value.toString()).getAllElements()
+    await ArrayTools.asyncForEach(options, async (group, index) => {
+      const sectionEles = await this.project.getSectionById(group?.value?.toString?.())?.getAllElements() || []
       if (sectionEles.length) {
-        this.createGroupOption(group.value as string, group.label, sectionEles)
+        this.createGroupOption(group.value as string, group.label || `Option ${index + 1}`, sectionEles)
       }
     })
 
@@ -25,11 +25,14 @@ export class GetOptionsForParentsSelector {
 
   private createGroupOption (sectionId: string, sectionLabel: string, sectionEles: Array<SectionElement>): void {
     const options: Array<IOptionKeysModel> = []
-    const section = Manager.getCurrentProject().getSectionById(sectionId)
-    const formEle = Manager.getCurrentProject().getSectionById(section.id).getFirstUserDefinedField()
+    const section = Manager.getCurrentProject()?.getSectionById(sectionId)
+    if (!section) {
+      return
+    }
+    const formEle = section.getFirstUserDefinedField()
     sectionEles.forEach(ele => options.push({
       value: `${sectionId}|${ele.id}`,
-      label: ele[formEle.fieldName]
+      label: ele[formEle!.fieldName]
     }))
     this.optionsGroups.push({
       label: sectionLabel,

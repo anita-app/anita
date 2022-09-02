@@ -35,7 +35,10 @@ export class Project {
     new ProjectDeletor(this.settings).delete()
   }
 
-  public getSectionById = (sectionId: string): Section | null => {
+  public getSectionById = (sectionId: string | undefined): Section | null => {
+    if (!sectionId) {
+      return null
+    }
     if (!this.sections[sectionId]) {
       const sectionData = this.sectionsDefinitions.find(section => section.id === sectionId)
       if (!sectionData) {

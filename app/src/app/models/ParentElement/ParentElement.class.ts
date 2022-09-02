@@ -13,9 +13,9 @@ export class ParentElement {
    * We do not want to store the whole object, only the values, as the label might change.
    */
   public static infoObjectToString (parentInfoObj: Array<IOption>): Array<string> {
-    const parentsInfo = []
+    const parentsInfo: Array<string> = []
     parentInfoObj.forEach(parentInfo => {
-      parentsInfo.push(parentInfo.value)
+      parentsInfo.push(parentInfo.value.toString())
     })
     return parentsInfo
   }
@@ -27,7 +27,7 @@ export class ParentElement {
    * @param selectOptions the options for the react-select component
    */
   public static infoStringToObj (parentsInfo: Array<string>, selectOptions: Array<IOption>): Array<IOption> {
-    const options = []
+    const options: Array<IOption> = []
 
     if (!parentsInfo || !selectOptions) {
       return options
@@ -52,7 +52,7 @@ export class ParentElement {
    * @param selectOptions the options for the react-select component
    */
   public static infoStringToObjForOptionsGroup (parentsInfo: Array<string>, selectOptions: Array<IOptionKeysModelGroup>): Array<IOption> {
-    const options = []
+    const options: Array<IOption> = []
 
     if (!parentsInfo || !selectOptions) {
       return options

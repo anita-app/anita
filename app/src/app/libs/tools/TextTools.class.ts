@@ -16,7 +16,7 @@ export class TextTools {
       y: '[ýÿ]'
     }
     for (const i in nonAsciis) {
-      r = r.replace(new RegExp(nonAsciis[i], 'g'), i)
+      r = r.replace(new RegExp(nonAsciis[i as keyof typeof nonAsciis], 'g'), i)
     }
 
     return r.replace(/\s/g, '-')
@@ -26,10 +26,10 @@ export class TextTools {
   /**
  * Converts a string from camelCase to kebab-case
  */
-  public static camelToKebabCase = str => str.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`)
+  public static camelToKebabCase = (str: string) => str.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`)
 
   /**
  * Capitalizes the first letter of a string
  */
-  public static capitalizeFirstLetter = str => str?.charAt(0).toUpperCase() + str.slice(1)
+  public static capitalizeFirstLetter = (str: string) => str?.charAt(0).toUpperCase() + str.slice(1)
 }

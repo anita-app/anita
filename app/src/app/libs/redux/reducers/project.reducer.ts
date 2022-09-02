@@ -5,12 +5,12 @@ import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 /**
  * The initial state of the container of the current project
  */
-const projectState: SystemData | void = null
+const projectState: SystemData | null = null
 
 /**
  * Updates the projectState
  */
-export const projectReducer = (state: SystemData | void = projectState, action: Action<REDUX_ACTIONS>): SystemData | void => {
+export const projectReducer = (state: SystemData | null = projectState, action: Action<REDUX_ACTIONS>): SystemData | null => {
   switch (action.type) {
     case REDUX_ACTIONS.setCurrentProject:
       return action.payload

@@ -115,7 +115,7 @@ interface IDateTimePicker<T> extends ICommonTypes<T> {
 
 interface ICommonTypes<T> {
   componentCode: FORM_COMPONENTS_CODES
-  fieldName?: keyof T & string
+  fieldName: keyof T & string
   label?: string
   disabled?: boolean
   readonly?: boolean

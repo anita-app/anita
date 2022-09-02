@@ -9,7 +9,7 @@ export enum ExportScope {
 }
 
 export class ProjectExporter {
-  private jsonData: string
+  private jsonData: string = ''
   private projectToExport: Partial<AnitaUniversalDataStorage> = {}
 
   constructor (
@@ -27,7 +27,7 @@ export class ProjectExporter {
       await this.getSectionsData()
     }
     this.convertToJson()
-    FsHelper.download(this.jsonData, `${this.systemData._settings[0].title}.json`, 'text/plain')
+    FsHelper.download(this.jsonData, `${this.systemData._settings?.[0].title}.json`, 'text/plain')
   }
 
   private addSystemDataToProjectToExport (): void {
@@ -40,7 +40,7 @@ export class ProjectExporter {
    * Loop all sections
    */
   private async getSectionsData (): Promise<void> {
-    for (const section of this.systemData._sections) {
+    for (const section of this.systemData._sections || []) {
       await this.getSectionData(section.id)
     }
   }
@@ -49,7 +49,7 @@ export class ProjectExporter {
    * Retrieve the data of each section and add it to the object to export
    */
   private async getSectionData (sectionId: string): Promise<void> {
-    const data = await dbInstances[this.systemData._settings[0].id].callSelector<SectionElement>(sectionId).multiple() || []
+    const data = await dbInstances[this.systemData._settings?.[0].id!].callSelector<SectionElement>(sectionId).multiple() || []
     this.projectToExport[sectionId] = data
   }
 

@@ -22,6 +22,6 @@ export class SectionElement {
       return null
     }
 
-    return optionToReturn.label
+    return optionToReturn.label ?? null
   }
 }

@@ -14,15 +14,15 @@ export class ProjectFileImporter {
   /**
    * List of FileSystemFileHandle for each project to import
    */
-  private fileHandle: FileSystemFileHandle
+  private fileHandle: FileSystemFileHandle | undefined
   /**
    * The file contents of each project to import
    */
-  private fileContents: string
+  private fileContents: string | undefined
   /**
    * The project data of each project to import
    */
-  private projectData: AnitaUniversalDataStorage
+  private projectData: AnitaUniversalDataStorage | undefined
 
   /**
    * Asks for the files to import and processes them, then sets the current project as the last one imported
@@ -39,7 +39,7 @@ export class ProjectFileImporter {
     }
 
     this.parseFileContents()
-    return { project: this.projectData, fileHandle: this.fileHandle }
+    return { project: this.projectData!, fileHandle: this.fileHandle! }
   }
 
   /**
@@ -63,6 +63,6 @@ export class ProjectFileImporter {
    * Converts the string of the project to the type `AnitaUniversalDataStorage`
    */
   private parseFileContents (): void {
-    this.projectData = JSON.parse(this.fileContents)
+    this.projectData = JSON.parse(this.fileContents!)
   }
 }
