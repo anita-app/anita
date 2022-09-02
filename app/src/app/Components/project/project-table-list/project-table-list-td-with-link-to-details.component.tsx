@@ -5,12 +5,12 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 interface IProjectTableListTdWithLinkToDetailsProps {
   tdProps: {}
-  elementId: string
+  elementId: string | undefined
   children: ReactNode
 }
 
 export const ProjectTableListTdWithLinkToDetails: React.FC<IProjectTableListTdWithLinkToDetailsProps> = ({ children, tdProps, elementId }) => {
-  const navigation = useNavigate()
+  const navigate = useNavigate()
   const params = useParams()
 
   const handleClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -19,7 +19,10 @@ export const ProjectTableListTdWithLinkToDetails: React.FC<IProjectTableListTdWi
     if (target.tagName === 'A' || target.tagName === 'BUTTON') {
       return
     }
-    navigation(urlParamFiller(ANITA_URLS.projectSectionEleDetails, [
+    if (!elementId || !params.projectId || !params.sectionId) {
+      return
+    }
+    navigate(urlParamFiller(ANITA_URLS.projectSectionEleDetails, [
       { name: URL_PARAMS.projectId, value: params.projectId },
       { name: URL_PARAMS.sectionId, value: params.sectionId },
       { name: URL_PARAMS.elementId, value: elementId }

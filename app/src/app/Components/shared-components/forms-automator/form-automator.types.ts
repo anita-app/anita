@@ -8,7 +8,9 @@ import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-au
 import { TextInputSupportedTypes } from 'app/components/shared-components/forms-automator/input-supported-types.const'
 import { TIconName } from 'app/libs/Icons/Icons.class'
 
-export type FormFieldsModel<T extends TSupportedFormsTypes> = IBasicInput<T> | IBasicCheckbox<T> | IBasicSelect<T> | IBasicRadio<T> | IBasicTextarea<T> | IHiddenInput<T> | IOptionsMaker<T> | IDatePicker<T> | IDateTimePicker<T>;
+export type FormFieldsModel<T extends TSupportedFormsTypes = TSupportedFormsTypes> = IBasicInput<T> | IBasicCheckbox<T> | IBasicSelect<T> | IBasicRadio<T> | IBasicTextarea<T> | IHiddenInput<T> | IOptionsMaker<T> | IDatePicker<T> | IDateTimePicker<T>;
+
+export type TFormFieldWithOptions<T extends TSupportedFormsTypes = TSupportedFormsTypes> = FormFieldsModel<T> & { options: Array<IOptionKeysModel> };
 
 export type TSupportedFormsTypes = IProjectSettings | SectionElement | ISectionCustomFieldProperties | SectionDetailsDeclaration | IOptionKeysModel;
 

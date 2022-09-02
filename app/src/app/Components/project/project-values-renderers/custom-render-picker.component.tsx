@@ -12,11 +12,11 @@ import { Tel } from 'app/components/project/project-values-renderers/tel.compone
 import { TextFromOptionsByValue } from 'app/components/project/project-values-renderers/text-from-options-by-value.component'
 import { Url } from 'app/components/project/project-values-renderers/url.component'
 import { Week } from 'app/components/project/project-values-renderers/week.component'
-import { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
+import { FormFieldsModel, TFormFieldWithOptions, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
 import { DateInputSupportedTypes, DateTimeInputSupportedTypes, TextInputSupportedTypes } from 'app/components/shared-components/forms-automator/input-supported-types.const'
 
-const handleInputType = (type: TextInputSupportedTypes | DateInputSupportedTypes | DateTimeInputSupportedTypes) => {
+const handleInputType = (type: TextInputSupportedTypes | DateInputSupportedTypes | DateTimeInputSupportedTypes | undefined) => {
   switch (type) {
     case TextInputSupportedTypes.color:
       return Color
@@ -37,7 +37,7 @@ const handleInputType = (type: TextInputSupportedTypes | DateInputSupportedTypes
   }
 }
 
-const handleDateType = (type: TextInputSupportedTypes | DateInputSupportedTypes | DateTimeInputSupportedTypes) => {
+const handleDateType = (type: TextInputSupportedTypes | DateInputSupportedTypes | DateTimeInputSupportedTypes | undefined) => {
   switch (type) {
     case DateInputSupportedTypes.month:
       return Month
@@ -49,7 +49,7 @@ const handleDateType = (type: TextInputSupportedTypes | DateInputSupportedTypes 
   }
 }
 
-const handleDateTimeType = (type: TextInputSupportedTypes | DateInputSupportedTypes | DateTimeInputSupportedTypes) => {
+const handleDateTimeType = (type: TextInputSupportedTypes | DateInputSupportedTypes | DateTimeInputSupportedTypes | undefined) => {
   switch (type) {
     case DateTimeInputSupportedTypes.time:
       return BasicText
@@ -59,7 +59,7 @@ const handleDateTimeType = (type: TextInputSupportedTypes | DateInputSupportedTy
   }
 }
 
-export const customRenderPicker = (formModel: FormFieldsModel<TSupportedFormsTypes>) => {
+export const customRenderPicker = (formModel: FormFieldsModel<TSupportedFormsTypes>): React.FC<any> => {
   const componentCode = typeof formModel.componentCode === 'string' ? parseInt(formModel.componentCode, 10) : formModel.componentCode
   switch (componentCode) {
     case FORM_COMPONENTS_CODES.basicInput:
@@ -73,7 +73,7 @@ export const customRenderPicker = (formModel: FormFieldsModel<TSupportedFormsTyp
     case FORM_COMPONENTS_CODES.basicSelect:
     case FORM_COMPONENTS_CODES.basicRadio:
       // eslint-disable-next-line dot-notation
-      return TextFromOptionsByValue.bind(null, formModel['options'])
+      return TextFromOptionsByValue.bind(null, (formModel as TFormFieldWithOptions).options) as unknown as React.FC<any>
     case FORM_COMPONENTS_CODES.basicCheckbox:
       return CheckBoxAsCheck
     default:
