@@ -3,7 +3,6 @@ import { projectInfoNewItem } from 'app/data/project-form-builder/project-info-b
 import { AnitaUniversalDataStorage, IProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info'
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api'
 import { Manager } from 'app/libs/manager/Manager.class'
-import { ProjectDataImporter } from 'app/libs/projects-helpers/project-importers/project-data-importer.class'
 import { ProjectFileImporter } from 'app/libs/projects-helpers/project-importers/project-file-importer.class'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
@@ -50,7 +49,7 @@ export const ImportProjectButton: React.FC<IImportProjectButtonProps> = (props) 
 
   const handleClickImport = async () => {
     projectData![RESERVED_AUDS_KEYS._settings][0] = projectSettings!
-    await new ProjectDataImporter(projectData!, projectFileHandle!).import()
+    await Manager.importProject(projectData!, projectFileHandle!)
     handleClickModal()
     Manager.setCurrentProject(projectData!)
     setTimeout(() => navigate(ANITA_URLS.projectsList), 500)
