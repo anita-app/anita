@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.14.17] - 2022-09-02
+### Fixed
+- update storage method in data file on project import.
+
 ## [0.14.16] - 2022-09-02
 ### Fixed
 - loading data for non existing section.
