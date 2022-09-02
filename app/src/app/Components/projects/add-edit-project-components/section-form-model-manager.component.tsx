@@ -39,7 +39,7 @@ export const SectionFormModelManager: React.FC<ISectionFormModelManagerProps> = 
 
   const params = useParams()
   const projectEditorMode = useSelector((store: AnitaStore) => store.formProject.mode)
-  const section = useSelector((state: AnitaStore) => state.formProject.original[RESERVED_AUDS_KEYS._sections][indexSection])
+  const section = useSelector((state: AnitaStore) => state.formProject.original[RESERVED_AUDS_KEYS._sections]![indexSection])
   const projectId = params[URL_PARAMS.projectId]
   const mode = useMemo(() => projectId ? EDITOR_MODE.edit : EDITOR_MODE.add, [projectId])
   const alreadyExists = getAlreadyExists(section, element.fieldName)
@@ -50,7 +50,7 @@ export const SectionFormModelManager: React.FC<ISectionFormModelManagerProps> = 
   )
 
   const handleChange = (indexSection: number, indexFormElement: number, fieldName: string | number, value: FormAutomatorOnChangeValue) => {
-    const identifierAutoVal: string | null = fieldName === 'label' && !alreadyExists ? SectionElement.autoGenerateFieldName(value) : null
+    const identifierAutoVal: string | null = fieldName === 'label' && !alreadyExists ? SectionElement.autoGenerateFieldName(value!) : null
     storeDispatcher({
       type: REDUX_ACTIONS.updateFormProjectUpdateFormModelOfSection,
       payload: {

@@ -40,7 +40,7 @@ const ElementValuesViewer = ({ element, formModels }: { element: SectionElement,
 )
 
 export const SectionElementDetails: React.FC = () => {
-  const [element, setElement] = useState<SectionElement>(null)
+  const [element, setElement] = useState<SectionElement | undefined | null>(null)
   const params = useParams()
   const projectId = params[URL_PARAMS.projectId]
   const sectionId = params[URL_PARAMS.sectionId]
@@ -55,10 +55,10 @@ export const SectionElementDetails: React.FC = () => {
         return setElement(undefined)
       }
 
-      const element = await project.getSectionById(sectionId).getElementById(elementId)
+      const element = await project.getSectionById(sectionId)?.getElementById(elementId)
 
       if (isMounted) {
-        setElement(element)
+        setElement(element as SectionElement | undefined)
       }
     }
 
@@ -80,12 +80,13 @@ export const SectionElementDetails: React.FC = () => {
 
   return (
     <MainContentContainer headerText="Details">
-      {(element === null) ? <Loader /> : <ElementValuesViewer element={element} formModels={Manager.getCurrentProject().getSectionById(sectionId).formModel} />}
-      {(element !== null && element.parentsInfo && Array.isArray(element.parentsInfo) && element.parentsInfo.length > 0) && <ProjectParentsLinkShower projectId={projectId} parentsInfo={element.parentsInfo} sections={Manager.getCurrentProject().getSectionsDefinitions()} />}
-      {(element !== null && (<div>
-        <ProjectDeleteSectionElementButton projectId={projectId} sectionId={sectionId} elementId={elementId} />
-        <AddEditElementButton projectId={projectId} sectionId={sectionId} elementId={elementId} mode={EDITOR_MODE.edit} />
-                             </div>
+      {(element === null) ? <Loader /> : <ElementValuesViewer element={element} formModels={Manager.getCurrentProject()?.getSectionById(sectionId)!.formModel!} />}
+      {(element !== null && element.parentsInfo && Array.isArray(element.parentsInfo) && element.parentsInfo.length > 0) && <ProjectParentsLinkShower projectId={projectId!} parentsInfo={element.parentsInfo} sections={Manager.getCurrentProject()?.getSectionsDefinitions()!} />}
+      {(element !== null && (
+        <div>
+          <ProjectDeleteSectionElementButton projectId={projectId!} sectionId={sectionId!} elementId={elementId!} />
+          <AddEditElementButton projectId={projectId!} sectionId={sectionId!} elementId={elementId!} mode={EDITOR_MODE.edit} />
+        </div>
       )
       )}
     </MainContentContainer>

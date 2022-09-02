@@ -18,11 +18,13 @@ export const ProjectGridListElement: React.FC<IProjectGridListElementProps> = (p
   const navigation = useNavigate()
   const params = useParams()
   const handleClick = () => {
-    navigation(urlParamFiller(ANITA_URLS.projectSectionEleDetails, [
-      { name: URL_PARAMS.projectId, value: params.projectId },
-      { name: URL_PARAMS.sectionId, value: params.sectionId },
-      { name: URL_PARAMS.elementId, value: props.element.id }
-    ]))
+    if (params.projectId && params.sectionId && props.element.id) {
+      navigation(urlParamFiller(ANITA_URLS.projectSectionEleDetails, [
+        { name: URL_PARAMS.projectId, value: params.projectId },
+        { name: URL_PARAMS.sectionId, value: params.sectionId },
+        { name: URL_PARAMS.elementId, value: props.element.id }
+      ]))
+    }
   }
 
   return (

@@ -15,7 +15,7 @@ export const ProjectSaveElement: React.FC<IProjectSaveElementProps> = ({ section
   const navigate = useNavigate()
 
   const handleClick = async () => {
-    await Manager.getCurrentProject().getSectionById(sectionId).saveElement(element)
+    await Manager.getCurrentProject()?.getSectionById(sectionId)?.saveElement(element!)
     navigate(-1)
   }
 
