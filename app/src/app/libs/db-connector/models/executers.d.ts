@@ -111,7 +111,7 @@ interface SelectorConstructable<E, DbTypes> {
  * Defines the public interface that a Selector instance must have
  */
 interface Selector<E> {
-  single(): Promise<E>;
+  single(): Promise<E | void>;
   multiple(): Promise<Array<E>>
   count(): Promise<number>
 }

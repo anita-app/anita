@@ -8,7 +8,7 @@ import Dexie from 'dexie'
  */
 export class DbSelector<E> implements Selector<E> {
   private data: Array<E> = []
-  private qe: QueryMaker<E>
+  private qe!: QueryMaker<E>
 
   /**
    * Creates an instance of db selector.
@@ -71,8 +71,8 @@ export class DbSelector<E> implements Selector<E> {
       return
     }
 
-    if (this.args[this.dbConnector.DS[this.section].pk]) {
-      this.qe.addWhere([this.dbConnector.DS[this.section].pk, '=', this.args[this.dbConnector.DS[this.section].pk]])
+    if (this.args[this.dbConnector.DS[this.section].pk as keyof E]) {
+      this.qe.addWhere([this.dbConnector.DS[this.section].pk, '=', this.args[this.dbConnector.DS[this.section].pk as keyof E] as unknown as string | number])
     }
   }
 

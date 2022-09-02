@@ -46,8 +46,8 @@ export class DbInsertor<E> implements Insertor<E> {
 
     await schemaExporter(
       this.dbConnector.dbStore.db,
-      this.dbConnector.options.projectInfo.fileHandle as any as FileSystemDirectoryHandle,
-      this.dbConnector.options.projectInfo.id)
+      this.dbConnector.options.projectInfo!.fileHandle as any as FileSystemDirectoryHandle,
+      this.dbConnector.options.projectInfo!.id)
   }
 
   private handleJsonFields (): void {
@@ -62,8 +62,8 @@ export class DbInsertor<E> implements Insertor<E> {
 
   private handleJsonField (element: Partial<E>): void {
     for (const jsonField of this.dbConnector.DS[this.section].jsonFields) {
-      if (element[jsonField]) {
-        element[jsonField] = JSON.stringify(element[jsonField])
+      if (element[jsonField as keyof E]) {
+        element[jsonField as keyof E] = JSON.stringify(element[jsonField as keyof E]) as unknown as E[keyof E]
       }
     }
   }

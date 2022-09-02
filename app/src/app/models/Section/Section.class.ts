@@ -34,7 +34,7 @@ export class Section implements ISection {
 
   public getAllElements = async (): Promise<Array<SectionElement>> => dbInstances[this.projectId].callSelector<SectionElement>(this.id).multiple()
 
-  public getElementById = (id: string): Promise<SectionElement> => dbInstances[this.projectId].callSelector<SectionElement>(this.id, { [RESERVED_FIELDS.id]: id }).single()
+  public getElementById = (id: string): Promise<SectionElement | void> => dbInstances[this.projectId].callSelector<SectionElement>(this.id, { [RESERVED_FIELDS.id]: id }).single()
 
   public saveElement = async (element: SectionElement): Promise<SectionElement> => {
     const mode = element.id ? EDITOR_MODE.edit : EDITOR_MODE.add

@@ -63,7 +63,7 @@ export class Manager {
 
     // Relaxed equality check, because localStorage prop is a string
     // eslint-disable-next-line eqeqeq
-    if (projectInfo.localStorage == LOCAL_STORAGE_SYSTEMS.IndexedDB) {
+    if (projectInfo?.localStorage == LOCAL_STORAGE_SYSTEMS.IndexedDB) {
       await new ProjectLoader(projectId, projectInfo).loadProject()
       return true
     }

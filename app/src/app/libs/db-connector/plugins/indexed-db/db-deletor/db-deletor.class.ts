@@ -23,8 +23,8 @@ export class DbDeletor<E> implements Deletor<E> {
    * Perform the delete action on the given element.
    */
   public async autoDelete (): Promise<void> {
-    if (this.args[this.dbConnector.DS[this.section].pk]) {
-      const aliasElementToDelete = this.args[this.dbConnector.DS[this.section].pk]
+    const aliasElementToDelete = this.args[this.dbConnector.DS[this.section].pk as keyof E] as unknown as string | number
+    if (aliasElementToDelete) {
       await new QueryMaker(this.dbConnector, this.section)
         .addWhere([this.dbConnector.DS[this.section].pk as string, '=', aliasElementToDelete])
         .delete()

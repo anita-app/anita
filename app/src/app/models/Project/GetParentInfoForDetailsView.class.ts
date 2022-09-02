@@ -25,7 +25,7 @@ export class GetParentInfoForDetailsView {
     const formEle = section.getFirstUserDefinedField()
     this.parentInfoForDetailsView.push({
       sectionId: arrInfo[0],
-      element,
+      element: element!,
       txt: element[formEle?.fieldName!]
     })
   }

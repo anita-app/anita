@@ -23,7 +23,7 @@ export class ProjectLoader {
    */
   constructor (
     private projectId: string,
-    private projectInfo?: LocalProjectSettings
+    private projectInfo?: LocalProjectSettings | void
   ) { }
 
   public async loadProject (): Promise<void> {

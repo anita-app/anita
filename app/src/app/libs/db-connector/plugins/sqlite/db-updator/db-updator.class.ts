@@ -46,8 +46,8 @@ export class DbUpdator<E> implements Updator<E> {
 
     await schemaExporter(
       this.dbConnector.dbStore.db,
-      this.dbConnector.options.projectInfo.fileHandle as any as FileSystemDirectoryHandle,
-      this.dbConnector.options.projectInfo.id
+      this.dbConnector.options.projectInfo!.fileHandle as any as FileSystemDirectoryHandle,
+      this.dbConnector.options.projectInfo!.id
     )
   }
 
@@ -56,7 +56,7 @@ export class DbUpdator<E> implements Updator<E> {
 
     if (this.dbConnector.DS[this.section].jsonFields?.length) {
       for (const field of this.dbConnector.DS[this.section].jsonFields) {
-        copyEle[field] = JSON.stringify(copyEle[field])
+        copyEle[field as keyof E] = JSON.stringify(copyEle[field as unknown as keyof E]) as unknown as E[keyof E]
       }
     }
 
