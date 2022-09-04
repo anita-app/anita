@@ -36,7 +36,7 @@ export const ProjectDeleteSectionElementButton: React.FC<IProjectDeleteSectionEl
     setTimeout(() => {
       dbInstances[projectId].callDeletor(sectionId, { id: elementId }).autoDelete()
       navigate(urlParamFiller(ANITA_URLS.projectSectionElesList, [{ name: URL_PARAMS.projectId, value: projectId }, { name: URL_PARAMS.sectionId, value: sectionId }]))
-    }, 500)
+    }, 0)
   }
 
   return (

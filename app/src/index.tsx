@@ -4,17 +4,20 @@ import { Startupper } from 'app/libs/startupper/startupper.class'
 import { AdminLayout } from 'app/components/admin-layout/admin-layout.component'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
+import { Provider as StoreProvider } from 'react-redux'
 import './index.css'
+import { ModalProvider } from 'app/components/shared-components/modals/modal.component'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 
 new Startupper().init()
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <AdminLayout />
-    </Provider>
+    <StoreProvider store={store}>
+      <ModalProvider>
+        <AdminLayout />
+      </ModalProvider>
+    </StoreProvider>
   </React.StrictMode>,
   document.getElementById('root')
 )
