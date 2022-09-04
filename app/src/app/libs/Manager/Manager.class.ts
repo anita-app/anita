@@ -51,8 +51,8 @@ export class Manager {
     }
   }
 
-  public static async importProject (projectData: AnitaUniversalDataStorage, fileHandle: FileSystemFileHandle): Promise<void> {
-    const projectInfo = await new ProjectDataImporter(projectData!, fileHandle!).import()
+  public static async importProject (projectData: AnitaUniversalDataStorage, fileHandle?: FileSystemFileHandle): Promise<void> {
+    const projectInfo = await new ProjectDataImporter(projectData!, fileHandle).import()
     await new ProjectLoader(projectData[RESERVED_AUDS_KEYS._settings][0].id, projectInfo).loadProject()
     await this.saveProject({ [RESERVED_AUDS_KEYS._settings]: projectData[RESERVED_AUDS_KEYS._settings], [RESERVED_AUDS_KEYS._sections]: projectData[RESERVED_AUDS_KEYS._sections] }, EDITOR_MODE.edit)
   }

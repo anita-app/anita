@@ -24,7 +24,7 @@ export class ProjectDataImporter {
    */
   constructor (
     private projectData: AnitaUniversalDataStorage,
-    private fileHandle: FileSystemFileHandle
+    private fileHandle?: FileSystemFileHandle
 
   ) { }
 

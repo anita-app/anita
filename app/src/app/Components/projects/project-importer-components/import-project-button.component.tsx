@@ -49,7 +49,7 @@ export const ImportProjectButton: React.FC<IImportProjectButtonProps> = (props) 
 
   const handleClickImport = async () => {
     projectData![RESERVED_AUDS_KEYS._settings][0] = projectSettings!
-    await Manager.importProject(projectData!, projectFileHandle!)
+    await Manager.importProject(projectData!, projectFileHandle)
     handleClickModal()
     Manager.setCurrentProject(projectData!)
     setTimeout(() => navigate(ANITA_URLS.projectsList), 500)
