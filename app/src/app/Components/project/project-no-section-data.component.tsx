@@ -2,6 +2,7 @@ import React from 'react'
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
+import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 
 interface INoSectionDataProps {
   sectionTitle: string
@@ -21,7 +22,7 @@ export const NoSectionData: React.FC<INoSectionDataProps> = ({ sectionTitle, sec
             id="createProject"
             label="Create a new entry"
             href={urlParamFiller(ANITA_URLS.projectSectionAddEle, [{ name: URL_PARAMS.projectId, value: projectId }, { name: URL_PARAMS.sectionId, value: sectionId }])}
-            type="primary"
+            type={Type.primary}
             size="lg"
             marginClassName="mx-2 mt-4"
             className="flex-grow"

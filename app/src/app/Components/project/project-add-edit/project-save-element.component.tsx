@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import React from 'react'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
+import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 
 interface IProjectSaveElementProps {
   sectionId: string
@@ -24,13 +25,13 @@ export const ProjectSaveElement: React.FC<IProjectSaveElementProps> = ({ section
       <Button
         id="cancel"
         label="Cancel"
-        type="secondary"
+        type={Type.secondary}
         onClick={() => navigate(-1)}
       />
       <Button
         id="save"
         label="Save"
-        type="primary"
+        type={Type.primary}
         disabled={Object.keys(validObj).some(key => validObj[key] === false)}
         onClick={handleClick}
       />

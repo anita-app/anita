@@ -1,4 +1,5 @@
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
+import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { FormFieldsModel, ICommonFormEleProps, IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { OptionsMakerSingleOption } from 'app/components/shared-components/forms-automator/form-fields/options-maker-single-option.component'
 import React, { memo } from 'react'
@@ -26,7 +27,7 @@ export const OptionsMaker: React.FC<ICommonFormEleProps<FormFieldsModel<IOptionK
           <Button
             id='addChoice'
             label='Add Choice'
-            type="success"
+            type={Type.success}
             fill="outline"
             marginClassName="mr-3"
             onClick={handleClickAddOption}

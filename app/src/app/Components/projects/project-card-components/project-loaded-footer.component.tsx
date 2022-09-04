@@ -5,6 +5,7 @@ import { EditButton } from 'app/components/shared-components/buttons/edit-projec
 import { ExportButton } from 'app/components/shared-components/buttons/export-project-button.component'
 import React from 'react'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
+import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 
 interface IProjectLoadedFooterProps {
   project: IProjectSettings
@@ -18,7 +19,7 @@ export const ProjectLoadedFooter: React.FC<IProjectLoadedFooterProps> = ({ proje
       id="projectDetails"
       label="Project details"
       href={urlParamFiller(ANITA_URLS.projectDetails, [{ name: URL_PARAMS.projectId, value: project.id }])}
-      type="info"
+      type={Type.info}
       icon="informationCircleOutline"
       marginClassName=''
       hasTooltip={true}

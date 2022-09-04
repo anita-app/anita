@@ -2,6 +2,7 @@ import React from 'react'
 import { ANITA_URLS } from 'app/libs/routing/anita-routes.constant'
 import { ImportProjectButton } from 'app/components/projects/project-importer-components/import-project-button.component'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
+import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 
 export const ProjectsNone: React.FC = () => (
   <div className="container px-0 md:px2 lg:px-5 pt-20 md:pt-24 mx-auto">
@@ -15,7 +16,7 @@ export const ProjectsNone: React.FC = () => (
           <Button
             id="createProject"
             label="Create a new project"
-            type="primary"
+            type={Type.primary}
             size="lg"
             href={ANITA_URLS.projectAdd}
             marginClassName="mt-4 lg:mt-0"

@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom'
 import { useModalContext } from 'app/components/shared-components/modals/modal-context'
 import { ImportProjectModalContent } from 'app/components/projects/project-importer-components/import-project-modal-content.component'
 import { store } from 'app/libs/redux/state.store'
+import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 
 interface IImportProjectButtonProps {
   btnType: 'icon' | 'text'
@@ -47,7 +48,7 @@ export const ImportProjectButton: React.FC<IImportProjectButtonProps> = (props) 
     showModal({
       title: 'Import project',
       actionText: 'Import',
-      type: 'confirm',
+      type: Type.primary,
       handleClickAction: handleClickImport,
       disableAction: Object.keys(validObj).some(key => validObj[key] === false),
       children: (
@@ -63,7 +64,7 @@ export const ImportProjectButton: React.FC<IImportProjectButtonProps> = (props) 
       labelClassName={props.btnType === 'icon' ? 'hidden' : undefined}
       icon={props.btnType === 'icon' ? 'downloadOutline' : undefined}
       onClick={handleClickModal}
-      type="secondary"
+      type={Type.secondary}
       size={props.btnType === 'text' ? 'lg' : 'sm'}
       className={props.btnType === 'text' ? 'w-full' : ''}
       hasTooltip={props.btnType === 'icon'}

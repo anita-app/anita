@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router'
 import React from 'react'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
+import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 
 export const FormProjectManager: React.FC = () => {
   const { projectId } = useParams<URL_PARAMS>()
@@ -55,7 +56,7 @@ export const FormProjectManager: React.FC = () => {
           <Button
             id="addSection"
             label="Add section"
-            type="success"
+            type={Type.success}
             fill="outline"
             className="w-full sm:w-auto"
             marginClassName=""
@@ -66,14 +67,14 @@ export const FormProjectManager: React.FC = () => {
               id="cancel"
               label="Cancel"
               marginClassName="mt-8 sm:mt-0 mr-3"
-              type="secondary"
+              type={Type.secondary}
               className="grow"
               onClick={() => navigate(-1)}
             />
             <Button
               id="save"
               label="Save"
-              type="primary"
+              type={Type.primary}
               className="grow"
               marginClassName="mt-8 sm:mt-0"
               disabled={Object.keys(validObj).some(key => validObj[key] === false)}

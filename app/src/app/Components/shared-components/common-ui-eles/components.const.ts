@@ -1,4 +1,11 @@
-export type TType = 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'danger'
+export enum Type {
+  primary = 'primary',
+  secondary = 'secondary',
+  success = 'success',
+  info = 'info',
+  warning = 'warning',
+  danger = 'danger'
+}
 
 export enum SolidBg {
   primary = 'bg-prussian-blue-400 hover:bg-prussian-blue-500',

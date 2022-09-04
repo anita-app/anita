@@ -6,6 +6,7 @@ import React from 'react'
 import { useNavigate } from 'react-router'
 import ReactTooltip from 'react-tooltip'
 import { useModalContext } from 'app/components/shared-components/modals/modal-context'
+import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 
 interface IProjectDeleteSectionElementButtonProps {
   projectId: string
@@ -27,7 +28,7 @@ export const ProjectDeleteSectionElementButton: React.FC<IProjectDeleteSectionEl
     showModal({
       title: 'Delete element',
       actionText: 'Delete',
-      type: 'alert',
+      type: Type.danger,
       handleClickAction: handleClickDelete,
       icon: 'warningOutline',
       iconClassName: 'text-red-600',
@@ -49,7 +50,7 @@ export const ProjectDeleteSectionElementButton: React.FC<IProjectDeleteSectionEl
       id="deleteElement"
       label="Delete"
       icon="trashOutline"
-      type="danger"
+      type={Type.danger}
       fill="outline"
       onClick={handleClickModal}
       breakpoint="lg"

@@ -4,6 +4,7 @@ import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
 import { ParentInfoForDetailsView, ISection } from 'app/data/project-structure/project-info'
 import { Manager } from 'app/libs/manager/manager.class'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
+import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 
 interface IProjectParentsLinkShowerProps {
   projectId: string
@@ -39,7 +40,7 @@ export const ProjectParentsLinkShower: React.FC<IProjectParentsLinkShowerProps> 
         <Button
           id={parent.element.id!}
           label={parent.txt}
-          type="secondary"
+          type={Type.secondary}
           size="sm"
           href={urlParamFiller(ANITA_URLS.projectSectionEleDetails, [
             { name: URL_PARAMS.projectId, value: projectId! },

@@ -11,6 +11,7 @@ import { FormFieldsModel } from 'app/components/shared-components/forms-automato
 import { useSelector } from 'react-redux'
 import React from 'react'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
+import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 
 interface ISectionManagerProps {
   section: ISection
@@ -71,7 +72,7 @@ export const SectionManager: React.FC<ISectionManagerProps> = ({ section, sectio
                 <Button
                   id="deleteField"
                   label="Delete field"
-                  type="danger"
+                  type={Type.danger}
                   fill="outline"
                   size="sm"
                   onClick={handleClickDeleteField.bind(undefined, indexFormElement)}
@@ -86,7 +87,7 @@ export const SectionManager: React.FC<ISectionManagerProps> = ({ section, sectio
           <Button
             id="deleteSection"
             label="Delete section"
-            type="danger"
+            type={Type.danger}
             fill="outline"
             onClick={handleClickDeleteSection}
           />
@@ -94,7 +95,7 @@ export const SectionManager: React.FC<ISectionManagerProps> = ({ section, sectio
         <Button
           id="addField"
           label="Add field"
-          type="success"
+          type={Type.success}
           fill="outline"
           onClick={handleClickAddField}
         />

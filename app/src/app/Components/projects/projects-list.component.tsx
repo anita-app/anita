@@ -7,6 +7,7 @@ import { Button } from 'app/components/shared-components/common-ui-eles/button.c
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router'
+import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 
 export const ProjectsList: React.FC = () => {
   const [hasLoaded, setHasLoaded] = useState(false)
@@ -52,7 +53,7 @@ export const ProjectsList: React.FC = () => {
               href={ANITA_URLS.projectAdd}
               icon="addOutline"
               tooltip='Create a new project'
-              type="primary"
+              type={Type.primary}
               size="sm"
             />
           </div>

@@ -1,4 +1,4 @@
-import { COLOR_SCHEME, TFill, TType } from 'app/components/shared-components/common-ui-eles/components.const'
+import { COLOR_SCHEME, TFill, Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { Icons, TIconName } from 'app/libs/icons/icons.class'
 import React from 'react'
 import { Link } from 'react-router-dom'
@@ -8,7 +8,7 @@ interface IButtonWithTooltipProps {
   id: string
   label: string
   icon?: TIconName
-  type: TType
+  type: Type
   fill?: TFill
   href?: string
   onClick?: () => void

@@ -7,6 +7,7 @@ import { Button } from 'app/components/shared-components/common-ui-eles/button.c
 import React from 'react'
 import { useNavigate } from 'react-router'
 import { useModalContext } from 'app/components/shared-components/modals/modal-context'
+import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 
 interface IDeleteProjectButtonProps {
   project: IProjectSettings
@@ -31,7 +32,7 @@ export const DeleteProjectButton: React.FC<IDeleteProjectButtonProps> = ({ proje
     showModal({
       title: 'Delete Project',
       actionText: 'Delete',
-      type: 'alert',
+      type: Type.danger,
       handleClickAction: handleClickDelete,
       icon: 'warningOutline',
       iconClassName: 'text-red-600',
@@ -50,7 +51,7 @@ export const DeleteProjectButton: React.FC<IDeleteProjectButtonProps> = ({ proje
       icon="trashOutline"
       onClick={handleClickModal}
       breakpoint={'lg'}
-      type="danger"
+      type={Type.danger}
       hasTooltip={true}
     />
   )
