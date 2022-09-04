@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import ReactTooltip from 'react-tooltip'
-import { Icons, TIconName } from 'app/libs/Icons/Icons.class'
+import { Icons, TIconName } from 'app/libs/icons/icons.class'
 
 function classNames (...classes: Array<string>) {
   return classes.filter(Boolean).join(' ')

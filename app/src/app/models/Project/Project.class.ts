@@ -1,9 +1,9 @@
 import { IProjectSettings, ISection, ParentInfoForDetailsView, RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info'
-import { GetOptionsForParentsSelector } from 'app/models/Project/GetOptionsForParentsSelector.class'
-import { GetParentInfoForDetailsView } from 'app/models/Project/GetParentInfoForDetailsView.class'
-import { ProjectDeletor } from 'app/models/Project/ProjectDeletor.class'
-import { ExportScope, ProjectExporter } from 'app/models/Project/ProjectExporter.class'
-import { Section } from 'app/models/Section/Section.class'
+import { GetOptionsForParentsSelector } from 'app/models/project/get-options-for-parents-selector.class'
+import { GetParentInfoForDetailsView } from 'app/models/project/get-parent-info-for-details-view.class'
+import { ProjectDeletor } from 'app/models/project/project-deletor.class'
+import { ExportScope, ProjectExporter } from 'app/models/project/project-exporter.class'
+import { Section } from 'app/models/section/section.class'
 import { IOptionKeysModel, OptionKeysModelGroup } from 'app/components/shared-components/forms-automator/form-automator.types'
 
 export class Project {

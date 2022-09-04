@@ -10,8 +10,8 @@ import React, { useEffect, useState } from 'react'
 import { Navigate, useParams } from 'react-router'
 import { Tab } from '@headlessui/react'
 import { ProjectGridList } from 'app/components/project/project-grid/project-grid-list'
-import { Manager } from 'app/libs/manager/Manager.class'
-import { Icons, TIconName } from 'app/libs/Icons/Icons.class'
+import { Manager } from 'app/libs/manager/manager.class'
+import { Icons, TIconName } from 'app/libs/icons/icons.class'
 
 const SUPPORTED_VIEWS: Array<TIconName> = [`${process.env.PUBLIC_URL}/assets/icons/svg/table.svg`, 'gridOutline']
 

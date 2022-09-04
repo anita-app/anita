@@ -1,8 +1,8 @@
 import * as ionicons from 'ionicons/icons/index'
 import { IonIcon } from '@ionic/react'
 import React, { ReactElement } from 'react'
-import { IOption } from 'app/models/ParentElement/ParentElement.class'
-import { TextTools } from 'app/libs/tools/TextTools.class'
+import { IOption } from 'app/models/parent-element/parent-element.class'
+import { TextTools } from 'app/libs/tools/text-tools.class'
 import { Logger } from 'app/libs/logger/logger.class'
 
 export type TSVGIcons = `${string}/assets/icons/svg/table.svg`

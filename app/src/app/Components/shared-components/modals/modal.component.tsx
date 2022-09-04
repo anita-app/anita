@@ -3,7 +3,7 @@ import { ModalBody } from 'app/components/shared-components/modals/modal-body.co
 import { ModalContent } from 'app/components/shared-components/modals/modal-content.component'
 import { ModalFooter } from 'app/components/shared-components/modals/modal-footer.component'
 import { ModalHeader } from 'app/components/shared-components/modals/modal-header.component'
-import { TIconName } from 'app/libs/Icons/Icons.class'
+import { TIconName } from 'app/libs/icons/icons.class'
 
 interface IModalProps {
   title: string

@@ -3,7 +3,7 @@ import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { Link } from 'react-router-dom'
 import React from 'react'
-import { Icons, TIconName } from 'app/libs/Icons/Icons.class'
+import { Icons, TIconName } from 'app/libs/icons/icons.class'
 
 interface IAddElementButtonProps {
   projectId: string;

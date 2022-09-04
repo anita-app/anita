@@ -1,6 +1,6 @@
 import { RESERVED_AUDS_KEYS, SectionElement } from 'app/data/project-structure/project-info'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
-import { IOption, ParentElement } from 'app/models/ParentElement/ParentElement.class'
+import { IOption, ParentElement } from 'app/models/parent-element/parent-element.class'
 import { IBasicSelect, ICommonFormEleProps } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { FormEleContainer } from 'app/components/shared-components/forms-automator/form-layout/form-ele-container.component'
 import { FormElementLabel } from 'app/components/shared-components/forms-automator/form-layout/form-element-label.component'

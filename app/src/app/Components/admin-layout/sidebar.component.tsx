@@ -1,4 +1,4 @@
-import { Icons } from 'app/libs/Icons/Icons.class'
+import { Icons } from 'app/libs/icons/icons.class'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { appVersion } from 'app/version'
 import React, { ReactNode } from 'react'

@@ -1,12 +1,12 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import { ISection, SectionElement } from 'app/data/project-structure/project-info'
 import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant'
-import { ParentInfoFormEleBuilder } from 'app/models/Section/ParentInfoFormEleBuilder.class'
-import { SectionElementSaver } from 'app/models/Section/SectionElementSaver.class'
+import { ParentInfoFormEleBuilder } from 'app/models/section/parent-info-form-ele-builder.class'
+import { SectionElementSaver } from 'app/models/section/section-element-saver.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
-import { TIconName } from 'app/libs/Icons/Icons.class'
+import { TIconName } from 'app/libs/icons/icons.class'
 
 export class Section implements ISection {
   public id: string
