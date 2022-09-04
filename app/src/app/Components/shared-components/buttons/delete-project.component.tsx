@@ -44,16 +44,14 @@ export const DeleteProjectButton: React.FC<IDeleteProjectButtonProps> = ({ proje
   }
 
   return (
-    <span>
-      <Button
-        id="deleteProject"
-        label="Delete Project"
-        icon="trashOutline"
-        onClick={handleClickModal}
-        breakpoint={'lg'}
-        type="danger"
-        hasTooltip={true}
-      />
-    </span>
+    <Button
+      id="deleteProject"
+      label="Delete Project"
+      icon="trashOutline"
+      onClick={handleClickModal}
+      breakpoint={'lg'}
+      type="danger"
+      hasTooltip={true}
+    />
   )
 }
