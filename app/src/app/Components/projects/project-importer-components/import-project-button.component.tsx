@@ -62,7 +62,7 @@ export const ImportProjectButton: React.FC<IImportProjectButtonProps> = (props) 
       id="importProject"
       label="Import an existing project"
       labelClassName={props.btnType === 'icon' ? 'hidden' : undefined}
-      icon={props.btnType === 'icon' ? 'downloadOutline' : undefined}
+      iconLeft={props.btnType === 'icon' ? 'downloadOutline' : undefined}
       onClick={handleClickModal}
       type={Type.secondary}
       size={props.btnType === 'text' ? 'lg' : 'sm'}

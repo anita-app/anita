@@ -49,7 +49,7 @@ export const ProjectDeleteSectionElementButton: React.FC<IProjectDeleteSectionEl
     <Button
       id="deleteElement"
       label="Delete"
-      icon="trashOutline"
+      iconLeft="trashOutline"
       type={Type.danger}
       fill="outline"
       onClick={handleClickModal}
