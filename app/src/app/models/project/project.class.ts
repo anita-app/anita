@@ -5,6 +5,8 @@ import { ProjectDeletor } from 'app/models/project/project-deletor.class'
 import { ExportScope, ProjectExporter } from 'app/models/project/project-exporter.class'
 import { Section } from 'app/models/section/section.class'
 import { IOptionKeysModel, OptionKeysModelGroup } from 'app/components/shared-components/forms-automator/form-automator.types'
+import { ProjectSaver } from 'app/models/project/project-saver.class'
+import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 
 export class Project {
   private settings: SystemData[RESERVED_AUDS_KEYS._settings][0]
@@ -12,7 +14,7 @@ export class Project {
   private sections: { [key: string]: Section } = {}
 
   constructor (
-    systemData: SystemData
+    private systemData: SystemData
   ) {
     this.settings = systemData[RESERVED_AUDS_KEYS._settings][0]
     this.sectionsDefinitions = systemData[RESERVED_AUDS_KEYS._sections]
@@ -45,6 +47,7 @@ export class Project {
         return null
       }
       this.sections[sectionId] = new Section(
+        this,
         this.getId(),
         this.getSectionsDefinitions(),
         sectionData
@@ -56,4 +59,8 @@ export class Project {
   public getParentInfoForDetailsView = (listOfParents: Array<string>): Promise<Array<ParentInfoForDetailsView>> => new GetParentInfoForDetailsView(this, listOfParents).get()
 
   public getOptionsForParentsSelector = (options: Array<IOptionKeysModel>): Promise<Array<OptionKeysModelGroup>> => new GetOptionsForParentsSelector(this).buildOptions(options)
+
+  public saveProject = (): void => {
+    new ProjectSaver(this.systemData, EDITOR_MODE.edit).save()
+  }
 }

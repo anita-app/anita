@@ -6,6 +6,7 @@ import { FormFieldsModel, IOptionKeysModel, TSupportedFormsTypes } from 'app/com
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
 import { TextInputSupportedTypes } from 'app/components/shared-components/forms-automator/input-supported-types.const'
 import { TIconName } from 'app/libs/icons/icons.class'
+import { SupportedViews } from 'app/models/section/view-settings.const'
 
 /**
  * Reserved keys are needed to store system required properties.
@@ -103,7 +104,12 @@ export interface SectionDetailsDeclaration {
  * Defines the full properties of a Section.
  */
 export interface ISection extends SectionDetailsDeclaration {
-  formModel: Array<FormFieldsModel<TSupportedFormsTypes>>;
+  formModel: Array<FormFieldsModel<TSupportedFormsTypes>>
+  viewSettings?: ISectionViewSettings
+}
+
+export interface ISectionViewSettings {
+  preferredView?: SupportedViews
 }
 
 /**

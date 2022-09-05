@@ -11,9 +11,8 @@ import { Navigate, useParams } from 'react-router'
 import { Tab } from '@headlessui/react'
 import { ProjectGridList } from 'app/components/project/project-grid/project-grid-list'
 import { Manager } from 'app/libs/manager/manager.class'
-import { Icons, TIconName } from 'app/libs/icons/icons.class'
-
-const SUPPORTED_VIEWS: Array<TIconName> = ['table', 'gridOutline']
+import { Icons } from 'app/libs/icons/icons.class'
+import { SupportedViews, SUPPORTED_VIEWS_ICONS } from 'app/models/section/view-settings.const'
 
 function classNames (...classes: Array<string>) {
   return classes.filter(Boolean).join(' ')
@@ -24,7 +23,8 @@ export const SectionElementsList: React.FC = () => {
   const projectId = params[URL_PARAMS.projectId]
   const sectionId = params[URL_PARAMS.sectionId]
   const [sectionData, setSectionData] = useState<Array<SectionElement> | undefined | null>(null)
-  const [activeTab, setActiveTab] = useState<number>(0)
+  console.log('Manager.getCurrentProject()?.getSectionById(sectionId)', Manager.getCurrentProject()?.getSectionById(sectionId)?.getPreferredView())
+  const [activeTab, setActiveTab] = useState<SupportedViews>(Manager.getCurrentProject()?.getSectionById(sectionId)?.getPreferredView() || SupportedViews.table)
 
   useEffect(() => {
     let isMounted = true
@@ -68,14 +68,19 @@ export const SectionElementsList: React.FC = () => {
     return <NoSectionData sectionId={sectionId!} sectionTitle={sectionInfo.title} projectId={projectId!} />
   }
 
+  const handleTabClick = (tab: number) => {
+    setActiveTab(tab as SupportedViews)
+    Manager.getCurrentProject()?.getSectionById(sectionId)?.setPreferredView(tab as SupportedViews)
+  }
+
   return (
-    <Tab.Group selectedIndex={activeTab} onChange={setActiveTab}>
+    <Tab.Group selectedIndex={activeTab} onChange={handleTabClick}>
       <MainContentContainer
         headerText={sectionInfo.title}
         hasHeaderOnlyStyle={activeTab === 1}
         headerRightComponent={(
           <Tab.List className="flex space-x-1 rounded-xl bg-prussian-blue-900/10 p-1 w-20">
-            {SUPPORTED_VIEWS.map(view => (
+            {SUPPORTED_VIEWS_ICONS.map(view => (
               <Tab
                 key={view}
                 className={({ selected }) => classNames(

@@ -7,6 +7,8 @@ import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
 import { TIconName } from 'app/libs/icons/icons.class'
+import { Project } from 'app/models/project/project.class'
+import { SupportedViews } from 'app/models/section/view-settings.const'
 
 export class Section implements ISection {
   public id: string
@@ -17,6 +19,7 @@ export class Section implements ISection {
   public formModel: Array<FormFieldsModel<TSupportedFormsTypes>>
 
   constructor (
+    private project: Project,
     private projectId: string,
     private allSections: Array<ISection>,
     private sectionData: ISection = {} as ISection
@@ -48,4 +51,16 @@ export class Section implements ISection {
   public getFirstFieldOfType = (types: Array<FORM_COMPONENTS_CODES>): FormFieldsModel<TSupportedFormsTypes> | undefined => this.formModel.find(formEle => types.includes(parseInt(formEle.componentCode as unknown as string)))
 
   public getParentInfoFormEle = (): FormFieldsModel<SectionElement> => new ParentInfoFormEleBuilder(this.childOf ?? [], this.allSections).build()
+
+  public getPreferredView (): SupportedViews {
+    return this.sectionData.viewSettings?.preferredView || SupportedViews.table
+  }
+
+  public setPreferredView (view: SupportedViews) {
+    if (!this.sectionData.viewSettings) {
+      this.sectionData.viewSettings = {}
+    }
+    this.sectionData.viewSettings.preferredView = view
+    this.project.saveProject()
+  }
 }
