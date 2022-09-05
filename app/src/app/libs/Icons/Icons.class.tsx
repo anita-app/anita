@@ -5,8 +5,15 @@ import { IOption } from 'app/models/parent-element/parent-element.class'
 import { TextTools } from 'app/libs/tools/text-tools.class'
 import { Logger } from 'app/libs/logger/logger.class'
 
-export type TSVGIcons = `${string}/assets/icons/svg/table.svg`
+const svgIcons = {
+  table: `${process.env.PUBLIC_URL}/assets/icons/svg/table.svg`
+}
+
+type TSVGIcons = keyof typeof svgIcons
+
 export type TIconName = keyof typeof ionicons | TSVGIcons
+
+const ALL_ICONS = Object.keys(ionicons).concat(Object.keys(svgIcons))
 
 export class Icons {
   public static getIconsOptionsList (): Array<IOption> {
@@ -20,11 +27,11 @@ export class Icons {
   }
 
   public static render = (iconName: TIconName, className: string = ''): ReactElement | null => {
-    if (!iconName.endsWith('.svg') && !ionicons[iconName as keyof typeof ionicons]) {
+    if (!ALL_ICONS.includes(iconName)) {
       Logger.error(`[Icons.render] Icon '${iconName}' not found`)
       return null
     }
-    const icon = iconName.endsWith('.svg') ? iconName : ionicons[iconName as keyof typeof ionicons]
+    const icon = svgIcons[iconName as TSVGIcons] ? svgIcons[iconName as TSVGIcons] : ionicons[iconName as keyof typeof ionicons]
     return <IonIcon icon={icon} className={className} />
   }
 }
