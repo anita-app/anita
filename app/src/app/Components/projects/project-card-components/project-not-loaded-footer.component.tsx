@@ -1,7 +1,8 @@
 import { IProjectSettings } from 'app/data/project-structure/project-info'
-import { Manager } from 'app/libs/manager/Manager.class'
+import { Manager } from 'app/libs/manager/manager.class'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import React from 'react'
+import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 
 interface IProjectNotLoadedFooterProps {
   project: IProjectSettings
@@ -12,7 +13,7 @@ export const ProjectNotLoadedFooter: React.FC<IProjectNotLoadedFooterProps> = ({
     id="loadProject"
     label="Load project"
     onClick={() => Manager.loadProjectById(project.id)}
-    type="primary"
+    type={Type.primary}
     fill="outline"
     marginClassName=''
   />

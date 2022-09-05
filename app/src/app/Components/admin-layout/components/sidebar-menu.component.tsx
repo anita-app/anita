@@ -6,8 +6,8 @@ import { ProjectPicker } from 'app/components/admin-layout/components/project-pi
 import { useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 import React from 'react'
-import { Manager } from 'app/libs/manager/Manager.class'
-import { Icons } from 'app/libs/Icons/Icons.class'
+import { Manager } from 'app/libs/manager/manager.class'
+import { Icons } from 'app/libs/icons/icons.class'
 
 const baseStyleOfSidebarLinks = 'flex items-center block py-2.5 px-2 transition duration-200 border-l-2 hover:border-prussian-blue-700 hover:text-prussian-blue-500 text-sm font-semibold'
 

@@ -7,7 +7,7 @@ import { useValidators } from 'app/components/shared-components/forms-automator/
 import uniqueId from 'lodash/uniqueId'
 import React, { memo, useRef, useState } from 'react'
 import ReactTooltip from 'react-tooltip'
-import { Icons } from 'app/libs/Icons/Icons.class'
+import { Icons } from 'app/libs/icons/icons.class'
 /* eslint-disable eqeqeq */
 
 export const BasicRadio: React.FC<ICommonFormEleProps<IBasicRadio<SectionElement>>> = memo(function BasicRadio ({ formEle, element, handleChange }: ICommonFormEleProps<IBasicRadio<SectionElement>>) {

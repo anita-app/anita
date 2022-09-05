@@ -1,66 +1,132 @@
-import React, { ReactNode } from 'react'
-import { ModalBody } from 'app/components/shared-components/modals/modal-body.component'
-import { ModalContent } from 'app/components/shared-components/modals/modal-content.component'
-import { ModalFooter } from 'app/components/shared-components/modals/modal-footer.component'
-import { ModalHeader } from 'app/components/shared-components/modals/modal-header.component'
-import { TIconName } from 'app/libs/Icons/Icons.class'
+import React, { Fragment, ReactNode, useState } from 'react'
+import { Icons, TIconName } from 'app/libs/icons/icons.class'
+import ReactDOM from 'react-dom'
+import { ModalContext, useModalContext } from 'app/components/shared-components/modals/modal-context'
+import { Dialog, Transition } from '@headlessui/react'
+import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
+import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 
-interface IModalProps {
+export interface IModalProps {
+  isOpen?: boolean
   title: string
   actionText: string
-  type: keyof typeof bgClasses
+  type: Type.primary | Type.danger
   handleClickAction: () => void
-  closeFn: () => void
-  animationClass: string
+  animationClass?: string
   children: ReactNode
   icon?: TIconName
   iconClassName?: string
   disableAction?: boolean
 }
 
-const bgClasses = {
-  confirm: {
-    normal: 'bg-prussian-blue-500',
-    hover: 'bg-prussian-blue-600',
-    focus: 'bg-prussian-blue-800'
-  },
-  alert: {
-    normal: 'bg-red-600',
-    hover: 'bg-red-700',
-    focus: 'bg-red-900'
+const Modal: React.FC<IModalProps> = (props) => {
+  const { hideModal } = useModalContext()
+  const handleActionClick = () => {
+    props.handleClickAction()
+    hideModal()
   }
+  return (
+    <Transition.Root show={props.isOpen} as={Fragment}>
+      <Dialog as="div" className="relative z-10" onClose={handleActionClick}>
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+        </Transition.Child>
+
+        <div className="fixed inset-0 z-10 overflow-y-auto">
+          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              enterTo="opacity-100 translate-y-0 sm:scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            >
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+                <div className="sm:flex sm:items-start">
+                  {props.icon && (
+                    <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                      {Icons.render(props.icon, `${props.iconClassName} text-xl -mt-1`)}
+                    </div>
+                  )}
+                  <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                    <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
+                      {props.title}
+                    </Dialog.Title>
+                    <div className="mt-2">
+                      {props.children}
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+                  <Button
+                    id="action-button"
+                    type={props.type}
+                    label={props.actionText}
+                    onClick={handleActionClick}
+                    disabled={props.disableAction}
+                  />
+                  <Button
+                    id="cancel"
+                    label="Cancel"
+                    type={Type.secondary}
+                    onClick={hideModal}
+                  />
+                </div>
+              </Dialog.Panel>
+            </Transition.Child>
+          </div>
+        </div>
+      </Dialog>
+    </Transition.Root>
+  )
 }
 
-export const Modal: React.FC<IModalProps> = (props) => (
-    <div className="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-      <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div className={`animate__animated ${props.animationClass} animate__faster fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity`} aria-hidden="true"></div>
-
-        <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-
-        <div className={`animate__animated ${props.animationClass} animate__faster inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full`}>
-          <ModalContent icon={props.icon} iconClassName={props.iconClassName}>
-            <ModalHeader>
-              {props.title}
-            </ModalHeader>
-            <ModalBody>
-              {props.children}
-            </ModalBody>
-          </ModalContent>
-          <ModalFooter>
-            <button
-              onClick={props.handleClickAction}
-              type="button"
-              className={`w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 ${bgClasses[props.type].normal} text-base font-medium text-white hover:${bgClasses[props.type].focus} focus:outline-none focus:ring-0 focus:${bgClasses[props.type].focus} sm:ml-3 sm:w-auto sm:text-sm`}
-              disabled={props.disableAction}
-            >
-              {props.actionText}
-            </button>
-            <button onClick={props.closeFn} type="button" className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-0 focus:bg-gray-200 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-              Cancel
-            </button>
-          </ModalFooter>
-        </div>
-      </div>
-    </div>
+const ModalContainer: React.FC<IModalProps> = (props) => (
+  ReactDOM.createPortal(
+    <Modal {...props} />,
+    document.getElementById('modal-root')!
+  )
 )
+
+export const ModalProvider: React.FC = (props) => {
+  const [modalProps, setModalProps] = useState<IModalProps>({
+    isOpen: false,
+    type: Type.primary,
+    title: '',
+    actionText: '',
+    handleClickAction: () => { },
+    children: null
+  })
+  const showModal = (modalProps: IModalProps) => {
+    setModalProps({
+      ...modalProps,
+      isOpen: true
+    })
+  }
+
+  const hideModal = () => {
+    setModalProps((currentState = {} as IModalProps) => ({
+      ...currentState!,
+      isOpen: false
+    }))
+  }
+
+  const renderComponent = () => <ModalContainer {...modalProps} />
+
+  return (
+    <ModalContext.Provider value={{ modalProps, showModal, hideModal }}>
+      {renderComponent()}
+      {props.children}
+    </ModalContext.Provider>
+  )
+}

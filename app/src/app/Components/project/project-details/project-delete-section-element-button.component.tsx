@@ -2,10 +2,11 @@ import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
-import { Modal } from 'app/components/shared-components/modals/modal.component'
-import React, { useState } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router'
 import ReactTooltip from 'react-tooltip'
+import { useModalContext } from 'app/components/shared-components/modals/modal-context'
+import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 
 interface IProjectDeleteSectionElementButtonProps {
   projectId: string
@@ -14,63 +15,47 @@ interface IProjectDeleteSectionElementButtonProps {
 }
 
 export const ProjectDeleteSectionElementButton: React.FC<IProjectDeleteSectionElementButtonProps> = ({ projectId, sectionId, elementId }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [animationClass, setAnimationClass] = useState('animate__fadeIn')
+  const { showModal } = useModalContext()
 
   const navigate = useNavigate()
 
-  const handleClickModal = () => {
-    if (isModalOpen) {
-      setAnimationClass('animate__fadeOut')
-      setTimeout(() => setIsModalOpen(false), 500)
-    } else {
-      setAnimationClass('animate__fadeIn')
-      setIsModalOpen(true)
-    }
-  }
-
   const handleClickDelete = () => {
-    handleClickModal()
-    // This timeout must be equal or greater than the one in closeFn.
-    // Otherwise we would cause an update on an unmounted component.
-    setTimeout(() => {
-      dbInstances[projectId].callDeletor(sectionId, { id: elementId }).autoDelete()
-      navigate(urlParamFiller(ANITA_URLS.projectSectionElesList, [{ name: URL_PARAMS.projectId, value: projectId }, { name: URL_PARAMS.sectionId, value: sectionId }]))
-    }, 500)
+    dbInstances[projectId].callDeletor(sectionId, { id: elementId }).autoDelete()
+    navigate(urlParamFiller(ANITA_URLS.projectSectionElesList, [{ name: URL_PARAMS.projectId, value: projectId }, { name: URL_PARAMS.sectionId, value: sectionId }]))
   }
 
-  return (
-    <span>
-      <Button
-        id="deleteElement"
-        label="Delete"
-        icon="trashOutline"
-        type="danger"
-        fill="outline"
-        onClick={handleClickModal}
-        breakpoint="lg"
-        hasTooltip={true}
-        marginClassName="mt-6"
-      />
-      {isModalOpen && (
-        <Modal
-          title="Delete element"
-          actionText="Delete"
-          type="alert"
-          handleClickAction={handleClickDelete}
-          closeFn={handleClickModal}
-          animationClass={animationClass}
-          icon="warningOutline"
-          iconClassName="text-red-600"
-        >
+  const handleClickModal = () => {
+    showModal({
+      title: 'Delete element',
+      actionText: 'Delete',
+      type: Type.danger,
+      handleClickAction: handleClickDelete,
+      icon: 'warningOutline',
+      iconClassName: 'text-red-600',
+      children: (
+        <>
           <p className="text-sm text-gray-500">
             Are you sure you want to delete this element?
           </p>
           <p className="text-sm text-gray-500">
             This action cannot be undone.
           </p>
-        </Modal>
-      )}
-    </span>
+        </>
+      )
+    })
+  }
+
+  return (
+    <Button
+      id="deleteElement"
+      label="Delete"
+      iconLeft="trashOutline"
+      type={Type.danger}
+      fill="outline"
+      onClick={handleClickModal}
+      breakpoint="lg"
+      hasTooltip={true}
+      marginClassName="mt-6"
+    />
   )
 }

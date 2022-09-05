@@ -1,4 +1,4 @@
-import { SectionElement } from 'app/models/SectionElement/SectionElement.class'
+import { SectionElement } from 'app/models/section-element/section-element.class'
 import { IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 
 interface ITextFromOptionsByValueProps {

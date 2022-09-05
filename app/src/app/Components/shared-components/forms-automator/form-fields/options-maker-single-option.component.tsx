@@ -6,6 +6,7 @@ import { FormAutomator } from 'app/components/shared-components/forms-automator/
 import { FormFieldsModel, IBasicSelect, ICommonFormEleProps, IOptionKeysModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
 import React, { memo, useMemo } from 'react'
 import { useSelector } from 'react-redux'
+import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 
 /**
  * Checks if the OptionKeysModel was already in the section before we started editing.
@@ -46,8 +47,8 @@ export const OptionsMakerSingleOption: React.FC<ICommonFormEleProps<FormFieldsMo
           <Button
             id={`deleteOption-${index + 1}`}
             label={`Delete option ${index + 1}`}
-            icon="trashOutline"
-            type="danger"
+            iconLeft="trashOutline"
+            type={Type.danger}
             fill="outline"
             hasTooltip={true}
             onClick={handleClickDeleteOption.bind(undefined, index)}

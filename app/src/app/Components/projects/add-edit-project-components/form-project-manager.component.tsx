@@ -2,7 +2,7 @@ import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
 import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const'
 import { IProjectSettings, RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info'
-import { Manager } from 'app/libs/manager/Manager.class'
+import { Manager } from 'app/libs/manager/manager.class'
 import { ProjectsListLoader } from 'app/libs/projects-helpers/projects-handlers/projects-list-loader.class'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router'
 import React from 'react'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
+import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 
 export const FormProjectManager: React.FC = () => {
   const { projectId } = useParams<URL_PARAMS>()
@@ -55,7 +56,7 @@ export const FormProjectManager: React.FC = () => {
           <Button
             id="addSection"
             label="Add section"
-            type="success"
+            type={Type.success}
             fill="outline"
             className="w-full sm:w-auto"
             marginClassName=""
@@ -66,14 +67,14 @@ export const FormProjectManager: React.FC = () => {
               id="cancel"
               label="Cancel"
               marginClassName="mt-8 sm:mt-0 mr-3"
-              type="secondary"
+              type={Type.secondary}
               className="grow"
               onClick={() => navigate(-1)}
             />
             <Button
               id="save"
               label="Save"
-              type="primary"
+              type={Type.primary}
               className="grow"
               marginClassName="mt-8 sm:mt-0"
               disabled={Object.keys(validObj).some(key => validObj[key] === false)}

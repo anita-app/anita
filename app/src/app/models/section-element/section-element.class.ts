@@ -1,4 +1,4 @@
-import { TextTools } from 'app/libs/tools/TextTools.class'
+import { TextTools } from 'app/libs/tools/text-tools.class'
 import { IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 
 export class SectionElement {

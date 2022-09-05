@@ -1,6 +1,6 @@
 import { SectionElement } from 'app/data/project-structure/project-info'
-import { Manager } from 'app/libs/manager/Manager.class'
-import { IOption, ParentElement } from 'app/models/ParentElement/ParentElement.class'
+import { Manager } from 'app/libs/manager/manager.class'
+import { IOption, ParentElement } from 'app/models/parent-element/parent-element.class'
 import { IBasicSelect, ICommonFormEleProps, OptionKeysModelGroup } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { FormEleContainer } from 'app/components/shared-components/forms-automator/form-layout/form-ele-container.component'
 import { FormElementLabel } from 'app/components/shared-components/forms-automator/form-layout/form-element-label.component'

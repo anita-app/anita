@@ -5,9 +5,9 @@ import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { store } from 'app/libs/redux/state.store'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
-import { Project } from 'app/models/Project/Project.class'
-import { ProjectLoader } from 'app/models/Project/ProjectLoader.class'
-import { ProjectSaver } from 'app/models/Project/ProjectSaver.class'
+import { Project } from 'app/models/project/project.class'
+import { ProjectLoader } from 'app/models/project/project-loader.class'
+import { ProjectSaver } from 'app/models/project/project-saver.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api'
 import { ProjectDataImporter } from 'app/libs/projects-helpers/project-importers/project-data-importer.class'
@@ -51,8 +51,8 @@ export class Manager {
     }
   }
 
-  public static async importProject (projectData: AnitaUniversalDataStorage, fileHandle: FileSystemFileHandle): Promise<void> {
-    const projectInfo = await new ProjectDataImporter(projectData!, fileHandle!).import()
+  public static async importProject (projectData: AnitaUniversalDataStorage, fileHandle?: FileSystemFileHandle): Promise<void> {
+    const projectInfo = await new ProjectDataImporter(projectData!, fileHandle).import()
     await new ProjectLoader(projectData[RESERVED_AUDS_KEYS._settings][0].id, projectInfo).loadProject()
     await this.saveProject({ [RESERVED_AUDS_KEYS._settings]: projectData[RESERVED_AUDS_KEYS._settings], [RESERVED_AUDS_KEYS._sections]: projectData[RESERVED_AUDS_KEYS._sections] }, EDITOR_MODE.edit)
   }

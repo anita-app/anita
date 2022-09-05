@@ -10,7 +10,7 @@ import {
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
-import { SectionElement } from 'app/models/SectionElement/SectionElement.class'
+import { SectionElement } from 'app/models/section-element/section-element.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { FormAutomator } from 'app/components/shared-components/forms-automator/form-automator.component'
 import {
