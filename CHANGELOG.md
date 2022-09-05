@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.14.18] - 2022-09-05
+### Changed
+- improved UI.
+
 ## [0.14.17] - 2022-09-02
 ### Fixed
 - update storage method in data file on project import.

@@ -4,6 +4,16 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.14.18",
+      "date": "2022-09-05",
+      "items": [
+        {
+          "type": "changed",
+          "value": "improved UI"
+        }
+      ]
+    },
+    {
       "version": "0.14.17",
       "date": "2022-09-02",
       "items": [
