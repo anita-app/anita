@@ -1,13 +1,13 @@
-import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
-import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
+import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing-n/anita-routes.constant'
+import { urlParamFiller } from 'app/libs/routing-n/url-param-fillers.function'
 import { RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info'
-import { Manager } from 'app/libs/manager/manager.class'
+import { Manager } from 'app/libs/manager-n/manager.class'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { useClickOutside } from 'app/components/hooks/click-outside.hook'
 import React, { Fragment, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { Icons } from 'app/libs/icons/icons.class'
+import { Icons } from 'app/libs/icons-n/icons.class'
 import { Transition } from '@headlessui/react'
 
 interface IProjectPickerProps {
@@ -55,7 +55,7 @@ export const ProjectPicker: React.FC<IProjectPickerProps> = ({ project }) => {
   return (
     <div className="block py-2.5 px-1">
       <p className="text-xs text-gray-400" style={{ fontVariant: 'small-caps' }}>project</p>
-      <div ref={dropDownRef} x-data="{ dropdownOpen: true }" className="relative">
+      <div ref={dropDownRef} className="relative">
         <button onClick={() => toggleDropdown(dropdownOpen)} className="relative w-full flex justify-between text-left z-10 py-2 transition-all focus:px-2 hover:px-2 border-b hover:border-b-prussian-blue-700 hover:rounded focus:border-b-prussian-blue-700 active:border-b-prussian-blue-700 focus:outline-none hover:bg-gray-100 focus:bg-gray-200 focus:rounded active:bg-gray-300 active:rounded">
           <span>{project?.[RESERVED_AUDS_KEYS._settings][0]?.title}</span>
           {Icons.render('codeOutline', 'my-auto rotate-90')}

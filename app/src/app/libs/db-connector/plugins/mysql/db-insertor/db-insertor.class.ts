@@ -30,7 +30,7 @@ export class DbInsertor<E> implements Insertor<E> {
     if (this.dbConnector.options.encrypted) {
       await this.handleEncryption()
     }
-    const query: string = new QueryMaker(this.dbConnector, this.section, this.element).insert()
+    const query: string = new QueryMaker(this.dbConnector, this.section, this.element as any).insert()
     await executeQuery(this.dbConnector, query)
   }
 

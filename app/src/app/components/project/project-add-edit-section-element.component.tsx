@@ -1,6 +1,6 @@
-import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
+import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing-n/anita-routes.constant'
 import { SectionElement } from 'app/data/project-structure/project-info'
-import { Manager } from 'app/libs/manager/manager.class'
+import { Manager } from 'app/libs/manager-n/manager.class'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'

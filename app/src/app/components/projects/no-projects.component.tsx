@@ -1,5 +1,5 @@
 import React from 'react'
-import { ANITA_URLS } from 'app/libs/routing/anita-routes.constant'
+import { ANITA_URLS } from 'app/libs/routing-n/anita-routes.constant'
 import { ImportProjectButton } from 'app/components/projects/project-importer-components/import-project-button.component'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
