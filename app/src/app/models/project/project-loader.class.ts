@@ -8,7 +8,7 @@ import {
 } from 'app/data/project-structure/project-info'
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
 import { Logger } from 'app/libs/logger/logger.class'
-import { Manager } from 'app/libs/manager-n/manager.class'
+import { Manager } from 'app/libs/manager/manager.class'
 
 export class ProjectLoader {
   /**

@@ -1,4 +1,4 @@
-import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing-n/anita-routes.constant'
+import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { SectionElement } from 'app/data/project-structure/project-info'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { ProjectTableList } from 'app/components/project/project-table-list/project-table-list.component'
@@ -10,8 +10,8 @@ import React, { useEffect, useState } from 'react'
 import { Navigate, useParams } from 'react-router'
 import { Tab } from '@headlessui/react'
 import { ProjectGridList } from 'app/components/project/project-grid/project-grid-list'
-import { Manager } from 'app/libs/manager-n/manager.class'
-import { Icons, TIconName } from 'app/libs/icons-n/icons.class'
+import { Manager } from 'app/libs/manager/manager.class'
+import { Icons, TIconName } from 'app/libs/icons/icons.class'
 
 const SUPPORTED_VIEWS: Array<TIconName> = ['table', 'gridOutline']
 
