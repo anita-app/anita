@@ -1,4 +1,4 @@
-import { TAnitaUniversalDataStorage } from 'app/models/project-n/project.declarations'
+import { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
 import { DbConnectorInstance } from 'app/libs/db-connector/models/executers'
 import Base from 'deta/dist/types/base'
 import Dexie from 'dexie'

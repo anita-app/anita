@@ -1,4 +1,4 @@
-import { TIconName } from 'app/libs/icons-n/icons.class'
+import { TIconName } from 'app/libs/icons/icons.class'
 
 export enum SupportedViews {
   table,

@@ -1,4 +1,4 @@
-import { RESERVED_AUDS_KEYS } from 'app/models/project-n/project.declarations'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { IOption, ParentElement } from 'app/models/parent-element/parent-element.class'

@@ -1,8 +1,8 @@
-import { Manager } from 'app/libs/manager-n/manager.class'
+import { Manager } from 'app/libs/manager/manager.class'
 import ReactTooltip from 'react-tooltip'
 import React from 'react'
 import { Dropdown, IMenuItem } from 'app/components/shared-components/common-ui-eles/dropdown.component'
-import { ExportScope } from 'app/models/project-n/project-exporter.class'
+import { ExportScope } from 'app/models/project/project-exporter.class'
 
 const exportMenuItems: Array<IMenuItem> = [
   {

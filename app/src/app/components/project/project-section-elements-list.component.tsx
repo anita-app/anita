@@ -1,4 +1,4 @@
-import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing-n/anita-routes.constant'
+import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { ProjectTableList } from 'app/components/project/project-table-list/project-table-list.component'
@@ -10,9 +10,9 @@ import React, { useEffect, useState } from 'react'
 import { Navigate, useParams } from 'react-router'
 import { Tab } from '@headlessui/react'
 import { ProjectGridList } from 'app/components/project/project-grid/project-grid-list'
-import { Manager } from 'app/libs/manager-n/manager.class'
+import { Manager } from 'app/libs/manager/manager.class'
 import { Icons } from 'app/libs/icons-n/icons.class'
-import { SupportedViews, SUPPORTED_VIEWS_ICONS } from 'app/models/section-n/view-settings.const'
+import { SupportedViews, SUPPORTED_VIEWS_ICONS } from 'app/models/section/view-settings.const'
 
 function classNames (...classes: Array<string>) {
   return classes.filter(Boolean).join(' ')

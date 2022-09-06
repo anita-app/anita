@@ -1,5 +1,5 @@
-import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing-n/anita-routes.constant'
-import { urlParamFiller } from 'app/libs/routing-n/url-param-fillers.function'
+import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
+import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
 import React, { ReactNode } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 

@@ -1,5 +1,5 @@
 import { ISectionElement } from 'app/models/section-element/section-element.declarations'
-import { ISection } from 'app/models/section-n/section.declarations'
+import { ISection } from 'app/models/section/section.declarations'
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import { SezBuilder } from 'app/libs/db-connector/db-builder/sez-builder.class'
 import { SectionDefinition, SectionModel } from 'app/libs/db-connector/db-builder/sez-definition'

@@ -1,4 +1,4 @@
-import { LocalProjectSettings } from 'app/models/project-n/project.declarations'
+import { LocalProjectSettings } from 'app/models/project/project.declarations'
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition'
 

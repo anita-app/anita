@@ -1,4 +1,4 @@
-import { LocalProjectSettings } from 'app/models/project-n/project.declarations'
+import { LocalProjectSettings } from 'app/models/project/project.declarations'
 import { Action } from 'app/libs/redux/action.type'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 

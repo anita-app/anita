@@ -1,5 +1,5 @@
 import React from 'react'
-import { AnitaRoutes } from 'app/libs/routing-n/anita-routes.component'
+import { AnitaRoutes } from 'app/libs/routing/anita-routes.component'
 import { SidebarMenu } from 'app/components/admin-layout/components/sidebar-menu.component'
 import { Content } from 'app/components/admin-layout/content.component'
 import { Header } from 'app/components/admin-layout/header.component'

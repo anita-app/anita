@@ -4,11 +4,11 @@ import {
   LocalProjectSettings,
   IProjectSettings,
   RESERVED_AUDS_KEYS
-} from 'app/models/project-n/project.declarations'
-import { ISection } from 'app/models/section-n/section.declarations'
+} from 'app/models/project/project.declarations'
+import { ISection } from 'app/models/section/section.declarations'
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
 import { Logger } from 'app/libs/logger/logger.class'
-import { Manager } from 'app/libs/manager-n/manager.class'
+import { Manager } from 'app/libs/manager/manager.class'
 
 export class ProjectLoader {
   /**
