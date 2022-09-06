@@ -1,5 +1,4 @@
-import { ISectionCustomFieldProperties, SectionDetailsDeclaration } from 'app/data/project-structure/project-info'
-import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant'
+import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import { FormFieldsModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES, SELECTABLE_FORM_ELES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
 import {
@@ -10,6 +9,7 @@ import {
   TEXT_INPUT_SUPPORTED_TYPES_OPTIONS,
   TextInputSupportedTypes
 } from 'app/components/shared-components/forms-automator/input-supported-types.const'
+import { ISectionCustomFieldProperties, SectionDetailsDeclaration } from 'app/models/section/section.declarations'
 
 export const sectionDetailsFormFieldsModel: Array<FormFieldsModel<SectionDetailsDeclaration>> = [
   {

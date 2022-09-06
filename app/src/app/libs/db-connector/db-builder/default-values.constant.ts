@@ -1,4 +1,4 @@
-import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant'
+import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 
 /**
  * Default primary key if none is specified.

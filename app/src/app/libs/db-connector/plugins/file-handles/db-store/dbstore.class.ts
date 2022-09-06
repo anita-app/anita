@@ -1,15 +1,15 @@
-import { AdditionalInfoForLocalStorage, AnitaUniversalDataStorage, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info'
+import { AdditionalInfoForLocalStorage, TAnitaUniversalDataStorage, RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { DataStructureExtender } from 'app/data/system-local-db/data-structure-extender.class'
 import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 import { DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers'
 import { fileHandleChecker } from 'app/libs/db-connector/plugins/file-handles/helpers/file-handle-checker.function'
 import { FsHelper } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper'
 
-export class DbStore implements DbStoreInterface<AnitaUniversalDataStorage> {
+export class DbStore implements DbStoreInterface<TAnitaUniversalDataStorage> {
   /**
    * Project data
    */
-  public db: AnitaUniversalDataStorage = {
+  public db: TAnitaUniversalDataStorage = {
     [RESERVED_AUDS_KEYS._settings]: [],
     [RESERVED_AUDS_KEYS._sections]: []
   }
@@ -24,7 +24,7 @@ export class DbStore implements DbStoreInterface<AnitaUniversalDataStorage> {
     private DS: AbstractModel
   ) { }
 
-  public async initDB (): Promise<DbStoreInterface<AnitaUniversalDataStorage>> {
+  public async initDB (): Promise<DbStoreInterface<TAnitaUniversalDataStorage>> {
     if (!this.options.projectInfo) {
       throw new Error('No projectInfo passed to DbConnector.\nTo retrieve a project from a local file, pass the an Object of type LocalProjectSettings as value of projectInfo to the options of DbConnector')
     }

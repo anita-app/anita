@@ -1,6 +1,6 @@
-import { SectionDetailsDeclaration } from 'app/data/project-structure/project-info'
 import { Action } from 'app/libs/redux/action.type'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
+import { SectionDetailsDeclaration } from 'app/models/section/section.declarations'
 
 /**
  * The initial state of the container of the sections selectable by the child of selector

@@ -1,4 +1,4 @@
-import { ISectionCustomFieldProperties } from 'app/data/project-structure/project-info'
+import { ISectionCustomFieldProperties } from 'app/models/section/section.declarations'
 
 /**
  * Creates a section form element based on the information provided by the user when creating/editing a project
