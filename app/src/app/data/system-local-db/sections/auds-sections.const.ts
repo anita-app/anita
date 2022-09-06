@@ -1,5 +1,5 @@
-import { RESERVED_AUDS_KEYS } from 'app/models/project-n/project.declarations'
-import { ISection } from 'app/models/section-n/section.declarations'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
+import { ISection } from 'app/models/section/section.declarations'
 import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition'
 
 /**

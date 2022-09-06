@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { ISectionElement } from 'app/models/section-element/section-element.declarations'
-import { ISection } from 'app/models/section-n/section.declarations'
+import { ISection } from 'app/models/section/section.declarations'
 import { ProjectTableListTdWithLinkToDetails } from 'app/components/project/project-table-list/project-table-list-td-with-link-to-details.component'
 import { customRenderPicker } from 'app/components/project/project-values-renderers/custom-render-picker.component'
 import { useSortBy, useTable, Column } from 'react-table'

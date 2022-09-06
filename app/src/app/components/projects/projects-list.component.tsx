@@ -1,4 +1,4 @@
-import { ANITA_URLS } from 'app/libs/routing-n/anita-routes.constant'
+import { ANITA_URLS } from 'app/libs/routing/anita-routes.constant'
 import { ProjectsListLoader } from 'app/libs/projects-helpers/projects-handlers/projects-list-loader.class'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { ProjectCard } from 'app/components/projects/project-card.component'

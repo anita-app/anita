@@ -2,9 +2,9 @@ import {
   LocalProjectSettings,
   IProjectSettings,
   TSystemData
-} from 'app/models/project-n/project.declarations'
+} from 'app/models/project/project.declarations'
 import { ISectionElement } from 'app/models/section-element/section-element.declarations'
-import { ISection, SectionDetailsDeclaration } from 'app/models/section-n/section.declarations'
+import { ISection, SectionDetailsDeclaration } from 'app/models/section/section.declarations'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
 

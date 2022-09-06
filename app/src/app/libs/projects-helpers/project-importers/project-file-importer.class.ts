@@ -1,4 +1,4 @@
-import { TAnitaUniversalDataStorage } from 'app/models/project-n/project.declarations'
+import { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api'
 import { FsHelper } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper'
 import fileDialog from 'file-dialog'

@@ -1,5 +1,5 @@
-import { IProjectSettings } from 'app/models/project-n/project.declarations'
-import { Manager } from 'app/libs/manager-n/manager.class'
+import { IProjectSettings } from 'app/models/project/project.declarations'
+import { Manager } from 'app/libs/manager/manager.class'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import React from 'react'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'

@@ -1,5 +1,5 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
-import { TAnitaUniversalDataStorage } from 'app/models/project-n/project.declarations'
+import { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
 import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { FsHelper } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper'
 

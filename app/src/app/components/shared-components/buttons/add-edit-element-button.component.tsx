@@ -1,9 +1,9 @@
-import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing-n/anita-routes.constant'
-import { urlParamFiller } from 'app/libs/routing-n/url-param-fillers.function'
+import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
+import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { Link } from 'react-router-dom'
 import React from 'react'
-import { Icons, TIconName } from 'app/libs/icons-n/icons.class'
+import { Icons, TIconName } from 'app/libs/icons/icons.class'
 
 interface IAddElementButtonProps {
   projectId: string

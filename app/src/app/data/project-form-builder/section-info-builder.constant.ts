@@ -2,8 +2,8 @@ import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import { FormFieldsModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
 import { TextInputSupportedTypes } from 'app/components/shared-components/forms-automator/input-supported-types.const'
-import { Icons } from 'app/libs/icons-n/icons.class'
-import { SectionDetailsDeclaration } from 'app/models/section-n/section.declarations'
+import { Icons } from 'app/libs/icons/icons.class'
+import { SectionDetailsDeclaration } from 'app/models/section/section.declarations'
 
 export const sectionDetailsFormFieldsModel: Array<FormFieldsModel<SectionDetailsDeclaration>> = [
   {

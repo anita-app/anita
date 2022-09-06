@@ -1,5 +1,5 @@
 import React from 'react'
-import { ANITA_URLS } from 'app/libs/routing-n/anita-routes.constant'
+import { ANITA_URLS } from 'app/libs/routing/anita-routes.constant'
 import { AddEditSectionElement } from 'app/components/project/project-add-edit-section-element.component'
 import { ProjectDetails } from 'app/components/project/project-details.component'
 import { SectionElementDetails } from 'app/components/project/project-section-element-details.component'

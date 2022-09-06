@@ -1,4 +1,4 @@
-import { TAnitaUniversalDataStorage } from 'app/models/project-n/project.declarations'
+import { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
 import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 import { DbConnectorInstance } from 'app/libs/db-connector/models/executers'
