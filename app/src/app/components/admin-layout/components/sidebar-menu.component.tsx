@@ -1,13 +1,13 @@
-import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
-import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
-import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
+import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing-n/anita-routes.constant'
+import { urlParamFiller } from 'app/libs/routing-n/url-param-fillers.function'
+import { RESERVED_AUDS_KEYS } from 'app/models/project-n/project.declarations'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { ProjectPicker } from 'app/components/admin-layout/components/project-picker.component'
 import { useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 import React from 'react'
-import { Manager } from 'app/libs/manager/manager.class'
-import { Icons } from 'app/libs/icons/icons.class'
+import { Manager } from 'app/libs/manager-n/manager.class'
+import { Icons } from 'app/libs/icons-n/icons.class'
 
 const baseStyleOfSidebarLinks = 'flex items-center block py-2.5 px-2 transition duration-200 border-l-2 hover:border-prussian-blue-700 hover:text-prussian-blue-500 text-sm font-semibold'
 

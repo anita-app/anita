@@ -1,4 +1,4 @@
-import { Manager } from 'app/libs/manager/manager.class'
+import { Manager } from 'app/libs/manager-n/manager.class'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'

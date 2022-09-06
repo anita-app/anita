@@ -1,4 +1,4 @@
-import { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
+import { TAnitaUniversalDataStorage } from 'app/models/project-n/project.declarations'
 import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 import { DbConnectorInstance, Deletor } from 'app/libs/db-connector/models/executers'
 import { ProjectFileHandleSaver } from 'app/libs/db-connector/plugins/file-handles/helpers/project-file-handle-saver.class'

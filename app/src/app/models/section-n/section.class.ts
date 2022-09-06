@@ -1,15 +1,15 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import { ISectionElement } from 'app/models/section-element/section-element.declarations'
-import { ISection } from 'app/models/section/section.declarations'
+import { ISection } from 'app/models/section-n/section.declarations'
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
-import { ParentInfoFormEleBuilder } from 'app/models/section/parent-info-form-ele-builder.class'
-import { SectionElementSaver } from 'app/models/section/section-element-saver.class'
+import { ParentInfoFormEleBuilder } from 'app/models/section-n/parent-info-form-ele-builder.class'
+import { SectionElementSaver } from 'app/models/section-n/section-element-saver.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
-import { TIconName } from 'app/libs/icons/icons.class'
-import { Project } from 'app/models/project/project.class'
-import { SupportedViews } from 'app/models/section/view-settings.const'
+import { TIconName } from 'app/libs/icons-n/icons.class'
+import { Project } from 'app/models/project-n/project.class'
+import { SupportedViews } from 'app/models/section-n/view-settings.const'
 
 export class Section implements ISection {
   public id: string

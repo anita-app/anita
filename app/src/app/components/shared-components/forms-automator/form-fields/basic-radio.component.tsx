@@ -6,7 +6,7 @@ import { useValidators } from 'app/components/shared-components/forms-automator/
 import uniqueId from 'lodash/uniqueId'
 import React, { memo, useRef, useState } from 'react'
 import ReactTooltip from 'react-tooltip'
-import { Icons } from 'app/libs/icons/icons.class'
+import { Icons } from 'app/libs/icons-n/icons.class'
 import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 /* eslint-disable eqeqeq */
 

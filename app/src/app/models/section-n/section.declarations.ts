@@ -1,7 +1,7 @@
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import { FormFieldsModel, TSupportedFormsTypes, IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
-import { TIconName } from 'app/libs/icons/icons.class'
-import { SupportedViews } from 'app/models/section/view-settings.const'
+import { TIconName } from 'app/libs/icons-n/icons.class'
+import { SupportedViews } from 'app/models/section-n/view-settings.const'
 import { TextInputSupportedTypes } from 'app/components/shared-components/forms-automator/input-supported-types.const'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
 

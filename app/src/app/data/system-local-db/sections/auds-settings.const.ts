@@ -1,4 +1,4 @@
-import { IProjectSettings, RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
+import { IProjectSettings, RESERVED_AUDS_KEYS } from 'app/models/project-n/project.declarations'
 import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition'
 
 /**

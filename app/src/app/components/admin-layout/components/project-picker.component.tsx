@@ -1,13 +1,13 @@
-import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
-import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
-import { RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
-import { Manager } from 'app/libs/manager/manager.class'
+import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing-n/anita-routes.constant'
+import { urlParamFiller } from 'app/libs/routing-n/url-param-fillers.function'
+import { RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project-n/project.declarations'
+import { Manager } from 'app/libs/manager-n/manager.class'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { useClickOutside } from 'app/components/hooks/click-outside.hook'
 import React, { Fragment, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { Icons } from 'app/libs/icons/icons.class'
+import { Icons } from 'app/libs/icons-n/icons.class'
 import { Transition } from '@headlessui/react'
 
 interface IProjectPickerProps {

@@ -1,4 +1,4 @@
-import { Icons, TIconName } from 'app/libs/icons/icons.class'
+import { Icons, TIconName } from 'app/libs/icons-n/icons.class'
 import React, { useState } from 'react'
 
 interface IPasswordProps {

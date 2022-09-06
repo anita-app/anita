@@ -1,7 +1,7 @@
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
 import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api'
-import { ISection } from 'app/models/section/section.declarations'
+import { ISection } from 'app/models/section-n/section.declarations'
 import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
 /**

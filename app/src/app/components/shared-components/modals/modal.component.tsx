@@ -1,5 +1,5 @@
 import React, { Fragment, ReactNode, useState } from 'react'
-import { Icons, TIconName } from 'app/libs/icons/icons.class'
+import { Icons, TIconName } from 'app/libs/icons-n/icons.class'
 import ReactDOM from 'react-dom'
 import { ModalContext, useModalContext } from 'app/components/shared-components/modals/modal-context'
 import { Dialog, Transition } from '@headlessui/react'

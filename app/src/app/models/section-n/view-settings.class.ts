@@ -1,5 +1,5 @@
-import { ISectionViewSettings } from 'app/models/section/section.declarations'
-import { SupportedViews } from 'app/models/section/view-settings.const'
+import { ISectionViewSettings } from 'app/models/section-n/section.declarations'
+import { SupportedViews } from 'app/models/section-n/view-settings.const'
 
 export class ViewSettings {
   constructor (
