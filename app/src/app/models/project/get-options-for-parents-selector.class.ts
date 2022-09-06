@@ -2,7 +2,7 @@ import { ISectionElement } from 'app/models/section-element/section-element.decl
 import { Manager } from 'app/libs/manager/manager.class'
 import { ArrayTools } from 'app/libs/tools/array-tools.class'
 import { Project } from 'app/models/project/project.class'
-import { IOptionKeysModel, OptionKeysModelGroup } from 'app/components-no/shared-components/forms-automator/form-automator.types'
+import { IOptionKeysModel, OptionKeysModelGroup } from 'app/components/shared-components/forms-automator/form-automator.types'
 
 export class GetOptionsForParentsSelector {
   private optionsGroups: Array<OptionKeysModelGroup> = []
