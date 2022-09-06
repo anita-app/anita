@@ -1,22 +1,22 @@
-import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
-import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
+import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing-n/anita-routes.constant'
+import { urlParamFiller } from 'app/libs/routing-n/url-param-fillers.function'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { Link } from 'react-router-dom'
 import React from 'react'
-import { Icons, TIconName } from 'app/libs/icons/icons.class'
+import { Icons, TIconName } from 'app/libs/icons-n/icons.class'
 
 interface IAddElementButtonProps {
-  projectId: string;
-  sectionId: string;
-  mode: EDITOR_MODE.add;
-  elementId?: never;
+  projectId: string
+  sectionId: string
+  mode: EDITOR_MODE.add
+  elementId?: never
 }
 
 interface IEditElementButtonProps {
-  projectId: string;
-  sectionId: string;
-  elementId: string;
-  mode: EDITOR_MODE.edit;
+  projectId: string
+  sectionId: string
+  elementId: string
+  mode: EDITOR_MODE.edit
 }
 
 type IAddEditElementButtonProps = | IAddElementButtonProps | IEditElementButtonProps;

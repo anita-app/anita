@@ -1,6 +1,6 @@
 import React, { Fragment, useRef } from 'react'
 import { Menu, Transition } from '@headlessui/react'
-import { TIconName } from 'app/libs/icons/icons.class'
+import { TIconName } from 'app/libs/icons-n/icons.class'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { useClickOutside } from 'app/components/hooks/click-outside.hook'
@@ -69,21 +69,21 @@ export const Dropdown: React.FC<IDropdown> = (props) => {
             className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
           >
             <div className="py-1">
-            {props.menuItems.map((item) => (
-              <Menu.Item key={item.id}>
-                {({ active }) => (
-                  <div
-                    className={classNames(
-                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                      'block px-4 py-2 text-sm cursor-pointer'
-                    )}
-                    onClick={item.handleClick}
-                  >
-                    {item.label}
-                  </div>
-                )}
-              </Menu.Item>
-            ))}
+              {props.menuItems.map((item) => (
+                <Menu.Item key={item.id}>
+                  {({ active }) => (
+                    <div
+                      className={classNames(
+                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                        'block px-4 py-2 text-sm cursor-pointer'
+                      )}
+                      onClick={item.handleClick}
+                    >
+                      {item.label}
+                    </div>
+                  )}
+                </Menu.Item>
+              ))}
             </div>
           </Menu.Items>
         </Transition>

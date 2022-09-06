@@ -1,7 +1,7 @@
 import { FormAutomator } from 'app/components/shared-components/forms-automator/form-automator.component'
 import { FormAutomatorOnChangeValue, FormFieldsModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { projectInfoNewItem } from 'app/data/project-form-builder/project-info-builder.constant'
-import { IProjectSettings } from 'app/models/project/project.declarations'
+import { IProjectSettings } from 'app/models/project-n/project.declarations'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import React, { useEffect, useState } from 'react'

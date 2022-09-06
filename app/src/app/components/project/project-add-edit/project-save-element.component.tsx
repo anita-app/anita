@@ -1,4 +1,4 @@
-import { Manager } from 'app/libs/manager/manager.class'
+import { Manager } from 'app/libs/manager-n/manager.class'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'

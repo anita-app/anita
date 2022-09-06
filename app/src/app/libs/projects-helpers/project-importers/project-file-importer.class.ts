@@ -1,4 +1,4 @@
-import { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
+import { TAnitaUniversalDataStorage } from 'app/models/project-n/project.declarations'
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api'
 import { FsHelper } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper'
 import fileDialog from 'file-dialog'
@@ -27,7 +27,7 @@ export class ProjectFileImporter {
   /**
    * Asks for the files to import and processes them, then sets the current project as the last one imported
    */
-  public async import (): Promise<{ project: TAnitaUniversalDataStorage, fileHandle: FileSystemFileHandle } | void> {
+  public async import (): Promise<{ project: TAnitaUniversalDataStorage; fileHandle: FileSystemFileHandle } | void> {
     if (typeof window.showOpenFilePicker === 'function') {
       await this.askForFileHandle()
     } else {

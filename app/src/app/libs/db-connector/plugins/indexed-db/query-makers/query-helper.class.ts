@@ -2,17 +2,17 @@ import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 import { NewWhere } from 'app/libs/db-connector/plugins/indexed-db/query-makers/query-maker.class'
 
 export interface BetweenSearchParams {
-  field: string;
-  lowerBound: string | number;
-  upperBound: string | number;
-  includeLower: boolean;
-  includeUpper: boolean;
+  field: string
+  lowerBound: string | number
+  upperBound: string | number
+  includeLower: boolean
+  includeUpper: boolean
 }
 
 export type SuppoertedOperators = '===' | '!=' | '>' | '>=' | '<' | '<=' | '=';
 
 export interface FieldNValues {
-  [index: string]: string | number;
+  [index: string]: string | number
 }
 
 export type Filter4Dexie = (item: { [key: string]: string | number}) => boolean;

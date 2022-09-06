@@ -10,7 +10,7 @@ import { useValidators } from 'app/components/shared-components/forms-automator/
 import uniqueId from 'lodash/uniqueId'
 import React, { memo, useRef, useState, Fragment } from 'react'
 import { Combobox, Transition } from '@headlessui/react'
-import { Icons } from 'app/libs/icons/icons.class'
+import { Icons } from 'app/libs/icons-n/icons.class'
 import { IOption } from 'app/models/parent-element/parent-element.class'
 
 export const BasicSelect: React.FC<ICommonFormEleProps<IBasicSelect<ISectionElement>>> = memo(function BasicSelect ({ formEle, element, handleChange }: ICommonFormEleProps<IBasicSelect<ISectionElement>>) {
@@ -75,50 +75,50 @@ export const BasicSelect: React.FC<ICommonFormEleProps<IBasicSelect<ISectionElem
             <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-10">
               {filteredOptions.length === 0 && query !== ''
                 ? (
-                <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
-                  Nothing found.
-                </div>
+                  <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
+                    Nothing found.
+                  </div>
                   )
                 : (
                     filteredOptions.map((option) => (
-                  <Combobox.Option
-                    key={option.value}
-                    className={({ active }) => `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                      <Combobox.Option
+                        key={option.value}
+                        className={({ active }) => `relative cursor-default select-none py-2 pl-10 pr-4 ${
                         active ? 'bg-prussian-blue-600 text-white' : 'text-gray-900'
                       }`}
-                    value={option}
-                  >
-                    {({ selected, active }) => (
-                      <>
-                        <span
-                          className={`block truncate ${
+                        value={option}
+                      >
+                        {({ selected, active }) => (
+                          <>
+                            <span
+                              className={`block truncate ${
                             selected ? 'font-medium' : 'font-normal'
                           }`}
-                        >
-                          {option.label}
-                        </span>
-                        {(selected || option.icon) && (
-                          <span
-                            className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
+                            >
+                              {option.label}
+                            </span>
+                            {(selected || option.icon) && (
+                            <span
+                              className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
                               active ? 'text-white' : selected ? 'text-teal-500' : 'text-prussian-blue-600'
                             }`}
-                          >
-                            {Icons.render(selected ? 'checkmark' : option.icon!, 'h-5 w-5')}
-                          </span>
-                        )}
-                        {(selected) && (
-                          <span
-                            className={`absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer ${
+                            >
+                              {Icons.render(selected ? 'checkmark' : option.icon!, 'h-5 w-5')}
+                            </span>
+                            )}
+                            {(selected) && (
+                            <span
+                              className={`absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer ${
                               active ? 'text-white' : 'text-prussian-blue-600'
                                   }`}
-                            onClick={handleClear}
-                          >
-                            {Icons.render('closeCircleOutline', 'h-5 w-5')}
-                          </span>
+                              onClick={handleClear}
+                            >
+                              {Icons.render('closeCircleOutline', 'h-5 w-5')}
+                            </span>
+                            )}
+                          </>
                         )}
-                      </>
-                    )}
-                  </Combobox.Option>
+                      </Combobox.Option>
                     ))
                   )}
             </Combobox.Options>

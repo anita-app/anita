@@ -1,4 +1,4 @@
-import { AdditionalInfoForLocalStorage, RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
+import { AdditionalInfoForLocalStorage, RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project-n/project.declarations'
 import { DataStructureExtender } from 'app/data/system-local-db/data-structure-extender.class'
 import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 import { DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers'

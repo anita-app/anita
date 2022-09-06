@@ -9,7 +9,7 @@ import {
   TEXT_INPUT_SUPPORTED_TYPES_OPTIONS,
   TextInputSupportedTypes
 } from 'app/components/shared-components/forms-automator/input-supported-types.const'
-import { ISectionCustomFieldProperties, SectionDetailsDeclaration } from 'app/models/section/section.declarations'
+import { ISectionCustomFieldProperties, SectionDetailsDeclaration } from 'app/models/section-n/section.declarations'
 
 export const sectionDetailsFormFieldsModel: Array<FormFieldsModel<SectionDetailsDeclaration>> = [
   {

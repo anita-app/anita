@@ -6,11 +6,13 @@ export const HiddenInput: React.FC<ICommonFormEleProps> = memo(function HiddenIn
     element[formEle.fieldName] = ''
   }
 
-  return (<input
-    key={formEle.fieldName}
-    name={formEle.fieldName}
-    type="hidden"
-    value={element[formEle.fieldName]}
-    onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleChange(formEle.fieldName, event.target.value)}
-          />)
+  return (
+    <input
+      key={formEle.fieldName}
+      name={formEle.fieldName}
+      type="hidden"
+      value={element[formEle.fieldName]}
+      onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleChange(formEle.fieldName, event.target.value)}
+    />
+  )
 }, (prevProps, nextProps) => prevProps.element[prevProps.formEle.fieldName] === nextProps.element[nextProps.formEle.fieldName])

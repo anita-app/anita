@@ -1,15 +1,15 @@
 import { PROJECT_EDITOR_MODE } from 'app/data/project-form-builder/project-editor-form-builder.const'
-import { RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
+import { RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project-n/project.declarations'
 import { IdCreator } from 'app/libs/id-creator/id-creator.class'
 import { Action } from 'app/libs/redux/action.type'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { FormFieldsModel, IBasicSelect, IOptionKeysModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
 import cloneDeep from 'lodash.clonedeep'
-import { ISectionCustomFieldProperties } from 'app/models/section/section.declarations'
+import { ISectionCustomFieldProperties } from 'app/models/section-n/section.declarations'
 
 export interface IFormProjectState {
-  original: Partial<TSystemData>;
-  project: Partial<TSystemData>;
+  original: Partial<TSystemData>
+  project: Partial<TSystemData>
   mode: PROJECT_EDITOR_MODE
 }
 

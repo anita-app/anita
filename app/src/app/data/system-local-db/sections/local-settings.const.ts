@@ -22,15 +22,15 @@ export enum LOCAL_SETTINGS_KEYS {
  * Defines the expected data structure to be saved in `localSettings`.
  */
 export interface LocalSettingsData<T extends LOCAL_SETTINGS_KEYS> {
-  id: T;
-  data: DataByKey[T];
+  id: T
+  data: DataByKey[T]
 }
 
 /**
  * Identifies the data type saved in `localSettings` by the enum value of `LOCAL_SETTINGS_KEYS`.
  */
 interface DataByKey {
-  [LOCAL_SETTINGS_KEYS.testData]: unknown;
+  [LOCAL_SETTINGS_KEYS.testData]: unknown
 }
 
 /**

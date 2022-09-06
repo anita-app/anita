@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { ISectionElement } from 'app/models/section-element/section-element.declarations'
-import { ISection } from 'app/models/section/section.declarations'
+import { ISection } from 'app/models/section-n/section.declarations'
 import { ProjectTableListTdWithLinkToDetails } from 'app/components/project/project-table-list/project-table-list-td-with-link-to-details.component'
 import { customRenderPicker } from 'app/components/project/project-values-renderers/custom-render-picker.component'
 import { useSortBy, useTable, Column } from 'react-table'
@@ -54,9 +54,9 @@ export const ProjectTableList: React.FC<IProjectTableListProps> = ({ sectionInfo
         {headerGroups.map((headerGroup, indexTr) => (
           <tr {...headerGroup.getHeaderGroupProps()} key={`tr-${indexTr}`}>
             {headerGroup.headers.map((column, indexTh) => (
-                <th className="px-6 py-2 text-xs text-gray-500 text-left" {...column.getHeaderProps((column as unknown as HeaderGroupFix).getSortByToggleProps())} key={`tr-${indexTh}-tr-${indexTh}`}>
-                  {column.render('Header')}
-                </th>
+              <th className="px-6 py-2 text-xs text-gray-500 text-left" {...column.getHeaderProps((column as unknown as HeaderGroupFix).getSortByToggleProps())} key={`tr-${indexTh}-tr-${indexTh}`}>
+                {column.render('Header')}
+              </th>
             ))}
           </tr>
         ))}

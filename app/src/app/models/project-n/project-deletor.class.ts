@@ -1,5 +1,5 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
-import { IProjectSettings } from 'app/models/project/project.declarations'
+import { IProjectSettings } from 'app/models/project-n/project.declarations'
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
 import { ProjectsListLoader } from 'app/libs/projects-helpers/projects-handlers/projects-list-loader.class'
 

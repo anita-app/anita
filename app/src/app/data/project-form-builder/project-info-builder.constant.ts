@@ -1,5 +1,5 @@
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
-import { IProjectSettings } from 'app/models/project/project.declarations'
+import { IProjectSettings } from 'app/models/project-n/project.declarations'
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import { FormFieldsModel, IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'

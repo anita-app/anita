@@ -1,4 +1,4 @@
-import { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
+import { TAnitaUniversalDataStorage } from 'app/models/project-n/project.declarations'
 import { DbObjects } from 'app/libs/db-connector/models/executers'
 import { DbDeletor } from './db-deletor/db-deletor.class'
 import { DbInsertor } from './db-insertor/db-insertor.class'

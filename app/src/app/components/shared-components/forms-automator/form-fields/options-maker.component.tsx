@@ -22,8 +22,8 @@ export const OptionsMaker: React.FC<ICommonFormEleProps<FormFieldsModel<IOptionK
         {element[formEle.fieldName].map((optionElement: IOptionKeysModel, index: number) => <OptionsMakerSingleOption key={`${optionElement.value}-${index}`} index={index} optionElement={optionElement} {...props} />
         )}
       </ol>
-      {(typeof handleClickAddOption === 'function') &&
-        (<div className="flex justify-end">
+      {(typeof handleClickAddOption === 'function') && (
+        <div className="flex justify-end">
           <Button
             id='addChoice'
             label='Add Choice'
@@ -32,7 +32,8 @@ export const OptionsMaker: React.FC<ICommonFormEleProps<FormFieldsModel<IOptionK
             marginClassName="mr-3"
             onClick={handleClickAddOption}
           />
-         </div>)}
+        </div>
+      )}
     </div>
   )
 })

@@ -1,5 +1,5 @@
 import { ISectionElement } from 'app/models/section-element/section-element.declarations'
-import { Manager } from 'app/libs/manager/manager.class'
+import { Manager } from 'app/libs/manager-n/manager.class'
 import { IOption, ParentElement } from 'app/models/parent-element/parent-element.class'
 import { IBasicSelect, ICommonFormEleProps, OptionKeysModelGroup } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { FormEleContainer } from 'app/components/shared-components/forms-automator/form-layout/form-ele-container.component'
@@ -51,19 +51,20 @@ export const ParentsSelector: React.FC<ICommonFormEleProps<IBasicSelect<ISection
 
   // We uas as any because react-select does not export the values we'd like to use,
   // and the ones we define are not compatible.
-  return (<FormEleContainer width="w-full">
-    <FormElementLabel label={formEle.label!} />
-    <Select
-      defaultValue={ParentElement.infoStringToObjForOptionsGroup(element[formEle.fieldName], selectOptions as any)}
-      isMulti={true}
-      name={formEle.fieldName}
-      options={selectOptions as any}
-      className={!isValid && touched ? 'border border-red-600 rounded' : ''}
-      onChange={handleChangeInParentsSelector}
-      onBlur={() => setTouched(true)}
-    />
-    <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} setIsValidForField={setIsValidForField} />
-          </FormEleContainer>
+  return (
+    <FormEleContainer width="w-full">
+      <FormElementLabel label={formEle.label!} />
+      <Select
+        defaultValue={ParentElement.infoStringToObjForOptionsGroup(element[formEle.fieldName], selectOptions as any)}
+        isMulti={true}
+        name={formEle.fieldName}
+        options={selectOptions as any}
+        className={!isValid && touched ? 'border border-red-600 rounded' : ''}
+        onChange={handleChangeInParentsSelector}
+        onBlur={() => setTouched(true)}
+      />
+      <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} setIsValidForField={setIsValidForField} />
+    </FormEleContainer>
   )
 }, (prevProps, nextProps) => (
   prevProps.element[prevProps.formEle.fieldName] === nextProps.element[nextProps.formEle.fieldName] &&
