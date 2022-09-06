@@ -2,7 +2,7 @@ import { Action } from 'app/libs/redux/action.type'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 
 export interface IFormElesValidState {
-  [formEleUniqueId: string]: boolean;
+  [formEleUniqueId: string]: boolean
 }
 
 /**

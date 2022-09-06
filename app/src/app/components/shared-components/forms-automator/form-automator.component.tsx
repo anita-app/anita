@@ -3,10 +3,10 @@ import { FieldSelector } from 'app/components/shared-components/forms-automator/
 import React from 'react'
 
 export interface IFormAutomatorProps {
-  formModel: ISection['formModel'];
-  element: { [key: string]: any };
-  handleChange: (...args: any) => void;
-  [customProps: string]: any;
+  formModel: ISection['formModel']
+  element: { [key: string]: any }
+  handleChange: (...args: any) => void
+  [customProps: string]: any
 
 }
 

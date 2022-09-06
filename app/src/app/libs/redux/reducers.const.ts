@@ -25,11 +25,11 @@ export const REDUCERS = {
  * Types managed by reducers
  */
 export interface AnitaStore {
-  project: TSystemData;
-  projects: Array<LocalProjectSettings>;
-  sectionsForChildOfSelector: Array<SectionDetailsDeclaration>;
-  formElesValidState: IFormElesValidState;
-  formElement: IFormElementState;
-  formProject: IFormProjectState;
-  layout: ILayoutState;
+  project: TSystemData
+  projects: Array<LocalProjectSettings>
+  sectionsForChildOfSelector: Array<SectionDetailsDeclaration>
+  formElesValidState: IFormElesValidState
+  formElement: IFormElementState
+  formProject: IFormProjectState
+  layout: ILayoutState
 }

@@ -35,15 +35,15 @@ export interface ISectionViewSettings {
  * These fields are for the object to be stored in `sections.formModel[]` of the `AnitaUniversalDataStorage` store.
  */
 export interface ISectionCustomFieldProperties {
-  componentCode: FORM_COMPONENTS_CODES;
-  type?: TextInputSupportedTypes;
-  fieldName: string;
-  label?: string;
-  options?: Array<IOptionKeysModel>;
-  required?: boolean;
-  externalLabel?: boolean;
-  value?: any;
-  width?: number;
-  [RESERVED_FIELDS.id]?: never;
-  [RESERVED_FIELDS.createdAt]?: never;
+  componentCode: FORM_COMPONENTS_CODES
+  type?: TextInputSupportedTypes
+  fieldName: string
+  label?: string
+  options?: Array<IOptionKeysModel>
+  required?: boolean
+  externalLabel?: boolean
+  value?: any
+  width?: number
+  [RESERVED_FIELDS.id]?: never
+  [RESERVED_FIELDS.createdAt]?: never
 }

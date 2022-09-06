@@ -16,10 +16,10 @@ export type FormModel<T = FormFieldsModel<TSupportedFormsTypes>> = Array<T>;
 export type FormAutomatorOnChangeValue = string | number | boolean | Array<string> | null
 
 export interface ICommonFormEleProps<T = FormFieldsModel<TSupportedFormsTypes>> {
-  formEle: T;
-  element: Partial<ISectionElement>;
-  handleChange: (fieldName: string | number, value: FormAutomatorOnChangeValue) => void;
-  [customProps: string]: any;
+  formEle: T
+  element: Partial<ISectionElement>
+  handleChange: (fieldName: string | number, value: FormAutomatorOnChangeValue) => void
+  [customProps: string]: any
 }
 
 /**
@@ -28,13 +28,13 @@ export interface ICommonFormEleProps<T = FormFieldsModel<TSupportedFormsTypes>> 
  * The value of each key is an Array of all the possible values that fulfill the prerequsite.
  */
 export interface Prerequisites {
-  [fieldToCheckIdentifier: string]: Array<string | number | boolean | undefined>;
+  [fieldToCheckIdentifier: string]: Array<string | number | boolean | undefined>
 }
 
 interface IHiddenInput<T> extends ICommonTypes<T> {
-  componentCode: FORM_COMPONENTS_CODES.hiddenInput;
-  required?: boolean;
-  value?: string | (() => string);
+  componentCode: FORM_COMPONENTS_CODES.hiddenInput
+  required?: boolean
+  value?: string | (() => string)
 }
 
 interface IBasicInput<T> extends ICommonTypes<T> {
@@ -45,15 +45,15 @@ interface IBasicInput<T> extends ICommonTypes<T> {
 }
 
 interface IBasicTextarea<T> extends ICommonTypes<T> {
-  componentCode: FORM_COMPONENTS_CODES.basicTextarea;
-  value?: string;
-  required?: boolean;
+  componentCode: FORM_COMPONENTS_CODES.basicTextarea
+  value?: string
+  required?: boolean
 }
 
 interface IBasicCheckbox<T> extends ICommonTypes<T> {
-  componentCode: FORM_COMPONENTS_CODES.basicCheckbox;
-  value?: boolean;
-  description?: string;
+  componentCode: FORM_COMPONENTS_CODES.basicCheckbox
+  value?: boolean
+  description?: string
   required?: boolean
   type?: never
 }
@@ -62,8 +62,8 @@ interface IBasicCheckbox<T> extends ICommonTypes<T> {
  * Defines the structure of possible choices to be selected in a Radio or Select html element.
  */
 export interface OptionKeysModelGroup {
-  label: string;
-  options: Array<IOptionKeysModel>;
+  label: string
+  options: Array<IOptionKeysModel>
 }
 
 /**
@@ -78,36 +78,36 @@ export interface IOptionKeysModel {
 }
 
 export interface IBasicRadio<T> extends ICommonTypes<T> {
-  componentCode: FORM_COMPONENTS_CODES.basicRadio;
-  options: Array<IOptionKeysModel>;
-  value?: string | number;
-  required?: boolean;
+  componentCode: FORM_COMPONENTS_CODES.basicRadio
+  options: Array<IOptionKeysModel>
+  value?: string | number
+  required?: boolean
 }
 
 export interface IBasicSelect<T> extends ICommonTypes<T> {
-  componentCode: FORM_COMPONENTS_CODES.basicSelect | FORM_COMPONENTS_CODES.childOfSelectorForSection | FORM_COMPONENTS_CODES.parentsSelector;
-  options: Array<IOptionKeysModel>;
-  value?: string | number;
-  required?: boolean;
+  componentCode: FORM_COMPONENTS_CODES.basicSelect | FORM_COMPONENTS_CODES.childOfSelectorForSection | FORM_COMPONENTS_CODES.parentsSelector
+  options: Array<IOptionKeysModel>
+  value?: string | number
+  required?: boolean
 }
 
 interface IOptionsMaker<T> extends ICommonTypes<T> {
-  componentCode: FORM_COMPONENTS_CODES.optionsMaker;
-  value?: string | number;
-  type: TextInputSupportedTypes.text;
-  required?: boolean;
+  componentCode: FORM_COMPONENTS_CODES.optionsMaker
+  value?: string | number
+  type: TextInputSupportedTypes.text
+  required?: boolean
 }
 
 interface IDatePicker<T> extends ICommonTypes<T> {
-  componentCode: FORM_COMPONENTS_CODES.datePicker;
-  value?: string;
-  required?: boolean;
+  componentCode: FORM_COMPONENTS_CODES.datePicker
+  value?: string
+  required?: boolean
 }
 
 interface IDateTimePicker<T> extends ICommonTypes<T> {
-  componentCode: FORM_COMPONENTS_CODES.dateTimePicker;
-  value?: string;
-  required?: boolean;
+  componentCode: FORM_COMPONENTS_CODES.dateTimePicker
+  value?: string
+  required?: boolean
 }
 
 interface ICommonTypes<T> {

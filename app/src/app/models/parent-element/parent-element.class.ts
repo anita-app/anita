@@ -1,9 +1,9 @@
 import { TIconName } from 'app/libs/icons/icons.class'
 
-export interface IOption { value: string | number, label: string, icon?: TIconName }
+export interface IOption { value: string | number; label: string; icon?: TIconName }
 
 interface IOptionKeysModelGroup {
-  label: string;
+  label: string
   options: Array<IOption>
 }
 

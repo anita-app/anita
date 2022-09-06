@@ -9,28 +9,28 @@ export interface DbConnectorConstructable<DbTypes> {
     allSez: Array<SectionDefinition<any>>,
     executers: DbObjects<unknown, DbTypes>,
     options: DsDbInitOptions
-  ): DbConnectorInstance<DbTypes>;
+  ): DbConnectorInstance<DbTypes>
 }
 
 export interface DbConnectorInstance<DbTypes> {
-  dbStore: DbStoreInterface<DbTypes>;
-  DS: AbstractModel;
-  options: DsDbInitOptions;
-  init(): Promise<DbConnectorInstance<DbTypes>>;
-  callInsertor<E>(section: keyof AbstractModel, element: E): Insertor<E>;
-  callSelector<E>(section: keyof AbstractModel, args?: Partial<E>): Selector<E>;
-  callUpdator<E>(section: keyof AbstractModel, element: Partial<E>): Updator<E>;
-  callDeletor<E>(section: keyof AbstractModel, args?: Partial<E>): Deletor<E>;
+  dbStore: DbStoreInterface<DbTypes>
+  DS: AbstractModel
+  options: DsDbInitOptions
+  init(): Promise<DbConnectorInstance<DbTypes>>
+  callInsertor<E>(section: keyof AbstractModel, element: E): Insertor<E>
+  callSelector<E>(section: keyof AbstractModel, args?: Partial<E>): Selector<E>
+  callUpdator<E>(section: keyof AbstractModel, element: Partial<E>): Updator<E>
+  callDeletor<E>(section: keyof AbstractModel, args?: Partial<E>): Deletor<E>
 }
 
 /**
  * Interface of the object to be passed to DbInit as the plugin implementing the logic to perform queries on the storage facility.
  */
 export interface DbObjects<E, DbTypes> {
-  insertor: InsertorConstructable<E, DbTypes>,
-  selector: SelectorConstructable<E, DbTypes>,
-  updator: UpdatorConstructable<E, DbTypes>,
-  deletor: DeletorConstructable<E, DbTypes>,
+  insertor: InsertorConstructable<E, DbTypes>
+  selector: SelectorConstructable<E, DbTypes>
+  updator: UpdatorConstructable<E, DbTypes>
+  deletor: DeletorConstructable<E, DbTypes>
   dbStore?: DbStoreConstructable<DbTypes>
 }
 
@@ -38,8 +38,8 @@ export interface DbObjects<E, DbTypes> {
  * Db connection data of a connected instance of Deta Base
  */
 export interface DetaConnectionData {
-  projectKey: string;
-  projectId: string;
+  projectKey: string
+  projectId: string
 }
 
 /**
@@ -48,18 +48,18 @@ export interface DetaConnectionData {
  */
 export interface DsDbInitOptions {
   // Deta
-  detaConnectionData?: DetaConnectionData;
+  detaConnectionData?: DetaConnectionData
   // File System
-  projectInfo?: LocalProjectSettings;
+  projectInfo?: LocalProjectSettings
   // MySQL
-  mySqlConnectionConfig?: ConnectionConfig;
+  mySqlConnectionConfig?: ConnectionConfig
   // IndexedDB
-  indexedDbName?: string;
-  DS?: AbstractModel;
-  previousVersions?: Array<Array<string>>;
+  indexedDbName?: string
+  DS?: AbstractModel
+  previousVersions?: Array<Array<string>>
   // Encryption
-  encrypted?: boolean;
-  encryptionKeys?: { [userId: string]: string };
+  encrypted?: boolean
+  encryptionKeys?: { [userId: string]: string }
 }
 
 interface DbStoreConstructable<DbTypes> {
@@ -70,12 +70,12 @@ interface DbStoreConstructable<DbTypes> {
 }
 
 interface DbStoreInterface<DbTypes> {
-  db: DbTypes;
-  initDB(): Promise<DbStoreInterface<DbTypes>>;
-  close(): void;
-  postProjectCreation?(args?: {}): Promise<AdditionalInfoForLocalStorage>;
-  postProjectUpdate?(args?: {}): Promise<AdditionalInfoForLocalStorage>;
-  onProjectDeleted?(): Promise<void>;
+  db: DbTypes
+  initDB(): Promise<DbStoreInterface<DbTypes>>
+  close(): void
+  postProjectCreation?(args?: {}): Promise<AdditionalInfoForLocalStorage>
+  postProjectUpdate?(args?: {}): Promise<AdditionalInfoForLocalStorage>
+  onProjectDeleted?(): Promise<void>
 }
 
 /**
@@ -86,14 +86,14 @@ interface InsertorConstructable<E, DbTypes> {
     dbConnector: DbConnectorInstance<DbTypes>,
     section: keyof AbstractModel,
     element: Array<E> | E
-  ): Insertor<E>;
+  ): Insertor<E>
 }
 /**
  * Defines the public interface that a Insertor instance must have
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface Insertor<E> {
-  autoInsert(): Promise<void>;
+  autoInsert(): Promise<void>
 }
 
 /**
@@ -104,14 +104,14 @@ interface SelectorConstructable<E, DbTypes> {
     dbConnector: DbConnectorInstance<DbTypes>,
     section: keyof AbstractModel,
     args?: Partial<E>
-  ): Selector<E>;
+  ): Selector<E>
 }
 
 /**
  * Defines the public interface that a Selector instance must have
  */
 interface Selector<E> {
-  single(): Promise<E | void>;
+  single(): Promise<E | void>
   multiple(): Promise<Array<E>>
   count(): Promise<number>
 }
@@ -124,14 +124,14 @@ interface UpdatorConstructable<E, DbTypes> {
     dbConnector: DbConnectorInstance<DbTypes>,
     section: keyof AbstractModel,
     element: Partial<E>
-  ): Updator<E>;
+  ): Updator<E>
 }
 
 /**
  * Defines the public interface that a Updator instance must have
  */
 interface Updator<E> {
-  autoUpdate(): Promise<void>;
+  autoUpdate(): Promise<void>
 }
 
 /**
@@ -142,13 +142,13 @@ interface DeletorConstructable<E, DbTypes> {
     dbConnector: DbConnectorInstance<DbTypes>,
     section: keyof AbstractModel,
     args: Partial<E>
-  ): Deletor<E>;
+  ): Deletor<E>
 }
 
 /**
  * Defines the public interface that a Deletor instance must have
  */
 interface Deletor<E> {
-  autoDelete(): Promise<void>;
-  clearSection(): Promise<void>;
+  autoDelete(): Promise<void>
+  clearSection(): Promise<void>
 }

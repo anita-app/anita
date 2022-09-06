@@ -6,17 +6,17 @@ import React from 'react'
 import { Icons, TIconName } from 'app/libs/icons/icons.class'
 
 interface IAddElementButtonProps {
-  projectId: string;
-  sectionId: string;
-  mode: EDITOR_MODE.add;
-  elementId?: never;
+  projectId: string
+  sectionId: string
+  mode: EDITOR_MODE.add
+  elementId?: never
 }
 
 interface IEditElementButtonProps {
-  projectId: string;
-  sectionId: string;
-  elementId: string;
-  mode: EDITOR_MODE.edit;
+  projectId: string
+  sectionId: string
+  elementId: string
+  mode: EDITOR_MODE.edit
 }
 
 type IAddEditElementButtonProps = | IAddElementButtonProps | IEditElementButtonProps;

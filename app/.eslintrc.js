@@ -32,6 +32,7 @@ module.exports = {
     '@typescript-eslint:disable:ordered-imports': 'off',
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': ['error', { varsIgnorePattern: 'React' }],
+    '@typescript-eslint/member-delimiter-style': ['error', { multiline: { delimiter: 'none' } }],
     'no-useless-constructor': 'off',
     '@typescript-eslint/array-type': [2, { default: 'generic' }],
     '@typescript-eslint/explicit-member-accessibility': ['error', {

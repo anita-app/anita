@@ -25,9 +25,9 @@ import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 
 interface ISectionFormModelManagerProps {
-  indexSection: number;
-  indexFormElement: number;
-  element: FormFieldsModel<TSupportedFormsTypes>;
+  indexSection: number
+  indexFormElement: number
+  element: FormFieldsModel<TSupportedFormsTypes>
 }
 
 const getAlreadyExists = (section: ISection, fieldName: string): boolean => {

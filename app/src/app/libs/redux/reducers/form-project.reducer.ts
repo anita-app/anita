@@ -8,8 +8,8 @@ import cloneDeep from 'lodash.clonedeep'
 import { ISectionCustomFieldProperties } from 'app/models/section/section.declarations'
 
 export interface IFormProjectState {
-  original: Partial<TSystemData>;
-  project: Partial<TSystemData>;
+  original: Partial<TSystemData>
+  project: Partial<TSystemData>
   mode: PROJECT_EDITOR_MODE
 }
 

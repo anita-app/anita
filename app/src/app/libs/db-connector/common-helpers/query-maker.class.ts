@@ -7,9 +7,9 @@ import { Database } from 'sql.js'
 import squel from 'squel'
 
 export interface WhereArgs {
-  field: string;
-  operator: string;
-  value: number | string;
+  field: string
+  operator: string
+  value: number | string
 }
 
 /**
