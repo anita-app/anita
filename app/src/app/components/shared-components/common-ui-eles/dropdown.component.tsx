@@ -1,6 +1,6 @@
 import React, { Fragment, useRef } from 'react'
 import { Menu, Transition } from '@headlessui/react'
-import { TIconName } from 'app/libs/icons-n/icons.class'
+import { TIconName } from 'app/libs/icons/icons.class'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { useClickOutside } from 'app/components/hooks/click-outside.hook'
