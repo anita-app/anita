@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.14.20] - 2022-09-06
+### Changed
+- updated landing example.
+
 ## [0.14.19] - 2022-09-06
 ### Added
 - improved landing description with typewriter.
