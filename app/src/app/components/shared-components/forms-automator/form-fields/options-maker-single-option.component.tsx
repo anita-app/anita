@@ -1,5 +1,6 @@
 import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const'
-import { RESERVED_AUDS_KEYS, ISection } from 'app/data/project-structure/project-info'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
+import { ISection } from 'app/models/section/section.declarations'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { FormAutomator } from 'app/components/shared-components/forms-automator/form-automator.component'

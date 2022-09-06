@@ -1,12 +1,12 @@
 import { DbInitializer } from 'app/data/local-dbs/db-initializer.class'
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
-import { RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info'
+import { RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
 import { SaveProjectSettingsInIndexedDB } from 'app/models/project/save-project-settings-in-indexed-db.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 
 export class ProjectSaver {
   constructor (
-    private project: SystemData = {
+    private project: TSystemData = {
       [RESERVED_AUDS_KEYS._settings]: [],
       [RESERVED_AUDS_KEYS._sections]: []
     },
@@ -14,7 +14,7 @@ export class ProjectSaver {
 
   ) { }
 
-  public async save (): Promise<SystemData> {
+  public async save (): Promise<TSystemData> {
     if (this.mode === EDITOR_MODE.edit) {
       this.setupdatedAt()
     } else {

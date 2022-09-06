@@ -1,5 +1,6 @@
-import { ISection, SectionElement } from 'app/data/project-structure/project-info'
-import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant'
+import { ISectionElement } from 'app/models/section-element/section-element.declarations'
+import { ISection } from 'app/models/section/section.declarations'
+import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import { FormFieldsModel, IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
 
@@ -9,7 +10,7 @@ import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-au
  * @see ParentsSelector
  */
 export class ParentInfoFormEleBuilder {
-  private parentInfoFormModel: FormFieldsModel<SectionElement> | undefined
+  private parentInfoFormModel: FormFieldsModel<ISectionElement> | undefined
   private options: Array<IOptionKeysModel> = []
 
   constructor (
@@ -18,7 +19,7 @@ export class ParentInfoFormEleBuilder {
 
   ) { }
 
-  public build (): FormFieldsModel<SectionElement> {
+  public build (): FormFieldsModel<ISectionElement> {
     this.setOptions()
     this.setParentSelector()
     return this.parentInfoFormModel!

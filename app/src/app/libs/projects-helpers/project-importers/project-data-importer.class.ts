@@ -1,7 +1,7 @@
 import { DbInitializer } from 'app/data/local-dbs/db-initializer.class'
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
-import { AdditionalInfoForLocalStorage, AnitaUniversalDataStorage, IProjectSettings, LocalProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info'
+import { AdditionalInfoForLocalStorage, TAnitaUniversalDataStorage, IProjectSettings, LocalProjectSettings, RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api'
 import { SaveProjectSettingsInIndexedDB } from 'app/models/project/save-project-settings-in-indexed-db.class'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
@@ -23,7 +23,7 @@ export class ProjectDataImporter {
    * @param fileHandle FileSystemFileHandle of the project to import
    */
   constructor (
-    private projectData: AnitaUniversalDataStorage,
+    private projectData: TAnitaUniversalDataStorage,
     private fileHandle?: FileSystemFileHandle
 
   ) { }

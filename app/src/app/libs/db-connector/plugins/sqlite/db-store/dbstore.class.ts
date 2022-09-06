@@ -1,4 +1,5 @@
-import { AdditionalInfoForLocalStorage, ISection } from 'app/data/project-structure/project-info'
+import { AdditionalInfoForLocalStorage } from 'app/models/project/project.declarations'
+import { ISection } from 'app/models/section/section.declarations'
 import { DataStructureExtender } from 'app/data/system-local-db/data-structure-extender.class'
 import { audsSections } from 'app/data/system-local-db/sections/auds-sections.const'
 import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'

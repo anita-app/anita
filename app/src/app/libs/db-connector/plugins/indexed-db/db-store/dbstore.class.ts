@@ -1,4 +1,4 @@
-import { AdditionalInfoForLocalStorage, RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info'
+import { AdditionalInfoForLocalStorage, RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
 import { DataStructureExtender } from 'app/data/system-local-db/data-structure-extender.class'
 import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 import { DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers'
@@ -38,7 +38,7 @@ export class DbStore implements DbStoreInterface<Dexie> {
     return this.makeDexieInfoForUpgrade()
   }
 
-  public async postProjectUpdate (project: SystemData): Promise<AdditionalInfoForLocalStorage> {
+  public async postProjectUpdate (project: TSystemData): Promise<AdditionalInfoForLocalStorage> {
     const newSections = Object.keys(project).concat(project[RESERVED_AUDS_KEYS._sections].map(section => section.id))
     const oldSections = Object.keys(this.DS)
 

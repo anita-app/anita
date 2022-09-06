@@ -1,18 +1,15 @@
-import {
-  IProjectSettings,
-  ISectionCustomFieldProperties,
-  SectionDetailsDeclaration,
-  SectionElement
-} from 'app/data/project-structure/project-info'
+import { IProjectSettings } from 'app/models/project/project.declarations'
+import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
 import { TextInputSupportedTypes } from 'app/components/shared-components/forms-automator/input-supported-types.const'
 import { TIconName } from 'app/libs/icons/icons.class'
+import { ISectionCustomFieldProperties, SectionDetailsDeclaration } from 'app/models/section/section.declarations'
 
 export type FormFieldsModel<T extends TSupportedFormsTypes = TSupportedFormsTypes> = IBasicInput<T> | IBasicCheckbox<T> | IBasicSelect<T> | IBasicRadio<T> | IBasicTextarea<T> | IHiddenInput<T> | IOptionsMaker<T> | IDatePicker<T> | IDateTimePicker<T>;
 
 export type TFormFieldWithOptions<T extends TSupportedFormsTypes = TSupportedFormsTypes> = FormFieldsModel<T> & { options: Array<IOptionKeysModel> };
 
-export type TSupportedFormsTypes = IProjectSettings | SectionElement | ISectionCustomFieldProperties | SectionDetailsDeclaration | IOptionKeysModel;
+export type TSupportedFormsTypes = IProjectSettings | ISectionElement | ISectionCustomFieldProperties | SectionDetailsDeclaration | IOptionKeysModel;
 
 export type FormModel<T = FormFieldsModel<TSupportedFormsTypes>> = Array<T>;
 
@@ -20,7 +17,7 @@ export type FormAutomatorOnChangeValue = string | number | boolean | Array<strin
 
 export interface ICommonFormEleProps<T = FormFieldsModel<TSupportedFormsTypes>> {
   formEle: T;
-  element: Partial<SectionElement>;
+  element: Partial<ISectionElement>;
   handleChange: (fieldName: string | number, value: FormAutomatorOnChangeValue) => void;
   [customProps: string]: any;
 }

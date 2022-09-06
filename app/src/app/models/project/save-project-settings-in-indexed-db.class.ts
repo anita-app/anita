@@ -1,5 +1,5 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
-import { AdditionalInfoForLocalStorage, LocalProjectSettings, IProjectSettings } from 'app/data/project-structure/project-info'
+import { AdditionalInfoForLocalStorage, LocalProjectSettings, IProjectSettings } from 'app/models/project/project.declarations'
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
 
 /**

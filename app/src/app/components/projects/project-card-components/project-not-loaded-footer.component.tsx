@@ -1,4 +1,4 @@
-import { IProjectSettings } from 'app/data/project-structure/project-info'
+import { IProjectSettings } from 'app/models/project/project.declarations'
 import { Manager } from 'app/libs/manager/manager.class'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import React from 'react'

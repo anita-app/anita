@@ -1,6 +1,7 @@
 import { URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const'
-import { RESERVED_AUDS_KEYS, ISection } from 'app/data/project-structure/project-info'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
+import { ISection } from 'app/models/section/section.declarations'
 import {
   IUpdateFormProjectUpdateFormModelAddOptionPayload,
   IUpdateFormProjectUpdateFormModelDeleteOptionPayload,

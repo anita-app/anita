@@ -1,5 +1,6 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
-import { AnitaUniversalDataStorage, SectionElement } from 'app/data/project-structure/project-info'
+import { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
+import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { FsHelper } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper'
 
 export enum ExportScope {
@@ -10,10 +11,10 @@ export enum ExportScope {
 
 export class ProjectExporter {
   private jsonData: string = ''
-  private projectToExport: Partial<AnitaUniversalDataStorage> = {}
+  private projectToExport: Partial<TAnitaUniversalDataStorage> = {}
 
   constructor (
-    private systemData: Partial<AnitaUniversalDataStorage>
+    private systemData: Partial<TAnitaUniversalDataStorage>
   ) {}
 
   /**
@@ -49,7 +50,7 @@ export class ProjectExporter {
    * Retrieve the data of each section and add it to the object to export
    */
   private async getSectionData (sectionId: string): Promise<void> {
-    const data = await dbInstances[this.systemData._settings?.[0].id!].callSelector<SectionElement>(sectionId).multiple() || []
+    const data = await dbInstances[this.systemData._settings?.[0].id!].callSelector<ISectionElement>(sectionId).multiple() || []
     this.projectToExport[sectionId] = data
   }
 

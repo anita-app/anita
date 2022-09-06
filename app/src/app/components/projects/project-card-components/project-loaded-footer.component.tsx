@@ -1,6 +1,6 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
-import { IProjectSettings } from 'app/data/project-structure/project-info'
+import { IProjectSettings } from 'app/models/project/project.declarations'
 import { EditButton } from 'app/components/shared-components/buttons/edit-project-button.component'
 import { ExportButton } from 'app/components/shared-components/buttons/export-project-button.component'
 import React from 'react'

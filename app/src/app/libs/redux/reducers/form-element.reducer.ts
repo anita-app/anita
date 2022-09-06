@@ -1,9 +1,9 @@
-import { SectionElement } from 'app/data/project-structure/project-info'
+import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { Action } from 'app/libs/redux/action.type'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 
 export interface IFormElementState {
-  element: SectionElement | undefined | null;
+  element: ISectionElement | undefined | null;
 }
 
 /**

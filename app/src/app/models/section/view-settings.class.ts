@@ -1,4 +1,4 @@
-import { ISectionViewSettings } from 'app/data/project-structure/project-info'
+import { ISectionViewSettings } from 'app/models/section/section.declarations'
 import { SupportedViews } from 'app/models/section/view-settings.const'
 
 export class ViewSettings {

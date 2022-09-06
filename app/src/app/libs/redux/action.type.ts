@@ -1,11 +1,10 @@
 import {
   LocalProjectSettings,
   IProjectSettings,
-  ISection,
-  SectionDetailsDeclaration,
-  SectionElement,
-  SystemData
-} from 'app/data/project-structure/project-info'
+  TSystemData
+} from 'app/models/project/project.declarations'
+import { ISectionElement } from 'app/models/section-element/section-element.declarations'
+import { ISection, SectionDetailsDeclaration } from 'app/models/section/section.declarations'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
 
@@ -26,11 +25,11 @@ interface ActionWithoutPayload {
 interface ActionsPayloads {
   [REDUX_ACTIONS.addProjectToList]: LocalProjectSettings;
   [REDUX_ACTIONS.setProjectList]: Array<LocalProjectSettings>;
-  [REDUX_ACTIONS.setCurrentProject]: SystemData;
+  [REDUX_ACTIONS.setCurrentProject]: TSystemData;
   [REDUX_ACTIONS.addSectionForChildOfSelector]: SectionDetailsDeclaration;
-  [REDUX_ACTIONS.updateFormElement]: SectionElement;
-  [REDUX_ACTIONS.updateFormElementKey]: { fieldName: keyof SectionElement, value: SectionElement[keyof SectionElement] };
-  [REDUX_ACTIONS.setFormProject]: SystemData;
+  [REDUX_ACTIONS.updateFormElement]: ISectionElement;
+  [REDUX_ACTIONS.updateFormElementKey]: { fieldName: keyof ISectionElement, value: ISectionElement[keyof ISectionElement] };
+  [REDUX_ACTIONS.setFormProject]: TSystemData;
   [REDUX_ACTIONS.updateFormProjectSettings]: { fieldName: keyof IProjectSettings, value: IProjectSettings[keyof IProjectSettings] };
   [REDUX_ACTIONS.setValidStateForEle]: IValidStateForEle;
   [REDUX_ACTIONS.unsetValidStateForEle]: string;

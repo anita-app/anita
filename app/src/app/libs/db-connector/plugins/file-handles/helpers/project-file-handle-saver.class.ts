@@ -1,4 +1,4 @@
-import { AnitaUniversalDataStorage } from 'app/data/project-structure/project-info'
+import { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
 import { DbConnectorInstance } from 'app/libs/db-connector/models/executers'
 import { FsHelper } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper'
 
@@ -18,7 +18,7 @@ export class ProjectFileHandleSaver {
    * @param projectData full data of the project to be saved
    */
   constructor (
-    private dbConnector: DbConnectorInstance<AnitaUniversalDataStorage>
+    private dbConnector: DbConnectorInstance<TAnitaUniversalDataStorage>
   ) { }
 
   /**

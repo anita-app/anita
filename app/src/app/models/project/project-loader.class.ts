@@ -3,9 +3,9 @@ import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import {
   LocalProjectSettings,
   IProjectSettings,
-  RESERVED_AUDS_KEYS,
-  ISection
-} from 'app/data/project-structure/project-info'
+  RESERVED_AUDS_KEYS
+} from 'app/models/project/project.declarations'
+import { ISection } from 'app/models/section/section.declarations'
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
 import { Logger } from 'app/libs/logger/logger.class'
 import { Manager } from 'app/libs/manager/manager.class'

@@ -1,5 +1,5 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
-import { SectionElement } from 'app/data/project-structure/project-info'
+import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { ProjectTableList } from 'app/components/project/project-table-list/project-table-list.component'
 import { NoSectionData } from 'app/components/project/project-no-section-data.component'
@@ -22,7 +22,7 @@ export const SectionElementsList: React.FC = () => {
   const params = useParams()
   const projectId = params[URL_PARAMS.projectId]
   const sectionId = params[URL_PARAMS.sectionId]
-  const [sectionData, setSectionData] = useState<Array<SectionElement> | undefined | null>(null)
+  const [sectionData, setSectionData] = useState<Array<ISectionElement> | undefined | null>(null)
   console.log('Manager.getCurrentProject()?.getSectionById(sectionId)', Manager.getCurrentProject()?.getSectionById(sectionId)?.getPreferredView())
   const [activeTab, setActiveTab] = useState<SupportedViews>(Manager.getCurrentProject()?.getSectionById(sectionId)?.getPreferredView() || SupportedViews.table)
 

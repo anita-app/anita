@@ -1,4 +1,5 @@
-import { AnitaUniversalDataStorage, SectionElement } from 'app/data/project-structure/project-info'
+import { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
+import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 import { DbConnectorInstance } from 'app/libs/db-connector/models/executers'
 import { ProjectFileHandleSaver } from 'app/libs/db-connector/plugins/file-handles/helpers/project-file-handle-saver.class'
@@ -13,7 +14,7 @@ export class ElementAdderToCollection<E> {
    * @param element the element to insert
    */
   constructor (
-    protected dbConnector: DbConnectorInstance<AnitaUniversalDataStorage>,
+    protected dbConnector: DbConnectorInstance<TAnitaUniversalDataStorage>,
     protected section: keyof AbstractModel,
     protected elements: Array<Partial<E>> | Partial<E>
   ) { }
@@ -51,7 +52,7 @@ export class ElementAdderToCollection<E> {
    * @remarks The index is used by `addToStore` to replace the existing element with the new one when in edit mode.
    */
   protected checkIfElementInStoreAndSetIndex (): void {
-    const elements = this.dbConnector.dbStore.db[this.section] as Array<SectionElement>
+    const elements = this.dbConnector.dbStore.db[this.section] as Array<ISectionElement>
     const check = elements.findIndex(ele => this.element[this.dbConnector.DS[this.section].pk as keyof E] === ele[this.dbConnector.DS[this.section].pk])
     this.index = (check >= 0) ? check : elements.length
   }
@@ -60,6 +61,6 @@ export class ElementAdderToCollection<E> {
    * Adds the element to the end of the store if it's a new element, otherwise replaces the existing element.
    */
   private addToStore (): void {
-    this.dbConnector.dbStore.db[this.section][this.index] = this.element as unknown as SectionElement
+    this.dbConnector.dbStore.db[this.section][this.index] = this.element as unknown as ISectionElement
   }
 }

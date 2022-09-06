@@ -1,6 +1,6 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
-import { SectionElement } from 'app/data/project-structure/project-info'
-import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant'
+import { ISectionElement } from 'app/models/section-element/section-element.declarations'
+import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import { SectionModel } from 'app/libs/db-connector/db-builder/sez-definition'
 import { IdCreator } from 'app/libs/id-creator/id-creator.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
@@ -12,7 +12,7 @@ export class SectionElementSaver {
   /**
    * Reference to section model in DS for easier access in code
    */
-  private sectionModelInDS: SectionModel<SectionElement> | undefined
+  private sectionModelInDS: SectionModel<ISectionElement> | undefined
 
   /**
    * Creates an instance of element saver.
@@ -23,14 +23,14 @@ export class SectionElementSaver {
   constructor (
     private projectId: string,
     private sectionId: string,
-    private element: SectionElement,
+    private element: ISectionElement,
     private mode: EDITOR_MODE
   ) { }
 
   /**
    * Deep clones the project, adds/updated the element in the project to save and finally save the project
    */
-  public async save (): Promise<SectionElement> {
+  public async save (): Promise<ISectionElement> {
     this.setSectionModel()
     this.checkAndSetPk()
     this.setcreatedAt()

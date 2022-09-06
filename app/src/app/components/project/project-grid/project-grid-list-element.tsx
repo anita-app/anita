@@ -1,11 +1,11 @@
 import React, { useRef } from 'react'
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
-import { SectionElement } from 'app/data/project-structure/project-info'
+import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { useNavigate, useParams } from 'react-router-dom'
 
 interface IProjectGridListElementProps {
-  element: SectionElement
+  element: ISectionElement
   titleKey: string
   descriptionKey: string
 }

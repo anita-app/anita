@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react'
-import { SectionElement, ISection } from 'app/data/project-structure/project-info'
+import { ISectionElement } from 'app/models/section-element/section-element.declarations'
+import { ISection } from 'app/models/section/section.declarations'
 import { ProjectTableListTdWithLinkToDetails } from 'app/components/project/project-table-list/project-table-list-td-with-link-to-details.component'
 import { customRenderPicker } from 'app/components/project/project-values-renderers/custom-render-picker.component'
 import { useSortBy, useTable, Column } from 'react-table'
@@ -9,7 +10,7 @@ import { useSortBy, useTable, Column } from 'react-table'
  */
 const useSectionInfo = (sectionInfo: ISection) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const colsToShoww: Array<Column<SectionElement>> = useMemo(() => [], [sectionInfo.id, sectionInfo.formModel])
+  const colsToShoww: Array<Column<ISectionElement>> = useMemo(() => [], [sectionInfo.id, sectionInfo.formModel])
   useMemo(
     () => sectionInfo.formModel.forEach(formModel => {
       if (sectionInfo.id && formModel.label) {
@@ -33,7 +34,7 @@ interface HeaderGroupFix {
 
 interface IProjectTableListProps {
   sectionInfo: ISection
-  sectionData: Array<SectionElement>
+  sectionData: Array<ISectionElement>
 }
 
 export const ProjectTableList: React.FC<IProjectTableListProps> = ({ sectionInfo, sectionData }) => {

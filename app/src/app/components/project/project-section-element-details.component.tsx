@@ -1,6 +1,6 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
-import { SectionElement } from 'app/data/project-structure/project-info'
+import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { Manager } from 'app/libs/manager/manager.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { ProjectDeleteSectionElementButton } from 'app/components/project/project-details/project-delete-section-element-button.component'
@@ -13,7 +13,7 @@ import { Loader } from 'app/components/shared-components/loader/loader.component
 import React, { useEffect, useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 
-const ValueWithLabel = ({ formModel, value }: { formModel: FormFieldsModel<SectionElement>, value: any }) => {
+const ValueWithLabel = ({ formModel, value }: { formModel: FormFieldsModel<ISectionElement>, value: any }) => {
   if (typeof value === 'undefined') {
     return null
   }
@@ -26,7 +26,7 @@ const ValueWithLabel = ({ formModel, value }: { formModel: FormFieldsModel<Secti
   )
 }
 
-const ElementValuesViewer = ({ element, formModels }: { element: SectionElement, formModels: Array<FormFieldsModel<SectionElement>> }) => (
+const ElementValuesViewer = ({ element, formModels }: { element: ISectionElement, formModels: Array<FormFieldsModel<ISectionElement>> }) => (
     <div className="p-3">
       {formModels.map((formModel) => {
         if (!formModel.label) {
@@ -40,7 +40,7 @@ const ElementValuesViewer = ({ element, formModels }: { element: SectionElement,
 )
 
 export const SectionElementDetails: React.FC = () => {
-  const [element, setElement] = useState<SectionElement | undefined | null>(null)
+  const [element, setElement] = useState<ISectionElement | undefined | null>(null)
   const params = useParams()
   const projectId = params[URL_PARAMS.projectId]
   const sectionId = params[URL_PARAMS.sectionId]
@@ -58,7 +58,7 @@ export const SectionElementDetails: React.FC = () => {
       const element = await project.getSectionById(sectionId)?.getElementById(elementId)
 
       if (isMounted) {
-        setElement(element as SectionElement | undefined)
+        setElement(element as ISectionElement | undefined)
       }
     }
 

@@ -1,6 +1,7 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
-import { LocalProjectSettings, ISection } from 'app/data/project-structure/project-info'
+import { LocalProjectSettings } from 'app/models/project/project.declarations'
+import { ISection } from 'app/models/section/section.declarations'
 import { DataStructureExtender } from 'app/data/system-local-db/data-structure-extender.class'
 import { DbConnector } from 'app/libs/db-connector/db-connector.class'
 import { FILE_HANDLES_PLUGIN } from 'app/libs/db-connector/plugins/file-handles/exporter.constant'

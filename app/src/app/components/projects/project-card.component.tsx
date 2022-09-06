@@ -1,5 +1,5 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
-import { IProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info'
+import { IProjectSettings, RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { ProjectLoadedFooter } from 'app/components/projects/project-card-components/project-loaded-footer.component'
 import { ProjectNotLoadedFooter } from 'app/components/projects/project-card-components/project-not-loaded-footer.component'

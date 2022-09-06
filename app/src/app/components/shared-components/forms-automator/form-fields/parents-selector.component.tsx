@@ -1,4 +1,4 @@
-import { SectionElement } from 'app/data/project-structure/project-info'
+import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { Manager } from 'app/libs/manager/manager.class'
 import { IOption, ParentElement } from 'app/models/parent-element/parent-element.class'
 import { IBasicSelect, ICommonFormEleProps, OptionKeysModelGroup } from 'app/components/shared-components/forms-automator/form-automator.types'
@@ -14,7 +14,7 @@ import React, {
   useState
 } from 'react'
 import Select, { MultiValue } from 'react-select'
-export const ParentsSelector: React.FC<ICommonFormEleProps<IBasicSelect<SectionElement>>> = memo(function ParentsSelector ({ formEle, element, handleChange }: ICommonFormEleProps<IBasicSelect<SectionElement>>) {
+export const ParentsSelector: React.FC<ICommonFormEleProps<IBasicSelect<ISectionElement>>> = memo(function ParentsSelector ({ formEle, element, handleChange }: ICommonFormEleProps<IBasicSelect<ISectionElement>>) {
   const [selectOptions, setSelectOptions] = useState<Array<OptionKeysModelGroup>>([])
 
   const [touched, setTouched] = useState(false)

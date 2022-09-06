@@ -1,4 +1,5 @@
-import { IProjectSettings, ISection, ParentInfoForDetailsView, RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info'
+import { IProjectSettings, RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
+import { ISection } from 'app/models/section/section.declarations'
 import { GetOptionsForParentsSelector } from 'app/models/project/get-options-for-parents-selector.class'
 import { GetParentInfoForDetailsView } from 'app/models/project/get-parent-info-for-details-view.class'
 import { ProjectDeletor } from 'app/models/project/project-deletor.class'
@@ -7,14 +8,15 @@ import { Section } from 'app/models/section/section.class'
 import { IOptionKeysModel, OptionKeysModelGroup } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { ProjectSaver } from 'app/models/project/project-saver.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
+import { ParentInfoForDetailsView } from 'app/models/parent-element/parent-element.declarations'
 
 export class Project {
-  private settings: SystemData[RESERVED_AUDS_KEYS._settings][0]
-  private sectionsDefinitions: SystemData[RESERVED_AUDS_KEYS._sections]
+  private settings: TSystemData[RESERVED_AUDS_KEYS._settings][0]
+  private sectionsDefinitions: TSystemData[RESERVED_AUDS_KEYS._sections]
   private sections: { [key: string]: Section } = {}
 
   constructor (
-    private systemData: SystemData
+    private systemData: TSystemData
   ) {
     this.settings = systemData[RESERVED_AUDS_KEYS._settings][0]
     this.sectionsDefinitions = systemData[RESERVED_AUDS_KEYS._sections]

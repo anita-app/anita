@@ -1,4 +1,4 @@
-import { SectionElement } from 'app/data/project-structure/project-info'
+import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { Manager } from 'app/libs/manager/manager.class'
 import { ArrayTools } from 'app/libs/tools/array-tools.class'
 import { Project } from 'app/models/project/project.class'
@@ -23,7 +23,7 @@ export class GetOptionsForParentsSelector {
     return this.optionsGroups
   }
 
-  private createGroupOption (sectionId: string, sectionLabel: string, sectionEles: Array<SectionElement>): void {
+  private createGroupOption (sectionId: string, sectionLabel: string, sectionEles: Array<ISectionElement>): void {
     const options: Array<IOptionKeysModel> = []
     const section = Manager.getCurrentProject()?.getSectionById(sectionId)
     if (!section) {

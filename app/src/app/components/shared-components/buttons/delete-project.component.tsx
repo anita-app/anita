@@ -1,5 +1,5 @@
 import { ANITA_URLS } from 'app/libs/routing/anita-routes.constant'
-import { IProjectSettings } from 'app/data/project-structure/project-info'
+import { IProjectSettings } from 'app/models/project/project.declarations'
 import { Manager } from 'app/libs/manager/manager.class'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'

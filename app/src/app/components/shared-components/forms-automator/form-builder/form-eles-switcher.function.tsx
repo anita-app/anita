@@ -1,4 +1,4 @@
-import { SectionElement } from 'app/data/project-structure/project-info'
+import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { IBasicRadio, IBasicSelect, ICommonFormEleProps } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
 import { BasicCheckbox } from 'app/components/shared-components/forms-automator/form-fields/basic-checkbox.component'
@@ -22,19 +22,19 @@ export function formElesSwitcher (key: string, componentCode: FORM_COMPONENTS_CO
     case FORM_COMPONENTS_CODES.dateTimePicker:
       return <BasicInput key={key} {...props} />
     case FORM_COMPONENTS_CODES.basicSelect:
-      return <BasicSelect key={key} {...props as ICommonFormEleProps<IBasicSelect<SectionElement>>} />
+      return <BasicSelect key={key} {...props as ICommonFormEleProps<IBasicSelect<ISectionElement>>} />
     case FORM_COMPONENTS_CODES.basicTextarea:
       return <BasicTextarea key={key} {...props} />
     case FORM_COMPONENTS_CODES.basicCheckbox:
       return <BasicCheckbox key={key} {...props} />
     case FORM_COMPONENTS_CODES.basicRadio:
-      return <BasicRadio key={key} {...props as ICommonFormEleProps<IBasicRadio<SectionElement>>} />
+      return <BasicRadio key={key} {...props as ICommonFormEleProps<IBasicRadio<ISectionElement>>} />
     case FORM_COMPONENTS_CODES.optionsMaker:
       return <OptionsMaker key={key} {...props} />
     case FORM_COMPONENTS_CODES.childOfSelectorForSection:
-      return <ChildOfSelectorForSection key={key} {...props as ICommonFormEleProps<IBasicSelect<SectionElement>>} />
+      return <ChildOfSelectorForSection key={key} {...props as ICommonFormEleProps<IBasicSelect<ISectionElement>>} />
     case FORM_COMPONENTS_CODES.parentsSelector:
-      return <ParentsSelector key={key} {...props as ICommonFormEleProps<IBasicSelect<SectionElement>>} />
+      return <ParentsSelector key={key} {...props as ICommonFormEleProps<IBasicSelect<ISectionElement>>} />
     default:
       return <BasicInput key={key} {...props} />
   }

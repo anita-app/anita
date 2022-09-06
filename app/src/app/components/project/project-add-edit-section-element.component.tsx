@@ -1,5 +1,5 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
-import { SectionElement } from 'app/data/project-structure/project-info'
+import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { Manager } from 'app/libs/manager/manager.class'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
@@ -19,7 +19,7 @@ export const AddEditSectionElement: React.FC = () => {
   const sectionId = params[URL_PARAMS.sectionId]
   const elementId = (mode === EDITOR_MODE.edit) ? params[URL_PARAMS.elementId] : null
 
-  const [element, setElement] = useState<Partial<SectionElement> | null | undefined>(null)
+  const [element, setElement] = useState<Partial<ISectionElement> | null | undefined>(null)
 
   useEffect(() => {
     let isMounted = true
@@ -37,7 +37,7 @@ export const AddEditSectionElement: React.FC = () => {
 
       const element = await project.getSectionById(sectionId)?.getElementById(elementId!)
       if (isMounted) {
-        setElement(element as SectionElement | undefined)
+        setElement(element as ISectionElement | undefined)
       }
     }
 

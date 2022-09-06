@@ -1,6 +1,6 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
-import { AnitaUniversalDataStorage, IProjectSettings, LocalProjectSettings, RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info'
+import { TAnitaUniversalDataStorage, IProjectSettings, LocalProjectSettings, RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { store } from 'app/libs/redux/state.store'
@@ -19,11 +19,11 @@ export class Manager {
     return new ProjectLoader(projectId).loadProject()
   }
 
-  public static saveProject = (systemData: SystemData, mode: EDITOR_MODE): Promise<SystemData> => (
+  public static saveProject = (systemData: TSystemData, mode: EDITOR_MODE): Promise<TSystemData> => (
     new ProjectSaver(systemData, mode).save()
   )
 
-  public static setCurrentProject (systemData: SystemData) {
+  public static setCurrentProject (systemData: TSystemData) {
     const systemDataClone = {
       [RESERVED_AUDS_KEYS._settings]: [{ ...systemData[RESERVED_AUDS_KEYS._settings][0] }],
       [RESERVED_AUDS_KEYS._sections]: [...systemData[RESERVED_AUDS_KEYS._sections]]
@@ -51,7 +51,7 @@ export class Manager {
     }
   }
 
-  public static async importProject (projectData: AnitaUniversalDataStorage, fileHandle?: FileSystemFileHandle): Promise<void> {
+  public static async importProject (projectData: TAnitaUniversalDataStorage, fileHandle?: FileSystemFileHandle): Promise<void> {
     const projectInfo = await new ProjectDataImporter(projectData!, fileHandle).import()
     await new ProjectLoader(projectData[RESERVED_AUDS_KEYS._settings][0].id, projectInfo).loadProject()
     await this.saveProject({ [RESERVED_AUDS_KEYS._settings]: projectData[RESERVED_AUDS_KEYS._settings], [RESERVED_AUDS_KEYS._sections]: projectData[RESERVED_AUDS_KEYS._sections] }, EDITOR_MODE.edit)

@@ -1,6 +1,6 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
-import { RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { ProjectPicker } from 'app/components/admin-layout/components/project-picker.component'
 import { useSelector } from 'react-redux'

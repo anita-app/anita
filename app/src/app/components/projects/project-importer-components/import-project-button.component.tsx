@@ -1,5 +1,5 @@
 import { ANITA_URLS } from 'app/libs/routing/anita-routes.constant'
-import { AnitaUniversalDataStorage, IProjectSettings, RESERVED_AUDS_KEYS } from 'app/data/project-structure/project-info'
+import { TAnitaUniversalDataStorage, IProjectSettings, RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api'
 import { Manager } from 'app/libs/manager/manager.class'
 import { ProjectFileImporter } from 'app/libs/projects-helpers/project-importers/project-file-importer.class'
@@ -21,7 +21,7 @@ export const ImportProjectButton: React.FC<IImportProjectButtonProps> = (props) 
   const navigate = useNavigate()
   const validObj = useSelector((state: AnitaStore) => state.formElesValidState)
   const { showModal } = useModalContext()
-  const projectData = useRef<AnitaUniversalDataStorage>()
+  const projectData = useRef<TAnitaUniversalDataStorage>()
   const projectFileHandle = useRef<FileSystemFileHandle>()
 
   const handleClickImport = async () => {

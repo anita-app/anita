@@ -1,4 +1,4 @@
-import { ISection } from 'app/data/project-structure/project-info'
+import { ISection } from 'app/models/section/section.declarations'
 import { FieldSelector } from 'app/components/shared-components/forms-automator/form-layout/field-selector.component'
 import React from 'react'
 

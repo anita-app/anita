@@ -1,12 +1,12 @@
 import React from 'react'
-import { SectionElement } from 'app/data/project-structure/project-info'
+import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { ProjectGridListElement } from 'app/components/project/project-grid/project-grid-list-element'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
 import { Manager } from 'app/libs/manager/manager.class'
 
 interface IProjectGridListProps {
   sectionId: string
-  sectionData: Array<SectionElement>
+  sectionData: Array<ISectionElement>
 }
 
 export const ProjectGridList: React.FC<IProjectGridListProps> = (props) => {

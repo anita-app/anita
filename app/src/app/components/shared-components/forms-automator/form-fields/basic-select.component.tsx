@@ -1,4 +1,4 @@
-import { SectionElement } from 'app/data/project-structure/project-info'
+import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { IBasicSelect, ICommonFormEleProps } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { calcWidth } from 'app/components/shared-components/forms-automator/form-builder/calc-width.function'
 import { FORM_ELEMENTS_CSS_CLASSES, FORM_ELEMENTS_CSS_CLASSES_ERR } from 'app/components/shared-components/forms-automator/form-layout/fom-elements-css-classes.const'
@@ -13,7 +13,7 @@ import { Combobox, Transition } from '@headlessui/react'
 import { Icons } from 'app/libs/icons/icons.class'
 import { IOption } from 'app/models/parent-element/parent-element.class'
 
-export const BasicSelect: React.FC<ICommonFormEleProps<IBasicSelect<SectionElement>>> = memo(function BasicSelect ({ formEle, element, handleChange }: ICommonFormEleProps<IBasicSelect<SectionElement>>) {
+export const BasicSelect: React.FC<ICommonFormEleProps<IBasicSelect<ISectionElement>>> = memo(function BasicSelect ({ formEle, element, handleChange }: ICommonFormEleProps<IBasicSelect<ISectionElement>>) {
   const [touched, setTouched] = useState(false)
   const [query, setQuery] = useState('')
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))

@@ -1,4 +1,5 @@
-import { RESERVED_AUDS_KEYS, SectionElement } from 'app/data/project-structure/project-info'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
+import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { IOption, ParentElement } from 'app/models/parent-element/parent-element.class'
 import { IBasicSelect, ICommonFormEleProps } from 'app/components/shared-components/forms-automator/form-automator.types'
@@ -16,7 +17,7 @@ import React, {
 import { useSelector } from 'react-redux'
 import Select, { MultiValue } from 'react-select'
 
-export const ChildOfSelectorForSection: React.FC<ICommonFormEleProps<IBasicSelect<SectionElement>>> = memo(function ChildOfSelectorForSection ({ formEle, element, handleChange, sectionId }: ICommonFormEleProps<IBasicSelect<SectionElement>>) {
+export const ChildOfSelectorForSection: React.FC<ICommonFormEleProps<IBasicSelect<ISectionElement>>> = memo(function ChildOfSelectorForSection ({ formEle, element, handleChange, sectionId }: ICommonFormEleProps<IBasicSelect<ISectionElement>>) {
   const currentEditedProjectSections = useSelector((state: AnitaStore) => state.formProject.project[RESERVED_AUDS_KEYS._sections])
   const [selectOptions, setSelectOptions] = useState<Array<IOption>>([])
 

@@ -1,4 +1,4 @@
-import { RESERVED_FIELDS } from 'app/data/project-structure/reserved-fields.constant'
+import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 import { DbConnectorInstance, Insertor } from 'app/libs/db-connector/models/executers'
 import Base from 'deta/dist/types/base'

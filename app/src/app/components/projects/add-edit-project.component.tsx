@@ -1,6 +1,6 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
-import { RESERVED_AUDS_KEYS, SystemData } from 'app/data/project-structure/project-info'
+import { RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
 import { IdCreator } from 'app/libs/id-creator/id-creator.class'
 import { Manager } from 'app/libs/manager/manager.class'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
@@ -25,7 +25,7 @@ export const AddEditProject: React.FC = () => {
 
     // in add mode, sets a new project
     if (mode === EDITOR_MODE.add) {
-      const newProjectSystemData: SystemData = {
+      const newProjectSystemData: TSystemData = {
         [RESERVED_AUDS_KEYS._settings]: [{ id: IdCreator.random(), title: '', description: '', createdAt: '', localStorage: LOCAL_STORAGE_SYSTEMS.IndexedDB }],
         [RESERVED_AUDS_KEYS._sections]: [{ id: IdCreator.random(), title: '', formModel: [{} as any] }]
       }

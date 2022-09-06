@@ -1,4 +1,4 @@
-import { AdditionalInfoForLocalStorage, LocalProjectSettings } from 'app/data/project-structure/project-info'
+import { AdditionalInfoForLocalStorage, LocalProjectSettings } from 'app/models/project/project.declarations'
 import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition'
 import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 import { ConnectionConfig } from 'mysql'

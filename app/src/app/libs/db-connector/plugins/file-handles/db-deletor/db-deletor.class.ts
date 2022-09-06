@@ -1,4 +1,4 @@
-import { AnitaUniversalDataStorage } from 'app/data/project-structure/project-info'
+import { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
 import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 import { DbConnectorInstance, Deletor } from 'app/libs/db-connector/models/executers'
 import { ProjectFileHandleSaver } from 'app/libs/db-connector/plugins/file-handles/helpers/project-file-handle-saver.class'
@@ -13,7 +13,7 @@ export class DbDeletor<E> implements Deletor<E> {
    * @param args the args of the query
    */
   constructor (
-    private dbConnector: DbConnectorInstance<AnitaUniversalDataStorage>,
+    private dbConnector: DbConnectorInstance<TAnitaUniversalDataStorage>,
     private section: keyof AbstractModel,
     private args: Partial<E>
   ) { }

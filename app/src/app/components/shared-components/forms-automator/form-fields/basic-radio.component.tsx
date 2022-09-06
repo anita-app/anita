@@ -1,4 +1,3 @@
-import { SectionElement } from 'app/data/project-structure/project-info'
 import { IBasicRadio, ICommonFormEleProps } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { FormEleContainer } from 'app/components/shared-components/forms-automator/form-layout/form-ele-container.component'
 import { FormElementLabel } from 'app/components/shared-components/forms-automator/form-layout/form-element-label.component'
@@ -8,9 +7,10 @@ import uniqueId from 'lodash/uniqueId'
 import React, { memo, useRef, useState } from 'react'
 import ReactTooltip from 'react-tooltip'
 import { Icons } from 'app/libs/icons/icons.class'
+import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 /* eslint-disable eqeqeq */
 
-export const BasicRadio: React.FC<ICommonFormEleProps<IBasicRadio<SectionElement>>> = memo(function BasicRadio ({ formEle, element, handleChange }: ICommonFormEleProps<IBasicRadio<SectionElement>>) {
+export const BasicRadio: React.FC<ICommonFormEleProps<IBasicRadio<ISectionElement>>> = memo(function BasicRadio ({ formEle, element, handleChange }: ICommonFormEleProps<IBasicRadio<ISectionElement>>) {
   const [touched, setTouched] = useState(false)
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))
   const [isValid, setIsValidForField] = useValidators(fieldId)
