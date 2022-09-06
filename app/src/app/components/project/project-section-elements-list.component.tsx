@@ -11,7 +11,7 @@ import { Navigate, useParams } from 'react-router'
 import { Tab } from '@headlessui/react'
 import { ProjectGridList } from 'app/components/project/project-grid/project-grid-list'
 import { Manager } from 'app/libs/manager/manager.class'
-import { Icons } from 'app/libs/icons/icons.class'
+import { Icons } from 'app/libs/icons-n/icons.class'
 import { SupportedViews, SUPPORTED_VIEWS_ICONS } from 'app/models/section/view-settings.const'
 
 function classNames (...classes: Array<string>) {
