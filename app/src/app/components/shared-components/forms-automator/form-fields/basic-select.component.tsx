@@ -10,7 +10,7 @@ import { useValidators } from 'app/components/shared-components/forms-automator/
 import uniqueId from 'lodash/uniqueId'
 import React, { memo, useRef, useState, Fragment } from 'react'
 import { Combobox, Transition } from '@headlessui/react'
-import { Icons } from 'app/libs/icons-n/icons.class'
+import { Icons } from 'app/libs/icons/icons.class'
 import { IOption } from 'app/models/parent-element/parent-element.class'
 
 export const BasicSelect: React.FC<ICommonFormEleProps<IBasicSelect<ISectionElement>>> = memo(function BasicSelect ({ formEle, element, handleChange }: ICommonFormEleProps<IBasicSelect<ISectionElement>>) {

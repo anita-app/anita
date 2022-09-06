@@ -1,5 +1,5 @@
 import { COLOR_SCHEME, TFill, Type } from 'app/components/shared-components/common-ui-eles/components.const'
-import { Icons, TIconName } from 'app/libs/icons-n/icons.class'
+import { Icons, TIconName } from 'app/libs/icons/icons.class'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
