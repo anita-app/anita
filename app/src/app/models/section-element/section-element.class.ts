@@ -1,5 +1,5 @@
 import { TextTools } from 'app/libs/tools/text-tools.class'
-import { IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
+import { IOptionKeysModel } from 'app/components-no/shared-components/forms-automator/form-automator.types'
 
 export class SectionElement {
   public static autoGenerateFieldName (labelValue: string | number | boolean | Array<string>): string | null {

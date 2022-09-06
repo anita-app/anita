@@ -5,9 +5,9 @@ import { GetParentInfoForDetailsView } from 'app/models/project/get-parent-info-
 import { ProjectDeletor } from 'app/models/project/project-deletor.class'
 import { ExportScope, ProjectExporter } from 'app/models/project/project-exporter.class'
 import { Section } from 'app/models/section/section.class'
-import { IOptionKeysModel, OptionKeysModelGroup } from 'app/components/shared-components/forms-automator/form-automator.types'
+import { IOptionKeysModel, OptionKeysModelGroup } from 'app/components-no/shared-components/forms-automator/form-automator.types'
 import { ProjectSaver } from 'app/models/project/project-saver.class'
-import { EDITOR_MODE } from 'app/components/editor-mode.enum'
+import { EDITOR_MODE } from 'app/components-no/editor-mode.enum'
 import { ParentInfoForDetailsView } from 'app/models/parent-element/parent-element.declarations'
 
 export class Project {

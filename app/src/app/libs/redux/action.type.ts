@@ -6,7 +6,7 @@ import {
 import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { ISection, SectionDetailsDeclaration } from 'app/models/section/section.declarations'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
-import { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
+import { FormFieldsModel, TSupportedFormsTypes } from 'app/components-no/shared-components/forms-automator/form-automator.types'
 
 export type Action<T extends REDUX_ACTIONS> = T extends ActionsWithoutPayload ? ActionWithoutPayload :
   ActionWithPayload<T>;

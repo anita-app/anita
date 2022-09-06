@@ -63,6 +63,7 @@ module.exports = {
     'react/jsx-curly-newline': ['error', 'never'],
     'react/jsx-equals-spacing': ['error', 'never'],
     'react/jsx-first-prop-new-line': ['error'],
+    'react/jsx-indent': ['error', 2],
     'react/jsx-indent-props': ['error', 2],
     'react/jsx-props-no-multi-spaces': ['error'],
     'react/jsx-boolean-value': ['error', 'always']

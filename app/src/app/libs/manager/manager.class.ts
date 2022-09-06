@@ -8,7 +8,7 @@ import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { Project } from 'app/models/project/project.class'
 import { ProjectLoader } from 'app/models/project/project-loader.class'
 import { ProjectSaver } from 'app/models/project/project-saver.class'
-import { EDITOR_MODE } from 'app/components/editor-mode.enum'
+import { EDITOR_MODE } from 'app/components-no/editor-mode.enum'
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api'
 import { ProjectDataImporter } from 'app/libs/projects-helpers/project-importers/project-data-importer.class'
 

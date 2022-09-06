@@ -3,7 +3,7 @@ import { RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.decl
 import { IdCreator } from 'app/libs/id-creator/id-creator.class'
 import { Action } from 'app/libs/redux/action.type'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
-import { FormFieldsModel, IBasicSelect, IOptionKeysModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
+import { FormFieldsModel, IBasicSelect, IOptionKeysModel, TSupportedFormsTypes } from 'app/components-no/shared-components/forms-automator/form-automator.types'
 import cloneDeep from 'lodash.clonedeep'
 import { ISectionCustomFieldProperties } from 'app/models/section/section.declarations'
 

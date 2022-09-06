@@ -1,8 +1,8 @@
 import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { ISection } from 'app/models/section/section.declarations'
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
-import { FormFieldsModel, IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
-import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
+import { FormFieldsModel, IOptionKeysModel } from 'app/components-no/shared-components/forms-automator/form-automator.types'
+import { FORM_COMPONENTS_CODES } from 'app/components-no/shared-components/forms-automator/form-component-codes.enum'
 
 /**
  * Builds the form element with the info on the parent section for ParentsSelector
