@@ -3,7 +3,7 @@ import { Action } from 'app/libs/redux/action.type'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 
 export interface IFormElementState {
-  element: ISectionElement | undefined | null;
+  element: ISectionElement | undefined | null
 }
 
 /**
