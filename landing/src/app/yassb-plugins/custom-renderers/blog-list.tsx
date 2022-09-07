@@ -11,32 +11,46 @@ export const blogList: Renderer = ({ source, lang, options, frontMatterStore }: 
   sortBlogsByDate(source, frontMatterStore);
 
   source.forEach((filePaths, index) => {
-    const mT = index === 0 ? '' : ' mt-10';
-    const mainDivClass = `w-full lg:w-7/12 ml-auto mr-auto p-10 border-2 rounded-md shadow-md${mT}`
     const date = frontMatterStore[filePaths.absolutePath].date as unknown as Date;
     let previewContent = converter.makeHtml(frontMatterStore[filePaths.absolutePath].excerpt as string);
-    // Remove from previewContent the <p> tags that are added by showdown
-    previewContent = previewContent.replace(/<\/?p>/g, '');
+    // Remove all html tags
+    previewContent = previewContent.replace(/(<([^>]+)>)/gi, '');
+    // limit to 200 characters
+    previewContent = previewContent.substring(0, 200) + '...';
     if (frontMatterStore[filePaths.absolutePath])
       divs.push(
-        <div key={filePaths.absolutePath} className={mainDivClass}>
-          <h3>
-            <a className="text-lg font-bold" href={filePaths.absoluteUrl}>{frontMatterStore[filePaths.absolutePath].title}</a>
-          </h3>
-          <p className="text-sm text-gray-700">Published on {new DateFormatter(date.toISOString(), 'YYYY/MM/DD').doFormat()} by {frontMatterStore[filePaths.absolutePath].author}</p>
-          <div className="mt-5 row-preview">
-            <div className="content-preview text-justify" dangerouslySetInnerHTML={{ __html: previewContent }}></div>
-            <div className="background"></div>
-          </div>
-          <div className="mt-5 text-right">
-            <a className="text-gray-700" style={{ fontVariant: "small-caps" }} href={filePaths.absoluteUrl}>Read more</a>
+        <div key={filePaths.absolutePath} className="flex flex-col overflow-hidden rounded-lg shadow-lg">
+          <a href={filePaths.absoluteUrl} className="flex-shrink-0">
+            <img className="h-48 w-full object-cover" src={`/assets/images/blog/${frontMatterStore[filePaths.absolutePath].image}`} alt="" />
+          </a>
+          <div className="flex flex-1 flex-col justify-between bg-white p-6">
+            <div className="flex-1">
+              <p className="text-sm font-medium text-prussian-blue-600">
+                <a href={filePaths.absoluteUrl} className="hover:underline">{frontMatterStore[filePaths.absolutePath].type}</a>
+              </p>
+              <a href={filePaths.absoluteUrl} className="mt-2 block">
+                <p className="text-xl font-semibold text-gray-900">{frontMatterStore[filePaths.absolutePath].title}</p>
+                <p className="mt-3 text-base text-gray-500">{previewContent}</p>
+                <span className="background"></span>
+              </a>
+            </div>
+            <div class="mt-6 flex items-center">
+              <div>
+                <p class="text-sm font-medium text-gray-900">
+                  <a href={filePaths.absoluteUrl} class="hover:underline">{frontMatterStore[filePaths.absolutePath].author}</a>
+                </p>
+                <div class="flex space-x-1 text-sm text-gray-500">
+                  <time datetime={date.toISOString().split('T')[0]}>{new DateFormatter(date.toISOString(), 'month DD, YYYY').doFormat()}</time>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       );
   });
   return renderToStaticMarkup(
-    <div className="mx-auto mt-36 mb-36">
+    <>
       {...divs}
-    </div>
+    </>
   );
 }

@@ -3,7 +3,9 @@ title: SQLite in a PWA with FileSystemAccessAPI
 description: How to use a Sqlite database in a PWA with FileSystemAccessAPI
 date: 2021-12-01
 author: ilDon
+type: Article
 slug: sqlite-in-a-pwa-with-file-system-access-api
+image: sqlite-in-a-pwa/database-free.png
 ---
 Anita now supports SQLite, which means you can save your data in a local database on your device from a Progressive Web App.
 

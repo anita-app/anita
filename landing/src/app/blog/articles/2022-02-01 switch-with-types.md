@@ -1,9 +1,11 @@
 ---
-title: How to make TypeScript infer types in switch statements without casting (in a Redux reducer or anywhere else)
+title: How to make TypeScript infer types in switch statements without casting
 description: Make TypeScript infer types in switch statements, expecially in those in a Redux reducer, without casting
 date: 2022-02-01
 author: ilDon
+type: Article
 slug: make-typeScript-infer-types-in-switch-statements-without-casting
+image: switch-with-types/switches.png
 ---
 As a developer with very poor memory, I really like coding in typed languages. They allow me to forget my data types, and be sure to pass the right props around my code. If you are unfamiliar with typed languages, I suggest you read [this](https://www.google.it/books/edition/Advanced_Topics_in_Types_and_Programming/A5ic1MPTvVsC?hl=it&gbpv=0) book for a general overview, or [this](https://www.typescriptlang.org/docs/handbook/basic-types.html) article for a more specific hands-on guide for TypeScript.
 
