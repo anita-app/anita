@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.15.1] - 2022-09-07
+### Fixed
+- new deploy.
+
 ## [0.15.0] - 2022-09-07
 ### Added
 - added blog article.
