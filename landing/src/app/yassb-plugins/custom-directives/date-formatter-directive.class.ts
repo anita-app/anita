@@ -1,3 +1,4 @@
+import { MONTHS } from './months.const';
 import { YassbDirective, YassbDirectiveProps, YassbDirectiveResponse } from 'yassb-web';
 import { YassbBaseDirective } from 'yassb-web/tools';
 
@@ -138,6 +139,7 @@ export class DateFormatter {
   private doFormatDateWithFormat(): void {
     this.formattedDate = this.format.replace('YYYY', this.dateObject.getFullYear().toString());
     this.formattedDate = this.formattedDate.replace('MM', (this.dateObject.getMonth() + 1).toString());
+    this.formattedDate = this.formattedDate.replace('month', MONTHS[this.dateObject.getMonth()]);
     this.formattedDate = this.formattedDate.replace('DD', this.dateObject.getDate().toString());
   }
 

@@ -11,8 +11,6 @@ export const blogList: Renderer = ({ source, lang, options, frontMatterStore }: 
   sortBlogsByDate(source, frontMatterStore);
 
   source.forEach((filePaths, index) => {
-    const mT = index === 0 ? '' : ' mt-10';
-    const mainDivClass = `w-full p-10 border-2 rounded-md shadow-md${mT}`
     const date = frontMatterStore[filePaths.absolutePath].date as unknown as Date;
     let previewContent = converter.makeHtml(frontMatterStore[filePaths.absolutePath].excerpt as string);
     // Remove all html tags
@@ -21,35 +19,33 @@ export const blogList: Renderer = ({ source, lang, options, frontMatterStore }: 
     previewContent = previewContent.substring(0, 200) + '...';
     if (frontMatterStore[filePaths.absolutePath])
       divs.push(
-        <>
-          <div key={filePaths.absolutePath} className="flex flex-col overflow-hidden rounded-lg shadow-lg">
-            <a href={filePaths.absoluteUrl} className="flex-shrink-0">
-              <img className="h-48 w-full object-cover" src={`/assets/images/blog/${frontMatterStore[filePaths.absolutePath].image}`} alt="" />
-            </a>
-            <div className="flex flex-1 flex-col justify-between bg-white p-6">
-              <div className="flex-1">
-                <p className="text-sm font-medium text-prussian-blue-600">
-                  <a href={filePaths.absoluteUrl} className="hover:underline">{frontMatterStore[filePaths.absolutePath].type}</a>
+        <div key={filePaths.absolutePath} className="flex flex-col overflow-hidden rounded-lg shadow-lg">
+          <a href={filePaths.absoluteUrl} className="flex-shrink-0">
+            <img className="h-48 w-full object-cover" src={`/assets/images/blog/${frontMatterStore[filePaths.absolutePath].image}`} alt="" />
+          </a>
+          <div className="flex flex-1 flex-col justify-between bg-white p-6">
+            <div className="flex-1">
+              <p className="text-sm font-medium text-prussian-blue-600">
+                <a href={filePaths.absoluteUrl} className="hover:underline">{frontMatterStore[filePaths.absolutePath].type}</a>
+              </p>
+              <a href={filePaths.absoluteUrl} className="mt-2 block">
+                <p className="text-xl font-semibold text-gray-900">{frontMatterStore[filePaths.absolutePath].title}</p>
+                <p className="mt-3 text-base text-gray-500">{previewContent}</p>
+                <span className="background"></span>
+              </a>
+            </div>
+            <div class="mt-6 flex items-center">
+              <div>
+                <p class="text-sm font-medium text-gray-900">
+                  <a href={filePaths.absoluteUrl} class="hover:underline">{frontMatterStore[filePaths.absolutePath].author}</a>
                 </p>
-                <a href={filePaths.absoluteUrl} className="mt-2 block">
-                  <p className="text-xl font-semibold text-gray-900">{frontMatterStore[filePaths.absolutePath].title}</p>
-                  <p className="mt-3 text-base text-gray-500">{previewContent}</p>
-                  <span className="background"></span>
-                </a>
-              </div>
-              <div class="mt-6 flex items-center">
-                <div>
-                  <p class="text-sm font-medium text-gray-900">
-                    <a href={filePaths.absoluteUrl} class="hover:underline">{frontMatterStore[filePaths.absolutePath].author}</a>
-                  </p>
-                  <div class="flex space-x-1 text-sm text-gray-500">
-                    <time datetime="2020-03-16">{new DateFormatter(date.toISOString(), 'YYYY/MM/DD').doFormat()}</time>
-                  </div>
+                <div class="flex space-x-1 text-sm text-gray-500">
+                  <time datetime={date.toISOString().split('T')[0]}>{new DateFormatter(date.toISOString(), 'month DD, YYYY').doFormat()}</time>
                 </div>
               </div>
             </div>
           </div>
-        </>
+        </div>
       );
   });
   return renderToStaticMarkup(
