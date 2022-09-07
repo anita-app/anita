@@ -7,6 +7,13 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.15.0] - 2022-09-07
+### Added
+- added blog article.
+
+### Changed
+- improved landing texts.
+
 ## [0.14.20] - 2022-09-06
 ### Changed
 - updated landing example.

@@ -4,6 +4,20 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.15.0",
+      "date": "2022-09-07",
+      "items": [
+        {
+          "type": "changed",
+          "value": "improved landing texts"
+        },
+        {
+          "type": "added",
+          "value": "added blog article"
+        }
+      ]
+    },
+    {
       "version": "0.14.20",
       "date": "2022-09-06",
       "items": [
