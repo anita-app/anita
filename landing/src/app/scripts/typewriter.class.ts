@@ -13,15 +13,15 @@ const itemsToType = [
   'your art collection',
   'your favourite books',
   'movies to watch',
+  'your collectables',
   'your wardrobe',
   'warehouse inventory',
   'musical instruments',
   'paintings',
   'your cars',
   'your collection of stamps',
-  'your collectables',
   'your devices',
-  'furniture',
+  'furniture details',
   'hospital equipment',
   'inventory of jewelry',
 ]
@@ -29,7 +29,6 @@ const itemsToType = [
 export class Typewriter {
   private static domElementId = 'description-last-item'
   private static domElement: HTMLSpanElement = null
-  private static previousString = ''
   private static delayBetweenLetters = 100
   private static delayCaret = 300
   private static currentWordIndex = -1
