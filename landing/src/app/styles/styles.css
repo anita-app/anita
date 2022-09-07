@@ -47,12 +47,6 @@ article h5 {
   @apply leading-normal;
 }
 
-article h1 {
-  @apply mt-8;
-  @apply text-5xl;
-  @apply mb-10;
-}
-
 article p {
   @apply text-justify;
   @apply my-4;

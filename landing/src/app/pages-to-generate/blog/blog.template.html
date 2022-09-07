@@ -12,14 +12,17 @@
 
   <section class="relative">
     <div class="mx-auto pb-20 mt-36 mb-36">
-      <div class="w-full lg:w-7/12 ml-auto mr-auto p-10 border-1 rounded-md shadow-md">
+      <div class="w-full max-w-3xl ml-auto mr-auto p-10 border-1 rounded-md shadow-md">
         <article>
-          <div class="pt-2 pb-1 text-justify pr-5 border-b rounded-t ">
-            <h1 class="m-0 font-light">{ title }</h1>
+          <div class="pt-2 pb-1 pr-5 border-b rounded-t ">
+            <h1 class="block text-center font-light leading-8 tracking-tight text-gray-900 text-4xl pb-6">{ title }</h1>
           </div>
           <p class="text-sm text-gray-500 mb-8 mt-1">Published on
             <!-- date-formatter="{ date }" format="YYYY/MM/DD" --> by { author }
           </p>
+          <figure class="mb-10 mt-10">
+            <img class="w-full rounded-lg mx-auto" src="/assets/images/blog/{ image }" alt="" width="1310" height="873">
+          </figure>
           <!-- generate-from-files="blog" -->
         </article>
       </div>
