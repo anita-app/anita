@@ -21,7 +21,7 @@ The most obvious reason for this inactivity from the tech giants participating i
 
 On top of that, there are technical challenges that need to be solved in order to make the data portability possible. These technical problems are not easy to solve because they involve many technologies and protocols. In the following sections, we will discuss some of these technical problems.
 
-## Why data portability is hard.
+## Why data portability is hard
 
 From a technical perspective, data portability means that the user needs to be able to export their data from a service provider and import it into the service that the user wants to switch to. This means not only physically moving the data from one place to another, but also transforming the data into a format that the receiving service can understand.
 
