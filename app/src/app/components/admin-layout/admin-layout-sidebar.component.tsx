@@ -2,18 +2,27 @@ import { AdminLayoutSidebarMenu } from 'app/components/admin-layout/admin-layout
 import { Icons } from 'app/libs/icons/icons.class'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { appVersion } from 'app/version'
-import React, { memo } from 'react'
+import React, { memo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import ReactTooltip from 'react-tooltip'
 
 export const AdminLayoutSidebar: React.FC = memo(function Sidebar () {
   const toggledClass = useSelector((store: AnitaStore) => store.layout.sidebar)
+  const [isEditingMenuItemsVisibility, setIsEditingMenuItemsVisibility] = useState(false)
+
+  const handleEditMenuItemsVisibility = () => {
+    setIsEditingMenuItemsVisibility(!isEditingMenuItemsVisibility)
+  }
 
   return (
     <div className="py-5 z-10">
       <div className={`${toggledClass} sidebar h-full bg-white shadow rounded-sm text-prussian-blue-500 w-64 space-y-6 pt-1 pb-7 px-2 absolute inset-y-0 left-0 transform md:relative md:translate-x-0 transition duration-200 ease-in-out`}>
         <nav>
-          <AdminLayoutSidebarMenu />
+          <button className="absolute right-3.5" onClick={handleEditMenuItemsVisibility} data-tip={true} data-for="editMenu">{Icons.render('pencilOutline', 'text-gray-400 text-sm')}</button>
+          <ReactTooltip id="editMenu" effect="solid" place='right'>
+            Edit menu
+          </ReactTooltip>
+          <AdminLayoutSidebarMenu isEditingMenuItemsVisibility={isEditingMenuItemsVisibility} />
         </nav>
         <div className="absolute bottom-1 text-xs text-gray-400">
           <div className="flex items-center">

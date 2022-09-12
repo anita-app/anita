@@ -52,6 +52,18 @@ export class Section implements ISection {
 
   public getParentInfoFormEle = (): FormFieldsModel<ISectionElement> => new ParentInfoFormEleBuilder(this.childOf ?? [], this.allSections).build()
 
+  public getIsHiddenInMenu (): boolean {
+    return this.sectionData.viewSettings?.isHiddenInMenu ?? false
+  }
+
+  public setIsHiddenInMenu (isHidden: boolean) {
+    if (!this.sectionData.viewSettings) {
+      this.sectionData.viewSettings = {}
+    }
+    this.sectionData.viewSettings.isHiddenInMenu = isHidden
+    new SectionElementSaver(this.projectId, RESERVED_AUDS_KEYS._sections, this.sectionData, EDITOR_MODE.edit).save()
+  }
+
   public getPreferredView (): SupportedViews {
     return this.sectionData.viewSettings?.preferredView || SupportedViews.table
   }
