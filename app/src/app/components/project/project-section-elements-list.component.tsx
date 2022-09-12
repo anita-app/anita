@@ -23,8 +23,7 @@ export const SectionElementsList: React.FC = () => {
   const projectId = params[URL_PARAMS.projectId]
   const sectionId = params[URL_PARAMS.sectionId]
   const [sectionData, setSectionData] = useState<Array<ISectionElement> | undefined | null>(null)
-  console.log('Manager.getCurrentProject()?.getSectionById(sectionId)', Manager.getCurrentProject()?.getSectionById(sectionId)?.getPreferredView())
-  const [activeTab, setActiveTab] = useState<SupportedViews>(Manager.getCurrentProject()?.getSectionById(sectionId)?.getPreferredView() || SupportedViews.table)
+  const [activeTab, setActiveTab] = useState<SupportedViews | null>(null)
 
   useEffect(() => {
     let isMounted = true
@@ -37,6 +36,7 @@ export const SectionElementsList: React.FC = () => {
 
       const data = await project.getSectionById(sectionId)?.getAllElements()
       if (isMounted && data) {
+        setActiveTab(Manager.getCurrentProject()?.getSectionById(sectionId)?.getPreferredView()!)
         setSectionData(data)
       }
     }
@@ -71,6 +71,10 @@ export const SectionElementsList: React.FC = () => {
   const handleTabClick = (tab: number) => {
     setActiveTab(tab as SupportedViews)
     Manager.getCurrentProject()?.getSectionById(sectionId)?.setPreferredView(tab as SupportedViews)
+  }
+
+  if (activeTab === null) {
+    return null
   }
 
   return (

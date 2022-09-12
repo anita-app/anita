@@ -26,6 +26,7 @@ export interface ISection extends SectionDetailsDeclaration {
 
 export interface ISectionViewSettings {
   preferredView?: SupportedViews
+  hiddenInMenu?: boolean
 }
 
 /**

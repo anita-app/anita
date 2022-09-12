@@ -49,7 +49,6 @@ export class Project {
         return null
       }
       this.sections[sectionId] = new Section(
-        this,
         this.getId(),
         this.getSectionsDefinitions(),
         sectionData
