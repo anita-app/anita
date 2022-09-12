@@ -54,14 +54,10 @@ export const SectionElementsList: React.FC = () => {
     return <Navigate to={ANITA_URLS.projectsList} />
   }
 
-  if (sectionData === null) {
-    return <Loader />
-  }
-
   const sectionInfo = Manager.getCurrentProject()?.getSectionById(sectionId)
 
-  if (!sectionInfo) {
-    return null
+  if (sectionData === null || activeTab === null || !sectionInfo) {
+    return <Loader />
   }
 
   if (sectionData.length === 0) {
@@ -71,10 +67,6 @@ export const SectionElementsList: React.FC = () => {
   const handleTabClick = (tab: number) => {
     setActiveTab(tab as SupportedViews)
     Manager.getCurrentProject()?.getSectionById(sectionId)?.setPreferredView(tab as SupportedViews)
-  }
-
-  if (activeTab === null) {
-    return null
   }
 
   return (

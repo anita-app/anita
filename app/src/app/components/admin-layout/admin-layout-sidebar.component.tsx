@@ -1,22 +1,19 @@
+import { AdminLayoutSidebarMenu } from 'app/components/admin-layout/admin-layout-sidebar-menu.component'
 import { Icons } from 'app/libs/icons/icons.class'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { appVersion } from 'app/version'
-import React, { ReactNode } from 'react'
+import React, { memo } from 'react'
 import { useSelector } from 'react-redux'
 import ReactTooltip from 'react-tooltip'
 
-interface ISidebarProps {
-  children: ReactNode
-}
-
-export const Sidebar: React.FC<ISidebarProps> = (props) => {
+export const AdminLayoutSidebar: React.FC = memo(function Sidebar () {
   const toggledClass = useSelector((store: AnitaStore) => store.layout.sidebar)
 
   return (
     <div className="py-5 z-10">
       <div className={`${toggledClass} sidebar h-full bg-white shadow rounded-sm text-prussian-blue-500 w-64 space-y-6 pt-1 pb-7 px-2 absolute inset-y-0 left-0 transform md:relative md:translate-x-0 transition duration-200 ease-in-out`}>
         <nav>
-          {props.children}
+          <AdminLayoutSidebarMenu />
         </nav>
         <div className="absolute bottom-1 text-xs text-gray-400">
           <div className="flex items-center">
@@ -32,4 +29,4 @@ export const Sidebar: React.FC<ISidebarProps> = (props) => {
       </div>
     </div>
   )
-}
+})

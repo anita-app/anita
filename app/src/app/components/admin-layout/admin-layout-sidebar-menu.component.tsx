@@ -2,7 +2,7 @@ import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
-import { ProjectPicker } from 'app/components/admin-layout/components/project-picker.component'
+import { AdminLayoutSidebarProjectPicker } from 'app/components/admin-layout/admin-layout-sidebar-project-picker.component'
 import { useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 import React from 'react'
@@ -18,7 +18,7 @@ const addActiveClassNameToBaseStyle = (currentPath: string, linkPath: string): s
   return `${baseStyleOfSidebarLinks} border-transparent`
 }
 
-export const SidebarMenu = () => {
+export const AdminLayoutSidebarMenu = () => {
   const project = useSelector((state: AnitaStore) => state.project)
   const location = useLocation()
 
@@ -28,7 +28,7 @@ export const SidebarMenu = () => {
 
   return (
     <div className="mt-3">
-      <ProjectPicker project={project} />
+      <AdminLayoutSidebarProjectPicker project={project} />
       {Manager.getCurrentProject()?.getSectionsDefinitions().map(section => {
         const linkPath = urlParamFiller(ANITA_URLS.projectSectionElesList, [{ name: URL_PARAMS.projectId, value: project[RESERVED_AUDS_KEYS._settings][0].id }, { name: URL_PARAMS.sectionId, value: section.id }])
         return (

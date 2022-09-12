@@ -5,7 +5,7 @@ import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-export const Header: React.FC = () => {
+export const AdminLayoutHeader: React.FC = () => {
   const sidebarHideClass = useSelector((store: AnitaStore) => store.layout.sidebar)
   const project = useSelector((store: AnitaStore) => store.project)
   const handleClickSidebar = () => {

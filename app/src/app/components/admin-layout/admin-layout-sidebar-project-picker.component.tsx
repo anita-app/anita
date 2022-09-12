@@ -14,7 +14,7 @@ interface IProjectPickerProps {
   project: TSystemData
 }
 
-export const ProjectPicker: React.FC<IProjectPickerProps> = ({ project }) => {
+export const AdminLayoutSidebarProjectPicker: React.FC<IProjectPickerProps> = ({ project }) => {
   const projects = useSelector((store: AnitaStore) => store.projects)
   const navigate = useNavigate()
   const [dropdownOpen, setDropdownOpen] = useState(false)
