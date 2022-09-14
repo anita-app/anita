@@ -4,14 +4,14 @@ import { Manager } from 'app/libs/manager/manager.class'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
-import { ProjectFormElementManager } from 'app/components/project/project-add-edit/project-form-element-manager.component'
-import { ProjectSaveElement } from 'app/components/project/project-add-edit/project-save-element.component'
+import { ProjectSectionElementAddEditFormManager } from 'app/components/project/section/element/add-edit-form-manager.component'
+import { ProjectSectionElementAddEditSaveCancelButtons } from 'app/components/project/section/element/add-edit-save-cancel-buttons.component'
 import { MainContentContainer } from 'app/components/shared-components/common-ui-eles/main-content-container.component'
 import { Loader } from 'app/components/shared-components/loader/loader.component'
 import React, { useEffect, useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 
-export const AddEditSectionElement: React.FC = () => {
+export const ProjectSectionElementAddEdit: React.FC = () => {
   const params = useParams()
   const mode = params[URL_PARAMS.elementId] ? EDITOR_MODE.edit : EDITOR_MODE.add
 
@@ -61,8 +61,8 @@ export const AddEditSectionElement: React.FC = () => {
   return (
     <MainContentContainer headerText={headerText} overflowClassName="overflow-y-visible">
       {element === null && <Loader />}
-      {element !== null && <ProjectFormElementManager sectionId={sectionId!} />}
-      {element !== null && <ProjectSaveElement sectionId={sectionId!} />}
+      {element !== null && <ProjectSectionElementAddEditFormManager sectionId={sectionId!} />}
+      {element !== null && <ProjectSectionElementAddEditSaveCancelButtons sectionId={sectionId!} />}
     </MainContentContainer>
   )
 }

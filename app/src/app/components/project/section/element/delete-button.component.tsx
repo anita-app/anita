@@ -8,13 +8,13 @@ import ReactTooltip from 'react-tooltip'
 import { useModalContext } from 'app/components/shared-components/modals/modal-context'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 
-interface IProjectDeleteSectionElementButtonProps {
+interface IProjectSectionElementDeleteButtonProps {
   projectId: string
   sectionId: string
   elementId: string
 }
 
-export const ProjectDeleteSectionElementButton: React.FC<IProjectDeleteSectionElementButtonProps> = ({ projectId, sectionId, elementId }) => {
+export const ProjectSectionElementDeleteButton: React.FC<IProjectSectionElementDeleteButtonProps> = ({ projectId, sectionId, elementId }) => {
   const { showModal } = useModalContext()
 
   const navigate = useNavigate()

@@ -3,13 +3,13 @@ import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
 import React, { ReactNode } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-interface IProjectTableListTdWithLinkToDetailsProps {
+interface IProjectSectionListTableTdWithLinkToDetailsProps {
   tdProps: {}
   elementId: string | undefined
   children: ReactNode
 }
 
-export const ProjectTableListTdWithLinkToDetails: React.FC<IProjectTableListTdWithLinkToDetailsProps> = ({ children, tdProps, elementId }) => {
+export const ProjectSectionListTableTdWithLinkToDetails: React.FC<IProjectSectionListTableTdWithLinkToDetailsProps> = ({ children, tdProps, elementId }) => {
   const navigate = useNavigate()
   const params = useParams()
 

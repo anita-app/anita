@@ -7,13 +7,13 @@ import { Button } from 'app/components/shared-components/common-ui-eles/button.c
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { ParentInfoForDetailsView } from 'app/models/parent-element/parent-element.declarations'
 
-interface IProjectParentsLinkShowerProps {
+interface IProjectSectionElementDetailsParentsLinksProps {
   projectId: string
   parentsInfo: Array<string>
   sections: Array<ISection>
 }
 
-export const ProjectParentsLinkShower: React.FC<IProjectParentsLinkShowerProps> = ({ projectId, parentsInfo, sections }) => {
+export const ProjectSectionElementDetailsParentsLinks: React.FC<IProjectSectionElementDetailsParentsLinksProps> = ({ projectId, parentsInfo, sections }) => {
   const [parents, setParents] = useState<Array<ParentInfoForDetailsView> | undefined>([])
 
   useEffect(() => {

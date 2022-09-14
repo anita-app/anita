@@ -11,7 +11,7 @@ interface IProjectFormElementManagerProps {
   sectionId: string
 }
 
-export const ProjectFormElementManager: React.FC<IProjectFormElementManagerProps> = ({ sectionId }) => {
+export const ProjectSectionElementAddEditFormManager: React.FC<IProjectFormElementManagerProps> = ({ sectionId }) => {
   const project = Manager.getCurrentProject()
   const section = project?.getSectionById(sectionId)
 

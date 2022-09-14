@@ -6,11 +6,11 @@ import React from 'react'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 
-interface IProjectSaveElementProps {
+interface IProjectSectionElementAddEditSaveCancelButtonsProps {
   sectionId: string
 }
 
-export const ProjectSaveElement: React.FC<IProjectSaveElementProps> = ({ sectionId }) => {
+export const ProjectSectionElementAddEditSaveCancelButtons: React.FC<IProjectSectionElementAddEditSaveCancelButtonsProps> = ({ sectionId }) => {
   const element = useSelector((state: AnitaStore) => state.formElement.element)
   const validObj = useSelector((state: AnitaStore) => state.formElesValidState)
   const navigate = useNavigate()

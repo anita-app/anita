@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react'
 import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { ISection } from 'app/models/section/section.declarations'
-import { ProjectTableListTdWithLinkToDetails } from 'app/components/project/project-table-list/project-table-list-td-with-link-to-details.component'
-import { customRenderPicker } from 'app/components/project/project-values-renderers/custom-render-picker.component'
+import { ProjectSectionListTableTdWithLinkToDetails } from 'app/components/project/section/list/table/table-td-with-link-to-details.component'
+import { customRenderPicker } from 'app/components/project/section/values-renderers/custom-render-picker.component'
 import { useSortBy, useTable, Column } from 'react-table'
 
 /**
@@ -32,12 +32,12 @@ interface HeaderGroupFix {
   getSortByToggleProps: () => any
 }
 
-interface IProjectTableListProps {
+interface IProjectSectionListTableProps {
   sectionInfo: ISection
   sectionData: Array<ISectionElement>
 }
 
-export const ProjectTableList: React.FC<IProjectTableListProps> = ({ sectionInfo, sectionData }) => {
+export const ProjectSectionListTable: React.FC<IProjectSectionListTableProps> = ({ sectionInfo, sectionData }) => {
   const columns = useSectionInfo(sectionInfo)
 
   const {
@@ -68,9 +68,9 @@ export const ProjectTableList: React.FC<IProjectTableListProps> = ({ sectionInfo
           return (
             <tr className="whitespace-nowrap" {...row.getRowProps()} key={`row-tr-${index}`}>
               {row.cells.map(cell => (
-                <ProjectTableListTdWithLinkToDetails key={`${cell.column.id}${cell.row.id}`} tdProps={cell.getCellProps()} elementId={cell.row.original.id}>
+                <ProjectSectionListTableTdWithLinkToDetails key={`${cell.column.id}${cell.row.id}`} tdProps={cell.getCellProps()} elementId={cell.row.original.id}>
                   {cell.render('Cell')}
-                </ProjectTableListTdWithLinkToDetails>
+                </ProjectSectionListTableTdWithLinkToDetails>
               ))}
             </tr>
           )

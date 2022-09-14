@@ -3,9 +3,9 @@ import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
 import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { Manager } from 'app/libs/manager/manager.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
-import { ProjectDeleteSectionElementButton } from 'app/components/project/project-details/project-delete-section-element-button.component'
-import { ProjectParentsLinkShower } from 'app/components/project/project-details/project-parents-link-shower.component'
-import { customRenderPicker } from 'app/components/project/project-values-renderers/custom-render-picker.component'
+import { ProjectSectionElementDeleteButton } from 'app/components/project/section/element/delete-button.component'
+import { ProjectSectionElementDetailsParentsLinks } from 'app/components/project/section/element/details-parents-links.component'
+import { customRenderPicker } from 'app/components/project/section/values-renderers/custom-render-picker.component'
 import { AddEditElementButton } from 'app/components/shared-components/buttons/add-edit-element-button.component'
 import { MainContentContainer } from 'app/components/shared-components/common-ui-eles/main-content-container.component'
 import { FormFieldsModel } from 'app/components/shared-components/forms-automator/form-automator.types'
@@ -39,7 +39,7 @@ const ElementValuesViewer = ({ element, formModels }: { element: ISectionElement
   </div>
 )
 
-export const SectionElementDetails: React.FC = () => {
+export const ProjectSectionElementDetails: React.FC = () => {
   const [element, setElement] = useState<ISectionElement | undefined | null>(null)
   const params = useParams()
   const projectId = params[URL_PARAMS.projectId]
@@ -81,10 +81,10 @@ export const SectionElementDetails: React.FC = () => {
   return (
     <MainContentContainer headerText="Details">
       {(element === null) ? <Loader /> : <ElementValuesViewer element={element} formModels={Manager.getCurrentProject()?.getSectionById(sectionId)!.formModel!} />}
-      {(element !== null && element.parentsInfo && Array.isArray(element.parentsInfo) && element.parentsInfo.length > 0) && <ProjectParentsLinkShower projectId={projectId!} parentsInfo={element.parentsInfo} sections={Manager.getCurrentProject()?.getSectionsDefinitions()!} />}
+      {(element !== null && element.parentsInfo && Array.isArray(element.parentsInfo) && element.parentsInfo.length > 0) && <ProjectSectionElementDetailsParentsLinks projectId={projectId!} parentsInfo={element.parentsInfo} sections={Manager.getCurrentProject()?.getSectionsDefinitions()!} />}
       {(element !== null && (
         <div>
-          <ProjectDeleteSectionElementButton projectId={projectId!} sectionId={sectionId!} elementId={elementId!} />
+          <ProjectSectionElementDeleteButton projectId={projectId!} sectionId={sectionId!} elementId={elementId!} />
           <AddEditElementButton projectId={projectId!} sectionId={sectionId!} elementId={elementId!} mode={EDITOR_MODE.edit} />
         </div>
       )

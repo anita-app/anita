@@ -4,7 +4,7 @@ import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
 import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { useNavigate, useParams } from 'react-router-dom'
 
-interface IProjectGridListElementProps {
+interface IProjectSectionListGridElementProps {
   element: ISectionElement
   titleKey: string
   descriptionKey: string
@@ -13,7 +13,7 @@ interface IProjectGridListElementProps {
 const DESCRIPTION_MAX_LENGHT = 500
 const shortenDescription = (string: string) => string.length > DESCRIPTION_MAX_LENGHT ? string.slice(0, DESCRIPTION_MAX_LENGHT) + ' …' : string
 
-export const ProjectGridListElement: React.FC<IProjectGridListElementProps> = (props) => {
+export const ProjectSectionListGridElement: React.FC<IProjectSectionListGridElementProps> = (props) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const navigation = useNavigate()
   const params = useParams()
