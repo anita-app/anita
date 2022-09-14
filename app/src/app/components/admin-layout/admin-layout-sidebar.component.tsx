@@ -1,3 +1,4 @@
+import { AdminLayoutSidebarEditMenuButton } from 'app/components/admin-layout/admin-layout-sidebar-edit-menu-buttonadmin-layout-sidebar.component.component'
 import { AdminLayoutSidebarMenu } from 'app/components/admin-layout/admin-layout-sidebar-menu.component'
 import { Icons } from 'app/libs/icons/icons.class'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
@@ -18,10 +19,10 @@ export const AdminLayoutSidebar: React.FC = memo(function Sidebar () {
     <div className="py-5 z-10">
       <div className={`${toggledClass} sidebar h-full bg-white shadow rounded-sm text-prussian-blue-500 w-64 space-y-6 pt-1 pb-7 px-2 absolute inset-y-0 left-0 transform md:relative md:translate-x-0 transition duration-200 ease-in-out`}>
         <nav>
-          <button className="absolute right-3.5" onClick={handleEditMenuItemsVisibility} data-tip={true} data-for="editMenu">{Icons.render('pencilOutline', 'text-gray-400 text-sm')}</button>
-          <ReactTooltip id="editMenu" effect="solid" place='right'>
-            Edit menu
-          </ReactTooltip>
+          <AdminLayoutSidebarEditMenuButton
+            isEditingMenuItemsVisibility={isEditingMenuItemsVisibility}
+            onClick={handleEditMenuItemsVisibility}
+          />
           <AdminLayoutSidebarMenu isEditingMenuItemsVisibility={isEditingMenuItemsVisibility} />
         </nav>
         <div className="absolute bottom-1 text-xs text-gray-400">
