@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { ISection } from 'app/models/section/section.declarations'
 import { ProjectSectionListTableTdWithLinkToDetails } from 'app/components/project/section/list/table/table-td-with-link-to-details.component'
-import { customRenderPicker } from 'app/components/project/section/values-renderers/custom-render-picker.component'
+import { customRenderPicker } from 'app/components/shared-components/values-renderers/custom-render-picker.component'
 import { useSortBy, useTable, Column } from 'react-table'
 
 /**
