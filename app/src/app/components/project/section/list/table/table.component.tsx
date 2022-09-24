@@ -1,22 +1,33 @@
 import React, { useEffect } from 'react'
 import { ISectionElement } from 'app/models/section-element/section-element.declarations'
-import { ProjectSectionListTableTdWithLinkToDetails } from 'app/components/project/section/list/table/table-td-with-link-to-details.component'
 import { customRenderPicker } from 'app/components/shared-components/values-renderers/custom-render-picker.component'
-import { useSortBy, useTable, Column } from 'react-table'
+import { useSortBy, useTable, Column, CellPropGetter, CellValue, Row, TableCellProps } from 'react-table'
 import { Section } from 'app/models/section/section.class'
 import { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
+import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
+import { ProjectSectionListTableTd } from 'app/components/project/section/list/table/table-td'
 
-/**
- * Builds the columns for the table with react-table looping through sectionInfo
- */
-const generateColumns = (visibleFormFields: Array<FormFieldsModel<TSupportedFormsTypes>>): Array<Column<ISectionElement>> => {
+type IColumnExtended = Column<ISectionElement> & {
+  componentCode: FORM_COMPONENTS_CODES
+}
+
+export interface UseTableCellProps {
+  column: IColumnExtended
+  row: Row<ISectionElement>
+  value: CellValue<string | number>
+  getCellProps: (propGetter?: CellPropGetter<ISectionElement>) => TableCellProps
+  render: (type: 'Cell' | string, userProps?: object) => React.ReactNode
+}
+
+const generateColumns = (visibleFormFields: Array<FormFieldsModel<TSupportedFormsTypes>>): Array<IColumnExtended> => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const colsToShoww: Array<Column<ISectionElement>> = []
+  const colsToShoww: Array<IColumnExtended> = []
   visibleFormFields.forEach(formModel => {
     colsToShoww.push({
       Header: formModel.label,
       accessor: formModel.fieldName,
-      Cell: customRenderPicker(formModel)
+      Cell: customRenderPicker(formModel),
+      componentCode: formModel.componentCode
     })
   })
   return colsToShoww
@@ -32,18 +43,16 @@ interface IProjectSectionListTableProps {
 }
 
 export const ProjectSectionListTable: React.FC<IProjectSectionListTableProps> = (props) => {
-  const [columns, setColumns] = React.useState<Array<Column<ISectionElement>>>(generateColumns(props.section.getVisibleColumnsInTableView()))
+  const [columns, setColumns] = React.useState<Array<IColumnExtended>>(generateColumns(props.section.getVisibleColumnsInTableView()))
 
   useEffect(() => {
     const refreshVisibleColumns = (visibleFormFields: Array<FormFieldsModel<TSupportedFormsTypes>>) => {
       setColumns(generateColumns(visibleFormFields))
     }
-
-    if (!props.section.visibleColumnsInTableView.observed) {
-      props.section.visibleColumnsInTableView.subscribe(refreshVisibleColumns)
-    }
+    const subscription = props.section.visibleColumnsInTableView.subscribe(refreshVisibleColumns)
+    setColumns(generateColumns(props.section.getVisibleColumnsInTableView()))
     return () => {
-      props.section.visibleColumnsInTableView.unsubscribe()
+      subscription.unsubscribe()
     }
   }, [props.section])
 
@@ -71,13 +80,10 @@ export const ProjectSectionListTable: React.FC<IProjectSectionListTableProps> = 
       <tbody className="divide-y divide-gray-200" {...getTableBodyProps()}>
         {rows.map((row, index) => {
           prepareRow(row)
-          // TODO No Link to details for checkbox
           return (
             <tr className="whitespace-nowrap" {...row.getRowProps()} key={`row-tr-${index}`}>
               {row.cells.map(cell => (
-                <ProjectSectionListTableTdWithLinkToDetails key={`${cell.column.id}${cell.row.id}`} tdProps={cell.getCellProps()} elementId={cell.row.original.id}>
-                  {cell.render('Cell')}
-                </ProjectSectionListTableTdWithLinkToDetails>
+                <ProjectSectionListTableTd key={`${cell.column.id}${cell.row.id}`} cell={cell as unknown as UseTableCellProps} />
               ))}
             </tr>
           )

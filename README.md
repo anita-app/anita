@@ -34,6 +34,7 @@ Our goal for version 1.0.0 is to implement the following:
 - [X] list views and grid views (cards);
 - [X] relationships between sections and sections elements (-> child elements can link to parent elements of parent sections);
 - [X] possibility to exclude certain sections from the main menu: useful for child sections to be displayed only as a subsection of a parent element;
+- [X] hide show columns in table views;
 - [ ] addition of a tab view for child sections;
 - [ ] Anita templates (at least one example template); 
 - [ ] support for synchronization of locally stored data with at least one remote data store (TBD);
