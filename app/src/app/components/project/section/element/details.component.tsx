@@ -12,6 +12,8 @@ import { FormFieldsModel } from 'app/components/shared-components/forms-automato
 import { Loader } from 'app/components/shared-components/loader/loader.component'
 import React, { useEffect, useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
+import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
+import { CheckBoxEditable } from 'app/components/shared-components/values-renderers/checkbox-editable.component'
 
 const ValueWithLabel = ({ formModel, value }: { formModel: FormFieldsModel<ISectionElement>; value: any }) => {
   if (typeof value === 'undefined') {
@@ -21,16 +23,27 @@ const ValueWithLabel = ({ formModel, value }: { formModel: FormFieldsModel<ISect
   return (
     <div>
       <p className="text-sm text-gray-500">{formModel.label}</p>
-      <p className="mb-3">{customRenderPicker(formModel)({ value })}</p>
+      <div className="mb-3">{customRenderPicker(formModel)({ value })}</div>
     </div>
   )
 }
 
-const ElementValuesViewer = ({ element, formModels }: { element: ISectionElement; formModels: Array<FormFieldsModel<ISectionElement>> }) => (
+const ElementValuesViewer = ({ element, formModels, sectionId }: { element: ISectionElement; formModels: Array<FormFieldsModel<ISectionElement>>; sectionId: string }) => (
   <div className="p-3">
     {formModels.map((formModel) => {
       if (!formModel.label) {
         return null
+      }
+      if (formModel.componentCode === FORM_COMPONENTS_CODES.basicCheckbox) {
+        return (
+          <CheckBoxEditable
+            key={formModel.fieldName}
+            elementId={element.id as string}
+            sectionId={sectionId}
+            label={formModel.label}
+            fieldName={formModel.fieldName}
+            value={element[formModel.fieldName]}
+          />)
       }
 
       return <ValueWithLabel key={formModel.fieldName} formModel={formModel} value={element[formModel.fieldName]} />
@@ -80,7 +93,7 @@ export const ProjectSectionElementDetails: React.FC = () => {
 
   return (
     <MainContentContainer headerText="Details">
-      {(element === null) ? <Loader /> : <ElementValuesViewer element={element} formModels={Manager.getCurrentProject()?.getSectionById(sectionId)!.formModel!} />}
+      {(element === null) ? <Loader /> : <ElementValuesViewer element={element} formModels={Manager.getCurrentProject()?.getSectionById(sectionId)!.formModel!} sectionId={sectionId!} />}
       {(element !== null && element.parentsInfo && Array.isArray(element.parentsInfo) && element.parentsInfo.length > 0) && <ProjectSectionElementDetailsParentsLinks projectId={projectId!} parentsInfo={element.parentsInfo} sections={Manager.getCurrentProject()?.getSectionsDefinitions()!} />}
       {(element !== null && (
         <div>

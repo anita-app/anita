@@ -32,7 +32,7 @@ export const ProjectSectionListTableTdWithLinkToDetails: React.FC<IProjectSectio
   return (
     <td
       onClick={handleClick}
-      className="px-6 py-4 cursor-pointer"
+      className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 md:pl-0 cursor-pointer"
       {...tdProps}
     >
       {children}

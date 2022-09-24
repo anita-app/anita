@@ -1,6 +1,5 @@
 import React from 'react'
 import { BasicText } from 'app/components/shared-components/values-renderers/basic-text.component'
-import { CheckBoxAsCheck } from 'app/components/shared-components/values-renderers/check-box-as-check.component'
 import { Color } from 'app/components/shared-components/values-renderers/color.component'
 import { Email } from 'app/components/shared-components/values-renderers/email.component'
 import { FormattedDateTime } from 'app/components/shared-components/values-renderers/formatted-date-time.component'
@@ -74,8 +73,6 @@ export const customRenderPicker = (formModel: FormFieldsModel<TSupportedFormsTyp
     case FORM_COMPONENTS_CODES.basicRadio:
       // eslint-disable-next-line dot-notation
       return TextFromOptionsByValue.bind(null, (formModel as TFormFieldWithOptions).options) as unknown as React.FC<any>
-    case FORM_COMPONENTS_CODES.basicCheckbox:
-      return CheckBoxAsCheck
     default:
       return BasicText
   }
