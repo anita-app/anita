@@ -27,6 +27,9 @@ export interface ISection extends SectionDetailsDeclaration {
 export interface ISectionViewSettings {
   preferredView?: SupportedViews
   isHiddenInMenu?: boolean
+  table?: {
+    formElesVisibility?: { [key: string]: boolean }
+  }
 }
 
 /**

@@ -4,13 +4,14 @@ import { SupportedViews } from 'app/models/section/view-settings.const'
 import React, { memo } from 'react'
 
 export interface IListTabsHeaderRightProps {
+  sectionId: string
   activeTab: SupportedViews
 }
 
 export const ListTabsHeaderRight: React.FC<IListTabsHeaderRightProps> = memo(function IListTabsHeaderRightProps (props: IListTabsHeaderRightProps) {
   return (
     <div className="flex justify-end">
-      <ListTabsHeaderRightEditView activeTab={props.activeTab} />
+      <ListTabsHeaderRightEditView activeTab={props.activeTab} sectionId={props.sectionId} />
       <ListTabsHeaderRightViewSelector activeTab={props.activeTab} />
     </div>
   )

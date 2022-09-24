@@ -31,7 +31,7 @@ export const ProjectSectionListTabs: React.FC<IProjectSectionListTabsProps> = (p
         headerText={props.sectionInfo.title}
         hasHeaderOnlyStyle={props.activeTab === 1}
         headerRightComponent={ListTabsHeaderRight}
-        headerRightComponentProps={{ activeTab: props.activeTab }}
+        headerRightComponentProps={{ activeTab: props.activeTab, sectionId: props.sectionId }}
       >
         <Tab.Panels>
           <Tab.Panel>

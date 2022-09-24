@@ -61,7 +61,7 @@ export class Section implements ISection {
       this.sectionData.viewSettings = {}
     }
     this.sectionData.viewSettings.isHiddenInMenu = isHidden
-    new SectionElementSaver(this.projectId, RESERVED_AUDS_KEYS._sections, this.sectionData, EDITOR_MODE.edit).save()
+    this.saveEditedSection()
   }
 
   public getPreferredView (): SupportedViews {
@@ -73,6 +73,28 @@ export class Section implements ISection {
       this.sectionData.viewSettings = {}
     }
     this.sectionData.viewSettings.preferredView = view
+    this.saveEditedSection()
+  }
+
+  public getIsFormEleVisibleInTable (formEleFieldName: string): boolean {
+    return this.sectionData.viewSettings?.table?.formElesVisibility?.[formEleFieldName!] !== false ?? true
+  }
+
+  public setIsFormEleVisibleInTable (formEleFieldName: string, isVisible: boolean) {
+    if (!this.sectionData.viewSettings) {
+      this.sectionData.viewSettings = {}
+    }
+    if (!this.sectionData.viewSettings.table) {
+      this.sectionData.viewSettings.table = {}
+    }
+    if (!this.sectionData.viewSettings.table.formElesVisibility) {
+      this.sectionData.viewSettings.table.formElesVisibility = {}
+    }
+    this.sectionData.viewSettings.table.formElesVisibility[formEleFieldName!] = isVisible
+    this.saveEditedSection()
+  }
+
+  private saveEditedSection = async (): Promise<void> => {
     new SectionElementSaver(this.projectId, RESERVED_AUDS_KEYS._sections, this.sectionData, EDITOR_MODE.edit).save()
   }
 }
