@@ -11,6 +11,7 @@ interface IAdminLayoutSidebarMenuProps {
 
 export const AdminLayoutSidebarMenu: React.FC<IAdminLayoutSidebarMenuProps> = (props) => {
   const project = useSelector((state: AnitaStore) => state.project)
+  const [currentSelectedSectionId, setCurrentSelectedSectionId] = React.useState<string | null>(null)
 
   if (project === null) {
     return null
@@ -24,7 +25,9 @@ export const AdminLayoutSidebarMenu: React.FC<IAdminLayoutSidebarMenuProps> = (p
           key={section.id}
           project={project}
           section={section}
+          selected={currentSelectedSectionId === section.id}
           isEditingMenuItemsVisibility={props.isEditingMenuItemsVisibility}
+          setCurrentSelectedSectionId={setCurrentSelectedSectionId}
         />
       ))}
 
