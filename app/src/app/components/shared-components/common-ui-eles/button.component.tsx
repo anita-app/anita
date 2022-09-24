@@ -50,10 +50,7 @@ enum TooltipBreakpoints {
   xxl = 'xxl:hidden'
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const colorClasses = 'focus:ring-indigo-500 bg-indigo-600 hover:bg-indigo-700'
-
-const sharedClasses = 'inline-flex items-center justify-center border border-transparent font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2'
+const sharedClasses = 'inline-flex items-center justify-center border border-transparent font-medium focus:outline-none focus:ring-2 focus:ring-offset-2'
 
 export const Button: React.FC<IButtonWithTooltipProps> = (props) => {
   const Component = props.href ? Link : 'button'
@@ -66,7 +63,7 @@ export const Button: React.FC<IButtonWithTooltipProps> = (props) => {
     <Component
       to={props.href ? props.href : undefined as any}
       onClick={props.onClick ? props.onClick : undefined}
-      className={`${sharedClasses} ${sizeClasses[props.size || 'md']} ${props.className || ''} ${props.marginClassName ?? 'mr-3'} leading-none text-sm rounded ${textClassName} ${bgClassName} focus:outline-none focus:ring-2 focus:ring-offset-2`}
+      className={`${sharedClasses} ${props.type !== Type.transparent ? 'shadow-sm' : ''} ${sizeClasses[props.size || 'md']} ${props.className || ''} ${props.marginClassName ?? 'mr-3'} leading-none text-sm rounded ${textClassName} ${bgClassName} focus:outline-none focus:ring-2 focus:ring-offset-2`}
       data-tip={true}
       data-for={props.id}
       disabled={props.disabled ?? false}
