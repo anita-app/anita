@@ -17,7 +17,7 @@ export const MainContentContainer: React.FC<IMainContentContainerProps> = (props
       {props.headerText && (
       <div className={props.hasHeaderOnlyStyle ? 'p-4' : ''}>
         <div className="mt-3 flex justify-between">
-          <h3 className="text-xl font-bold truncate">{props.headerText}</h3>
+          <h3 className="text-xl font-semibold truncate">{props.headerText}</h3>
           {!!RightComponent && !!props.headerRightComponentProps && <RightComponent {...props.headerRightComponentProps} />}
         </div>
         {!props.hasHeaderOnlyStyle && <hr className="mt-4" />}
