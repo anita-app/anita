@@ -14,7 +14,7 @@ import { ListTabsHeaderRight } from 'app/components/project/section/list/list-ta
 interface IProjectSectionListTabsProps {
   sectionId: string
   projectId: string
-  sectionInfo: Section
+  section: Section
   sectionData: Array<ISectionElement>
   activeTab: SupportedViews
   handleTabClick: (tab: SupportedViews) => void
@@ -22,23 +22,23 @@ interface IProjectSectionListTabsProps {
 
 export const ProjectSectionListTabs: React.FC<IProjectSectionListTabsProps> = (props) => {
   if (props.sectionData.length === 0) {
-    return <ProjectSectionNoData sectionId={props.sectionId!} sectionTitle={props.sectionInfo.title} projectId={props.projectId!} />
+    return <ProjectSectionNoData sectionId={props.sectionId!} sectionTitle={props.section.title} projectId={props.projectId!} />
   }
 
   return (
     <Tab.Group selectedIndex={props.activeTab} onChange={props.handleTabClick}>
       <MainContentContainer
-        headerText={props.sectionInfo.title}
+        headerText={props.section.title}
         hasHeaderOnlyStyle={props.activeTab === 1}
         headerRightComponent={ListTabsHeaderRight}
         headerRightComponentProps={{ activeTab: props.activeTab, sectionId: props.sectionId }}
       >
         <Tab.Panels>
           <Tab.Panel>
-            <ProjectSectionListTable sectionInfo={props.sectionInfo} sectionData={props.sectionData} />
+            <ProjectSectionListTable section={props.section} sectionData={props.sectionData} />
           </Tab.Panel>
           <Tab.Panel>
-            <ProjectSectionListGrid sectionId={props.sectionInfo.id} sectionData={props.sectionData} />
+            <ProjectSectionListGrid sectionId={props.section.id} sectionData={props.sectionData} />
           </Tab.Panel>
         </Tab.Panels>
         <AddEditElementButton projectId={props.projectId!} sectionId={props.sectionId!} mode={EDITOR_MODE.add} />

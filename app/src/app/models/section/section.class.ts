@@ -10,6 +10,9 @@ import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-au
 import { TIconName } from 'app/libs/icons/icons.class'
 import { SupportedViews } from 'app/models/section/view-settings.const'
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
+import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
+import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
+import { Subject } from 'rxjs'
 
 export class Section implements ISection {
   public id: string
@@ -18,6 +21,7 @@ export class Section implements ISection {
   public childOf?: Array<string>
   public [RESERVED_FIELDS.createdAt]?: never
   public formModel: Array<FormFieldsModel<TSupportedFormsTypes>>
+  public visibleColumnsInTableView = new Subject<Array<FormFieldsModel<TSupportedFormsTypes>>>()
 
   constructor (
     private projectId: string,
@@ -29,6 +33,7 @@ export class Section implements ISection {
     this.icon = sectionData.icon || undefined
     this.childOf = sectionData.childOf
     this.formModel = sectionData.formModel
+    this.visibleColumnsInTableView.next(this.getVisibleColumnsInTableView())
   }
 
   public getSectionIcon (): TIconName {
@@ -91,10 +96,16 @@ export class Section implements ISection {
       this.sectionData.viewSettings.table.formElesVisibility = {}
     }
     this.sectionData.viewSettings.table.formElesVisibility[formEleFieldName!] = isVisible
+    this.visibleColumnsInTableView.next(this.getVisibleColumnsInTableView())
     this.saveEditedSection()
+  }
+
+  public getVisibleColumnsInTableView (): Array<FormFieldsModel<TSupportedFormsTypes>> {
+    return this.formModel.filter(formEle => this.getIsFormEleVisibleInTable(formEle.fieldName!))
   }
 
   private saveEditedSection = async (): Promise<void> => {
     new SectionElementSaver(this.projectId, RESERVED_AUDS_KEYS._sections, this.sectionData, EDITOR_MODE.edit).save()
+    storeDispatcher({ type: REDUX_ACTIONS.updateSection, payload: this.sectionData })
   }
 }

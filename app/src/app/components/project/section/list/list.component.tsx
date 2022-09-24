@@ -44,14 +44,14 @@ export const ProjectSectionList: React.FC = () => {
     return <Navigate to={ANITA_URLS.projectsList} />
   }
 
-  const sectionInfo = Manager.getCurrentProject()?.getSectionById(sectionId)
+  const section = Manager.getCurrentProject()?.getSectionById(sectionId)
 
-  if (sectionData === null || activeTab === null || !sectionInfo) {
+  if (sectionData === null || activeTab === null || !section) {
     return <Loader />
   }
 
   if (sectionData.length === 0) {
-    return <ProjectSectionNoData sectionId={sectionId!} sectionTitle={sectionInfo.title} projectId={projectId!} />
+    return <ProjectSectionNoData sectionId={sectionId!} sectionTitle={section.title} projectId={projectId!} />
   }
 
   const handleTabClick = (tab: number) => {
@@ -64,7 +64,7 @@ export const ProjectSectionList: React.FC = () => {
       projectId={projectId!}
       sectionId={sectionId!}
       activeTab={activeTab}
-      sectionInfo={sectionInfo}
+      section={section}
       sectionData={sectionData}
       handleTabClick={handleTabClick}
     />

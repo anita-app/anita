@@ -1,30 +1,24 @@
-import React, { useMemo } from 'react'
+import React, { useEffect } from 'react'
 import { ISectionElement } from 'app/models/section-element/section-element.declarations'
-import { ISection } from 'app/models/section/section.declarations'
 import { ProjectSectionListTableTdWithLinkToDetails } from 'app/components/project/section/list/table/table-td-with-link-to-details.component'
 import { customRenderPicker } from 'app/components/shared-components/values-renderers/custom-render-picker.component'
 import { useSortBy, useTable, Column } from 'react-table'
+import { Section } from 'app/models/section/section.class'
+import { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
 
 /**
  * Builds the columns for the table with react-table looping through sectionInfo
  */
-const useSectionInfo = (sectionInfo: ISection) => {
+const generateColumns = (visibleFormFields: Array<FormFieldsModel<TSupportedFormsTypes>>): Array<Column<ISectionElement>> => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const colsToShoww: Array<Column<ISectionElement>> = useMemo(() => [], [sectionInfo.id, sectionInfo.formModel])
-  useMemo(
-    () => sectionInfo.formModel.forEach(formModel => {
-      if (sectionInfo.id && formModel.label) {
-        colsToShoww.push({
-          Header: formModel.label,
-          accessor: formModel.fieldName,
-          Cell: customRenderPicker(formModel)
-        })
-      }
-    }
-    ),
-
-    [sectionInfo.id, sectionInfo.formModel, colsToShoww]
-  )
+  const colsToShoww: Array<Column<ISectionElement>> = []
+  visibleFormFields.forEach(formModel => {
+    colsToShoww.push({
+      Header: formModel.label,
+      accessor: formModel.fieldName,
+      Cell: customRenderPicker(formModel)
+    })
+  })
   return colsToShoww
 }
 
@@ -33,12 +27,25 @@ interface HeaderGroupFix {
 }
 
 interface IProjectSectionListTableProps {
-  sectionInfo: ISection
+  section: Section
   sectionData: Array<ISectionElement>
 }
 
-export const ProjectSectionListTable: React.FC<IProjectSectionListTableProps> = ({ sectionInfo, sectionData }) => {
-  const columns = useSectionInfo(sectionInfo)
+export const ProjectSectionListTable: React.FC<IProjectSectionListTableProps> = (props) => {
+  const [columns, setColumns] = React.useState<Array<Column<ISectionElement>>>(generateColumns(props.section.getVisibleColumnsInTableView()))
+
+  useEffect(() => {
+    const refreshVisibleColumns = (visibleFormFields: Array<FormFieldsModel<TSupportedFormsTypes>>) => {
+      setColumns(generateColumns(visibleFormFields))
+    }
+
+    if (!props.section.visibleColumnsInTableView.observed) {
+      props.section.visibleColumnsInTableView.subscribe(refreshVisibleColumns)
+    }
+    return () => {
+      props.section.visibleColumnsInTableView.unsubscribe()
+    }
+  }, [props.section])
 
   const {
     getTableProps,
@@ -46,7 +53,7 @@ export const ProjectSectionListTable: React.FC<IProjectSectionListTableProps> = 
     headerGroups,
     rows,
     prepareRow
-  } = useTable({ columns, data: sectionData }, useSortBy)
+  } = useTable({ columns, data: props.sectionData }, useSortBy)
 
   return (
     <table className="table-auto w-full divide-y divide-gray-200" {...getTableProps()}>
