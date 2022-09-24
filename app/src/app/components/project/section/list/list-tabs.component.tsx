@@ -9,7 +9,7 @@ import { Tab } from '@headlessui/react'
 import { ProjectSectionListGrid } from 'app/components/project/section/list/grid/grid'
 import { SupportedViews } from 'app/models/section/view-settings.const'
 import { Section } from 'app/models/section/section.class'
-import { ListTabsViewSelector } from 'app/components/project/section/list/list-tabs-view-selector.component'
+import { ListTabsHeaderRight } from 'app/components/project/section/list/list-tabs-header-right.component'
 
 interface IProjectSectionListTabsProps {
   sectionId: string
@@ -30,7 +30,8 @@ export const ProjectSectionListTabs: React.FC<IProjectSectionListTabsProps> = (p
       <MainContentContainer
         headerText={props.sectionInfo.title}
         hasHeaderOnlyStyle={props.activeTab === 1}
-        headerRightComponent={ListTabsViewSelector}
+        headerRightComponent={ListTabsHeaderRight}
+        headerRightComponentProps={{ activeTab: props.activeTab }}
       >
         <Tab.Panels>
           <Tab.Panel>
