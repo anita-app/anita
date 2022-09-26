@@ -4,12 +4,11 @@ import React, { ReactNode } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 interface IProjectSectionListTableTdWithLinkToDetailsProps {
-  tdProps: {}
   elementId: string | undefined
   children: ReactNode
 }
 
-export const ProjectSectionListTableTdWithLinkToDetails: React.FC<IProjectSectionListTableTdWithLinkToDetailsProps> = ({ children, tdProps, elementId }) => {
+export const ProjectSectionListTableBodyTrTdWithLinkToDetails: React.FC<IProjectSectionListTableTdWithLinkToDetailsProps> = ({ children, elementId }) => {
   const navigate = useNavigate()
   const params = useParams()
 
@@ -33,7 +32,6 @@ export const ProjectSectionListTableTdWithLinkToDetails: React.FC<IProjectSectio
     <td
       onClick={handleClick}
       className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 md:pl-0 cursor-pointer"
-      {...tdProps}
     >
       {children}
     </td>
