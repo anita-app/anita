@@ -3,6 +3,7 @@ import { ISectionElement } from 'app/models/section-element/section-element.decl
 import { Section } from 'app/models/section/section.class'
 import { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { ProjectSectionListTableBodyTr } from 'app/components/project/section/list/table/table-body-tr.component'
+import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
 
 interface IProjectSectionListTableProps {
   section: Section
@@ -17,7 +18,8 @@ export const ProjectSectionListTable: React.FC<IProjectSectionListTableProps> = 
         {props.columns.map((col) => (
           <th
             key={`th-${col.fieldName}`}
-            className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 md:pl-0"
+            // eslint-disable-next-line eqeqeq
+            className={`py-3.5 pl-4 pr-3 text-sm font-semibold text-gray-900 sm:pl-6 md:pl-0 ${col.componentCode != FORM_COMPONENTS_CODES.basicCheckbox ? 'text-left' : 'text-center'}`}
           >
             {col.label}
           </th>
