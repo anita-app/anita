@@ -18,7 +18,6 @@ export const ProjectSectionListTableTd: React.FC<IProjectSectionListTableTdProps
           sectionId={props.sectionId}
           element={props.cell.row.original}
           fieldName={props.cell.column.id as string}
-          value={!!props.cell.value}
         />
       </ProjectSectionListTableTdWithoutLink>
     )
