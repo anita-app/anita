@@ -16,7 +16,7 @@ export const ProjectSectionListTableTd: React.FC<IProjectSectionListTableTdProps
       <ProjectSectionListTableTdWithoutLink key={`${props.cell.column.id}${props.cell.row.id}`} tdProps={props.cell.getCellProps()}>
         <CheckBoxEditable
           sectionId={props.sectionId}
-          elementId={props.cell.row.original.id as string}
+          element={props.cell.row.original}
           fieldName={props.cell.column.id as string}
           value={!!props.cell.value}
         />
