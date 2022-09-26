@@ -38,7 +38,7 @@ const ElementValuesViewer = ({ element, formModels, sectionId }: { element: ISec
         return (
           <CheckBoxEditable
             key={formModel.fieldName}
-            elementId={element.id as string}
+            element={element}
             sectionId={sectionId}
             label={formModel.label}
             fieldName={formModel.fieldName}
