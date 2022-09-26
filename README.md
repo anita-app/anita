@@ -26,12 +26,15 @@ As we move forward we will make available our current roadmap, as of now our nex
 
 Our goal for version 1.0.0 is to implement the following:
 
-- [X] support for child elements to link to parent elements of parent sections;
-- [X] support for saving data locally in the browser's IndexedDB (with [Dexie.js](https://dexie.org/));
-- [ ] possibility to exclude certain sections from the main menu: useful for child sections to be displayed only as a subsection of a parent element;
+- [X] full support for custom data structures ([see the blog post about it](https://anita-app.com/blog/articles/most-secure-cloud.html))
+- [X] full support for custom data types
+- [X] full support for CRUD operations on data stored:
+  - [X] locally in the browser's IndexedDB (with [Dexie.js](https://dexie.org/));
+  - [X] locally in a JSON or SQLite file in the device FS [see the blog post](https://anita-app.com/blog/articles/sqlite-in-a-pwa-with-file-system-access-api.html);
+- [X] list views and grid views (cards);
+- [X] relationships between sections and sections elements (-> child elements can link to parent elements of parent sections);
+- [X] possibility to exclude certain sections from the main menu: useful for child sections to be displayed only as a subsection of a parent element;
+- [X] hide show columns in table views;
 - [ ] addition of a tab view for child sections;
 - [ ] Anita templates (at least one example template); 
-- [ ] support for synchronization of locally stored data with one or more remote databases connected directly to the PWA, without intermediaries (serverless/no-server). Priority development for (in order of priority):
-  - [ ] [Deta Base](https://www.deta.sh/)
-  - [ ] [DexieCloud](https://dexie.org/cloud/)
-  - [ ] MySQL
+- [ ] support for synchronization of locally stored data with at least one remote data store (TBD);

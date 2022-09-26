@@ -11,18 +11,18 @@ export interface IModalProps {
   title: string
   actionText: string
   type: Type.primary | Type.danger
-  handleClickAction: () => void
-  animationClass?: string
+  handleClickAction?: () => void
   children: ReactNode
   icon?: TIconName
   iconClassName?: string
   disableAction?: boolean
+  hideCancelButton?: boolean
 }
 
 const Modal: React.FC<IModalProps> = (props) => {
   const { hideModal } = useModalContext()
   const handleActionClick = () => {
-    props.handleClickAction()
+    props.handleClickAction?.()
     hideModal()
   }
   return (
@@ -41,7 +41,7 @@ const Modal: React.FC<IModalProps> = (props) => {
         </Transition.Child>
 
         <div className="fixed inset-0 z-10 overflow-y-auto">
-          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+          <div className="flex min-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -51,14 +51,14 @@ const Modal: React.FC<IModalProps> = (props) => {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 w-full sm:max-w-lg sm:p-6">
                 <div className="sm:flex sm:items-start">
                   {props.icon && (
                     <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
                       {Icons.render(props.icon, `${props.iconClassName} text-xl -mt-1`)}
                     </div>
                   )}
-                  <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                  <div className="ml-2 sm:ml-4 text-left">
                     <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
                       {props.title}
                     </Dialog.Title>
@@ -67,19 +67,21 @@ const Modal: React.FC<IModalProps> = (props) => {
                     </div>
                   </div>
                 </div>
-                <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+                <div className="flex items-center justify-end mt-5 sm:mt-4">
+                  {props.hideCancelButton !== true && (
+                    <Button
+                      id="cancel"
+                      label="Cancel"
+                      type={Type.secondary}
+                      onClick={hideModal}
+                    />
+                  )}
                   <Button
                     id="action-button"
                     type={props.type}
                     label={props.actionText}
                     onClick={handleActionClick}
                     disabled={props.disableAction}
-                  />
-                  <Button
-                    id="cancel"
-                    label="Cancel"
-                    type={Type.secondary}
-                    onClick={hideModal}
                   />
                 </div>
               </Dialog.Panel>

@@ -1,80 +1,89 @@
 const itemsToType = [
   'your personal notes',
-  'projects',
-  'contacts',
-  'meetings notes',
-  'financial data',
   'balance sheets',
+  'bills and invoices',
+  'subscriptions to online services',
+  'personal or business contacts',
+  'financial data',
   'business accounts',
+  'meetings notes',
+  'ongoing projects',
   'your favourite recipes',
+  'passwords',
   'your art collection',
   'your favourite books',
   'movies to watch',
+  'your collectables',
   'your wardrobe',
-  'hospital equipment',
-  'jewelry',
+  'warehouse inventory',
   'musical instruments',
   'paintings',
   'your cars',
   'your collection of stamps',
-  'your collectables',
   'your devices',
-  'furniture',
-  'bills and invoices',
-  'subscriptions to online services'
+  'furniture details',
+  'hospital equipment',
+  'inventory of jewelry',
 ]
 
 export class Typewriter {
   private static domElementId = 'description-last-item'
   private static domElement: HTMLSpanElement = null
-  private static previousString = ''
-  private static delayBetweenLetters = 100
+  private static delayBetweenLetters = 50
   private static delayCaret = 500
-  private static delayBetweenWords = 1000
+  private static currentWordIndex = -1
 
+  public static async start(): Promise<void> {
+    if(!this.domElement) {
+      this.domElement = document.getElementById(this.domElementId)
+    }
+    if (this.domElement) {
+      this.type()
+    }
+  }
+  
   public static async type(): Promise<void> {
-    if(!Typewriter.domElement) {
-      Typewriter.domElement = document.getElementById(Typewriter.domElementId)
-    }
-    if (Typewriter.domElement) {
-      const stringToType = await Typewriter.getRandomString()
-      await Typewriter.typeString(stringToType)
-    }
+    const stringToType = await this.getNextString()
+    await this.typeString(stringToType)
   }
 
   private static async sleep(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms))
   }
 
-  private static getRandomString(): string {
-    const randomIndex = Math.floor(Math.random() * itemsToType.length)
-    const randomItem = itemsToType[randomIndex]
-    if (randomItem === Typewriter.previousString) {
-      return Typewriter.getRandomString()
-    } else {
-      Typewriter.previousString = randomItem
-      return randomItem
-    }
+  private static getNextString(): string {
+    this.currentWordIndex = (this.currentWordIndex + 1) < itemsToType.length ? this.currentWordIndex + 1 : 0
+    return itemsToType[this.currentWordIndex]
   }
 
   private static async typeString(stringToType: string): Promise<void> {
+    
     for (let i = 0; i < stringToType.length; i++) {
       if (i === 0) {
-        Typewriter.domElement.innerHTML = ''
+        this.domElement.innerHTML = ''
       }
-      Typewriter.domElement.innerHTML = Typewriter.domElement.innerHTML.slice(0, -1) + stringToType.charAt(i) + '|'
-      await Typewriter.sleep(Typewriter.delayBetweenLetters)
-    }
-    Typewriter.domElement.innerHTML = Typewriter.domElement.innerHTML.slice(0, -1)
-    for (let i = 0; i <= Typewriter.delayBetweenWords / Typewriter.delayCaret; i++) {
-      Typewriter.domElement.innerHTML = `${stringToType}|`
-      await Typewriter.sleep(Typewriter.delayCaret)
-      // html white space
-      Typewriter.domElement.innerHTML = `${stringToType}&nbsp;`
-      await Typewriter.sleep(Typewriter.delayCaret)
+      this.domElement.innerHTML = this.domElement.innerHTML.slice(0, -1) + stringToType.charAt(i) + '|'
+      await this.sleep(this.delayBetweenLetters)
     }
     
-    Typewriter.type()
+    this.domElement.innerHTML = this.domElement.innerHTML.slice(0, -1)
+    
+    this.domElement.innerHTML = `${stringToType}|`
+    await this.sleep(this.delayCaret)
+    // html white space
+    this.domElement.innerHTML = `${stringToType}&nbsp;`
+    await this.sleep(this.delayCaret)
+  
+    this.domElement.innerHTML = `${stringToType}|`
+
+    for (let i = 0; i < stringToType.length; i++) {
+      this.domElement.innerHTML = this.domElement.innerHTML.slice(0, -2) + '|'
+      await this.sleep(10)
+    }
+    
+    await this.sleep(10)
+
+    this.type()
   }
 
 }

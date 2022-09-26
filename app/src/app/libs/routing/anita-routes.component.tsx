@@ -1,9 +1,9 @@
 import React from 'react'
 import { ANITA_URLS } from 'app/libs/routing/anita-routes.constant'
-import { AddEditSectionElement } from 'app/components/project/project-add-edit-section-element.component'
-import { ProjectDetails } from 'app/components/project/project-details.component'
-import { SectionElementDetails } from 'app/components/project/project-section-element-details.component'
-import { SectionElementsList } from 'app/components/project/project-section-elements-list.component'
+import { ProjectSectionElementAddEdit } from 'app/components/project/section/element/add-edit.component'
+import { ProjectDetails } from 'app/components/project/details.component'
+import { ProjectSectionElementDetails } from 'app/components/project/section/element/details.component'
+import { ProjectSectionList } from 'app/components/project/section/list/list.component'
 import { AddEditProject } from 'app/components/projects/add-edit-project.component'
 import { ProjectsNone } from 'app/components/projects/no-projects.component'
 import { ProjectsList } from 'app/components/projects/projects-list.component'
@@ -17,10 +17,10 @@ export const AnitaRoutes = () => (
     <Route path={ANITA_URLS.projectsNone} element={<ProjectsNone />} />
     <Route path={ANITA_URLS.projectDetails} element={<ProjectDetails />} />
 
-    <Route path={ANITA_URLS.projectSectionElesList} element={<SectionElementsList />} />
-    <Route path={ANITA_URLS.projectSectionEleDetails} element={<SectionElementDetails />} />
-    <Route path={ANITA_URLS.projectSectionAddEle} element={<AddEditSectionElement />} />
-    <Route path={ANITA_URLS.projectSectionEditEle} element={<AddEditSectionElement />} />
+    <Route path={ANITA_URLS.projectSectionElesList} element={<ProjectSectionList />} />
+    <Route path={ANITA_URLS.projectSectionEleDetails} element={<ProjectSectionElementDetails />} />
+    <Route path={ANITA_URLS.projectSectionAddEle} element={<ProjectSectionElementAddEdit />} />
+    <Route path={ANITA_URLS.projectSectionEditEle} element={<ProjectSectionElementAddEdit />} />
     <Route
       path="*" element={<Navigate to={ANITA_URLS.projectsList} />}
     />

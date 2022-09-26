@@ -14,5 +14,5 @@ window.onresize = setHeights;
 
 // on window ready
 window.onload = () => {
-  Typewriter.type()
+  Typewriter.start()
 }

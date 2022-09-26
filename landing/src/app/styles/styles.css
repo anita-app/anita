@@ -7,23 +7,7 @@
  * @see https://2ality.com/2012/01/numbering-headingshtml.html
  **/
 
-body {
-  counter-reset: h2counter;
-}
-h1 {
-  counter-reset: h2counter;
-}
-article h2:before {
-  content: counter(h2counter) ".\0000a0\0000a0";
-  counter-increment: h2counter;
-}
-article h2 {
-  counter-reset: h3counter;
-}
-article h3:before {
-  content: counter(h2counter) "." counter(h3counter) ".\0000a0\0000a0";
-  counter-increment: h3counter;
-}
+
 
 /**
  * Blog layout
@@ -47,16 +31,8 @@ article h5 {
   @apply leading-normal;
 }
 
-article h1 {
-  @apply mt-8;
-  @apply text-5xl;
-  @apply mb-10;
-}
-
 article p {
   @apply text-justify;
-  @apply my-4;
-  @apply text-base;
 }
 
 article li {
@@ -75,16 +51,26 @@ article a {
   @apply underline;
 }
 
-.code-block {
-  @apply my-6;
+.code-block pre {
+  @apply pl-4;
+  @apply pr-4;
+  @apply py-5;
+  @apply my-0;
+}
+.code-block,
+.code-block code {
   @apply rounded-xl;
   @apply overflow-x-auto;
-  @apply bg-gray-800;
-  @apply text-white;
-  @apply pt-3;
-  @apply pl-5;
-  @apply pb-3;
+  @apply bg-gray-800 !important;
+  @apply text-white !important;
+  @apply py-0;
+  @apply pl-0;
   @apply pr-5;
+}
+
+.prose :where(code):not(:where([class~=not-prose]*))::before,
+.prose :where(code):not(:where([class~=not-prose]*))::after {
+  content: none;
 }
 
 p code,
@@ -100,10 +86,7 @@ a code {
 }
 
 blockquote {
-  @apply border-l-4;
   @apply px-3 py-1;
-  @apply border-prussian-blue-600;
-  @apply bg-gray-100;
 }
 
 ol {

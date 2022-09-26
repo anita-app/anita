@@ -3,8 +3,11 @@ title: The journey of Anita to the ultimate bootstrapping thanks to GitHub Pages
 description: How to build a zero cost (as in zero kelvins) free and open source progressive web app and host it on GitHub Pages.
 date: 2021-11-02
 author: ilDon
+type: Article
+slug: the-journey-of-anita-to-the-ultimate-bootstrapping-thanks-to-git-hub-pages
+image: hosting-pwa-for-free/hosting-pwa-for-free.png
 ---
-Since I've started developing for the web (spoiler alert: it has been a couple of decades), I have always looked for ways to develop, host, and distribute my free and open-source projects (FOSS) at no cost. The reasoning is that there are already enough factors that make open source challenging to maintain, so economic sustainability should not be one.
+Since I've started developing for the web, I have always looked for ways to develop, host, and distribute my free and open-source projects (FOSS) at no cost. The reasoning is that there are already enough factors that make open source challenging to maintain, so economic sustainability should not be one.
 
 My latest FOSS project is [Anita](https://anita-app.com/), an app that I developed primarily because I needed it, and because the way I want to build it makes it a very fun project to work on. The first requirement that make this project fun is that I want it to __cost zero__ (as in *zero kelvins*), not considering my labor.
 

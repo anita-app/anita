@@ -57,7 +57,7 @@ export const BasicSelect: React.FC<ICommonFormEleProps<IBasicSelect<ISectionElem
           <div className={`relative w-full cursor-default overflow-hidden bg-white text-left sm:text-sm ${isValid || ''}`}>
             <Combobox.Input
               className={`w-full h-[42px] pr-10 text-sm leading-5 focus:ring-0 rounded-md ${!isValid && touched ? FORM_ELEMENTS_CSS_CLASSES_ERR : FORM_ELEMENTS_CSS_CLASSES}`}
-              displayValue={(option) => (option as IOption)?.label}
+              displayValue={(option) => (option as unknown as IOption)?.label}
               onChange={(event) => setQuery(event.target.value)}
               onBlur={() => setTouched(true)}
             />

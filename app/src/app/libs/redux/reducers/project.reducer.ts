@@ -16,6 +16,12 @@ export const projectReducer = (state: TSystemData | null = projectState, action:
       return action.payload
     case REDUX_ACTIONS.resetCurrentProject:
       return null
+    case REDUX_ACTIONS.updateSection: {
+      const newState = { ...state }
+      const sectionToUpdateIndex = newState._sections!.findIndex(section => section.id === action.payload.id)
+      newState._sections![sectionToUpdateIndex] = action.payload
+      return newState as TSystemData
+    }
     default:
       return state
   }

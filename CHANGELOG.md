@@ -7,6 +7,25 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.16.0] - 2022-09-26
+### Added
+- show hide cols in table view.
+
+## [0.15.1] - 2022-09-07
+### Fixed
+- new deploy.
+
+## [0.15.0] - 2022-09-07
+### Added
+- added blog article.
+
+### Changed
+- improved landing texts.
+
+## [0.14.20] - 2022-09-06
+### Changed
+- updated landing example.
+
 ## [0.14.19] - 2022-09-06
 ### Added
 - improved landing description with typewriter.

@@ -3,7 +3,9 @@ title: Porting Anita from Angular to React resulted in 20% less code
 description: How to port a complex Angular Progressive Web App, with offline capabilities and NgRx to React, step by step guide
 date: 2021-11-10
 author: ilDon
+type: Article
 slug: porting-anita-from-angular-to-react-resulted-in-20-less-code
+image: porting/porting-anita-from-angular-to-react.png
 ---
 I started developing Anita in Angular because I had previously developed with it a form generator that could power the core parts of the app. Having years of experience also with React, though, I soon realized that Angular was slowing me down. So I decided to port Anita from Angular to React.
 

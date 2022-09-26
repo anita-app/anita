@@ -4,6 +4,50 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.16.0",
+      "date": "2022-09-26",
+      "items": [
+        {
+          "type": "added",
+          "value": "show hide cols in table view"
+        }
+      ]
+    },
+    {
+      "version": "0.15.1",
+      "date": "2022-09-07",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "new deploy"
+        }
+      ]
+    },
+    {
+      "version": "0.15.0",
+      "date": "2022-09-07",
+      "items": [
+        {
+          "type": "changed",
+          "value": "improved landing texts"
+        },
+        {
+          "type": "added",
+          "value": "added blog article"
+        }
+      ]
+    },
+    {
+      "version": "0.14.20",
+      "date": "2022-09-06",
+      "items": [
+        {
+          "type": "changed",
+          "value": "updated landing example"
+        }
+      ]
+    },
+    {
       "version": "0.14.19",
       "date": "2022-09-06",
       "items": [
