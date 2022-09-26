@@ -4,6 +4,16 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.16.1",
+      "date": "2022-09-26",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "updating partial element removes data not included in the update"
+        }
+      ]
+    },
+    {
       "version": "0.16.0",
       "date": "2022-09-26",
       "items": [

@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.16.1] - 2022-09-26
+### Fixed
+- updating partial element removes data not included in the update.
+
 ## [0.16.0] - 2022-09-26
 ### Added
 - show hide cols in table view.
