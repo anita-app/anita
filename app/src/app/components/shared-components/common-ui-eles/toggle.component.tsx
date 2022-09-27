@@ -8,6 +8,8 @@ function classNames (...classes: Array<string>) {
 interface IToggleProps {
   label: string
   initialState: boolean
+  marginVerticalClassName?: string
+  labelPosition?: 'left' | 'right'
   onChange: (value: boolean) => void
 }
 
@@ -20,7 +22,12 @@ export const Toggle: React.FC<IToggleProps> = (props) => {
   }
 
   return (
-    <Switch.Group as="div" className="flex items-center my-4">
+    <Switch.Group as="div" className={`flex items-center ${props.marginVerticalClassName ?? 'my-4'}`}>
+      {props.labelPosition === 'left' && (
+        <Switch.Label as="span" className="mr-3">
+          <span className="text-sm font-medium text-gray-900">{props.label}</span>
+        </Switch.Label>
+      )}
       <Switch
         checked={enabled}
         onChange={handleToggleChange}
@@ -37,9 +44,11 @@ export const Toggle: React.FC<IToggleProps> = (props) => {
           )}
         />
       </Switch>
-      <Switch.Label as="span" className="ml-3">
-        <span className="text-sm font-medium text-gray-900">{props.label}</span>
-      </Switch.Label>
+      {props.labelPosition !== 'left' && (
+        <Switch.Label as="span" className="ml-3">
+          <span className="text-sm font-medium text-gray-900">{props.label}</span>
+        </Switch.Label>
+      )}
     </Switch.Group>
   )
 }
