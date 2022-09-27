@@ -1,7 +1,7 @@
 ---
 title: Data portability is a hard problem worth solving 
 description: Data portability has many benefits for users, most notably it ensures that they can take their data with them when they switch services.
-date: 2022-09-11
+date: 2022-09-27
 author: ilDon
 type: Article
 slug: data-portability-is-a-hard-problem
