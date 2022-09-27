@@ -42,7 +42,6 @@ const ElementValuesViewer = ({ element, formModels, sectionId }: { element: ISec
             sectionId={sectionId}
             label={formModel.label}
             fieldName={formModel.fieldName}
-            value={element[formModel.fieldName]}
           />)
       }
 

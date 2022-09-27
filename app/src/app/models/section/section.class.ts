@@ -22,6 +22,7 @@ export class Section implements ISection {
   public [RESERVED_FIELDS.createdAt]?: never
   public formModel: Array<FormFieldsModel<TSupportedFormsTypes>>
   public visibleColumnsInTableView = new Subject<Array<FormFieldsModel<TSupportedFormsTypes>>>()
+  public sorting = new Subject<[string, 'asc' | 'desc'] | [null, null]>()
 
   constructor (
     private projectId: string,
@@ -34,6 +35,7 @@ export class Section implements ISection {
     this.childOf = sectionData.childOf
     this.formModel = sectionData.formModel
     this.visibleColumnsInTableView.next(this.getVisibleColumnsInTableView())
+    this.sorting.next(this.getSorting())
   }
 
   public getSectionIcon (): TIconName {
@@ -102,6 +104,26 @@ export class Section implements ISection {
 
   public getVisibleColumnsInTableView (): Array<FormFieldsModel<TSupportedFormsTypes>> {
     return this.formModel.filter(formEle => this.getIsFormEleVisibleInTable(formEle.fieldName!))
+  }
+
+  public getSorting (): [string, 'asc' | 'desc'] | [null, null] {
+    return this.sectionData.viewSettings?.table?.sorting ?? [null, null]
+  }
+
+  public setSorting (sorting: string) {
+    if (!this.sectionData.viewSettings) {
+      this.sectionData.viewSettings = {}
+    }
+    if (!this.sectionData.viewSettings.table) {
+      this.sectionData.viewSettings.table = {}
+    }
+    const currentSorting = this.getSorting()
+    const order: 'asc' | 'desc' = currentSorting[0] === sorting ? (currentSorting[1] === 'asc' ? 'desc' : 'asc') : 'asc'
+    const newSorting: [string, 'asc' | 'desc'] = [sorting, order]
+    this.sectionData.viewSettings.table.sorting = newSorting
+
+    this.sorting.next(newSorting)
+    this.saveEditedSection()
   }
 
   private saveEditedSection = async (): Promise<void> => {

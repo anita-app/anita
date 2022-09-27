@@ -29,6 +29,7 @@ export interface ISectionViewSettings {
   isHiddenInMenu?: boolean
   table?: {
     formElesVisibility?: { [key: string]: boolean }
+    sorting?: [string, 'asc' | 'desc' ] | null
   }
 }
 

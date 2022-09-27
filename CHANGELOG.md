@@ -7,6 +7,14 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.16.2] - 2022-09-27
+### Added
+- table sorting.
+- close menu on click on mobile.
+
+### Fixed
+- duplicate field identifiers.
+
 ## [0.16.1] - 2022-09-26
 ### Fixed
 - updating partial element removes data not included in the update.

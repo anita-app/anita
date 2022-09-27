@@ -4,6 +4,24 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.16.2",
+      "date": "2022-09-27",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "duplicate field identifiers"
+        },
+        {
+          "type": "added",
+          "value": "table sorting"
+        },
+        {
+          "type": "added",
+          "value": "close menu on click on mobile"
+        }
+      ]
+    },
+    {
       "version": "0.16.1",
       "date": "2022-09-26",
       "items": [

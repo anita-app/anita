@@ -7,6 +7,8 @@ import { Manager } from 'app/libs/manager/manager.class'
 import { Icons } from 'app/libs/icons/icons.class'
 import { ISection } from 'app/models/section/section.declarations'
 import ReactTooltip from 'react-tooltip'
+import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
+import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 
 const baseStyleOfSidebarLinks = 'flex items-center block py-2.5 px-2 transition duration-200 border-l-2 hover:border-prussian-blue-700 hover:text-prussian-blue-500 text-sm font-semibold'
 
@@ -54,11 +56,16 @@ export const AdminLayoutSidebarMenuItem: React.FC<IAdminLayoutSidebarMenuItemPro
   const icon = isHiddenInMenu ? 'eyeOffOutline' : 'eyeOutline'
   const tooltip = isHiddenInMenu ? 'Show' : 'Hide'
 
+  const handleLinkClick = () => {
+    props.setCurrentSelectedSectionId(props.section.id)
+    storeDispatcher({ type: REDUX_ACTIONS.toggleSidebar })
+  }
+
   return (
     <Link
       key={props.section.id}
       to={linkPath}
-      onClick={() => props.setCurrentSelectedSectionId(props.section.id)}
+      onClick={handleLinkClick}
       className={addActiveClassNameToBaseStyle(!!props.selected)}
     >
       <div className="flex items-center justify-between w-full">
