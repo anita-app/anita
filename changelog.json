@@ -4,6 +4,16 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.16.3",
+      "date": "2022-09-27",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "checkbox position in table"
+        }
+      ]
+    },
+    {
       "version": "0.16.2",
       "date": "2022-09-27",
       "items": [

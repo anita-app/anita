@@ -20,6 +20,7 @@ export const CheckBoxEditable: React.FC<ICheckBoxAsCheckProps> = (props) => {
     <Checkbox
       label={props.label}
       initialValue={!!props.element[props.fieldName]}
+      isCentered={true}
       onChange={handleOnChange}
     />
   )

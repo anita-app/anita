@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 interface ICheckboxProps {
   label?: string
   initialValue: boolean
+  isCentered?: boolean
   onChange: (value: boolean) => void
 }
 
@@ -16,7 +17,7 @@ export const Checkbox: React.FC<ICheckboxProps> = (props) => {
 
   return (
     <fieldset className="space-y-5">
-      <div className="relative flex items-start">
+      <div className={`relative flex items-start ${props.isCentered ? 'justify-center' : ''}`}>
         <div className="flex h-5 items-center">
           <input
             id="offers"

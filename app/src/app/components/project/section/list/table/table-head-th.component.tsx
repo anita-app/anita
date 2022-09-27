@@ -17,12 +17,12 @@ export const ProjectSectionListTableHeadTh: React.FC<IProjectSectionListTableHea
   return (
     <th
     // eslint-disable-next-line eqeqeq
-      className={`py-3.5 pl-4 pr-3 text-sm font-semibold text-gray-900 sm:pl-6 md:pl-0 cursor-pointer ${props.col.componentCode != FORM_COMPONENTS_CODES.basicCheckbox ? 'text-left' : 'text-center'}`}
+      className={`py-3.5 pl-4 pr-3 text-sm font-semibold text-gray-900 sm:pl-6 md:pl-0 cursor-pointer relative ${props.col.componentCode != FORM_COMPONENTS_CODES.basicCheckbox ? 'text-left' : 'text-center'}`}
       onClick={handleHeaderClick}
     >
       {props.col.label}
       {field === props.col.fieldName && (
-        <span className="ml-1 opacity-60">
+        <span className="absolute top-4 ml-1 opacity-60">
           {order === 'asc' ? Icons.render('arrowDown') : Icons.render('arrowUp')}
         </span>
       )}
