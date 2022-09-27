@@ -1,6 +1,5 @@
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
-import './project-editor-mode-toggle.component.css'
 import React from 'react'
 import { Toggle } from 'app/components/shared-components/common-ui-eles/toggle.component'
 import { PROJECT_EDITOR_MODE } from 'app/data/project-form-builder/project-editor-form-builder.const'

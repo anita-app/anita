@@ -1,4 +1,0 @@
-input:checked ~ .dot {
-  transform: translateX(100%);
-  @apply bg-green-600;
-}
