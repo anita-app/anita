@@ -7,7 +7,6 @@ import {
 } from 'app/models/project/project.declarations'
 import { ISection } from 'app/models/section/section.declarations'
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
-import { Logger } from 'app/libs/logger/logger.class'
 import { Manager } from 'app/libs/manager/manager.class'
 
 export class ProjectLoader {
@@ -37,9 +36,6 @@ export class ProjectLoader {
       throw new Error('[ProjectLoader.loadProject] projectInfo is not set')
     }
     await this.createNewInstanceOfDbConnectorForProject()
-
-    Logger.info('[ProjectLoader.loadProject] projectId', this.projectId)
-    Logger.info('[ProjectLoader.loadProject] projectInfo', this.projectInfo)
 
     if (!dbInstances[this.projectId]) {
       throw new Error('[ProjectLoader.loadProject] dbInstance is not set')

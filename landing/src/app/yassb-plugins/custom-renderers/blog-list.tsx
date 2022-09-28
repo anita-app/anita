@@ -34,13 +34,13 @@ export const blogList: Renderer = ({ source, lang, options, frontMatterStore }: 
                 <span className="background"></span>
               </a>
             </div>
-            <div class="mt-6 flex items-center">
+            <div className="mt-6 flex items-center">
               <div>
-                <p class="text-sm font-medium text-gray-900">
-                  <a href={filePaths.absoluteUrl} class="hover:underline">{frontMatterStore[filePaths.absolutePath].author}</a>
+                <p className="text-sm font-medium text-gray-900">
+                  <a href={filePaths.absoluteUrl} className="hover:underline">{frontMatterStore[filePaths.absolutePath].author}</a>
                 </p>
-                <div class="flex space-x-1 text-sm text-gray-500">
-                  <time datetime={date.toISOString().split('T')[0]}>{new DateFormatter(date.toISOString(), 'month DD, YYYY').doFormat()}</time>
+                <div className="flex space-x-1 text-sm text-gray-500">
+                  <time dateTime={date.toISOString().split('T')[0]}>{new DateFormatter(date.toISOString(), 'month DD, YYYY').doFormat()}</time>
                 </div>
               </div>
             </div>

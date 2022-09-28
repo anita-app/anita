@@ -7,6 +7,34 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.16.5] - 2022-09-28
+### Added
+- link to new article on landing page.
+
+## [0.16.4] - 2022-09-27
+### Fixed
+- publication date.
+
+## [0.16.3] - 2022-09-27
+### Fixed
+- checkbox position in table.
+
+## [0.16.2] - 2022-09-27
+### Added
+- table sorting.
+- close menu on click on mobile.
+
+### Fixed
+- duplicate field identifiers.
+
+## [0.16.1] - 2022-09-26
+### Fixed
+- updating partial element removes data not included in the update.
+
+## [0.16.0] - 2022-09-26
+### Added
+- show hide cols in table view.
+
 ## [0.15.1] - 2022-09-07
 ### Fixed
 - new deploy.

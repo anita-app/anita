@@ -46,6 +46,7 @@ interface ActionsPayloads {
   [REDUX_ACTIONS.updateFormProjectAddSection]: void
   [REDUX_ACTIONS.resetSectionForChildOfSelector]: void
   [REDUX_ACTIONS.resetCurrentProject]: void
+  [REDUX_ACTIONS.updateSection]: ISection
 }
 
 export interface IValidStateForEle {

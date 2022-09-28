@@ -9,10 +9,9 @@
 
 <body class="text-gray-800 antialiased flex flex-col h-screen justify-between">
   <!-- component="navbar/navbar.component.html" -->
-
   <section class="relative">
     <div class="mx-auto pb-20 mt-36 mb-36">
-      <div class="w-full max-w-3xl ml-auto mr-auto p-10 border-1 rounded-md shadow-md">
+      <div class="w-full max-w-3xl ml-auto mr-auto py-10 px-6 sm:px-8 md:px-0">
         <article>
           <div class="pt-2 pb-1 pr-5 border-b rounded-t ">
             <h1 class="block text-center font-light leading-8 tracking-tight text-gray-900 text-4xl pb-6">{ title }</h1>
@@ -24,7 +23,9 @@
           <figure class="mb-10 mt-10">
             <img class="w-full rounded-lg mx-auto" src="/assets/images/blog/{ image }" alt="" width="1310" height="873">
           </figure>
-          <!-- generate-from-files="blog" -->          
+          <div class="prose prose-lg prose-prussian-blue mx-auto mt-6 text-gray-500 max-w-none">
+            <!-- generate-from-files="blog" -->          
+          </div>
         </article>
         <div class="flex justify-center mt-10">
           <!-- component="get-started.component.html" -->

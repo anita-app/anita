@@ -62,7 +62,6 @@ export class DbInitializer {
   }
 
   private async doIndexedDb (): Promise<void> {
-    Logger.info('[DbInitializer.doJson] Initializing IndexedDB')
     if (this.projectSections) {
       const dsExpander = new DataStructureExtender(this.projectSections)
       dsExpander.extend()
