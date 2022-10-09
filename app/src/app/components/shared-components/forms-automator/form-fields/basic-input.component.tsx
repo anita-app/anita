@@ -21,7 +21,7 @@ export const BasicInput: React.FC<ICommonFormEleProps> = memo(function BasicInpu
 
   return (
     <FormEleContainer width={width}>
-      <FormElementLabel label={formEle.label!} />
+      <FormElementLabel label={formEle.label!} labelHint={formEle.labelHint} />
       <input
         key={formEle.fieldName}
         name={formEle.fieldName}

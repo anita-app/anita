@@ -66,7 +66,7 @@ export const ChildOfSelectorForSection: React.FC<ICommonFormEleProps<IBasicSelec
   // and the ones we define are not compatible.
   return (
     <FormEleContainer width="w-full">
-      <FormElementLabel label={formEle.label!} />
+      <FormElementLabel label={formEle.label!} labelHint={formEle.labelHint} />
       <Select
         defaultValue={ParentElement.infoStringToObj(element[formEle.fieldName], selectOptions as any)}
         isMulti={true}

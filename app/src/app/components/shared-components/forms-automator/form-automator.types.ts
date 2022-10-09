@@ -115,6 +115,7 @@ interface ICommonTypes<T> {
   componentCode: FORM_COMPONENTS_CODES
   fieldName: keyof T & string
   label?: string
+  labelHint?: string
   disabled?: boolean
   readonly?: boolean
   prerequisites?: Array<Prerequisites>

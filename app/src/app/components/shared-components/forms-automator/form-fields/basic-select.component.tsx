@@ -51,7 +51,7 @@ export const BasicSelect: React.FC<ICommonFormEleProps<IBasicSelect<ISectionElem
 
   return (
     <FormEleContainer width={width}>
-      <FormElementLabel label={formEle.label!} />
+      <FormElementLabel label={formEle.label!} labelHint={formEle.labelHint} />
       <Combobox value={selectedOption} onChange={handleSelected}>
         <div className="relative">
           <div className={`relative w-full cursor-default overflow-hidden bg-white text-left sm:text-sm ${isValid || ''}`}>
