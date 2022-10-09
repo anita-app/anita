@@ -1,5 +1,5 @@
-import { IListTabsHeaderRightProps } from 'app/components/project/section/list/list-tabs-header-right.component'
 import React, { ReactNode } from 'react'
+import type { IListTabsHeaderRightProps } from 'app/components/project/section/list/tabs/header-right.component'
 
 interface IMainContentContainerProps {
   headerText?: string

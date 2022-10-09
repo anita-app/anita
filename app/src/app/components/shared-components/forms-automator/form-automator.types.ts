@@ -19,6 +19,7 @@ export interface ICommonFormEleProps<T = FormFieldsModel<TSupportedFormsTypes>> 
   formEle: T
   element: Partial<ISectionElement>
   handleChange: (fieldName: string | number, value: FormAutomatorOnChangeValue) => void
+  forceFullWidth?: boolean
   [customProps: string]: any
 }
 
@@ -114,6 +115,7 @@ interface ICommonTypes<T> {
   componentCode: FORM_COMPONENTS_CODES
   fieldName: keyof T & string
   label?: string
+  labelHint?: string
   disabled?: boolean
   readonly?: boolean
   prerequisites?: Array<Prerequisites>

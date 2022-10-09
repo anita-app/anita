@@ -57,6 +57,10 @@ export class Project {
     return this.sections[sectionId]
   }
 
+  public getSystemData = (): TSystemData => this.systemData
+
+  public getProjectProp = (key: keyof IProjectSettings): any => this.systemData[RESERVED_AUDS_KEYS._settings][0][key]
+
   public getParentInfoForDetailsView = (listOfParents: Array<string>): Promise<Array<ParentInfoForDetailsView>> => new GetParentInfoForDetailsView(this, listOfParents).get()
 
   public getOptionsForParentsSelector = (options: Array<IOptionKeysModel>): Promise<Array<OptionKeysModelGroup>> => new GetOptionsForParentsSelector(this).buildOptions(options)

@@ -53,7 +53,7 @@ export const OptionsMakerSingleOption: React.FC<ICommonFormEleProps<FormFieldsMo
             fill="outline"
             hasTooltip={true}
             onClick={handleClickDeleteOption.bind(undefined, index)}
-            marginClassName=''
+            marginClassName=""
             className="w-full lg:w-12"
             labelClassName="lg:hidden"
             tooltipContainerClassName="hidden lg:block"

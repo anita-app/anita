@@ -1,5 +1,5 @@
-import { ListTabsHeaderRightEditView } from 'app/components/project/section/list/list-tabs-header-right-edit-view.component'
-import { ListTabsHeaderRightViewSelector } from 'app/components/project/section/list/list-tabs-header-right-view-selector.component'
+import { ListTabsHeaderRightEditView } from 'app/components/project/section/list/tabs/header-right-edit-view.component'
+import { ListTabsHeaderRightViewSelector } from 'app/components/project/section/list/tabs/header-right-view-selector.component'
 import { SupportedViews } from 'app/models/section/view-settings.const'
 import React, { memo } from 'react'
 

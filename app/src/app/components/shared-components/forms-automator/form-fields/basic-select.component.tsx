@@ -13,13 +13,13 @@ import { Combobox, Transition } from '@headlessui/react'
 import { Icons } from 'app/libs/icons/icons.class'
 import { IOption } from 'app/models/parent-element/parent-element.class'
 
-export const BasicSelect: React.FC<ICommonFormEleProps<IBasicSelect<ISectionElement>>> = memo(function BasicSelect ({ formEle, element, handleChange }: ICommonFormEleProps<IBasicSelect<ISectionElement>>) {
+export const BasicSelect: React.FC<ICommonFormEleProps<IBasicSelect<ISectionElement>>> = memo(function BasicSelect ({ formEle, element, handleChange, forceFullWidth }: ICommonFormEleProps<IBasicSelect<ISectionElement>>) {
   const [touched, setTouched] = useState(false)
   const [query, setQuery] = useState('')
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))
   const [isValid, setIsValidForField] = useValidators(fieldId)
 
-  const width = formEle.width ? calcWidth(formEle.width) : 'w-full'
+  const width = formEle.width && !forceFullWidth ? calcWidth(formEle.width) : 'w-full'
 
   // check that the value of element[formEle.fieldName] is a value in formEle.options
   // Use a relaxed equality check to consider numbers and strings the same
@@ -51,7 +51,7 @@ export const BasicSelect: React.FC<ICommonFormEleProps<IBasicSelect<ISectionElem
 
   return (
     <FormEleContainer width={width}>
-      <FormElementLabel label={formEle.label!} />
+      <FormElementLabel label={formEle.label!} labelHint={formEle.labelHint} />
       <Combobox value={selectedOption} onChange={handleSelected}>
         <div className="relative">
           <div className={`relative w-full cursor-default overflow-hidden bg-white text-left sm:text-sm ${isValid || ''}`}>

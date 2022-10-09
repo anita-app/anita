@@ -66,7 +66,8 @@ module.exports = {
     'react/jsx-indent': ['error', 2],
     'react/jsx-indent-props': ['error', 2],
     'react/jsx-props-no-multi-spaces': ['error'],
-    'react/jsx-boolean-value': ['error', 'always']
+    'react/jsx-boolean-value': ['error', 'always'],
+    'jsx-quotes': ['error', 'prefer-double']
     // TO BE EVALUATED
     // 'padding-line-between-statements': ['error', { blankLine: 'always', prev: 'block-like', next: 'return' }]
   },
