@@ -25,8 +25,8 @@ export const OptionsMaker: React.FC<ICommonFormEleProps<FormFieldsModel<IOptionK
       {(typeof handleClickAddOption === 'function') && (
         <div className="flex justify-end">
           <Button
-            id='addChoice'
-            label='Add Choice'
+            id="addChoice"
+            label="Add Choice"
             type={Type.success}
             fill="outline"
             marginClassName="mr-3"

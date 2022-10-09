@@ -21,7 +21,7 @@ export const ProjectLoadedFooter: React.FC<IProjectLoadedFooterProps> = ({ proje
       href={urlParamFiller(ANITA_URLS.projectDetails, [{ name: URL_PARAMS.projectId, value: project.id }])}
       type={Type.info}
       iconLeft="informationCircleOutline"
-      marginClassName=''
+      marginClassName=""
       hasTooltip={true}
       breakpoint={'sm'}
     />

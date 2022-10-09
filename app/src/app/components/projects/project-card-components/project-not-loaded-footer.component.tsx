@@ -15,6 +15,6 @@ export const ProjectNotLoadedFooter: React.FC<IProjectNotLoadedFooterProps> = ({
     onClick={() => Manager.loadProjectById(project.id)}
     type={Type.primary}
     fill="outline"
-    marginClassName=''
+    marginClassName=""
   />
 )

@@ -77,7 +77,7 @@ export const AdminLayoutSidebarMenuItem: React.FC<IAdminLayoutSidebarMenuItemPro
             <button className="flex items-center" onClick={handleVisibilityClick} data-tip={true} data-for={`menuItem${props.section.id}`}>
               {Icons.render(icon, 'text-gray-400')}
             </button>
-            <ReactTooltip id={`menuItem${props.section.id}`} effect="solid" place='right'>
+            <ReactTooltip id={`menuItem${props.section.id}`} effect="solid" place="right">
               {tooltip}
             </ReactTooltip>
           </>

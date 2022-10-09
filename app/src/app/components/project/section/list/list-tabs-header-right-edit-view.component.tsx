@@ -40,7 +40,7 @@ export const ListTabsHeaderRightEditView: React.FC<IListTabsHeaderRightEditViewP
         labelClassName="hidden"
         onClick={handleOpenConfigForView}
         iconLeft="cogOutline"
-        tooltip='Edit view'
+        tooltip="Edit view"
         type={Type.transparent}
         size="sm"
       />
