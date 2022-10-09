@@ -4,6 +4,20 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.17.0",
+      "date": "2022-10-09",
+      "items": [
+        {
+          "type": "added",
+          "value": "add fields from list view"
+        },
+        {
+          "type": "added",
+          "value": "section name abbreviation for menu"
+        }
+      ]
+    },
+    {
       "version": "0.16.5",
       "date": "2022-09-28",
       "items": [
