@@ -4,6 +4,7 @@ import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { CloudSyncButton } from 'app/components/admin-layout/header/cloud-sync-button'
 
 export const AdminLayoutHeader: React.FC = () => {
   const sidebarHideClass = useSelector((store: AnitaStore) => store.layout.sidebar)
@@ -13,7 +14,7 @@ export const AdminLayoutHeader: React.FC = () => {
   }
 
   return (
-    <div className={`bg-white text-gray-700 flex h-14 shadow-md ${project ? 'justify-between' : 'justify-center'}`}>
+    <div className={`bg-white text-gray-700 flex items-center h-14 shadow-md ${project ? 'justify-between' : 'justify-center'}`}>
       {!!project && (
         <button className="mobile-menu-button p-4 focus:outline-none  md:hidden" onClick={handleClickSidebar}>
           <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -30,6 +31,8 @@ export const AdminLayoutHeader: React.FC = () => {
           <span className="text-md font-bold leading-relaxed uppercase">Anita</span><sup style={{ fontVariant: 'small-caps' }}>Beta</sup>
         </Link>
       </div>
+
+      <CloudSyncButton />
 
       {sidebarHideClass === '' && (<div onClick={handleClickSidebar} className="absolute inset-0 h-full w-full z-10 md:hidden"></div>)}
 

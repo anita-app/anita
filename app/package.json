@@ -19,6 +19,7 @@
     "date-format": "^3.0.0",
     "deta": "^1.0.2",
     "dexie": "^3.0.3",
+    "dropbox": "^10.32.0",
     "file-dialog": "^0.0.8",
     "history": "5",
     "ionicons": "^6.0.3",
