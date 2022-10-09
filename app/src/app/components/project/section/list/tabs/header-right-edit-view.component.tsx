@@ -1,4 +1,4 @@
-import { ListTabsHeaderRightEditViewTable } from 'app/components/project/section/list/list-tabs-header-right-edit-view-table.component'
+import { ListTabsHeaderRightEditViewTable } from 'app/components/project/section/list/tabs/header-right-edit-view-table.component'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { useModalContext } from 'app/components/shared-components/modals/modal-context'

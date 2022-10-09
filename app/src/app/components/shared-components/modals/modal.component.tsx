@@ -17,6 +17,7 @@ export interface IModalProps {
   iconClassName?: string
   disableAction?: boolean
   hideCancelButton?: boolean
+  hideActionRow?: boolean
 }
 
 const Modal: React.FC<IModalProps> = (props) => {
@@ -67,23 +68,24 @@ const Modal: React.FC<IModalProps> = (props) => {
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center justify-end mt-5 sm:mt-4">
-                  {props.hideCancelButton !== true && (
+                {!props.hideActionRow && (
+                  <div className="flex items-center justify-end mt-5 sm:mt-4">
+                    {props.hideCancelButton !== true && (
+                      <Button
+                        id="cancel"
+                        label="Cancel"
+                        type={Type.secondary}
+                        onClick={hideModal}
+                      />
+                    )}
                     <Button
-                      id="cancel"
-                      label="Cancel"
-                      type={Type.secondary}
-                      onClick={hideModal}
+                      id="action-button"
+                      type={props.type}
+                      label={props.actionText}
+                      onClick={handleActionClick}
+                      disabled={props.disableAction}
                     />
-                  )}
-                  <Button
-                    id="action-button"
-                    type={props.type}
-                    label={props.actionText}
-                    onClick={handleActionClick}
-                    disabled={props.disableAction}
-                  />
-                </div>
+                  </div>)}
               </Dialog.Panel>
             </Transition.Child>
           </div>

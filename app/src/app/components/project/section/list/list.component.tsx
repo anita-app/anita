@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react'
 import { Navigate, useParams } from 'react-router'
 import { Manager } from 'app/libs/manager/manager.class'
 import { SupportedViews } from 'app/models/section/view-settings.const'
-import { ProjectSectionListTabs } from 'app/components/project/section/list/list-tabs.component'
+import { ProjectSectionListTabs } from 'app/components/project/section/list/tabs/list-tabs.component'
 
 export const ProjectSectionList: React.FC = () => {
   const params = useParams()
@@ -62,6 +62,7 @@ export const ProjectSectionList: React.FC = () => {
   return (
     <ProjectSectionListTabs
       projectId={projectId!}
+      projectUpdatedAt={Manager.getCurrentProject()?.getProjectProp('updatedAt')!}
       sectionId={sectionId!}
       activeTab={activeTab}
       section={section}

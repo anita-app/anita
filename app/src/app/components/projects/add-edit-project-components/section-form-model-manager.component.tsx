@@ -28,6 +28,7 @@ interface ISectionFormModelManagerProps {
   indexSection: number
   indexFormElement: number
   element: FormFieldsModel<TSupportedFormsTypes>
+  forceFullWidth?: boolean
 }
 
 const getAlreadyExists = (section: ISection, fieldName: string): boolean => {
@@ -44,7 +45,6 @@ export const SectionFormModelManager: React.FC<ISectionFormModelManagerProps> = 
   const projectId = params[URL_PARAMS.projectId]
   const mode = useMemo(() => projectId ? EDITOR_MODE.edit : EDITOR_MODE.add, [projectId])
   const alreadyExists = getAlreadyExists(section, element.fieldName)
-  console.log('alreadyExists', alreadyExists)
   const formModelToUse = useMemo(() => mode === EDITOR_MODE.edit && alreadyExists
     ? PROJECT_EDITOR_FORM_BUILDER[projectEditorMode].sectionEles.existingItem
     : PROJECT_EDITOR_FORM_BUILDER[projectEditorMode].sectionEles.newItem,
