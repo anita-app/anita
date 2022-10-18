@@ -17,7 +17,7 @@ export class OAuthUtils {
     const ret = Object.create(null)
     const urlParams = window.location.href.split(UNIQUE_DATA_SEPARATOR)[1]
 
-    urlParams.split('&').forEach((param) => {
+    urlParams?.split('&').forEach((param) => {
       const parts = param.replace(/\+/g, ' ').split('=')
       let key: string | undefined = parts.shift()
       let val: string | null | undefined = parts.length > 0 ? parts.join('=') : undefined
