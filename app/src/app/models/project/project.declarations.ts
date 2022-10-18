@@ -46,6 +46,9 @@ export interface IProjectSettings {
   localStorage: LOCAL_STORAGE_SYSTEMS
   updatedAt?: string
   encrypted?: boolean
+  cloudSync?: {
+    dropbox?: string
+  }
 }
 
 export interface AdditionalInfoForLocalStorage {

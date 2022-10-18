@@ -1,5 +1,5 @@
 import { CloudSyncBase, SupportedCloud } from 'app/libs/cloud-sync/cloud-sync-base.class'
-import { IDropboxTokens } from 'app/libs/cloud-sync/cloud-sync.const'
+import { IDropboxTokens, ISharedFileMeta } from 'app/libs/cloud-sync/cloud-sync.const'
 import { Dropbox, DropboxAuth, files } from 'dropbox'
 
 export class DropboxHelper extends CloudSyncBase {
@@ -9,7 +9,7 @@ export class DropboxHelper extends CloudSyncBase {
   private BASE_URL: string = ''
 
   constructor () {
-    super()
+    super(SupportedCloud.DROPBOX)
     this.dbxAuth = new DropboxAuth({ clientId: this.CLIENT_ID })
     this.initDB()
     this.setBaseUrl()
@@ -31,13 +31,13 @@ export class DropboxHelper extends CloudSyncBase {
     this.dbxAuth!.setCodeVerifier(window.sessionStorage.getItem('codeVerifier') as string)
     const response = await this.dbxAuth!.getAccessTokenFromCode(this.BASE_URL, code)
     if (response.result) {
-      await this.storeDataForService(SupportedCloud.DROPBOX, response.result as unknown as IDropboxTokens)
+      await this.storeDataForService(response.result as unknown as IDropboxTokens)
     }
     this.authWithTokens()
   }
 
   public async authWithTokens () {
-    const tokens = await this.getDataForService(SupportedCloud.DROPBOX)
+    const tokens = await this.getDataForService()
     if (tokens) {
       this.dbxAuth!.setAccessToken(tokens.access_token)
       this.dbxAuth!.setRefreshToken(tokens.refresh_token)
@@ -47,17 +47,16 @@ export class DropboxHelper extends CloudSyncBase {
     }
   }
 
-  public async getFileListForPath (path: string = ''): Promise<files.ListFolderResult> {
+  public async getFileListForPath (path: string = ''): Promise<Array<ISharedFileMeta>> {
     if (!this.dbx) {
       await this.authWithTokens()
     }
     const response = await this.dbx!.filesListFolder({ path })
-    console.log('getFileListForPath ~ response.result', response.result)
-    return response.result
+    return this.convertFileList(response?.result?.entries || [])
   }
 
   public saveToken (data: IDropboxTokens): void {
-    this.storeDataForService(SupportedCloud.DROPBOX, data)
+    this.storeDataForService(data)
   }
 
   public async isAuthenticated () {
@@ -72,7 +71,17 @@ export class DropboxHelper extends CloudSyncBase {
     this.BASE_URL = window.location.href.split('#')[0]
   }
 
-  public openChooser () {
-
-  }
+  private convertFileList = (files: files.ListFolderResult['entries']): Array<ISharedFileMeta> => (
+    files.map((file) => {
+      if (file['.tag'] !== 'deleted' && !!file.id) {
+        return {
+          type: file['.tag'],
+          name: file.name,
+          path: file.path_lower,
+          id: file.id
+        }
+      }
+      return null
+    }).filter((file) => !!file) as Array<ISharedFileMeta>
+  )
 }
