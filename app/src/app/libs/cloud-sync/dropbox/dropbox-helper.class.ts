@@ -11,7 +11,7 @@ export class DropboxHelper extends CloudSyncBase {
   constructor () {
     super(SupportedCloud.DROPBOX)
     this.dbxAuth = new DropboxAuth({ clientId: this.CLIENT_ID })
-    this.initDB()
+    CloudSyncBase.initDB()
     this.setBaseUrl()
   }
 
@@ -72,7 +72,7 @@ export class DropboxHelper extends CloudSyncBase {
   }
 
   private convertFileList = (files: files.ListFolderResult['entries']): Array<ISharedFileMeta> => (
-    files.map((file) => {
+    files.map((file: files.ListFolderResult['entries'][0]) => {
       if (file['.tag'] !== 'deleted' && !!file.id) {
         return {
           type: file['.tag'],
@@ -82,6 +82,6 @@ export class DropboxHelper extends CloudSyncBase {
         }
       }
       return null
-    }).filter((file) => !!file) as Array<ISharedFileMeta>
+    }).filter((file: ISharedFileMeta | null) => !!file) as Array<ISharedFileMeta>
   )
 }

@@ -7,6 +7,8 @@ import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { CloudSyncButtonOpenFilePicker } from 'app/components/admin-layout/header/cloud-sync-button-open-file-picker'
 
+const dropboxHelperInstance = new DropboxHelper()
+
 export const CloudSyncButton: React.FC = () => {
   const [cloudSyncState, setCloudSyncState] = useState<CloudSyncState | undefined>(undefined)
   const project = useSelector((state: AnitaStore) => state.project)
@@ -14,14 +16,14 @@ export const CloudSyncButton: React.FC = () => {
 
   useEffect(() => {
     const getCloudSyncState = async () => {
-      const isAuthenticated = await new DropboxHelper().isAuthenticated()
+      const isAuthenticated = await dropboxHelperInstance.isAuthenticated()
       if (!projectId) {
         return
       }
       if (!isAuthenticated) {
         return setCloudSyncState(CloudSyncState.NOT_CONNECTED)
       }
-      const isLinked = await new DropboxHelper().isLinked(projectId)
+      const isLinked = await dropboxHelperInstance.isLinked(projectId)
       if (!isLinked) {
         return setCloudSyncState(CloudSyncState.NOT_LINKED)
       }
@@ -36,7 +38,7 @@ export const CloudSyncButton: React.FC = () => {
 
   if (cloudSyncState === CloudSyncState.NOT_CONNECTED) {
     return (
-      <CloudSyncButtonConnect />
+      <CloudSyncButtonConnect setCloudSyncState={setCloudSyncState} />
     )
   }
 

@@ -11,7 +11,7 @@ export enum SupportedCloud {
 }
 
 export class CloudSyncBase<T extends IDropboxTokens = IDropboxTokens> {
-  protected DB: Dexie | undefined
+  private static DB: Dexie | undefined
   constructor (
     private service: SupportedCloud
   ) { }
@@ -24,18 +24,25 @@ export class CloudSyncBase<T extends IDropboxTokens = IDropboxTokens> {
     return !!project?.cloudSync?.[this.service!]
   }
 
-  protected async initDB () {
-    this.DB = new Dexie('CloudSync')
-    this.DB.version(DB_VERSION).stores({
+  public static getDB (): Dexie {
+    if (!CloudSyncBase.DB) {
+      CloudSyncBase.initDB()
+    }
+    return CloudSyncBase.DB!
+  }
+
+  protected static initDB () {
+    CloudSyncBase.DB = new Dexie('CloudSync')
+    CloudSyncBase.DB.version(DB_VERSION).stores({
       accounts: 'service'
     })
   }
 
   protected storeDataForService (data: T) {
-    return this.DB!.table('accounts').put({ ...data, service: this.service })
+    return CloudSyncBase.DB!.table('accounts').put({ ...data, service: this.service })
   }
 
   protected getDataForService (): Promise<T | undefined> {
-    return this.DB!.table('accounts').get({ service: this.service })
+    return CloudSyncBase.DB!.table('accounts').get({ service: this.service })
   }
 }
