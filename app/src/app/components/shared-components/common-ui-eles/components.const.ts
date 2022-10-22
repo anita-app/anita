@@ -9,6 +9,16 @@ export enum Type {
 }
 
 export enum SolidBg {
+  primary = 'bg-prussian-blue-400',
+  secondary = 'bg-gray-100',
+  success = 'bg-green-500',
+  info = 'bg-blue-500',
+  warning = 'bg-orange-700',
+  danger = 'bg-red-600',
+  transparent = 'bg-transparent'
+}
+
+export enum SolidBgWithHover {
   primary = 'bg-prussian-blue-400 hover:bg-prussian-blue-500 focus:ring-prussian-blue-300',
   secondary = 'bg-gray-100 hover:bg-gray-200 focus:ring-gray-200',
   success = 'bg-green-500 hover:bg-green-600 focus:ring-green-500',
@@ -50,7 +60,7 @@ export enum OutlineText {
 
 export const COLOR_SCHEME = {
   solid: {
-    bg: SolidBg,
+    bg: SolidBgWithHover,
     text: SolidText
   },
   outline: {

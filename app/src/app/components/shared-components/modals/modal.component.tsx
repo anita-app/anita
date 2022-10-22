@@ -125,11 +125,16 @@ export const ModalProvider: React.FC = (props) => {
     }))
   }
 
-  const renderComponent = () => <ModalContainer {...modalProps} />
+  const updateModal = (newModalProps: Partial<IModalProps>) => {
+    setModalProps((currentValue) => ({
+      ...currentValue,
+      ...newModalProps
+    }))
+  }
 
   return (
-    <ModalContext.Provider value={{ modalProps, showModal, hideModal }}>
-      {renderComponent()}
+    <ModalContext.Provider value={{ modalProps, showModal, hideModal, updateModal }}>
+      <ModalContainer {...modalProps} />
       {props.children}
     </ModalContext.Provider>
   )
