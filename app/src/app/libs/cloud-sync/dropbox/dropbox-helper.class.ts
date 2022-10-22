@@ -3,6 +3,13 @@ import { IDropboxTokens, ISharedFileMeta } from 'app/libs/cloud-sync/cloud-sync.
 import { Dropbox, DropboxAuth, files } from 'dropbox'
 
 export class DropboxHelper extends CloudSyncBase {
+  public static instance: DropboxHelper
+
+  public static init (): DropboxHelper {
+    DropboxHelper.instance = new DropboxHelper()
+    return DropboxHelper.instance
+  }
+
   private dbxAuth: DropboxAuth | undefined
   private dbx: Dropbox | undefined
   private CLIENT_ID: string = 'neonkm3wexybl7c'

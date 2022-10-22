@@ -59,7 +59,7 @@ const Modal: React.FC<IModalProps> = (props) => {
                       {Icons.render(props.icon, `${props.iconClassName} text-xl -mt-1`)}
                     </div>
                   )}
-                  <div className="ml-2 sm:ml-4 text-left">
+                  <div className="text-left w-full">
                     <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
                       {props.title}
                     </Dialog.Title>
