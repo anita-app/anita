@@ -3,16 +3,17 @@ import { store } from 'app/libs/redux/state.store'
 import { Startupper } from 'app/libs/startupper/startupper.class'
 import { AdminLayout } from 'app/components/admin-layout/admin-layout.component'
 import React from 'react'
-import ReactDOM from 'react-dom'
 import { HashRouter as Router } from 'react-router-dom'
 import { Provider as StoreProvider } from 'react-redux'
 import './index.css'
 import { ModalProvider } from 'app/components/shared-components/modals/modal.component'
+import * as ReactDOMClient from 'react-dom/client'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 
 new Startupper().init()
-
-ReactDOM.render(
+const rootElement = document.getElementById('root')
+const root = ReactDOMClient.createRoot(rootElement!)
+root.render(
   <React.StrictMode>
     <StoreProvider store={store}>
       <ModalProvider>
@@ -21,8 +22,7 @@ ReactDOM.render(
         </Router>
       </ModalProvider>
     </StoreProvider>
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 )
 
 serviceWorkerRegistration.register()
