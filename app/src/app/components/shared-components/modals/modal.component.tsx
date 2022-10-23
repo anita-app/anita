@@ -102,7 +102,7 @@ const ModalContainer: React.FC<IModalProps> = (props) => (
   )
 )
 
-export const ModalProvider: React.FC = (props) => {
+export const ModalProvider: React.FC<{children: React.ReactNode}> = (props) => {
   const [modalProps, setModalProps] = useState<IModalProps>({
     isOpen: false,
     type: Type.primary,
