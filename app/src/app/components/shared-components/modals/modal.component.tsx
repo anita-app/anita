@@ -1,23 +1,27 @@
-import React, { Fragment, ReactNode, useState } from 'react'
+import React, { Fragment, ReactNode } from 'react'
 import { Icons, TIconName } from 'app/libs/icons/icons.class'
 import ReactDOM from 'react-dom'
 import { ModalContext, useModalContext } from 'app/components/shared-components/modals/modal-context'
 import { Dialog, Transition } from '@headlessui/react'
-import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
+import { Button, IButtonWithTooltipProps } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
+import { useMultiState } from 'app/components/hooks/multi-state.hook'
 
 export interface IModalProps {
   isOpen?: boolean
   title: string
   actionText: string
   type: Type.primary | Type.danger
-  handleClickAction?: () => void
   children: ReactNode
   icon?: TIconName
   iconClassName?: string
   disableAction?: boolean
   hideCancelButton?: boolean
   hideActionRow?: boolean
+  leftButton?: IButtonWithTooltipProps
+  handleClickAction?: () => void
+  handleClickCancel?: () => void
+  handleOnClose?: () => void
 }
 
 const Modal: React.FC<IModalProps> = (props) => {
@@ -26,9 +30,16 @@ const Modal: React.FC<IModalProps> = (props) => {
     props.handleClickAction?.()
     hideModal()
   }
+  const cancelAction = () => {
+    props.handleClickCancel?.()
+    hideModal()
+  }
+  const onCloseAction = () => {
+    props.handleOnClose?.()
+  }
   return (
     <Transition.Root show={props.isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={handleActionClick}>
+      <Dialog as="div" className="relative z-10" onClose={onCloseAction}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -70,12 +81,18 @@ const Modal: React.FC<IModalProps> = (props) => {
                 </div>
                 {!props.hideActionRow && (
                   <div className="flex items-center justify-end mt-5 sm:mt-4">
+                    {props.leftButton && (
+                      <Button
+                        {...props.leftButton}
+                        marginClassName="mr-auto"
+                      />
+                    )}
                     {props.hideCancelButton !== true && (
                       <Button
                         id="cancel"
                         label="Cancel"
                         type={Type.secondary}
-                        onClick={hideModal}
+                        onClick={cancelAction}
                       />
                     )}
                     <Button
@@ -103,7 +120,7 @@ const ModalContainer: React.FC<IModalProps> = (props) => (
 )
 
 export const ModalProvider: React.FC<{children: React.ReactNode}> = (props) => {
-  const [modalProps, setModalProps] = useState<IModalProps>({
+  const [state, setState] = useMultiState<IModalProps>({
     isOpen: false,
     type: Type.primary,
     title: '',
@@ -112,29 +129,23 @@ export const ModalProvider: React.FC<{children: React.ReactNode}> = (props) => {
     children: null
   })
   const showModal = (modalProps: IModalProps) => {
-    setModalProps({
+    setState({
       ...modalProps,
       isOpen: true
     })
   }
 
   const hideModal = () => {
-    setModalProps((currentState = {} as IModalProps) => ({
-      ...currentState!,
-      isOpen: false
-    }))
+    setState({ isOpen: false })
   }
 
   const updateModal = (newModalProps: Partial<IModalProps>) => {
-    setModalProps((currentValue) => ({
-      ...currentValue,
-      ...newModalProps
-    }))
+    setState({ ...newModalProps })
   }
 
   return (
-    <ModalContext.Provider value={{ modalProps, showModal, hideModal, updateModal }}>
-      <ModalContainer {...modalProps} />
+    <ModalContext.Provider value={{ modalProps: state, showModal, hideModal, updateModal }}>
+      <ModalContainer {...state} />
       {props.children}
     </ModalContext.Provider>
   )

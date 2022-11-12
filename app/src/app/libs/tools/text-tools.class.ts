@@ -32,4 +32,9 @@ export class TextTools {
  * Capitalizes the first letter of a string
  */
   public static capitalizeFirstLetter = (str: string) => str?.charAt(0).toUpperCase() + str.slice(1)
+
+  /**
+   * Returns a shortened version of a string
+   */
+  public static shortenString = (str: string, maxLength: number = 20) => str.length > maxLength ? `${str.substring(0, maxLength)}...` : str
 }

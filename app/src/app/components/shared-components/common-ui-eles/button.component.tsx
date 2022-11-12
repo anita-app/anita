@@ -12,7 +12,7 @@ const sizeClasses = {
   xl: 'rounded-md px-6 py-3 text-base'
 }
 
-interface IButtonWithTooltipProps {
+export interface IButtonWithTooltipProps {
   id: string
   label: string
   iconLeft?: TIconName

@@ -1,27 +1,43 @@
-import { Transition } from '@headlessui/react'
-import { AlertWithDescription } from 'app/components/shared-components/alerts/alert-with-description'
+/* eslint-disable */
+import { useMultiState } from 'app/components/hooks/multi-state.hook'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { FileExplorer } from 'app/components/shared-components/file-explorer/file-explorer'
+import { Loader } from 'app/components/shared-components/loader/loader.component'
 import { useModalContext } from 'app/components/shared-components/modals/modal-context'
 import { IModalProps } from 'app/components/shared-components/modals/modal.component'
 import { ISharedFileMeta } from 'app/libs/cloud-sync/cloud-sync.const'
 import { DropboxHelper } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
+import { TextTools } from 'app/libs/tools/text-tools.class'
 import React, { useEffect, useRef, useState } from 'react'
 
+interface ICloudSyncFilePickerState {
+  files: Array<ISharedFileMeta> | null
+  selected: ISharedFileMeta | null
+  currentFolder: ISharedFileMeta | null
+  isChangingFolder: boolean
+  direction: 'forward' | 'back'
+}
+
+const handleSaveHere = (path: string) => {
+  console.log('handleSaveHere ~ file', path)
+  // todo
+}
+
 const CloudSyncFilePicker: React.FC = () => {
-  const [files, setFiles] = useState<Array<ISharedFileMeta> | null>(null)
-  const [selected, setSelected] = useState<ISharedFileMeta | null>(null)
-  const [currentFolder, setCurrentFolder] = useState<ISharedFileMeta | null>(null)
-  const [isChangingFolder, setIsChangingFolder] = useState<boolean>(false)
-  const [direction, setDirection] = useState<'forward' | 'back'>('forward')
+  const [state, setState, getState] = useMultiState<ICloudSyncFilePickerState>({
+    files: null,
+    selected: null,
+    currentFolder: null,
+    isChangingFolder: false,
+    direction: 'forward'
+  })
   const pathsHistoryRef = useRef<Array<string>>([])
   const { updateModal } = useModalContext()
   const getFiles = async () => {
     const path = pathsHistoryRef.current[pathsHistoryRef.current.length - 1]
     const files = await DropboxHelper.instance.getFileListForPath(path)
-    setFiles(files)
-    setIsChangingFolder(false)
+    setState({files, isChangingFolder: false})
   }
 
   useEffect(() => {
@@ -29,101 +45,80 @@ const CloudSyncFilePicker: React.FC = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleNavigateToFolder = async (folder: ISharedFileMeta) => {
-    setDirection('forward')
-    setIsChangingFolder(true)
-    setSelected(null)
-    updateModal({ disableAction: true })
-    setCurrentFolder(folder)
-    pathsHistoryRef.current.push(folder.path!)
+  const handleNavigateToFolder = async (currentFolder: ISharedFileMeta) => {
+    const selectedPath = currentFolder.path  || '/'
+    updateModal({
+      actionText: 'Save here',
+      handleClickAction: handleSaveHere.bind(null, selectedPath),
+      leftButton: {
+        id: "file-picker-go-back",
+        label: "Back",
+        type: Type.transparent,
+        iconLeft: "chevronBack",
+        onClick: goBack,
+    }
+    })
+    setState({ isChangingFolder: true, direction: 'forward', selected: null, currentFolder })
+    pathsHistoryRef.current.push(currentFolder.path!)
     await getFiles()
   }
 
-  const handleSelectItem = async (file: ISharedFileMeta) => {
-    setSelected((currentValue) => {
-      const newValue = currentValue?.id === file.id ? null : file
-      updateModal({ disableAction: !newValue })
-      return newValue
+  const handleSelectFolder = async (file: ISharedFileMeta) => {
+    const selected = getState().selected?.id === file.id ? null : file
+    const actionText = selected === file ? `Save in ${TextTools.shortenString(file.name)}` : 'Save here'
+    const selectedPath = selected ? selected.path : pathsHistoryRef.current[pathsHistoryRef.current.length - 1]
+    updateModal({
+      actionText,
+      handleClickAction: handleSaveHere.bind(null, selectedPath || '/')
     })
-  }
-
-  const handleSaveHere = (file: ISharedFileMeta | null) => {
-    console.log('handleSaveHere ~ file', file)
-    // todo
+    setState({ selected })
   }
 
   const goBack = async () => {
-    setDirection('back')
-    setIsChangingFolder(true)
-    setSelected(null)
-    updateModal({ disableAction: true })
     pathsHistoryRef.current.pop()
+    const selectedPath = pathsHistoryRef.current[pathsHistoryRef.current.length - 1]
+    setState({ isChangingFolder: true, direction: 'back', currentFolder: null, selected: null })
     getFiles()
+    if(!pathsHistoryRef.current.length) {
+      updateModal({
+        actionText: 'Save here',
+        leftButton: undefined,
+        handleClickAction: handleSaveHere.bind(null, selectedPath)
+      })
+    }
   }
 
-  if (!files) {
-    return <div className="h-96">Loading...</div>
+  if (!state.files) {
+    return (
+      <div className="relative h-96">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <Loader />
+        </div>
+      </div>
+    )
   }
 
   return (
-    <>
+    <div className="pt-4 pb-2">
       <FileExplorer
-        files={files}
-        isChangingFolder={isChangingFolder}
-        direction={direction}
-        selected={selected}
-        currentFolder={currentFolder}
-        onSelecteItem={handleSelectItem}
+        files={state.files}
+        isChangingFolder={state.isChangingFolder}
+        direction={state.direction}
+        selected={state.selected}
+        currentFolder={state.currentFolder}
+        onSelectehandleSelectFolder={handleSelectFolder}
         onNavigateToFolder={handleNavigateToFolder}
       />
-      <div className="mt-1 h-8">
-        {pathsHistoryRef.current.length > 0 && (
-          <Button
-            id="file-picker-go-back"
-            label="Back"
-            type={Type.transparent}
-            iconLeft="chevronBack"
-            onClick={goBack}
-          />
-        )}
-        {!pathsHistoryRef.current.length && (
-        <Button
-          id="save-here"
-          label="Save project in the root folder"
-          type={Type.transparent}
-          onClick={() => handleSaveHere(currentFolder)}
-        />
-        )}
-      </div>
-      <Transition
-        show={selected?.type === 'folder'}
-        enter="ease-out duration-300"
-        enterFrom="opacity-0"
-        enterTo="opacity-100"
-        leave="ease-in duration-200"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
-      >
-        <div className="pr-3 mt-4">
-          <AlertWithDescription
-            title={`Folder selected: ${selected?.name}`}
-            description="The project file will be saved in this folder as a new file."
-            type={Type.success}
-          />
-        </div>
-
-      </Transition>
-    </>
+    </div>
   )
 }
 
 export const FILE_PICKER_MODAL_CONFIG: IModalProps = {
-  title: 'Pick a file or folder',
-  actionText: 'Select',
+  title: 'Pick a folder',
+  actionText: 'Save here',
   type: Type.primary,
-  handleClickAction: () => {},
+  handleClickAction: handleSaveHere.bind(null, '/'),
   children: (
     <><CloudSyncFilePicker /></>
-  ),
-  disableAction: true
+  )
 }
