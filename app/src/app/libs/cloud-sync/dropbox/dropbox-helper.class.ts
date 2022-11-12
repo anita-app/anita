@@ -22,6 +22,11 @@ export class DropboxHelper extends CloudSyncBase {
     this.setBaseUrl()
   }
 
+  public startAuthProcess = async () => {
+    const authUrl = await this.getAuthenticationUrl()
+    window.open(authUrl as unknown as string, '_blank')
+  }
+
   public async getAuthenticationUrl (): Promise<String> {
     const scopes = [
       'files.content.write',
@@ -62,8 +67,16 @@ export class DropboxHelper extends CloudSyncBase {
     return this.convertFileList(response?.result?.entries || [])
   }
 
-  public saveToken (data: IDropboxTokens): void {
-    this.storeDataForService(data)
+  public async uploadFile (path: string, fileName: string, contents: string) {
+    if (await this.isAuthenticated()) {
+      const pathWithFileName = path.endsWith('/') ? `${path}${fileName}` : `${path}/${fileName}`
+      const res = await this.dbx!.filesUpload({ path: pathWithFileName, contents })
+      if (res.result?.id) {
+        this.setRemoteFileId(res.result.id)
+      }
+    } else {
+      this.startAuthProcess()
+    }
   }
 
   public async isAuthenticated () {

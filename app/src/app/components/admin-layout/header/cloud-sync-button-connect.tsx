@@ -28,7 +28,7 @@ export const CloudSyncButtonConnect: React.FC<ICloudSyncButtonConnectProps> = (p
   }
 
   const handleConnectClick = async () => {
-    const authUrl = await new DropboxHelper().getAuthenticationUrl()
+    const authUrl = await DropboxHelper.instance.getAuthenticationUrl()
     startObserver()
     window.open(authUrl as unknown as string, '_blank')
   }

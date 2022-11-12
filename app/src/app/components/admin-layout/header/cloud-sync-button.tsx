@@ -7,8 +7,6 @@ import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { CloudSyncButtonOpenFilePicker } from 'app/components/admin-layout/header/cloud-sync-button-open-file-picker'
 
-DropboxHelper.init()
-
 export const CloudSyncButton: React.FC = () => {
   const [cloudSyncState, setCloudSyncState] = useState<CloudSyncState | undefined>(undefined)
   const project = useSelector((state: AnitaStore) => state.project)

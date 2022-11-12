@@ -18,9 +18,23 @@ export class ProjectExporter {
   ) {}
 
   /**
-   * Retrieves the data and saves it as a file on the device
+   * Retrieves the data and returns it
    */
-  public async export (scope: ExportScope): Promise<void> {
+  public async getAsJson (scope: ExportScope): Promise<string> {
+    if (scope !== ExportScope.dataOnly) {
+      this.addSystemDataToProjectToExport()
+    }
+    if (scope !== ExportScope.structureOnly) {
+      await this.getSectionsData()
+    }
+    this.convertToJson()
+    return this.jsonData
+  }
+
+  /**
+   * Saves the data as a file on the device
+   */
+  public async exportToFile (scope: ExportScope): Promise<void> {
     if (scope !== ExportScope.dataOnly) {
       this.addSystemDataToProjectToExport()
     }
