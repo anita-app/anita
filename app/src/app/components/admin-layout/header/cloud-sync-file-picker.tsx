@@ -80,13 +80,14 @@ const CloudSyncFilePicker: React.FC = () => {
     const selectedPath = pathsHistoryRef.current[pathsHistoryRef.current.length - 1]
     setState({ isChangingFolder: true, direction: 'back', currentFolder: null, selected: null })
     getFiles()
-    if(!pathsHistoryRef.current.length) {
-      updateModal({
-        actionText: 'Save here',
-        leftButton: undefined,
-        handleClickAction: handleSaveHere.bind(null, selectedPath)
-      })
+    const modalProps: Partial<IModalProps> = {
+      actionText: 'Save here',
+      handleClickAction: handleSaveHere.bind(null, selectedPath)
     }
+    if (!pathsHistoryRef.current.length) {
+      modalProps.leftButton = undefined
+    }
+    updateModal(modalProps)
   }
 
   if (!state.files) {
