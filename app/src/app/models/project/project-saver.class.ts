@@ -3,6 +3,8 @@ import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import { RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
 import { SaveProjectSettingsInIndexedDB } from 'app/models/project/save-project-settings-in-indexed-db.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
+import { DateTools } from 'app/libs/tools/date-tools.class'
+import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 
 export class ProjectSaver {
   constructor (
@@ -34,11 +36,11 @@ export class ProjectSaver {
   }
 
   private setcreatedAt (): void {
-    this.project[RESERVED_AUDS_KEYS._settings][0].createdAt = new Date(new Date().toUTCString()).toISOString()
+    this.project[RESERVED_AUDS_KEYS._settings][0][RESERVED_FIELDS.createdAt] = DateTools.getUtcIsoString()
   }
 
   private setupdatedAt (): void {
-    this.project[RESERVED_AUDS_KEYS._settings][0].updatedAt = new Date(new Date().toUTCString()).toISOString()
+    this.project[RESERVED_AUDS_KEYS._settings][0][RESERVED_FIELDS.updatedAt] = DateTools.getUtcIsoString()
   }
 
   private async initDbInstance (): Promise<void> {

@@ -4,6 +4,7 @@ import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import { SectionModel } from 'app/libs/db-connector/db-builder/sez-definition'
 import { IdCreator } from 'app/libs/id-creator/id-creator.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
+import { DateTools } from 'app/libs/tools/date-tools.class'
 
 /**
  * Saves a new element in a section of the project, stores the project on disk and dispatches the changes to the current state
@@ -78,7 +79,7 @@ export class SectionElementSaver {
    */
   private setcreatedAt (): void {
     if (this.sectionModelInDS?.fields.includes(RESERVED_FIELDS.createdAt) && !this.element[RESERVED_FIELDS.createdAt]) {
-      this.element[RESERVED_FIELDS.createdAt] = new Date(new Date().toUTCString()).toISOString()
+      this.element[RESERVED_FIELDS.createdAt] = DateTools.getUtcIsoString()
     }
   }
 
@@ -87,7 +88,7 @@ export class SectionElementSaver {
    */
   private setupdatedAtValueIfInEditMode (): void {
     if (this.sectionModelInDS?.fields.includes(RESERVED_FIELDS.updatedAt)) {
-      this.element[RESERVED_FIELDS.updatedAt] = new Date(new Date().toUTCString()).toISOString()
+      this.element[RESERVED_FIELDS.updatedAt] = DateTools.getUtcIsoString()
     }
   }
 }

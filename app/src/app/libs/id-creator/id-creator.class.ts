@@ -1,3 +1,4 @@
+import { DateTools } from 'app/libs/tools/date-tools.class'
 import CryptoES from 'crypto-es'
 
 /**
@@ -8,7 +9,7 @@ export class IdCreator {
    * Makes a unique random string with the a name
    */
   public static make (name: string): string {
-    const aliasDate = new Date(new Date().toUTCString()).toISOString()
+    const aliasDate = DateTools.getUtcIsoString()
     const randNumber = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000
 
     const id = `${name}${aliasDate}${randNumber}`
@@ -20,7 +21,7 @@ export class IdCreator {
    * Makes a unique completely random string
    */
   public static random (): string {
-    const aliasDate = new Date(new Date().toUTCString()).toISOString()
+    const aliasDate = DateTools.getUtcIsoString()
     const randNumber = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000
 
     const id = `${aliasDate}${randNumber}`
