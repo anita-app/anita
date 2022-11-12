@@ -119,17 +119,28 @@ const ModalContainer: React.FC<IModalProps> = (props) => (
   )
 )
 
+const DEFAULT_MODAL_STATE: IModalProps = {
+  isOpen: false,
+  type: Type.primary,
+  title: '',
+  actionText: '',
+  children: null,
+  icon: undefined,
+  leftButton: undefined,
+  iconClassName: undefined,
+  disableAction: undefined,
+  hideCancelButton: undefined,
+  hideActionRow: undefined,
+  handleClickAction: () => { },
+  handleClickCancel: () => { },
+  handleOnClose: () => {}
+}
+
 export const ModalProvider: React.FC<{children: React.ReactNode}> = (props) => {
-  const [state, setState] = useMultiState<IModalProps>({
-    isOpen: false,
-    type: Type.primary,
-    title: '',
-    actionText: '',
-    handleClickAction: () => { },
-    children: null
-  })
+  const [state, setState] = useMultiState<IModalProps>({ ...DEFAULT_MODAL_STATE })
   const showModal = (modalProps: IModalProps) => {
     setState({
+      ...DEFAULT_MODAL_STATE,
       ...modalProps,
       isOpen: true
     })
