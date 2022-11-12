@@ -2,7 +2,7 @@ import { DropboxHelper } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
 import { ProjectExporter, ExportScope } from 'app/models/project/project-exporter.class'
 import { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
 
-export class ProjectSyncing {
+export class ProjectUploader {
   private projectInJson: string | undefined
   private fileName: string | undefined
 

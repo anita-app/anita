@@ -9,7 +9,7 @@ import { IOptionKeysModel, OptionKeysModelGroup } from 'app/components/shared-co
 import { ProjectSaver } from 'app/models/project/project-saver.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { ParentInfoForDetailsView } from 'app/models/parent-element/parent-element.declarations'
-import { ProjectSyncing } from 'app/models/project/syncing/project-syncing'
+import { ProjectUploader } from 'app/models/project/syncing/project-uploader'
 
 export class Project {
   private settings: TSystemData[RESERVED_AUDS_KEYS._settings][0]
@@ -37,7 +37,7 @@ export class Project {
   }
 
   public uploadToCloudService = (path: string): void => {
-    new ProjectSyncing({
+    new ProjectUploader({
       [RESERVED_AUDS_KEYS._settings]: [this.settings],
       [RESERVED_AUDS_KEYS._sections]: this.sectionsDefinitions
     }).uploadToCloudService(path)
