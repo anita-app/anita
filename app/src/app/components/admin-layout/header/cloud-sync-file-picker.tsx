@@ -35,10 +35,12 @@ const CloudSyncFilePicker: React.FC = () => {
   })
   const pathsHistoryRef = useRef<Array<string>>([])
   const { updateModal } = useModalContext()
+  
   const getFiles = async () => {
     const path = pathsHistoryRef.current[pathsHistoryRef.current.length - 1]
     const files = await DropboxHelper.instance.getFileListForPath(path)
-    setState({files, isChangingFolder: false})
+    setState({ files, isChangingFolder: false })
+    updateModal({ disableAction: false })
   }
 
   useEffect(() => {
@@ -50,6 +52,7 @@ const CloudSyncFilePicker: React.FC = () => {
     const selectedPath = currentFolder.path  || '/'
     updateModal({
       actionText: 'Save here',
+      disableAction: true,
       handleClickAction: handleSaveHere.bind(null, selectedPath),
       leftButton: {
         id: "file-picker-go-back",
@@ -79,15 +82,16 @@ const CloudSyncFilePicker: React.FC = () => {
     pathsHistoryRef.current.pop()
     const selectedPath = pathsHistoryRef.current[pathsHistoryRef.current.length - 1]
     setState({ isChangingFolder: true, direction: 'back', currentFolder: null, selected: null })
-    getFiles()
     const modalProps: Partial<IModalProps> = {
       actionText: 'Save here',
+      disableAction: true,
       handleClickAction: handleSaveHere.bind(null, selectedPath)
     }
     if (!pathsHistoryRef.current.length) {
       modalProps.leftButton = undefined
     }
     updateModal(modalProps)
+    getFiles()
   }
 
   if (!state.files) {
