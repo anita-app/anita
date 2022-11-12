@@ -72,7 +72,7 @@ export class DropboxHelper extends CloudSyncBase {
       const pathWithFileName = path.endsWith('/') ? `${path}${fileName}` : `${path}/${fileName}`
       const res = await this.dbx!.filesUpload({ path: pathWithFileName, contents })
       if (res.result?.id) {
-        this.setRemoteFileId(res.result.id)
+        this.setRemoteId(res.result.id)
       }
     } else {
       this.startAuthProcess()

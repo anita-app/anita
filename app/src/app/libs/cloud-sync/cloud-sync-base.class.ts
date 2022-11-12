@@ -1,7 +1,9 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
 import { Manager } from 'app/libs/manager/manager.class'
-import { LocalProjectSettings, RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
+import { DateTools } from 'app/libs/tools/date-tools.class'
+import { LocalProjectSettings } from 'app/models/project/project.declarations'
+import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import Dexie from 'dexie'
 import { IDropboxTokens } from './cloud-sync.const'
 
@@ -32,20 +34,28 @@ export class CloudSyncBase<T extends IDropboxTokens = IDropboxTokens> {
     return CloudSyncBase.DB!
   }
 
-  protected async setRemoteFileId (remoteId: string) {
-    const project = Manager.getCurrentProject()
+  protected async setRemoteId (remoteId: string) {
+    const currentProject = Manager.getCurrentProject()
+
+    if (!currentProject) {
+      return
+    }
+    const project = await dbInstances.system.callSelector<LocalProjectSettings>(CLIENT_SECTIONS.projects, { id: currentProject.getId() }).single()
+
     if (!project) {
       return
     }
-    const systemData = project.getSystemData()
-    if (!systemData[RESERVED_AUDS_KEYS._settings][0].cloudSync) {
-      systemData[RESERVED_AUDS_KEYS._settings][0].cloudSync = {}
+
+    if (!project.cloudSync) {
+      project.cloudSync = {}
     }
 
-    systemData[RESERVED_AUDS_KEYS._settings][0].cloudSync = {
+    project.cloudSync = {
       [this.service]: remoteId
     }
-    project.saveProject()
+    project[RESERVED_FIELDS.updatedAt] = DateTools.getUtcIsoString()
+    await dbInstances.system.callUpdator<LocalProjectSettings>(CLIENT_SECTIONS.projects, project).autoUpdate()
+    Manager.loadProjectById(currentProject.getId())
   }
 
   protected static initDB () {

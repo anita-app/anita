@@ -5,6 +5,7 @@ import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { CloudSyncButton } from 'app/components/admin-layout/header/cloud-sync-button'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 
 export const AdminLayoutHeader: React.FC = () => {
   const sidebarHideClass = useSelector((store: AnitaStore) => store.layout.sidebar)
@@ -32,7 +33,9 @@ export const AdminLayoutHeader: React.FC = () => {
         </Link>
       </div>
 
-      <CloudSyncButton />
+      {project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.id && (
+        <CloudSyncButton projectId={project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.id} />
+      )}
 
       {sidebarHideClass === '' && (<div onClick={handleClickSidebar} className="absolute inset-0 h-full w-full z-10 md:hidden"></div>)}
 
