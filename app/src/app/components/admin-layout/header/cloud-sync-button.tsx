@@ -3,6 +3,7 @@ import { CloudSyncState } from 'app/libs/cloud-sync/cloud-sync.const'
 import { CloudSyncButtonConnect } from 'app/components/admin-layout/header/cloud-sync-button-connect'
 import { DropboxHelper } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
 import { CloudSyncButtonOpenFilePicker } from 'app/components/admin-layout/header/cloud-sync-button-open-file-picker'
+import { CloudSyncButtonDoSync } from 'app/components/admin-layout/header/cloud-sync-button-do-sync'
 
 interface ICloudSyncButtonProps {
   projectId: string
@@ -10,6 +11,7 @@ interface ICloudSyncButtonProps {
 
 export const CloudSyncButton: React.FC<ICloudSyncButtonProps> = (props) => {
   const [cloudSyncState, setCloudSyncState] = useState<CloudSyncState | undefined>(undefined)
+  const [linkedFileId, setLinkedFileId] = useState<string | undefined>(undefined)
   const projectId = props.projectId
 
   useEffect(() => {
@@ -21,11 +23,12 @@ export const CloudSyncButton: React.FC<ICloudSyncButtonProps> = (props) => {
       if (!isAuthenticated) {
         return setCloudSyncState(CloudSyncState.NOT_CONNECTED)
       }
-      const isLinked = await DropboxHelper.instance.isLinked(projectId)
-      if (!isLinked) {
+      const linkedFileId = await DropboxHelper.instance.getLinkedFileIdOrNull(projectId)
+      if (!linkedFileId) {
         return setCloudSyncState(CloudSyncState.NOT_LINKED)
       }
       setCloudSyncState(CloudSyncState.LINKED)
+      setLinkedFileId(linkedFileId)
     }
     getCloudSyncState()
   })
@@ -47,8 +50,6 @@ export const CloudSyncButton: React.FC<ICloudSyncButtonProps> = (props) => {
   }
 
   return (
-    <div className="ml-auto">
-      not yet implemented
-    </div>
+    <CloudSyncButtonDoSync linkedFileId={linkedFileId!} />
   )
 }

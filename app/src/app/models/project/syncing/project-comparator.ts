@@ -1,10 +1,11 @@
 import { DateTools } from 'app/libs/tools/date-tools.class'
-import { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
+import { RESERVED_AUDS_KEYS, TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
-interface IComparisonResult {
+export interface IComparisonResult {
   remote: IElesForScope
+  allRemoteWithDelta: TAnitaUniversalDataStorage
   local: IElesForScope
 }
 
@@ -15,12 +16,14 @@ interface IElesForScope {
 }
 
 export class Comparator {
-  private elesFor: IComparisonResult = {
+  private static nonDeletableSections = Object.values(RESERVED_AUDS_KEYS)
+  private delta: IComparisonResult = {
     remote: {
       delete: {},
       insert: {},
       update: {}
     },
+    allRemoteWithDelta: {} as TAnitaUniversalDataStorage,
     local: {
       delete: {},
       insert: {},
@@ -31,17 +34,21 @@ export class Comparator {
   private localElementsMerged: { [key: keyof TAnitaUniversalDataStorage]: Array<string> } = {}
 
   constructor (
-    private lastSync: string,
+    private lastSync: string | undefined,
     private localData: TAnitaUniversalDataStorage,
     private remoteData: TAnitaUniversalDataStorage
   ) { }
 
   public compare (): IComparisonResult {
+    if (!this.remoteData) {
+      this.remoteData = {} as TAnitaUniversalDataStorage
+    }
     for (const section in this.remoteData) {
       this.handleSection(section)
     }
     this.handleAllLocalElements()
-    return this.elesFor
+    this.applyDeltaToRemoteData()
+    return this.delta
   }
 
   private handleSection (section: keyof TAnitaUniversalDataStorage): void {
@@ -56,6 +63,33 @@ export class Comparator {
           }
         } catch (error) {
           console.error(error)
+        }
+      }
+    }
+  }
+
+  private applyDeltaToRemoteData (): void {
+    for (const action in this.delta.remote) {
+      const actionAsKey = action as keyof IElesForScope
+      const deltaRemoteActionData = this.delta.remote[actionAsKey]
+      for (const section in deltaRemoteActionData) {
+        const sectionAsKey = section as keyof TAnitaUniversalDataStorage
+        if (typeof deltaRemoteActionData[sectionAsKey] === 'object') {
+          for (const element of deltaRemoteActionData[sectionAsKey]!) {
+            if (actionAsKey === 'delete') {
+              this.remoteData[sectionAsKey] = this.remoteData?.[sectionAsKey]?.filter((ele) => ele[RESERVED_FIELDS.id] !== element[RESERVED_FIELDS.id])
+            } else if (actionAsKey === 'insert') {
+              if (!this.remoteData[sectionAsKey]) {
+                this.remoteData[sectionAsKey] = []
+              }
+              this.remoteData[sectionAsKey].push(element)
+            } else if (actionAsKey === 'update') {
+              const indexElement = this.remoteData[sectionAsKey].findIndex((ele) => ele[RESERVED_FIELDS.id] === element[RESERVED_FIELDS.id])
+              if (indexElement !== -1) {
+                this.remoteData[sectionAsKey][indexElement] = element
+              }
+            }
+          }
         }
       }
     }
@@ -142,15 +176,18 @@ export class Comparator {
   }
 
   private addElesForScope (target: 'remote' | 'local', action: 'delete' | 'insert' | 'update', section: keyof TAnitaUniversalDataStorage, localElement: ISectionElement): void {
-    if (!this.elesFor[target][action]) {
-      this.elesFor[target][action] = {}
+    if (action === 'delete' && Comparator.nonDeletableSections.includes(section as unknown as RESERVED_AUDS_KEYS)) {
+      return
     }
-    if (!this.elesFor[target][action]) {
-      this.elesFor[target][action] = {}
+    if (!this.delta[target][action]) {
+      this.delta[target][action] = {}
     }
-    if (!this.elesFor[target][action][section]) {
-      this.elesFor[target][action][section] = []
+    if (!this.delta[target][action]) {
+      this.delta[target][action] = {}
     }
-    this.elesFor[target][action][section]!.push(localElement)
+    if (!this.delta[target][action][section]) {
+      this.delta[target][action][section] = []
+    }
+    this.delta[target][action][section]!.push(localElement)
   }
 }

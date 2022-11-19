@@ -79,6 +79,18 @@ export class DropboxHelper extends CloudSyncBase {
     }
   }
 
+  public async downloadFile (fileId: string): Promise<any> {
+    if (!this.dbx) {
+      await this.authWithTokens()
+    }
+    const fileMeta = await this.dbx!.fileRequestsGet({ id: fileId })
+    console.log('downloadFile ~ fileMeta', fileMeta)
+    if (fileMeta.result) {
+      const fileData = await this.dbx!.filesExport({ path: fileMeta.result.destination!, export_format: 'json' })
+      console.log('downloadFile ~ fileData', fileData)
+    }
+  }
+
   public async isAuthenticated () {
     if (this.dbx) {
       return true

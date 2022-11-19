@@ -1,4 +1,4 @@
-import { IProjectSettings, RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
+import { IProjectSettings, RESERVED_AUDS_KEYS, TAnitaUniversalDataStorage, TSystemData } from 'app/models/project/project.declarations'
 import { ISection } from 'app/models/section/section.declarations'
 import { GetOptionsForParentsSelector } from 'app/models/project/get-options-for-parents-selector.class'
 import { GetParentInfoForDetailsView } from 'app/models/project/get-parent-info-for-details-view.class'
@@ -35,6 +35,8 @@ export class Project {
       [RESERVED_AUDS_KEYS._sections]: this.sectionsDefinitions
     }).exportToFile(scope)
   }
+
+  public getAllData = (): Promise<TAnitaUniversalDataStorage> => new ProjectExporter(this.systemData).getData(ExportScope.all)
 
   public uploadToCloudService = (path: string): void => {
     new ProjectUploader({

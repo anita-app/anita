@@ -10,15 +10,13 @@ export const CloudSyncButtonOpenFilePicker: React.FC = () => {
     showModal(FILE_PICKER_MODAL_CONFIG)
   }
   return (
-    <div className="ml-auto">
-      <Button
-        id="cloud-sync-button"
-        label="Connect with Dropbox"
-        tooltip="Pick the file you want to sync with Dropbox"
-        type={Type.transparent}
-        iconLeft="cloudyOutline"
-        onClick={handleOpenModalClick}
-      />
-    </div>
+    <Button
+      id="cloud-sync-button"
+      label="Connect with Dropbox"
+      tooltip="Pick the file you want to sync with Dropbox"
+      type={Type.transparent}
+      iconLeft="cloudyOutline"
+      onClick={handleOpenModalClick}
+    />
   )
 }

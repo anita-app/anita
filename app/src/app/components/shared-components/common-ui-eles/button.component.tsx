@@ -22,7 +22,7 @@ export interface IButtonWithTooltipProps {
   type: Type
   fill?: TFill
   href?: string
-  onClick?: () => void
+  onClick?: (e: React.MouseEvent) => void
   breakpoint?: 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
   size?: keyof typeof sizeClasses
   marginClassName?: string

@@ -34,7 +34,9 @@ export const AdminLayoutHeader: React.FC = () => {
       </div>
 
       {project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.id && (
-        <CloudSyncButton projectId={project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.id} />
+        <div className="ml-auto">
+          <CloudSyncButton projectId={project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.id} />
+        </div>
       )}
 
       {sidebarHideClass === '' && (<div onClick={handleClickSidebar} className="absolute inset-0 h-full w-full z-10 md:hidden"></div>)}

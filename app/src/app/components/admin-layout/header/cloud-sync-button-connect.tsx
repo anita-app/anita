@@ -33,15 +33,13 @@ export const CloudSyncButtonConnect: React.FC<ICloudSyncButtonConnectProps> = (p
     window.open(authUrl as unknown as string, '_blank')
   }
   return (
-    <div className="ml-auto">
-      <Button
-        id="cloud-sync-connect"
-        label="Login with Dropbox"
-        tooltip="Sync your project across devices with Dropbox"
-        type={Type.transparent}
-        iconLeft="cloudyOutline"
-        onClick={handleConnectClick}
-      />
-    </div>
+    <Button
+      id="cloud-sync-connect"
+      label="Login with Dropbox"
+      tooltip="Sync your project across devices with Dropbox"
+      type={Type.transparent}
+      iconLeft="cloudyOutline"
+      onClick={handleConnectClick}
+    />
   )
 }

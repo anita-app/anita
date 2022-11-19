@@ -18,15 +18,24 @@ export class ProjectExporter {
   ) {}
 
   /**
-   * Retrieves the data and returns it
+   * Retrieves the data and returns it as an object
    */
-  public async getAsJson (scope: ExportScope): Promise<string> {
+  public async getData (scope: ExportScope): Promise<TAnitaUniversalDataStorage> {
     if (scope !== ExportScope.dataOnly) {
       this.addSystemDataToProjectToExport()
     }
     if (scope !== ExportScope.structureOnly) {
       await this.getSectionsData()
     }
+
+    return this.projectToExport as TAnitaUniversalDataStorage
+  }
+
+  /**
+   * Retrieves the data and returns it as a string
+   */
+  public async getAsJson (scope: ExportScope): Promise<string> {
+    await this.getData(scope)
     this.convertToJson()
     return this.jsonData
   }
@@ -35,13 +44,7 @@ export class ProjectExporter {
    * Saves the data as a file on the device
    */
   public async exportToFile (scope: ExportScope): Promise<void> {
-    if (scope !== ExportScope.dataOnly) {
-      this.addSystemDataToProjectToExport()
-    }
-    if (scope !== ExportScope.structureOnly) {
-      await this.getSectionsData()
-    }
-    this.convertToJson()
+    await this.getAsJson(scope)
     FsHelper.download(this.jsonData, `${this.systemData._settings?.[0].title}.json`, 'text/plain')
   }
 
