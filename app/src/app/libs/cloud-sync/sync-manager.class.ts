@@ -17,6 +17,9 @@ export class SyncManager {
     const lastSync = await this.getLastSync()
     const localData = await this.getLocalData()
     const remoteData = await this.getRemoteData()
+    if (!remoteData) {
+      return
+    }
     const comparisonResult = await this.compare(lastSync, localData, remoteData)
     await this.saveLocalChanges(comparisonResult)
     await this.sendToRemote(comparisonResult)
@@ -31,12 +34,12 @@ export class SyncManager {
   }
 
   private async getRemoteData (): Promise<TAnitaUniversalDataStorage> {
-    const remoteData = await DropboxHelper.instance.downloadFile(this.remoteId)
-    return remoteData
+    return DropboxHelper.instance.downloadFile(this.remoteId)
   }
 
   private async compare (lastSync: string | undefined, localData: TAnitaUniversalDataStorage, remoteData: TAnitaUniversalDataStorage): Promise<IComparisonResult> {
     const comparisonResult = await new Comparator(lastSync, localData, remoteData).compare()
+    console.log('compare ~ comparisonResult', comparisonResult)
     return comparisonResult
   }
 
@@ -47,6 +50,6 @@ export class SyncManager {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private async sendToRemote (comparisonResult: IComparisonResult): Promise<void> {
-    // TODO send to remote
+    DropboxHelper.instance.updateFile(this.remoteId, comparisonResult.remoteData)
   }
 }

@@ -51,7 +51,7 @@ export class CloudSyncBase<T extends IDropboxTokens = IDropboxTokens> {
     return CloudSyncBase.DB!
   }
 
-  protected async setRemoteId (remoteId: string) {
+  protected async setRemoteId (remoteId: string | null) {
     const currentProject = Manager.getCurrentProject()
 
     if (!currentProject) {
@@ -67,12 +67,14 @@ export class CloudSyncBase<T extends IDropboxTokens = IDropboxTokens> {
       project.cloudSync = {}
     }
 
-    project.cloudSync = {
-      [this.service]: remoteId
-    }
+    project.cloudSync = remoteId ? { [this.service]: remoteId } : undefined
     project[RESERVED_FIELDS.updatedAt] = DateTools.getUtcIsoString()
     await dbInstances.system.callUpdator<LocalProjectSettings>(CLIENT_SECTIONS.projects, project).autoUpdate()
     Manager.loadProjectById(currentProject.getId())
+  }
+
+  protected async clearRemoteId () {
+    this.setRemoteId(null)
   }
 
   protected static initDB () {

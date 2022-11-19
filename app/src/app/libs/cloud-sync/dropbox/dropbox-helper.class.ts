@@ -1,5 +1,6 @@
 import { CloudSyncBase, SupportedCloud } from 'app/libs/cloud-sync/cloud-sync-base.class'
 import { IDropboxTokens, ISharedFileMeta } from 'app/libs/cloud-sync/cloud-sync.const'
+import { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
 import { Dropbox, DropboxAuth, files } from 'dropbox'
 
 export class DropboxHelper extends CloudSyncBase {
@@ -30,7 +31,9 @@ export class DropboxHelper extends CloudSyncBase {
   public async getAuthenticationUrl (): Promise<String> {
     const scopes = [
       'files.content.write',
-      'files.content.read'
+      'files.content.read',
+      'file_requests.write',
+      'file_requests.read'
     ]
     const url = await this.dbxAuth!.getAuthenticationUrl(`${this.BASE_URL}`, undefined, 'code', 'offline', scopes, undefined, true)
     window.sessionStorage.clear()
@@ -83,12 +86,35 @@ export class DropboxHelper extends CloudSyncBase {
     if (!this.dbx) {
       await this.authWithTokens()
     }
-    const fileMeta = await this.dbx!.fileRequestsGet({ id: fileId })
-    console.log('downloadFile ~ fileMeta', fileMeta)
-    if (fileMeta.result) {
-      const fileData = await this.dbx!.filesExport({ path: fileMeta.result.destination!, export_format: 'json' })
-      console.log('downloadFile ~ fileData', fileData)
+    try {
+      const response = await this.dbx!.filesDownload({ path: fileId })
+      if (response.result) {
+        // @ts-ignore
+        const fileBlob = response.result.fileBlob
+        const reader = new FileReader()
+        reader.readAsText(fileBlob)
+        return new Promise((resolve, reject) => {
+          reader.onload = () => {
+            resolve(JSON.parse(reader.result as string) as TAnitaUniversalDataStorage)
+          }
+          reader.onerror = () => {
+            reject(reader.error)
+          }
+        })
+      }
+    } catch (error: any) {
+      if (error?.error?.error_summary?.includes('path/not_found/')) {
+        this.clearRemoteId()
+      }
+      return null
     }
+  }
+
+  public async updateFile (fileId: string, contents: TAnitaUniversalDataStorage) {
+    if (!this.dbx) {
+      await this.authWithTokens()
+    }
+    await this.dbx!.filesUpload({ path: fileId, contents: JSON.stringify(contents), mode: { '.tag': 'overwrite' } })
   }
 
   public async isAuthenticated () {

@@ -5,7 +5,7 @@ import { ISectionElement } from 'app/models/section-element/section-element.decl
 
 export interface IComparisonResult {
   remote: IElesForScope
-  allRemoteWithDelta: TAnitaUniversalDataStorage
+  remoteData: TAnitaUniversalDataStorage
   local: IElesForScope
 }
 
@@ -23,7 +23,7 @@ export class Comparator {
       insert: {},
       update: {}
     },
-    allRemoteWithDelta: {} as TAnitaUniversalDataStorage,
+    remoteData: {} as TAnitaUniversalDataStorage,
     local: {
       delete: {},
       insert: {},
@@ -93,6 +93,7 @@ export class Comparator {
         }
       }
     }
+    this.delta.remoteData = this.remoteData
   }
 
   private toDoIfLocalElementExistsOrNot (remElesCounter: number, section: keyof TAnitaUniversalDataStorage, localElement: ISectionElement): void {
@@ -130,17 +131,17 @@ export class Comparator {
    *              otherwise, the element has to be deleted from the remote db
    */
   private checkIfInsertOrDelete (section: keyof TAnitaUniversalDataStorage, remElesCounter: number): void {
-    const pkKey = RESERVED_FIELDS.id
     const dateCompareField = RESERVED_FIELDS.updatedAt
     const target = DateTools.firstIsAfterSecond(this.remoteData[section][remElesCounter][dateCompareField], this.lastSync) || !this.lastSync ? 'local' : 'remote'
-    this.addElesForScope(target, 'insert', section, this.remoteData[section][remElesCounter])
-    if (this.remoteData[section][remElesCounter][pkKey]) {
+    const action = target === 'local' ? 'insert' : 'delete'
+    this.addElesForScope(target, action, section, this.remoteData[section][remElesCounter])
+    if (target === 'remote') {
       this.addToLocalElementsMerged(section, this.remoteData[section][remElesCounter])
     }
   }
 
   private handleAllLocalElements (): void {
-    for (const section in this.remoteData) {
+    for (const section in this.localData) {
       this.handleLocalElements(section)
     }
   }
@@ -148,9 +149,11 @@ export class Comparator {
   private handleLocalElements (section: keyof TAnitaUniversalDataStorage): void {
     const pkKey = RESERVED_FIELDS.id
 
-    if (this.localElementsMerged[section].length) {
+    if (this.localElementsMerged?.[section]?.length) {
       const elements = this.localData[section].filter((ele) => ele[pkKey] && !this.localElementsMerged[section].includes(ele[pkKey]))
       this.elesInLocalDbOnly(section, elements)
+    } else {
+      this.elesInLocalDbOnly(section, this.localData[section])
     }
   }
 
@@ -161,9 +164,9 @@ export class Comparator {
        * If the updatedAt is after the lastSync, or the lastSync is null, the element has to be pushed to the remote db
        * otherwise, the element has to be deleted from the local db
        */
-      for (let remoteElesOnlyCounter = 0, remoteElesOnlyLen = localElementsList.length; remoteElesOnlyCounter < remoteElesOnlyLen; remoteElesOnlyCounter++) {
-        const target = (DateTools.firstIsAfterSecond(localElementsList[remoteElesOnlyCounter][dateCompareField], this.lastSync) || !this.lastSync) ? 'remote' : 'local'
-        this.addElesForScope(target, 'delete', section, localElementsList[remoteElesOnlyCounter])
+      for (let localElesOnlyCounter = 0, remoteElesOnlyLen = localElementsList.length; localElesOnlyCounter < remoteElesOnlyLen; localElesOnlyCounter++) {
+        const target = (DateTools.firstIsAfterSecond(localElementsList[localElesOnlyCounter][dateCompareField], this.lastSync) || !this.lastSync) ? 'remote' : 'local'
+        this.addElesForScope(target, 'insert', section, localElementsList[localElesOnlyCounter])
       }
     }
   }
