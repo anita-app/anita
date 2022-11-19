@@ -7,6 +7,7 @@ export interface IComparisonResult {
   remote: IElesForScope
   remoteData: TAnitaUniversalDataStorage
   local: IElesForScope
+  localData: TAnitaUniversalDataStorage
 }
 
 interface IElesForScope {
@@ -28,7 +29,8 @@ export class Comparator {
       delete: {},
       insert: {},
       update: {}
-    }
+    },
+    localData: {} as TAnitaUniversalDataStorage
   }
 
   private localElementsMerged: { [key: keyof TAnitaUniversalDataStorage]: Array<string> } = {}
@@ -47,7 +49,8 @@ export class Comparator {
       this.handleSection(section)
     }
     this.handleAllLocalElements()
-    this.applyDeltaToRemoteData()
+    this.delta.remoteData = this.applyDeltaToData('remote', this.remoteData)
+    this.delta.localData = this.applyDeltaToData('local', this.localData)
     return this.delta
   }
 
@@ -68,32 +71,32 @@ export class Comparator {
     }
   }
 
-  private applyDeltaToRemoteData (): void {
-    for (const action in this.delta.remote) {
+  private applyDeltaToData (scope: 'local' | 'remote', dataToUpdate: TAnitaUniversalDataStorage): TAnitaUniversalDataStorage {
+    for (const action in this.delta[scope]) {
       const actionAsKey = action as keyof IElesForScope
-      const deltaRemoteActionData = this.delta.remote[actionAsKey]
+      const deltaRemoteActionData = this.delta[scope][actionAsKey]
       for (const section in deltaRemoteActionData) {
         const sectionAsKey = section as keyof TAnitaUniversalDataStorage
         if (typeof deltaRemoteActionData[sectionAsKey] === 'object') {
           for (const element of deltaRemoteActionData[sectionAsKey]!) {
             if (actionAsKey === 'delete') {
-              this.remoteData[sectionAsKey] = this.remoteData?.[sectionAsKey]?.filter((ele) => ele[RESERVED_FIELDS.id] !== element[RESERVED_FIELDS.id])
+              dataToUpdate[sectionAsKey] = dataToUpdate?.[sectionAsKey]?.filter((ele) => ele[RESERVED_FIELDS.id] !== element[RESERVED_FIELDS.id])
             } else if (actionAsKey === 'insert') {
-              if (!this.remoteData[sectionAsKey]) {
-                this.remoteData[sectionAsKey] = []
+              if (!dataToUpdate[sectionAsKey]) {
+                dataToUpdate[sectionAsKey] = []
               }
-              this.remoteData[sectionAsKey].push(element)
+              dataToUpdate[sectionAsKey].push(element)
             } else if (actionAsKey === 'update') {
-              const indexElement = this.remoteData[sectionAsKey].findIndex((ele) => ele[RESERVED_FIELDS.id] === element[RESERVED_FIELDS.id])
+              const indexElement = dataToUpdate[sectionAsKey].findIndex((ele) => ele[RESERVED_FIELDS.id] === element[RESERVED_FIELDS.id])
               if (indexElement !== -1) {
-                this.remoteData[sectionAsKey][indexElement] = element
+                dataToUpdate[sectionAsKey][indexElement] = element
               }
             }
           }
         }
       }
     }
-    this.delta.remoteData = this.remoteData
+    return dataToUpdate
   }
 
   private toDoIfLocalElementExistsOrNot (remElesCounter: number, section: keyof TAnitaUniversalDataStorage, localElement: ISectionElement): void {

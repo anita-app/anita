@@ -10,6 +10,8 @@ import { ProjectSaver } from 'app/models/project/project-saver.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { ParentInfoForDetailsView } from 'app/models/parent-element/parent-element.declarations'
 import { ProjectUploader } from 'app/models/project/syncing/project-uploader'
+import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
+import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 
 export class Project {
   private settings: TSystemData[RESERVED_AUDS_KEYS._settings][0]
@@ -69,13 +71,25 @@ export class Project {
 
   public getSystemData = (): TSystemData => this.systemData
 
+  public updateSystemData = async (systemData: TSystemData): Promise<void> => {
+    this.systemData = systemData
+    this.settings = systemData[RESERVED_AUDS_KEYS._settings][0]
+    this.sectionsDefinitions = systemData[RESERVED_AUDS_KEYS._sections]
+    await this.saveProject()
+    const systemDataClone = JSON.parse(JSON.stringify(systemData))
+    storeDispatcher(({
+      type: REDUX_ACTIONS.setCurrentProject,
+      payload: systemDataClone
+    }))
+  }
+
   public getProjectProp = (key: keyof IProjectSettings): any => this.systemData[RESERVED_AUDS_KEYS._settings][0][key]
 
   public getParentInfoForDetailsView = (listOfParents: Array<string>): Promise<Array<ParentInfoForDetailsView>> => new GetParentInfoForDetailsView(this, listOfParents).get()
 
   public getOptionsForParentsSelector = (options: Array<IOptionKeysModel>): Promise<Array<OptionKeysModelGroup>> => new GetOptionsForParentsSelector(this).buildOptions(options)
 
-  public saveProject = (): void => {
+  private saveProject = (): Promise<TSystemData> => (
     new ProjectSaver(this.systemData, EDITOR_MODE.edit).save()
-  }
+  )
 }

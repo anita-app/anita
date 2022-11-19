@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { useShortcut } from 'app/components/hooks/use-shortcut'
@@ -13,9 +13,18 @@ export const CloudSyncButtonDoSync: React.FC<ICloudSyncButtonDoSyncProps> = (pro
   const handleSyncClick = async (e: KeyboardEvent | React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
-    setIsSyncing(true)
     new SyncManager(props.linkedFileId).sync()
   }
+
+  useEffect(() => {
+    const updateIsSyncing = (newValue: boolean) => {
+      setIsSyncing(newValue)
+    }
+    const isSyncingSubscription = SyncManager.isSyncing.subscribe(updateIsSyncing)
+    return () => {
+      isSyncingSubscription.unsubscribe()
+    }
+  }, [])
 
   useShortcut({ s: { withMetakey: true } }, handleSyncClick)
 
