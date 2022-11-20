@@ -5,8 +5,10 @@ import { SaveProjectSettingsInIndexedDB } from 'app/models/project/save-project-
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { DateTools } from 'app/libs/tools/date-tools.class'
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
+import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
 
 export class ProjectSaver {
+  private localStorage: LOCAL_STORAGE_SYSTEMS | undefined
   constructor (
     private project: TSystemData = {
       [RESERVED_AUDS_KEYS._settings]: [],
@@ -48,7 +50,10 @@ export class ProjectSaver {
   }
 
   private async saveSettings (): Promise<void> {
-    await dbInstances[this.project[RESERVED_AUDS_KEYS._settings][0].id].callInsertor(RESERVED_AUDS_KEYS._settings, this.project[RESERVED_AUDS_KEYS._settings][0]).autoInsert()
+    const settingsClone = { ...this.project[RESERVED_AUDS_KEYS._settings][0] }
+    this.localStorage = settingsClone.localStorage
+    delete settingsClone.localStorage
+    await dbInstances[this.project[RESERVED_AUDS_KEYS._settings][0].id].callInsertor(RESERVED_AUDS_KEYS._settings, settingsClone).autoInsert()
   }
 
   private async saveSections (): Promise<void> {
@@ -59,7 +64,7 @@ export class ProjectSaver {
   private async postSaveActions (): Promise<void> {
     const methodName = this.mode === EDITOR_MODE.add ? 'postProjectCreation' : 'postProjectUpdate'
     const payload = await dbInstances[this.project[RESERVED_AUDS_KEYS._settings][0].id].dbStore[methodName]?.(this.project) || {}
-
-    await new SaveProjectSettingsInIndexedDB(this.project[RESERVED_AUDS_KEYS._settings][0], payload).save()
+    const settingsWithLocalStorage = { ...this.project[RESERVED_AUDS_KEYS._settings][0], localStorage: this.localStorage }
+    await new SaveProjectSettingsInIndexedDB(settingsWithLocalStorage, payload).save()
   }
 }

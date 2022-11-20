@@ -1,5 +1,4 @@
 import { ANITA_URLS } from 'app/libs/routing/anita-routes.constant'
-import { ProjectsListLoader } from 'app/libs/projects-helpers/projects-handlers/projects-list-loader.class'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { ProjectCard } from 'app/components/projects/project-card.component'
 import { ImportProjectButton } from 'app/components/projects/project-importer-components/import-project-button.component'
@@ -8,6 +7,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
+import { Manager } from 'app/libs/manager/manager.class'
 
 export const ProjectsList: React.FC = () => {
   const [hasLoaded, setHasLoaded] = useState(false)
@@ -17,7 +17,7 @@ export const ProjectsList: React.FC = () => {
   useEffect(() => {
     let isMounted = true
     const loadProjectsList = async () => {
-      await new ProjectsListLoader().load()
+      await Manager.loadProjectsList()
       setHasLoaded(true)
     }
     if (isMounted) {

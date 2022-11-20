@@ -4,7 +4,6 @@ import { Button } from 'app/components/shared-components/common-ui-eles/button.c
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { useModalContext } from 'app/components/shared-components/modals/modal-context'
 import { Manager } from 'app/libs/manager/manager.class'
-import { ProjectsListLoader } from 'app/libs/projects-helpers/projects-handlers/projects-list-loader.class'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
 import React from 'react'
@@ -28,7 +27,7 @@ export const ListTabsHeaderRightAddField: React.FC<IListTabsHeaderRightAddFieldP
 
   const handleActionClick = async () => {
     const systemData = await Manager.saveProject(project as TSystemData, EDITOR_MODE.edit)
-    await new ProjectsListLoader().load()
+    await Manager.loadProjectsList()
     Manager.setCurrentProject(systemData)
     hideModal()
   }

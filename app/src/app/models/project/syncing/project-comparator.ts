@@ -119,7 +119,8 @@ export class Comparator {
     const remoteElement = this.remoteData[section][remElesCounter]
     if (!DateTools.areEqual(remoteElement[RESERVED_FIELDS.updatedAt], localElement[RESERVED_FIELDS.updatedAt])) {
       const target = DateTools.firstIsAfterSecond(remoteElement[RESERVED_FIELDS.updatedAt], localElement[RESERVED_FIELDS.updatedAt]) ? 'local' : 'remote'
-      this.addElesForScope(target, 'update', section, localElement)
+      const newestElement = target === 'local' ? remoteElement : localElement
+      this.addElesForScope(target, 'update', section, newestElement)
     }
     if (localElement[pkKey]) {
       this.addToLocalElementsMerged(section, localElement)
@@ -134,7 +135,7 @@ export class Comparator {
    *              otherwise, the element has to be deleted from the remote db
    */
   private checkIfInsertOrDelete (section: keyof TAnitaUniversalDataStorage, remElesCounter: number): void {
-    const dateCompareField = RESERVED_FIELDS.updatedAt
+    const dateCompareField = this.remoteData[section][remElesCounter][RESERVED_FIELDS.updatedAt] ? RESERVED_FIELDS.updatedAt : RESERVED_FIELDS.createdAt
     const target = DateTools.firstIsAfterSecond(this.remoteData[section][remElesCounter][dateCompareField], this.lastSync) || !this.lastSync ? 'local' : 'remote'
     const action = target === 'local' ? 'insert' : 'delete'
     this.addElesForScope(target, action, section, this.remoteData[section][remElesCounter])
@@ -169,7 +170,8 @@ export class Comparator {
        */
       for (let localElesOnlyCounter = 0, remoteElesOnlyLen = localElementsList.length; localElesOnlyCounter < remoteElesOnlyLen; localElesOnlyCounter++) {
         const target = (DateTools.firstIsAfterSecond(localElementsList[localElesOnlyCounter][dateCompareField], this.lastSync) || !this.lastSync) ? 'remote' : 'local'
-        this.addElesForScope(target, 'insert', section, localElementsList[localElesOnlyCounter])
+        const action = target === 'local' ? 'delete' : 'insert'
+        this.addElesForScope(target, action, section, localElementsList[localElesOnlyCounter])
       }
     }
   }
@@ -181,7 +183,7 @@ export class Comparator {
     }
   }
 
-  private addElesForScope (target: 'remote' | 'local', action: 'delete' | 'insert' | 'update', section: keyof TAnitaUniversalDataStorage, localElement: ISectionElement): void {
+  private addElesForScope (target: 'remote' | 'local', action: 'delete' | 'insert' | 'update', section: keyof TAnitaUniversalDataStorage, element: ISectionElement): void {
     if (action === 'delete' && Comparator.nonDeletableSections.includes(section as unknown as RESERVED_AUDS_KEYS)) {
       return
     }
@@ -194,6 +196,6 @@ export class Comparator {
     if (!this.delta[target][action][section]) {
       this.delta[target][action][section] = []
     }
-    this.delta[target][action][section]!.push(localElement)
+    this.delta[target][action][section]!.push(element)
   }
 }

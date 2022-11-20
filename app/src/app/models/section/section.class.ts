@@ -51,6 +51,10 @@ export class Section implements ISection {
     return new SectionElementSaver(this.projectId, this.id, element, mode).save()
   }
 
+  public deleteElement = (element: ISectionElement): Promise<void> => (
+    dbInstances[this.projectId].callDeletor(this.id, { id: element.id }).autoDelete()
+  )
+
   public getFirstUserDefinedField (): FormFieldsModel<TSupportedFormsTypes> | undefined {
     return this.formModel.find(formEle => !RESERVED_FIELDS[formEle.fieldName!])
   }

@@ -43,7 +43,7 @@ export interface IProjectSettings {
   title: string
   description: string
   createdAt: string
-  localStorage: LOCAL_STORAGE_SYSTEMS
+  localStorage?: LOCAL_STORAGE_SYSTEMS
   updatedAt?: string
   encrypted?: boolean
   cloudSync?: {

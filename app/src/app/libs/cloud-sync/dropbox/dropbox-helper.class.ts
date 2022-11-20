@@ -82,7 +82,7 @@ export class DropboxHelper extends CloudSyncBase {
     }
   }
 
-  public async downloadFile (fileId: string): Promise<any> {
+  public async downloadFile (projectId: string, fileId: string): Promise<any> {
     if (!this.dbx) {
       await this.authWithTokens()
     }
@@ -104,7 +104,7 @@ export class DropboxHelper extends CloudSyncBase {
       }
     } catch (error: any) {
       if (error?.error?.error_summary?.includes('path/not_found/')) {
-        this.clearRemoteId()
+        this.clearRemoteId(projectId)
       }
       return null
     }
@@ -114,7 +114,7 @@ export class DropboxHelper extends CloudSyncBase {
     if (!this.dbx) {
       await this.authWithTokens()
     }
-    await this.dbx!.filesUpload({ path: fileId, contents: JSON.stringify(contents), mode: { '.tag': 'overwrite' } })
+    await this.dbx!.filesUpload({ path: fileId, contents: JSON.stringify(contents, null, 2), mode: { '.tag': 'overwrite' } })
   }
 
   public async isAuthenticated () {

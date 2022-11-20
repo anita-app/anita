@@ -22,7 +22,7 @@ export const ProjectDetailsCard: React.FC<IProjectDetailsCardProps> = (props) =>
     <p className="text-md mb-3">{dateFormat('yyyy/MM/dd, at hh:mm', new Date(props.project.createdAt))}</p>
 
     <p className="text-gray-600 text-xs">Storage method:</p>
-    <p className="text-md">{SectionElement.txtByFieldValue(availableSystems, props.project.localStorage)}</p>
+    <p className="text-md">{SectionElement.txtByFieldValue(availableSystems, props.project.localStorage!)}</p>
 
     <CardFooter>
       <DeleteProjectButton project={props.project} />

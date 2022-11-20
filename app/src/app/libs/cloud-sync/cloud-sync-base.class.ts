@@ -1,13 +1,9 @@
-import { dbInstances } from 'app/data/local-dbs/db-instances.const'
-import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
 import { Manager } from 'app/libs/manager/manager.class'
 import { DateTools } from 'app/libs/tools/date-tools.class'
-import { LocalProjectSettings } from 'app/models/project/project.declarations'
-import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import Dexie from 'dexie'
 import { IDropboxTokens } from './cloud-sync.const'
 
-const DB_VERSION = 3
+const DB_VERSION = 4
 
 export enum SupportedCloud {
   DROPBOX = 'dropbox'
@@ -19,7 +15,8 @@ interface IAccountsTable extends IDropboxTokens {
 
 enum CloudSyncTable {
   ACCOUNTS = 'accounts',
-  SYNC_INFO = 'syncInfo'
+  SYNC_INFO = 'syncInfo',
+  FILES_INFO = 'filesInfo'
 }
 
 interface ICloudSyncDB {
@@ -27,6 +24,10 @@ interface ICloudSyncDB {
   [CloudSyncTable.SYNC_INFO]: {
     projectId: string
     lastSync: string
+  }
+  [CloudSyncTable.FILES_INFO]: {
+    projectId: string
+    fileId: string
   }
 }
 
@@ -36,53 +37,42 @@ export class CloudSyncBase<T extends IDropboxTokens = IDropboxTokens> {
     private service: SupportedCloud
   ) { }
 
+  public static getDB (): Dexie {
+    CloudSyncBase.initDB()
+    return CloudSyncBase.DB!
+  }
+
   public async getLinkedFileIdOrNull (projectId: string | undefined): Promise<string | null> {
     if (!projectId) {
       return null
     }
-    const project = await dbInstances.system.callSelector<LocalProjectSettings>(CLIENT_SECTIONS.projects, { id: projectId }).single()
-    return project?.cloudSync?.[this.service!] ?? null
+    CloudSyncBase.initDB()
+    return (await CloudSyncBase.DB!.table<ICloudSyncDB['filesInfo']>(CloudSyncTable.FILES_INFO).get({ projectId }))?.fileId ?? null
   }
 
-  public static getDB (): Dexie {
-    if (!CloudSyncBase.DB) {
-      CloudSyncBase.initDB()
-    }
-    return CloudSyncBase.DB!
-  }
-
-  protected async setRemoteId (remoteId: string | null) {
+  protected async setRemoteId (remoteId: string) {
     const currentProject = Manager.getCurrentProject()
 
     if (!currentProject) {
       return
     }
-    const project = await dbInstances.system.callSelector<LocalProjectSettings>(CLIENT_SECTIONS.projects, { id: currentProject.getId() }).single()
-
-    if (!project) {
-      return
-    }
-
-    if (!project.cloudSync) {
-      project.cloudSync = {}
-    }
-
-    project.cloudSync = remoteId ? { [this.service]: remoteId } : undefined
-    project[RESERVED_FIELDS.updatedAt] = DateTools.getUtcIsoString()
-    await dbInstances.system.callUpdator<LocalProjectSettings>(CLIENT_SECTIONS.projects, project).autoUpdate()
+    await CloudSyncBase.DB!.table<ICloudSyncDB['filesInfo']>(CloudSyncTable.FILES_INFO).put({ projectId: currentProject.getId(), fileId: remoteId })
     Manager.loadProjectById(currentProject.getId())
   }
 
-  protected async clearRemoteId () {
-    this.setRemoteId(null)
+  protected async clearRemoteId (projectId: string) {
+    await CloudSyncBase.DB!.table<ICloudSyncDB['filesInfo']>(CloudSyncTable.FILES_INFO).delete(projectId)
   }
 
   protected static initDB () {
-    CloudSyncBase.DB = new Dexie('CloudSync')
-    CloudSyncBase.DB.version(DB_VERSION).stores({
-      [CloudSyncTable.ACCOUNTS]: 'service',
-      [CloudSyncTable.SYNC_INFO]: 'projectId'
-    })
+    if (!CloudSyncBase.DB) {
+      CloudSyncBase.DB = new Dexie('CloudSync')
+      CloudSyncBase.DB.version(DB_VERSION).stores({
+        [CloudSyncTable.ACCOUNTS]: 'service',
+        [CloudSyncTable.SYNC_INFO]: 'projectId',
+        [CloudSyncTable.FILES_INFO]: 'projectId'
+      })
+    }
   }
 
   protected storeDataForService (data: T) {

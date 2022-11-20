@@ -19,8 +19,8 @@ export const OAuth: React.FC = () => {
     return <Navigate to={ANITA_URLS.projectsList} />
   }
 
-  new DropboxHelper().getAccessTokenFromCode(data.code)
-  console.log('Auth')
+  DropboxHelper.instance.getAccessTokenFromCode(data.code)
+
   return (
     <div className="container px-0 md:px2 lg:px-5 pt-20 md:pt-24 mx-auto">
       <div className="p-4 lg:w-2/3 mx-auto">

@@ -1,7 +1,6 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
-import { SectionModel } from 'app/libs/db-connector/db-builder/sez-definition'
 import { IdCreator } from 'app/libs/id-creator/id-creator.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { DateTools } from 'app/libs/tools/date-tools.class'
@@ -10,11 +9,6 @@ import { DateTools } from 'app/libs/tools/date-tools.class'
  * Saves a new element in a section of the project, stores the project on disk and dispatches the changes to the current state
  */
 export class SectionElementSaver {
-  /**
-   * Reference to section model in DS for easier access in code
-   */
-  private sectionModelInDS: SectionModel<ISectionElement> | undefined
-
   /**
    * Creates an instance of element saver.
    * @param projectData the unmodified project data
@@ -32,7 +26,6 @@ export class SectionElementSaver {
    * Deep clones the project, adds/updated the element in the project to save and finally save the project
    */
   public async save (): Promise<ISectionElement> {
-    this.setSectionModel()
     this.checkAndSetPk()
     this.setcreatedAt()
     this.deleteEmptyProps()
@@ -48,18 +41,12 @@ export class SectionElementSaver {
   }
 
   /**
-   * Sets the section model from the DS stored in DbConnector
-   */
-  private setSectionModel (): void {
-    this.sectionModelInDS = dbInstances[this.projectId].DS[this.sectionId]
-  }
-
-  /**
-   * Checks if a `pk` value is set, if not one is created.
+   * Checks if the `id` is set, if not one is created.
    */
   private checkAndSetPk (): void {
-    if (!this.element[this.sectionModelInDS!.pk]) {
-      this.element[this.sectionModelInDS!.pk] = IdCreator.make(this.sectionModelInDS!.name)
+    if (!this.element[RESERVED_FIELDS.id]) {
+      const elementValues = Object.values(this.element)
+      this.element[RESERVED_FIELDS.id] = IdCreator.make(elementValues.join('-'))
     }
   }
 
@@ -78,7 +65,7 @@ export class SectionElementSaver {
    * Checks if `createdAt` value is set, if not one is created.
    */
   private setcreatedAt (): void {
-    if (this.sectionModelInDS?.fields.includes(RESERVED_FIELDS.createdAt) && !this.element[RESERVED_FIELDS.createdAt]) {
+    if (!this.element[RESERVED_FIELDS.createdAt]) {
       this.element[RESERVED_FIELDS.createdAt] = DateTools.getUtcIsoString()
     }
   }
@@ -87,8 +74,6 @@ export class SectionElementSaver {
    * Sets the updatedAt value if in edit mode
    */
   private setupdatedAtValueIfInEditMode (): void {
-    if (this.sectionModelInDS?.fields.includes(RESERVED_FIELDS.updatedAt)) {
-      this.element[RESERVED_FIELDS.updatedAt] = DateTools.getUtcIsoString()
-    }
+    this.element[RESERVED_FIELDS.updatedAt] = DateTools.getUtcIsoString()
   }
 }

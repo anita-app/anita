@@ -11,9 +11,17 @@ import { ProjectSaver } from 'app/models/project/project-saver.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api'
 import { ProjectDataImporter } from 'app/libs/projects-helpers/project-importers/project-data-importer.class'
+import { ProjectsListLoader } from 'app/libs/projects-helpers/projects-handlers/projects-list-loader.class'
 
 export class Manager {
   private static currentProject: Project
+
+  /**
+   * Loads the projects from IndexedDB and adds them to the current state
+   */
+  public static loadProjectsList (): Promise<void> {
+    return new ProjectsListLoader().load()
+  }
 
   public static loadProjectById (projectId: string): Promise<void> {
     return new ProjectLoader(projectId).loadProject()

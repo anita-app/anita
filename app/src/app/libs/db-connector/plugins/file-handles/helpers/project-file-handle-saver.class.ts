@@ -33,7 +33,7 @@ export class ProjectFileHandleSaver {
    * Converts the project data to string
    */
   private setData (): void {
-    this.data = JSON.stringify(this.dbConnector.dbStore.db)
+    this.data = JSON.stringify(this.dbConnector.dbStore.db, null, 2)
   }
 
   /**

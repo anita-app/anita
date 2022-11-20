@@ -56,7 +56,7 @@ export class Project {
       return null
     }
     if (!this.sections[sectionId]) {
-      const sectionData = this.sectionsDefinitions.find(section => section.id === sectionId)
+      const sectionData = this.getSectionDataById(sectionId)
       if (!sectionData) {
         return null
       }
@@ -91,5 +91,9 @@ export class Project {
 
   private saveProject = (): Promise<TSystemData> => (
     new ProjectSaver(this.systemData, EDITOR_MODE.edit).save()
+  )
+
+  private getSectionDataById = (sectionId: string): ISection | undefined => (
+    this.sectionsDefinitions.find(section => section.id === sectionId)
   )
 }
