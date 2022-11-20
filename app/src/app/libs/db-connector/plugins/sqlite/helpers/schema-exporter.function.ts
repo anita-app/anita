@@ -8,6 +8,7 @@ export async function schemaExporter (db: Database, dirHandle: FileSystemDirecto
   const binaryArray = db.export()
   const fileHandle = await dirHandle.getFileHandle(`${projectId}.db`, { create: true })
   const writable = await fileHandle.createWritable({ keepExistingData: true })
+  writable.truncate(0)
   await writable.write(binaryArray)
   await writable.close()
 }
