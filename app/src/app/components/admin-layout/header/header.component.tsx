@@ -35,7 +35,7 @@ export const AdminLayoutHeader: React.FC = () => {
 
       {project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.id && (
         <div className="ml-auto">
-          <CloudSyncButton projectId={project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.id} />
+          <CloudSyncButton projectId={project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.id} localStorage={project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.localStorage!} />
         </div>
       )}
 

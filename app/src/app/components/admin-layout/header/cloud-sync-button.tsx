@@ -4,9 +4,11 @@ import { CloudSyncButtonConnect } from 'app/components/admin-layout/header/cloud
 import { DropboxHelper } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
 import { CloudSyncButtonOpenFilePicker } from 'app/components/admin-layout/header/cloud-sync-button-open-file-picker'
 import { CloudSyncButtonDoSync } from 'app/components/admin-layout/header/cloud-sync-button-do-sync'
+import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
 
 interface ICloudSyncButtonProps {
   projectId: string
+  localStorage: LOCAL_STORAGE_SYSTEMS
 }
 
 export const CloudSyncButton: React.FC<ICloudSyncButtonProps> = (props) => {
@@ -33,7 +35,7 @@ export const CloudSyncButton: React.FC<ICloudSyncButtonProps> = (props) => {
     getCloudSyncState()
   })
 
-  if (cloudSyncState === undefined) {
+  if (cloudSyncState === undefined || props.localStorage !== LOCAL_STORAGE_SYSTEMS.IndexedDB) {
     return null
   }
 
