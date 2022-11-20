@@ -67,7 +67,24 @@ export class DropboxHelper extends CloudSyncBase {
       await this.authWithTokens()
     }
     const response = await this.dbx!.filesListFolder({ path })
-    return this.convertFileList(response?.result?.entries || [])
+    const allResults: files.ListFolderResult['entries'] = []
+    if (response.result?.entries) {
+      allResults.push(...response.result.entries)
+      if (response.result.has_more) {
+        await this.getMoreFilesWithCursor(allResults, response.result.cursor)
+      }
+    }
+    return this.convertFileList(allResults)
+  }
+
+  private async getMoreFilesWithCursor (allResults: files.ListFolderResult['entries'], cursor: string) {
+    const moreResults = await this.dbx!.filesListFolderContinue({ cursor })
+    if (moreResults.result?.entries?.length) {
+      allResults.push(...moreResults?.result?.entries)
+    }
+    if (moreResults?.result?.has_more) {
+      await this.getMoreFilesWithCursor(allResults, moreResults.result.cursor)
+    }
   }
 
   public async uploadFile (path: string, fileName: string, contents: string) {
