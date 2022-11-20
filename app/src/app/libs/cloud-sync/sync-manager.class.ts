@@ -1,5 +1,5 @@
 import { RESERVED_AUDS_KEYS, TAnitaUniversalDataStorage, TSystemData } from 'app/models/project/project.declarations'
-import { Comparator, IComparisonResult } from 'app/models/project/syncing/project-comparator'
+import { IComparisonResult } from 'app/models/project/syncing/project-comparator'
 import { Manager } from 'app/libs/manager/manager.class'
 import { Project } from 'app/models/project/project.class'
 import { DropboxHelper } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
@@ -9,6 +9,7 @@ import { CloudSyncState } from 'app/libs/cloud-sync/cloud-sync.const'
 
 export class SyncManager {
   private project: Project
+  private static comparatorWorker: Worker | undefined
 
   constructor (private remoteId: string) {
     this.project = Manager.getCurrentProject()!
@@ -22,6 +23,7 @@ export class SyncManager {
   )
 
   public async sync (): Promise<void> {
+    this.setWorker()
     IS_SYNCING.next(true)
     const lastSync = await this.getLastSync()
     const localData = await this.getLocalData()
@@ -30,12 +32,16 @@ export class SyncManager {
       IS_SYNCING.next(false)
       return
     }
-    const comparisonResult = await this.compare(lastSync, localData, remoteData)
-    if (this.hasScopeChanges('local', comparisonResult)) {
-      await this.saveLocalChanges(comparisonResult)
+    this.sendToWorkerForComparison(lastSync, localData, remoteData)
+  }
+
+  private setWorker (): void {
+    if (!SyncManager.comparatorWorker) {
+      SyncManager.comparatorWorker = new Worker(new URL('app/workers/comparator.worker', import.meta.url), { type: 'module' })
+      SyncManager.comparatorWorker.onmessage = (event: MessageEvent<IComparisonResult>) => {
+        this.handleComparisonResult(event.data)
+      }
     }
-    await this.sendToRemote(comparisonResult)
-    IS_SYNCING.next(false)
   }
 
   private async getLastSync (): Promise<string | undefined> {
@@ -50,9 +56,20 @@ export class SyncManager {
     return DropboxHelper.instance.downloadFile(this.project.getId(), this.remoteId)
   }
 
-  private async compare (lastSync: string | undefined, localData: TAnitaUniversalDataStorage, remoteData: TAnitaUniversalDataStorage): Promise<IComparisonResult> {
-    const comparisonResult = await new Comparator(lastSync, localData, remoteData).compare()
-    return comparisonResult
+  private sendToWorkerForComparison (lastSync: string | undefined, localData: TAnitaUniversalDataStorage, remoteData: TAnitaUniversalDataStorage): void {
+    SyncManager.comparatorWorker!.postMessage({
+      lastSync,
+      localData,
+      remoteData
+    })
+  }
+
+  private handleComparisonResult = async (comparisonResult: IComparisonResult): Promise<void> => {
+    if (this.hasScopeChanges('local', comparisonResult)) {
+      await this.saveLocalChanges(comparisonResult)
+    }
+    await this.sendToRemote(comparisonResult)
+    IS_SYNCING.next(false)
   }
 
   private async saveLocalChanges (comparisonResult: IComparisonResult): Promise<void> {
