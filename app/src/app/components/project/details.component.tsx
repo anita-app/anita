@@ -14,6 +14,7 @@ export const ProjectDetails: React.FC = () => {
   const [project, setElement] = useState<IProjectSettings | undefined | null>(null)
   const projects = useSelector((state: AnitaStore) => state.projects)
 
+  // TODO - implement logic with obserbvable with section ids and elements changed, and then provider and hooks to check for id change
   const projectFromList = projects?.find((project) => project.id === projectId)
   const projectFromListLastUpdate = projectFromList?.updatedAt
 
