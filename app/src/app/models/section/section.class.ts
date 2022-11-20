@@ -13,8 +13,6 @@ import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { Subject } from 'rxjs'
-import { RemoteAndLocalMerger } from 'app/libs/cloud-sync/remote-and-local-merger.class'
-import { CURRENT_PROJECT_SYNC_INFO } from 'app/libs/cloud-sync/sync-manager.const'
 import { SyncManager } from 'app/libs/cloud-sync/sync-manager.class'
 
 export class Section implements ISection {
@@ -52,17 +50,13 @@ export class Section implements ISection {
   public saveElement = async (element: ISectionElement, forceMode?: EDITOR_MODE): Promise<ISectionElement> => {
     const mode = forceMode || (element.id ? EDITOR_MODE.edit : EDITOR_MODE.add)
     const savedElement = await new SectionElementSaver(this.projectId, this.id, element, mode).save()
-    if (SyncManager.canStartSync()) {
-      new RemoteAndLocalMerger(CURRENT_PROJECT_SYNC_INFO.linkedFileId!).sync()
-    }
+    SyncManager.syncWithRemoteIfSet()
     return savedElement
   }
 
   public deleteElement = async (element: ISectionElement): Promise<void> => {
     await dbInstances[this.projectId].callDeletor(this.id, { id: element.id }).autoDelete()
-    if (SyncManager.canStartSync()) {
-      new RemoteAndLocalMerger(CURRENT_PROJECT_SYNC_INFO.linkedFileId!).sync()
-    }
+    SyncManager.syncWithRemoteIfSet()
   }
 
   public getFirstUserDefinedField (): FormFieldsModel<TSupportedFormsTypes> | undefined {

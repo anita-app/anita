@@ -7,8 +7,6 @@ import { DateTools } from 'app/libs/tools/date-tools.class'
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
-import { RemoteAndLocalMerger } from 'app/libs/cloud-sync/remote-and-local-merger.class'
-import { CURRENT_PROJECT_SYNC_INFO } from 'app/libs/cloud-sync/sync-manager.const'
 import { SyncManager } from 'app/libs/cloud-sync/sync-manager.class'
 
 export class ProjectSaver {
@@ -40,9 +38,7 @@ export class ProjectSaver {
 
     await this.postSaveActions()
 
-    if (SyncManager.canStartSync()) {
-      new RemoteAndLocalMerger(CURRENT_PROJECT_SYNC_INFO.linkedFileId!).sync()
-    }
+    SyncManager.syncWithRemoteIfSet()
 
     return this.project
   }
