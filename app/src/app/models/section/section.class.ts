@@ -13,8 +13,9 @@ import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { Subject } from 'rxjs'
-import { SyncManager } from 'app/libs/cloud-sync/sync-manager.class'
+import { RemoteAndLocalMerger } from 'app/libs/cloud-sync/remote-and-local-merger.class'
 import { CURRENT_PROJECT_SYNC_INFO } from 'app/libs/cloud-sync/sync-manager.const'
+import { SyncManager } from 'app/libs/cloud-sync/sync-manager.class'
 
 export class Section implements ISection {
   public id: string
@@ -52,7 +53,7 @@ export class Section implements ISection {
     const mode = forceMode || (element.id ? EDITOR_MODE.edit : EDITOR_MODE.add)
     const savedElement = await new SectionElementSaver(this.projectId, this.id, element, mode).save()
     if (SyncManager.canStartSync()) {
-      new SyncManager(CURRENT_PROJECT_SYNC_INFO.linkedFileId!).sync()
+      new RemoteAndLocalMerger(CURRENT_PROJECT_SYNC_INFO.linkedFileId!).sync()
     }
     return savedElement
   }
@@ -60,7 +61,7 @@ export class Section implements ISection {
   public deleteElement = async (element: ISectionElement): Promise<void> => {
     await dbInstances[this.projectId].callDeletor(this.id, { id: element.id }).autoDelete()
     if (SyncManager.canStartSync()) {
-      new SyncManager(CURRENT_PROJECT_SYNC_INFO.linkedFileId!).sync()
+      new RemoteAndLocalMerger(CURRENT_PROJECT_SYNC_INFO.linkedFileId!).sync()
     }
   }
 

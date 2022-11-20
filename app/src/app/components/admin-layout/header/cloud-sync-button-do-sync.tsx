@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from 'react'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { useShortcut } from 'app/components/hooks/use-shortcut'
-import { SyncManager } from 'app/libs/cloud-sync/sync-manager.class'
+import { RemoteAndLocalMerger } from 'app/libs/cloud-sync/remote-and-local-merger.class'
 import { DropboxHelper } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
 import { IS_SYNCING } from 'app/libs/cloud-sync/sync-manager.const'
 
@@ -15,7 +15,7 @@ export const CloudSyncButtonDoSync: React.FC<ICloudSyncButtonDoSyncProps> = memo
   const handleSyncClick = async (e: KeyboardEvent | React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
-    new SyncManager(props.linkedFileId).sync()
+    new RemoteAndLocalMerger(props.linkedFileId).sync()
   }
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export const CloudSyncButtonDoSync: React.FC<ICloudSyncButtonDoSyncProps> = memo
     const checkIfShouldSync = async () => {
       const shouldSync = await DropboxHelper.instance.shouldSync(props.linkedFileId)
       if (shouldSync) {
-        new SyncManager(props.linkedFileId).sync()
+        new RemoteAndLocalMerger(props.linkedFileId).sync()
       }
     }
     checkIfShouldSync()
