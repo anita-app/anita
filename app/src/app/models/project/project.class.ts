@@ -72,11 +72,10 @@ export class Project {
   public getSystemData = (): TSystemData => this.systemData
 
   public updateSystemData = async (systemData: TSystemData): Promise<void> => {
-    this.systemData = systemData
     this.settings = systemData[RESERVED_AUDS_KEYS._settings][0]
     this.sectionsDefinitions = systemData[RESERVED_AUDS_KEYS._sections]
-    await this.saveProject()
-    const systemDataClone = JSON.parse(JSON.stringify(systemData))
+    this.systemData = await this.saveProject()
+    const systemDataClone = JSON.parse(JSON.stringify(this.systemData))
     storeDispatcher(({
       type: REDUX_ACTIONS.setCurrentProject,
       payload: systemDataClone

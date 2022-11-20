@@ -1,7 +1,6 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import { AdditionalInfoForLocalStorage, LocalProjectSettings, IProjectSettings } from 'app/models/project/project.declarations'
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
-import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
 
 /**
  * Saves project's settings in IndexedDB.
@@ -28,27 +27,9 @@ export class SaveProjectSettingsInIndexedDB {
    */
   public async save (): Promise<LocalProjectSettings> {
     this.setProjectSettingsCloneWithAdditionalKeys()
-    this.checkIfLocalStorageIsSetOrGetIt()
     this.doStoreProjectSettings()
 
     return this.copyOfProjectSettings!
-  }
-
-  /**
-   * Checks if `localStorage` is set in the project settings. If not, it gets it from the local storage
-   * `localStorage` could be undefined if the settings are being updated by the remote sync
-   */
-  private async checkIfLocalStorageIsSetOrGetIt (): Promise<void> {
-    if (!this.copyOfProjectSettings!.localStorage) {
-      this.copyOfProjectSettings!.localStorage = await this.getLocalStorage()
-    }
-  }
-
-  /**
-   * Gets the `localStorage` system from the local system db. It is safe to assume that the local storage system is set
-   */
-  private getLocalStorage (): Promise<LOCAL_STORAGE_SYSTEMS> {
-    return dbInstances.system.callSelector<IProjectSettings>(CLIENT_SECTIONS.projects, { id: this.projectSettings.id }).single().then((projectSettings) => projectSettings!.localStorage!)
   }
 
   /**
