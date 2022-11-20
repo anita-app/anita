@@ -1,10 +1,16 @@
 import { CloudSyncBase, SupportedCloud } from 'app/libs/cloud-sync/cloud-sync-base.class'
 import { IDropboxTokens, ISharedFileMeta } from 'app/libs/cloud-sync/cloud-sync.const'
+import { IS_SYNCING } from 'app/libs/cloud-sync/sync-manager.const'
 import { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
-import { Dropbox, DropboxAuth, files } from 'dropbox'
+import { Dropbox, DropboxAuth, DropboxResponse, files } from 'dropbox'
+
+/**
+ * API reference: https://www.dropbox.com/developers/documentation/http/documentation
+ */
 
 export class DropboxHelper extends CloudSyncBase {
   public static instance: DropboxHelper
+  private static contentHashByFileId: { [fileId: string]: string } = {}
 
   public static init (): DropboxHelper {
     DropboxHelper.instance = new DropboxHelper()
@@ -127,11 +133,28 @@ export class DropboxHelper extends CloudSyncBase {
     }
   }
 
+  public async shouldSync (fileId: string): Promise<boolean> {
+    const isCurrentlySyncing: boolean = IS_SYNCING.getValue()
+    if (isCurrentlySyncing) {
+      return false
+    }
+    const contentHash = await this.getFileContentHash(fileId)
+    if (contentHash && DropboxHelper.contentHashByFileId[fileId] !== contentHash) {
+      DropboxHelper.contentHashByFileId[fileId] = contentHash
+      return true
+    }
+    return false
+  }
+
   public async updateFile (fileId: string, contents: TAnitaUniversalDataStorage) {
     if (!this.dbx) {
       await this.authWithTokens()
     }
     await this.dbx!.filesUpload({ path: fileId, contents: JSON.stringify(contents, null, 2), mode: { '.tag': 'overwrite' } })
+    const newContentHash = await this.getFileContentHash(fileId)
+    if (newContentHash) {
+      DropboxHelper.contentHashByFileId[fileId] = newContentHash
+    }
   }
 
   public async isAuthenticated () {
@@ -140,6 +163,16 @@ export class DropboxHelper extends CloudSyncBase {
     }
     await this.authWithTokens()
     return !!this.dbx
+  }
+
+  private async getFileContentHash (fileId: string): Promise<string | undefined> {
+    if (!this.dbx) {
+      await this.authWithTokens()
+    }
+    const response = await this.dbx!.filesGetMetadata({ path: fileId }) as DropboxResponse<files.FileMetadataReference>
+    if (response.result) {
+      return response.result.content_hash
+    }
   }
 
   private setBaseUrl () {

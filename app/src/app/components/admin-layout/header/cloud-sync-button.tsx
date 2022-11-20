@@ -1,19 +1,29 @@
-import React, { useEffect, useState } from 'react'
+import React, { memo, useCallback, useEffect } from 'react'
 import { CloudSyncState } from 'app/libs/cloud-sync/cloud-sync.const'
 import { CloudSyncButtonConnect } from 'app/components/admin-layout/header/cloud-sync-button-connect'
 import { DropboxHelper } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
 import { CloudSyncButtonOpenFilePicker } from 'app/components/admin-layout/header/cloud-sync-button-open-file-picker'
 import { CloudSyncButtonDoSync } from 'app/components/admin-layout/header/cloud-sync-button-do-sync'
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
+import { CURRENT_PROJECT_SYNC_INFO } from 'app/libs/cloud-sync/sync-manager.const'
+import { useMultiState } from 'app/components/hooks/multi-state.hook'
 
 interface ICloudSyncButtonProps {
   projectId: string
   localStorage: LOCAL_STORAGE_SYSTEMS
 }
 
-export const CloudSyncButton: React.FC<ICloudSyncButtonProps> = (props) => {
-  const [cloudSyncState, setCloudSyncState] = useState<CloudSyncState | undefined>(undefined)
-  const [linkedFileId, setLinkedFileId] = useState<string | undefined>(undefined)
+interface ICloudSyncButtonState {
+  cloudSyncState: CloudSyncState | null
+  linkedFileId: string | null
+}
+
+export const CloudSyncButton: React.FC<ICloudSyncButtonProps> = memo(function CloudSyncButton (props: ICloudSyncButtonProps) {
+  const [state, setState] = useMultiState<ICloudSyncButtonState>({
+    cloudSyncState: null,
+    linkedFileId: null
+  })
+
   const projectId = props.projectId
 
   useEffect(() => {
@@ -23,35 +33,51 @@ export const CloudSyncButton: React.FC<ICloudSyncButtonProps> = (props) => {
         return
       }
       if (!isAuthenticated) {
-        return setCloudSyncState(CloudSyncState.NOT_CONNECTED)
+        CURRENT_PROJECT_SYNC_INFO.cloudSyncState = CloudSyncState.NOT_CONNECTED
+        return setState(CURRENT_PROJECT_SYNC_INFO)
       }
       const linkedFileId = await DropboxHelper.instance.getLinkedFileIdOrNull(projectId)
       if (!linkedFileId) {
-        return setCloudSyncState(CloudSyncState.NOT_LINKED)
+        CURRENT_PROJECT_SYNC_INFO.cloudSyncState = CloudSyncState.NOT_LINKED
+        return setState(CURRENT_PROJECT_SYNC_INFO)
       }
-      setCloudSyncState(CloudSyncState.LINKED)
-      setLinkedFileId(linkedFileId)
-    }
-    getCloudSyncState()
-  })
 
-  if (cloudSyncState === undefined || props.localStorage !== LOCAL_STORAGE_SYSTEMS.IndexedDB) {
+      CURRENT_PROJECT_SYNC_INFO.cloudSyncState = CloudSyncState.LINKED
+      CURRENT_PROJECT_SYNC_INFO.linkedFileId = linkedFileId
+      setState(CURRENT_PROJECT_SYNC_INFO)
+    }
+
+    getCloudSyncState()
+
+    return () => {
+      CURRENT_PROJECT_SYNC_INFO.cloudSyncState = CloudSyncState.NOT_CONNECTED
+      CURRENT_PROJECT_SYNC_INFO.linkedFileId = null
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [projectId])
+
+  const setCloudSyncState = useCallback((cloudSyncState: CloudSyncState) => {
+    setState({ cloudSyncState })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  if (!state.cloudSyncState || !state.linkedFileId || props.localStorage !== LOCAL_STORAGE_SYSTEMS.IndexedDB) {
     return null
   }
 
-  if (cloudSyncState === CloudSyncState.NOT_CONNECTED) {
+  if (state.cloudSyncState === CloudSyncState.NOT_CONNECTED) {
     return (
       <CloudSyncButtonConnect setCloudSyncState={setCloudSyncState} />
     )
   }
 
-  if (cloudSyncState === CloudSyncState.NOT_LINKED) {
+  if (state.cloudSyncState === CloudSyncState.NOT_LINKED) {
     return (
       <CloudSyncButtonOpenFilePicker />
     )
   }
 
   return (
-    <CloudSyncButtonDoSync linkedFileId={linkedFileId!} />
+    <CloudSyncButtonDoSync linkedFileId={state.linkedFileId} />
   )
-}
+})

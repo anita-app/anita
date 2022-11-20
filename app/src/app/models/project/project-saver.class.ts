@@ -7,6 +7,8 @@ import { DateTools } from 'app/libs/tools/date-tools.class'
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
+import { SyncManager } from 'app/libs/cloud-sync/sync-manager.class'
+import { CURRENT_PROJECT_SYNC_INFO } from 'app/libs/cloud-sync/sync-manager.const'
 
 export class ProjectSaver {
   private localStorage: LOCAL_STORAGE_SYSTEMS | undefined
@@ -36,6 +38,10 @@ export class ProjectSaver {
     await this.saveSections()
 
     await this.postSaveActions()
+
+    if (SyncManager.canStartSync()) {
+      new SyncManager(CURRENT_PROJECT_SYNC_INFO.linkedFileId!).sync()
+    }
 
     return this.project
   }

@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { useShortcut } from 'app/components/hooks/use-shortcut'
 import { SyncManager } from 'app/libs/cloud-sync/sync-manager.class'
+import { DropboxHelper } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
+import { IS_SYNCING } from 'app/libs/cloud-sync/sync-manager.const'
 
 interface ICloudSyncButtonDoSyncProps {
   linkedFileId: string
 }
 
-export const CloudSyncButtonDoSync: React.FC<ICloudSyncButtonDoSyncProps> = (props) => {
+export const CloudSyncButtonDoSync: React.FC<ICloudSyncButtonDoSyncProps> = memo(function CloudSyncButtonDoSync (props: ICloudSyncButtonDoSyncProps) {
   const [isSyncing, setIsSyncing] = useState(false)
   const handleSyncClick = async (e: KeyboardEvent | React.MouseEvent) => {
     e.preventDefault()
@@ -20,10 +22,25 @@ export const CloudSyncButtonDoSync: React.FC<ICloudSyncButtonDoSyncProps> = (pro
     const updateIsSyncing = (newValue: boolean) => {
       setIsSyncing(newValue)
     }
-    const isSyncingSubscription = SyncManager.isSyncing.subscribe(updateIsSyncing)
+    const isSyncingSubscription = IS_SYNCING.subscribe(updateIsSyncing)
     return () => {
       isSyncingSubscription.unsubscribe()
     }
+  }, [])
+
+  useEffect(() => {
+    const checkIfShouldSync = async () => {
+      const shouldSync = await DropboxHelper.instance.shouldSync(props.linkedFileId)
+      if (shouldSync) {
+        new SyncManager(props.linkedFileId).sync()
+      }
+    }
+    checkIfShouldSync()
+    const interval = setInterval(checkIfShouldSync, 10000)
+    return () => {
+      clearInterval(interval)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useShortcut({ s: { withMetakey: true } }, handleSyncClick)
@@ -38,4 +55,4 @@ export const CloudSyncButtonDoSync: React.FC<ICloudSyncButtonDoSyncProps> = (pro
       onClick={handleSyncClick}
     />
   )
-}
+})

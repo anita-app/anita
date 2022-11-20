@@ -3,26 +3,31 @@ import { Comparator, IComparisonResult } from 'app/models/project/syncing/projec
 import { Manager } from 'app/libs/manager/manager.class'
 import { Project } from 'app/models/project/project.class'
 import { DropboxHelper } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
-import { Subject } from 'rxjs'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
+import { CURRENT_PROJECT_SYNC_INFO, IS_SYNCING } from 'app/libs/cloud-sync/sync-manager.const'
+import { CloudSyncState } from 'app/libs/cloud-sync/cloud-sync.const'
 
 export class SyncManager {
-  public static isSyncing = new Subject<boolean>()
-
   private project: Project
 
   constructor (private remoteId: string) {
     this.project = Manager.getCurrentProject()!
-    SyncManager.isSyncing.next(false)
+    IS_SYNCING.next(false)
   }
 
+  public static canStartSync = (): boolean => (
+    !IS_SYNCING.getValue() &&
+    CURRENT_PROJECT_SYNC_INFO.cloudSyncState === CloudSyncState.LINKED &&
+    !!CURRENT_PROJECT_SYNC_INFO.linkedFileId
+  )
+
   public async sync (): Promise<void> {
-    SyncManager.isSyncing.next(true)
+    IS_SYNCING.next(true)
     const lastSync = await this.getLastSync()
     const localData = await this.getLocalData()
     const remoteData = await this.getRemoteData()
     if (!remoteData) {
-      SyncManager.isSyncing.next(false)
+      IS_SYNCING.next(false)
       return
     }
     const comparisonResult = await this.compare(lastSync, localData, remoteData)
@@ -30,7 +35,7 @@ export class SyncManager {
       await this.saveLocalChanges(comparisonResult)
     }
     await this.sendToRemote(comparisonResult)
-    SyncManager.isSyncing.next(false)
+    IS_SYNCING.next(false)
   }
 
   private async getLastSync (): Promise<string | undefined> {
@@ -104,7 +109,7 @@ export class SyncManager {
 
   private async sendToRemote (comparisonResult: IComparisonResult): Promise<void> {
     if (this.hasScopeChanges('remote', comparisonResult)) {
-      DropboxHelper.instance.updateFile(this.remoteId, comparisonResult.remoteData)
+      await DropboxHelper.instance.updateFile(this.remoteId, comparisonResult.remoteData)
     }
   }
 
