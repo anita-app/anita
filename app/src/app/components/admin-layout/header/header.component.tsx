@@ -1,5 +1,5 @@
 /* eslint-disable eqeqeq */
-import React from 'react'
+import React, { useEffect } from 'react'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
@@ -9,7 +9,7 @@ import { CloudSyncButton } from 'app/components/admin-layout/header/cloud-sync-b
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
 import { LocalFsInfo } from 'app/components/admin-layout/header/local-fs-info'
-import { CURRENT_PROJECT } from 'app/libs/manager/manager.const'
+import { Manager } from 'app/libs/manager/manager.class'
 
 export const AdminLayoutHeader: React.FC = () => {
   const sidebarHideClass = useSelector((store: AnitaStore) => store.layout.sidebar)
@@ -19,9 +19,12 @@ export const AdminLayoutHeader: React.FC = () => {
   }
 
   const localStorage = project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.localStorage!
-  if (localStorage) {
-    CURRENT_PROJECT.store?.syncInfo.setLocalStorage(localStorage)
-  }
+
+  useEffect(() => {
+    if (localStorage) {
+      Manager.getCurrentProject()?.syncInfo.setLocalStorage(localStorage)
+    }
+  }, [localStorage])
 
   return (
     <div className={`bg-white text-gray-700 flex items-center h-14 shadow-md ${project ? 'justify-between' : 'justify-center'}`}>
