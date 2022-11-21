@@ -9,7 +9,7 @@ import { CloudSyncButton } from 'app/components/admin-layout/header/cloud-sync-b
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
 import { LocalFsInfo } from 'app/components/admin-layout/header/local-fs-info'
-import { CURRENT_PROJECT_SYNC_INFO } from 'app/libs/cloud-sync/sync-manager.const'
+import { CURRENT_PROJECT } from 'app/libs/manager/manager.const'
 
 export const AdminLayoutHeader: React.FC = () => {
   const sidebarHideClass = useSelector((store: AnitaStore) => store.layout.sidebar)
@@ -18,7 +18,10 @@ export const AdminLayoutHeader: React.FC = () => {
     storeDispatcher({ type: REDUX_ACTIONS.toggleSidebar })
   }
 
-  CURRENT_PROJECT_SYNC_INFO.localStorage = project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.localStorage!
+  const localStorage = project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.localStorage!
+  if (localStorage) {
+    CURRENT_PROJECT.store?.syncInfo.setLocalStorage(localStorage)
+  }
 
   return (
     <div className={`bg-white text-gray-700 flex items-center h-14 shadow-md ${project ? 'justify-between' : 'justify-center'}`}>
@@ -41,8 +44,8 @@ export const AdminLayoutHeader: React.FC = () => {
 
       {project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.id && (
         <div className="ml-auto">
-          {CURRENT_PROJECT_SYNC_INFO.localStorage == LOCAL_STORAGE_SYSTEMS.IndexedDB && (<CloudSyncButton projectId={project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.id} />)}
-          {CURRENT_PROJECT_SYNC_INFO.localStorage == LOCAL_STORAGE_SYSTEMS.json && (<LocalFsInfo />)}
+          {localStorage == LOCAL_STORAGE_SYSTEMS.IndexedDB && (<CloudSyncButton projectId={project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.id} />)}
+          {localStorage == LOCAL_STORAGE_SYSTEMS.json && (<LocalFsInfo />)}
         </div>
       )}
 

@@ -12,10 +12,9 @@ import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api'
 import { ProjectDataImporter } from 'app/libs/projects-helpers/project-importers/project-data-importer.class'
 import { ProjectsListLoader } from 'app/libs/projects-helpers/projects-handlers/projects-list-loader.class'
+import { CURRENT_PROJECT } from 'app/libs/manager/manager.const'
 
 export class Manager {
-  private static currentProject: Project
-
   /**
    * Loads the projects from IndexedDB and adds them to the current state
    */
@@ -36,7 +35,7 @@ export class Manager {
       [RESERVED_AUDS_KEYS._settings]: [{ ...systemData[RESERVED_AUDS_KEYS._settings][0] }],
       [RESERVED_AUDS_KEYS._sections]: [...systemData[RESERVED_AUDS_KEYS._sections]]
     }
-    this.currentProject = new Project(systemDataClone)
+    CURRENT_PROJECT.store = new Project(systemDataClone)
     storeDispatcher(({
       type: REDUX_ACTIONS.setCurrentProject,
       payload: systemDataClone
@@ -44,15 +43,15 @@ export class Manager {
   }
 
   public static getCurrentProject (): Project | undefined {
-    if (!this.currentProject) {
+    if (!CURRENT_PROJECT.store) {
       this.loadCurrentProjectFromStore()
     }
-    return this.currentProject
+    return CURRENT_PROJECT.store
   }
 
   public static getProjectById = async (projectId: string | undefined, initialize: boolean = false): Promise<Project | undefined> => {
     if (projectId && await this.isProjectLoaded(projectId)) {
-      return this.currentProject
+      return CURRENT_PROJECT.store
     }
     if (initialize) {
       return new Project({ [RESERVED_AUDS_KEYS._settings]: [{ id: projectId } as IProjectSettings], [RESERVED_AUDS_KEYS._sections]: [] })
@@ -68,7 +67,7 @@ export class Manager {
   private static loadCurrentProjectFromStore () {
     const projectInStore = store.getState().project
     if (projectInStore) {
-      this.currentProject = new Project(projectInStore)
+      CURRENT_PROJECT.store = new Project(projectInStore)
     }
   }
 
