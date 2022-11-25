@@ -4,6 +4,16 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.18.4",
+      "date": "2022-11-25",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "redirect uri"
+        }
+      ]
+    },
+    {
       "version": "0.18.3",
       "date": "2022-11-25",
       "items": [
