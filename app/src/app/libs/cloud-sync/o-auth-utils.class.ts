@@ -8,8 +8,9 @@ export class OAuthUtils {
       window.location.hash = `${ANITA_URLS.auth}/${UNIQUE_DATA_SEPARATOR}${hashData}`
     }
     if (window.location.href.includes('?code=')) {
+      const base = window.location.href.includes('localhost') ? '/' : '/app/'
       const hashData = window.location.href.split('?code=')[1].split('#')[0]
-      window.location.href = `/#${ANITA_URLS.auth}/${UNIQUE_DATA_SEPARATOR}code=${hashData}`
+      window.location.href = `${base}#${ANITA_URLS.auth}/${UNIQUE_DATA_SEPARATOR}code=${hashData}`
     }
   }
 

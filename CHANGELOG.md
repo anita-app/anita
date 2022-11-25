@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.18.5] - 2022-11-25
+### Fixed
+- internal redirect.
+
 ## [0.18.4] - 2022-11-25
 ### Fixed
 - redirect uri.
