@@ -28,6 +28,8 @@ export const CloudSyncButton: React.FC<ICloudSyncButtonProps> = memo(function Cl
     const getCloudSyncState = async () => {
       const currentProject = Manager.getCurrentProject()
       const isAuthenticated = await DropboxHelper.instance.isAuthenticated()
+      console.log('getCloudSyncState ~ isAuthenticated', isAuthenticated)
+      console.log('getCloudSyncState ~ projectId', projectId)
       if (!projectId) {
         return
       }
@@ -59,9 +61,9 @@ export const CloudSyncButton: React.FC<ICloudSyncButtonProps> = memo(function Cl
   const setCloudSyncState = useCallback((cloudSyncState: CloudSyncState) => {
     setState({ cloudSyncState })
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [projectId])
 
-  if (!state.cloudSyncState || !state.linkedFileId) {
+  if (!state.cloudSyncState) {
     return null
   }
 
@@ -75,6 +77,10 @@ export const CloudSyncButton: React.FC<ICloudSyncButtonProps> = memo(function Cl
     return (
       <CloudSyncButtonOpenFilePicker />
     )
+  }
+
+  if (!state.linkedFileId) {
+    return null
   }
 
   return (
