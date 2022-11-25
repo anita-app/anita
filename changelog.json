@@ -4,6 +4,16 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.18.2",
+      "date": "2022-11-25",
+      "items": [
+        {
+          "type": "added",
+          "value": "styles for lists"
+        }
+      ]
+    },
+    {
       "version": "0.18.1",
       "date": "2022-11-25",
       "items": [

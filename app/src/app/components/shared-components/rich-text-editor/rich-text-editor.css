@@ -21,6 +21,20 @@
   margin: 0;
 }
 
+#rich-text-editor ul {
+  list-style-type: disc;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-left: 32px;
+}
+
+#rich-text-editor ol {
+  list-style-type: decimal;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-left: 32px;
+}
+
 #rich-text-editor pre {
   padding: 10px;
   background-color: #eee;
