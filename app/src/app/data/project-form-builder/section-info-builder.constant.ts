@@ -16,7 +16,16 @@ export const sectionDetailsFormFieldsModel: Array<FormFieldsModel<SectionDetails
     type: TextInputSupportedTypes.text,
     label: 'Title',
     required: true,
-    width: '9'
+    width: '6'
+  },
+  {
+    componentCode: FORM_COMPONENTS_CODES.basicInput,
+    fieldName: 'title_short',
+    type: TextInputSupportedTypes.text,
+    value: '',
+    label: 'Abbreviation',
+    width: '3',
+    labelHint: 'Used in the menu, if set.'
   },
   {
     componentCode: FORM_COMPONENTS_CODES.basicSelect,

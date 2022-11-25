@@ -11,6 +11,7 @@ import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-au
 export interface SectionDetailsDeclaration {
   id: string
   title: string
+  title_short?: string
   icon?: TIconName
   childOf?: Array<string>
   [RESERVED_FIELDS.createdAt]?: never

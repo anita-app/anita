@@ -70,14 +70,14 @@ export const AdminLayoutSidebarMenuItem: React.FC<IAdminLayoutSidebarMenuItemPro
     >
       <div className="flex items-center justify-between w-full">
         <div className="flex items-center">
-          {Icons.render(Manager.getCurrentProject()?.getSectionById(props.section.id)?.getSectionIcon() || 'chevronForwardOutline')}<span className="ml-2">{props.section.title}</span>
+          {Icons.render(Manager.getCurrentProject()?.getSectionById(props.section.id)?.getSectionIcon() || 'chevronForwardOutline')}<span className="ml-2">{props.section.title_short || props.section.title}</span>
         </div>
         {props.isEditingMenuItemsVisibility && (
           <>
             <button className="flex items-center" onClick={handleVisibilityClick} data-tip={true} data-for={`menuItem${props.section.id}`}>
               {Icons.render(icon, 'text-gray-400')}
             </button>
-            <ReactTooltip id={`menuItem${props.section.id}`} effect="solid" place='right'>
+            <ReactTooltip id={`menuItem${props.section.id}`} effect="solid" place="right">
               {tooltip}
             </ReactTooltip>
           </>

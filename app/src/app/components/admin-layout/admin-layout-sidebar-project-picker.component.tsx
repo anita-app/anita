@@ -52,6 +52,11 @@ export const AdminLayoutSidebarProjectPicker: React.FC<IProjectPickerProps> = ({
     navigate(urlParamFiller(ANITA_URLS.projectEdit, [{ name: URL_PARAMS.projectId, value: projectId }]))
   }
 
+  const goToPlainRoute = (route: string) => {
+    closeDropdown()
+    navigate(route)
+  }
+
   return (
     <div className="block py-2.5 px-1">
       <p className="text-xs text-gray-400" style={{ fontVariant: 'small-caps' }}>project</p>
@@ -87,11 +92,11 @@ export const AdminLayoutSidebarProjectPicker: React.FC<IProjectPickerProps> = ({
                 <button key={projectFromList.id} className="w-full block text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => loadProject(projectFromList.id)}>{projectFromList.title}</button>)
             })}
             <div className="block py-2.5 px-4 text-sm bg-gray-100 text-gray-600">Actions</div>
-            <button className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => navigate(ANITA_URLS.projectsList)}>
+            <button className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => goToPlainRoute(ANITA_URLS.projectsList)}>
               {Icons.render('fileTrayStackedOutline', 'mr-2')}
               Go to the projects list
             </button>
-            <button className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => navigate(ANITA_URLS.projectAdd)}>
+            <button className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => goToPlainRoute(ANITA_URLS.projectAdd)}>
               {Icons.render('addOutline', 'mr-2')}
               Create a new project
             </button>

@@ -4,6 +4,34 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.18.0",
+      "date": "2022-11-25",
+      "items": [
+        {
+          "type": "added",
+          "value": "cloud ync with dropbox (experimental)"
+        },
+        {
+          "type": "added",
+          "value": "support for rich text"
+        }
+      ]
+    },
+    {
+      "version": "0.17.0",
+      "date": "2022-10-09",
+      "items": [
+        {
+          "type": "added",
+          "value": "add fields from list view"
+        },
+        {
+          "type": "added",
+          "value": "section name abbreviation for menu"
+        }
+      ]
+    },
+    {
       "version": "0.16.5",
       "date": "2022-09-28",
       "items": [

@@ -13,6 +13,7 @@ import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { Subject } from 'rxjs'
+import { SyncManager } from 'app/libs/cloud-sync/sync-manager.class'
 
 export class Section implements ISection {
   public id: string
@@ -46,9 +47,16 @@ export class Section implements ISection {
 
   public getElementById = (id: string): Promise<ISectionElement | void> => dbInstances[this.projectId].callSelector<ISectionElement>(this.id, { [RESERVED_FIELDS.id]: id }).single()
 
-  public saveElement = async (element: ISectionElement): Promise<ISectionElement> => {
-    const mode = element.id ? EDITOR_MODE.edit : EDITOR_MODE.add
-    return new SectionElementSaver(this.projectId, this.id, element, mode).save()
+  public saveElement = async (element: ISectionElement, forceMode?: EDITOR_MODE): Promise<ISectionElement> => {
+    const mode = forceMode || (element.id ? EDITOR_MODE.edit : EDITOR_MODE.add)
+    const savedElement = await new SectionElementSaver(this.projectId, this.id, element, mode).save()
+    SyncManager.syncWithRemoteIfSet()
+    return savedElement
+  }
+
+  public deleteElement = async (element: ISectionElement): Promise<void> => {
+    await dbInstances[this.projectId].callDeletor(this.id, { id: element.id }).autoDelete()
+    SyncManager.syncWithRemoteIfSet()
   }
 
   public getFirstUserDefinedField (): FormFieldsModel<TSupportedFormsTypes> | undefined {

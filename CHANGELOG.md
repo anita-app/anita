@@ -7,6 +7,16 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.18.0] - 2022-11-25
+### Added
+- cloud ync with dropbox (experimental).
+- support for rich text.
+
+## [0.17.0] - 2022-10-09
+### Added
+- add fields from list view.
+- section name abbreviation for menu.
+
 ## [0.16.5] - 2022-09-28
 ### Added
 - link to new article on landing page.

@@ -8,12 +8,12 @@ import { useValidators } from 'app/components/shared-components/forms-automator/
 import uniqueId from 'lodash/uniqueId'
 import React, { memo, useRef, useState } from 'react'
 
-export const BasicInput: React.FC<ICommonFormEleProps> = memo(function BasicInput ({ formEle, element, handleChange }: ICommonFormEleProps) {
+export const BasicInput: React.FC<ICommonFormEleProps> = memo(function BasicInput ({ formEle, element, handleChange, forceFullWidth }: ICommonFormEleProps) {
   const [touched, setTouched] = useState(false)
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))
   const [isValid, setIsValidForField] = useValidators(fieldId)
 
-  const width = formEle.width ? calcWidth(formEle.width) : 'w-full'
+  const width = formEle.width && !forceFullWidth ? calcWidth(formEle.width) : 'w-full'
 
   if (element[formEle.fieldName] === undefined || element[formEle.fieldName] === null) {
     element[formEle.fieldName] = ''
@@ -21,7 +21,7 @@ export const BasicInput: React.FC<ICommonFormEleProps> = memo(function BasicInpu
 
   return (
     <FormEleContainer width={width}>
-      <FormElementLabel label={formEle.label!} />
+      <FormElementLabel label={formEle.label!} labelHint={formEle.labelHint} />
       <input
         key={formEle.fieldName}
         name={formEle.fieldName}

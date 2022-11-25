@@ -5,25 +5,27 @@ import { RequiredField } from 'app/components/shared-components/forms-automator/
 import { TelephoneNumber } from 'app/components/shared-components/forms-automator/form-validation/validators/telephone-number.component'
 import { UrlFormat } from 'app/components/shared-components/forms-automator/form-validation/validators/url-format.component'
 import { TextInputSupportedTypes } from 'app/components/shared-components/forms-automator/input-supported-types.const'
-import React, { memo, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 
 export const ValidatorsContainer: React.FC<IValidatorsConatinerProps> = memo(function ValidatorsContainer (props: IValidatorsConatinerProps) {
   const validators = []
-  const setFieldValidatorsState = useState<IValidatorsState>({})[1]
+  const [fieldValidatorsState, setFieldValidatorsState] = useState<IValidatorsState>({})
 
   const updateValidatorState = (validatorName: SUPPORTED_VALIDATORS, isValid: boolean) => {
     setFieldValidatorsState(currentValue => {
-      if (currentValue[validatorName] === isValid) {
+      if (currentValue[validatorName] && currentValue[validatorName] === isValid) {
         return currentValue
       }
-
       const newValue: IValidatorsState = { ...currentValue, [validatorName]: isValid }
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const allValid = Object.keys(newValue).every(key => newValue[key as unknown as keyof IValidatorsState])
-      props.setIsValidForField(allValid)
       return newValue
     })
   }
+
+  useEffect(() => {
+    const allValid = Object.keys(fieldValidatorsState).every(key => fieldValidatorsState[key as unknown as keyof IValidatorsState])
+    props.setIsValidForField(allValid)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fieldValidatorsState])
 
   if (props.formEle.required) {
     validators.push(<RequiredField key="required-validator" updateValidatorState={updateValidatorState} {...props} />)

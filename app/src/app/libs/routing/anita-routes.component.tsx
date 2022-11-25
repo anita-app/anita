@@ -8,9 +8,11 @@ import { AddEditProject } from 'app/components/projects/add-edit-project.compone
 import { ProjectsNone } from 'app/components/projects/no-projects.component'
 import { ProjectsList } from 'app/components/projects/projects-list.component'
 import { Navigate, Route, Routes } from 'react-router-dom'
+import { OAuth } from 'app/components/auth/o-auth.component'
 
 export const AnitaRoutes = () => (
   <Routes>
+    <Route path={`${ANITA_URLS.auth}/*`} element={<OAuth />} />
     <Route path={ANITA_URLS.projectsList} element={<ProjectsList />} />
     <Route path={ANITA_URLS.projectAdd} element={<AddEditProject />} />
     <Route path={ANITA_URLS.projectEdit} element={<AddEditProject />} />

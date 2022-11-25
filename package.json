@@ -1,6 +1,6 @@
 {
   "name": "anita-manager",
-  "version": "0.16.5",
+  "version": "0.18.0",
   "scripts": {
     "eslint": "eslint \"app/src/**/*.?(ts|tsx)\" --fix",
     "licenses-landing": "cd landing && npm run licenses",

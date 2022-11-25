@@ -3,7 +3,6 @@ import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
 import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const'
 import { IProjectSettings, RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
 import { Manager } from 'app/libs/manager/manager.class'
-import { ProjectsListLoader } from 'app/libs/projects-helpers/projects-handlers/projects-list-loader.class'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
@@ -30,7 +29,7 @@ export const FormProjectManager: React.FC = () => {
 
   const handleClickSave = async () => {
     const systemData = await Manager.saveProject(project as TSystemData, mode)
-    await new ProjectsListLoader().load()
+    await Manager.loadProjectsList()
     Manager.setCurrentProject(systemData)
     navigate(urlParamFiller(ANITA_URLS.projectDetails, [{ name: URL_PARAMS.projectId, value: project[RESERVED_AUDS_KEYS._settings]![0].id }]))
   }

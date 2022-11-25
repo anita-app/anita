@@ -28,7 +28,7 @@ export const ExportButton: React.FC = () => (
     label="Export"
     labelClassName="hidden lg:inline-block"
     tooltip="Export"
-    tooltipClassName='lg:hidden'
+    tooltipClassName="lg:hidden"
     chevronClassName="hidden lg:inline-block"
     icon="cloudDownloadOutline"
     iconClassName="lg:hidden"

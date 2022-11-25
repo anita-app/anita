@@ -1,9 +1,15 @@
-import React from 'react'
+/* eslint-disable eqeqeq */
+import React, { useEffect } from 'react'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { CloudSyncButton } from 'app/components/admin-layout/header/cloud-sync-button'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
+import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
+import { LocalFsInfo } from 'app/components/admin-layout/header/local-fs-info'
+import { Manager } from 'app/libs/manager/manager.class'
 
 export const AdminLayoutHeader: React.FC = () => {
   const sidebarHideClass = useSelector((store: AnitaStore) => store.layout.sidebar)
@@ -12,8 +18,16 @@ export const AdminLayoutHeader: React.FC = () => {
     storeDispatcher({ type: REDUX_ACTIONS.toggleSidebar })
   }
 
+  const localStorage = project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.localStorage!
+
+  useEffect(() => {
+    if (localStorage) {
+      Manager.getCurrentProject()?.syncInfo.setLocalStorage(localStorage)
+    }
+  }, [localStorage])
+
   return (
-    <div className={`bg-white text-gray-700 flex h-14 shadow-md ${project ? 'justify-between' : 'justify-center'}`}>
+    <div className={`bg-white text-gray-700 flex items-center h-14 shadow-md ${project ? 'justify-between' : 'justify-center'}`}>
       {!!project && (
         <button className="mobile-menu-button p-4 focus:outline-none  md:hidden" onClick={handleClickSidebar}>
           <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -30,6 +44,13 @@ export const AdminLayoutHeader: React.FC = () => {
           <span className="text-md font-bold leading-relaxed uppercase">Anita</span><sup style={{ fontVariant: 'small-caps' }}>Beta</sup>
         </Link>
       </div>
+
+      {project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.id && (
+        <div className="ml-auto">
+          {localStorage == LOCAL_STORAGE_SYSTEMS.IndexedDB && (<CloudSyncButton projectId={project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.id} />)}
+          {localStorage == LOCAL_STORAGE_SYSTEMS.json && (<LocalFsInfo />)}
+        </div>
+      )}
 
       {sidebarHideClass === '' && (<div onClick={handleClickSidebar} className="absolute inset-0 h-full w-full z-10 md:hidden"></div>)}
 

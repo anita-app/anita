@@ -8,12 +8,13 @@ import { Tab } from '@headlessui/react'
 import { ProjectSectionListGrid } from 'app/components/project/section/list/grid/grid'
 import { SupportedViews } from 'app/models/section/view-settings.const'
 import { Section } from 'app/models/section/section.class'
-import { ListTabsHeaderRight } from 'app/components/project/section/list/list-tabs-header-right.component'
 import { ProjectSectionListTableContainer } from 'app/components/project/section/list/table/table-container.component'
+import { ListTabsHeaderRight } from 'app/components/project/section/list/tabs/header-right.component'
 
 interface IProjectSectionListTabsProps {
   sectionId: string
   projectId: string
+  projectUpdatedAt: string
   section: Section
   sectionData: Array<ISectionElement>
   activeTab: SupportedViews
@@ -46,5 +47,6 @@ export const ProjectSectionListTabs: React.FC<IProjectSectionListTabsProps> = me
   )
 }, (prevProps, nextProps) => (
   prevProps.sectionData === nextProps.sectionData &&
-  prevProps.activeTab === nextProps.activeTab
+  prevProps.activeTab === nextProps.activeTab &&
+  prevProps.projectUpdatedAt === nextProps.projectUpdatedAt
 ))

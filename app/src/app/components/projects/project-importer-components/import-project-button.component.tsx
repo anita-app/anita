@@ -26,9 +26,7 @@ export const ImportProjectButton: React.FC<IImportProjectButtonProps> = (props) 
 
   const handleClickImport = async () => {
     const projectSettings = store.getState().formElement.element as IProjectSettings
-    console.log('handleClickImport ~ projectSettings', projectSettings)
     projectData.current![RESERVED_AUDS_KEYS._settings][0] = projectSettings
-    console.log('handleClickImport ~ projectData', projectData)
     await Manager.importProject(projectData.current!, projectFileHandle.current)
     Manager.setCurrentProject(projectData.current!)
     navigate(ANITA_URLS.projectsList)
@@ -41,7 +39,6 @@ export const ImportProjectButton: React.FC<IImportProjectButtonProps> = (props) 
       return
     }
 
-    console.log('handleClickModal ~ project', JSON.stringify(project[RESERVED_AUDS_KEYS._settings][0]))
     projectData.current = project
     projectFileHandle.current = fileHandle
 

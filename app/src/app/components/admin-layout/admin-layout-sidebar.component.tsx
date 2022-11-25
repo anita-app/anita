@@ -17,7 +17,7 @@ export const AdminLayoutSidebar: React.FC = memo(function Sidebar () {
 
   return (
     <div className="py-5 z-10">
-      <div className={`${toggledClass} sidebar h-full bg-white shadow rounded-sm text-prussian-blue-500 w-64 space-y-6 pt-1 pb-7 px-2 absolute inset-y-0 left-0 transform md:relative md:translate-x-0 transition duration-200 ease-in-out`}>
+      <div className={`${toggledClass} sidebar h-full bg-white shadow rounded-sm text-prussian-blue-500 w-64 space-y-6 pt-1 pb-7 px-2 absolute inset-y-0 left-0 md:relative md:translate-x-0 transform transition duration-200 ease-in-out`}>
         <nav>
           <AdminLayoutSidebarEditMenuButton
             isEditingMenuItemsVisibility={isEditingMenuItemsVisibility}

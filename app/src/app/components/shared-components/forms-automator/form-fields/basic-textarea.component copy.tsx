@@ -20,7 +20,7 @@ export const BasicTextarea: React.FC<ICommonFormEleProps> = memo(function BasicT
 
   return (
     <FormEleContainer width={width}>
-      <FormElementLabel label={formEle.label!} />
+      <FormElementLabel label={formEle.label!} labelHint={formEle.labelHint} />
       <textarea
         name={formEle.fieldName}
         className={`w-full ${!isValid && touched ? FORM_ELEMENTS_CSS_CLASSES_ERR : FORM_ELEMENTS_CSS_CLASSES}`}

@@ -120,8 +120,9 @@ export class FsHelper {
     try {
       // For Chrome 83 and later.
       // Create a FileSystemWritableFileStream to write to.
-      const writable = await fileHandle.createWritable()
+      const writable = await fileHandle.createWritable({ keepExistingData: true })
       // Write the contents of the file to the stream.
+      writable.truncate(0)
       await writable.write(contents)
       // Close the file and write the contents to disk.
       await writable.close()

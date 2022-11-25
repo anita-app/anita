@@ -13,6 +13,8 @@ export enum URL_PARAMS {
  * @remarks We can't use the enum approach here because we need to concat strings.
  */
 export const ANITA_URLS = {
+  // OAUTH
+  auth: '/auth',
   // PROJECTS
   projectsNone: '/projects/none',
   projectsList: '/projects/list',

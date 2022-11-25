@@ -4,16 +4,22 @@ import { Manager } from 'app/libs/manager/manager.class'
 import { Loader } from 'app/components/shared-components/loader/loader.component'
 import React, { useEffect, useState } from 'react'
 import { Navigate, useParams } from 'react-router'
+import { useSelector } from 'react-redux'
+import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { ProjectDetailsCard } from './details-card'
 
 export const ProjectDetails: React.FC = () => {
   const urlParams = useParams()
   const projectId = urlParams[URL_PARAMS.projectId]
   const [project, setElement] = useState<IProjectSettings | undefined | null>(null)
+  const projects = useSelector((state: AnitaStore) => state.projects)
+
+  // TODO - implement logic with obserbvable with section ids and elements changed, and then provider and hooks to check for id change
+  const projectFromList = projects?.find((project) => project.id === projectId)
+  const projectFromListLastUpdate = projectFromList?.updatedAt
 
   useEffect(() => {
     let isMounted = true
-
     const loadProject = async () => {
       const project = await Manager.getProjectById(projectId)
 
@@ -29,7 +35,7 @@ export const ProjectDetails: React.FC = () => {
     return () => {
       isMounted = false
     }
-  }, [projectId])
+  }, [projectId, projectFromListLastUpdate])
 
   // If there is no DB instance loaded, for now we just redirect to the project list
   if (project === undefined) {
