@@ -5,9 +5,6 @@ import { Manager } from 'app/libs/manager/manager.class'
 
 export class SyncManager {
   public static syncWithRemoteIfSet = async (): Promise<void> => {
-    console.log('syncWithRemoteIfSet= ~ SyncManager.canStartSyncWithRemote()', SyncManager.canStartSyncWithRemote())
-    console.log('Manager.getCurrentProject()?.syncInfo.getCloudSyncState()', Manager.getCurrentProject()?.syncInfo.getCloudSyncState())
-    console.log('Manager.getCurrentProject()?.syncInfo.getLinkedFileId()', Manager.getCurrentProject()?.syncInfo.getLinkedFileId())
     if (SyncManager.canStartSyncWithRemote()) {
       new RemoteAndLocalMerger(Manager.getCurrentProject()?.syncInfo.getLinkedFileId()!).sync()
     }

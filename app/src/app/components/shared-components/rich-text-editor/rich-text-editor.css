@@ -1,0 +1,87 @@
+#rich-text-editor textarea {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.4;
+  background: #eee;
+}
+
+#rich-text-editor h1 {
+  font-size: 2.0em;
+  font-weight: 700;
+  margin: 0.67em 0;
+}
+
+#rich-text-editor h2 {
+  font-size: 1.5em;
+  font-weight: 700;
+  margin: 0.83em 0;
+}
+
+
+#rich-text-editor p {
+  margin: 0;
+}
+
+#rich-text-editor pre {
+  padding: 10px;
+  background-color: #eee;
+  white-space: pre-wrap;
+}
+
+#rich-text-editor :not(pre) > code {
+  font-family: monospace;
+  background-color: #eee;
+  padding: 3px;
+}
+
+#rich-text-editor img {
+  max-width: 100%;
+  max-height: 20em;
+}
+
+#rich-text-editor blockquote {
+  border-left: 2px solid #ddd;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 10px;
+  color: #aaa;
+  font-style: italic;
+}
+
+#rich-text-editor blockquote[dir='rtl'] {
+  border-left: none;
+  padding-left: 0;
+  padding-right: 10px;
+  border-right: 2px solid #ddd;
+}
+
+#rich-text-editor table {
+  border-collapse: collapse;
+}
+
+#rich-text-editor td {
+  padding: 10px;
+  border: 2px solid #ddd;
+}
+
+#rich-text-editor input {
+  box-sizing: border-box;
+  font-size: 0.85em;
+  width: 100%;
+  padding: 0.5em;
+  border: 2px solid #ddd;
+  background: #fafafa;
+}
+
+#rich-text-editor input:focus {
+  outline: 0;
+  border-color: blue;
+}
+
+#rich-text-editor iframe {
+  width: 100%;
+  border: 1px solid #eee;
+}
+
+[data-slate-editor] > * + * {
+  margin-top: 1em;
+}

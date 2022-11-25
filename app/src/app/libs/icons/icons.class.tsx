@@ -6,7 +6,20 @@ import { TextTools } from 'app/libs/tools/text-tools.class'
 import { Logger } from 'app/libs/logger/logger.class'
 
 const svgIcons = {
-  table: `${process.env.PUBLIC_URL}/assets/icons/svg/table.svg`
+  table: `${process.env.PUBLIC_URL}/assets/icons/svg/table.svg`,
+  format_bold: `${process.env.PUBLIC_URL}/assets/icons/svg/format_bold.svg`,
+  format_italic: `${process.env.PUBLIC_URL}/assets/icons/svg/format_italic.svg`,
+  format_underlined: `${process.env.PUBLIC_URL}/assets/icons/svg/format_underlined.svg`,
+  format_code: `${process.env.PUBLIC_URL}/assets/icons/svg/format_code.svg`,
+  format_looks_one: `${process.env.PUBLIC_URL}/assets/icons/svg/format_looks_one.svg`,
+  format_looks_two: `${process.env.PUBLIC_URL}/assets/icons/svg/format_looks_two.svg`,
+  format_quote: `${process.env.PUBLIC_URL}/assets/icons/svg/format_quote.svg`,
+  format_list_numbered: `${process.env.PUBLIC_URL}/assets/icons/svg/format_list_numbered.svg`,
+  format_list_bulleted: `${process.env.PUBLIC_URL}/assets/icons/svg/format_list_bulleted.svg`,
+  format_align_left: `${process.env.PUBLIC_URL}/assets/icons/svg/format_align_left.svg`,
+  format_align_center: `${process.env.PUBLIC_URL}/assets/icons/svg/format_align_center.svg`,
+  format_align_right: `${process.env.PUBLIC_URL}/assets/icons/svg/format_align_right.svg`,
+  format_align_justify: `${process.env.PUBLIC_URL}/assets/icons/svg/format_align_justify.svg`
 }
 
 type TSVGIcons = keyof typeof svgIcons

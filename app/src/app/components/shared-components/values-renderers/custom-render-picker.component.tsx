@@ -14,6 +14,7 @@ import { Week } from 'app/components/shared-components/values-renderers/week.com
 import { FormFieldsModel, TFormFieldWithOptions, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
 import { DateInputSupportedTypes, DateTimeInputSupportedTypes, TextInputSupportedTypes } from 'app/components/shared-components/forms-automator/input-supported-types.const'
+import { RichText } from 'app/components/shared-components/values-renderers/rich-text.component'
 
 const handleInputType = (type: TextInputSupportedTypes | DateInputSupportedTypes | DateTimeInputSupportedTypes | undefined) => {
   switch (type) {
@@ -67,6 +68,8 @@ export const customRenderPicker = (formModel: FormFieldsModel<TSupportedFormsTyp
       return handleDateType(formModel.type)
     case FORM_COMPONENTS_CODES.dateTimePicker:
       return handleDateTimeType(formModel.type)
+    case FORM_COMPONENTS_CODES.richText:
+      return RichText
     case FORM_COMPONENTS_CODES.basicTextarea:
       return BasicText
     case FORM_COMPONENTS_CODES.basicSelect:

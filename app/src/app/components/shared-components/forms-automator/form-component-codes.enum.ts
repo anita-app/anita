@@ -8,7 +8,7 @@ import { IOptionKeysModel } from 'app/components/shared-components/forms-automat
  */
 export enum FORM_COMPONENTS_CODES {
   basicInput = 1,
-  basicTextarea = 2,
+  richText = 2,
   basicCheckbox = 3,
   basicSelect = 4,
   basicRadio = 5,
@@ -17,7 +17,8 @@ export enum FORM_COMPONENTS_CODES {
   datePicker = 8,
   dateTimePicker = 9,
   childOfSelectorForSection = 10,
-  parentsSelector = 11
+  parentsSelector = 11,
+  basicTextarea = 12
 }
 
 /**
@@ -29,7 +30,7 @@ export const SELECTABLE_FORM_ELES: Array<IOptionKeysModel> = [
     label: 'Short text'
   },
   {
-    value: FORM_COMPONENTS_CODES.basicTextarea,
+    value: FORM_COMPONENTS_CODES.richText,
     label: 'Long text'
   },
   {

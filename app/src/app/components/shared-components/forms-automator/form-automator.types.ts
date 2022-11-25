@@ -5,7 +5,7 @@ import { TextInputSupportedTypes } from 'app/components/shared-components/forms-
 import { TIconName } from 'app/libs/icons/icons.class'
 import { ISectionCustomFieldProperties, SectionDetailsDeclaration } from 'app/models/section/section.declarations'
 
-export type FormFieldsModel<T extends TSupportedFormsTypes = TSupportedFormsTypes> = IBasicInput<T> | IBasicCheckbox<T> | IBasicSelect<T> | IBasicRadio<T> | IBasicTextarea<T> | IHiddenInput<T> | IOptionsMaker<T> | IDatePicker<T> | IDateTimePicker<T>;
+export type FormFieldsModel<T extends TSupportedFormsTypes = TSupportedFormsTypes> = IBasicInput<T> | IBasicCheckbox<T> | IBasicSelect<T> | IBasicRadio<T> | IRichText<T> | IBasicTextarea<T> | IHiddenInput<T> | IOptionsMaker<T> | IDatePicker<T> | IDateTimePicker<T>;
 
 export type TFormFieldWithOptions<T extends TSupportedFormsTypes = TSupportedFormsTypes> = FormFieldsModel<T> & { options: Array<IOptionKeysModel> };
 
@@ -41,6 +41,12 @@ interface IHiddenInput<T> extends ICommonTypes<T> {
 interface IBasicInput<T> extends ICommonTypes<T> {
   componentCode: FORM_COMPONENTS_CODES.basicInput
   type: TextInputSupportedTypes
+  value?: string
+  required?: boolean
+}
+
+interface IRichText<T> extends ICommonTypes<T> {
+  componentCode: FORM_COMPONENTS_CODES.richText
   value?: string
   required?: boolean
 }
