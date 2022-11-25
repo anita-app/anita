@@ -4,6 +4,16 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.18.3",
+      "date": "2022-11-25",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "header buttons positioning and visibility"
+        }
+      ]
+    },
+    {
       "version": "0.18.2",
       "date": "2022-11-25",
       "items": [

@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.18.3] - 2022-11-25
+### Fixed
+- header buttons positioning and visibility.
+
 ## [0.18.2] - 2022-11-25
 ### Added
 - styles for lists.
