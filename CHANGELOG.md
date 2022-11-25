@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.18.1] - 2022-11-25
+### Fixed
+- conflict.
+
 ## [0.18.0] - 2022-11-25
 ### Added
 - cloud ync with dropbox (experimental).
