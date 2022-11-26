@@ -7,6 +7,13 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.18.6] - 2022-11-26
+### Changed
+- sync icon.
+
+### Removed
+- unused DB plugin.
+
 ## [0.18.5] - 2022-11-25
 ### Fixed
 - internal redirect.

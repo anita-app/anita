@@ -52,7 +52,8 @@ export const CloudSyncButtonDoSync: React.FC<ICloudSyncButtonDoSyncProps> = memo
       breakpoint="md"
       tooltip={isSyncing ? 'Syncing with Dropbox' : 'Sync with Dropbox'}
       type={Type.transparent}
-      iconLeft={isSyncing ? 'sync' : 'cloudyOutline'}
+      iconLeft="sync"
+      iconLeftClassName={isSyncing ? 'animate-spin' : ''}
       onClick={handleSyncClick}
     />
   )
