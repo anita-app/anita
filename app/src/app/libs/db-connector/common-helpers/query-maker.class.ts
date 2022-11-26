@@ -2,7 +2,6 @@ import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 import { DbConnectorInstance } from 'app/libs/db-connector/models/executers'
 import { Logger } from 'app/libs/logger/logger.class'
 import { cloneDeep } from 'lodash'
-import * as mysql from 'mysql'
 import { Database } from 'sql.js'
 import squel from 'squel'
 
@@ -22,7 +21,7 @@ export class QueryMaker {
    * @param [element] optional element on which to run the query
    */
   constructor (
-    private dbConnector: DbConnectorInstance<mysql.Connection | Database>,
+    private dbConnector: DbConnectorInstance<Database>,
     private section: keyof AbstractModel,
     private element?: Object | Array<Object>
   ) { }
