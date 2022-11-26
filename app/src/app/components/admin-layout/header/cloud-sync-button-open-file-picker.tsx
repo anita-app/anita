@@ -16,7 +16,8 @@ export const CloudSyncButtonOpenFilePicker: React.FC = () => {
       breakpoint="md"
       tooltip="Save the project on Dropbox to sync it with other devices"
       type={Type.transparent}
-      iconLeft="cloudyOutline"
+      iconLeft="saveOutline"
+      iconLeftClassName="animate-pulse"
       onClick={handleOpenModalClick}
     />
   )
