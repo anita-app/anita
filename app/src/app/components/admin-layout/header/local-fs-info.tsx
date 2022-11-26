@@ -8,7 +8,6 @@ export const LocalFsInfo: React.FC = () => {
 
   useEffect(() => {
     const updateIsSaving = (newValue: boolean) => {
-      console.log('updateIsSaving ~ newValue', newValue)
       setIsSavingInFs(newValue)
     }
     const isSavingSubscription = IS_SAVING_IN_FS.subscribe(updateIsSaving)

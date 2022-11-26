@@ -45,9 +45,9 @@ export const ProjectSectionListGridElement: React.FC<IProjectSectionListGridElem
           </div>
           {props.descriptionKey && props.descriptionKey !== props.titleField.fieldName && props.element[props.descriptionKey] && (
             <>
-              <p className="mt-1 text-gray-500 text-sm max-h-96">
+              <div className="mt-1 text-gray-500 text-sm max-h-96 overflow-hidden">
                 <RichText value={props.element[props.descriptionKey]} />
-              </p>
+              </div>
               {props.element[props.descriptionKey].length > DESCRIPTION_MAX_LENGHT && (
                 <div className="bottom-0 h-10 pointer-events-none absolute inset-x-0 z-10 bg-gradient-to-b from-transparent to-white"></div>
               )}
