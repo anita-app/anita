@@ -8,6 +8,7 @@ import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
 import { SyncManager } from 'app/libs/cloud-sync/sync-manager.class'
+import { IS_SAVING_IN_FS } from 'app/libs/cloud-sync/sync-manager.const'
 
 export class ProjectSaver {
   private localStorage: LOCAL_STORAGE_SYSTEMS | undefined
@@ -21,6 +22,7 @@ export class ProjectSaver {
   ) { }
 
   public async save (): Promise<TSystemData> {
+    IS_SAVING_IN_FS.next(true)
     if (this.mode === EDITOR_MODE.edit) {
       this.setupdatedAt()
     } else {
@@ -38,7 +40,7 @@ export class ProjectSaver {
 
     await this.postSaveActions()
 
-    SyncManager.syncWithRemoteIfSet()
+    SyncManager.syncWithRemoteOrLocal()
 
     return this.project
   }
