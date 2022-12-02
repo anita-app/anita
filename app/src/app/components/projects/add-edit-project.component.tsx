@@ -27,7 +27,7 @@ export const AddEditProject: React.FC = () => {
     if (mode === EDITOR_MODE.add) {
       const newProjectSystemData: TSystemData = {
         [RESERVED_AUDS_KEYS._settings]: [{ id: IdCreator.random(), title: '', description: '', createdAt: '', localStorage: LOCAL_STORAGE_SYSTEMS.IndexedDB }],
-        [RESERVED_AUDS_KEYS._sections]: [{ id: IdCreator.random(), title: '', formModel: [{} as any] }]
+        [RESERVED_AUDS_KEYS._sections]: [{ id: IdCreator.random(), title: '', formModel: [{} as any], createdAt: '' }]
       }
       storeDispatcher({ type: REDUX_ACTIONS.setFormProject, payload: newProjectSystemData })
       return setHasProject(true)

@@ -15,13 +15,15 @@ import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { Subject } from 'rxjs'
 import { SyncManager } from 'app/libs/cloud-sync/sync-manager.class'
 import { IS_SAVING_IN_FS } from 'app/libs/cloud-sync/sync-manager.const'
+import { DateTools } from 'app/libs/tools/date-tools.class'
 
 export class Section implements ISection {
   public id: string
   public title: string
   public icon?: TIconName
   public childOf?: Array<string>
-  public [RESERVED_FIELDS.createdAt]?: never
+  public createdAt: string
+  public updatedAt?: string
   public formModel: Array<FormFieldsModel<TSupportedFormsTypes>>
   public visibleColumnsInTableView = new Subject<Array<FormFieldsModel<TSupportedFormsTypes>>>()
   public sorting = new Subject<[string, 'asc' | 'desc'] | [null, null]>()
@@ -38,6 +40,8 @@ export class Section implements ISection {
     this.formModel = sectionData.formModel
     this.visibleColumnsInTableView.next(this.getVisibleColumnsInTableView())
     this.sorting.next(this.getSorting())
+    this.createdAt = sectionData[RESERVED_FIELDS.createdAt] || DateTools.getUtcIsoString()
+    this.updatedAt = sectionData[RESERVED_FIELDS.updatedAt]
   }
 
   public getSectionIcon (): TIconName {

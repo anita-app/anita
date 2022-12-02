@@ -62,7 +62,8 @@ export const formProjectReducer = (state: IFormProjectState = formElementState, 
           [RESERVED_AUDS_KEYS._sections]: state.project[RESERVED_AUDS_KEYS._sections]?.concat({
             id: IdCreator.random(),
             title: '',
-            formModel: [{} as any]
+            formModel: [{} as any],
+            createdAt: ''
           })
         }
       }

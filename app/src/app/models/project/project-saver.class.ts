@@ -47,10 +47,16 @@ export class ProjectSaver {
 
   private setcreatedAt (): void {
     this.project[RESERVED_AUDS_KEYS._settings][0][RESERVED_FIELDS.createdAt] = DateTools.getUtcIsoString()
+    this.project[RESERVED_AUDS_KEYS._sections].forEach((section) => {
+      section[RESERVED_FIELDS.createdAt] = DateTools.getUtcIsoString()
+    })
   }
 
   private setupdatedAt (): void {
     this.project[RESERVED_AUDS_KEYS._settings][0][RESERVED_FIELDS.updatedAt] = DateTools.getUtcIsoString()
+    this.project[RESERVED_AUDS_KEYS._sections].forEach((section) => {
+      section[RESERVED_FIELDS.updatedAt] = DateTools.getUtcIsoString()
+    })
   }
 
   /**
