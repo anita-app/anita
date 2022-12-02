@@ -14,6 +14,7 @@ export const useLastChangedIdListener = (lastChangedId: string) => {
     return () => {
       lastChangedAtSubscription.unsubscribe()
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return lastChangedAt
