@@ -14,7 +14,8 @@ export interface SectionDetailsDeclaration {
   title_short?: string
   icon?: TIconName
   childOf?: Array<string>
-  [RESERVED_FIELDS.createdAt]?: never
+  [RESERVED_FIELDS.createdAt]: string
+  [RESERVED_FIELDS.updatedAt]?: string
 }
 
 /**

@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.18.7] - 2022-12-02
+### Fixed
+- sync process.
+
 ## [0.18.6] - 2022-11-26
 ### Changed
 - sync icon.

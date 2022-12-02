@@ -4,6 +4,16 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.18.7",
+      "date": "2022-12-02",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "sync process"
+        }
+      ]
+    },
+    {
       "version": "0.18.6",
       "date": "2022-11-26",
       "items": [
