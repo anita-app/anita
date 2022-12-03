@@ -60,7 +60,7 @@ export class CloudSyncBase<T extends IDropboxTokens = IDropboxTokens> {
     Manager.loadProjectById(currentProject.getId())
   }
 
-  protected async clearRemoteId (projectId: string) {
+  public static async clearRemoteId (projectId: string) {
     await CloudSyncBase.DB!.table<ICloudSyncDB['filesInfo']>(CloudSyncTable.FILES_INFO).delete(projectId)
   }
 
@@ -87,7 +87,11 @@ export class CloudSyncBase<T extends IDropboxTokens = IDropboxTokens> {
     return CloudSyncBase.DB!.table<ICloudSyncDB['syncInfo']>(CloudSyncTable.SYNC_INFO).put({ projectId, lastSync: DateTools.getUtcIsoString() })
   }
 
-  public async getLastSync (projectId: string): Promise<string | undefined> {
+  public static async getLastSync (projectId: string): Promise<string | undefined> {
     return (await CloudSyncBase.DB!.table<ICloudSyncDB['syncInfo']>(CloudSyncTable.SYNC_INFO).get({ projectId }))?.lastSync
+  }
+
+  public static async deleteLastSync (projectId: string): Promise<void> {
+    return CloudSyncBase.DB!.table<ICloudSyncDB['syncInfo']>(CloudSyncTable.SYNC_INFO).delete(projectId)
   }
 }
