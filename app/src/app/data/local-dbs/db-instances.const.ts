@@ -2,12 +2,11 @@ import { TAnitaUniversalDataStorage } from 'app/models/project/project.declarati
 import { DbConnectorInstance } from 'app/libs/db-connector/models/executers'
 import Base from 'deta/dist/types/base'
 import Dexie from 'dexie'
-import * as mysql from 'mysql'
 import { Database } from 'sql.js'
 
 interface DbInstances {
   system: DbConnectorInstance<Dexie>
-  [projectIdentifier: string]: DbConnectorInstance<Dexie | Base | mysql.Connection | TAnitaUniversalDataStorage | Database>
+  [projectIdentifier: string]: DbConnectorInstance<Dexie | Base | TAnitaUniversalDataStorage | Database>
 }
 
 export const dbInstances: DbInstances = {

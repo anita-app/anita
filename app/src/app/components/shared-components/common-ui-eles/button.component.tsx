@@ -23,6 +23,7 @@ export interface IButtonWithTooltipProps {
   fill?: TFill
   href?: string
   onClick?: (e: React.MouseEvent) => void
+  onMouseDown?: (e: React.MouseEvent) => void
   breakpoint?: 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
   size?: keyof typeof sizeClasses
   marginClassName?: string
@@ -59,10 +60,19 @@ export const Button: React.FC<IButtonWithTooltipProps> = (props) => {
   const bgClassName = props.disabled ? 'disabled:bg-gray-400 disabled:bg-opacity-40 disabled:cursor-not-allowed' : COLOR_SCHEME[fillStyle].bg[props.type]
   const textClassName = COLOR_SCHEME[fillStyle].text[props.type]
 
+  const handleClick = (e: React.MouseEvent) => {
+    if (Component === 'button') {
+      e.preventDefault()
+      e.stopPropagation()
+      props.onClick?.(e)
+    }
+  }
+
   return (
     <Component
       to={props.href ? props.href : undefined as any}
-      onClick={props.onClick ? props.onClick : undefined}
+      onClick={handleClick}
+      onMouseDown={props.onMouseDown ? props.onMouseDown : undefined}
       className={`${sharedClasses} ${props.type !== Type.transparent ? 'shadow-sm' : ''} ${sizeClasses[props.size || 'md']} ${props.className || ''} ${props.marginClassName ?? 'mr-3'} leading-none text-sm rounded ${textClassName} ${bgClassName} focus:outline-none focus:ring-2 focus:ring-offset-2`}
       data-tip={true}
       data-for={props.id}

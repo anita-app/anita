@@ -1,7 +1,6 @@
 import { AdditionalInfoForLocalStorage, LocalProjectSettings } from 'app/models/project/project.declarations'
 import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition'
 import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
-import { ConnectionConfig } from 'mysql'
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 export interface DbConnectorConstructable<DbTypes> {
@@ -51,8 +50,6 @@ export interface DsDbInitOptions {
   detaConnectionData?: DetaConnectionData
   // File System
   projectInfo?: LocalProjectSettings
-  // MySQL
-  mySqlConnectionConfig?: ConnectionConfig
   // IndexedDB
   indexedDbName?: string
   DS?: AbstractModel

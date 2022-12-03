@@ -14,13 +14,16 @@ import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { Subject } from 'rxjs'
 import { SyncManager } from 'app/libs/cloud-sync/sync-manager.class'
+import { IS_SAVING_IN_FS } from 'app/libs/cloud-sync/sync-manager.const'
+import { DateTools } from 'app/libs/tools/date-tools.class'
 
 export class Section implements ISection {
   public id: string
   public title: string
   public icon?: TIconName
   public childOf?: Array<string>
-  public [RESERVED_FIELDS.createdAt]?: never
+  public createdAt: string
+  public updatedAt?: string
   public formModel: Array<FormFieldsModel<TSupportedFormsTypes>>
   public visibleColumnsInTableView = new Subject<Array<FormFieldsModel<TSupportedFormsTypes>>>()
   public sorting = new Subject<[string, 'asc' | 'desc'] | [null, null]>()
@@ -37,6 +40,8 @@ export class Section implements ISection {
     this.formModel = sectionData.formModel
     this.visibleColumnsInTableView.next(this.getVisibleColumnsInTableView())
     this.sorting.next(this.getSorting())
+    this.createdAt = sectionData[RESERVED_FIELDS.createdAt] || DateTools.getUtcIsoString()
+    this.updatedAt = sectionData[RESERVED_FIELDS.updatedAt]
   }
 
   public getSectionIcon (): TIconName {
@@ -48,15 +53,17 @@ export class Section implements ISection {
   public getElementById = (id: string): Promise<ISectionElement | void> => dbInstances[this.projectId].callSelector<ISectionElement>(this.id, { [RESERVED_FIELDS.id]: id }).single()
 
   public saveElement = async (element: ISectionElement, forceMode?: EDITOR_MODE): Promise<ISectionElement> => {
+    IS_SAVING_IN_FS.next(true)
     const mode = forceMode || (element.id ? EDITOR_MODE.edit : EDITOR_MODE.add)
     const savedElement = await new SectionElementSaver(this.projectId, this.id, element, mode).save()
-    SyncManager.syncWithRemoteIfSet()
+    SyncManager.syncWithRemoteOrLocal()
     return savedElement
   }
 
   public deleteElement = async (element: ISectionElement): Promise<void> => {
+    IS_SAVING_IN_FS.next(true)
     await dbInstances[this.projectId].callDeletor(this.id, { id: element.id }).autoDelete()
-    SyncManager.syncWithRemoteIfSet()
+    SyncManager.syncWithRemoteOrLocal()
   }
 
   public getFirstUserDefinedField (): FormFieldsModel<TSupportedFormsTypes> | undefined {

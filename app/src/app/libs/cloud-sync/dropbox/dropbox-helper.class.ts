@@ -176,7 +176,8 @@ export class DropboxHelper extends CloudSyncBase {
   }
 
   private setBaseUrl () {
-    this.BASE_URL = window.location.href.split('#')[0]
+    const base = `${window.location.origin}/`
+    this.BASE_URL = window.location.href.includes('localhost') ? base : `${base}app/`
   }
 
   private convertFileList = (files: files.ListFolderResult['entries']): Array<ISharedFileMeta> => (

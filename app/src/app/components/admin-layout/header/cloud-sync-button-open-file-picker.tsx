@@ -13,9 +13,11 @@ export const CloudSyncButtonOpenFilePicker: React.FC = () => {
     <Button
       id="cloud-sync-button"
       label="Save on Dropbox"
+      breakpoint="md"
       tooltip="Save the project on Dropbox to sync it with other devices"
       type={Type.transparent}
-      iconLeft="cloudyOutline"
+      iconLeft="saveOutline"
+      iconLeftClassName="animate-pulse"
       onClick={handleOpenModalClick}
     />
   )

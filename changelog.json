@@ -4,6 +4,94 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.18.7",
+      "date": "2022-12-02",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "sync process"
+        }
+      ]
+    },
+    {
+      "version": "0.18.6",
+      "date": "2022-11-26",
+      "items": [
+        {
+          "type": "changed",
+          "value": "sync icon"
+        },
+        {
+          "type": "removed",
+          "value": "unused DB plugin"
+        }
+      ]
+    },
+    {
+      "version": "0.18.5",
+      "date": "2022-11-25",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "internal redirect"
+        }
+      ]
+    },
+    {
+      "version": "0.18.4",
+      "date": "2022-11-25",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "redirect uri"
+        }
+      ]
+    },
+    {
+      "version": "0.18.3",
+      "date": "2022-11-25",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "header buttons positioning and visibility"
+        }
+      ]
+    },
+    {
+      "version": "0.18.2",
+      "date": "2022-11-25",
+      "items": [
+        {
+          "type": "added",
+          "value": "styles for lists"
+        }
+      ]
+    },
+    {
+      "version": "0.18.1",
+      "date": "2022-11-25",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "conflict"
+        }
+      ]
+    },
+    {
+      "version": "0.18.0",
+      "date": "2022-11-25",
+      "items": [
+        {
+          "type": "added",
+          "value": "cloud ync with dropbox (experimental)"
+        },
+        {
+          "type": "added",
+          "value": "support for rich text"
+        }
+      ]
+    },
+    {
       "version": "0.17.0",
       "date": "2022-10-09",
       "items": [

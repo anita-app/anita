@@ -11,12 +11,15 @@ interface IProjectSectionListGridProps {
 
 export const ProjectSectionListGrid: React.FC<IProjectSectionListGridProps> = (props) => {
   const section = Manager.getCurrentProject()?.getSectionById(props.sectionId)!
-  const titleKey = section.getFirstUserDefinedField()?.fieldName
-  const descriptionField = section.getFirstFieldOfType([FORM_COMPONENTS_CODES.basicTextarea])
+  const titleField = section.getFirstUserDefinedField()
+  const descriptionField = section.getFirstFieldOfType([FORM_COMPONENTS_CODES.richText])
+  if (!titleField) {
+    return null
+  }
   return (
     <div role="list" className="columns-1 gap-6 sm:columns-2 lg:columns-3 xl:columns-4">
       {props.sectionData.map(element => (
-        <ProjectSectionListGridElement key={element.id} element={element} titleKey={titleKey!} descriptionKey={descriptionField?.fieldName!} />
+        <ProjectSectionListGridElement key={element.id} element={element} titleField={titleField!} descriptionKey={descriptionField?.fieldName!} />
       ))}
     </div>
   )

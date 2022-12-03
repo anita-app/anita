@@ -4,8 +4,8 @@ import { CloudSyncButtonConnect } from 'app/components/admin-layout/header/cloud
 import { DropboxHelper } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
 import { CloudSyncButtonOpenFilePicker } from 'app/components/admin-layout/header/cloud-sync-button-open-file-picker'
 import { CloudSyncButtonDoSync } from 'app/components/admin-layout/header/cloud-sync-button-do-sync'
-import { CURRENT_PROJECT_SYNC_INFO } from 'app/libs/cloud-sync/sync-manager.const'
 import { useMultiState } from 'app/components/hooks/multi-state.hook'
+import { Manager } from 'app/libs/manager/manager.class'
 
 interface ICloudSyncButtonProps {
   projectId: string
@@ -26,30 +26,34 @@ export const CloudSyncButton: React.FC<ICloudSyncButtonProps> = memo(function Cl
 
   useEffect(() => {
     const getCloudSyncState = async () => {
+      const currentProject = Manager.getCurrentProject()
       const isAuthenticated = await DropboxHelper.instance.isAuthenticated()
+      console.log('getCloudSyncState ~ isAuthenticated', isAuthenticated)
+      console.log('getCloudSyncState ~ projectId', projectId)
       if (!projectId) {
         return
       }
       if (!isAuthenticated) {
-        CURRENT_PROJECT_SYNC_INFO.cloudSyncState = CloudSyncState.NOT_CONNECTED
-        return setState(CURRENT_PROJECT_SYNC_INFO)
+        currentProject?.syncInfo.setCloudSyncState(CloudSyncState.NOT_CONNECTED)
+        return setState({ cloudSyncState: CloudSyncState.NOT_CONNECTED })
       }
       const linkedFileId = await DropboxHelper.instance.getLinkedFileIdOrNull(projectId)
       if (!linkedFileId) {
-        CURRENT_PROJECT_SYNC_INFO.cloudSyncState = CloudSyncState.NOT_LINKED
-        return setState(CURRENT_PROJECT_SYNC_INFO)
+        currentProject?.syncInfo.setCloudSyncState(CloudSyncState.NOT_LINKED)
+        return setState({ cloudSyncState: CloudSyncState.NOT_LINKED })
       }
 
-      CURRENT_PROJECT_SYNC_INFO.cloudSyncState = CloudSyncState.LINKED
-      CURRENT_PROJECT_SYNC_INFO.linkedFileId = linkedFileId
-      setState(CURRENT_PROJECT_SYNC_INFO)
+      currentProject?.syncInfo.setCloudSyncState(CloudSyncState.LINKED)
+      currentProject?.syncInfo.setLinkedFileId(linkedFileId)
+      setState({ cloudSyncState: CloudSyncState.LINKED, linkedFileId })
     }
 
     getCloudSyncState()
 
     return () => {
-      CURRENT_PROJECT_SYNC_INFO.cloudSyncState = CloudSyncState.NOT_CONNECTED
-      CURRENT_PROJECT_SYNC_INFO.linkedFileId = null
+      const currentProject = Manager.getCurrentProject()
+      currentProject?.syncInfo.setCloudSyncState(CloudSyncState.NOT_CONNECTED)
+      currentProject?.syncInfo.setLinkedFileId(null)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectId])
@@ -57,9 +61,9 @@ export const CloudSyncButton: React.FC<ICloudSyncButtonProps> = memo(function Cl
   const setCloudSyncState = useCallback((cloudSyncState: CloudSyncState) => {
     setState({ cloudSyncState })
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [projectId])
 
-  if (!state.cloudSyncState || !state.linkedFileId) {
+  if (!state.cloudSyncState) {
     return null
   }
 
@@ -73,6 +77,10 @@ export const CloudSyncButton: React.FC<ICloudSyncButtonProps> = memo(function Cl
     return (
       <CloudSyncButtonOpenFilePicker />
     )
+  }
+
+  if (!state.linkedFileId) {
+    return null
   }
 
   return (

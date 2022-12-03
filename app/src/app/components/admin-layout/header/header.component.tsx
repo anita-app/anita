@@ -1,5 +1,5 @@
 /* eslint-disable eqeqeq */
-import React from 'react'
+import React, { useEffect } from 'react'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
@@ -9,7 +9,7 @@ import { CloudSyncButton } from 'app/components/admin-layout/header/cloud-sync-b
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
 import { LocalFsInfo } from 'app/components/admin-layout/header/local-fs-info'
-import { CURRENT_PROJECT_SYNC_INFO } from 'app/libs/cloud-sync/sync-manager.const'
+import { Manager } from 'app/libs/manager/manager.class'
 
 export const AdminLayoutHeader: React.FC = () => {
   const sidebarHideClass = useSelector((store: AnitaStore) => store.layout.sidebar)
@@ -18,10 +18,16 @@ export const AdminLayoutHeader: React.FC = () => {
     storeDispatcher({ type: REDUX_ACTIONS.toggleSidebar })
   }
 
-  CURRENT_PROJECT_SYNC_INFO.localStorage = project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.localStorage!
+  const localStorage = project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.localStorage!
+
+  useEffect(() => {
+    if (localStorage) {
+      Manager.getCurrentProject()?.syncInfo.setLocalStorage(localStorage)
+    }
+  }, [localStorage])
 
   return (
-    <div className={`bg-white text-gray-700 flex items-center h-14 shadow-md ${project ? 'justify-between' : 'justify-center'}`}>
+    <div className={`bg-white text-gray-700 flex items-center h-14 shadow-md ${project ? 'justify-between' : 'justify-center md:justify-start'}`}>
       {!!project && (
         <button className="mobile-menu-button p-4 focus:outline-none  md:hidden" onClick={handleClickSidebar}>
           <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -31,7 +37,7 @@ export const AdminLayoutHeader: React.FC = () => {
       )}
 
       <div className="relative flex items-center lg:w-auto lg:static md:pl-5 -ml-7 md:ml-0">
-        <Link to="/" className={`text-lg font-bold leading-relaxed inline-block ${project ? 'mr-4' : 'translate-x-1/2 md:translate-x-0 md:mr-4'} py-2 whitespace-no-wrap uppercase`}>
+        <Link to="/" className={`text-lg font-bold leading-relaxed inline-block ${project ? '' : ''}translate-x-1/2 md:translate-x-0 md:mr-4 py-2 whitespace-no-wrap uppercase`}>
           <img src={`${process.env.PUBLIC_URL}/assets/logo/logo_square.svg`} style={{ height: '30px', width: 'auto' }} alt="Anita" />
         </Link>
         <Link to="/" className="hidden md:inline-block mr-4 py-2 whitespace-no-wrap text-prussian-blue-400">
@@ -40,9 +46,9 @@ export const AdminLayoutHeader: React.FC = () => {
       </div>
 
       {project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.id && (
-        <div className="ml-auto">
-          {CURRENT_PROJECT_SYNC_INFO.localStorage == LOCAL_STORAGE_SYSTEMS.IndexedDB && (<CloudSyncButton projectId={project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.id} />)}
-          {CURRENT_PROJECT_SYNC_INFO.localStorage == LOCAL_STORAGE_SYSTEMS.json && (<LocalFsInfo />)}
+        <div>
+          {localStorage == LOCAL_STORAGE_SYSTEMS.IndexedDB && (<CloudSyncButton projectId={project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.id} />)}
+          {localStorage == LOCAL_STORAGE_SYSTEMS.json && (<LocalFsInfo />)}
         </div>
       )}
 

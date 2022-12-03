@@ -7,6 +7,42 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.18.7] - 2022-12-02
+### Fixed
+- sync process.
+
+## [0.18.6] - 2022-11-26
+### Changed
+- sync icon.
+
+### Removed
+- unused DB plugin.
+
+## [0.18.5] - 2022-11-25
+### Fixed
+- internal redirect.
+
+## [0.18.4] - 2022-11-25
+### Fixed
+- redirect uri.
+
+## [0.18.3] - 2022-11-25
+### Fixed
+- header buttons positioning and visibility.
+
+## [0.18.2] - 2022-11-25
+### Added
+- styles for lists.
+
+## [0.18.1] - 2022-11-25
+### Fixed
+- conflict.
+
+## [0.18.0] - 2022-11-25
+### Added
+- cloud ync with dropbox (experimental).
+- support for rich text.
+
 ## [0.17.0] - 2022-10-09
 ### Added
 - add fields from list view.
