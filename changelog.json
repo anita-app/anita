@@ -4,6 +4,20 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.18.8",
+      "date": "2022-12-05",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "no projects page not redirecting"
+        },
+        {
+          "type": "security",
+          "value": "editor"
+        }
+      ]
+    },
+    {
       "version": "0.18.7",
       "date": "2022-12-02",
       "items": [

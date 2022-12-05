@@ -7,6 +7,13 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.18.8] - 2022-12-05
+### Fixed
+- no projects page not redirecting.
+
+### Security
+- editor.
+
 ## [0.18.7] - 2022-12-02
 ### Fixed
 - sync process.
