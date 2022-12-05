@@ -4,6 +4,20 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.18.10",
+      "date": "2022-12-05",
+      "items": [
+        {
+          "type": "added",
+          "value": "save shortcut"
+        },
+        {
+          "type": "added",
+          "value": "sticky toolbar for editor"
+        }
+      ]
+    },
+    {
       "version": "0.18.9",
       "date": "2022-12-05",
       "items": [

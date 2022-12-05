@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import isHotkey from 'is-hotkey'
 import { Editable, withReact, useSlate, Slate } from 'slate-react'
 import {
@@ -157,10 +157,36 @@ export const RichTextEditor: React.FC<IRichTextEditorProps> = (props) => {
     props.onChange(value)
   }
 
+  useEffect(() => {
+    const scrollableContainer = document.getElementById('admin-layout-content')
+    const toolbar = document.getElementById('rich-text-editor-toolbar')
+    const makeToolbarFixedOnScroll = () => {
+      if (toolbar && scrollableContainer) {
+        const toolbarTop = toolbar.offsetTop
+        const scrollableContainerTop = scrollableContainer?.scrollTop || 0
+        if (scrollableContainerTop > toolbarTop) {
+          toolbar.style.position = 'fixed'
+          toolbar.style.top = '60px'
+          toolbar.style.width = '100%'
+          toolbar.style.zIndex = '100'
+        } else {
+          toolbar.style.position = 'relative'
+          toolbar.style.top = '0'
+          toolbar.style.width = '100%'
+          toolbar.style.zIndex = '100'
+        }
+      }
+    }
+    // scrollableContainer?.addEventListener('scroll', makeToolbarFixedOnScroll)
+    return () => {
+      scrollableContainer?.removeEventListener('scroll', makeToolbarFixedOnScroll)
+    }
+  }, [])
+
   return (
     <div id="rich-text-editor" className="border-2 border-gray-200 rounded-lg p-2">
       <Slate editor={editor} value={props.initialValue} onChange={onChange}>
-        <div id="rich-text-editor-toolbar" className="relative border-b border-gray-300 pb-2">
+        <div id="rich-text-editor-toolbar" className="sticky top-0 border-b border-gray-300 pb-2 bg-white z-10">
           <MarkButton format="bold" icon="format_bold" />
           <MarkButton format="italic" icon="format_italic" />
           <MarkButton format="underline" icon="format_underlined" />
