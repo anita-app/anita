@@ -3,7 +3,7 @@ import { Descendant } from 'slate'
 export class RichTextEditorHelpers {
   public static makeInitialOutputData = (rawValue: string): Array<Descendant> => {
     try {
-      if (rawValue.startsWith('[')) {
+      if (rawValue?.startsWith('[')) {
         return JSON.parse(rawValue)
       }
       return [
@@ -15,7 +15,14 @@ export class RichTextEditorHelpers {
         } as any
       ]
     } catch (error) {
-      return []
+      return [
+        {
+          type: 'paragraph',
+          children: [
+            { text: '' }
+          ]
+        } as any
+      ]
     }
   }
 }
