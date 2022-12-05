@@ -28,8 +28,6 @@ export const CloudSyncButton: React.FC<ICloudSyncButtonProps> = memo(function Cl
     const getCloudSyncState = async () => {
       const currentProject = Manager.getCurrentProject()
       const isAuthenticated = await DropboxHelper.instance.isAuthenticated()
-      console.log('getCloudSyncState ~ isAuthenticated', isAuthenticated)
-      console.log('getCloudSyncState ~ projectId', projectId)
       if (!projectId) {
         return
       }
