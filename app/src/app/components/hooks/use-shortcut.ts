@@ -7,10 +7,11 @@ interface IShortcut {
     withMetakey?: boolean
     withShift?: boolean
     skipIfInsideInput?: boolean
+    callback: (...args: Array<any>) => void
   }
 }
 
-export const useShortcut = (shortcuts: IShortcut, callback: (...args: Array<any>) => void) => {
+export const useShortcut = (shortcuts: IShortcut) => {
   const supportedKeysInLowerCase = useRef<Array<string>>(Object.keys(shortcuts).map(key => key.toLowerCase()))
   const supportedKeys = useRef<Array<string>>(Object.keys(shortcuts))
   useEffect(() => {
@@ -21,7 +22,7 @@ export const useShortcut = (shortcuts: IShortcut, callback: (...args: Array<any>
       const isInsideInput = Keyboard.isTyping(e.target as HTMLElement)
       if ((((shortcutConfig.withMetakey === true && metaKey) || (!shortcutConfig.withMetakey && !metaKey)) && ((shortcutConfig.withShift === true && e.shiftKey) || (!shortcutConfig.withShift && !e.shiftKey))) &&
         (!shortcutConfig.skipIfInsideInput || !isInsideInput)) {
-        callback(e)
+        shortcutConfig.callback(e)
       } else {
         return true
       }

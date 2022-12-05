@@ -2,12 +2,21 @@ import { Manager } from 'app/libs/manager/manager.class'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
+import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
+import { useShortcut } from 'app/components/hooks/use-shortcut'
+import { store } from 'app/libs/redux/state.store'
 
 interface IProjectSectionElementAddEditSaveCancelButtonsProps {
   sectionId: string
+}
+
+const saveOnShortcut = (sectionId: string, e: KeyboardEvent) => {
+  const currentElementInStore = store.getState().formElement.element
+  e.preventDefault()
+  Manager.getCurrentProject()?.getSectionById(sectionId)?.saveElement(currentElementInStore!)
 }
 
 export const ProjectSectionElementAddEditSaveCancelButtons: React.FC<IProjectSectionElementAddEditSaveCancelButtonsProps> = ({ sectionId }) => {
@@ -15,11 +24,21 @@ export const ProjectSectionElementAddEditSaveCancelButtons: React.FC<IProjectSec
   const validObj = useSelector((state: AnitaStore) => state.formElesValidState)
   const navigate = useNavigate()
 
-  const handleClick = async () => {
+  const handleSave = useCallback(async () => {
     await Manager.getCurrentProject()?.getSectionById(sectionId)?.saveElement(element!)
-    navigate(-1)
-  }
+  }, [element, sectionId])
 
+  const handleSaveAndClose = useCallback(async () => {
+    await handleSave()
+    navigate(-1)
+  }, [handleSave, navigate])
+
+  useShortcut({
+    s: { withMetakey: true, callback: saveOnShortcut.bind(undefined, sectionId) }
+  })
+
+  const hasLongDetailsField = Manager.getCurrentProject()!.getSectionById(sectionId)!.getFirstFieldOfType([FORM_COMPONENTS_CODES.richText]) !== undefined
+  const saveAndCloseText = hasLongDetailsField ? 'Save & Close' : 'Save'
   return (
     <div className="mt-6 flex justify-end">
       <Button
@@ -28,12 +47,22 @@ export const ProjectSectionElementAddEditSaveCancelButtons: React.FC<IProjectSec
         type={Type.secondary}
         onClick={() => navigate(-1)}
       />
+      {hasLongDetailsField && (
+        <Button
+          id="save"
+          label="Save"
+          type={Type.primary}
+          fill="outline"
+          disabled={Object.keys(validObj).some(key => validObj[key] === false)}
+          onClick={handleSave}
+        />
+      )}
       <Button
         id="save"
-        label="Save"
+        label={saveAndCloseText}
         type={Type.primary}
         disabled={Object.keys(validObj).some(key => validObj[key] === false)}
-        onClick={handleClick}
+        onClick={handleSaveAndClose}
       />
     </div>
   )
