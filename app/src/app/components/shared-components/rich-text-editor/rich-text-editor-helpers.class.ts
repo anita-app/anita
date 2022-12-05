@@ -10,7 +10,7 @@ export class RichTextEditorHelpers {
         {
           type: 'paragraph',
           children: [
-            { text: rawValue }
+            { text: rawValue || '' }
           ]
         } as any
       ]

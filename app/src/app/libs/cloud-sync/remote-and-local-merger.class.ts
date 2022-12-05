@@ -5,6 +5,7 @@ import { Project } from 'app/models/project/project.class'
 import { DropboxHelper } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { IS_SYNCING } from 'app/libs/cloud-sync/sync-manager.const'
+import { CloudSyncBase } from 'app/libs/cloud-sync/cloud-sync-base.class'
 
 export class RemoteAndLocalMerger {
   private project: Project
@@ -38,7 +39,7 @@ export class RemoteAndLocalMerger {
   }
 
   private async getLastSync (): Promise<string | undefined> {
-    return DropboxHelper.instance.getLastSync(this.project.getId())
+    return CloudSyncBase.getLastSync(this.project.getId())
   }
 
   private getLocalData (): Promise<TAnitaUniversalDataStorage> {

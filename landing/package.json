@@ -1,7 +1,7 @@
 {
   "name": "anita-landing",
   "description": "Anita landing page",
-  "version": "0.18.7",
+  "version": "0.18.8",
   "author": "ilDon",
   "scripts": {
     "licenses": "npx license-checker --production --json --out src/app/data-sources/landing-packages.json",

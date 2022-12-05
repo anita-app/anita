@@ -127,7 +127,7 @@ export class DropboxHelper extends CloudSyncBase {
       }
     } catch (error: any) {
       if (error?.error?.error_summary?.includes('path/not_found/')) {
-        this.clearRemoteId(projectId)
+        CloudSyncBase.clearRemoteId(projectId)
       }
       return null
     }
