@@ -7,6 +7,11 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.18.10] - 2022-12-05
+### Added
+- save shortcut.
+- sticky toolbar for editor.
+
 ## [0.18.9] - 2022-12-05
 ### Fixed
 - editor default value.
