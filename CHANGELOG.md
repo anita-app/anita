@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.18.11] - 2022-12-06
+### Fixed
+- added createdAt and updatedAt to data structure.
+
 ## [0.18.10] - 2022-12-05
 ### Added
 - save shortcut.
