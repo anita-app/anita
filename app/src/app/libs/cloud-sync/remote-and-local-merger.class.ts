@@ -75,7 +75,8 @@ export class RemoteAndLocalMerger {
       allSectionsWithInserts.includes(RESERVED_AUDS_KEYS._settings) ||
       allSectionsWithInserts.includes(RESERVED_AUDS_KEYS._sections) ||
       allSectionsWithDeletes.includes(RESERVED_AUDS_KEYS._settings) ||
-      allSectionsWithDeletes.includes(RESERVED_AUDS_KEYS._sections)) {
+      allSectionsWithDeletes.includes(RESERVED_AUDS_KEYS._sections)
+    ) {
       const newSystemData: TSystemData = {
         [RESERVED_AUDS_KEYS._settings]: comparisonResult.localData[RESERVED_AUDS_KEYS._settings],
         [RESERVED_AUDS_KEYS._sections]: comparisonResult.localData[RESERVED_AUDS_KEYS._sections]

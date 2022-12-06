@@ -7,6 +7,7 @@ import { Navigate, useParams } from 'react-router'
 import { Manager } from 'app/libs/manager/manager.class'
 import { SupportedViews } from 'app/models/section/view-settings.const'
 import { ProjectSectionListTabs } from 'app/components/project/section/list/tabs/list-tabs.component'
+import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 
 export const ProjectSectionList: React.FC = () => {
   const params = useParams()
@@ -62,7 +63,7 @@ export const ProjectSectionList: React.FC = () => {
   return (
     <ProjectSectionListTabs
       projectId={projectId!}
-      projectUpdatedAt={Manager.getCurrentProject()?.getProjectProp('updatedAt')!}
+      projectUpdatedAt={Manager.getCurrentProject()?.getProjectProp(RESERVED_FIELDS.updatedAt)!}
       sectionId={sectionId!}
       activeTab={activeTab}
       section={section}
