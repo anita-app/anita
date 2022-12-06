@@ -10,6 +10,6 @@ import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 export const audsSections: SectionDefinition<ISection> = {
   name: RESERVED_AUDS_KEYS._sections,
   pk: 'id',
-  fields: ['title'],
-  jsonFields: ['childOf', 'formModel', RESERVED_FIELDS.createdAt, RESERVED_FIELDS.updatedAt]
+  fields: ['title', 'title_short', 'icon', RESERVED_FIELDS.createdAt, RESERVED_FIELDS.updatedAt],
+  jsonFields: ['childOf', 'formModel', 'viewSettings']
 }
