@@ -33,9 +33,12 @@ export const ProjectSectionElementAddEditSaveCancelButtons: React.FC<IProjectSec
     navigate(-1)
   }, [handleSave, navigate])
 
-  useShortcut({
-    s: { withMetakey: true, callback: saveOnShortcut.bind(undefined, sectionId) }
-  })
+  const handleCancel = useCallback(() => {
+    navigate(-1)
+  }, [navigate])
+
+  useShortcut({ key: 's', withMetakey: true, callback: saveOnShortcut.bind(undefined, sectionId) })
+  useShortcut({ key: 'Escape', callback: handleCancel })
 
   const hasLongDetailsField = Manager.getCurrentProject()!.getSectionById(sectionId)!.getFirstFieldOfType([FORM_COMPONENTS_CODES.richText]) !== undefined
   const saveAndCloseText = hasLongDetailsField ? 'Save & Close' : 'Save'
@@ -45,7 +48,7 @@ export const ProjectSectionElementAddEditSaveCancelButtons: React.FC<IProjectSec
         id="cancel"
         label="Cancel"
         type={Type.secondary}
-        onClick={() => navigate(-1)}
+        onClick={handleCancel}
       />
       {hasLongDetailsField && (
         <Button

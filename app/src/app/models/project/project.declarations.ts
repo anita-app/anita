@@ -3,6 +3,7 @@ import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api'
 import { ISection } from 'app/models/section/section.declarations'
 import { ISectionElement } from 'app/models/section-element/section-element.declarations'
+import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 
 /**
  * Reserved keys are needed to store system required properties.
@@ -42,9 +43,9 @@ export interface IProjectSettings {
   id: string
   title: string
   description: string
-  createdAt: string
+  [RESERVED_FIELDS.createdAt]: string
+  [RESERVED_FIELDS.updatedAt]?: string
   localStorage?: LOCAL_STORAGE_SYSTEMS
-  updatedAt?: string
   encrypted?: boolean
   cloudSync?: {
     dropbox?: string
