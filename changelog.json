@@ -4,6 +4,16 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.18.12",
+      "date": "2022-12-06",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "added fields to sections data structure"
+        }
+      ]
+    },
+    {
       "version": "0.18.11",
       "date": "2022-12-06",
       "items": [

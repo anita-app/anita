@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.18.12] - 2022-12-06
+### Fixed
+- added fields to sections data structure.
+
 ## [0.18.11] - 2022-12-06
 ### Fixed
 - added createdAt and updatedAt to data structure.
