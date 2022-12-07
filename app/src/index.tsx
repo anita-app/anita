@@ -9,6 +9,7 @@ import './index.css'
 import { ModalProvider } from 'app/components/shared-components/modals/modal.component'
 import * as ReactDOMClient from 'react-dom/client'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
+import 'tippy.js/dist/tippy.css'
 
 new Startupper().init()
 const rootElement = document.getElementById('root')

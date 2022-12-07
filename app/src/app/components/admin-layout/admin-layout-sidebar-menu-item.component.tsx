@@ -6,9 +6,9 @@ import { Link } from 'react-router-dom'
 import { Manager } from 'app/libs/manager/manager.class'
 import { Icons } from 'app/libs/icons/icons.class'
 import { ISection } from 'app/models/section/section.declarations'
-import ReactTooltip from 'react-tooltip'
 import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
+import { AdminLayoutSidebarMenuItemIcon } from 'app/components/admin-layout/admin-layout-sidebar-menu-item-icon.component'
 
 const baseStyleOfSidebarLinks = 'flex items-center block py-2.5 px-2 transition duration-200 border-l-2 hover:border-prussian-blue-700 hover:text-prussian-blue-500 text-sm font-semibold'
 
@@ -73,14 +73,7 @@ export const AdminLayoutSidebarMenuItem: React.FC<IAdminLayoutSidebarMenuItemPro
           {Icons.render(Manager.getCurrentProject()?.getSectionById(props.section.id)?.getSectionIcon() || 'chevronForwardOutline')}<span className="ml-2">{props.section.title_short || props.section.title}</span>
         </div>
         {props.isEditingMenuItemsVisibility && (
-          <>
-            <button className="flex items-center" onClick={handleVisibilityClick} data-tip={true} data-for={`menuItem${props.section.id}`}>
-              {Icons.render(icon, 'text-gray-400')}
-            </button>
-            <ReactTooltip id={`menuItem${props.section.id}`} effect="solid" place="right">
-              {tooltip}
-            </ReactTooltip>
-          </>
+          <AdminLayoutSidebarMenuItemIcon elementId={`menuItem${props.section.id}`} tooltip={tooltip} icon={icon} onClick={handleVisibilityClick} />
         )}
       </div>
     </Link>

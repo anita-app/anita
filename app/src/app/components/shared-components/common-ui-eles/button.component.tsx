@@ -1,8 +1,8 @@
+import { useTippyTooltip } from 'app/components/hooks/use-tippy-tooltip'
 import { COLOR_SCHEME, TFill, Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { Icons, TIconName } from 'app/libs/icons/icons.class'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import ReactTooltip from 'react-tooltip'
 
 const sizeClasses = {
   xs: 'rounded px-2.5 py-1.5 text-xs',
@@ -43,6 +43,7 @@ enum LabelBreakpoints {
   xxl = 'xxl:inline-block'
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 enum TooltipBreakpoints {
   sm = 'sm:hidden',
   md = 'md:hidden',
@@ -68,26 +69,23 @@ export const Button: React.FC<IButtonWithTooltipProps> = (props) => {
     }
   }
 
+  const tooltipContent = props.hasTooltip || props.tooltip ? props.tooltip || props.label : undefined
+  const additionalTooltipClass = props.breakpoint ? TooltipBreakpoints[props.breakpoint] : props.tooltipContainerClassName || ''
+
+  useTippyTooltip(props.id, tooltipContent, additionalTooltipClass)
+
   return (
     <Component
+      id={props.id}
       to={props.href ? props.href : undefined as any}
       onClick={handleClick}
       onMouseDown={props.onMouseDown ? props.onMouseDown : undefined}
       className={`${sharedClasses} ${props.type !== Type.transparent ? 'shadow-sm' : ''} ${sizeClasses[props.size || 'md']} ${props.className || ''} ${props.marginClassName ?? 'mr-3'} leading-none text-sm rounded ${textClassName} ${bgClassName} focus:outline-none focus:ring-2 focus:ring-offset-2`}
-      data-tip={true}
-      data-for={props.id}
       disabled={props.disabled ?? false}
     >
       {!!props.iconLeft && Icons.render(props.iconLeft, props.iconLeftClassName)}
       <span className={`${props.iconLeft ? 'ml-2' : ''} ${collapsable ? 'hidden' : ''} ${props.breakpoint ? LabelBreakpoints[props.breakpoint] : ''} ${props.labelClassName ?? ''}`}>{props.label}</span>
       {!!props.iconRight && Icons.render(props.iconRight, `ml-2 ${props.iconRightClassName || ''}`)}
-      {(props.hasTooltip || props.tooltip) && (
-        <span className={props.breakpoint ? TooltipBreakpoints[props.breakpoint] : props.tooltipContainerClassName || ''}>
-          <ReactTooltip id={props.id} effect="solid">
-            {props.tooltip || props.label}
-          </ReactTooltip>
-        </span>
-      )}
     </Component>
   )
 }

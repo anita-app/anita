@@ -1,11 +1,11 @@
 import { AdminLayoutSidebarEditMenuButton } from 'app/components/admin-layout/admin-layout-sidebar-edit-menu-button.component'
 import { AdminLayoutSidebarMenu } from 'app/components/admin-layout/admin-layout-sidebar-menu.component'
+import { useTippyTooltip } from 'app/components/hooks/use-tippy-tooltip'
 import { Icons } from 'app/libs/icons/icons.class'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { appVersion } from 'app/version'
 import React, { memo, useState } from 'react'
 import { useSelector } from 'react-redux'
-import ReactTooltip from 'react-tooltip'
 
 export const AdminLayoutSidebar: React.FC = memo(function Sidebar () {
   const toggledClass = useSelector((store: AnitaStore) => store.layout.sidebar)
@@ -14,6 +14,8 @@ export const AdminLayoutSidebar: React.FC = memo(function Sidebar () {
   const handleEditMenuItemsVisibility = () => {
     setIsEditingMenuItemsVisibility(!isEditingMenuItemsVisibility)
   }
+
+  useTippyTooltip('reportBug', 'Report a bug')
 
   return (
     <div className="py-5 z-10">
@@ -28,12 +30,9 @@ export const AdminLayoutSidebar: React.FC = memo(function Sidebar () {
         <div className="absolute bottom-1 text-xs text-gray-400">
           <div className="flex items-center">
             <p className="inline-block mr-1">v{appVersion}</p>|
-            <a className="ml-1" href="https://github.com/anita-app/anita/issues" target="_blank" rel="noreferrer" data-tip={true} data-for="reportBug">
+            <a className="ml-1" href="https://github.com/anita-app/anita/issues" target="_blank" rel="noreferrer" id="reportBug">
               {Icons.render('bugOutline', 'mt-1.5')}
             </a>
-            <ReactTooltip id="reportBug" effect="solid">
-              Report a bug
-            </ReactTooltip>
           </div>
         </div>
       </div>
