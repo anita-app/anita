@@ -13,7 +13,7 @@ export const useTippyTooltip = (elementId: string, content?: string, additionalC
     })
     if (additionalClasses) {
       instancesRef.current?.forEach((i) => {
-        i.props.onShow = (i) => {
+        i.props.onShow = (i: Instance) => {
           i.popper.classList.add(additionalClasses)
         }
       })
