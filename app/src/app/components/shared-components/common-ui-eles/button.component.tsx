@@ -1,4 +1,4 @@
-import { useTippyTooltip } from 'app/components/hooks/use-tippy-tooltip'
+import { useTippyTooltip } from 'app/components/hooks/tippy-tooltip'
 import { COLOR_SCHEME, TFill, Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { Icons, TIconName } from 'app/libs/icons/icons.class'
 import React from 'react'

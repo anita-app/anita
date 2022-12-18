@@ -1,5 +1,5 @@
 import React from 'react'
-import { useTippyTooltip } from 'app/components/hooks/use-tippy-tooltip'
+import { useTippyTooltip } from 'app/components/hooks/tippy-tooltip'
 import { Icons } from 'app/libs/icons/icons.class'
 
 interface IFormElementLabelProps {

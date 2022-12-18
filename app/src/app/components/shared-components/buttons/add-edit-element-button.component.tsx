@@ -4,7 +4,7 @@ import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { Link, useNavigate } from 'react-router-dom'
 import React from 'react'
 import { Icons, TIconName } from 'app/libs/icons/icons.class'
-import { useShortcut } from 'app/components/hooks/use-shortcut'
+import { useShortcut } from 'app/components/hooks/shortcut'
 
 interface IAddElementButtonProps {
   projectId: string

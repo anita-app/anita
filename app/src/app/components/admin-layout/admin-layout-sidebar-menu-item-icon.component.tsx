@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 import { Icons, TIconName } from 'app/libs/icons/icons.class'
-import { useTippyTooltip } from 'app/components/hooks/use-tippy-tooltip'
+import { useTippyTooltip } from 'app/components/hooks/tippy-tooltip'
 
 interface IAdminLayoutSidebarMenuItemIconProps {
   elementId: string

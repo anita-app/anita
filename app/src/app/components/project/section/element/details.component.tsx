@@ -14,7 +14,7 @@ import React, { useEffect, useState } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
 import { CheckBoxEditable } from 'app/components/shared-components/values-renderers/checkbox-editable.component'
-import { useShortcut } from 'app/components/hooks/use-shortcut'
+import { useShortcut } from 'app/components/hooks/shortcut'
 
 const ValueWithLabel = ({ formModel, value }: { formModel: FormFieldsModel<ISectionElement>; value: any }) => {
   if (typeof value === 'undefined') {

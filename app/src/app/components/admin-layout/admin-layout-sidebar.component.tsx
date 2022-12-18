@@ -1,6 +1,6 @@
 import { AdminLayoutSidebarEditMenuButton } from 'app/components/admin-layout/admin-layout-sidebar-edit-menu-button.component'
 import { AdminLayoutSidebarMenu } from 'app/components/admin-layout/admin-layout-sidebar-menu.component'
-import { useTippyTooltip } from 'app/components/hooks/use-tippy-tooltip'
+import { useTippyTooltip } from 'app/components/hooks/tippy-tooltip'
 import { Icons } from 'app/libs/icons/icons.class'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { appVersion } from 'app/version'
