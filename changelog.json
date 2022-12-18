@@ -4,6 +4,16 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.18.14",
+      "date": "2022-12-18",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "bug fixes"
+        }
+      ]
+    },
+    {
       "version": "0.18.13",
       "date": "2022-12-18",
       "items": [
