@@ -4,6 +4,16 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.18.15",
+      "date": "2022-12-18",
+      "items": [
+        {
+          "type": "changed",
+          "value": "using jpg instead of png"
+        }
+      ]
+    },
+    {
       "version": "0.18.14",
       "date": "2022-12-18",
       "items": [
