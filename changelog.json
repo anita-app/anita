@@ -4,6 +4,20 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.18.13",
+      "date": "2022-12-18",
+      "items": [
+        {
+          "type": "fixed",
+          "value": "improved sync"
+        },
+        {
+          "type": "changed",
+          "value": "using Tippyjs for tooltips"
+        }
+      ]
+    },
+    {
       "version": "0.18.12",
       "date": "2022-12-06",
       "items": [
