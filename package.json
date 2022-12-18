@@ -10,7 +10,7 @@
     "build-app": "cd app && npm run build",
     "testdist": "cd anita-app.github.io && http-server",
     "buildTest": "npm run build-app && npm run testdist",
-    "pull-main": "cd anita-app.github.io && git pull origin main",
+    "pull-main": "cd anita-app.github.io && git pull --force origin main",
     "add-all": "cd anita-app.github.io && git add --all",
     "propagate-version": "node version-propagator.js",
     "commit-with-message": "cd anita-app.github.io && git commit -m \"New version\"",
