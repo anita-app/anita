@@ -5,7 +5,7 @@ date: 2022-02-01
 author: ilDon
 type: Article
 slug: make-typeScript-infer-types-in-switch-statements-without-casting
-image: switch-with-types/switches.png
+image: switch-with-types/switches.jpg
 ---
 As a developer with very poor memory, I really like coding in typed languages. They allow me to forget my data types, and be sure to pass the right props around my code. If you are unfamiliar with typed languages, I suggest you read [this](https://www.google.it/books/edition/Advanced_Topics_in_Types_and_Programming/A5ic1MPTvVsC?hl=it&gbpv=0) book for a general overview, or [this](https://www.typescriptlang.org/docs/handbook/basic-types.html) article for a more specific hands-on guide for TypeScript.
 
@@ -117,15 +117,15 @@ Some screenshots of the code in action:
 
 Setting the element:
 
-![Set Element](/assets/images/blog/switch-with-types/2020-02-01_setElement-example.png)
+![Set Element](/assets/images/blog/switch-with-types/2020-02-01_setElement-example.jpg)
 
 Updating the element:
 
-![Update Element](/assets/images/blog/switch-with-types/2020-02-01_updateElement-example.png)
+![Update Element](/assets/images/blog/switch-with-types/2020-02-01_updateElement-example.jpg)
 
 Clearing the element:
 
-![Clear Element](/assets/images/blog/switch-with-types/2020-02-01_clearElement-example.png)
+![Clear Element](/assets/images/blog/switch-with-types/2020-02-01_clearElement-example.jpg)
 
 As mentioned above, you can also check out the code in action in the [`SwitchWithTypes` _StackBiz_ project](https://stackblitz.com/edit/switch-with-types?file=switch.ts), with live type checking.
 

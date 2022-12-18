@@ -5,7 +5,7 @@ date: 2022-12-18
 author: ilDon
 type: Article
 slug: a-simpler-way-to-use-tippyjs-with-react
-image: a-simpler-way-to-use-tippyjs-with-react/a-simpler-way-to-use-tippyjs-with-react.png
+image: a-simpler-way-to-use-tippyjs-with-react/a-simpler-way-to-use-tippyjs-with-react.jpg
 ---
 Tooltips are a powerful UX element. They help users understand the purpose of UI elements without cluttering the layout of the page.
 

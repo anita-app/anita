@@ -5,7 +5,7 @@ date: 2022-09-27
 author: ilDon
 type: Article
 slug: data-portability-is-a-hard-problem
-image: data-portability-is-a-hard-problem/data-portability-is-a-hard-problem.png
+image: data-portability-is-a-hard-problem/data-portability-is-a-hard-problem.jpg
 ---
 Data portability can be defined as the ability to take your data with you when you switch services. It is a feature that is often requested by users, but it is also a feature that is often not as smooth as users would like it to be.
 

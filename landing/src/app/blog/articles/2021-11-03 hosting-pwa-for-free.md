@@ -5,7 +5,7 @@ date: 2021-11-02
 author: ilDon
 type: Article
 slug: the-journey-of-anita-to-the-ultimate-bootstrapping-thanks-to-git-hub-pages
-image: hosting-pwa-for-free/hosting-pwa-for-free.png
+image: hosting-pwa-for-free/hosting-pwa-for-free.jpg
 ---
 Since I've started developing for the web, I have always looked for ways to develop, host, and distribute my free and open-source projects (FOSS) at no cost. The reasoning is that there are already enough factors that make open source challenging to maintain, so economic sustainability should not be one.
 

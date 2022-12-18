@@ -5,7 +5,7 @@ date: 2022-09-07
 author: ilDon
 type: Article
 slug: most-secure-cloud
-image: most-secure-cloud/most-secure-cloud.png
+image: most-secure-cloud/most-secure-cloud.jpg
 ---
 When it comes to data storage, security is a big concern. No matter what information you store, you want to make sure that it is safe and secure. Even trivial information is now worth a lot of money, and it is used to profile users.
 So you want to make sure that your data is safe. Even more, when dealing with important data hackers and other bad actors will try to get their hands on it, and you want to make sure that they can't. 
@@ -20,7 +20,7 @@ In short, the cloud is someone else's computer. Normally these computers acting 
 
 Technically speaking, these computers are servers. And the data center is a building where many servers are located. As a matter of fact the word “cloud” could not be further from what in the real world “the cloud” is. These data centers are not in the sky, but on the ground. And they are very much real, and not just a metaphor. In the picture below you can see an example of a data center.
 
-![Code Working meme](/assets/images/blog/most-secure-cloud/data_centre.png)
+![Code Working meme](/assets/images/blog/most-secure-cloud/data_centre.jpg)
 
 This means that whenever you store your data "in the cloud", you are actually storing it on someone else's computer. And this is a big problem, because you have no control over what happens to your data. If the owner of the data center goes bankrupt, your data is gone. If the owner of the data center decides to rise the prices for storage, you have either to stop using the service or to pay more. 
 
