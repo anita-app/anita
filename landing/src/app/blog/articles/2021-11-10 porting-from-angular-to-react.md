@@ -5,7 +5,7 @@ date: 2021-11-10
 author: ilDon
 type: Article
 slug: porting-anita-from-angular-to-react-resulted-in-20-less-code
-image: porting/porting-anita-from-angular-to-react.png
+image: porting/porting-anita-from-angular-to-react.jpg
 ---
 I started developing Anita in Angular because I had previously developed with it a form generator that could power the core parts of the app. Having years of experience also with React, though, I soon realized that Angular was slowing me down. So I decided to port Anita from Angular to React.
 
@@ -55,7 +55,7 @@ Since we want to keep the offline capabilities of the Angular app, and we want t
 
 Let's run `yarn start` to check that everything works as expected: 
 
-![React app initialized](/assets/images/blog/porting/2021-11-10_app_initialized.png)
+![React app initialized](/assets/images/blog/porting/2021-11-10_app_initialized.jpg)
 
 The only drawback of `create-react-app` is that it adds a lot of starter stuff to the project. Let's remove it.
 
@@ -86,8 +86,8 @@ In an Angular project all static files are normally in the `app/src/assets` fold
 Now we can update `index.html` and `manifest.json` in `public`, add Anita icons, title, and description. We can also remove the starter files left there by `create-react-app`:
 
 - public/favicon.ico
-- public/logo192.png
-- public/logo512.png
+- public/logo192.jpg
+- public/logo512.jpg
 
 Now let's move to the code base.
 
@@ -272,7 +272,7 @@ Let's implement a very basic admin panel in `index.tsx`:
 
 Lets' test if TailwindCSS works and how our initial layout works:
 
-![Tailwind initialized](/assets/images/blog/porting/2021-11-10_tailwind.png)
+![Tailwind initialized](/assets/images/blog/porting/2021-11-10_tailwind.jpg)
 
 Good enough for now. Let's add some components to improve the layout.
 
@@ -638,18 +638,18 @@ And now some screenshots of the final project, which you can also try live by vi
 
 1. The initial page, without any project: 
 
-![Anita React app - no projects](/assets/images/blog/porting/2021-11-21_final_result.png)
+![Anita React app - no projects](/assets/images/blog/porting/2021-11-21_final_result.jpg)
 
 2. A view of an example project:
 
-![Anita React app - one project](/assets/images/blog/porting/2021-11-21_final_result_with_project.png)
+![Anita React app - one project](/assets/images/blog/porting/2021-11-21_final_result_with_project.jpg)
 
 For comparison, the same views in the Angular version.
 
 1. The initial page, without any project: 
 
-![Anita Angular app - no projects](/assets/images/blog/porting/Anita_angular_no_projects.png)
+![Anita Angular app - no projects](/assets/images/blog/porting/Anita_angular_no_projects.jpg)
 
 2. A view of an example project:
 
-![Anita Angular app - one project](/assets/images/blog/porting/Anita_angular_projects_list.png)
+![Anita Angular app - one project](/assets/images/blog/porting/Anita_angular_projects_list.jpg)
