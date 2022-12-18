@@ -5,7 +5,7 @@
   "scripts": {
     "eslint": "eslint \"src/**/*.?(ts|tsx)\" --fix",
     "licenses": "npx license-checker --production --json --out ../landing/src/app/data-sources/app-packages.json",
-    "start": "cross-env BROWSER=none react-app-rewired start",
+    "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject"
@@ -71,7 +71,6 @@
     "@typescript-eslint/eslint-plugin": "^5.40.1",
     "@typescript-eslint/parser": "^5.40.1",
     "autoprefixer": "^10.4.12",
-    "cross-env": "^7.0.3",
     "eslint": "^8.26.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
