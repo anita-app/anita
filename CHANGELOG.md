@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.18.14] - 2022-12-18
+### Fixed
+- bug fixes.
+
 ## [0.18.13] - 2022-12-18
 ### Changed
 - using Tippyjs for tooltips.
