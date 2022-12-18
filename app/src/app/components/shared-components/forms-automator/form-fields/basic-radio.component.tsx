@@ -5,9 +5,8 @@ import { ValidatorsContainer } from 'app/components/shared-components/forms-auto
 import { useValidators } from 'app/components/shared-components/forms-automator/hooks/use-validators.hook'
 import uniqueId from 'lodash/uniqueId'
 import React, { memo, useRef, useState } from 'react'
-import ReactTooltip from 'react-tooltip'
-import { Icons } from 'app/libs/icons/icons.class'
 import { ISectionElement } from 'app/models/section-element/section-element.declarations'
+import { BasicRadioInfoIcon } from 'app/components/shared-components/forms-automator/form-fields/basic-radio-info-icon.component'
 /* eslint-disable eqeqeq */
 
 export const BasicRadio: React.FC<ICommonFormEleProps<IBasicRadio<ISectionElement>>> = memo(function BasicRadio ({ formEle, element, handleChange }: ICommonFormEleProps<IBasicRadio<ISectionElement>>) {
@@ -40,16 +39,7 @@ export const BasicRadio: React.FC<ICommonFormEleProps<IBasicRadio<ISectionElemen
             />
             <span className={option.disabled || formEle.disabled ? 'text-gray-300 cursor-not-allowed' : ''}>{option.label}</span>
             {option.hint && (
-            <>
-              <span data-tip={true} data-for={`${fieldId}${indexOption}`}>
-                <sup>
-                  {Icons.render('informationCircleOutline', 'ml-1 text-xs')}
-                </sup>
-              </span>
-              <ReactTooltip id={`${fieldId}${indexOption}`} effect="solid" data-multiline={true} className="msg-wrapper text-center">
-                {option.hint}
-              </ReactTooltip>
-            </>
+              <BasicRadioInfoIcon fieldId={fieldId} indexOption={indexOption} optionHint={option.hint} />
             )}
           </div>
         ))}

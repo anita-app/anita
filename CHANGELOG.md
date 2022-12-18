@@ -7,6 +7,13 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.18.13] - 2022-12-18
+### Changed
+- using Tippyjs for tooltips.
+
+### Fixed
+- improved sync.
+
 ## [0.18.12] - 2022-12-06
 ### Fixed
 - added fields to sections data structure.

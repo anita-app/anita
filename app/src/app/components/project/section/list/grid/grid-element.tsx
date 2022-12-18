@@ -34,7 +34,7 @@ export const ProjectSectionListGridElement: React.FC<IProjectSectionListGridElem
   return (
     <div ref={containerRef} key={props.element.id} className="h-max cursor-pointer mb-6 break-inside-avoid-column" onClick={handleClick}>
       <div className="w-full bg-white rounded-lg shadow flex items-center justify-between p-6 space-x-6">
-        <div className="flex-1 relative">
+        <div className="flex-1 relative overflow-hidden">
           <div className="flex items-center space-x-3">
             {props.titleField.componentCode !== FORM_COMPONENTS_CODES.richText && (
               <h3 className="text-gray-900 text-sm font-medium">{props.element[props.titleField.fieldName]}</h3>

@@ -6,7 +6,7 @@ import React, { useCallback } from 'react'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
-import { useShortcut } from 'app/components/hooks/use-shortcut'
+import { useShortcut } from 'app/components/hooks/shortcut'
 import { store } from 'app/libs/redux/state.store'
 
 interface IProjectSectionElementAddEditSaveCancelButtonsProps {

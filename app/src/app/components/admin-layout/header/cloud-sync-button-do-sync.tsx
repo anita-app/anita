@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from 'react'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
-import { useShortcut } from 'app/components/hooks/use-shortcut'
+import { useShortcut } from 'app/components/hooks/shortcut'
 import { RemoteAndLocalMerger } from 'app/libs/cloud-sync/remote-and-local-merger.class'
 import { DropboxHelper } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
 import { IS_SYNCING } from 'app/libs/cloud-sync/sync-manager.const'

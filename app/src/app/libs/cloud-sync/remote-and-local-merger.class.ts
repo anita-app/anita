@@ -4,7 +4,7 @@ import { Manager } from 'app/libs/manager/manager.class'
 import { Project } from 'app/models/project/project.class'
 import { DropboxHelper } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
-import { IS_SYNCING } from 'app/libs/cloud-sync/sync-manager.const'
+import { IS_SYNCING, LAST_SYNCED_ID } from 'app/libs/cloud-sync/sync-manager.const'
 import { CloudSyncBase } from 'app/libs/cloud-sync/cloud-sync-base.class'
 
 export class RemoteAndLocalMerger {
@@ -82,6 +82,10 @@ export class RemoteAndLocalMerger {
         [RESERVED_AUDS_KEYS._sections]: comparisonResult.localData[RESERVED_AUDS_KEYS._sections]
       }
       await this.project.updateSystemData(newSystemData)
+      LAST_SYNCED_ID.next(newSystemData[RESERVED_AUDS_KEYS._settings][0].id)
+      Object.keys(newSystemData[RESERVED_AUDS_KEYS._sections]).forEach((sectionId) => {
+        LAST_SYNCED_ID.next(sectionId)
+      })
     }
     for (const action in comparisonResult.local) {
       const actionAsKey = action as keyof IComparisonResult['local']
@@ -104,8 +108,10 @@ export class RemoteAndLocalMerger {
     comparisonResult: IComparisonResult
   ): Promise<void> {
     const sectionObject = this.project.getSectionById(section)!
+    const sectionId = sectionObject.id
     if (comparisonResult.local[actionAsKey]?.[section]?.length) {
       for (const element of comparisonResult.local[actionAsKey][section]!) {
+        const elementId = element.id
         if (actionAsKey === 'insert') {
           await sectionObject.saveElement(element, EDITOR_MODE.add)
         }
@@ -115,7 +121,11 @@ export class RemoteAndLocalMerger {
         if (actionAsKey === 'delete') {
           await sectionObject.deleteElement(element)
         }
+        if (elementId) {
+          LAST_SYNCED_ID.next(elementId)
+        }
       }
+      LAST_SYNCED_ID.next(sectionId)
     }
   }
 

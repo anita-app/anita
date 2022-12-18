@@ -84,3 +84,11 @@ select.border-red-300:focus {
 .main-scrollbar::-webkit-scrollbar-thumb {
   border: 3px solid theme('colors.gray.100') !important;
 }
+
+/**
+  * Ionicons
+  */
+
+ion-icon {
+  pointer-events: none;
+}

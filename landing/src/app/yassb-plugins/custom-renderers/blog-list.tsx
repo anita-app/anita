@@ -21,7 +21,7 @@ export const blogList: Renderer = ({ source, lang, options, frontMatterStore }: 
       divs.push(
         <div key={filePaths.absolutePath} className="flex flex-col overflow-hidden rounded-lg shadow-lg">
           <a href={filePaths.absoluteUrl} className="flex-shrink-0">
-            <img className="h-48 w-full object-cover" src={`/assets/images/blog/${frontMatterStore[filePaths.absolutePath].image}`} alt="" />
+            <img className="h-80 w-full object-cover" src={`/assets/images/blog/${frontMatterStore[filePaths.absolutePath].image}`} alt="" />
           </a>
           <div className="flex flex-1 flex-col justify-between bg-white p-6">
             <div className="flex-1">

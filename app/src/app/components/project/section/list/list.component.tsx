@@ -8,6 +8,7 @@ import { Manager } from 'app/libs/manager/manager.class'
 import { SupportedViews } from 'app/models/section/view-settings.const'
 import { ProjectSectionListTabs } from 'app/components/project/section/list/tabs/list-tabs.component'
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
+import { useIdLastChangedBySync } from 'app/components/hooks/id-last-changed-by-sync'
 
 export const ProjectSectionList: React.FC = () => {
   const params = useParams()
@@ -15,6 +16,8 @@ export const ProjectSectionList: React.FC = () => {
   const sectionId = params[URL_PARAMS.sectionId]
   const [sectionData, setSectionData] = useState<Array<ISectionElement> | undefined | null>(null)
   const [activeTab, setActiveTab] = useState<SupportedViews | null>(null)
+
+  const sectionLastChangedBySyncAt = useIdLastChangedBySync(sectionId)
 
   useEffect(() => {
     let isMounted = true
@@ -39,7 +42,7 @@ export const ProjectSectionList: React.FC = () => {
     return () => {
       isMounted = false
     }
-  }, [sectionId, projectId])
+  }, [sectionId, projectId, sectionLastChangedBySyncAt])
 
   if (sectionData === undefined) {
     return <Navigate to={ANITA_URLS.projectsList} />
