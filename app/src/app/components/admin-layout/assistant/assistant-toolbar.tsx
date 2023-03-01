@@ -61,8 +61,8 @@ export const AssistantToolbar = () => {
   }
 
   return (
-    <div className={`fixed right-0 bottom-0 p-4 ${apiKey ? 'w-full z-[10]' : ''}`}>
-      <div className="bg-white mt-2 rounded-lg shadow-md border">
+    <div className={`fixed flex flex-col right-0 bottom-0 p-4 h-full max-h-full z-[10] overflow-y-auto ${apiKey ? 'w-full' : 'w-auto'}`}>
+      <div className="flex flex-col max-h-full bg-white mt-2 rounded-lg shadow-md border">
         <div className="flex justify-end">
           <Button
             id="close"
@@ -77,12 +77,11 @@ export const AssistantToolbar = () => {
           />
         </div>
         <div className="p-4">
-
-          {!!apiKey && (<AssistantToolbarEnterPrompt apiKey={apiKey} />)}
-          {!apiKey && (<AssistantToolbarEnterApiKey handleApiKeySubmit={handleApiKeySubmit} />)}
+          {!!apiKey && <AssistantToolbarEnterPrompt apiKey={apiKey} />}
+          {!apiKey && <AssistantToolbarEnterApiKey handleApiKeySubmit={handleApiKeySubmit} />}
         </div>
         {responses.length > 0 && (
-          <div className="p-4">
+          <div className="flex flex-col max-h-full p-4 overflow-auto">
             <h3 className="text-lg font-semibold">Responses</h3>
             <ul className="mt-2">
               {responses.map((response, index) => (
