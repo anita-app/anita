@@ -17,7 +17,7 @@ function getPlatform () {
 const platform = getPlatform().toLowerCase()
 
 const isOSX = /mac/.test(platform)
-const isIOS = ['iphone', 'ipad', 'ipod'].indexOf(platform)
+const isIOS = ['iphone', 'ipad', 'ipod'].indexOf(platform) !== -1
 /** For detecting phones vs. tablets, see:
   * https://stackoverflow.com/questions/9533106/detect-phone-vs-tablet
   * https://developers.google.com/search/blog/2011/03/mo-better-to-also-detect-mobile-user

@@ -26,11 +26,11 @@ export const AssistantProvider: React.FC<IAssistantProviderProps> = ({ children 
   const [responses, setResponses] = useState<Array<string>>([])
 
   const addQuery = (query: string) => {
-    setQueries([...queries, query])
+    setQueries([query, ...queries])
   }
 
   const addResponse = (response: string) => {
-    setResponses([...responses, response])
+    setResponses([response, ...responses])
   }
 
   const value = {

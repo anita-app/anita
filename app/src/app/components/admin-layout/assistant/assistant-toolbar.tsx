@@ -5,6 +5,7 @@ import { AssistantToolbarOpenButton } from 'app/components/admin-layout/assistan
 import { useShortcut } from 'app/components/hooks/shortcut'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
+import { Icons } from 'app/libs/icons/icons.class'
 import React, { useState, useEffect } from 'react'
 
 export const AssistantToolbar = () => {
@@ -52,7 +53,7 @@ export const AssistantToolbar = () => {
     callback: openAssistant
   })
 
-  const { responses } = useAssistant()
+  const { responses, queries } = useAssistant()
 
   if (!isOpen) {
     return (
@@ -62,8 +63,8 @@ export const AssistantToolbar = () => {
 
   return (
     <div className={`fixed flex flex-col right-0 bottom-0 p-4 h-full max-h-full z-[10] overflow-y-auto ${apiKey ? 'w-full' : 'w-auto'}`}>
-      <div className="flex flex-col max-h-full bg-white mt-2 rounded-lg shadow-md border">
-        <div className="flex justify-end">
+      <div className="mt-auto flex flex-col max-h-full bg-white rounded-lg shadow-md border">
+        <div className="flex justify-end mb-0.5">
           <Button
             id="close"
             type={Type.transparent}
@@ -76,18 +77,18 @@ export const AssistantToolbar = () => {
             size="xs"
           />
         </div>
-        <div className="p-4">
+        <div className="p-4 pt-0">
           {!!apiKey && <AssistantToolbarEnterPrompt apiKey={apiKey} />}
           {!apiKey && <AssistantToolbarEnterApiKey handleApiKeySubmit={handleApiKeySubmit} />}
         </div>
         {responses.length > 0 && (
-          <div className="flex flex-col max-h-full p-4 overflow-auto">
-            <h3 className="text-lg font-semibold">Responses</h3>
-            <ul className="mt-2">
+          <div className="flex flex-col max-h-full p-4 pt-0 overflow-auto">
+            <ul>
               {responses.map((response, index) => (
                 <li key={index} className="mt-2">
                   <div className="bg-gray-100 p-2 rounded-lg">
-                    <pre className="text-sm">{response}</pre>
+                    <div className="flex items-center mb-2">{ Icons.render('chevronForwardOutline')}<pre className="whitespace-pre-line text-sm italic">{queries[index]}</pre></div>
+                    <pre className="text-sm whitespace-pre-line">{response}</pre>
                   </div>
                 </li>
               ))}
