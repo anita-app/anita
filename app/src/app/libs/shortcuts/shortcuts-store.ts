@@ -1,7 +1,7 @@
 export interface IShortcut {
   id?: string
   key: string
-  withMetakey?: boolean
+  withMetaKey?: boolean
   withShift?: boolean
   skipIfInsideInput?: boolean
   callback: (...args: Array<any>) => void

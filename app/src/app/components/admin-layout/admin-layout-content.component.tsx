@@ -1,3 +1,4 @@
+import { AssistantToolbar } from 'app/components/admin-layout/assistant/assistant-toolbar'
 import React, { ReactNode } from 'react'
 
 interface IContentProps {
@@ -6,6 +7,7 @@ interface IContentProps {
 
 export const AdminLayoutContent: React.FC<IContentProps> = (props) => (
   <div className="flex-1 p-2 md:p-3 md:pt-5 lg:pt-5 lg:p-10 pt-5 overflow-auto main-scrollbar">
+    <AssistantToolbar />
     {props.children}
   </div>
 )

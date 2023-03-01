@@ -37,7 +37,7 @@ export const ProjectSectionElementAddEditSaveCancelButtons: React.FC<IProjectSec
     navigate(-1)
   }, [navigate])
 
-  useShortcut({ key: 's', withMetakey: true, callback: saveOnShortcut.bind(undefined, sectionId) })
+  useShortcut({ key: 's', withMetaKey: true, callback: saveOnShortcut.bind(undefined, sectionId) })
   useShortcut({ key: 'Escape', callback: handleCancel })
 
   const hasLongDetailsField = Manager.getCurrentProject()!.getSectionById(sectionId)!.getFirstFieldOfType([FORM_COMPONENTS_CODES.richText]) !== undefined

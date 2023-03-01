@@ -16,9 +16,9 @@ export class ShortcutsManager {
 
   private static getShortcutsStore (shortcut: IShortcut): IShortcutsByKey {
     switch (true) {
-      case shortcut.withMetakey && shortcut.withShift:
+      case shortcut.withMetaKey && shortcut.withShift:
         return SHORTCUTS_STORE.withMetaKeyAndShift
-      case shortcut.withMetakey:
+      case shortcut.withMetaKey:
         return SHORTCUTS_STORE.withMetaKey
       case shortcut.withShift:
         return SHORTCUTS_STORE.withShift

@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.19.0] - 2023-03-02
+### Added
+- added openAI powered assistant.
+
 ## [0.18.15] - 2022-12-18
 ### Changed
 - using jpg instead of png.
