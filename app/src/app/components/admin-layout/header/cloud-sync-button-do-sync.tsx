@@ -43,7 +43,7 @@ export const CloudSyncButtonDoSync: React.FC<ICloudSyncButtonDoSyncProps> = memo
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  useShortcut({ key: 's', withMetakey: true, callback: handleSyncClick })
+  useShortcut({ key: 's', withMetaKey: true, callback: handleSyncClick })
 
   return (
     <Button
