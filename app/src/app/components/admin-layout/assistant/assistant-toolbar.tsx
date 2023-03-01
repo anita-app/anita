@@ -1,3 +1,4 @@
+import { useAssistant } from 'app/components/admin-layout/assistant/assistant-provider'
 import { AssistantToolbarEnterApiKey } from 'app/components/admin-layout/assistant/assistant-toolbar-enter-api-key'
 import { AssistantToolbarEnterPrompt } from 'app/components/admin-layout/assistant/assistant-toolbar-enter-prompt'
 import { AssistantToolbarOpenButton } from 'app/components/admin-layout/assistant/assistant-toolbar-open-button'
@@ -51,6 +52,8 @@ export const AssistantToolbar = () => {
     callback: openAssistant
   })
 
+  const { responses } = useAssistant()
+
   if (!isOpen) {
     return (
       <AssistantToolbarOpenButton openAssistant={openAssistant} />
@@ -75,17 +78,23 @@ export const AssistantToolbar = () => {
         </div>
         <div className="p-4">
 
-          {!!apiKey && (
-          <AssistantToolbarEnterPrompt
-            apiKey={apiKey}
-          />
-          )}
-          {!apiKey && (
-          <AssistantToolbarEnterApiKey
-            handleApiKeySubmit={handleApiKeySubmit}
-          />
-          )}
+          {!!apiKey && (<AssistantToolbarEnterPrompt apiKey={apiKey} />)}
+          {!apiKey && (<AssistantToolbarEnterApiKey handleApiKeySubmit={handleApiKeySubmit} />)}
         </div>
+        {responses.length > 0 && (
+          <div className="p-4">
+            <h3 className="text-lg font-semibold">Responses</h3>
+            <ul className="mt-2">
+              {responses.map((response, index) => (
+                <li key={index} className="mt-2">
+                  <div className="bg-gray-100 p-2 rounded-lg">
+                    <pre className="text-sm">{response}</pre>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   )
