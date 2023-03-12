@@ -37,7 +37,6 @@ export const AssistantToolbarEnterPrompt: React.FC<IAssistantToolbarEnterPromptP
     HISTORY.responses.push(response)
     assistant.setQueries(HISTORY.queries)
     assistant.setResponses(HISTORY.responses)
-    console.log('handleAssistantRequest ~ assistant:', assistant)
   }
 
   const focusTextarea = (e: KeyboardEvent) => {

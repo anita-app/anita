@@ -41,7 +41,6 @@ export const fetchFromOpenAI = async (inputText: string, apiKey: string, history
 
   const messages: Array<IGptPayload> = []
 
-  console.log('fetchFromOpenAI ~ history:', history)
   if (history.queries.length > 0) {
     for (let i = 0; i < history.queries.length; i++) {
       messages.push({

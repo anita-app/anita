@@ -2,10 +2,10 @@ import { useAssistant } from 'app/components/admin-layout/assistant/assistant-pr
 import { AssistantToolbarEnterApiKey } from 'app/components/admin-layout/assistant/assistant-toolbar-enter-api-key'
 import { AssistantToolbarEnterPrompt } from 'app/components/admin-layout/assistant/assistant-toolbar-enter-prompt'
 import { AssistantToolbarOpenButton } from 'app/components/admin-layout/assistant/assistant-toolbar-open-button'
+import { AssistantToolbarResponsesList } from 'app/components/admin-layout/assistant/assistant-toolbar-responses-list'
 import { useShortcut } from 'app/components/hooks/shortcut'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
-import { Icons } from 'app/libs/icons/icons.class'
 import React, { useState, useEffect } from 'react'
 
 export const AssistantToolbar = () => {
@@ -81,20 +81,7 @@ export const AssistantToolbar = () => {
           {!!apiKey && <AssistantToolbarEnterPrompt apiKey={apiKey} />}
           {!apiKey && <AssistantToolbarEnterApiKey handleApiKeySubmit={handleApiKeySubmit} />}
         </div>
-        {responses.length > 0 && (
-          <div className="flex flex-col max-h-full p-4 pt-0 overflow-auto">
-            <ul>
-              {responses.map((response, index) => (
-                <li key={index} className="mt-2">
-                  <div className="bg-gray-100 p-2 rounded-lg">
-                    <div className="flex items-center mb-2">{ Icons.render('chevronForwardOutline')}<pre className="whitespace-pre-line text-sm italic">{queries[index]}</pre></div>
-                    <pre className="text-sm whitespace-pre-line">{response}</pre>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+        <AssistantToolbarResponsesList responses={responses} queries={queries} />
       </div>
     </div>
   )
