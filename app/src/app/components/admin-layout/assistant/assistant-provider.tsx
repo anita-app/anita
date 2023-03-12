@@ -3,8 +3,9 @@ import React, { useState, useContext, createContext } from 'react'
 interface AssistantContextType {
   queries: Array<string>
   responses: Array<string>
-  addQuery: (query: string) => void
-  addResponse: (response: string) => void
+  setQueries: (queries: Array<string>) => void
+  setResponses: (responses: Array<string>) => void
+  clear: () => void
 }
 
 const AssistantContext = createContext<AssistantContextType | null>(null)
@@ -22,22 +23,28 @@ interface IAssistantProviderProps {
 }
 
 export const AssistantProvider: React.FC<IAssistantProviderProps> = ({ children }) => {
-  const [queries, setQueries] = useState<Array<string>>([])
-  const [responses, setResponses] = useState<Array<string>>([])
+  const [queries, setQueriesState] = useState<Array<string>>([])
+  const [responses, setResponsesState] = useState<Array<string>>([])
 
-  const addQuery = (query: string) => {
-    setQueries([query, ...queries])
+  const setQueries = (queries: Array<string>) => {
+    setQueriesState([...queries])
   }
 
-  const addResponse = (response: string) => {
-    setResponses([response, ...responses])
+  const setResponses = (responses: Array<string>) => {
+    setResponsesState([...responses])
+  }
+
+  const clear = () => {
+    setQueriesState([])
+    setResponsesState([])
   }
 
   const value = {
     queries,
     responses,
-    addQuery,
-    addResponse
+    setQueries,
+    setResponses,
+    clear
   }
 
   return (
