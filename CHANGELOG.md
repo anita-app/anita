@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.20.0] - 2023-03-12
+### Added
+- added support for conversation with assistant.
+
 ## [0.19.0] - 2023-03-02
 ### Added
 - added openAI powered assistant.

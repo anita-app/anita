@@ -4,6 +4,16 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.20.0",
+      "date": "2023-03-12",
+      "items": [
+        {
+          "type": "added",
+          "value": "added support for conversation with assistant"
+        }
+      ]
+    },
+    {
       "version": "0.19.0",
       "date": "2023-03-02",
       "items": [
