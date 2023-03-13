@@ -33,7 +33,7 @@ export interface IAssistantHistory {
   responses: Array<string>
 }
 
-const FORCE_IN_DEV_MODE = true
+const FORCE_IN_DEV_MODE = false
 const DEBUG = DevTools.isReactDev() && !FORCE_IN_DEV_MODE
 
 const randomStringThatLooksLikeAnAnswer = () => {
