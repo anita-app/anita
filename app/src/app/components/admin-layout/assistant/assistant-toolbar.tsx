@@ -77,11 +77,11 @@ export const AssistantToolbar = () => {
             size="xs"
           />
         </div>
+        <AssistantToolbarResponsesList responses={responses} queries={queries} />
         <div className="p-4 pt-0">
           {!!apiKey && <AssistantToolbarEnterPrompt apiKey={apiKey} />}
           {!apiKey && <AssistantToolbarEnterApiKey handleApiKeySubmit={handleApiKeySubmit} />}
         </div>
-        <AssistantToolbarResponsesList responses={responses} queries={queries} />
       </div>
     </div>
   )

@@ -13,8 +13,8 @@ export const AssistantToolbarResponsesList: React.FC<IAssistantToolbarResponsesL
   return (
     <div className="flex flex-col max-h-full p-4 pt-0 overflow-auto">
       <ul>
-        {props.responses.map((response, index) => (
-          <AssistantToolbarResponsesListItem key={index} response={response} index={index} queries={props.queries} />
+        {props.queries.map((query, index) => (
+          <AssistantToolbarResponsesListItem key={index} response={props.responses[index]} query={query} />
         ))}
       </ul>
     </div>

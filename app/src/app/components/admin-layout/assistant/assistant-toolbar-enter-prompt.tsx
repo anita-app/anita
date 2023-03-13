@@ -8,6 +8,7 @@ import * as React from 'react'
 import { PLATFORM } from 'app/const/platform.const'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
+import { Icons } from 'app/libs/icons/icons.class'
 
 interface IAssistantToolbarEnterPromptProps {
   apiKey: string
@@ -26,17 +27,18 @@ const HISTORY: IAssistantHistory = {
 export const AssistantToolbarEnterPrompt: React.FC<IAssistantToolbarEnterPromptProps> = (props) => {
   const textareaRef = React.useRef<HTMLTextAreaElement>(null)
   const [state, setState, getState] = useMultiState<IAssistantToolbarEnterPromptState>({ query: '', isFetching: false })
-  const assistant = useAssistant()
+  const { responses, setQueries, setResponses, clear } = useAssistant()
   const handleAssistantRequest = async (event: React.MouseEvent | KeyboardEvent) => {
     event.preventDefault()
     const query = getState().query
     setState({ isFetching: true })
-    const response = await fetchFromOpenAI(query, props.apiKey, HISTORY)
-    setState({ isFetching: false, query: '' })
     HISTORY.queries.push(query)
+    setQueries(HISTORY.queries)
+    setState({ query: '' })
+    const response = await fetchFromOpenAI(props.apiKey, HISTORY)
+    setState({ isFetching: false })
     HISTORY.responses.push(response)
-    assistant.setQueries(HISTORY.queries)
-    assistant.setResponses(HISTORY.responses)
+    setResponses(HISTORY.responses)
   }
 
   const focusTextarea = (e: KeyboardEvent) => {
@@ -63,7 +65,7 @@ export const AssistantToolbarEnterPrompt: React.FC<IAssistantToolbarEnterPromptP
 
   const doClear = () => {
     setState({ query: '' })
-    assistant.clear()
+    clear()
     HISTORY.queries.length = 0
     HISTORY.responses.length = 0
   }
@@ -72,6 +74,19 @@ export const AssistantToolbarEnterPrompt: React.FC<IAssistantToolbarEnterPromptP
 
   return (
     <>
+      {state.isFetching && (
+        <div className="chat-message">
+          <div className="flex items-end">
+            <div className="flex flex-col space-y-2 text-xs order-2 items-start mb-4">
+              <div>
+                <span className="px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600 whitespace-pre-line animate-pulse">
+                  {Icons.render('ellipsisHorizontalOutline')}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <textarea
         ref={textareaRef}
         className={`${FORM_ELEMENTS_CSS_CLASSES} w-full`}
@@ -86,7 +101,7 @@ export const AssistantToolbarEnterPrompt: React.FC<IAssistantToolbarEnterPromptP
       <div className="flex justify-end md:justify-between text-xs text-gray-500">
         <span className="hidden md:block">Press {metaSymbol}+Enter to submit</span>
         <span>
-          {!!assistant.responses.length && (
+          {!!responses.length && (
             <Button
               id="ask-assistant"
               type={Type.secondary}

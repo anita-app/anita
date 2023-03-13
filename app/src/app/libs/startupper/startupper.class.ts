@@ -6,6 +6,7 @@ import { INDEXEDDB_PLUGIN } from 'app/libs/db-connector/plugins/indexed-db/expor
 import { Logger } from 'app/libs/logger/logger.class'
 import { Manager } from 'app/libs/manager/manager.class'
 import { ShortcutsListener } from 'app/libs/shortcuts/shortcuts-listener'
+import { DevTools } from 'app/libs/tools/dev-tools.class'
 import { appVersion } from 'app/version'
 import React from 'react'
 
@@ -32,17 +33,10 @@ export class Startupper {
   }
 
   /**
-   * Detect if React is in development mode
-   */
-  private isReactDev (): boolean {
-    return '_self' in React.createElement('div')
-  }
-
-  /**
    * Sets logger debug
    */
   private setLoggerDebug (): void {
-    Logger.debug = this.isReactDev()
+    Logger.debug = DevTools.isReactDev()
   }
 
   /**
