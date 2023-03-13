@@ -41,13 +41,19 @@ export const AssistantToolbarEnterPrompt: React.FC<IAssistantToolbarEnterPromptP
     setResponses(HISTORY.responses)
   }
 
-  const focusTextarea = (e: KeyboardEvent) => {
+  const focusTextarea = (e?: KeyboardEvent) => {
     if (textareaRef.current && document.activeElement !== textareaRef.current) {
-      e.preventDefault()
-      e.stopPropagation()
+      e?.preventDefault()
+      e?.stopPropagation()
       textareaRef.current.focus()
     }
   }
+
+  React.useEffect(() => {
+    if (responses.length > 0) {
+      focusTextarea()
+    }
+  }, [responses])
 
   useShortcut({
     id: 'submit-assistant-request',

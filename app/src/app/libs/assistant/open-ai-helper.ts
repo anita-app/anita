@@ -45,14 +45,17 @@ const randomStringThatLooksLikeAnAnswer = () => {
   return result
 }
 
-const preparedResponse = 'To set an element to full width in Tailwind, you can use the `w-full` class. This class will make the element take up the full width of its parent container. You can also add the `max-w-full` class to ensure the element takes up the full width even on larger screens.\n\nHere\'s an example of how to use it:\n\n```html\n<div class="w-full max-w-full">\n<!-- Your content here -->\n</div>\n```'
+const preparedResponses = [
+  'To set an element to full width in Tailwind, you can use the `w-full` class. This class will make the element take up the full width of its parent container. You can also add the `max-w-full` class to ensure the element takes up the full width even on larger screens.\n\nHere\'s an example of how to use it:\n\n```html\n<div class="w-full max-w-full">\n<!-- Your content here -->\n</div>\n```',
+  'To set a background color in Tailwind, you can use the `bg-` prefix followed by the name of the color. For example, to set a red background color, you would use the class `bg-red-500`.\n\nHere\'s an example:\n\n```\n<div class="w-full bg-red-500">\nThis element will take up the full width of its container and have a red background color.\n</div>\n```\n\nYou can find a list of all the built-in colors in Tailwind in the official documentation: https://tailwindcss.com/docs/background-color'
+]
 
 const OPEN_AI_URL = 'https://api.openai.com/v1/chat/completions'
 
 export const fetchFromOpenAI = async (apiKey: string, history: IAssistantHistory): Promise<string> => {
   if (DEBUG) {
-    if (history.queries.length === 1) {
-      return preparedResponse
+    if (preparedResponses[history.queries.length - 1]) {
+      return preparedResponses[history.queries.length - 1]
     }
     return randomStringThatLooksLikeAnAnswer()
   }
