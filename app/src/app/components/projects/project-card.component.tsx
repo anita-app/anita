@@ -14,7 +14,7 @@ interface IProjectCardProps {
 }
 
 export const ProjectCard: React.FC<IProjectCardProps> = ({ project }) => {
-  const projectState = useAtomValue(ProjectAtoms.current)
+  const projectState = useAtomValue(ProjectAtoms.currentSystemData)
 
   return (
     <div className=" mt-4 h-full border-2 border-gray-200 border-opacity-60 rounded-lg bg-white">

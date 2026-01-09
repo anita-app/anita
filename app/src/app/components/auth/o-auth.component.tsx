@@ -6,8 +6,9 @@ import { DropboxHelper } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
 import { OAuthUtils } from 'app/libs/cloud-sync/o-auth-utils.class'
 import { WordpressHelper } from 'app/libs/cloud-sync/wordpress/wordpress-helper.class'
 import { ANITA_URLS } from 'app/libs/routing/anita-routes.constant'
+import { RoutingState } from 'app/state/routing/routing-state.class'
 import React from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
 const onClick = () => {
   window.close()
@@ -15,7 +16,6 @@ const onClick = () => {
 
 export const OAuth: React.FC = () => {
   const data = OAuthUtils.parseQueryString()
-  const navigate = useNavigate()
 
   const code = data.code
   const service = data.service ?? SupportedCloud.DROPBOX
@@ -32,7 +32,7 @@ export const OAuth: React.FC = () => {
   }
 
   const goToProjectsList = () => {
-    navigate(ANITA_URLS.projectsList)
+    RoutingState.goTo(ANITA_URLS.projectsList)
   }
 
   return (

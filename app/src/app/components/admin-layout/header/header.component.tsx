@@ -11,7 +11,7 @@ import { ProjectAtoms } from 'app/state/project/project.atoms'
 
 export const AdminLayoutHeader: React.FC = () => {
   const sidebarCollapsed = useAtomValue(LayoutAtoms.sidebarCollapsed)
-  const project = useAtomValue(ProjectAtoms.current)
+  const project = useAtomValue(ProjectAtoms.currentSystemData)
   const remoteIds = useAtomValue(SyncStateAtoms.wordPressRemotesIds)
   const remoteIdsLength = remoteIds?.length
 

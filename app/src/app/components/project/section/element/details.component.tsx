@@ -11,11 +11,12 @@ import { MainContentContainer } from 'app/components/shared-components/common-ui
 import { FormFieldsModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { Loader } from 'app/components/shared-components/loader/loader.component'
 import React, { useEffect, useState } from 'react'
-import { Navigate, useNavigate, useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
 import { CheckBoxEditable } from 'app/components/shared-components/values-renderers/checkbox-editable.component'
 import { useShortcut } from 'app/components/hooks/shortcut'
 import { useIdLastChangedBySync } from 'app/components/hooks/id-last-changed-by-sync'
+import { RoutingState } from 'app/state/routing/routing-state.class'
 
 const ValueWithLabel = ({ formModel, value }: { formModel: FormFieldsModel<ISectionElement>; value: any }) => {
   if (typeof value === 'undefined') {
@@ -59,10 +60,9 @@ export const ProjectSectionElementDetails: React.FC = () => {
   const projectId = params[URL_PARAMS.projectId]
   const sectionId = params[URL_PARAMS.sectionId]
   const elementId = params[URL_PARAMS.elementId]
-  const navigate = useNavigate()
 
   const goBack = () => {
-    navigate(-1)
+    RoutingState.goTo(-1)
   }
 
   useShortcut({ key: 'Escape', callback: goBack })

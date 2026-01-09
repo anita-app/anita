@@ -3,26 +3,24 @@ import { IProjectSettings } from 'app/models/project/project.declarations'
 import { Manager } from 'app/cross-refs-exports'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { ModalState } from 'app/state/modal/modal-state.class'
 import { WordpressHelper } from 'app/libs/cloud-sync/wordpress/wordpress-helper.class'
 import { ProjectDeletor } from 'app/models/project/project-deletor.class'
 import { ProjectState } from 'app/state/project/project-state.class'
+import { RoutingState } from 'app/state/routing/routing-state.class'
 
 interface IDeleteProjectButtonProps {
   project: IProjectSettings
 }
 
 export const DeleteProjectButton: React.FC<IDeleteProjectButtonProps> = ({ project }) => {
-  const navigate = useNavigate()
-
   const handleClickDelete = async () => {
     if (Manager.getCurrentProject()?.getId() === project.id) {
       ProjectState.resetCurrentProject()
     }
     new ProjectDeletor(project.id).delete()
-    navigate(ANITA_URLS.projectsList)
+    RoutingState.goTo(ANITA_URLS.projectsList)
   }
 
   const handleClickModal = () => {

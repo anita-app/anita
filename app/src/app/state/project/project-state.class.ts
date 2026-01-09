@@ -5,19 +5,19 @@ import { ISection } from 'app/models/section/section.declarations'
 
 export class ProjectState {
   public static setCurrentProject = (systemData: TSystemData) => {
-    Bucket.general.set(ProjectAtoms.current, systemData)
+    Bucket.general.set(ProjectAtoms.currentSystemData, systemData)
   }
 
   public static resetCurrentProject = () => {
-    Bucket.general.set(ProjectAtoms.current, null)
+    Bucket.general.set(ProjectAtoms.currentSystemData, null)
   }
 
   public static getCurrentProject = (): TSystemData | null => (
-    Bucket.general.get(ProjectAtoms.current)
+    Bucket.general.get(ProjectAtoms.currentSystemData)
   )
 
   public static updateSection = (section: ISection) => {
-    const current = Bucket.general.get(ProjectAtoms.current)
+    const current = Bucket.general.get(ProjectAtoms.currentSystemData)
     if (!current || !current._sections) {
       return
     }
@@ -29,6 +29,6 @@ export class ProjectState {
 
     const updatedSections = current._sections.slice()
     updatedSections[sectionIndex] = section
-    Bucket.general.set(ProjectAtoms.current, { ...current, _sections: updatedSections })
+    Bucket.general.set(ProjectAtoms.currentSystemData, { ...current, _sections: updatedSections })
   }
 }

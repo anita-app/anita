@@ -10,7 +10,7 @@ interface IAdminLayoutSidebarMenuProps {
 }
 
 export const AdminLayoutSidebarMenu: React.FC<IAdminLayoutSidebarMenuProps> = (props) => {
-  const project = useAtomValue(ProjectAtoms.current)
+  const project = useAtomValue(ProjectAtoms.currentSystemData)
   const [currentSelectedSectionId, setCurrentSelectedSectionId] = React.useState<string | null>(null)
 
   if (project === null) {

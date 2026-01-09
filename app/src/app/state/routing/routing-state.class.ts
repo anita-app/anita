@@ -1,9 +1,21 @@
 import { Logger } from 'app/libs/logger/logger.class'
 import { IRouteParams, ROUTE_PARAM_VALUES, SORTED_ROUTES, TAnitaRoute, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
+import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
 import { Bucket } from 'app/state/bucket.state'
 import { RoutingAtoms } from 'app/state/routing/routing.atoms'
+import { NavigateFunction } from 'react-router-dom'
 
 export class RoutingState {
+  public static navigate: NavigateFunction
+
+  public static goTo (url: string | number, paramsToFill?: Array<{ name: URL_PARAMS; value: string }>): void {
+    if (!paramsToFill || typeof url === 'number') {
+      RoutingState.navigate(url as any, { flushSync: true, viewTransition: true })
+    } else {
+      RoutingState.navigate(urlParamFiller(url, paramsToFill), { flushSync: true, viewTransition: true })
+    }
+  }
+
   public static syncFromPath = (rawPath: string) => {
     const [route, params] = RoutingState.parsePath(rawPath)
     RoutingState.commitRouteState(route, params)

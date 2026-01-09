@@ -1,11 +1,11 @@
 import React, { useRef } from 'react'
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
-import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
 import { ISectionElement } from 'app/models/section-element/section-element.declarations'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { RichText } from 'app/components/shared-components/values-renderers/rich-text.component'
 import { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
+import { RoutingState } from 'app/state/routing/routing-state.class'
 
 interface IProjectSectionListGridElementProps {
   element: ISectionElement
@@ -19,15 +19,14 @@ const shortenDescription = (string: string) => string.length > DESCRIPTION_MAX_L
 
 export const ProjectSectionListGridElement: React.FC<IProjectSectionListGridElementProps> = (props) => {
   const containerRef = useRef<HTMLDivElement>(null)
-  const navigation = useNavigate()
   const params = useParams()
   const handleClick = () => {
     if (params.projectId && params.sectionId && props.element.id) {
-      navigation(urlParamFiller(ANITA_URLS.projectSectionEleDetails, [
+      RoutingState.goTo(ANITA_URLS.projectSectionEleDetails, [
         { name: URL_PARAMS.projectId, value: params.projectId },
         { name: URL_PARAMS.sectionId, value: params.sectionId },
         { name: URL_PARAMS.elementId, value: props.element.id }
-      ]))
+      ])
     }
   }
 

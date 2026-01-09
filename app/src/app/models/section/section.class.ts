@@ -30,18 +30,17 @@ export class Section implements ISection {
 
   constructor (
     private projectId: string,
-    private allSections: Array<ISection>,
-    private sectionData: ISection = {} as ISection
+    private sectionDefinition: ISection = {} as ISection
   ) {
-    this.id = sectionData.id
-    this.title = sectionData.title
-    this.icon = sectionData.icon || undefined
-    this.childOf = sectionData.childOf
-    this.formModel = sectionData.formModel
+    this.id = sectionDefinition.id
+    this.title = sectionDefinition.title
+    this.icon = sectionDefinition.icon || undefined
+    this.childOf = sectionDefinition.childOf
+    this.formModel = sectionDefinition.formModel
     Bucket.general.set(this.visibleColumnsInTableView, this.getVisibleColumnsInTableView())
     Bucket.general.set(this.sorting, this.getSorting())
-    this.createdAt = sectionData[RESERVED_FIELDS.createdAt] || DateTools.getUtcIsoString()
-    this.updatedAt = sectionData[RESERVED_FIELDS.updatedAt]
+    this.createdAt = sectionDefinition[RESERVED_FIELDS.createdAt] || DateTools.getUtcIsoString()
+    this.updatedAt = sectionDefinition[RESERVED_FIELDS.updatedAt]
   }
 
   public getSectionIcon (): TIconName {
@@ -72,50 +71,50 @@ export class Section implements ISection {
 
   public getFirstFieldOfType = (types: Array<FORM_COMPONENTS_CODES>): FormFieldsModel<TSupportedFormsTypes> | undefined => this.formModel.find(formEle => types.includes(parseInt(formEle.componentCode as unknown as string)))
 
-  public getParentInfoFormEle = (): FormFieldsModel<ISectionElement> => new ParentInfoFormEleBuilder(this.childOf ?? [], this.allSections).build()
+  public getParentInfoFormEle = (sections: Array<ISection>): FormFieldsModel<ISectionElement> => new ParentInfoFormEleBuilder(this.childOf ?? [], sections).build()
 
   public getIsHiddenInMenu (): boolean {
-    return this.sectionData.viewSettings?.isHiddenInMenu ?? false
+    return this.sectionDefinition.viewSettings?.isHiddenInMenu ?? false
   }
 
   public setIsHiddenInMenu (isHidden: boolean) {
-    if (!this.sectionData.viewSettings) {
-      this.sectionData.viewSettings = {}
+    if (!this.sectionDefinition.viewSettings) {
+      this.sectionDefinition.viewSettings = {}
     }
-    this.sectionData.viewSettings.isHiddenInMenu = isHidden
+    this.sectionDefinition.viewSettings.isHiddenInMenu = isHidden
     this.saveEditedSection()
   }
 
   public getPreferredView (): SupportedViews {
-    return this.sectionData.viewSettings?.preferredView || SupportedViews.table
+    return this.sectionDefinition.viewSettings?.preferredView || SupportedViews.table
   }
 
   public setPreferredView (view: SupportedViews) {
-    if (!this.sectionData.viewSettings) {
-      this.sectionData.viewSettings = {}
+    if (!this.sectionDefinition.viewSettings) {
+      this.sectionDefinition.viewSettings = {}
     }
-    this.sectionData.viewSettings.preferredView = view
+    this.sectionDefinition.viewSettings.preferredView = view
     this.saveEditedSection()
   }
 
   public getIsFormEleVisibleInTable (formEleFieldName: string): boolean {
-    if (this.sectionData.viewSettings?.table?.formElesVisibility?.[formEleFieldName!] === false) {
+    if (this.sectionDefinition.viewSettings?.table?.formElesVisibility?.[formEleFieldName!] === false) {
       return false
     }
     return true
   }
 
   public setIsFormEleVisibleInTable (formEleFieldName: string, isVisible: boolean) {
-    if (!this.sectionData.viewSettings) {
-      this.sectionData.viewSettings = {}
+    if (!this.sectionDefinition.viewSettings) {
+      this.sectionDefinition.viewSettings = {}
     }
-    if (!this.sectionData.viewSettings.table) {
-      this.sectionData.viewSettings.table = {}
+    if (!this.sectionDefinition.viewSettings.table) {
+      this.sectionDefinition.viewSettings.table = {}
     }
-    if (!this.sectionData.viewSettings.table.formElesVisibility) {
-      this.sectionData.viewSettings.table.formElesVisibility = {}
+    if (!this.sectionDefinition.viewSettings.table.formElesVisibility) {
+      this.sectionDefinition.viewSettings.table.formElesVisibility = {}
     }
-    this.sectionData.viewSettings.table.formElesVisibility[formEleFieldName!] = isVisible
+    this.sectionDefinition.viewSettings.table.formElesVisibility[formEleFieldName!] = isVisible
     Bucket.general.set(this.visibleColumnsInTableView, this.getVisibleColumnsInTableView())
     this.saveEditedSection()
   }
@@ -125,27 +124,27 @@ export class Section implements ISection {
   }
 
   public getSorting (): [string, 'asc' | 'desc'] | [null, null] {
-    return this.sectionData.viewSettings?.table?.sorting ?? [null, null]
+    return this.sectionDefinition.viewSettings?.table?.sorting ?? [null, null]
   }
 
   public setSorting (sorting: string) {
-    if (!this.sectionData.viewSettings) {
-      this.sectionData.viewSettings = {}
+    if (!this.sectionDefinition.viewSettings) {
+      this.sectionDefinition.viewSettings = {}
     }
-    if (!this.sectionData.viewSettings.table) {
-      this.sectionData.viewSettings.table = {}
+    if (!this.sectionDefinition.viewSettings.table) {
+      this.sectionDefinition.viewSettings.table = {}
     }
     const currentSorting = this.getSorting()
     const order: 'asc' | 'desc' = currentSorting[0] === sorting ? (currentSorting[1] === 'asc' ? 'desc' : 'asc') : 'asc'
     const newSorting: [string, 'asc' | 'desc'] = [sorting, order]
-    this.sectionData.viewSettings.table.sorting = newSorting
+    this.sectionDefinition.viewSettings.table.sorting = newSorting
 
     Bucket.general.set(this.sorting, newSorting)
     this.saveEditedSection()
   }
 
   private saveEditedSection = async (): Promise<void> => {
-    new SectionElementSaver(this.projectId, RESERVED_AUDS_KEYS._sections, this.sectionData, EDITOR_MODE.edit).save()
-    ProjectState.updateSection(this.sectionData)
+    new SectionElementSaver(this.projectId, RESERVED_AUDS_KEYS._sections, this.sectionDefinition, EDITOR_MODE.edit).save()
+    ProjectState.updateSection(this.sectionDefinition)
   }
 }

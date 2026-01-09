@@ -13,6 +13,7 @@ interface IProjectFormElementManagerProps {
 
 export const ProjectSectionElementAddEditFormManager: React.FC<IProjectFormElementManagerProps> = ({ sectionId }) => {
   const project = Manager.getCurrentProject()
+  const allSections = project?.getSectionsDefinitions()!
   const section = project?.getSectionById(sectionId)
 
   const element = useAtomValue(FormElementAtoms.element)
@@ -28,7 +29,7 @@ export const ProjectSectionElementAddEditFormManager: React.FC<IProjectFormEleme
   return (
     <form name="element-form">
       {section.childOf && section.childOf.length > 0 && (<FormAutomator
-        formModel={[section.getParentInfoFormEle()]}
+        formModel={[section.getParentInfoFormEle(allSections)]}
         element={element}
         handleChange={handleChange}
                                                          />)}

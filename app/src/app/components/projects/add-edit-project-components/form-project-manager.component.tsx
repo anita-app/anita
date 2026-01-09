@@ -1,12 +1,11 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
-import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
 import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const'
 import { IProjectSettings, RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
 import { Manager } from 'app/cross-refs-exports'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { SectionManager } from 'app/components/projects/add-edit-project-components/section-manager.component'
 import { FormAutomator } from 'app/components/shared-components/forms-automator/form-automator.component'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import React from 'react'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
@@ -14,6 +13,7 @@ import { useAtomValue } from 'jotai'
 import { FormProjectAtoms } from 'app/state/form-project/form-project.atoms'
 import { FormProjectState } from 'app/state/form-project/form-project-state.class'
 import { FormElesValidStateAtoms } from 'app/state/form-eles-valid-state/form-eles-valid-state.atoms'
+import { RoutingState } from 'app/state/routing/routing-state.class'
 
 export const FormProjectManager: React.FC = () => {
   const { projectId } = useParams<URL_PARAMS>()
@@ -21,7 +21,6 @@ export const FormProjectManager: React.FC = () => {
   const project = useAtomValue(FormProjectAtoms.project)
   const validObj = useAtomValue(FormElesValidStateAtoms.validState)
   const mode: EDITOR_MODE = projectId ? EDITOR_MODE.edit : EDITOR_MODE.add
-  const navigate = useNavigate()
 
   const handleProjectChange = (fieldName: keyof IProjectSettings, value: IProjectSettings[keyof IProjectSettings]) => {
     FormProjectState.updateProjectSettings(fieldName, value)
@@ -30,7 +29,7 @@ export const FormProjectManager: React.FC = () => {
   const handleClickSave = async () => {
     const systemData = await Manager.saveProject(project as TSystemData, mode)
     Manager.setCurrentProject(systemData)
-    navigate(urlParamFiller(ANITA_URLS.projectDetails, [{ name: URL_PARAMS.projectId, value: project[RESERVED_AUDS_KEYS._settings]![0].id }]))
+    RoutingState.goTo(ANITA_URLS.projectDetails, [{ name: URL_PARAMS.projectId, value: project[RESERVED_AUDS_KEYS._settings]![0].id }])
   }
 
   const handleClickAddSection = () => {
@@ -67,7 +66,7 @@ export const FormProjectManager: React.FC = () => {
               marginClassName="mt-8 sm:mt-0 mr-3"
               type={Type.secondary}
               className="grow"
-              onClick={() => navigate(-1)}
+              onClick={() => RoutingState.goTo(-1)}
             />
             <Button
               id="save"

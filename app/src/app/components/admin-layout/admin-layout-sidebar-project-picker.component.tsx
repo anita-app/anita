@@ -1,14 +1,13 @@
 import React, { Fragment, useRef, useState } from 'react'
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
-import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
 import { RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
 import { Manager } from 'app/cross-refs-exports'
 import { useClickOutside } from 'app/components/hooks/click-outside.hook'
-import { useNavigate } from 'react-router-dom'
 import { Icons } from 'app/libs/icons/icons.class'
 import { Transition } from '@headlessui/react'
 import { ProjectsListAtoms } from 'app/state/projects-list/projects-list.atoms'
 import { useAtomValue } from 'jotai'
+import { RoutingState } from 'app/state/routing/routing-state.class'
 
 interface IProjectPickerProps {
   project: TSystemData
@@ -16,7 +15,6 @@ interface IProjectPickerProps {
 
 export const AdminLayoutSidebarProjectPicker: React.FC<IProjectPickerProps> = ({ project }) => {
   const projects = useAtomValue(ProjectsListAtoms.projects)
-  const navigate = useNavigate()
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const dropDownRef = useRef<HTMLDivElement>(null)
 
@@ -38,7 +36,7 @@ export const AdminLayoutSidebarProjectPicker: React.FC<IProjectPickerProps> = ({
 
   const goToDetails = (projectId: string) => {
     closeDropdown()
-    navigate(urlParamFiller(ANITA_URLS.projectDetails, [{ name: URL_PARAMS.projectId, value: projectId }]))
+    RoutingState.goTo(ANITA_URLS.projectDetails, [{ name: URL_PARAMS.projectId, value: projectId }])
   }
 
   const loadProject = async (projectId: string) => {
@@ -49,12 +47,12 @@ export const AdminLayoutSidebarProjectPicker: React.FC<IProjectPickerProps> = ({
 
   const goToEditProject = (projectId: string) => {
     closeDropdown()
-    navigate(urlParamFiller(ANITA_URLS.projectEdit, [{ name: URL_PARAMS.projectId, value: projectId }]))
+    RoutingState.goTo(ANITA_URLS.projectEdit, [{ name: URL_PARAMS.projectId, value: projectId }])
   }
 
   const goToPlainRoute = (route: string) => {
     closeDropdown()
-    navigate(route)
+    RoutingState.goTo(route)
   }
 
   return (

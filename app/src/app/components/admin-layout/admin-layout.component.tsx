@@ -8,7 +8,7 @@ import { ProjectAtoms } from 'app/state/project/project.atoms'
 import { Outlet } from 'react-router-dom'
 
 export const AdminLayout: React.FC = () => {
-  const project = useAtomValue(ProjectAtoms.current)
+  const project = useAtomValue(ProjectAtoms.currentSystemData)
   useEffect(() => {
     OAuthUtils.redirectToAuthPageIfUrlHasCode()
   }, [])

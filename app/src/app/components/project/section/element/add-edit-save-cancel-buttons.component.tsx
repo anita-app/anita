@@ -1,5 +1,4 @@
 import { Manager } from 'app/cross-refs-exports'
-import { useNavigate } from 'react-router-dom'
 import React, { useCallback } from 'react'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
@@ -9,6 +8,7 @@ import { FormElementState } from 'app/state/form-element/form-element-state.clas
 import { useAtomValue } from 'jotai'
 import { FormElementAtoms } from 'app/state/form-element/form-element.atoms'
 import { FormElesValidStateAtoms } from 'app/state/form-eles-valid-state/form-eles-valid-state.atoms'
+import { RoutingState } from 'app/state/routing/routing-state.class'
 
 interface IProjectSectionElementAddEditSaveCancelButtonsProps {
   sectionId: string
@@ -23,7 +23,6 @@ const saveOnShortcut = (sectionId: string, e: KeyboardEvent) => {
 export const ProjectSectionElementAddEditSaveCancelButtons: React.FC<IProjectSectionElementAddEditSaveCancelButtonsProps> = ({ sectionId }) => {
   const element = useAtomValue(FormElementAtoms.element)
   const validObj = useAtomValue(FormElesValidStateAtoms.validState)
-  const navigate = useNavigate()
 
   const handleSave = useCallback(async () => {
     await Manager.getCurrentProject()?.getSectionById(sectionId)?.saveElement(element!)
@@ -31,12 +30,12 @@ export const ProjectSectionElementAddEditSaveCancelButtons: React.FC<IProjectSec
 
   const handleSaveAndClose = useCallback(async () => {
     await handleSave()
-    navigate(-1)
-  }, [handleSave, navigate])
+    RoutingState.goTo(-1)
+  }, [handleSave])
 
   const handleCancel = useCallback(() => {
-    navigate(-1)
-  }, [navigate])
+    RoutingState.goTo(-1)
+  }, [])
 
   useShortcut({ key: 's', withMetaKey: true, callback: saveOnShortcut.bind(undefined, sectionId) })
   useShortcut({ key: 'Escape', callback: handleCancel })

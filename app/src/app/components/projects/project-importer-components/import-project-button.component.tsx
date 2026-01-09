@@ -5,20 +5,19 @@ import { Manager } from 'app/cross-refs-exports'
 import { ProjectFileImporter } from 'app/libs/projects-helpers/project-importers/project-file-importer.class'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import React, { useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { ImportProjectModalContent } from 'app/components/projects/project-importer-components/import-project-modal-content.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { ModalState } from 'app/state/modal/modal-state.class'
 import { useAtomValue } from 'jotai'
 import { FormElesValidStateAtoms } from 'app/state/form-eles-valid-state/form-eles-valid-state.atoms'
 import { FormElementState } from 'app/state/form-element/form-element-state.class'
+import { RoutingState } from 'app/state/routing/routing-state.class'
 
 interface IImportProjectButtonProps {
   btnType: 'icon' | 'text'
 }
 
 export const ImportProjectButton: React.FC<IImportProjectButtonProps> = (props) => {
-  const navigate = useNavigate()
   const validObj = useAtomValue(FormElesValidStateAtoms.validState)
   const projectData = useRef<TAnitaUniversalDataStorage>(null)
 
@@ -27,7 +26,7 @@ export const ImportProjectButton: React.FC<IImportProjectButtonProps> = (props) 
     projectData.current![RESERVED_AUDS_KEYS._settings][0] = { ...projectSettings, localStorage: LOCAL_STORAGE_SYSTEMS.IndexedDB }
     await Manager.importProject(projectData.current!)
     Manager.setCurrentProject(projectData.current!)
-    navigate(ANITA_URLS.projectsList)
+    RoutingState.goTo(ANITA_URLS.projectsList)
   }
 
   const handleClickModal = async () => {
