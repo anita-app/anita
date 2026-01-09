@@ -1,21 +1,28 @@
+import { useLiveQuery } from 'dexie-react-hooks'
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
-import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { ProjectSectionNoData } from 'app/components/project/section/no-data.component'
 import { Loader } from 'app/components/shared-components/loader/loader.component'
 import React, { useEffect, useState } from 'react'
-import { Navigate, useParams } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import { Manager } from 'app/cross-refs-exports'
 import { SupportedViews } from 'app/models/section/view-settings.const'
 import { ProjectSectionListTabs } from 'app/components/project/section/list/tabs/list-tabs.component'
 import { useIdLastChangedBySync } from 'app/components/hooks/id-last-changed-by-sync'
 import { Section } from 'app/models/section/section.class'
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
+import { useAtomValue } from 'jotai'
+import { RoutingAtoms } from 'app/state/routing/routing.atoms'
 
 export const ProjectSectionList: React.FC = () => {
-  const params = useParams()
-  const projectId = params[URL_PARAMS.projectId]
-  const sectionId = params[URL_PARAMS.sectionId]
-  const [sectionData, setSectionData] = useState<Array<ISectionElement> | undefined | null>(null)
+  const projectId = useAtomValue(RoutingAtoms.param(URL_PARAMS.projectId))
+  const sectionId = useAtomValue(RoutingAtoms.param(URL_PARAMS.sectionId))
+  const sectionData = useLiveQuery(async () => {
+    const project = await Manager.getProjectById(projectId)
+    if (!project || !project.getSectionById(sectionId)) {
+      return undefined
+    }
+    return project!.getSectionById(sectionId)?.getAllElements()
+  }, [projectId, sectionId], null)
   const [section, setSection] = useState<Section | null>(null)
   const [activeTab, setActiveTab] = useState<SupportedViews | null>(null)
 
@@ -23,18 +30,9 @@ export const ProjectSectionList: React.FC = () => {
 
   useEffect(() => {
     const getSectionData = async () => {
-      const project = await Manager.getProjectById(projectId)
-
-      if (!project || !project.getSectionById(sectionId)) {
-        return setSectionData(undefined)
-      }
-
-      const data = await project.getSectionById(sectionId)?.getAllElements()
-      if (data) {
-        setActiveTab(Manager.getCurrentProject()?.getSectionById(sectionId)?.getPreferredView()!)
-        setSectionData(data)
-        setSection(Manager.getCurrentProject()?.getSectionById(sectionId) ?? null)
-      }
+      await Manager.getProjectById(projectId)
+      setActiveTab(Manager.getCurrentProject()?.getSectionById(sectionId)?.getPreferredView()!)
+      setSection(Manager.getCurrentProject()?.getSectionById(sectionId) ?? null)
     }
 
     getSectionData()
