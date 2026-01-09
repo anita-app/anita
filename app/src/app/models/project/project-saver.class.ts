@@ -1,12 +1,11 @@
 import { DbInitializer } from 'app/data/local-dbs/db-initializer.class'
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
-import { IProjectSettings, RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
+import { RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
 import { SaveProjectSettingsInIndexedDB } from 'app/models/project/save-project-settings-in-indexed-db.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { DateTools } from 'app/libs/tools/date-tools.class'
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
-import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
 import { ISyncWithRemoteOrLocalAddProjectProps, ISyncWithRemoteOrLocalEditProjectProps, SyncManager } from 'app/cross-refs-exports'
 import { SyncState } from 'app/state/sync/sync-state.class'
 
@@ -66,20 +65,10 @@ export class ProjectSaver {
   }
 
   /**
-   * Checks if `localStorage` is set in the project settings. If not, it gets it from the local storage
-   * `localStorage` could be undefined if the settings are being updated by the remote sync
+   * Forces the local storage system to IndexedDB.
    */
   private async checkIfLocalStorageIsSetOrGetIt (): Promise<void> {
-    if (!this.project[RESERVED_AUDS_KEYS._settings][0].localStorage) {
-      this.project[RESERVED_AUDS_KEYS._settings][0].localStorage = await this.getLocalStorage()
-    }
-  }
-
-  /**
-     * Gets the `localStorage` system from the local system db. It is safe to assume that the local storage system is set
-     */
-  private getLocalStorage (): Promise<LOCAL_STORAGE_SYSTEMS> {
-    return dbInstances.system.callSelector<IProjectSettings>(CLIENT_SECTIONS.projects, { id: this.project[RESERVED_AUDS_KEYS._settings][0].id }).single().then((projectSettings) => projectSettings!.localStorage!)
+    this.project[RESERVED_AUDS_KEYS._settings][0].localStorage = LOCAL_STORAGE_SYSTEMS.IndexedDB
   }
 
   private async initDbInstance (): Promise<void> {

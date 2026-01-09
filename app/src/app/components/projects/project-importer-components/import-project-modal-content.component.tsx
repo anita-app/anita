@@ -1,6 +1,7 @@
 import { FormAutomator } from 'app/components/shared-components/forms-automator/form-automator.component'
-import { FormAutomatorOnChangeValue, FormFieldsModel, IBasicRadio } from 'app/components/shared-components/forms-automator/form-automator.types'
+import { FormAutomatorOnChangeValue, FormFieldsModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { projectInfoNewItem } from 'app/data/project-form-builder/project-info-builder.constant'
+import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
 import { IProjectSettings } from 'app/models/project/project.declarations'
 import React, { useEffect, useState } from 'react'
 import { FormElementState } from 'app/state/form-element/form-element-state.class'
@@ -9,28 +10,12 @@ interface IImportProjectModalContentProps {
   projectSettings: IProjectSettings | null
 }
 
-const getSupportedStorageOptions = (projectInfoNewItem: Array<FormFieldsModel<IProjectSettings>>): Array<IProjectSettings['localStorage']> => (
-  (projectInfoNewItem.find(item => item.fieldName === 'localStorage') as IBasicRadio<IProjectSettings>).options.filter(option => !option.disabled).map(option => option.value as IProjectSettings['localStorage'])
-)
-
-const ensureSelectedStorageIsSupported = (projectSettings: IProjectSettings | null, supportedStorageOptions: Array<IProjectSettings['localStorage']>): IProjectSettings | null => {
-  if (!projectSettings) {
-    return null
-  }
-
-  if (supportedStorageOptions.includes(parseInt(projectSettings.localStorage as unknown as string, 10))) {
-    return projectSettings
-  }
-  return {
-    ...projectSettings,
-    localStorage: supportedStorageOptions[0] as IProjectSettings['localStorage']
-  }
-}
-
 export const ImportProjectModalContent: React.FC<IImportProjectModalContentProps> = (props) => {
   const projectInfoNewItemClone: Array<FormFieldsModel<any>> = JSON.parse(JSON.stringify(projectInfoNewItem))
-  const supportedStorageOptions: Array<IProjectSettings['localStorage']> = getSupportedStorageOptions(projectInfoNewItemClone)
-  const [projectSettings, setProjectSettings] = useState<IProjectSettings | null>(ensureSelectedStorageIsSupported(props.projectSettings, supportedStorageOptions))
+  const [projectSettings, setProjectSettings] = useState<IProjectSettings | null>(
+    props.projectSettings ? { ...props.projectSettings, localStorage: LOCAL_STORAGE_SYSTEMS.IndexedDB } : null
+  )
+
   const handleProjectChange = (fieldName: string | number, value: FormAutomatorOnChangeValue) => {
     setProjectSettings(currenntValue => ({ ...currenntValue!, [fieldName]: value }))
   }
@@ -43,11 +28,6 @@ export const ImportProjectModalContent: React.FC<IImportProjectModalContentProps
 
   if (!projectSettings) {
     return null
-  }
-
-  if (supportedStorageOptions.length === 1) {
-    const index = projectInfoNewItemClone.findIndex(item => item.fieldName === 'localStorage')
-    projectInfoNewItemClone.splice(index, 1)
   }
 
   return (

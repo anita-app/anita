@@ -1,11 +1,7 @@
-/* eslint-disable eqeqeq */
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import { DropboxSyncButton } from 'app/components/admin-layout/header/dropbox-sync/dropbox-sync-button'
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
-import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
-import { LocalFsInfo } from 'app/components/admin-layout/header/local-fs-info'
-import { Manager } from 'app/cross-refs-exports'
 import { WordPressSyncButtons } from 'app/components/admin-layout/header/wordpress-sync/wordpress-sync-buttons'
 import { useAtomValue } from 'jotai'
 import { SyncStateAtoms } from 'app/state/sync/sync-state.atoms'
@@ -18,14 +14,6 @@ export const AdminLayoutHeader: React.FC = () => {
   const project = useAtomValue(ProjectAtoms.current)
   const remoteIds = useAtomValue(SyncStateAtoms.wordPressRemotesIds)
   const remoteIdsLength = remoteIds?.length
-
-  const localStorage = project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.localStorage!
-
-  useEffect(() => {
-    if (localStorage) {
-      Manager.getCurrentProject()?.dropBoxSyncInfo.setLocalStorage(localStorage)
-    }
-  }, [localStorage])
 
   const hasMenu = !!project
   const hasWordPressRemotes = !!remoteIdsLength
@@ -57,8 +45,7 @@ export const AdminLayoutHeader: React.FC = () => {
         <div className="flex items-center justify-end w-1/3 md:pr-5">
           {hasProjectLoaded && !project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.remoteStorage && (
             <div>
-              {localStorage == LOCAL_STORAGE_SYSTEMS.IndexedDB && (<DropboxSyncButton projectId={project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.id} />)}
-              {localStorage == LOCAL_STORAGE_SYSTEMS.json && (<LocalFsInfo />)}
+              <DropboxSyncButton projectId={project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.id} />
             </div>
           )}
           {!!remoteIdsLength && (<WordPressSyncButtons remoteIds={remoteIds} />)}

@@ -1,7 +1,5 @@
-/* eslint-disable eqeqeq */
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { Manager, SupportedCloud } from 'app/cross-refs-exports'
-import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
 import { CloudSyncState } from 'app/libs/cloud-sync/cloud-sync.const'
 import { RemoteAndLocalMerger } from 'app/libs/cloud-sync/remote-and-local-merger.class'
 import { WordpressHelper } from 'app/libs/cloud-sync/wordpress/wordpress-helper.class'
@@ -48,12 +46,14 @@ type ISyncWithRemoteOrLocalProps = ISyncWithRemoteOrLocalAddProjectProps | ISync
 export class SyncManager {
   public static syncWithRemoteOrLocal = async (props: ISyncWithRemoteOrLocalProps): Promise<void> => {
     const [remoteId, type] = SyncManager.getRemoteIdAndType(props)
+    // eslint-disable-next-line eqeqeq
     if (remoteId && type == SupportedCloud.WORDPRESS && props.mode === EDITOR_MODE.delete) {
       const projectIdForDelete = props.projectId
       const client = await WordpressHelper.instance.getClient(remoteId)
       if (client) {
         await client.deleteProject(projectIdForDelete)
       }
+    // eslint-disable-next-line eqeqeq
     } else if (remoteId && type == SupportedCloud.WORDPRESS && props.type === 'element') {
       const client = await WordpressHelper.instance.getClient(remoteId)
       const projectIdForElement = props.projectId
@@ -74,7 +74,7 @@ export class SyncManager {
   }
 
   private static getRemoteIdAndType = (props: ISyncWithRemoteOrLocalProps): [string, SupportedCloud] | [null, null] => {
-    if (Manager.getCurrentProject()?.dropBoxSyncInfo.getLocalStorage() == LOCAL_STORAGE_SYSTEMS.IndexedDB && Manager.getCurrentProject()?.dropBoxSyncInfo.getLinkedFileId()) {
+    if (Manager.getCurrentProject()?.dropBoxSyncInfo.getLinkedFileId()) {
       const remoteId = Manager.getCurrentProject()?.dropBoxSyncInfo.getLinkedFileId()!
       return [remoteId, SupportedCloud.DROPBOX]
     }

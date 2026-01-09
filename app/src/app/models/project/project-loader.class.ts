@@ -16,7 +16,6 @@ export class ProjectLoader {
    */
   private projectSettings: Array<IProjectSettings> = []
   private projectSections: Array<ISection> = []
-  private localStorage: LOCAL_STORAGE_SYSTEMS = LOCAL_STORAGE_SYSTEMS.IndexedDB
 
   /**
    * Creates an instance of ProjectLoader
@@ -53,7 +52,6 @@ export class ProjectLoader {
    */
   private async setProjectInfoFromIndexedDB () {
     this.projectInfo = await dbInstances.system.callSelector<LocalProjectSettings>(CLIENT_SECTIONS.projects, { id: this.projectId }).single()
-    this.localStorage = this.projectInfo!.localStorage!
   }
 
   /**
@@ -68,7 +66,7 @@ export class ProjectLoader {
    */
   public async loadProjectSettings (): Promise<void> {
     this.projectSettings = await dbInstances[this.projectId].callSelector<IProjectSettings>(RESERVED_AUDS_KEYS._settings).multiple()
-    this.projectSettings[0].localStorage = this.localStorage
+    this.projectSettings[0].localStorage = this.projectInfo?.localStorage ?? LOCAL_STORAGE_SYSTEMS.IndexedDB
   }
 
   /**

@@ -1,6 +1,6 @@
 import { ANITA_URLS } from 'app/libs/routing/anita-routes.constant'
-import { TAnitaUniversalDataStorage, IProjectSettings, RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
-import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api'
+import { IProjectSettings, RESERVED_AUDS_KEYS, TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
+import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
 import { Manager } from 'app/cross-refs-exports'
 import { ProjectFileImporter } from 'app/libs/projects-helpers/project-importers/project-file-importer.class'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
@@ -21,25 +21,24 @@ export const ImportProjectButton: React.FC<IImportProjectButtonProps> = (props) 
   const navigate = useNavigate()
   const validObj = useAtomValue(FormElesValidStateAtoms.validState)
   const projectData = useRef<TAnitaUniversalDataStorage>(null)
-  const projectFileHandle = useRef<FileSystemFileHandle>(null)
 
   const handleClickImport = async () => {
     const projectSettings = FormElementState.getElement() as IProjectSettings
-    projectData.current![RESERVED_AUDS_KEYS._settings][0] = projectSettings
-    await Manager.importProject(projectData.current!, projectFileHandle.current!)
+    projectData.current![RESERVED_AUDS_KEYS._settings][0] = { ...projectSettings, localStorage: LOCAL_STORAGE_SYSTEMS.IndexedDB }
+    await Manager.importProject(projectData.current!)
     Manager.setCurrentProject(projectData.current!)
     navigate(ANITA_URLS.projectsList)
   }
 
   const handleClickModal = async () => {
-    const { project, fileHandle } = await new ProjectFileImporter().import() || {}
+    const { project } = await new ProjectFileImporter().import() || {}
+    console.log('🚀 ~ handleClickModal ~ project:', project)
 
     if (!project) {
       return
     }
 
     projectData.current = project
-    projectFileHandle.current = fileHandle!
 
     ModalState.showModal({
       title: 'Import project',

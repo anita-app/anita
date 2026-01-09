@@ -1,4 +1,4 @@
-import { AdditionalInfoForLocalStorage, LocalProjectSettings } from 'app/models/project/project.declarations'
+import { AdditionalInfoForLocalStorage } from 'app/models/project/project.declarations'
 import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition'
 import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -48,8 +48,6 @@ export interface DetaConnectionData {
 export interface DsDbInitOptions {
   // Deta
   detaConnectionData?: DetaConnectionData
-  // File System
-  projectInfo?: LocalProjectSettings
   // IndexedDB
   indexedDbName?: string
   DS?: AbstractModel

@@ -1,12 +1,10 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
-import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
 import { TAnitaUniversalDataStorage, IProjectSettings, LocalProjectSettings, RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
 import { Project } from 'app/models/project/project.class'
 import { ProjectLoader } from 'app/models/project/project-loader.class'
 import { ProjectSaver } from 'app/models/project/project-saver.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
-import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api'
 import { ProjectDataImporter } from 'app/libs/projects-helpers/project-importers/project-data-importer.class'
 import { ProjectState } from 'app/state/project/project-state.class'
 
@@ -46,8 +44,8 @@ export class Manager {
     }
   }
 
-  public static async importProject (projectData: TAnitaUniversalDataStorage, fileHandle?: FileSystemFileHandle): Promise<void> {
-    const projectInfo = await new ProjectDataImporter(projectData!, fileHandle).import()
+  public static async importProject (projectData: TAnitaUniversalDataStorage): Promise<void> {
+    const projectInfo = await new ProjectDataImporter(projectData).import()
     await new ProjectLoader(projectData[RESERVED_AUDS_KEYS._settings][0].id, projectInfo).loadProject()
     await this.saveProject({ [RESERVED_AUDS_KEYS._settings]: projectData[RESERVED_AUDS_KEYS._settings], [RESERVED_AUDS_KEYS._sections]: projectData[RESERVED_AUDS_KEYS._sections] }, EDITOR_MODE.edit)
   }
@@ -66,9 +64,7 @@ export class Manager {
 
     const projectInfo = await dbInstances.system.callSelector<LocalProjectSettings>(CLIENT_SECTIONS.projects, { id: projectId }).single()
 
-    // Relaxed equality check, because localStorage prop is a string
-    // eslint-disable-next-line eqeqeq
-    if (projectInfo?.localStorage == LOCAL_STORAGE_SYSTEMS.IndexedDB) {
+    if (projectInfo) {
       await new ProjectLoader(projectId, projectInfo).loadProject()
       return true
     }

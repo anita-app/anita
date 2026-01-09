@@ -14,7 +14,7 @@ export class SaveProjectSettingsInIndexedDB {
   /**
    * Creates an instance of save project settings in indexed db.
    * @param projectSettings settings Object of the project to store
-   * @param fileHandle handle of the file on disk. Saved in the IndexedDB for future use
+   * @param localSettingAdditionalKeys extra settings saved in IndexedDB for future use
    */
   constructor (
     private projectSettings: IProjectSettings,
@@ -33,7 +33,7 @@ export class SaveProjectSettingsInIndexedDB {
   }
 
   /**
-   * Deep clonse settings and then adds the fileHandle to prevent setting the fileHandle on the project data object
+   * Deep clone settings and then add extra local settings for storage in IndexedDB
    */
   private setProjectSettingsCloneWithAdditionalKeys (): void {
     this.copyOfProjectSettings = { ...this.projectSettings, ...this.localSettingAdditionalKeys }

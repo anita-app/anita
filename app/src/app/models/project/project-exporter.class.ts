@@ -1,7 +1,6 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
 import { ISectionElement } from 'app/models/section-element/section-element.declarations'
-import { FsHelper } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper'
 
 export enum ExportScope {
   all,
@@ -45,7 +44,7 @@ export class ProjectExporter {
    */
   public async exportToFile (scope: ExportScope): Promise<void> {
     await this.getAsJson(scope)
-    FsHelper.download(this.jsonData, `${this.systemData._settings?.[0].title}.json`, 'text/plain')
+    this.download(this.jsonData, `${this.systemData._settings?.[0].title}.json`, 'text/plain')
   }
 
   private addSystemDataToProjectToExport (): void {
@@ -76,5 +75,15 @@ export class ProjectExporter {
    */
   private convertToJson (): void {
     this.jsonData = JSON.stringify(this.projectToExport, null, 2)
+  }
+
+  private download (content: string, fileName: string, contentType: 'text/plain'): void {
+    const link = document.createElement('a')
+    const file = new Blob([content], { type: contentType })
+    const url = URL.createObjectURL(file)
+    link.href = url
+    link.download = fileName
+    link.click()
+    URL.revokeObjectURL(url)
   }
 }

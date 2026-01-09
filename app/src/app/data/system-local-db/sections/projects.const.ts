@@ -10,7 +10,6 @@ export const projects: SectionDefinition<LocalProjectSettings> = {
   name: 'projects',
   fields: [
     'title',
-    'fileHandle',
     'description',
     RESERVED_FIELDS.createdAt
   ]

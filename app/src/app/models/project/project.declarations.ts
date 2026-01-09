@@ -1,6 +1,5 @@
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
 import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
-import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api'
 import { ISection } from 'app/models/section/section.declarations'
 import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
@@ -54,7 +53,6 @@ export interface IProjectSettings {
 }
 
 export interface AdditionalInfoForLocalStorage {
-  fileHandle?: FileSystemFileHandle
   dexieInfoForUpgrade?: {
     previousVersions: Array<Array<string>>
     DS: AbstractModel
@@ -64,7 +62,6 @@ export interface AdditionalInfoForLocalStorage {
 /**
  * Info on Projects saved locally to know what project are on the device.
  *
- * @property [fileHandle] - The file handle of the project file (only if the project is saved on the file system)
  * @property [sections] - The sections of the project to load the IndexedDB database with Dexie
  */
 export interface LocalProjectSettings extends IProjectSettings, AdditionalInfoForLocalStorage {
