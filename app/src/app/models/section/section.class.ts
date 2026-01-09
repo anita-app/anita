@@ -99,7 +99,10 @@ export class Section implements ISection {
   }
 
   public getIsFormEleVisibleInTable (formEleFieldName: string): boolean {
-    return this.sectionData.viewSettings?.table?.formElesVisibility?.[formEleFieldName!] !== false ?? true
+    if (this.sectionData.viewSettings?.table?.formElesVisibility?.[formEleFieldName!] === false) {
+      return false
+    }
+    return true
   }
 
   public setIsFormEleVisibleInTable (formEleFieldName: string, isVisible: boolean) {
