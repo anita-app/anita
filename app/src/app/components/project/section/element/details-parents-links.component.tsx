@@ -17,21 +17,12 @@ export const ProjectSectionElementDetailsParentsLinks: React.FC<IProjectSectionE
   const [parents, setParents] = useState<Array<ParentInfoForDetailsView> | undefined>([])
 
   useEffect(() => {
-    let isMounted = true
     const getParents = async () => {
       const parents = await Manager.getCurrentProject()?.getParentInfoForDetailsView(parentsInfo)
-      if (isMounted) {
-        setParents(parents)
-      }
+      setParents(parents)
     }
 
-    if (isMounted) {
-      getParents()
-    }
-
-    return (): void => {
-      isMounted = false
-    }
+    getParents()
   }, [parentsInfo, projectId, sections])
 
   return (

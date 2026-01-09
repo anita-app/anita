@@ -22,23 +22,15 @@ export const ParentsSelector: React.FC<ICommonFormEleProps<IBasicSelect<ISection
   const [isValid, setIsValidForField] = useValidators(fieldId)
 
   useEffect(() => {
-    let isMounted = true
-
     const getSelectOptions = async () => {
       const options = await Manager.getCurrentProject()?.getOptionsForParentsSelector(formEle.options)
 
-      if (isMounted && options) {
+      if (options) {
         setSelectOptions(options)
       }
     }
 
-    if (isMounted) {
-      getSelectOptions()
-    }
-
-    return () => {
-      isMounted = false
-    }
+    getSelectOptions()
   }, [formEle.options])
 
   const handleChangeInParentsSelector = (newValue: MultiValue<IOption>) => {

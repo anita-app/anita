@@ -20,8 +20,6 @@ export const AddEditProject: React.FC = () => {
   const [hasProject, setHasProject] = useState<boolean | null | undefined>(null)
 
   useEffect(() => {
-    let isMounted = true
-
     // in add mode, sets a new project
     if (mode === EDITOR_MODE.add) {
       const newProjectSystemData: TSystemData = {
@@ -41,19 +39,11 @@ export const AddEditProject: React.FC = () => {
       const _settings = [{ ...project.getSettings() }]
       const _sections = [...project.getSectionsDefinitions()]
 
-      if (isMounted) {
-        FormProjectState.setFormProject({ _settings, _sections })
-        setHasProject(true)
-      }
+      FormProjectState.setFormProject({ _settings, _sections })
+      setHasProject(true)
     }
 
-    if (isMounted) {
-      fetchEProject()
-    }
-
-    return () => {
-      isMounted = false
-    }
+    fetchEProject()
   }, [mode, projectId])
 
   if (hasProject === undefined) {

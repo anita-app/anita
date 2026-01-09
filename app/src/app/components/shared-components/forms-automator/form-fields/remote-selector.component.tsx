@@ -24,8 +24,6 @@ export const RemoteSelector: React.FC<ICommonFormEleProps<IBasicSelect<ISectionE
   const [isValid, setIsValidForField] = useValidators(fieldId)
 
   useEffect(() => {
-    let isMounted = true
-
     const getSelectOptions = async () => {
       const connectedRemotes = await WordpressHelper.instance.getAllRemotesInfo()
       if (connectedRemotes?.length > 0) {
@@ -38,19 +36,13 @@ export const RemoteSelector: React.FC<ICommonFormEleProps<IBasicSelect<ISectionE
           label: remote.data.site_name,
           value: remote.remoteId
         }))
-        if (isMounted && options) {
+        if (options) {
           setSelectOptions(options)
         }
       }
     }
 
-    if (isMounted) {
-      getSelectOptions()
-    }
-
-    return () => {
-      isMounted = false
-    }
+    getSelectOptions()
   }, [formEle.options])
 
   const handleChangeInParentsSelector = (newValue: SingleValue<IOption>) => {

@@ -27,8 +27,6 @@ export const ChildOfSelectorForSection: React.FC<ICommonFormEleProps<IBasicSelec
   const [isValid, setIsValidForField] = useValidators(fieldId)
 
   useEffect(() => {
-    let isMounted = true
-
     const buildOptions = () => {
       if (!Array.isArray(currentEditedProjectSections)) {
         return
@@ -46,13 +44,7 @@ export const ChildOfSelectorForSection: React.FC<ICommonFormEleProps<IBasicSelec
       setSelectOptions(selectableSections)
     }
 
-    if (isMounted) {
-      buildOptions()
-    }
-
-    return () => {
-      isMounted = false
-    }
+    buildOptions()
   }, [currentEditedProjectSections, currentEditedProjectSections?.length, sectionId])
 
   const handleChangeInChildOfSelectorForSection = (newValue: MultiValue<IOption>) => {

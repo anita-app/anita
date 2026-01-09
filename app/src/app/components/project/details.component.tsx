@@ -15,22 +15,11 @@ export const ProjectDetails: React.FC = () => {
   const projectLastChangedBySyncAt = useIdLastChangedBySync(projectId)
 
   useEffect(() => {
-    let isMounted = true
     const loadProject = async () => {
       const project = await Manager.getProjectById(projectId)
-
-      if (isMounted) {
-        setElement(project?.getSettings())
-      }
+      setElement(project?.getSettings())
     }
-
-    if (isMounted) {
-      loadProject()
-    }
-
-    return () => {
-      isMounted = false
-    }
+    loadProject()
   }, [projectId, projectLastChangedBySyncAt])
 
   // If there is no DB instance loaded, for now we just redirect to the project list

@@ -21,8 +21,6 @@ export const ProjectSectionElementAddEdit: React.FC = () => {
   const [element, setElement] = useState<Partial<ISectionElement> | null | undefined>(null)
 
   useEffect(() => {
-    let isMounted = true
-
     const fetchElement = async () => {
       const project = await Manager.getProjectById(projectId)
 
@@ -35,18 +33,10 @@ export const ProjectSectionElementAddEdit: React.FC = () => {
       }
 
       const element = await project.getSectionById(sectionId)?.getElementById(elementId!)
-      if (isMounted) {
-        setElement(element as ISectionElement | undefined)
-      }
+      setElement(element as ISectionElement | undefined)
     }
 
-    if (isMounted) {
-      fetchElement()
-    }
-
-    return () => {
-      isMounted = false
-    }
+    fetchElement()
   }, [mode, projectId, sectionId, elementId])
 
   useEffect(() => {

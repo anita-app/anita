@@ -25,7 +25,7 @@ const ValueWithLabel = ({ formModel, value }: { formModel: FormFieldsModel<ISect
   return (
     <div>
       <p className="text-sm text-gray-500">{formModel.label}</p>
-      <div className="mb-3">{customRenderPicker(formModel)({ value })}</div>
+      <div className="mb-3">{customRenderPicker(formModel)({ value }) as React.ReactNode}</div>
     </div>
   )
 }
@@ -70,7 +70,6 @@ export const ProjectSectionElementDetails: React.FC = () => {
   const elementLastChangedBySyncAt = useIdLastChangedBySync(elementId)
 
   useEffect(() => {
-    let isMounted = true
     const fetchData = async () => {
       const project = await Manager.getProjectById(projectId)
 
@@ -80,18 +79,10 @@ export const ProjectSectionElementDetails: React.FC = () => {
 
       const element = await project.getSectionById(sectionId)?.getElementById(elementId)
 
-      if (isMounted) {
-        setElement(element as ISectionElement | undefined)
-      }
+      setElement(element as ISectionElement | undefined)
     }
 
-    if (isMounted) {
-      fetchData()
-    }
-
-    return () => {
-      isMounted = false
-    }
+    fetchData()
   }, [projectId, sectionId, elementId, elementLastChangedBySyncAt])
 
   if (element === undefined) {
