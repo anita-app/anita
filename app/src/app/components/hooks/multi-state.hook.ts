@@ -1,15 +1,16 @@
-import { Dispatch, useCallback, useReducer, useRef } from 'react'
+import { Dispatch, Reducer, useCallback, useReducer, useRef } from 'react'
 
 export const useMultiState = <T extends Object>(data: T): [T, Dispatch<Partial<T>>, () => T] => {
-  const lastState = useRef(data)
+  const lastState = useRef<T>(data)
+
+  const reducer: Reducer<T, Partial<T>> = (state, action) => {
+    const nextState = { ...state, ...action }
+    lastState.current = nextState
+    return nextState
+  }
+
+  const [state, dispatch] = useReducer(reducer, data)
   const getState = useCallback(() => lastState.current, [])
-  return [
-    ...useReducer<(state: T, action: Partial<T>) => T>
-      (
-      // eslint-disable-next-line no-return-assign
-      (state, action) => lastState.current = ({ ...state, ...action }),
-      data
-      ),
-    getState
-  ]
+
+  return [state, dispatch, getState]
 }

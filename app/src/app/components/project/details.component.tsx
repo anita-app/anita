@@ -3,7 +3,7 @@ import { IProjectSettings } from 'app/models/project/project.declarations'
 import { Manager } from 'app/cross-refs-exports'
 import { Loader } from 'app/components/shared-components/loader/loader.component'
 import React, { useEffect, useState } from 'react'
-import { Navigate, useParams } from 'react-router'
+import { Navigate, useParams } from 'react-router-dom'
 import { useIdLastChangedBySync } from 'app/components/hooks/id-last-changed-by-sync'
 import { ProjectDetailsCard } from './details-card'
 

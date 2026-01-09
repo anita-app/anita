@@ -20,13 +20,13 @@ interface IImportProjectButtonProps {
 export const ImportProjectButton: React.FC<IImportProjectButtonProps> = (props) => {
   const navigate = useNavigate()
   const validObj = useAtomValue(FormElesValidStateAtoms.validState)
-  const projectData = useRef<TAnitaUniversalDataStorage>()
-  const projectFileHandle = useRef<FileSystemFileHandle>()
+  const projectData = useRef<TAnitaUniversalDataStorage>(null)
+  const projectFileHandle = useRef<FileSystemFileHandle>(null)
 
   const handleClickImport = async () => {
     const projectSettings = FormElementState.getElement() as IProjectSettings
     projectData.current![RESERVED_AUDS_KEYS._settings][0] = projectSettings
-    await Manager.importProject(projectData.current!, projectFileHandle.current)
+    await Manager.importProject(projectData.current!, projectFileHandle.current!)
     Manager.setCurrentProject(projectData.current!)
     navigate(ANITA_URLS.projectsList)
   }
@@ -39,7 +39,7 @@ export const ImportProjectButton: React.FC<IImportProjectButtonProps> = (props) 
     }
 
     projectData.current = project
-    projectFileHandle.current = fileHandle
+    projectFileHandle.current = fileHandle!
 
     ModalState.showModal({
       title: 'Import project',

@@ -12,7 +12,7 @@ import {
   TSupportedFormsTypes
 } from 'app/components/shared-components/forms-automator/form-automator.types'
 import React, { useMemo } from 'react'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 import { useAtomValue } from 'jotai'
 import { FormProjectAtoms } from 'app/state/form-project/form-project.atoms'
 import { FormProjectState } from 'app/state/form-project/form-project-state.class'

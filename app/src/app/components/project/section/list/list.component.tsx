@@ -3,7 +3,7 @@ import { ISectionElement } from 'app/models/section-element/section-element.decl
 import { ProjectSectionNoData } from 'app/components/project/section/no-data.component'
 import { Loader } from 'app/components/shared-components/loader/loader.component'
 import React, { useEffect, useState } from 'react'
-import { Navigate, useParams } from 'react-router'
+import { Navigate, useParams } from 'react-router-dom'
 import { Manager } from 'app/cross-refs-exports'
 import { SupportedViews } from 'app/models/section/view-settings.const'
 import { ProjectSectionListTabs } from 'app/components/project/section/list/tabs/list-tabs.component'

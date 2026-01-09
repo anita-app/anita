@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import tippy, { Instance } from 'tippy.js'
 
 export const useTippyTooltip = (elementId: string, content?: string, additionalClasses?: string): void => {
-  const instancesRef = useRef<Array<Instance> | undefined>()
+  const instancesRef = useRef<Array<Instance> | null>(null)
   window.requestAnimationFrame(() => {
     if (!content || instancesRef.current?.length) {
       return
