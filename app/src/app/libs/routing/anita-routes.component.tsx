@@ -7,24 +7,48 @@ import { ProjectSectionList } from 'app/components/project/section/list/list.com
 import { AddEditProject } from 'app/components/projects/add-edit-project.component'
 import { ProjectsNone } from 'app/components/projects/no-projects.component'
 import { ProjectsList } from 'app/components/projects/projects-list.component'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { createHashRouter, Navigate, RouteObject } from 'react-router-dom'
 import { OAuth } from 'app/components/auth/o-auth.component'
+import { AdminLayout } from 'app/components/admin-layout/admin-layout.component'
+import { RoutingState } from 'app/state/routing/routing-state.class'
 
-export const AnitaRoutes = () => (
-  <Routes>
-    <Route path={`${ANITA_URLS.auth}/*`} element={<OAuth />} />
-    <Route path={ANITA_URLS.projectsList} element={<ProjectsList />} />
-    <Route path={ANITA_URLS.projectAdd} element={<AddEditProject />} />
-    <Route path={ANITA_URLS.projectEdit} element={<AddEditProject />} />
-    <Route path={ANITA_URLS.projectsNone} element={<ProjectsNone />} />
-    <Route path={ANITA_URLS.projectDetails} element={<ProjectDetails />} />
+const anitaRoutes: Array<RouteObject> = [
+  {
+    path: '/',
+    element: <AdminLayout />,
+    children: [
+      { path: `${ANITA_URLS.auth}/*`, element: <OAuth /> },
+      { path: ANITA_URLS.projectsList, element: <ProjectsList /> },
+      { path: ANITA_URLS.projectAdd, element: <AddEditProject /> },
+      { path: ANITA_URLS.projectEdit, element: <AddEditProject /> },
+      { path: ANITA_URLS.projectsNone, element: <ProjectsNone /> },
+      { path: ANITA_URLS.projectDetails, element: <ProjectDetails /> },
+      { path: ANITA_URLS.projectSectionElesList, element: <ProjectSectionList /> },
+      { path: ANITA_URLS.projectSectionEleDetails, element: <ProjectSectionElementDetails /> },
+      { path: ANITA_URLS.projectSectionAddEle, element: <ProjectSectionElementAddEdit /> },
+      { path: ANITA_URLS.projectSectionEditEle, element: <ProjectSectionElementAddEdit /> },
+      { path: '*', element: <Navigate to={ANITA_URLS.projectsList} replace={true} /> }
+    ]
+  }
+]
 
-    <Route path={ANITA_URLS.projectSectionElesList} element={<ProjectSectionList />} />
-    <Route path={ANITA_URLS.projectSectionEleDetails} element={<ProjectSectionElementDetails />} />
-    <Route path={ANITA_URLS.projectSectionAddEle} element={<ProjectSectionElementAddEdit />} />
-    <Route path={ANITA_URLS.projectSectionEditEle} element={<ProjectSectionElementAddEdit />} />
-    <Route
-      path="*" element={<Navigate to={ANITA_URLS.projectsList} />}
-    />
-  </Routes>
-)
+export const anitaRouter = createHashRouter(anitaRoutes)
+
+let lastSyncedLocationKey: string | null = null
+
+const syncRouteStateWithRouterLocation = (location: typeof anitaRouter.state.location) => {
+  if (!location) {
+    return
+  }
+  const locationKey = `${location.pathname}${location.search}`
+  if (locationKey === lastSyncedLocationKey) {
+    return
+  }
+  lastSyncedLocationKey = locationKey
+  RoutingState.syncFromPath(locationKey)
+}
+
+syncRouteStateWithRouterLocation(anitaRouter.state.location)
+anitaRouter.subscribe(({ location }) => {
+  syncRouteStateWithRouterLocation(location)
+})

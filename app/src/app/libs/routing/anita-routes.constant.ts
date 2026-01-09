@@ -7,6 +7,13 @@ export enum URL_PARAMS {
   parentId = 'parentId'
 }
 
+export interface IRouteParams {
+  [URL_PARAMS.projectId]?: string
+  [URL_PARAMS.sectionId]?: string
+  [URL_PARAMS.elementId]?: string
+  [URL_PARAMS.parentId]?: string
+}
+
 /**
  * Lists all the routes in the application
  *
@@ -27,3 +34,10 @@ export const ANITA_URLS = {
   projectSectionEditEle: `/project/:${URL_PARAMS.projectId}/:${URL_PARAMS.sectionId}/${EDITOR_MODE.edit}/:${URL_PARAMS.elementId}`,
   projectSectionEleDetails: `/project/:${URL_PARAMS.projectId}/:${URL_PARAMS.sectionId}/details/:${URL_PARAMS.elementId}`
 }
+
+export type TAnitaRoute = keyof typeof ANITA_URLS
+
+const allRoutesValues = Object.values(ANITA_URLS)
+export const SORTED_ROUTES: Array<TAnitaRoute> = allRoutesValues.sort((a, b) => b.length - a.length) as Array<TAnitaRoute>
+
+export const ROUTE_PARAM_VALUES = new Set<string>(Object.values(URL_PARAMS))

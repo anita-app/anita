@@ -1,10 +1,10 @@
 import 'animate.css'
 import { Startupper } from 'app/libs/startupper/startupper.class'
-import { AdminLayout } from 'app/components/admin-layout/admin-layout.component'
 import React from 'react'
-import { HashRouter as Router } from 'react-router-dom'
+import { RouterProvider } from 'react-router-dom'
 import './index.css'
 import { ModalPortal } from 'app/components/shared-components/modals/modal.component'
+import { anitaRouter } from 'app/libs/routing/anita-routes.component'
 import * as ReactDOMClient from 'react-dom/client'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 import 'tippy.js/dist/tippy.css'
@@ -16,9 +16,7 @@ const start = async () => {
   root.render(
     <React.StrictMode>
       <ModalPortal />
-      <Router>
-        <AdminLayout />
-      </Router>
+      <RouterProvider router={anitaRouter} />
     </React.StrictMode>
   )
 }
