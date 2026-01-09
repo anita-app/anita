@@ -19,35 +19,53 @@ export class RoutingState {
     }
 
     try {
+      const pathParts = sanitizedPath.split('/').filter(Boolean)
       for (const route of SORTED_ROUTES) {
-        const routeWithoutParams = route.split('/:')[0]
-        if (sanitizedPath.startsWith(routeWithoutParams)) {
-          // if it does, parse the params and return the route
-          const params: Partial<Record<URL_PARAMS, string | boolean>> = {}
-          const expectedParams = route.replace(routeWithoutParams, '').split('/:').filter(Boolean)
-          if (expectedParams.length) {
-            const pathParts = sanitizedPath.replace(`${routeWithoutParams}/`, '').split('/')
-            for (let i = 0, len = expectedParams.length; i < len; i++) {
-              const expectedParam = expectedParams[i]
-              if (!ROUTE_PARAM_VALUES.has(expectedParam)) {
-                continue
-              }
-              const param = expectedParam as URL_PARAMS
-              const paramValue = pathParts[i]
-              if (paramValue) {
-                try {
-                  params[param] = JSON.parse(decodeURIComponent(paramValue)) as string | boolean
-                } catch (error) {
-                  params[param] = decodeURIComponent(paramValue)
-                }
-              }
+        const routeParts = route.split('/').filter(Boolean)
+        const hasParams = routeParts.some((part) => part.startsWith(':'))
+
+        if (hasParams && routeParts.length !== pathParts.length) {
+          continue
+        }
+        if (!hasParams && routeParts.length > pathParts.length) {
+          continue
+        }
+
+        const params: Partial<Record<URL_PARAMS, string | boolean>> = {}
+        let isMatch = true
+        let expectedParamsCount = 0
+
+        for (let i = 0; i < routeParts.length; i++) {
+          const routePart = routeParts[i]
+          const pathPart = pathParts[i]
+          if (routePart.startsWith(':')) {
+            const paramName = routePart.slice(1)
+            if (!ROUTE_PARAM_VALUES.has(paramName) || !pathPart) {
+              isMatch = false
+              break
             }
-          }
-          if (expectedParams.length !== Object.keys(params).length) {
+            expectedParamsCount += 1
+            const param = paramName as URL_PARAMS
+            try {
+              params[param] = JSON.parse(decodeURIComponent(pathPart)) as string | boolean
+            } catch (error) {
+              params[param] = decodeURIComponent(pathPart)
+            }
             continue
           }
-          return [route, params as IRouteParams]
+          if (routePart !== pathPart) {
+            isMatch = false
+            break
+          }
         }
+
+        if (!isMatch) {
+          continue
+        }
+        if (expectedParamsCount !== Object.keys(params).length) {
+          continue
+        }
+        return [route, params as IRouteParams]
       }
       return [null, null]
     } catch (error) {
