@@ -7,20 +7,21 @@ import { Navigate, useParams } from 'react-router-dom'
 import { Manager } from 'app/cross-refs-exports'
 import { SupportedViews } from 'app/models/section/view-settings.const'
 import { ProjectSectionListTabs } from 'app/components/project/section/list/tabs/list-tabs.component'
-import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import { useIdLastChangedBySync } from 'app/components/hooks/id-last-changed-by-sync'
+import { Section } from 'app/models/section/section.class'
+import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 
 export const ProjectSectionList: React.FC = () => {
   const params = useParams()
   const projectId = params[URL_PARAMS.projectId]
   const sectionId = params[URL_PARAMS.sectionId]
   const [sectionData, setSectionData] = useState<Array<ISectionElement> | undefined | null>(null)
+  const [section, setSection] = useState<Section | null>(null)
   const [activeTab, setActiveTab] = useState<SupportedViews | null>(null)
 
   const sectionLastChangedBySyncAt = useIdLastChangedBySync(sectionId)
 
   useEffect(() => {
-    let isMounted = true
     const getSectionData = async () => {
       const project = await Manager.getProjectById(projectId)
 
@@ -29,26 +30,19 @@ export const ProjectSectionList: React.FC = () => {
       }
 
       const data = await project.getSectionById(sectionId)?.getAllElements()
-      if (isMounted && data) {
+      if (data) {
         setActiveTab(Manager.getCurrentProject()?.getSectionById(sectionId)?.getPreferredView()!)
         setSectionData(data)
+        setSection(Manager.getCurrentProject()?.getSectionById(sectionId) ?? null)
       }
     }
 
-    if (isMounted) {
-      getSectionData()
-    }
-
-    return () => {
-      isMounted = false
-    }
+    getSectionData()
   }, [sectionId, projectId, sectionLastChangedBySyncAt])
 
   if (sectionData === undefined) {
     return <Navigate to={ANITA_URLS.projectsList} />
   }
-
-  const section = Manager.getCurrentProject()?.getSectionById(sectionId)
 
   if (sectionData === null || activeTab === null || !section) {
     return <Loader />
