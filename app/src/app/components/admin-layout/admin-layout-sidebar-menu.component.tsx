@@ -1,16 +1,16 @@
-import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { AdminLayoutSidebarProjectPicker } from 'app/components/admin-layout/admin-layout-sidebar-project-picker.component'
-import { useSelector } from 'react-redux'
 import React from 'react'
 import { Manager } from 'app/cross-refs-exports'
 import { AdminLayoutSidebarMenuItem } from 'app/components/admin-layout/admin-layout-sidebar-menu-item.component'
+import { useAtomValue } from 'jotai'
+import { ProjectAtoms } from 'app/state/project/project.atoms'
 
 interface IAdminLayoutSidebarMenuProps {
   isEditingMenuItemsVisibility: boolean
 }
 
 export const AdminLayoutSidebarMenu: React.FC<IAdminLayoutSidebarMenuProps> = (props) => {
-  const project = useSelector((state: AnitaStore) => state.project)
+  const project = useAtomValue(ProjectAtoms.current)
   const [currentSelectedSectionId, setCurrentSelectedSectionId] = React.useState<string | null>(null)
 
   if (project === null) {

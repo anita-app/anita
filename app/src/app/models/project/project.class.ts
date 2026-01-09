@@ -9,9 +9,8 @@ import { ProjectSaver } from 'app/models/project/project-saver.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { ParentInfoForDetailsView } from 'app/models/parent-element/parent-element.declarations'
 import { ProjectUploader } from 'app/models/project/syncing/project-uploader'
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
-import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { DropboxSyncInfo } from 'app/models/project/syncing/dropbox-sync-info.class'
+import { ProjectState } from 'app/state/project/project-state.class'
 
 export class Project {
   public dropBoxSyncInfo: DropboxSyncInfo = new DropboxSyncInfo()
@@ -74,10 +73,7 @@ export class Project {
     this.sectionsDefinitions = systemData[RESERVED_AUDS_KEYS._sections]
     this.systemData = await this.saveProject()
     const systemDataClone = JSON.parse(JSON.stringify(this.systemData))
-    storeDispatcher(({
-      type: REDUX_ACTIONS.setCurrentProject,
-      payload: systemDataClone
-    }))
+    ProjectState.setCurrentProject(systemDataClone)
   }
 
   public getProjectProp = (key: keyof IProjectSettings): any => this.systemData[RESERVED_AUDS_KEYS._settings][0][key]

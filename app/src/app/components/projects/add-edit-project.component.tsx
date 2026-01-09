@@ -3,14 +3,13 @@ import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.
 import { RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
 import { IdCreator } from 'app/libs/id-creator/id-creator.class'
 import { Manager } from 'app/cross-refs-exports'
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
-import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { FormProjectManager } from 'app/components/projects/add-edit-project-components/form-project-manager.component'
 import { ProjectEditorModeToggle } from 'app/components/projects/add-edit-project-components/project-editor-mode-toggle.component'
 import { Loader } from 'app/components/shared-components/loader/loader.component'
 import React, { useEffect, useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
+import { FormProjectState } from 'app/state/form-project/form-project-state.class'
 
 export const AddEditProject: React.FC = () => {
   const params = useParams()
@@ -29,7 +28,7 @@ export const AddEditProject: React.FC = () => {
         [RESERVED_AUDS_KEYS._settings]: [{ id: IdCreator.random(), title: '', description: '', createdAt: '', localStorage: LOCAL_STORAGE_SYSTEMS.IndexedDB }],
         [RESERVED_AUDS_KEYS._sections]: [{ id: IdCreator.random(), title: '', formModel: [{} as any], createdAt: '' }]
       }
-      storeDispatcher({ type: REDUX_ACTIONS.setFormProject, payload: newProjectSystemData })
+      FormProjectState.setFormProject(newProjectSystemData)
       return setHasProject(true)
     }
 
@@ -43,7 +42,7 @@ export const AddEditProject: React.FC = () => {
       const _sections = [...project.getSectionsDefinitions()]
 
       if (isMounted) {
-        storeDispatcher({ type: REDUX_ACTIONS.setFormProject, payload: { _settings, _sections } })
+        FormProjectState.setFormProject({ _settings, _sections })
         setHasProject(true)
       }
     }

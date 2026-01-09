@@ -1,8 +1,6 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { Manager } from 'app/cross-refs-exports'
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
-import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { ProjectSectionElementAddEditFormManager } from 'app/components/project/section/element/add-edit-form-manager.component'
 import { ProjectSectionElementAddEditSaveCancelButtons } from 'app/components/project/section/element/add-edit-save-cancel-buttons.component'
@@ -10,6 +8,7 @@ import { MainContentContainer } from 'app/components/shared-components/common-ui
 import { Loader } from 'app/components/shared-components/loader/loader.component'
 import React, { useEffect, useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
+import { FormElementState } from 'app/state/form-element/form-element-state.class'
 
 export const ProjectSectionElementAddEdit: React.FC = () => {
   const params = useParams()
@@ -50,13 +49,22 @@ export const ProjectSectionElementAddEdit: React.FC = () => {
     }
   }, [mode, projectId, sectionId, elementId])
 
+  useEffect(() => {
+    if (element === null) {
+      FormElementState.setElement(null)
+      return
+    }
+
+    if (element !== undefined) {
+      FormElementState.setElement(element as ISectionElement)
+    }
+  }, [element])
+
   if (element === undefined) {
     return <Navigate to={ANITA_URLS.projectsList} />
   }
 
   const headerText = mode === EDITOR_MODE.add ? 'Add Element' : 'Edit Element'
-
-  storeDispatcher({ type: REDUX_ACTIONS.updateFormElement, payload: element! })
 
   return (
     <MainContentContainer headerText={headerText} overflowClassName="overflow-y-visible">

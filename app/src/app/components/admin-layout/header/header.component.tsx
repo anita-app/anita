@@ -1,7 +1,5 @@
 /* eslint-disable eqeqeq */
 import React, { useEffect } from 'react'
-import { AnitaStore } from 'app/libs/redux/reducers.const'
-import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { DropboxSyncButton } from 'app/components/admin-layout/header/dropbox-sync/dropbox-sync-button'
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
@@ -13,10 +11,11 @@ import { useAtomValue } from 'jotai'
 import { SyncStateAtoms } from 'app/state/sync/sync-state.atoms'
 import { LayoutState } from 'app/state/layout/layout-state.class'
 import { LayoutAtoms } from 'app/state/layout/layout.atoms'
+import { ProjectAtoms } from 'app/state/project/project.atoms'
 
 export const AdminLayoutHeader: React.FC = () => {
   const sidebarCollapsed = useAtomValue(LayoutAtoms.sidebarCollapsed)
-  const project = useSelector((store: AnitaStore) => store.project)
+  const project = useAtomValue(ProjectAtoms.current)
   const remoteIds = useAtomValue(SyncStateAtoms.wordPressRemotesIds)
   const remoteIdsLength = remoteIds?.length
 

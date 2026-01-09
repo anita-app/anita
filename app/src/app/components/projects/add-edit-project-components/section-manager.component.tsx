@@ -2,17 +2,15 @@ import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/proje
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { ISection } from 'app/models/section/section.declarations'
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
-import { IUpdateFormProjectRemoveFieldFromSectionPayload } from 'app/libs/redux/action.type'
-import { AnitaStore } from 'app/libs/redux/reducers.const'
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
-import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { SectionFormModelManager } from 'app/components/projects/add-edit-project-components/section-form-model-manager.component'
 import { FormAutomator } from 'app/components/shared-components/forms-automator/form-automator.component'
 import { FormFieldsModel } from 'app/components/shared-components/forms-automator/form-automator.types'
-import { useSelector } from 'react-redux'
 import React from 'react'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
+import { useAtomValue } from 'jotai'
+import { FormProjectAtoms } from 'app/state/form-project/form-project.atoms'
+import { FormProjectState } from 'app/state/form-project/form-project-state.class'
 
 interface ISectionManagerProps {
   section: ISection
@@ -20,28 +18,27 @@ interface ISectionManagerProps {
 }
 
 export const SectionManager: React.FC<ISectionManagerProps> = ({ section, sectionIndex }) => {
-  const projectEditorMode = useSelector((store: AnitaStore) => store.formProject.mode)
-  const sections = useSelector((store: AnitaStore) => store.formProject.project[RESERVED_AUDS_KEYS._sections])
+  const projectEditorMode = useAtomValue(FormProjectAtoms.mode)
+  const project = useAtomValue(FormProjectAtoms.project)
+  const sections = project[RESERVED_AUDS_KEYS._sections]
   const customFields: Array<string | null> = section.formModel
     .map(formElement => Object.values(RESERVED_FIELDS).includes(formElement.fieldName) ? null : formElement.fieldName)
     .filter(fieldName => fieldName !== null)
 
   const handleChange = (index: number, fieldName: keyof ISection, value: ISection[keyof ISection]) => {
-    storeDispatcher({
-      type: REDUX_ACTIONS.updateFormProjectUpdateSection, payload: { fieldName, value, index }
-    })
+    FormProjectState.updateSection(index, fieldName, value)
   }
 
   const handleClickAddField = () => {
-    storeDispatcher({ type: REDUX_ACTIONS.updateFormProjectAddFieldToSection, payload: sectionIndex })
+    FormProjectState.addFieldToSection(sectionIndex)
   }
 
   const handleClickDeleteSection = () => {
-    storeDispatcher({ type: REDUX_ACTIONS.updateFormProjectRemoveSection, payload: sectionIndex })
+    FormProjectState.removeSection(sectionIndex)
   }
 
   const handleClickDeleteField = (fieldIndex: number) => {
-    storeDispatcher({ type: REDUX_ACTIONS.updateFormProjectRemoveFieldFromSection, payload: { sectionIndex, fieldIndex } as IUpdateFormProjectRemoveFieldFromSectionPayload })
+    FormProjectState.removeFieldFromSection(sectionIndex, fieldIndex)
   }
 
   return (

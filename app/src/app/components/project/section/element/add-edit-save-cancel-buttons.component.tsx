@@ -1,27 +1,28 @@
 import { Manager } from 'app/cross-refs-exports'
-import { AnitaStore } from 'app/libs/redux/reducers.const'
-import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import React, { useCallback } from 'react'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
 import { useShortcut } from 'app/components/hooks/shortcut'
-import { store } from 'app/libs/redux/state.store'
+import { FormElementState } from 'app/state/form-element/form-element-state.class'
+import { useAtomValue } from 'jotai'
+import { FormElementAtoms } from 'app/state/form-element/form-element.atoms'
+import { FormElesValidStateAtoms } from 'app/state/form-eles-valid-state/form-eles-valid-state.atoms'
 
 interface IProjectSectionElementAddEditSaveCancelButtonsProps {
   sectionId: string
 }
 
 const saveOnShortcut = (sectionId: string, e: KeyboardEvent) => {
-  const currentElementInStore = store.getState().formElement.element
+  const currentElementInStore = FormElementState.getElement()
   e.preventDefault()
   Manager.getCurrentProject()?.getSectionById(sectionId)?.saveElement(currentElementInStore!)
 }
 
 export const ProjectSectionElementAddEditSaveCancelButtons: React.FC<IProjectSectionElementAddEditSaveCancelButtonsProps> = ({ sectionId }) => {
-  const element = useSelector((state: AnitaStore) => state.formElement.element)
-  const validObj = useSelector((state: AnitaStore) => state.formElesValidState)
+  const element = useAtomValue(FormElementAtoms.element)
+  const validObj = useAtomValue(FormElesValidStateAtoms.validState)
   const navigate = useNavigate()
 
   const handleSave = useCallback(async () => {

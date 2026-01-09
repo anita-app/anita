@@ -10,13 +10,12 @@ import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-au
 import { TIconName } from 'app/libs/icons/icons.class'
 import { SupportedViews } from 'app/models/section/view-settings.const'
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
-import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { DateTools } from 'app/libs/tools/date-tools.class'
 import { SyncManager } from 'app/cross-refs-exports'
 import { SyncState } from 'app/state/sync/sync-state.class'
 import { atom } from 'jotai'
 import { Bucket } from 'app/state/bucket.state'
+import { ProjectState } from 'app/state/project/project-state.class'
 
 export class Section implements ISection {
   public id: string
@@ -144,6 +143,6 @@ export class Section implements ISection {
 
   private saveEditedSection = async (): Promise<void> => {
     new SectionElementSaver(this.projectId, RESERVED_AUDS_KEYS._sections, this.sectionData, EDITOR_MODE.edit).save()
-    storeDispatcher({ type: REDUX_ACTIONS.updateSection, payload: this.sectionData })
+    ProjectState.updateSection(this.sectionData)
   }
 }

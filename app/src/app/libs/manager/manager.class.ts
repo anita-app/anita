@@ -2,15 +2,13 @@ import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
 import { TAnitaUniversalDataStorage, IProjectSettings, LocalProjectSettings, RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
-import { store } from 'app/libs/redux/state.store'
-import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { Project } from 'app/models/project/project.class'
 import { ProjectLoader } from 'app/models/project/project-loader.class'
 import { ProjectSaver } from 'app/models/project/project-saver.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api'
 import { ProjectDataImporter } from 'app/libs/projects-helpers/project-importers/project-data-importer.class'
+import { ProjectState } from 'app/state/project/project-state.class'
 
 export class Manager {
   private static currentProject: Project
@@ -29,10 +27,7 @@ export class Manager {
       [RESERVED_AUDS_KEYS._sections]: [...systemData[RESERVED_AUDS_KEYS._sections]]
     }
     this.currentProject = new Project(systemDataClone)
-    storeDispatcher(({
-      type: REDUX_ACTIONS.setCurrentProject,
-      payload: systemDataClone
-    }))
+    ProjectState.setCurrentProject(systemDataClone)
   }
 
   public static getCurrentProject (): Project | undefined {
@@ -58,7 +53,7 @@ export class Manager {
   }
 
   private static loadCurrentProjectFromStore () {
-    const projectInStore = store.getState().project
+    const projectInStore = ProjectState.getCurrentProject()
     if (projectInStore) {
       this.currentProject = new Project(projectInStore)
     }

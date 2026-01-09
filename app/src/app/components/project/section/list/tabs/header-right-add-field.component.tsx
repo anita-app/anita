@@ -3,19 +3,20 @@ import { SectionFormModelManager } from 'app/components/projects/add-edit-projec
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { Manager } from 'app/cross-refs-exports'
-import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
 import { ModalState } from 'app/state/modal/modal-state.class'
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useAtomValue } from 'jotai'
+import { FormProjectAtoms } from 'app/state/form-project/form-project.atoms'
+import { FormElesValidStateAtoms } from 'app/state/form-eles-valid-state/form-eles-valid-state.atoms'
 
 interface IListTabsHeaderRightAddFieldProps {
   sectionId: string
 }
 
 export const ListTabsHeaderRightAddField: React.FC<IListTabsHeaderRightAddFieldProps> = (props) => {
-  const project = useSelector((state: AnitaStore) => state.formProject.project)
-  const validObj = useSelector((state: AnitaStore) => state.formElesValidState)
+  const project = useAtomValue(FormProjectAtoms.project)
+  const validObj = useAtomValue(FormElesValidStateAtoms.validState)
   const sections = project[RESERVED_AUDS_KEYS._sections]!
   const sectionIndex = sections?.findIndex((section) => section.id === props.sectionId)
 

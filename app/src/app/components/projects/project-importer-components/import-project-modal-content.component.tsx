@@ -2,9 +2,8 @@ import { FormAutomator } from 'app/components/shared-components/forms-automator/
 import { FormAutomatorOnChangeValue, FormFieldsModel, IBasicRadio } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { projectInfoNewItem } from 'app/data/project-form-builder/project-info-builder.constant'
 import { IProjectSettings } from 'app/models/project/project.declarations'
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
-import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import React, { useEffect, useState } from 'react'
+import { FormElementState } from 'app/state/form-element/form-element-state.class'
 
 interface IImportProjectModalContentProps {
   projectSettings: IProjectSettings | null
@@ -37,10 +36,9 @@ export const ImportProjectModalContent: React.FC<IImportProjectModalContentProps
   }
 
   useEffect(() => {
-    storeDispatcher({
-      type: REDUX_ACTIONS.updateFormElement,
-      payload: projectSettings!
-    })
+    if (projectSettings) {
+      FormElementState.setElement(projectSettings)
+    }
   }, [projectSettings])
 
   if (!projectSettings) {

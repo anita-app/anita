@@ -1,13 +1,13 @@
 import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const'
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { ISection } from 'app/models/section/section.declarations'
-import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { FormAutomator } from 'app/components/shared-components/forms-automator/form-automator.component'
 import { FormFieldsModel, IBasicSelect, ICommonFormEleProps, IOptionKeysModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
 import React, { memo, useMemo } from 'react'
-import { useSelector } from 'react-redux'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
+import { useAtomValue } from 'jotai'
+import { FormProjectAtoms } from 'app/state/form-project/form-project.atoms'
 
 /**
  * Checks if the OptionKeysModel was already in the section before we started editing.
@@ -27,8 +27,9 @@ function getCanEdit (section: ISection, indexFormElement: number, value: string 
 
 export const OptionsMakerSingleOption: React.FC<ICommonFormEleProps<FormFieldsModel<IOptionKeysModel>>> = memo(function OptionsMakerSingleOption (props: ICommonFormEleProps<FormFieldsModel<IOptionKeysModel>>) {
   const { formEle, element, handleOptionsChange, handleClickDeleteOption, indexSection, indexFormElement, index, optionElement } = props
-  const projectEditorMode = useSelector((store: AnitaStore) => store.formProject.mode)
-  const section = useSelector((store: AnitaStore) => store.formProject.original[RESERVED_AUDS_KEYS._sections]![indexSection])
+  const projectEditorMode = useAtomValue(FormProjectAtoms.mode)
+  const originalProject = useAtomValue(FormProjectAtoms.original)
+  const section = originalProject[RESERVED_AUDS_KEYS._sections]![indexSection]
   const formModelToUse: Array<FormFieldsModel<TSupportedFormsTypes>> = useMemo(() => {
     const canEdit = getCanEdit(section, indexFormElement, optionElement.value)
     return canEdit

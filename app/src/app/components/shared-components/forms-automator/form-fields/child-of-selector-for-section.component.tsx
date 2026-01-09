@@ -1,6 +1,5 @@
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { ISectionElement } from 'app/models/section-element/section-element.declarations'
-import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { IOption, ParentElement } from 'app/models/parent-element/parent-element.class'
 import { IBasicSelect, ICommonFormEleProps } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { FormEleContainer } from 'app/components/shared-components/forms-automator/form-layout/form-ele-container.component'
@@ -14,11 +13,13 @@ import React, {
   useRef,
   useState
 } from 'react'
-import { useSelector } from 'react-redux'
 import Select, { MultiValue } from 'react-select'
+import { useAtomValue } from 'jotai'
+import { FormProjectAtoms } from 'app/state/form-project/form-project.atoms'
 
 export const ChildOfSelectorForSection: React.FC<ICommonFormEleProps<IBasicSelect<ISectionElement>>> = memo(function ChildOfSelectorForSection ({ formEle, element, handleChange, sectionId }: ICommonFormEleProps<IBasicSelect<ISectionElement>>) {
-  const currentEditedProjectSections = useSelector((state: AnitaStore) => state.formProject.project[RESERVED_AUDS_KEYS._sections])
+  const currentProject = useAtomValue(FormProjectAtoms.project)
+  const currentEditedProjectSections = currentProject[RESERVED_AUDS_KEYS._sections]
   const [selectOptions, setSelectOptions] = useState<Array<IOption>>([])
 
   const [touched, setTouched] = useState(false)

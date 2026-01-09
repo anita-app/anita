@@ -3,10 +3,9 @@ import { Type } from 'app/components/shared-components/common-ui-eles/components
 import { Toggle } from 'app/components/shared-components/common-ui-eles/toggle.component'
 import { Manager } from 'app/cross-refs-exports'
 import React from 'react'
-import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { ListTabsHeaderRightAddField } from 'app/components/project/section/list/tabs/header-right-add-field.component'
 import { IModalProps, ModalState } from 'app/state/modal/modal-state.class'
+import { FormProjectState } from 'app/state/form-project/form-project-state.class'
 
 interface IListTabsHeaderRightEditViewListProps {
   sectionId: string
@@ -22,8 +21,8 @@ export const ListTabsHeaderRightEditViewTable: React.FC<IListTabsHeaderRightEdit
     const payload = project?.getSystemData()
     const sectionIndex = payload?._sections?.findIndex((sez) => sez.id === section.id)
     if (payload && sectionIndex !== undefined) {
-      storeDispatcher({ type: REDUX_ACTIONS.setFormProject, payload })
-      storeDispatcher({ type: REDUX_ACTIONS.updateFormProjectAddFieldToSection, payload: sectionIndex })
+      FormProjectState.setFormProject(payload)
+      FormProjectState.addFieldToSection(sectionIndex)
     }
     ModalState.showModal({
       title: 'Add field',

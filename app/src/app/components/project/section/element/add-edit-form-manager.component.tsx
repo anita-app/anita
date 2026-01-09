@@ -1,11 +1,11 @@
 import { Manager } from 'app/cross-refs-exports'
-import { AnitaStore } from 'app/libs/redux/reducers.const'
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
-import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { FormAutomator } from 'app/components/shared-components/forms-automator/form-automator.component'
 import { FormAutomatorOnChangeValue } from 'app/components/shared-components/forms-automator/form-automator.types'
-import { useSelector } from 'react-redux'
 import React from 'react'
+import { useAtomValue } from 'jotai'
+import { FormElementAtoms } from 'app/state/form-element/form-element.atoms'
+import { FormElementState } from 'app/state/form-element/form-element-state.class'
+import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
 interface IProjectFormElementManagerProps {
   sectionId: string
@@ -15,10 +15,10 @@ export const ProjectSectionElementAddEditFormManager: React.FC<IProjectFormEleme
   const project = Manager.getCurrentProject()
   const section = project?.getSectionById(sectionId)
 
-  const element = useSelector((store: AnitaStore) => store.formElement.element)
+  const element = useAtomValue(FormElementAtoms.element)
 
   const handleChange = (fieldName: string | number, value: FormAutomatorOnChangeValue) => {
-    storeDispatcher({ type: REDUX_ACTIONS.updateFormElementKey, payload: { fieldName, value } })
+    FormElementState.updateElementKey(fieldName as keyof ISectionElement, value as ISectionElement[keyof ISectionElement])
   }
 
   if (!section || !element) {

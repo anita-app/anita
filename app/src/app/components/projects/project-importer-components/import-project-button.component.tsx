@@ -3,15 +3,15 @@ import { TAnitaUniversalDataStorage, IProjectSettings, RESERVED_AUDS_KEYS } from
 import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api'
 import { Manager } from 'app/cross-refs-exports'
 import { ProjectFileImporter } from 'app/libs/projects-helpers/project-importers/project-file-importer.class'
-import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import React, { useRef } from 'react'
-import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { ImportProjectModalContent } from 'app/components/projects/project-importer-components/import-project-modal-content.component'
-import { store } from 'app/libs/redux/state.store'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { ModalState } from 'app/state/modal/modal-state.class'
+import { useAtomValue } from 'jotai'
+import { FormElesValidStateAtoms } from 'app/state/form-eles-valid-state/form-eles-valid-state.atoms'
+import { FormElementState } from 'app/state/form-element/form-element-state.class'
 
 interface IImportProjectButtonProps {
   btnType: 'icon' | 'text'
@@ -19,12 +19,12 @@ interface IImportProjectButtonProps {
 
 export const ImportProjectButton: React.FC<IImportProjectButtonProps> = (props) => {
   const navigate = useNavigate()
-  const validObj = useSelector((state: AnitaStore) => state.formElesValidState)
+  const validObj = useAtomValue(FormElesValidStateAtoms.validState)
   const projectData = useRef<TAnitaUniversalDataStorage>()
   const projectFileHandle = useRef<FileSystemFileHandle>()
 
   const handleClickImport = async () => {
-    const projectSettings = store.getState().formElement.element as IProjectSettings
+    const projectSettings = FormElementState.getElement() as IProjectSettings
     projectData.current![RESERVED_AUDS_KEYS._settings][0] = projectSettings
     await Manager.importProject(projectData.current!, projectFileHandle.current)
     Manager.setCurrentProject(projectData.current!)

@@ -3,28 +3,28 @@ import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
 import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const'
 import { IProjectSettings, RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
 import { Manager } from 'app/cross-refs-exports'
-import { AnitaStore } from 'app/libs/redux/reducers.const'
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
-import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { SectionManager } from 'app/components/projects/add-edit-project-components/section-manager.component'
 import { FormAutomator } from 'app/components/shared-components/forms-automator/form-automator.component'
-import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router'
 import React from 'react'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
+import { useAtomValue } from 'jotai'
+import { FormProjectAtoms } from 'app/state/form-project/form-project.atoms'
+import { FormProjectState } from 'app/state/form-project/form-project-state.class'
+import { FormElesValidStateAtoms } from 'app/state/form-eles-valid-state/form-eles-valid-state.atoms'
 
 export const FormProjectManager: React.FC = () => {
   const { projectId } = useParams<URL_PARAMS>()
-  const projectEditorMode = useSelector((store: AnitaStore) => store.formProject.mode)
-  const project = useSelector((state: AnitaStore) => state.formProject.project)
-  const validObj = useSelector((state: AnitaStore) => state.formElesValidState)
+  const projectEditorMode = useAtomValue(FormProjectAtoms.mode)
+  const project = useAtomValue(FormProjectAtoms.project)
+  const validObj = useAtomValue(FormElesValidStateAtoms.validState)
   const mode: EDITOR_MODE = projectId ? EDITOR_MODE.edit : EDITOR_MODE.add
   const navigate = useNavigate()
 
   const handleProjectChange = (fieldName: keyof IProjectSettings, value: IProjectSettings[keyof IProjectSettings]) => {
-    storeDispatcher({ type: REDUX_ACTIONS.updateFormProjectSettings, payload: { fieldName, value } })
+    FormProjectState.updateProjectSettings(fieldName, value)
   }
 
   const handleClickSave = async () => {
@@ -34,7 +34,7 @@ export const FormProjectManager: React.FC = () => {
   }
 
   const handleClickAddSection = () => {
-    storeDispatcher({ type: REDUX_ACTIONS.updateFormProjectAddSection })
+    FormProjectState.addSection()
   }
 
   const projectFormModel = mode === EDITOR_MODE.add

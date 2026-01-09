@@ -1,8 +1,6 @@
 import { ANITA_URLS } from 'app/libs/routing/anita-routes.constant'
 import { IProjectSettings } from 'app/models/project/project.declarations'
 import { Manager } from 'app/cross-refs-exports'
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
-import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import React from 'react'
 import { useNavigate } from 'react-router'
@@ -10,6 +8,7 @@ import { Type } from 'app/components/shared-components/common-ui-eles/components
 import { ModalState } from 'app/state/modal/modal-state.class'
 import { WordpressHelper } from 'app/libs/cloud-sync/wordpress/wordpress-helper.class'
 import { ProjectDeletor } from 'app/models/project/project-deletor.class'
+import { ProjectState } from 'app/state/project/project-state.class'
 
 interface IDeleteProjectButtonProps {
   project: IProjectSettings
@@ -20,7 +19,7 @@ export const DeleteProjectButton: React.FC<IDeleteProjectButtonProps> = ({ proje
 
   const handleClickDelete = async () => {
     if (Manager.getCurrentProject()?.getId() === project.id) {
-      storeDispatcher({ type: REDUX_ACTIONS.resetCurrentProject })
+      ProjectState.resetCurrentProject()
     }
     new ProjectDeletor(project.id).delete()
     navigate(ANITA_URLS.projectsList)
