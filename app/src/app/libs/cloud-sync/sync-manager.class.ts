@@ -1,10 +1,12 @@
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
-import { Manager, SupportedCloud } from 'app/cross-refs-exports'
+import { SupportedCloud } from 'app/cross-refs-exports'
 import { CloudSyncState } from 'app/libs/cloud-sync/cloud-sync.const'
 import { RemoteAndLocalMerger } from 'app/libs/cloud-sync/remote-and-local-merger.class'
 import { WordpressHelper } from 'app/libs/cloud-sync/wordpress/wordpress-helper.class'
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { SyncState } from 'app/state/sync/sync-state.class'
+import { Bucket } from 'app/state/bucket.state'
+import { ProjectAtoms } from 'app/state/project/project.atoms'
 import type { TSystemData } from 'app/models/project/project.declarations'
 import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
@@ -75,8 +77,8 @@ export class SyncManager {
   }
 
   private static getRemoteIdAndType = (props: ISyncWithRemoteOrLocalProps): [string, SupportedCloud] | [null, null] => {
-    if (Manager.getCurrentProject()?.dropBoxSyncInfo.getLinkedFileId()) {
-      const remoteId = Manager.getCurrentProject()?.dropBoxSyncInfo.getLinkedFileId()!
+    if (Bucket.general.get(ProjectAtoms.currentProject)?.dropBoxSyncInfo.getLinkedFileId()) {
+      const remoteId = Bucket.general.get(ProjectAtoms.currentProject)?.dropBoxSyncInfo.getLinkedFileId()!
       return [remoteId, SupportedCloud.DROPBOX]
     }
     const remoteIdForWordPress = this.getRemoteIdForWordPress(props)
@@ -90,7 +92,7 @@ export class SyncManager {
     if (props.mode === EDITOR_MODE.add && props.type === 'project') {
       return props.systemData[RESERVED_AUDS_KEYS._settings][0].remoteStorage
     }
-    return Manager.getCurrentProject()?.getSettings().remoteStorage
+    return Bucket.general.get(ProjectAtoms.currentProject)?.getSettings().remoteStorage
   }
 
   private static handleRemoteSync = (remoteId: string, type: SupportedCloud): Promise<void> | undefined => {
@@ -101,7 +103,7 @@ export class SyncManager {
 
   private static canStartSyncWithRemote = (): boolean => (
     !SyncState.getIsSyncing() &&
-    Manager.getCurrentProject()?.dropBoxSyncInfo.getCloudSyncState() === CloudSyncState.LINKED &&
-    !!Manager.getCurrentProject()?.dropBoxSyncInfo.getLinkedFileId()
+    Bucket.general.get(ProjectAtoms.currentProject)?.dropBoxSyncInfo.getCloudSyncState() === CloudSyncState.LINKED &&
+    !!Bucket.general.get(ProjectAtoms.currentProject)?.dropBoxSyncInfo.getLinkedFileId()
   )
 }

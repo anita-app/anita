@@ -1,5 +1,6 @@
-import { Manager } from 'app/cross-refs-exports'
 import { ArrayTools } from 'app/libs/tools/array-tools.class'
+import { ProjectAtoms } from 'app/state/project/project.atoms'
+import { Bucket } from 'app/state/bucket.state'
 import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import type { Project } from 'app/models/project/project.class'
 import type { IOptionKeysModel, OptionKeysModelGroup } from 'app/components/shared-components/forms-automator/form-automator.types'
@@ -25,7 +26,7 @@ export class GetOptionsForParentsSelector {
 
   private createGroupOption (sectionId: string, sectionLabel: string, sectionEles: Array<ISectionElement>): void {
     const options: Array<IOptionKeysModel> = []
-    const section = Manager.getCurrentProject()?.getSectionById(sectionId)
+    const section = Bucket.general.get(ProjectAtoms.currentProject)?.getSectionById(sectionId)
     if (!section) {
       return
     }

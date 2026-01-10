@@ -1,9 +1,11 @@
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
-import { CloudSyncBase, Manager, SupportedCloud } from 'app/cross-refs-exports'
+import { CloudSyncBase, SupportedCloud } from 'app/cross-refs-exports'
 import { DropboxHelper } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { SyncState } from 'app/state/sync/sync-state.class'
 import { WordpressHelper } from 'app/libs/cloud-sync/wordpress/wordpress-helper.class'
+import { Bucket } from 'app/state/bucket.state'
+import { ProjectAtoms } from 'app/state/project/project.atoms'
 import type { Project } from 'app/models/project/project.class'
 import type { IComparisonResult } from 'app/models/project/syncing/project-comparator'
 import type { TAnitaUniversalDataStorage, TSystemData } from 'app/models/project/project.declarations'
@@ -18,7 +20,7 @@ export class RemoteAndLocalMerger {
     private remoteId: string,
     private type: SupportedCloud,
   ) {
-    this.project = Manager.getCurrentProject()!
+    this.project = Bucket.general.get(ProjectAtoms.currentProject)!
     SyncState.setIsSyncing(false)
   }
 

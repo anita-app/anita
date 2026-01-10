@@ -1,6 +1,8 @@
 import { Manager } from 'app/cross-refs-exports'
 import { DateTools } from 'app/libs/tools/date-tools.class'
 import Dexie from 'dexie'
+import { ProjectAtoms } from 'app/state/project/project.atoms'
+import { Bucket } from 'app/state/bucket.state'
 import { CloudSyncTable } from './cloud-sync.const'
 import type { IWordPressAuthData } from 'app/libs/cloud-sync/wordpress/wordpress-helper.class'
 import type { IWordPressRemoteInfo, IWordPressSpaceInfo } from 'app/libs/cloud-sync/wordpress/wordpress.const'
@@ -58,7 +60,7 @@ export class CloudSyncBase<T extends SupportedCloud> {
   }
 
   protected async setRemoteId (remoteId: string) {
-    const currentProject = Manager.getCurrentProject()
+    const currentProject = Bucket.general.get(ProjectAtoms.currentProject)!
 
     if (!currentProject) {
       return
