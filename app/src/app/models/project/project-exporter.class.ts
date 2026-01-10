@@ -1,5 +1,5 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
-import type { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
+import type { TAnitaUniversalDataStorage, TSystemData } from 'app/models/project/project.declarations'
 import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
 export enum ExportScope {
@@ -13,7 +13,7 @@ export class ProjectExporter {
   private projectToExport: Partial<TAnitaUniversalDataStorage> = {}
 
   constructor (
-    private systemData: Partial<TAnitaUniversalDataStorage>,
+    private systemData: Partial<TAnitaUniversalDataStorage> | TSystemData,
   ) {}
 
   /**
