@@ -1,4 +1,3 @@
-import React from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import showdown from 'showdown'
 import { FilePathsForPublicFileList, Renderer, RendererProps } from 'yassb-web'

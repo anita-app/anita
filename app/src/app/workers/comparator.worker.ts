@@ -1,5 +1,5 @@
-import { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
 import { Comparator } from 'app/models/project/syncing/project-comparator'
+import type { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
 
 interface IComparatorWorkerPayload {
   lastSync: string | undefined

@@ -1,7 +1,8 @@
 import { ProjectSectionListTableBodyTrTd } from 'app/components/project/section/list/table/table-body-tr-td.component'
-import { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
-import { ISectionElement } from 'app/models/section-element/section-element.declarations'
-import React, { memo } from 'react'
+import { memo } from 'react'
+import type { FC } from 'react'
+import type { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
+import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
 interface ITableTbodyTrProps extends ISectionElement {
   element: ISectionElement
@@ -9,9 +10,12 @@ interface ITableTbodyTrProps extends ISectionElement {
   columns: Array<FormFieldsModel<TSupportedFormsTypes>>
 }
 
-export const ProjectSectionListTableBodyTr: React.FC<ITableTbodyTrProps> = memo(function TableTbodyTr (props: ITableTbodyTrProps) {
+export const ProjectSectionListTableBodyTr: FC<ITableTbodyTrProps> = memo(function TableTbodyTr (props: ITableTbodyTrProps) {
   return (
-    <tr className="whitespace-nowrap" key={`row-tr-${props.id}`}>
+    <tr
+      className="whitespace-nowrap"
+      key={`row-tr-${props.id}`}
+    >
       {props.columns.map(column => (
         <ProjectSectionListTableBodyTrTd
           key={`row-${props.id}-${column.fieldName}`}

@@ -2,34 +2,35 @@ import { ListTabsHeaderRightEditViewTable } from 'app/components/project/section
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { SupportedViews } from 'app/models/section/view-settings.const'
-import { IModalProps, ModalState } from 'app/state/modal/modal-state.class'
-import React from 'react'
+import { ModalState } from 'app/state/modal/modal-state.class'
+import type { FC } from 'react'
+import type { IModalProps } from 'app/state/modal/modal-state.class'
 
 interface IListTabsHeaderRightEditViewProps {
   sectionId: string
   activeTab: SupportedViews
 }
 
-export const ListTabsHeaderRightEditView: React.FC<IListTabsHeaderRightEditViewProps> = (props: IListTabsHeaderRightEditViewProps) => {
+export const ListTabsHeaderRightEditView: FC<IListTabsHeaderRightEditViewProps> = (props: IListTabsHeaderRightEditViewProps) => {
   const modalConfigsByView: { [key: number]: IModalProps } = {
     [SupportedViews.grid]: {
       title: 'Edit Card Layout',
       ctas: [{
-        actionText: 'Close'
+        actionText: 'Close',
       }],
       hideCancelButton: true,
       type: Type.primary,
-      children: <>ToDo</>
+      children: <>ToDo</>,
     },
     [SupportedViews.table]: {
       title: 'Edit visible columns',
       ctas: [{
-        actionText: 'Close'
+        actionText: 'Close',
       }],
       hideCancelButton: true,
       type: Type.primary,
-      children: <><ListTabsHeaderRightEditViewTable sectionId={props.sectionId} /></>
-    }
+      children: <><ListTabsHeaderRightEditViewTable sectionId={props.sectionId} /></>,
+    },
   }
   const handleOpenConfigForView = () => {
     ModalState.showModal(modalConfigsByView[props.activeTab])

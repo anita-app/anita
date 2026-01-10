@@ -1,21 +1,21 @@
-import React from 'react'
+import type { FC } from 'react'
 
-export const RichTextEditorLeaf = ({ attributes, children, leaf }: any) => {
-  if (leaf.bold) {
-    children = <strong>{children}</strong>
+export const RichTextEditorLeaf: FC<any> = (props) => {
+  if (props.leaf.bold) {
+    props.children = <strong>{props.children}</strong>
   }
 
-  if (leaf.code) {
-    children = <code>{children}</code>
+  if (props.leaf.code) {
+    props.children = <code>{props.children}</code>
   }
 
-  if (leaf.italic) {
-    children = <em>{children}</em>
+  if (props.leaf.italic) {
+    props.children = <em>{props.children}</em>
   }
 
-  if (leaf.underline) {
-    children = <u>{children}</u>
+  if (props.leaf.underline) {
+    props.children = <u>{props.children}</u>
   }
 
-  return <span {...attributes}>{children}</span>
+  return <span {...props.attributes}>{props.children}</span>
 }

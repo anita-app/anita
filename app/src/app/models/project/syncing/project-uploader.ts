@@ -1,13 +1,13 @@
 import { DropboxHelper } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
 import { ProjectExporter, ExportScope } from 'app/models/project/project-exporter.class'
-import { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
+import type { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
 
 export class ProjectUploader {
   private projectInJson: string | undefined
   private fileName: string | undefined
 
   constructor (
-    private systemData: Partial<TAnitaUniversalDataStorage>
+    private systemData: Partial<TAnitaUniversalDataStorage>,
   ) {
     this.fileName = `${this.systemData._settings?.[0].title}.json`
   }

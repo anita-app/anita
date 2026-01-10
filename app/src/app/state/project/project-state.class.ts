@@ -1,7 +1,7 @@
 import { Bucket } from 'app/state/bucket.state'
 import { ProjectAtoms } from 'app/state/project/project.atoms'
-import { TSystemData } from 'app/models/project/project.declarations'
-import { ISection } from 'app/models/section/section.declarations'
+import type { TSystemData } from 'app/models/project/project.declarations'
+import type { ISection } from 'app/models/section/section.declarations'
 
 export class ProjectState {
   public static setCurrentProject = (systemData: TSystemData) => {

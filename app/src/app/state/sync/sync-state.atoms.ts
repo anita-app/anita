@@ -1,5 +1,6 @@
-import { IWordPressRemoteInfo } from 'app/libs/cloud-sync/wordpress/wordpress.const'
-import { PrimitiveAtom, atom } from 'jotai'
+import { atom } from 'jotai'
+import type { IWordPressRemoteInfo } from 'app/libs/cloud-sync/wordpress/wordpress.const'
+import type { PrimitiveAtom } from 'jotai'
 
 export class SyncStateAtoms {
   public static isSyncing = atom<boolean>(false)

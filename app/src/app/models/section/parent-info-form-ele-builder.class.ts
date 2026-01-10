@@ -1,8 +1,8 @@
-import { ISectionElement } from 'app/models/section-element/section-element.declarations'
-import { ISection } from 'app/models/section/section.declarations'
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
-import { FormFieldsModel, IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
+import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
+import type { ISection } from 'app/models/section/section.declarations'
+import type { FormFieldsModel, IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 
 /**
  * Builds the form element with the info on the parent section for ParentsSelector
@@ -15,7 +15,7 @@ export class ParentInfoFormEleBuilder {
 
   constructor (
     private childOf: Array<string>,
-    private sections?: Array<ISection>
+    private sections?: Array<ISection>,
 
   ) { }
 
@@ -39,7 +39,7 @@ export class ParentInfoFormEleBuilder {
       componentCode: FORM_COMPONENTS_CODES.parentsSelector,
       fieldName: RESERVED_FIELDS.parentsInfo,
       label: 'Parent elements',
-      options: this.options
+      options: this.options,
     }
   }
 }

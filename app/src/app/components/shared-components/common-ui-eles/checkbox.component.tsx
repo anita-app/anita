@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
+import type { FC } from 'react'
 
 interface ICheckboxProps {
   label?: string
@@ -7,7 +8,7 @@ interface ICheckboxProps {
   onChange: (value: boolean) => void
 }
 
-export const Checkbox: React.FC<ICheckboxProps> = (props) => {
+export const Checkbox: FC<ICheckboxProps> = (props) => {
   const [checked, setChecked] = useState(props.initialValue)
 
   const handleOnChange = () => {
@@ -31,7 +32,10 @@ export const Checkbox: React.FC<ICheckboxProps> = (props) => {
         </div>
         {!!props.label && (
           <div className="ml-3 text-sm">
-            <label htmlFor="offers" className="font-medium text-gray-700">
+            <label
+              htmlFor="offers"
+              className="font-medium text-gray-700"
+            >
               {props.label}
             </label>
           </div>

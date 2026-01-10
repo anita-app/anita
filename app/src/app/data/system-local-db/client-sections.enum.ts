@@ -6,7 +6,7 @@ import { projects } from 'app/data/system-local-db/sections/projects.const'
  */
 export const CLIENT_SECTIONS = {
   projects: projects.name,
-  localSettings: localSettings.name
+  localSettings: localSettings.name,
 }
 
 /**

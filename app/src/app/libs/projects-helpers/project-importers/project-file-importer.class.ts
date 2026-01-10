@@ -1,5 +1,5 @@
-import { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
 import fileDialog from 'file-dialog'
+import type { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
 
 /**
  * Imports an existing project file from disk.

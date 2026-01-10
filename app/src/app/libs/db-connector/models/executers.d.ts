@@ -1,6 +1,6 @@
-import { AdditionalInfoForLocalStorage } from 'app/models/project/project.declarations'
-import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition'
-import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
+import type { AdditionalInfoForLocalStorage } from 'app/models/project/project.declarations'
+import type { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition'
+import type { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 export interface DbConnectorConstructable<DbTypes> {

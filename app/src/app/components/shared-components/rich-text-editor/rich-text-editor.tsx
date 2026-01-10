@@ -1,28 +1,30 @@
-import React, { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import isHotkey from 'is-hotkey'
 import { Editable, withReact, useSlate, Slate } from 'slate-react'
 import {
   Editor,
   Transforms,
   createEditor,
-  Descendant,
   Element as SlateElement,
-  BaseEditor
 } from 'slate'
 import { withHistory } from 'slate-history'
-
-import { TIconName } from 'app/libs/icons/icons.class'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import './rich-text-editor.css'
 import { RichTextEditorElement } from 'app/components/shared-components/rich-text-editor/rich-text-editor-element'
 import { RichTextEditorLeaf } from 'app/components/shared-components/rich-text-editor/rich-text-editor-leaf'
+import type { FC } from 'react'
+import type { TIconName } from 'app/libs/icons/icons.class'
+import type {
+  Descendant,
+  BaseEditor,
+} from 'slate'
 
 const HOTKEYS = {
   'mod+b': 'bold',
   'mod+i': 'italic',
   'mod+u': 'underline',
-  'mod+`': 'code'
+  'mod+`': 'code',
 }
 
 const LIST_TYPES = ['numbered-list', 'bulleted-list']
@@ -37,8 +39,8 @@ const isBlockActive = (editor: BaseEditor, format: string, blockType = 'type') =
       at: (Editor as any).unhangRange(editor, selection),
       match: (n: any) => !(Editor as any).isEditor(n) &&
         SlateElement.isElement(n) &&
-        (n as any)[blockType as any] === format
-    })
+        (n as any)[blockType as any] === format,
+    }),
   )
 
   return !!match
@@ -58,7 +60,7 @@ const toggleBlock = (editor: BaseEditor, format: string) => {
   const isActive = isBlockActive(
     editor,
     format,
-    TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type'
+    TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type',
   )
   const isList = LIST_TYPES.includes(format)
 
@@ -67,16 +69,16 @@ const toggleBlock = (editor: BaseEditor, format: string) => {
       SlateElement.isElement(n) &&
       LIST_TYPES.includes((n as any).type) &&
       !TEXT_ALIGN_TYPES.includes(format),
-    split: true
+    split: true,
   })
   let newProperties: Partial<SlateElement>
   if (TEXT_ALIGN_TYPES.includes(format)) {
     newProperties = {
-      align: isActive ? undefined : format
+      align: isActive ? undefined : format,
     } as Partial<SlateElement>
   } else {
     newProperties = {
-      type: isActive ? 'paragraph' : isList ? 'list-item' : format
+      type: isActive ? 'paragraph' : isList ? 'list-item' : format,
     } as Partial<SlateElement>
   }
   Transforms.setNodes<SlateElement>(editor, newProperties)
@@ -97,47 +99,47 @@ const toggleMark = (editor: BaseEditor, format: string) => {
   }
 }
 
-const MarkButton = ({ format, icon }: { format: string; icon: TIconName }) => {
+const MarkButton: FC<{ format: string; icon: TIconName }> = (props) => {
   const editor = useSlate()
   return (
     <Button
-      id={icon}
+      id={props.icon}
       size="sm"
-      iconLeft={icon}
+      iconLeft={props.icon}
       type={Type.transparent}
-      label={format}
+      label={props.format}
       labelClassName="hidden"
-      className={isMarkActive(editor, format) ? 'bg-gray-200' : ''}
+      className={isMarkActive(editor, props.format) ? 'bg-gray-200' : ''}
       marginClassName=""
       onMouseDown={(e: React.MouseEvent) => {
         e.preventDefault()
         e.stopPropagation()
-        toggleMark(editor, format)
+        toggleMark(editor, props.format)
       }}
     />
   )
 }
 
-const BlockButton = ({ format, icon }: { format: string; icon: TIconName }) => {
+const BlockButton: FC<{ format: string; icon: TIconName }> = (props) => {
   const editor = useSlate()
   const isActive = isBlockActive(
     editor,
-    format,
-    TEXT_ALIGN_TYPES.includes(format) ? 'align' : 'type'
+    props.format,
+    TEXT_ALIGN_TYPES.includes(props.format) ? 'align' : 'type',
   )
   return (
     <Button
-      id={icon}
-      iconLeft={icon}
+      id={props.icon}
+      iconLeft={props.icon}
       type={Type.transparent}
-      label={format}
+      label={props.format}
       className={isActive ? 'bg-gray-200' : ''}
       marginClassName=""
       labelClassName="hidden"
       onMouseDown={(e: React.MouseEvent) => {
         e.preventDefault()
         e.stopPropagation()
-        toggleBlock(editor, format)
+        toggleBlock(editor, props.format)
       }}
     />
   )
@@ -148,7 +150,7 @@ interface IRichTextEditorProps {
   onChange: (value: Array<Descendant>) => void
 }
 
-export const RichTextEditor: React.FC<IRichTextEditorProps> = (props) => {
+export const RichTextEditor: FC<IRichTextEditorProps> = (props) => {
   const renderElement = useCallback((props: any) => <RichTextEditorElement {...props} />, [])
   const renderLeaf = useCallback((props: any) => <RichTextEditorLeaf {...props} />, [])
   const editor = useMemo(() => withHistory(withReact(createEditor())), [])
@@ -184,22 +186,71 @@ export const RichTextEditor: React.FC<IRichTextEditorProps> = (props) => {
   }, [])
 
   return (
-    <div id="rich-text-editor" className="border-2 border-gray-200 rounded-lg p-2">
-      <Slate editor={editor} value={props.initialValue} onChange={onChange}>
-        <div id="rich-text-editor-toolbar" className="sticky top-0 border-b border-gray-300 pb-2 bg-white z-10">
-          <MarkButton format="bold" icon="format_bold" />
-          <MarkButton format="italic" icon="format_italic" />
-          <MarkButton format="underline" icon="format_underlined" />
-          <MarkButton format="code" icon="format_code" />
-          <BlockButton format="heading-one" icon="format_looks_one" />
-          <BlockButton format="heading-two" icon="format_looks_two" />
-          <BlockButton format="block-quote" icon="format_quote" />
-          <BlockButton format="numbered-list" icon="format_list_numbered" />
-          <BlockButton format="bulleted-list" icon="format_list_bulleted" />
-          <BlockButton format="left" icon="format_align_left" />
-          <BlockButton format="center" icon="format_align_center" />
-          <BlockButton format="right" icon="format_align_right" />
-          <BlockButton format="justify" icon="format_align_justify" />
+    <div
+      id="rich-text-editor"
+      className="border-2 border-gray-200 rounded-lg p-2"
+    >
+      <Slate
+        editor={editor}
+        value={props.initialValue}
+        onChange={onChange}
+      >
+        <div
+          id="rich-text-editor-toolbar"
+          className="sticky top-0 border-b border-gray-300 pb-2 bg-white z-10"
+        >
+          <MarkButton
+            format="bold"
+            icon="format_bold"
+          />
+          <MarkButton
+            format="italic"
+            icon="format_italic"
+          />
+          <MarkButton
+            format="underline"
+            icon="format_underlined"
+          />
+          <MarkButton
+            format="code"
+            icon="format_code"
+          />
+          <BlockButton
+            format="heading-one"
+            icon="format_looks_one"
+          />
+          <BlockButton
+            format="heading-two"
+            icon="format_looks_two"
+          />
+          <BlockButton
+            format="block-quote"
+            icon="format_quote"
+          />
+          <BlockButton
+            format="numbered-list"
+            icon="format_list_numbered"
+          />
+          <BlockButton
+            format="bulleted-list"
+            icon="format_list_bulleted"
+          />
+          <BlockButton
+            format="left"
+            icon="format_align_left"
+          />
+          <BlockButton
+            format="center"
+            icon="format_align_center"
+          />
+          <BlockButton
+            format="right"
+            icon="format_align_right"
+          />
+          <BlockButton
+            format="justify"
+            icon="format_align_justify"
+          />
         </div>
         <Editable
           renderElement={renderElement}

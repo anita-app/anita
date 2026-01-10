@@ -1,8 +1,9 @@
 import { SUPPORTED_VALIDATORS } from 'app/components/shared-components/forms-automator/form-validation/supported-validators.enum'
-import { IValidatorsProps } from 'app/components/shared-components/forms-automator/form-validation/validators'
-import React, { memo, useEffect } from 'react'
+import { memo, useEffect } from 'react'
+import type { FC } from 'react'
+import type { IValidatorsProps } from 'app/components/shared-components/forms-automator/form-validation/validators'
 
-export const RequiredField: React.FC<IValidatorsProps> = memo(function RequiredField ({ formEle, element, touched, updateValidatorState }: IValidatorsProps) {
+export const RequiredField: FC<IValidatorsProps> = memo(function RequiredField ({ formEle, element, touched, updateValidatorState }: IValidatorsProps) {
   const value = element[formEle.fieldName]
 
   useEffect(() => {

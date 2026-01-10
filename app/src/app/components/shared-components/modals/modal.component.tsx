@@ -1,12 +1,15 @@
-import React, { Fragment } from 'react'
-import { Icons, TIconName } from 'app/libs/icons/icons.class'
+import { Fragment } from 'react'
+import { Icons } from 'app/libs/icons/icons.class'
 import ReactDOM from 'react-dom'
 import { Dialog, Transition } from '@headlessui/react'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
-import { IModalProps, IModalPropsOpen, ModalState } from 'app/state/modal/modal-state.class'
+import { ModalState } from 'app/state/modal/modal-state.class'
 import { useAtomValue } from 'jotai'
 import { ModalStateAtoms } from 'app/state/modal/modal-state.atoms'
+import type { FC } from 'react'
+import type { IModalProps, IModalPropsOpen } from 'app/state/modal/modal-state.class'
+import type { TIconName } from 'app/libs/icons/icons.class'
 
 const ICON_CONFIG_BY_TYPE: Record<Type, { icon: TIconName; iconTextColor: string; iconBgColor: string } | null> = {
   [Type.primary]: null,
@@ -15,10 +18,10 @@ const ICON_CONFIG_BY_TYPE: Record<Type, { icon: TIconName; iconTextColor: string
   [Type.info]: null,
   [Type.warning]: null,
   [Type.danger]: { icon: 'warningOutline', iconTextColor: 'text-red-600', iconBgColor: 'sm:bg-red-100' },
-  [Type.transparent]: null
+  [Type.transparent]: null,
 }
 
-const Modal: React.FC<IModalProps> = (props) => {
+const Modal: FC<IModalProps> = (props) => {
   const handleActionClick = (callback?: () => void) => {
     if (typeof callback === 'function') {
       callback()
@@ -37,8 +40,15 @@ const Modal: React.FC<IModalProps> = (props) => {
   const iconConfig = config.type ? ICON_CONFIG_BY_TYPE[config.type] : null
 
   return (
-    <Transition.Root show={props.isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={onCloseAction}>
+    <Transition.Root
+      show={props.isOpen}
+      as={Fragment}
+    >
+      <Dialog
+        as="div"
+        className="relative z-10"
+        onClose={onCloseAction}
+      >
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -70,7 +80,10 @@ const Modal: React.FC<IModalProps> = (props) => {
                     </div>
                   )}
                   <div className="text-left w-full">
-                    <Dialog.Title as="h3" className={`text-lg font-medium leading-6 text-gray-900 ${iconConfig ? 'sm:pt-1' : ''}`}>
+                    <Dialog.Title
+                      as="h3"
+                      className={`text-lg font-medium leading-6 text-gray-900 ${iconConfig ? 'sm:pt-1' : ''}`}
+                    >
                       {config.title}
                     </Dialog.Title>
                     <div className="mt-2">
@@ -114,12 +127,12 @@ const Modal: React.FC<IModalProps> = (props) => {
   )
 }
 
-export const ModalPortal: React.FC = () => {
+export const ModalPortal: FC = () => {
   const modalConfig = useAtomValue(ModalStateAtoms.modalProps)
   return (
     ReactDOM.createPortal(
       <Modal {...modalConfig} />,
-      document.getElementById('modal-root')!
+      document.getElementById('modal-root')!,
     )
   )
 }

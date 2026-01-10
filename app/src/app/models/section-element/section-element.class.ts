@@ -1,6 +1,6 @@
 import { TextTools } from 'app/libs/tools/text-tools.class'
-import { IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
-import { ISection } from 'app/models/section/section.declarations'
+import type { IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
+import type { ISection } from 'app/models/section/section.declarations'
 
 export class SectionElement {
   public static autoGenerateFieldName (section: ISection, labelValue: string | number | boolean | Array<string>): string | null {

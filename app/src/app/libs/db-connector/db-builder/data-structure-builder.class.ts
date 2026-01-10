@@ -1,6 +1,6 @@
 import { SezBuilder } from 'app/libs/db-connector/db-builder/sez-builder.class'
-import { SectionDefinition, SectionModel } from 'app/libs/db-connector/db-builder/sez-definition'
-import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
+import type { SectionDefinition, SectionModel } from 'app/libs/db-connector/db-builder/sez-definition'
+import type { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 
 /**
  * Builds the data structure of the DB from the section definitions and returns it.
@@ -16,7 +16,7 @@ export class DataStructureBuilder {
    * @param allSez the `Array` of all the definitions of the Sections (aka tables) of the DB.
    */
   constructor (
-    private allSez: Array<SectionDefinition<any>>
+    private allSez: Array<SectionDefinition<any>>,
   ) { }
 
   /**
@@ -41,7 +41,7 @@ export class DataStructureBuilder {
       sezParams.orderBy,
       sezParams.childOf,
       sezParams.parentsIdentifiers,
-      sezParams.ownerIdentifier
+      sezParams.ownerIdentifier,
     ).make()
     this.addToTempDs(sez)
   }

@@ -2,12 +2,14 @@ import { useMultiState } from 'app/components/hooks/multi-state.hook'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { FileExplorer } from 'app/components/shared-components/file-explorer/file-explorer'
 import { Loader } from 'app/components/shared-components/loader/loader.component'
-import { ISharedFileMeta } from 'app/libs/cloud-sync/cloud-sync.const'
 import { DropboxHelper } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
 import { Manager } from 'app/cross-refs-exports'
 import { TextTools } from 'app/libs/tools/text-tools.class'
-import React, { useEffect, useRef } from 'react'
-import { IModalProps, ModalState } from 'app/state/modal/modal-state.class'
+import { useEffect, useRef } from 'react'
+import { ModalState } from 'app/state/modal/modal-state.class'
+import type { FC } from 'react'
+import type { IModalProps } from 'app/state/modal/modal-state.class'
+import type { ISharedFileMeta } from 'app/libs/cloud-sync/cloud-sync.const'
 
 interface DropboxSyncFilePickerState {
   files: Array<ISharedFileMeta> | null
@@ -22,13 +24,13 @@ const handleSaveHere = (path: string) => {
   // todo
 }
 
-const DropboxSyncFilePicker: React.FC = () => {
+const DropboxSyncFilePicker: FC = () => {
   const [state, setState, getState] = useMultiState<DropboxSyncFilePickerState>({
     files: null,
     selected: null,
     currentFolder: null,
     isChangingFolder: false,
-    direction: 'forward'
+    direction: 'forward',
   })
   const pathsHistoryRef = useRef<Array<string>>([])
   const getFiles = async () => {
@@ -39,8 +41,8 @@ const DropboxSyncFilePicker: React.FC = () => {
       ctas: [{
         actionText: 'Save here',
         disableAction: false,
-        handleClickAction: handleSaveHere.bind(null, path)
-      }]
+        handleClickAction: handleSaveHere.bind(null, path),
+      }],
     })
   }
 
@@ -57,8 +59,8 @@ const DropboxSyncFilePicker: React.FC = () => {
       ctas: [{
         disableAction: true,
         actionText: 'Save here',
-        handleClickAction: handleSaveHere.bind(null, selectedPath)
-      }]
+        handleClickAction: handleSaveHere.bind(null, selectedPath),
+      }],
     }
     if (!pathsHistoryRef.current.length) {
       modalProps.leftButton = undefined
@@ -73,15 +75,15 @@ const DropboxSyncFilePicker: React.FC = () => {
       ctas: [{
         actionText: 'Save here',
         disableAction: true,
-        handleClickAction: handleSaveHere.bind(null, selectedPath)
+        handleClickAction: handleSaveHere.bind(null, selectedPath),
       }],
       leftButton: {
         id: 'file-picker-go-back',
         label: 'Back',
         type: Type.transparent,
         iconLeft: 'chevronBack',
-        onClick: goBack
-      }
+        onClick: goBack,
+      },
     })
     setState({ isChangingFolder: true, direction: 'forward', selected: null, currentFolder })
     pathsHistoryRef.current.push(currentFolder.path!)
@@ -95,8 +97,8 @@ const DropboxSyncFilePicker: React.FC = () => {
     ModalState.updateModal({
       ctas: [{
         actionText,
-        handleClickAction: handleSaveHere.bind(null, selectedPath || '/')
-      }]
+        handleClickAction: handleSaveHere.bind(null, selectedPath || '/'),
+      }],
     })
     setState({ selected })
   }
@@ -131,9 +133,9 @@ export const FILE_PICKER_MODAL_CONFIG: IModalProps = {
   type: Type.primary,
   ctas: [{
     actionText: 'Save here',
-    handleClickAction: handleSaveHere.bind(null, '/')
+    handleClickAction: handleSaveHere.bind(null, '/'),
   }],
   children: (
     <><DropboxSyncFilePicker /></>
-  )
+  ),
 }

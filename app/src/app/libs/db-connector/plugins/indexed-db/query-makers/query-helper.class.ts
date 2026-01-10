@@ -1,5 +1,5 @@
-import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
-import { NewWhere } from 'app/libs/db-connector/plugins/indexed-db/query-makers/query-maker.class'
+import type { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
+import type { NewWhere } from 'app/libs/db-connector/plugins/indexed-db/query-makers/query-maker.class'
 
 export interface BetweenSearchParams {
   field: string
@@ -92,7 +92,7 @@ export class QueryHelper {
       lowerBound: arraysWhere[0][2],
       upperBound: arraysWhere[1][2],
       includeLower,
-      includeUpper
+      includeUpper,
     }
   }
 

@@ -1,16 +1,17 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
-import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { Manager } from 'app/cross-refs-exports'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { ProjectSectionElementAddEditFormManager } from 'app/components/project/section/element/add-edit-form-manager.component'
 import { ProjectSectionElementAddEditSaveCancelButtons } from 'app/components/project/section/element/add-edit-save-cancel-buttons.component'
 import { MainContentContainer } from 'app/components/shared-components/common-ui-eles/main-content-container.component'
 import { Loader } from 'app/components/shared-components/loader/loader.component'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 import { FormElementState } from 'app/state/form-element/form-element-state.class'
+import type { FC } from 'react'
+import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
-export const ProjectSectionElementAddEdit: React.FC = () => {
+export const ProjectSectionElementAddEdit: FC = () => {
   const params = useParams()
   const mode = params[URL_PARAMS.elementId] ? EDITOR_MODE.edit : EDITOR_MODE.add
 
@@ -57,7 +58,10 @@ export const ProjectSectionElementAddEdit: React.FC = () => {
   const headerText = mode === EDITOR_MODE.add ? 'Add Element' : 'Edit Element'
 
   return (
-    <MainContentContainer headerText={headerText} overflowClassName="overflow-y-visible">
+    <MainContentContainer
+      headerText={headerText}
+      overflowClassName="overflow-y-visible"
+    >
       {element === null && <Loader />}
       {element !== null && <ProjectSectionElementAddEditFormManager sectionId={sectionId!} />}
       {element !== null && <ProjectSectionElementAddEditSaveCancelButtons sectionId={sectionId!} />}

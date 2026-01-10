@@ -1,5 +1,6 @@
 import { Bucket } from 'app/state/bucket.state'
-import { FormElesValidStateAtoms, IFormElesValidState } from 'app/state/form-eles-valid-state/form-eles-valid-state.atoms'
+import { FormElesValidStateAtoms } from 'app/state/form-eles-valid-state/form-eles-valid-state.atoms'
+import type { IFormElesValidState } from 'app/state/form-eles-valid-state/form-eles-valid-state.atoms'
 
 export class FormElesValidState {
   public static setValidStateForEle = (formEleId: string, valid: boolean) => {

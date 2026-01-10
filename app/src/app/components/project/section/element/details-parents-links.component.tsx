@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
-import { ISection } from 'app/models/section/section.declarations'
 import { Manager } from 'app/cross-refs-exports'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
-import { ParentInfoForDetailsView } from 'app/models/parent-element/parent-element.declarations'
+import type { FC } from 'react'
+import type { ISection } from 'app/models/section/section.declarations'
+import type { ParentInfoForDetailsView } from 'app/models/parent-element/parent-element.declarations'
 
 interface IProjectSectionElementDetailsParentsLinksProps {
   projectId: string
@@ -13,17 +14,17 @@ interface IProjectSectionElementDetailsParentsLinksProps {
   sections: Array<ISection>
 }
 
-export const ProjectSectionElementDetailsParentsLinks: React.FC<IProjectSectionElementDetailsParentsLinksProps> = ({ projectId, parentsInfo, sections }) => {
+export const ProjectSectionElementDetailsParentsLinks: FC<IProjectSectionElementDetailsParentsLinksProps> = (props) => {
   const [parents, setParents] = useState<Array<ParentInfoForDetailsView> | undefined>([])
 
   useEffect(() => {
     const getParents = async () => {
-      const parents = await Manager.getCurrentProject()?.getParentInfoForDetailsView(parentsInfo)
+      const parents = await Manager.getCurrentProject()?.getParentInfoForDetailsView(props.parentsInfo)
       setParents(parents)
     }
 
     getParents()
-  }, [parentsInfo, projectId, sections])
+  }, [props.parentsInfo, props.projectId, props.sections])
 
   return (
     <div className="p-3 pt-0">
@@ -35,10 +36,11 @@ export const ProjectSectionElementDetailsParentsLinks: React.FC<IProjectSectionE
           type={Type.secondary}
           size="sm"
           href={urlParamFiller(ANITA_URLS.projectSectionEleDetails, [
-            { name: URL_PARAMS.projectId, value: projectId! },
+            { name: URL_PARAMS.projectId, value: props.projectId! },
             { name: URL_PARAMS.sectionId, value: parent.sectionId! },
-            { name: URL_PARAMS.elementId, value: parent.element.id! }
-          ])} key={parent.element.id}
+            { name: URL_PARAMS.elementId, value: parent.element.id! },
+          ])}
+          key={parent.element.id}
           className="font-semibold"
         />
       ))}

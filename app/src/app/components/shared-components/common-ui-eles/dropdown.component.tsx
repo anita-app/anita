@@ -1,9 +1,10 @@
-import React, { Fragment, useRef } from 'react'
+import { Fragment, useRef, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
-import { TIconName } from 'app/libs/icons/icons.class'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { useClickOutside } from 'app/components/hooks/click-outside.hook'
+import type { FC } from 'react'
+import type { TIconName } from 'app/libs/icons/icons.class'
 
 function classNames (...classes: Array<string>) {
   return classes.filter(Boolean).join(' ')
@@ -28,14 +29,17 @@ interface IDropdown {
   margin?: string
 }
 
-export const Dropdown: React.FC<IDropdown> = (props) => {
+export const Dropdown: FC<IDropdown> = (props) => {
   const dropdownRef = useRef<HTMLDivElement>(null)
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
   const toggleOpen = (currentState: boolean) => setOpen(!currentState)
   const closeDropdown = () => setOpen(false)
   useClickOutside(dropdownRef, closeDropdown)
   return (
-    <Menu as="div" className={`relative inline-block text-left ${props.margin || ''}`}>
+    <Menu
+      as="div"
+      className={`relative inline-block text-left ${props.margin || ''}`}
+    >
       <div ref={dropdownRef}>
         <div>
           <Button
@@ -75,7 +79,7 @@ export const Dropdown: React.FC<IDropdown> = (props) => {
                     <div
                       className={classNames(
                         active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                        'block px-4 py-2 text-sm cursor-pointer'
+                        'block px-4 py-2 text-sm cursor-pointer',
                       )}
                       onClick={item.handleClick}
                     >

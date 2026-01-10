@@ -1,5 +1,5 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
-import { TAnitaUniversalDataStorage, IProjectSettings, LocalProjectSettings, RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
 import { Project } from 'app/models/project/project.class'
 import { ProjectLoader } from 'app/models/project/project-loader.class'
@@ -7,6 +7,7 @@ import { ProjectSaver } from 'app/models/project/project-saver.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { ProjectDataImporter } from 'app/libs/projects-helpers/project-importers/project-data-importer.class'
 import { ProjectState } from 'app/state/project/project-state.class'
+import type { TAnitaUniversalDataStorage, IProjectSettings, LocalProjectSettings, TSystemData } from 'app/models/project/project.declarations'
 
 export class Manager {
   private static currentProject: Project
@@ -22,7 +23,7 @@ export class Manager {
   public static setCurrentProject (systemData: TSystemData) {
     const systemDataClone = {
       [RESERVED_AUDS_KEYS._settings]: [{ ...systemData[RESERVED_AUDS_KEYS._settings][0] }],
-      [RESERVED_AUDS_KEYS._sections]: [...systemData[RESERVED_AUDS_KEYS._sections]]
+      [RESERVED_AUDS_KEYS._sections]: [...systemData[RESERVED_AUDS_KEYS._sections]],
     }
     this.currentProject = new Project(systemDataClone)
     ProjectState.setCurrentProject(systemDataClone)

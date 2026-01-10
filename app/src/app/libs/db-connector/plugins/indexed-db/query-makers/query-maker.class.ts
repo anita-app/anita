@@ -1,8 +1,10 @@
-import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
-import { DbConnectorInstance } from 'app/libs/db-connector/models/executers'
-import { Filter4Dexie, QueryHelper, SuppoertedOperators } from 'app/libs/db-connector/plugins/indexed-db/query-makers/query-helper.class'
+import { QueryHelper } from 'app/libs/db-connector/plugins/indexed-db/query-makers/query-helper.class'
 import { Logger } from 'app/libs/logger/logger.class'
-import Dexie, { Table } from 'dexie'
+import type { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
+import type { DbConnectorInstance } from 'app/libs/db-connector/models/executers'
+import type { Filter4Dexie, SuppoertedOperators } from 'app/libs/db-connector/plugins/indexed-db/query-makers/query-helper.class'
+import type { Table } from 'dexie'
+import type Dexie from 'dexie'
 
 export type NewWhere = [string, SuppoertedOperators, string | number];
 
@@ -26,7 +28,7 @@ export class QueryMaker<E> {
   constructor (
     private dbConnector: DbConnectorInstance<Dexie>,
     private section: keyof AbstractModel,
-    private element?: E
+    private element?: E,
   ) {
     this.table = this.dbConnector.DS[this.section].name
     this.collection = (this.dbConnector.dbStore.db[this.table as keyof Dexie] as unknown as Table)
@@ -112,7 +114,7 @@ export class QueryMaker<E> {
    * Performs a comples select action that is not supported natively by IndexedDB (and so Dexie)
    */
   private complexSelect (): Promise<Array<E>> {
-    this.arrWhere.forEach(arrWhere => this.dexieFilters.push(QueryHelper.buildFilter4Dexie(arrWhere))
+    this.arrWhere.forEach(arrWhere => this.dexieFilters.push(QueryHelper.buildFilter4Dexie(arrWhere)),
     )
 
     let allRecords = (this.dbConnector.dbStore.db[this.table as keyof Dexie] as unknown as Table).toCollection()

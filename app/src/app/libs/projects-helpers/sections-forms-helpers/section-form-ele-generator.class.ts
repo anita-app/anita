@@ -1,4 +1,4 @@
-import { ISectionCustomFieldProperties } from 'app/models/section/section.declarations'
+import type { ISectionCustomFieldProperties } from 'app/models/section/section.declarations'
 
 /**
  * Creates a section form element based on the information provided by the user when creating/editing a project
@@ -14,7 +14,7 @@ export class SectionFormEleGenerator {
    * @param ele the details specified by the user
    */
   constructor (
-    private ele: ISectionCustomFieldProperties
+    private ele: ISectionCustomFieldProperties,
   ) { }
 
   /**
@@ -34,7 +34,7 @@ export class SectionFormEleGenerator {
     this.fieldElement = {
       componentCode: this.ele.componentCode,
       fieldName: this.ele.fieldName,
-      label: this.ele.label
+      label: this.ele.label,
     }
   }
 

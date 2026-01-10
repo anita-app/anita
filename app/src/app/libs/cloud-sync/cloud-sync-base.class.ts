@@ -1,15 +1,16 @@
 import { Manager } from 'app/cross-refs-exports'
 import { DateTools } from 'app/libs/tools/date-tools.class'
 import Dexie from 'dexie'
-import { IWordPressAuthData } from 'app/libs/cloud-sync/wordpress/wordpress-helper.class'
-import { IWordPressRemoteInfo, IWordPressSpaceInfo } from 'app/libs/cloud-sync/wordpress/wordpress.const'
-import { CloudSyncTable, IDropboxTokens } from './cloud-sync.const'
+import { CloudSyncTable } from './cloud-sync.const'
+import type { IWordPressAuthData } from 'app/libs/cloud-sync/wordpress/wordpress-helper.class'
+import type { IWordPressRemoteInfo, IWordPressSpaceInfo } from 'app/libs/cloud-sync/wordpress/wordpress.const'
+import type { IDropboxTokens } from './cloud-sync.const'
 
 const DB_VERSION = 6
 
 export enum SupportedCloud {
   DROPBOX = 'dropbox',
-  WORDPRESS = 'wordpress'
+  WORDPRESS = 'wordpress',
 }
 
 interface IAccountsTableForDropbox extends IDropboxTokens {
@@ -40,7 +41,7 @@ interface ICloudSyncDB<T extends SupportedCloud> {
 export class CloudSyncBase<T extends SupportedCloud> {
   private static DB: Dexie | undefined
   constructor (
-    private service: T
+    private service: T,
   ) { }
 
   public static getDB (): Dexie {
@@ -77,7 +78,7 @@ export class CloudSyncBase<T extends SupportedCloud> {
         [CloudSyncTable.ACCOUNTS]: 'service',
         [CloudSyncTable.SYNC_INFO]: 'projectId',
         [CloudSyncTable.FILES_INFO]: 'projectId',
-        [CloudSyncTable.REMOTES_INFO]: 'remoteId'
+        [CloudSyncTable.REMOTES_INFO]: 'remoteId',
       })
     }
   }

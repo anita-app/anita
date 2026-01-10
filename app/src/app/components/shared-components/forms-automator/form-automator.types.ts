@@ -1,9 +1,9 @@
-import { IProjectSettings } from 'app/models/project/project.declarations'
-import { ISectionElement } from 'app/models/section-element/section-element.declarations'
-import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
-import { TextInputSupportedTypes } from 'app/components/shared-components/forms-automator/input-supported-types.const'
-import { TIconName } from 'app/libs/icons/icons.class'
-import { ISectionCustomFieldProperties, SectionDetailsDeclaration } from 'app/models/section/section.declarations'
+import type { IProjectSettings } from 'app/models/project/project.declarations'
+import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
+import type { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
+import type { TextInputSupportedTypes } from 'app/components/shared-components/forms-automator/input-supported-types.const'
+import type { TIconName } from 'app/libs/icons/icons.class'
+import type { ISectionCustomFieldProperties, SectionDetailsDeclaration } from 'app/models/section/section.declarations'
 
 export type FormFieldsModel<T extends TSupportedFormsTypes = TSupportedFormsTypes> = IBasicInput<T> | IBasicCheckbox<T> | IBasicSelect<T> | IBasicRadio<T> | IRichText<T> | IBasicTextarea<T> | IHiddenInput<T> | IOptionsMaker<T> | IDatePicker<T> | IDateTimePicker<T>;
 

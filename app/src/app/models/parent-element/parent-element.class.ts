@@ -1,4 +1,4 @@
-import { TIconName } from 'app/libs/icons/icons.class'
+import type { TIconName } from 'app/libs/icons/icons.class'
 
 export interface IOption { value: string | number; label: string; icon?: TIconName }
 

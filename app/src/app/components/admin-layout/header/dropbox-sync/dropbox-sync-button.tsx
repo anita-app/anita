@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect } from 'react'
+import { memo, useCallback, useEffect } from 'react'
 import { CloudSyncState } from 'app/libs/cloud-sync/cloud-sync.const'
 import { DropboxSyncButtonConnect } from 'app/components/admin-layout/header/dropbox-sync/dropbox-sync-button-connect'
 import { DropboxHelper } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
@@ -6,6 +6,7 @@ import { DropboxSyncButtonOpenFilePicker } from 'app/components/admin-layout/hea
 import { DropboxSyncButtonDoSync } from 'app/components/admin-layout/header/dropbox-sync/dropbox-sync-button-do-sync'
 import { useMultiState } from 'app/components/hooks/multi-state.hook'
 import { Manager } from 'app/cross-refs-exports'
+import type { FC } from 'react'
 
 interface IDropboxSyncButtonProps {
   projectId: string
@@ -16,10 +17,10 @@ interface IDropboxSyncButtonState {
   linkedFileId: string | null
 }
 
-export const DropboxSyncButton: React.FC<IDropboxSyncButtonProps> = memo(function CloudSyncButton (props: IDropboxSyncButtonProps) {
+export const DropboxSyncButton: FC<IDropboxSyncButtonProps> = memo(function CloudSyncButton (props: IDropboxSyncButtonProps) {
   const [state, setState] = useMultiState<IDropboxSyncButtonState>({
     cloudSyncState: null,
-    linkedFileId: null
+    linkedFileId: null,
   })
 
   const projectId = props.projectId

@@ -1,9 +1,9 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
-import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import { IdCreator } from 'app/libs/id-creator/id-creator.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { DateTools } from 'app/libs/tools/date-tools.class'
+import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
 /**
  * Saves a new element in a section of the project, stores the project on disk and dispatches the changes to the current state
@@ -19,7 +19,7 @@ export class SectionElementSaver {
     private projectId: string,
     private sectionId: string,
     private element: ISectionElement,
-    private mode: EDITOR_MODE
+    private mode: EDITOR_MODE,
   ) { }
 
   /**

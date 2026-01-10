@@ -7,22 +7,22 @@ import { OAuthUtils } from 'app/libs/cloud-sync/o-auth-utils.class'
 import { WordpressHelper } from 'app/libs/cloud-sync/wordpress/wordpress-helper.class'
 import { ANITA_URLS } from 'app/libs/routing/anita-routes.constant'
 import { RoutingState } from 'app/state/routing/routing-state.class'
-import React from 'react'
 import { Navigate } from 'react-router-dom'
+import { useEffect, useMemo, type FC } from 'react'
 
 const onClick = () => {
   window.close()
 }
 
-export const OAuth: React.FC = () => {
+export const OAuth: FC = () => {
   const data = OAuthUtils.parseQueryString()
 
   const code = data.code
   const service = data.service ?? SupportedCloud.DROPBOX
   const label = service === SupportedCloud.WORDPRESS ? 'WordPress' : 'Dropbox'
-  const helper = React.useMemo(() => (service === SupportedCloud.WORDPRESS ? WordpressHelper.instance : DropboxHelper.instance), [service])
+  const helper = useMemo(() => (service === SupportedCloud.WORDPRESS ? WordpressHelper.instance : DropboxHelper.instance), [service])
 
-  React.useEffect(() => {
+  useEffect(() => {
     helper.getAccessTokenFromCode(code)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code, helper])

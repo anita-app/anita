@@ -32,5 +32,5 @@ export const PLATFORM = {
   IS_WIN: /win/.test(platform),
   IS_ANDROID: /android/.test(platform),
   IS_LINUX: /linux/.test(platform),
-  IS_WEB: true
+  IS_WEB: true,
 }

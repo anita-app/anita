@@ -4,7 +4,7 @@ export enum URL_PARAMS {
   projectId = 'projectId',
   sectionId = 'sectionId',
   elementId = 'elementId',
-  parentId = 'parentId'
+  parentId = 'parentId',
 }
 
 export interface IRouteParams {
@@ -32,7 +32,7 @@ export const ANITA_URLS = {
   projectSectionElesList: `/project/:${URL_PARAMS.projectId}/list/:${URL_PARAMS.sectionId}`,
   projectSectionAddEle: `/project/:${URL_PARAMS.projectId}/:${URL_PARAMS.sectionId}/${EDITOR_MODE.add}`,
   projectSectionEditEle: `/project/:${URL_PARAMS.projectId}/:${URL_PARAMS.sectionId}/${EDITOR_MODE.edit}/:${URL_PARAMS.elementId}`,
-  projectSectionEleDetails: `/project/:${URL_PARAMS.projectId}/:${URL_PARAMS.sectionId}/details/:${URL_PARAMS.elementId}`
+  projectSectionEleDetails: `/project/:${URL_PARAMS.projectId}/:${URL_PARAMS.sectionId}/details/:${URL_PARAMS.elementId}`,
 }
 
 export type TAnitaRoute = keyof typeof ANITA_URLS

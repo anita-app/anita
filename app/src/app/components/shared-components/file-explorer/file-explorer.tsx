@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Transition } from '@headlessui/react'
-import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
-import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { Loader } from 'app/components/shared-components/loader/loader.component'
-import { ISharedFileMeta } from 'app/libs/cloud-sync/cloud-sync.const'
 import { Icons } from 'app/libs/icons/icons.class'
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import type { FC } from 'react'
+import type { ISharedFileMeta } from 'app/libs/cloud-sync/cloud-sync.const'
 
 interface IFileExplorerProps {
   files: Array<ISharedFileMeta>
@@ -18,7 +16,7 @@ interface IFileExplorerProps {
   onNavigateToFolder: (folder: ISharedFileMeta) => void
 }
 
-export const FileExplorer: React.FC<IFileExplorerProps> = (props) => {
+export const FileExplorer: FC<IFileExplorerProps> = (props) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const [isScrollAtBottom, setIsScrollAtBottom] = useState(false)
 
@@ -50,7 +48,10 @@ export const FileExplorer: React.FC<IFileExplorerProps> = (props) => {
   const navigableFolders = props.files?.filter((file) => file.type === 'folder' || (props.allowFilePickByExtensions && props.allowFilePickByExtensions.includes(file.name.split('.').pop()?.toLowerCase() || '')))
   return (
     <div className="relative">
-      <div ref={containerRef} className="bg-white h-96 overflow-y-auto overflow-x-hidden pr-2">
+      <div
+        ref={containerRef}
+        className="bg-white h-96 overflow-y-auto overflow-x-hidden pr-2"
+      >
         <Transition
           show={!props.isChangingFolder}
           enter="h-full ease-out duration-300"
@@ -62,7 +63,10 @@ export const FileExplorer: React.FC<IFileExplorerProps> = (props) => {
           leaveTo={leaveTo}
         >
           {!!navigableFolders.length && (
-            <ul role="list" className="divide-y divide-gray-200 border rounded-md">
+            <ul
+              role="list"
+              className="divide-y divide-gray-200 border rounded-md"
+            >
               {navigableFolders
                 .map((file) => (
                   <li key={file.id}>
@@ -79,8 +83,15 @@ export const FileExplorer: React.FC<IFileExplorerProps> = (props) => {
                           </div>
                         </div>
                         {file.type === 'folder' && (
-                        <div className="py-4 pr-4 flex-shrink-0 border-l pl-4 hover:bg-gray-100 leading-none h-[52px]" onClick={() => props.onNavigateToFolder(file)}>
-                          <i className="h-5 w-5 text-gray-400" aria-hidden="true">{Icons.render('chevronForward')}</i>
+                        <div
+                          className="py-4 pr-4 flex-shrink-0 border-l pl-4 hover:bg-gray-100 leading-none h-[52px]"
+                          onClick={() => props.onNavigateToFolder(file)}
+                        >
+                          <i
+                            className="h-5 w-5 text-gray-400"
+                            aria-hidden="true"
+                          >{Icons.render('chevronForward')}
+                          </i>
                         </div>
                         )}
                       </div>
@@ -92,7 +103,11 @@ export const FileExplorer: React.FC<IFileExplorerProps> = (props) => {
           {!navigableFolders.length && props.currentFolder && (
             <div className="flex items-center justify-center h-full">
               <div className="text-gray-500 text-center">
-                <i className="h-10 w-10" aria-hidden="true">{Icons.render('folderOutline')}</i>
+                <i
+                  className="h-10 w-10"
+                  aria-hidden="true"
+                >{Icons.render('folderOutline')}
+                </i>
                 <p className="mt-2 text-sm">No folders found</p>
               </div>
             </div>

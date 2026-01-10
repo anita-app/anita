@@ -1,10 +1,11 @@
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { CloudSyncBase, SupportedCloud } from 'app/cross-refs-exports'
-import { IWordPressSpaceInfo } from 'app/libs/cloud-sync/wordpress/wordpress.const'
 import { Logger } from 'app/libs/logger/logger.class'
-import { TAnitaUniversalDataStorage, TSystemData } from 'app/models/project/project.declarations'
 import { ModalState } from 'app/state/modal/modal-state.class'
-import axios, { AxiosInstance } from 'axios'
+import axios from 'axios'
+import type { IWordPressSpaceInfo } from 'app/libs/cloud-sync/wordpress/wordpress.const'
+import type { TAnitaUniversalDataStorage, TSystemData } from 'app/models/project/project.declarations'
+import type { AxiosInstance } from 'axios'
 
 interface IWordPressAuthData {
   access_token: string
@@ -17,16 +18,16 @@ export class WordPressClient {
 
   constructor (
     private remoteId: string,
-    private authData: IWordPressAuthData
+    private authData: IWordPressAuthData,
   ) {
     this.axiosInstance = axios.create({
-      baseURL: `${this.authData.remoteBaseUrl}/wp-json/anita-api/v1/`
+      baseURL: `${this.authData.remoteBaseUrl}/wp-json/anita-api/v1/`,
     })
 
     this.axiosInstance.interceptors.request.use((config) => {
       config.headers = {
         ...config.headers,
-        Authorization: `Bearer ${this.authData.access_token}`
+        Authorization: `Bearer ${this.authData.access_token}`,
       } as any
       return config
     }, (error) => Promise.reject(error))
@@ -57,7 +58,7 @@ export class WordPressClient {
   private async refreshAccessToken (): Promise<string> {
     try {
       const response = await axios.post(`${this.authData.remoteBaseUrl}/wp-json/anita-api/v1/refresh-token`, {
-        refresh_token: this.authData.refresh_token
+        refresh_token: this.authData.refresh_token,
       })
       const newAccessToken = response.data.access_token
       this.authData.access_token = newAccessToken
@@ -75,8 +76,8 @@ export class WordPressClient {
         children: `There is an issue with the your authentication data. Please re-authenticate on ${cleanRemoteUrl}.`,
         ctas: [{
           actionText: 'Open login page',
-          handleClickAction: () => this.openLoginPage()
-        }]
+          handleClickAction: () => this.openLoginPage(),
+        }],
       })
       throw error
     }
@@ -142,7 +143,7 @@ export class WordPressClient {
         projectId,
         sectionId,
         elementId,
-        element: elementData
+        element: elementData,
       })
       console.log('Section element saved successfully:', response.data)
     } catch (error) {
@@ -157,8 +158,8 @@ export class WordPressClient {
         data: {
           projectId,
           sectionId,
-          elementId
-        }
+          elementId,
+        },
       })
       console.log('Section element deleted successfully:', response.data)
     } catch (error) {

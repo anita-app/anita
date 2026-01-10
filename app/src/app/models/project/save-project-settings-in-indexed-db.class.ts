@@ -1,6 +1,6 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
-import { AdditionalInfoForLocalStorage, LocalProjectSettings, IProjectSettings } from 'app/models/project/project.declarations'
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
+import type { AdditionalInfoForLocalStorage, LocalProjectSettings, IProjectSettings } from 'app/models/project/project.declarations'
 
 /**
  * Saves project's settings in IndexedDB.
@@ -18,7 +18,7 @@ export class SaveProjectSettingsInIndexedDB {
    */
   constructor (
     private projectSettings: IProjectSettings,
-    private localSettingAdditionalKeys: AdditionalInfoForLocalStorage
+    private localSettingAdditionalKeys: AdditionalInfoForLocalStorage,
   ) { }
 
   /**

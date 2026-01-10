@@ -1,14 +1,16 @@
 import { DbInitializer } from 'app/data/local-dbs/db-initializer.class'
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import {
-  LocalProjectSettings,
-  IProjectSettings,
-  RESERVED_AUDS_KEYS
+  RESERVED_AUDS_KEYS,
 } from 'app/models/project/project.declarations'
-import { ISection } from 'app/models/section/section.declarations'
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
 import { Manager } from 'app/cross-refs-exports'
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
+import type { ISection } from 'app/models/section/section.declarations'
+import type {
+  LocalProjectSettings,
+  IProjectSettings,
+} from 'app/models/project/project.declarations'
 
 export class ProjectLoader {
   /**
@@ -23,7 +25,7 @@ export class ProjectLoader {
    */
   constructor (
     private projectId: string,
-    private projectInfo?: LocalProjectSettings | void
+    private projectInfo?: LocalProjectSettings | void,
   ) { }
 
   public async loadProject (): Promise<void> {
@@ -82,7 +84,7 @@ export class ProjectLoader {
   private callCurrentProjectSetter () {
     Manager.setCurrentProject({
       [RESERVED_AUDS_KEYS._settings]: this.projectSettings,
-      [RESERVED_AUDS_KEYS._sections]: this.projectSections
+      [RESERVED_AUDS_KEYS._sections]: this.projectSections,
     })
   }
 }

@@ -1,5 +1,3 @@
-import { ISectionElement } from 'app/models/section-element/section-element.declarations'
-import { IBasicSelect, ICommonFormEleProps } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { calcWidth } from 'app/components/shared-components/forms-automator/form-builder/calc-width.function'
 import { FORM_ELEMENTS_CSS_CLASSES, FORM_ELEMENTS_CSS_CLASSES_ERR } from 'app/components/shared-components/forms-automator/form-layout/fom-elements-css-classes.const'
 import { FormEleContainer } from 'app/components/shared-components/forms-automator/form-layout/form-ele-container.component'
@@ -8,12 +6,15 @@ import { ValidatorsContainer } from 'app/components/shared-components/forms-auto
 import { useSetDefaultValue } from 'app/components/shared-components/forms-automator/hooks/use-set-default-value'
 import { useValidators } from 'app/components/shared-components/forms-automator/hooks/use-validators.hook'
 import uniqueId from 'lodash/uniqueId'
-import React, { memo, useRef, useState, Fragment } from 'react'
+import { memo, useRef, useState, Fragment } from 'react'
 import { Combobox, Transition } from '@headlessui/react'
 import { Icons } from 'app/libs/icons/icons.class'
-import { IOption } from 'app/models/parent-element/parent-element.class'
+import type { FC } from 'react'
+import type { IBasicSelect, ICommonFormEleProps } from 'app/components/shared-components/forms-automator/form-automator.types'
+import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
+import type { IOption } from 'app/models/parent-element/parent-element.class'
 
-export const BasicSelect: React.FC<ICommonFormEleProps<IBasicSelect<ISectionElement>>> = memo(function BasicSelect ({ formEle, element, handleChange, forceFullWidth }: ICommonFormEleProps<IBasicSelect<ISectionElement>>) {
+export const BasicSelect: FC<ICommonFormEleProps<IBasicSelect<ISectionElement>>> = memo(function BasicSelect ({ formEle, element, handleChange, forceFullWidth }: ICommonFormEleProps<IBasicSelect<ISectionElement>>) {
   const [touched, setTouched] = useState(false)
   const [query, setQuery] = useState('')
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))
@@ -36,7 +37,7 @@ export const BasicSelect: React.FC<ICommonFormEleProps<IBasicSelect<ISectionElem
     : formEle.options.filter((option) => option.value?.toString()
       .toLowerCase()
       .replace(/\s+/g, '')
-      .includes(query.toLowerCase().replace(/\s+/g, ''))
+      .includes(query.toLowerCase().replace(/\s+/g, '')),
     )
 
   const handleSelected = (option: IOption): void => {
@@ -51,8 +52,14 @@ export const BasicSelect: React.FC<ICommonFormEleProps<IBasicSelect<ISectionElem
 
   return (
     <FormEleContainer width={width}>
-      <FormElementLabel label={formEle.label!} labelHint={formEle.labelHint} />
-      <Combobox value={selectedOption} onChange={handleSelected}>
+      <FormElementLabel
+        label={formEle.label!}
+        labelHint={formEle.labelHint}
+      />
+      <Combobox
+        value={selectedOption}
+        onChange={handleSelected}
+      >
         <div className="relative">
           <div className={`relative w-full cursor-default overflow-hidden bg-white text-left sm:text-sm ${isValid || ''}`}>
             <Combobox.Input
@@ -90,16 +97,14 @@ export const BasicSelect: React.FC<ICommonFormEleProps<IBasicSelect<ISectionElem
                       >
                         {({ selected, active }) => (
                           <>
-                            <span
-                              className={`block truncate ${
+                            <span className={`block truncate ${
                             selected ? 'font-medium' : 'font-normal'
                           }`}
                             >
                               {option.label}
                             </span>
                             {(selected || option.icon) && (
-                            <span
-                              className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
+                            <span className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
                               active ? 'text-white' : selected ? 'text-teal-500' : 'text-prussian-blue-600'
                             }`}
                             >
@@ -125,7 +130,13 @@ export const BasicSelect: React.FC<ICommonFormEleProps<IBasicSelect<ISectionElem
           </Transition>
         </div>
       </Combobox>
-      {(!formEle.value || element[formEle.fieldName]) && <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} setIsValidForField={setIsValidForField} />}
+      {(!formEle.value || element[formEle.fieldName]) && (<ValidatorsContainer
+        formEle={formEle}
+        element={element}
+        fieldId={fieldId}
+        touched={touched}
+        setIsValidForField={setIsValidForField}
+                                                          />)}
     </FormEleContainer>
   )
 }, (prevProps, nextProps) => {

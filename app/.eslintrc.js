@@ -4,25 +4,23 @@ module.exports = {
     commonjs: true,
     es2020: true,
     node: true,
-    mocha: true
+    mocha: true,
   },
-  root: true,
   extends: [
     'standard',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
-    'plugin:react/recommended'
-    // 'plugin:@typescript-eslint/recommended'
+    'plugin:react/recommended',
   ],
   parser: '@typescript-eslint/parser',
   plugins: [
     '@typescript-eslint',
     'eslint-plugin-import',
-    'eslint-plugin-react'
+    'eslint-plugin-react',
   ],
   parserOptions: {
     ecmaVersion: 2020,
-    impliedStrict: true
+    impliedStrict: true,
   },
   rules: {
     'no-use-before-define': 'off',
@@ -31,49 +29,79 @@ module.exports = {
     'import/first': 'off',
     '@typescript-eslint:disable:ordered-imports': 'off',
     'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': ['error', { varsIgnorePattern: 'React' }],
-    '@typescript-eslint/member-delimiter-style': ['error', { multiline: { delimiter: 'none' } }],
+    '@typescript-eslint/no-unused-vars': 'error',
     'no-useless-constructor': 'off',
     '@typescript-eslint/array-type': [2, { default: 'generic' }],
     '@typescript-eslint/explicit-member-accessibility': ['error', {
       accessibility: 'explicit',
       ignoredMethodNames: ['render', 'componentDidMount', 'componentDidUpdate', 'componentWillUnmount', 'componentDidCatch', 'shouldComponentUpdate', 'getDerivedStateFromProps', 'getDerivedStateFromError'],
-      overrides: { constructors: 'off', properties: 'off' }
+      overrides: { constructors: 'off', properties: 'off' },
     }],
+    '@typescript-eslint/member-delimiter-style': ['error', { multiline: { delimiter: 'none' } }],
     'react/function-component-definition': [2, { namedComponents: 'arrow-function', unnamedComponents: 'arrow-function' }],
     'no-else-return': 'error',
     'no-return-assign': 'error',
     'arrow-body-style': ['error', 'as-needed'],
     'implicit-arrow-linebreak': ['error', 'beside'],
     'brace-style': ['error', '1tbs', { allowSingleLine: false }],
-    'import/order': ['error', {
-      pathGroups: [
-        {
-          pattern: 'app/**',
-          group: 'internal',
-          position: 'after'
-        }
-      ],
-      groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object', 'type']
-    }],
+    'import/order': ['error', { groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object', 'type'] }],
     'react/jsx-wrap-multilines': ['error', { declaration: true, assignment: true, return: true, arrow: true, logical: true }],
     'react/jsx-closing-bracket-location': ['error'],
     'react/jsx-closing-tag-location': ['error'],
     'react/jsx-curly-spacing': ['error', 'never'],
     'react/jsx-curly-newline': ['error', 'never'],
     'react/jsx-equals-spacing': ['error', 'never'],
-    'react/jsx-first-prop-new-line': ['error'],
+    'react/jsx-first-prop-new-line': ['error', 'multiprop'],
     'react/jsx-indent': ['error', 2],
     'react/jsx-indent-props': ['error', 2],
     'react/jsx-props-no-multi-spaces': ['error'],
     'react/jsx-boolean-value': ['error', 'always'],
-    'jsx-quotes': ['error', 'prefer-double']
-    // TO BE EVALUATED
-    // 'padding-line-between-statements': ['error', { blankLine: 'always', prev: 'block-like', next: 'return' }]
+    'react/destructuring-assignment': [2, 'never'],
+    'react-hooks/refs': 'off',
+    'react-hooks/set-state-in-effect': 'off',
+    'react-hooks/immutability': 'off',
+    'no-restricted-syntax': [
+      'error',
+      {
+        selector: 'ExportDefaultDeclaration',
+        message: 'Prefer named exports',
+      },
+      {
+        selector: 'ImportDeclaration[source.value=\'react\'][specifiers.0.type=\'ImportDefaultSpecifier\']',
+        message: 'Default React import not allowed',
+      },
+    ],
+    'no-console': ['warn', { allow: ['warn', 'error', 'table', 'stack', 'debug'] }],
+    'comma-dangle': ['warn', 'always-multiline'],
+    '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports', disallowTypeAnnotations: false, fixStyle: 'separate-type-imports' }],
+    '@typescript-eslint/comma-dangle': ['warn', 'always-multiline'],
+    '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
+    'jsx-quotes': ['error', 'prefer-double'],
+    '@typescript-eslint/quotes': ['error', 'single'],
+    'react/jsx-max-props-per-line': [1, { maximum: 1, when: 'always' }],
+    'react/jsx-child-element-spacing': [1],
+    'react/no-unstable-nested-components': ['error', { allowAsProps: true }],
+    'react/jsx-uses-react': 'off',
+    'react/react-in-jsx-scope': 'off',
   },
+  overrides: [
+    {
+      files: ['./src/renderer/db/**/*.js'],
+      rules: {
+        camelcase: ['off', /^_.*/], // commands/utils exported names
+      },
+    },
+    {
+      files: ['*.ts', '*.tsx'],
+      rules: {
+        'no-undef': 'off',
+      },
+    },
+  ],
   settings: {
     react: {
-      version: 'detect'
-    }
-  }
+      version: 'detect',
+    },
+  },
+  ignorePatterns: ['service-worker.js'],
 }

@@ -1,8 +1,8 @@
 import { Bucket } from 'app/state/bucket.state'
-import { IButtonWithTooltipProps } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
-import { ReactNode } from 'react'
 import { ModalStateAtoms } from './modal-state.atoms'
+import type { IButtonWithTooltipProps } from 'app/components/shared-components/common-ui-eles/button.component'
+import type { ReactNode } from 'react'
 
 interface ICta {
   actionText: string

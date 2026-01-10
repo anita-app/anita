@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
-import { IShortcut } from 'app/libs/shortcuts/shortcuts-store'
 import { ShortcutsManager } from 'app/libs/shortcuts/shortcuts-manager'
+import type { IShortcut } from 'app/libs/shortcuts/shortcuts-store'
 
 export const useShortcut = (shortcut: IShortcut) => {
   const shortcutUniqueId = useRef<string>(Math.random().toString(36).substr(2, 9))

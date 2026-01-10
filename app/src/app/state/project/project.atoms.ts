@@ -1,9 +1,10 @@
 import { atom } from 'jotai'
-import { RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { Project } from 'app/models/project/project.class'
-import { ISection } from 'app/models/section/section.declarations'
 import { Section } from 'app/models/section/section.class'
 import { atomFamily } from 'jotai-family'
+import type { ISection } from 'app/models/section/section.declarations'
+import type { TSystemData } from 'app/models/project/project.declarations'
 
 export class ProjectAtoms {
   public static currentSystemData = atom<TSystemData | null>(null)
@@ -52,7 +53,7 @@ export class ProjectAtoms {
     }
     const section = new Section(
       projectId,
-      sectionDefinition
+      sectionDefinition,
     )
     return section
   }))

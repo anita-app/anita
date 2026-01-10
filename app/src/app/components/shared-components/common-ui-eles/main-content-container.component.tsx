@@ -1,16 +1,16 @@
-import React, { ReactNode } from 'react'
+import type { FC, ReactNode } from 'react'
 import type { IListTabsHeaderRightProps } from 'app/components/project/section/list/tabs/header-right.component'
 
 interface IMainContentContainerProps {
   headerText?: string
-  headerRightComponent?: React.FC<IListTabsHeaderRightProps>
+  headerRightComponent?: FC<IListTabsHeaderRightProps>
   headerRightComponentProps?: IListTabsHeaderRightProps
   hasHeaderOnlyStyle?: boolean
   overflowClassName?: string
   children: ReactNode
 }
 
-export const MainContentContainer: React.FC<IMainContentContainerProps> = (props) => {
+export const MainContentContainer: FC<IMainContentContainerProps> = (props) => {
   const RightComponent = props.headerRightComponent
   return (
     <div className={props.hasHeaderOnlyStyle ? '' : 'p-4 bg-white rounded shadow'}>

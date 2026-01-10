@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useAtomValue } from 'jotai'
 import { SyncStateAtoms } from 'app/state/sync/sync-state.atoms'
 import { WordpressHelper } from 'app/libs/cloud-sync/wordpress/wordpress-helper.class'
+import type { FC } from 'react'
 
 interface IWordPressSyncButtonProps {
   remoteId: string
@@ -15,7 +16,7 @@ const getFallbackText = (siteName: string) => {
   return siteName.substring(0, 2).toUpperCase()
 }
 
-export const WordPressSyncButton: React.FC<IWordPressSyncButtonProps> = (props) => {
+export const WordPressSyncButton: FC<IWordPressSyncButtonProps> = (props) => {
   const remoteInfo = useAtomValue(SyncStateAtoms.remoteInfo[props.remoteId])
 
   useEffect(() => {
@@ -47,7 +48,11 @@ export const WordPressSyncButton: React.FC<IWordPressSyncButtonProps> = (props) 
           aria-label="WordPress Sync"
           onClick={handleClick}
         >
-          <img src={remoteInfo.data.icon_base_64} alt={remoteInfo.data.site_name} className="w-full h-full rounded-full" />
+          <img
+            src={remoteInfo.data.icon_base_64}
+            alt={remoteInfo.data.site_name}
+            className="w-full h-full rounded-full"
+          />
         </button>
       )}
     </>

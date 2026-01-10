@@ -1,11 +1,12 @@
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
-import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { useParams } from 'react-router-dom'
 import { RichText } from 'app/components/shared-components/values-renderers/rich-text.component'
-import { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
 import { RoutingState } from 'app/state/routing/routing-state.class'
+import type { FC } from 'react'
+import type { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
+import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
 interface IProjectSectionListGridElementProps {
   element: ISectionElement
@@ -17,7 +18,7 @@ const DESCRIPTION_MAX_LENGHT = 500
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const shortenDescription = (string: string) => string.length > DESCRIPTION_MAX_LENGHT ? string.slice(0, DESCRIPTION_MAX_LENGHT) + ' …' : string
 
-export const ProjectSectionListGridElement: React.FC<IProjectSectionListGridElementProps> = (props) => {
+export const ProjectSectionListGridElement: FC<IProjectSectionListGridElementProps> = (props) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const params = useParams()
   const handleClick = () => {
@@ -25,13 +26,18 @@ export const ProjectSectionListGridElement: React.FC<IProjectSectionListGridElem
       RoutingState.goTo(ANITA_URLS.projectSectionEleDetails, [
         { name: URL_PARAMS.projectId, value: params.projectId },
         { name: URL_PARAMS.sectionId, value: params.sectionId },
-        { name: URL_PARAMS.elementId, value: props.element.id }
+        { name: URL_PARAMS.elementId, value: props.element.id },
       ])
     }
   }
 
   return (
-    <div ref={containerRef} key={props.element.id} className="h-max cursor-pointer mb-6 break-inside-avoid-column" onClick={handleClick}>
+    <div
+      ref={containerRef}
+      key={props.element.id}
+      className="h-max cursor-pointer mb-6 break-inside-avoid-column"
+      onClick={handleClick}
+    >
       <div className="w-full bg-white rounded-lg shadow flex items-center justify-between p-6 space-x-6">
         <div className="flex-1 relative overflow-hidden">
           <div className="flex items-center space-x-3">

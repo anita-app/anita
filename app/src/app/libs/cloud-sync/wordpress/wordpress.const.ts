@@ -3,7 +3,7 @@ export const WORD_PRESS_ROLE_WEIGHT = {
   contributor: 2,
   author: 3,
   editor: 4,
-  administrator: 5
+  administrator: 5,
 }
 
 type TUserRole = 'administrator' | 'editor' | 'author' | 'contributor' | 'subscriber'

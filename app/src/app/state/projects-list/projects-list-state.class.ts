@@ -1,9 +1,9 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
-import { LocalProjectSettings } from 'app/models/project/project.declarations'
 import { Bucket } from 'app/state/bucket.state'
 import { ProjectsListAtoms } from 'app/state/projects-list/projects-list.atoms'
 import { liveQuery } from 'dexie'
+import type { LocalProjectSettings } from 'app/models/project/project.declarations'
 
 export class ProjectsListState {
   public static watchProjectsList = (): Promise<true> => (

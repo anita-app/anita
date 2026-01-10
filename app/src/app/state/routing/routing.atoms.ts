@@ -1,6 +1,8 @@
-import { IRouteParams, TAnitaRoute, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
-import { Atom, atom, PrimitiveAtom } from 'jotai'
-import { AtomFamily, atomFamily } from 'jotai-family'
+import { atom } from 'jotai'
+import { atomFamily } from 'jotai-family'
+import type { IRouteParams, TAnitaRoute, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
+import type { Atom, PrimitiveAtom } from 'jotai'
+import type { AtomFamily } from 'jotai-family'
 
 export class RoutingAtoms {
   public static route: PrimitiveAtom<TAnitaRoute | null> = atom(null) as PrimitiveAtom<TAnitaRoute | null>

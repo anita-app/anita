@@ -1,9 +1,10 @@
 import { Logger } from 'app/libs/logger/logger.class'
-import { IRouteParams, ROUTE_PARAM_VALUES, SORTED_ROUTES, TAnitaRoute, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
+import { ROUTE_PARAM_VALUES, SORTED_ROUTES } from 'app/libs/routing/anita-routes.constant'
 import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
 import { Bucket } from 'app/state/bucket.state'
 import { RoutingAtoms } from 'app/state/routing/routing.atoms'
-import { NavigateFunction } from 'react-router-dom'
+import type { IRouteParams, TAnitaRoute, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
+import type { NavigateFunction } from 'react-router-dom'
 
 export class RoutingState {
   public static navigate: NavigateFunction

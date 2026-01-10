@@ -21,5 +21,5 @@ export const SHORTCUTS_STORE: IShortcutsStore = {
   plain: {},
   withMetaKey: {},
   withShift: {},
-  withMetaKeyAndShift: {}
+  withMetaKeyAndShift: {},
 }

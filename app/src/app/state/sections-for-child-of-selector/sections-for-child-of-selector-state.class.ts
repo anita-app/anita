@@ -1,6 +1,6 @@
 import { Bucket } from 'app/state/bucket.state'
-import { SectionDetailsDeclaration } from 'app/models/section/section.declarations'
 import { SectionsForChildOfSelectorAtoms } from 'app/state/sections-for-child-of-selector/sections-for-child-of-selector.atoms'
+import type { SectionDetailsDeclaration } from 'app/models/section/section.declarations'
 
 export class SectionsForChildOfSelectorState {
   public static addSection = (section: SectionDetailsDeclaration) => {

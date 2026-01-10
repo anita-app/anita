@@ -1,14 +1,14 @@
-import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { Manager } from 'app/cross-refs-exports'
 import { ArrayTools } from 'app/libs/tools/array-tools.class'
-import { Project } from 'app/models/project/project.class'
-import { IOptionKeysModel, OptionKeysModelGroup } from 'app/components/shared-components/forms-automator/form-automator.types'
+import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
+import type { Project } from 'app/models/project/project.class'
+import type { IOptionKeysModel, OptionKeysModelGroup } from 'app/components/shared-components/forms-automator/form-automator.types'
 
 export class GetOptionsForParentsSelector {
   private optionsGroups: Array<OptionKeysModelGroup> = []
 
   constructor (
-    private project: Project
+    private project: Project,
   ) {
   }
 
@@ -32,11 +32,11 @@ export class GetOptionsForParentsSelector {
     const formEle = section.getFirstUserDefinedField()
     sectionEles.forEach(ele => options.push({
       value: `${sectionId}|${ele.id}`,
-      label: ele[formEle!.fieldName]
+      label: ele[formEle!.fieldName],
     }))
     this.optionsGroups.push({
       label: sectionLabel,
-      options
+      options,
     })
   }
 }

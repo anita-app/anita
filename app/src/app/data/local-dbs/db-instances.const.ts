@@ -1,5 +1,5 @@
-import { DbConnectorInstance } from 'app/libs/db-connector/models/executers'
-import Dexie from 'dexie'
+import type { DbConnectorInstance } from 'app/libs/db-connector/models/executers'
+import type Dexie from 'dexie'
 
 interface DbInstances {
   system: DbConnectorInstance<Dexie>
@@ -7,5 +7,5 @@ interface DbInstances {
 }
 
 export const dbInstances: DbInstances = {
-  system: undefined as any
+  system: undefined as any,
 }

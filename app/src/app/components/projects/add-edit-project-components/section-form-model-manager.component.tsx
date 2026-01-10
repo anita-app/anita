@@ -1,21 +1,22 @@
 import { URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const'
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
-import { ISection } from 'app/models/section/section.declarations'
 import { SectionElement } from 'app/models/section-element/section-element.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { FormAutomator } from 'app/components/shared-components/forms-automator/form-automator.component'
-import {
-  FormAutomatorOnChangeValue,
-  FormFieldsModel,
-  IOptionKeysModel,
-  TSupportedFormsTypes
-} from 'app/components/shared-components/forms-automator/form-automator.types'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { useAtomValue } from 'jotai'
 import { FormProjectAtoms } from 'app/state/form-project/form-project.atoms'
 import { FormProjectState } from 'app/state/form-project/form-project-state.class'
+import type { FC } from 'react'
+import type {
+  FormAutomatorOnChangeValue,
+  FormFieldsModel,
+  IOptionKeysModel,
+  TSupportedFormsTypes,
+} from 'app/components/shared-components/forms-automator/form-automator.types'
+import type { ISection } from 'app/models/section/section.declarations'
 
 interface ISectionFormModelManagerProps {
   indexSection: number
@@ -29,20 +30,18 @@ const getAlreadyExists = (section: ISection, fieldName: string): boolean => {
   return section.formModel.some(formElement => formElement.fieldName === fieldName)
 }
 
-export const SectionFormModelManager: React.FC<ISectionFormModelManagerProps> = (props) => {
-  const { indexSection, indexFormElement, element } = props
-
+export const SectionFormModelManager: FC<ISectionFormModelManagerProps> = (props) => {
   const params = useParams()
   const projectEditorMode = useAtomValue(FormProjectAtoms.mode)
   const originalProject = useAtomValue(FormProjectAtoms.original)
-  const section = originalProject[RESERVED_AUDS_KEYS._sections]![indexSection]
+  const section = originalProject[RESERVED_AUDS_KEYS._sections]![props.indexSection]
   const projectId = params[URL_PARAMS.projectId]
   const mode = useMemo(() => projectId ? EDITOR_MODE.edit : EDITOR_MODE.add, [projectId])
-  const alreadyExists = getAlreadyExists(section, element.fieldName)
+  const alreadyExists = getAlreadyExists(section, props.element.fieldName)
   const formModelToUse = useMemo(() => mode === EDITOR_MODE.edit && alreadyExists
     ? PROJECT_EDITOR_FORM_BUILDER[projectEditorMode].sectionEles.existingItem
     : PROJECT_EDITOR_FORM_BUILDER[projectEditorMode].sectionEles.newItem,
-  [alreadyExists, mode, projectEditorMode]
+  [alreadyExists, mode, projectEditorMode],
   )
 
   const handleChange = (indexSection: number, indexFormElement: number, fieldName: string | number, value: FormAutomatorOnChangeValue) => {
@@ -52,7 +51,7 @@ export const SectionFormModelManager: React.FC<ISectionFormModelManagerProps> = 
       indexFormElement,
       fieldName as keyof FormFieldsModel<TSupportedFormsTypes>,
       value as FormFieldsModel<TSupportedFormsTypes>[keyof FormFieldsModel<TSupportedFormsTypes>],
-      identifierAutoVal
+      identifierAutoVal,
     )
   }
 
@@ -61,7 +60,7 @@ export const SectionFormModelManager: React.FC<ISectionFormModelManagerProps> = 
       indexSection,
       indexFormElement,
       indexOptions,
-      { ...optionElement, [fieldName]: value }
+      { ...optionElement, [fieldName]: value },
     )
   }
 
@@ -74,15 +73,14 @@ export const SectionFormModelManager: React.FC<ISectionFormModelManagerProps> = 
   }
 
   return (
-    <FormAutomator
-      {
+    <FormAutomator {
       ...{
         ...props,
         formModel: formModelToUse as Array<FormFieldsModel<any>>,
-        handleChange: handleChange.bind(undefined, indexSection, indexFormElement),
-        handleOptionsChange: handleOptionsChange.bind(undefined, indexSection, indexFormElement),
-        handleClickAddOption: handleClickAddOption.bind(undefined, indexSection, indexFormElement),
-        handleClickDeleteOption: handleClickDeleteOption.bind(undefined, indexSection, indexFormElement)
+        handleChange: handleChange.bind(undefined, props.indexSection, props.indexFormElement),
+        handleOptionsChange: handleOptionsChange.bind(undefined, props.indexSection, props.indexFormElement),
+        handleClickAddOption: handleClickAddOption.bind(undefined, props.indexSection, props.indexFormElement),
+        handleClickDeleteOption: handleClickDeleteOption.bind(undefined, props.indexSection, props.indexFormElement),
       }
       }
     />

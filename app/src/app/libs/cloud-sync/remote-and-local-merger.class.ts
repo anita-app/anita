@@ -1,12 +1,13 @@
-import { RESERVED_AUDS_KEYS, TAnitaUniversalDataStorage, TSystemData } from 'app/models/project/project.declarations'
-import { IComparisonResult } from 'app/models/project/syncing/project-comparator'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { CloudSyncBase, Manager, SupportedCloud } from 'app/cross-refs-exports'
-import { Project } from 'app/models/project/project.class'
 import { DropboxHelper } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { SyncState } from 'app/state/sync/sync-state.class'
 import { WordpressHelper } from 'app/libs/cloud-sync/wordpress/wordpress-helper.class'
-import { WordPressClient } from 'app/libs/cloud-sync/wordpress/wordpress-client.class'
+import type { Project } from 'app/models/project/project.class'
+import type { IComparisonResult } from 'app/models/project/syncing/project-comparator'
+import type { TAnitaUniversalDataStorage, TSystemData } from 'app/models/project/project.declarations'
+import type { WordPressClient } from 'app/libs/cloud-sync/wordpress/wordpress-client.class'
 
 export class RemoteAndLocalMerger {
   private project: Project
@@ -15,7 +16,7 @@ export class RemoteAndLocalMerger {
 
   constructor (
     private remoteId: string,
-    private type: SupportedCloud
+    private type: SupportedCloud,
   ) {
     this.project = Manager.getCurrentProject()!
     SyncState.setIsSyncing(false)
@@ -68,7 +69,7 @@ export class RemoteAndLocalMerger {
     RemoteAndLocalMerger.comparatorWorker!.postMessage({
       lastSync,
       localData,
-      remoteData
+      remoteData,
     })
   }
 
@@ -93,7 +94,7 @@ export class RemoteAndLocalMerger {
     ) {
       const newSystemData: TSystemData = {
         [RESERVED_AUDS_KEYS._settings]: comparisonResult.localData[RESERVED_AUDS_KEYS._settings],
-        [RESERVED_AUDS_KEYS._sections]: comparisonResult.localData[RESERVED_AUDS_KEYS._sections]
+        [RESERVED_AUDS_KEYS._sections]: comparisonResult.localData[RESERVED_AUDS_KEYS._sections],
       }
       await this.project.updateSystemData(newSystemData)
       SyncState.setLastSyncedId(newSystemData[RESERVED_AUDS_KEYS._settings][0].id)
@@ -118,7 +119,7 @@ export class RemoteAndLocalMerger {
   private async saveSectionElementsLocally<A extends keyof IComparisonResult['local']> (
     actionAsKey: A,
     section: keyof IComparisonResult['local'][A] & string,
-    comparisonResult: IComparisonResult
+    comparisonResult: IComparisonResult,
   ): Promise<void> {
     const sectionObject = this.project.getSectionById(section)!
     const sectionId = sectionObject.id
@@ -165,7 +166,7 @@ export class RemoteAndLocalMerger {
     ) {
       const newSystemData: TSystemData = {
         [RESERVED_AUDS_KEYS._settings]: comparisonResult.remoteData[RESERVED_AUDS_KEYS._settings],
-        [RESERVED_AUDS_KEYS._sections]: comparisonResult.remoteData[RESERVED_AUDS_KEYS._sections]
+        [RESERVED_AUDS_KEYS._sections]: comparisonResult.remoteData[RESERVED_AUDS_KEYS._sections],
       }
       await this.wpClient!.saveProject(newSystemData)
       SyncState.setLastSyncedId(newSystemData[RESERVED_AUDS_KEYS._settings][0].id)
@@ -190,7 +191,7 @@ export class RemoteAndLocalMerger {
   private async sendSectionElementsToRemoteWordPress<A extends keyof IComparisonResult['remote']> (
     actionAsKey: A,
     section: keyof IComparisonResult['remote'][A] & string,
-    comparisonResult: IComparisonResult
+    comparisonResult: IComparisonResult,
   ): Promise<void> {
     const projectId = this.project.getId()
     const sectionObject = this.project.getSectionById(section)!

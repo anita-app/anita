@@ -1,4 +1,4 @@
-import { CloudSyncState } from 'app/libs/cloud-sync/cloud-sync.const'
+import type { CloudSyncState } from 'app/libs/cloud-sync/cloud-sync.const'
 
 export class DropboxSyncInfo {
   private cloudSyncState: CloudSyncState | null = null

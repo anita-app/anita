@@ -1,10 +1,11 @@
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
-import { FormFieldsModel, ICommonFormEleProps, IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { OptionsMakerSingleOption } from 'app/components/shared-components/forms-automator/form-fields/options-maker-single-option.component'
-import React, { memo } from 'react'
+import { memo } from 'react'
+import type { FC } from 'react'
+import type { FormFieldsModel, ICommonFormEleProps, IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 
-export const OptionsMaker: React.FC<ICommonFormEleProps<FormFieldsModel<IOptionKeysModel>>> = memo(function OptionsMaker (props: ICommonFormEleProps<FormFieldsModel<IOptionKeysModel>>) {
+export const OptionsMaker: FC<ICommonFormEleProps<FormFieldsModel<IOptionKeysModel>>> = memo(function OptionsMaker (props: ICommonFormEleProps<FormFieldsModel<IOptionKeysModel>>) {
   const { formEle, element, handleOptionsChange, handleClickAddOption } = props
 
   if (typeof handleOptionsChange !== 'function') {
@@ -19,7 +20,12 @@ export const OptionsMaker: React.FC<ICommonFormEleProps<FormFieldsModel<IOptionK
     <div className="mt-6 pl-10 py-4 bg-gray-50 rounded-lg">
       <p className="-ml-5 font-semibold mb-1">Choices</p>
       <ol className="list-decimal">
-        {element[formEle.fieldName].map((optionElement: IOptionKeysModel, index: number) => <OptionsMakerSingleOption key={`${optionElement.value}-${index}`} index={index} optionElement={optionElement} {...props} />
+        {element[formEle.fieldName].map((optionElement: IOptionKeysModel, index: number) => (<OptionsMakerSingleOption
+          key={`${optionElement.value}-${index}`}
+          index={index}
+          optionElement={optionElement}
+          {...props}
+                                                                                             />),
         )}
       </ol>
       {(typeof handleClickAddOption === 'function') && (

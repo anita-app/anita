@@ -1,8 +1,9 @@
 import { CloudSyncBase, SupportedCloud } from 'app/cross-refs-exports'
-import { IDropboxTokens, ISharedFileMeta } from 'app/libs/cloud-sync/cloud-sync.const'
-import { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
 import { SyncState } from 'app/state/sync/sync-state.class'
-import { Dropbox, DropboxAuth, DropboxResponse, files } from 'dropbox'
+import { Dropbox, DropboxAuth } from 'dropbox'
+import type { IDropboxTokens, ISharedFileMeta } from 'app/libs/cloud-sync/cloud-sync.const'
+import type { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
+import type { DropboxResponse, files } from 'dropbox'
 
 /**
  * API reference: https://www.dropbox.com/developers/documentation/http/documentation
@@ -39,7 +40,7 @@ export class DropboxHelper extends CloudSyncBase<SupportedCloud.DROPBOX> {
       'files.content.write',
       'files.content.read',
       'file_requests.write',
-      'file_requests.read'
+      'file_requests.read',
     ]
     const url = await this.dbxAuth!.getAuthenticationUrl(`${this.BASE_URL}`, undefined, 'code', 'offline', scopes, undefined, true)
     window.sessionStorage.clear()
@@ -64,7 +65,7 @@ export class DropboxHelper extends CloudSyncBase<SupportedCloud.DROPBOX> {
       this.dbxAuth!.setAccessToken(tokens.access_token)
       this.dbxAuth!.setRefreshToken(tokens.refresh_token)
       this.dbx = new Dropbox({
-        auth: this.dbxAuth
+        auth: this.dbxAuth,
       })
     }
   }
@@ -188,7 +189,7 @@ export class DropboxHelper extends CloudSyncBase<SupportedCloud.DROPBOX> {
           type: file['.tag'],
           name: file.name,
           path: file.path_lower,
-          id: file.id
+          id: file.id,
         }
       }
       return null

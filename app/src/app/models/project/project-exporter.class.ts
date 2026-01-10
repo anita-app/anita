@@ -1,11 +1,11 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
-import { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
-import { ISectionElement } from 'app/models/section-element/section-element.declarations'
+import type { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
+import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
 export enum ExportScope {
   all,
   dataOnly,
-  structureOnly
+  structureOnly,
 }
 
 export class ProjectExporter {
@@ -13,7 +13,7 @@ export class ProjectExporter {
   private projectToExport: Partial<TAnitaUniversalDataStorage> = {}
 
   constructor (
-    private systemData: Partial<TAnitaUniversalDataStorage>
+    private systemData: Partial<TAnitaUniversalDataStorage>,
   ) {}
 
   /**
@@ -49,7 +49,7 @@ export class ProjectExporter {
 
   private addSystemDataToProjectToExport (): void {
     this.projectToExport = {
-      ...this.systemData
+      ...this.systemData,
     }
   }
 

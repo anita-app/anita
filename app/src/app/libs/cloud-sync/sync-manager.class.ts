@@ -3,9 +3,10 @@ import { Manager, SupportedCloud } from 'app/cross-refs-exports'
 import { CloudSyncState } from 'app/libs/cloud-sync/cloud-sync.const'
 import { RemoteAndLocalMerger } from 'app/libs/cloud-sync/remote-and-local-merger.class'
 import { WordpressHelper } from 'app/libs/cloud-sync/wordpress/wordpress-helper.class'
-import { RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
-import { ISectionElement } from 'app/models/section-element/section-element.declarations'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { SyncState } from 'app/state/sync/sync-state.class'
+import type { TSystemData } from 'app/models/project/project.declarations'
+import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
 export interface ISyncWithRemoteOrLocalAddProjectProps {
   mode: EDITOR_MODE.add

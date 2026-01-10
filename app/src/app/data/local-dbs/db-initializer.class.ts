@@ -1,16 +1,16 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
-import { LocalProjectSettings } from 'app/models/project/project.declarations'
-import { ISection } from 'app/models/section/section.declarations'
 import { DataStructureExtender } from 'app/data/system-local-db/data-structure-extender.class'
 import { DbConnector } from 'app/libs/db-connector/db-connector.class'
 import { INDEXEDDB_PLUGIN } from 'app/libs/db-connector/plugins/indexed-db/exporter.constant'
+import type { ISection } from 'app/models/section/section.declarations'
+import type { LocalProjectSettings } from 'app/models/project/project.declarations'
 
 export class DbInitializer {
   private projectId: string
 
   constructor (
     private projectInfo: LocalProjectSettings,
-    private projectSections?: Array<ISection>
+    private projectSections?: Array<ISection>,
 
   ) {
     this.projectId = projectInfo.id
@@ -23,7 +23,7 @@ export class DbInitializer {
       dbInstances[this.projectId] = await new DbConnector(
         INDEXEDDB_PLUGIN,
         { previousVersions: [], indexedDbName: this.projectId },
-        dsExpander.allSez
+        dsExpander.allSez,
       ).init()
     } else if (this.projectInfo.dexieInfoForUpgrade) {
       dbInstances[this.projectId] = await new DbConnector(
@@ -31,8 +31,8 @@ export class DbInitializer {
         {
           previousVersions: this.projectInfo.dexieInfoForUpgrade.previousVersions,
           DS: this.projectInfo.dexieInfoForUpgrade.DS,
-          indexedDbName: this.projectId
-        }
+          indexedDbName: this.projectId,
+        },
       ).init()
     }
   }

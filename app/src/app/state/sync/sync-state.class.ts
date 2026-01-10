@@ -1,7 +1,7 @@
 import { Bucket } from 'app/state/bucket.state'
-import { IWordPressRemoteInfo } from 'app/libs/cloud-sync/wordpress/wordpress.const'
 import { atom } from 'jotai'
 import { SyncStateAtoms } from './sync-state.atoms'
+import type { IWordPressRemoteInfo } from 'app/libs/cloud-sync/wordpress/wordpress.const'
 
 export class SyncState {
   public static atoms = SyncStateAtoms

@@ -1,16 +1,17 @@
-import { IProjectSettings, RESERVED_AUDS_KEYS, TAnitaUniversalDataStorage, TSystemData } from 'app/models/project/project.declarations'
-import { ISection } from 'app/models/section/section.declarations'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { GetOptionsForParentsSelector } from 'app/models/project/get-options-for-parents-selector.class'
 import { GetParentInfoForDetailsView } from 'app/models/project/get-parent-info-for-details-view.class'
 import { ExportScope, ProjectExporter } from 'app/models/project/project-exporter.class'
 import { Section } from 'app/models/section/section.class'
-import { IOptionKeysModel, OptionKeysModelGroup } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { ProjectSaver } from 'app/models/project/project-saver.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
-import { ParentInfoForDetailsView } from 'app/models/parent-element/parent-element.declarations'
 import { ProjectUploader } from 'app/models/project/syncing/project-uploader'
 import { DropboxSyncInfo } from 'app/models/project/syncing/dropbox-sync-info.class'
 import { ProjectState } from 'app/state/project/project-state.class'
+import type { ParentInfoForDetailsView } from 'app/models/parent-element/parent-element.declarations'
+import type { IOptionKeysModel, OptionKeysModelGroup } from 'app/components/shared-components/forms-automator/form-automator.types'
+import type { ISection } from 'app/models/section/section.declarations'
+import type { IProjectSettings, TAnitaUniversalDataStorage, TSystemData } from 'app/models/project/project.declarations'
 
 export class Project {
   public dropBoxSyncInfo: DropboxSyncInfo = new DropboxSyncInfo()
@@ -20,7 +21,7 @@ export class Project {
   private sections: { [key: string]: Section } = {}
 
   constructor (
-    private systemData: TSystemData
+    private systemData: TSystemData,
   ) {
     this.settings = systemData[RESERVED_AUDS_KEYS._settings][0]
     this.sectionsDefinitions = systemData[RESERVED_AUDS_KEYS._sections]
@@ -35,7 +36,7 @@ export class Project {
   public export = (scope: ExportScope): void => {
     new ProjectExporter({
       [RESERVED_AUDS_KEYS._settings]: [this.settings],
-      [RESERVED_AUDS_KEYS._sections]: this.sectionsDefinitions
+      [RESERVED_AUDS_KEYS._sections]: this.sectionsDefinitions,
     }).exportToFile(scope)
   }
 
@@ -44,7 +45,7 @@ export class Project {
   public uploadToCloudService = (path: string): void => {
     new ProjectUploader({
       [RESERVED_AUDS_KEYS._settings]: [this.settings],
-      [RESERVED_AUDS_KEYS._sections]: this.sectionsDefinitions
+      [RESERVED_AUDS_KEYS._sections]: this.sectionsDefinitions,
     }).uploadToCloudService(path)
   }
 
@@ -59,7 +60,7 @@ export class Project {
       }
       this.sections[sectionId] = new Section(
         this.getId(),
-        sectionData
+        sectionData,
       )
     }
     return this.sections[sectionId]

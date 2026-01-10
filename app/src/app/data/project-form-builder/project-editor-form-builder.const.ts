@@ -2,51 +2,51 @@ import {
   optionsBuilderForAddingAdvanced,
   optionsBuilderForAddingBasic,
   optionsBuilderForEditingAdvanced,
-  optionsBuilderForEditingBasic
+  optionsBuilderForEditingBasic,
 } from 'app/data/project-form-builder/options-builder.constant'
 import { projectInfoForEditing, projectInfoNewItem } from 'app/data/project-form-builder/project-info-builder.constant'
 import {
   sectionElesForEditingAdvanced,
   sectionElesForEditingBasic,
   sectionElesNewItemAdvanced,
-  sectionElesNewItemBasic
+  sectionElesNewItemBasic,
 } from 'app/data/project-form-builder/section-fields-builder.constant'
 import { sectionDetailsFormFieldsModel } from 'app/data/project-form-builder/section-info-builder.constant'
 
 export enum PROJECT_EDITOR_MODE {
   advanced = 1,
-  basic
+  basic,
 }
 
 export const PROJECT_EDITOR_FORM_BUILDER = {
   [PROJECT_EDITOR_MODE.advanced]: {
     projectInfo: {
       newItem: projectInfoNewItem,
-      existingItem: projectInfoForEditing
+      existingItem: projectInfoForEditing,
     },
     sectionInfo: sectionDetailsFormFieldsModel,
     sectionEles: {
       newItem: sectionElesNewItemAdvanced,
-      existingItem: sectionElesForEditingAdvanced
+      existingItem: sectionElesForEditingAdvanced,
     },
     optionEles: {
       newItem: optionsBuilderForAddingAdvanced,
-      existingItem: optionsBuilderForEditingAdvanced
-    }
+      existingItem: optionsBuilderForEditingAdvanced,
+    },
   },
   [PROJECT_EDITOR_MODE.basic]: {
     projectInfo: {
       newItem: projectInfoNewItem,
-      existingItem: projectInfoForEditing
+      existingItem: projectInfoForEditing,
     },
     sectionInfo: sectionDetailsFormFieldsModel,
     sectionEles: {
       newItem: sectionElesNewItemBasic,
-      existingItem: sectionElesForEditingBasic
+      existingItem: sectionElesForEditingBasic,
     },
     optionEles: {
       newItem: optionsBuilderForAddingBasic,
-      existingItem: optionsBuilderForEditingBasic
-    }
-  }
+      existingItem: optionsBuilderForEditingBasic,
+    },
+  },
 }

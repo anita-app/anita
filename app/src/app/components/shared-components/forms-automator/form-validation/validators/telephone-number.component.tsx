@@ -1,8 +1,9 @@
 import { SUPPORTED_VALIDATORS } from 'app/components/shared-components/forms-automator/form-validation/supported-validators.enum'
-import { IValidatorsProps } from 'app/components/shared-components/forms-automator/form-validation/validators'
-import React, { memo, useEffect } from 'react'
+import { memo, useEffect } from 'react'
+import type { FC } from 'react'
+import type { IValidatorsProps } from 'app/components/shared-components/forms-automator/form-validation/validators'
 
-export const TelephoneNumber: React.FC<IValidatorsProps> = memo(function TelephoneNumber ({ formEle, element, updateValidatorState }: IValidatorsProps) {
+export const TelephoneNumber: FC<IValidatorsProps> = memo(function TelephoneNumber ({ formEle, element, updateValidatorState }: IValidatorsProps) {
   const value = element[formEle.fieldName]
   const isValidTelephonenumber = /^\+?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4,})$/.test(value)
 

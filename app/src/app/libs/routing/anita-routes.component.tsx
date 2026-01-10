@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { ProjectSectionElementAddEdit } from 'app/components/project/section/element/add-edit.component'
 import { ProjectDetails } from 'app/components/project/details.component'
@@ -7,7 +7,7 @@ import { ProjectSectionList } from 'app/components/project/section/list/list.com
 import { AddEditProject } from 'app/components/projects/add-edit-project.component'
 import { ProjectsNone } from 'app/components/projects/no-projects.component'
 import { ProjectsList } from 'app/components/projects/projects-list.component'
-import { createHashRouter, Navigate, Outlet, RouteObject } from 'react-router-dom'
+import { createHashRouter, Navigate, Outlet } from 'react-router-dom'
 import { OAuth } from 'app/components/auth/o-auth.component'
 import { AdminLayout } from 'app/components/admin-layout/admin-layout.component'
 import { RoutingState } from 'app/state/routing/routing-state.class'
@@ -15,8 +15,10 @@ import { Manager } from 'app/cross-refs-exports'
 import { Loader } from 'app/components/shared-components/loader/loader.component'
 import { useAtomValue } from 'jotai'
 import { RoutingAtoms } from 'app/state/routing/routing.atoms'
+import type { FC } from 'react'
+import type { RouteObject } from 'react-router-dom'
 
-const ProjectLoadedGuard: React.FC = () => {
+const ProjectLoadedGuard: FC = () => {
   const projectId = useAtomValue(RoutingAtoms.param(URL_PARAMS.projectId))
   const [hasProject, setHasProject] = useState<boolean | null>(null)
   const [loadedProjectId, setLoadedProjectId] = useState<string | undefined>(undefined)
@@ -63,12 +65,18 @@ const anitaRoutes: Array<RouteObject> = [
           { path: ANITA_URLS.projectSectionElesList, element: <ProjectSectionList /> },
           { path: ANITA_URLS.projectSectionEleDetails, element: <ProjectSectionElementDetails /> },
           { path: ANITA_URLS.projectSectionAddEle, element: <ProjectSectionElementAddEdit /> },
-          { path: ANITA_URLS.projectSectionEditEle, element: <ProjectSectionElementAddEdit /> }
-        ]
+          { path: ANITA_URLS.projectSectionEditEle, element: <ProjectSectionElementAddEdit /> },
+        ],
       },
-      { path: '*', element: <Navigate to={ANITA_URLS.projectsList} replace={true} /> }
-    ]
-  }
+      {
+        path: '*',
+        element: <Navigate
+          to={ANITA_URLS.projectsList}
+          replace={true}
+                 />,
+      },
+    ],
+  },
 ]
 
 export const anitaRouter = createHashRouter(anitaRoutes)

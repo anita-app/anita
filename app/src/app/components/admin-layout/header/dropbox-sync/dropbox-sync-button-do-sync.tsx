@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react'
+import { memo, useEffect } from 'react'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { useShortcut } from 'app/components/hooks/shortcut'
@@ -7,12 +7,13 @@ import { DropboxHelper } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
 import { useAtomValue } from 'jotai'
 import { SyncStateAtoms } from 'app/state/sync/sync-state.atoms'
 import { SupportedCloud } from 'app/cross-refs-exports'
+import type { FC } from 'react'
 
 interface IDropboxSyncButtonDoSyncProps {
   linkedFileId: string
 }
 
-export const DropboxSyncButtonDoSync: React.FC<IDropboxSyncButtonDoSyncProps> = memo(function DropboxSyncButtonDoSync (props: IDropboxSyncButtonDoSyncProps) {
+export const DropboxSyncButtonDoSync: FC<IDropboxSyncButtonDoSyncProps> = memo(function DropboxSyncButtonDoSync (props: IDropboxSyncButtonDoSyncProps) {
   const isSyncing = useAtomValue(SyncStateAtoms.isSyncing)
   const handleSyncClick = async (e: KeyboardEvent | React.MouseEvent) => {
     e.preventDefault()

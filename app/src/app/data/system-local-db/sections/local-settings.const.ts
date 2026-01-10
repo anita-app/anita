@@ -1,4 +1,4 @@
-import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition'
+import type { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition'
 
 /**
  * Defines the table localSettings and its fields for the `indexedDb` plugin of `db-connector`
@@ -6,8 +6,8 @@ import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definiti
 export const localSettings: SectionDefinition<LocalSettingsData<LOCAL_SETTINGS_KEYS>> = {
   name: 'localSettings',
   fields: [
-    'data'
-  ]
+    'data',
+  ],
 }
 
 /**
@@ -15,7 +15,7 @@ export const localSettings: SectionDefinition<LocalSettingsData<LOCAL_SETTINGS_K
  * As of now there are no settings yet to save, so we keep `testData`.
  */
 export enum LOCAL_SETTINGS_KEYS {
-  testData = 1
+  testData = 1,
 }
 
 /**

@@ -1,7 +1,7 @@
 import { Checkbox } from 'app/components/shared-components/common-ui-eles/checkbox.component'
 import { Manager } from 'app/cross-refs-exports'
-import { ISectionElement } from 'app/models/section-element/section-element.declarations'
-import React from 'react'
+import type { FC } from 'react'
+import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
 interface ICheckBoxAsCheckProps {
   sectionId: string
@@ -10,7 +10,7 @@ interface ICheckBoxAsCheckProps {
   fieldName: string
 }
 
-export const CheckBoxEditable: React.FC<ICheckBoxAsCheckProps> = (props) => {
+export const CheckBoxEditable: FC<ICheckBoxAsCheckProps> = (props) => {
   const handleOnChange = (value: boolean) => {
     Manager.getCurrentProject()
       ?.getSectionById(props.sectionId)

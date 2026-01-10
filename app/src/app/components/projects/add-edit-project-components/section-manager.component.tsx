@@ -1,27 +1,27 @@
 import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const'
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
-import { ISection } from 'app/models/section/section.declarations'
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import { SectionFormModelManager } from 'app/components/projects/add-edit-project-components/section-form-model-manager.component'
 import { FormAutomator } from 'app/components/shared-components/forms-automator/form-automator.component'
-import { FormFieldsModel } from 'app/components/shared-components/forms-automator/form-automator.types'
-import React from 'react'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { useAtomValue } from 'jotai'
 import { FormProjectAtoms } from 'app/state/form-project/form-project.atoms'
 import { FormProjectState } from 'app/state/form-project/form-project-state.class'
+import type { FC } from 'react'
+import type { FormFieldsModel } from 'app/components/shared-components/forms-automator/form-automator.types'
+import type { ISection } from 'app/models/section/section.declarations'
 
 interface ISectionManagerProps {
   section: ISection
   sectionIndex: number
 }
 
-export const SectionManager: React.FC<ISectionManagerProps> = ({ section, sectionIndex }) => {
+export const SectionManager: FC<ISectionManagerProps> = (props) => {
   const projectEditorMode = useAtomValue(FormProjectAtoms.mode)
   const project = useAtomValue(FormProjectAtoms.project)
   const sections = project[RESERVED_AUDS_KEYS._sections]
-  const customFields: Array<string | null> = section.formModel
+  const customFields: Array<string | null> = props.section.formModel
     .map(formElement => Object.values(RESERVED_FIELDS).includes(formElement.fieldName) ? null : formElement.fieldName)
     .filter(fieldName => fieldName !== null)
 
@@ -30,39 +30,42 @@ export const SectionManager: React.FC<ISectionManagerProps> = ({ section, sectio
   }
 
   const handleClickAddField = () => {
-    FormProjectState.addFieldToSection(sectionIndex)
+    FormProjectState.addFieldToSection(props.sectionIndex)
   }
 
   const handleClickDeleteSection = () => {
-    FormProjectState.removeSection(sectionIndex)
+    FormProjectState.removeSection(props.sectionIndex)
   }
 
   const handleClickDeleteField = (fieldIndex: number) => {
-    FormProjectState.removeFieldFromSection(sectionIndex, fieldIndex)
+    FormProjectState.removeFieldFromSection(props.sectionIndex, fieldIndex)
   }
 
   return (
     <div className="mt-5 p-4 bg-white rounded shadow">
       <div>
-        <h3 className="text-md font-bold">{`Section # ${sectionIndex + 1}`}</h3>
+        <h3 className="text-md font-bold">{`Section # ${props.sectionIndex + 1}`}</h3>
         <hr className="mt-4" />
       </div>
       <div className="pt-4">
         <FormAutomator
           formModel={PROJECT_EDITOR_FORM_BUILDER[projectEditorMode].sectionInfo as Array<FormFieldsModel<any>>}
-          element={section}
-          handleChange={handleChange.bind(undefined, sectionIndex)}
-          sectionId={section.id}
+          element={props.section}
+          handleChange={handleChange.bind(undefined, props.sectionIndex)}
+          sectionId={props.section.id}
         />
       </div>
       <h4 className="pl-2 font-bold mb-2 mt-6">Section element fields</h4>
-      {section.formModel.map((formElement, indexFormElement) => !customFields.includes(formElement.fieldName)
+      {props.section.formModel.map((formElement, indexFormElement) => !customFields.includes(formElement.fieldName)
         ? null
         : (
-          <div key={`${section.id}-${indexFormElement}`} className="border border-transparent hover:border-prussian-blue-500 shadow rounded mb-3 p-4">
+          <div
+            key={`${props.section.id}-${indexFormElement}`}
+            className="border border-transparent hover:border-prussian-blue-500 shadow rounded mb-3 p-4"
+          >
             <SectionFormModelManager
               indexFormElement={indexFormElement}
-              indexSection={sectionIndex}
+              indexSection={props.sectionIndex}
               element={formElement}
             />
             {customFields.length > 1 && (
@@ -78,7 +81,7 @@ export const SectionManager: React.FC<ISectionManagerProps> = ({ section, sectio
               </div>
             )}
           </div>
-          )
+          ),
       )}
       <div className={`flex ${sections?.length! > 1 ? 'justify-between' : 'justify-end'} mt-10 mb-1`}>
         {(sections?.length! > 1) && (

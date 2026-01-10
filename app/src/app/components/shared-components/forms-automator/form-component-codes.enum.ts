@@ -1,4 +1,4 @@
-import { IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
+import type { IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 
 /**
  * Values to identify the form component to dynamically load.
@@ -19,7 +19,7 @@ export enum FORM_COMPONENTS_CODES {
   childOfSelectorForSection = 10,
   parentsSelector = 11,
   basicTextarea = 12,
-  remoteSelector = 13
+  remoteSelector = 13,
 }
 
 /**
@@ -28,30 +28,30 @@ export enum FORM_COMPONENTS_CODES {
 export const SELECTABLE_FORM_ELES: Array<IOptionKeysModel> = [
   {
     value: FORM_COMPONENTS_CODES.basicInput,
-    label: 'Short text'
+    label: 'Short text',
   },
   {
     value: FORM_COMPONENTS_CODES.richText,
-    label: 'Long text'
+    label: 'Long text',
   },
   {
     value: FORM_COMPONENTS_CODES.basicCheckbox,
-    label: 'Check box'
+    label: 'Check box',
   },
   {
     value: FORM_COMPONENTS_CODES.basicSelect,
-    label: 'Drop-down list'
+    label: 'Drop-down list',
   },
   {
     value: FORM_COMPONENTS_CODES.basicRadio,
-    label: 'Alternative choice'
+    label: 'Alternative choice',
   },
   {
     value: FORM_COMPONENTS_CODES.datePicker,
-    label: 'Date picker'
+    label: 'Date picker',
   },
   {
     value: FORM_COMPONENTS_CODES.dateTimePicker,
-    label: 'Date & time'
-  }
+    label: 'Date & time',
+  },
 ]

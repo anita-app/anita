@@ -1,8 +1,8 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
-import { IProjectSettings } from 'app/models/project/project.declarations'
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
 import { CloudSyncBase, SyncManager } from 'app/cross-refs-exports'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
+import type { IProjectSettings } from 'app/models/project/project.declarations'
 
 /**
  * Deletes a project from the current device
@@ -13,7 +13,7 @@ export class ProjectDeletor {
    * @param projectSettings the settings of the project to delete
    */
   constructor (
-    private projectId: string
+    private projectId: string,
   ) { }
 
   /**

@@ -5,7 +5,7 @@ export enum Type {
   info = 'info',
   warning = 'warning',
   danger = 'danger',
-  transparent = 'transparent'
+  transparent = 'transparent',
 }
 
 export enum SolidBg {
@@ -15,7 +15,7 @@ export enum SolidBg {
   info = 'bg-blue-500',
   warning = 'bg-orange-700',
   danger = 'bg-red-600',
-  transparent = 'bg-transparent'
+  transparent = 'bg-transparent',
 }
 
 export enum SolidBgWithHover {
@@ -25,7 +25,7 @@ export enum SolidBgWithHover {
   info = 'bg-blue-500 hover:bg-blue-600 focus:ring-blue-500',
   warning = 'bg-orange-700 bg-opacity-10 hover:bg-opacity-20 focus:ring-orange-700 focus:ring-opacity-10',
   danger = 'bg-red-600 hover:bg-red-700 focus:ring-red-600',
-  transparent = 'bg-transparent hover:bg-gray-200 focus:ring-0'
+  transparent = 'bg-transparent hover:bg-gray-200 focus:ring-0',
 }
 
 export enum SolidText {
@@ -35,7 +35,7 @@ export enum SolidText {
   info = 'text-white',
   warning = 'text-orange-700 hover:text-orange-800',
   danger = 'text-white',
-  transparent = 'text-gray-800'
+  transparent = 'text-gray-800',
 }
 
 export enum OutlineBg {
@@ -55,18 +55,18 @@ export enum OutlineText {
   info = 'text-blue-500 hover:text-white',
   warning = 'text-orange-700 hover:text-white',
   danger = 'text-red-700 hover:text-white',
-  transparent = 'text-gray-700 hover:text-gray-800'
+  transparent = 'text-gray-700 hover:text-gray-800',
 }
 
 export const COLOR_SCHEME = {
   solid: {
     bg: SolidBgWithHover,
-    text: SolidText
+    text: SolidText,
   },
   outline: {
     bg: OutlineBg,
-    text: OutlineText
-  }
+    text: OutlineText,
+  },
 }
 
 export type TFill = keyof typeof COLOR_SCHEME

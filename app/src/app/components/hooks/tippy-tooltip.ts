@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
-import tippy, { Instance } from 'tippy.js'
+import tippy from 'tippy.js'
+import type { Instance } from 'tippy.js'
 
 export const useTippyTooltip = (elementId: string, content?: string, additionalClasses?: string): void => {
   const instancesRef = useRef<Array<Instance> | null>(null)
@@ -9,7 +10,7 @@ export const useTippyTooltip = (elementId: string, content?: string, additionalC
     }
     instancesRef.current = tippy(`#${elementId}`, {
       content,
-      trigger: 'mouseenter'
+      trigger: 'mouseenter',
     })
     if (additionalClasses) {
       instancesRef.current?.forEach((i) => {

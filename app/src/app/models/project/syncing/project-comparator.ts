@@ -1,7 +1,8 @@
 import { DateTools } from 'app/libs/tools/date-tools.class'
-import { RESERVED_AUDS_KEYS, TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
-import { ISectionElement } from 'app/models/section-element/section-element.declarations'
+import type { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
+import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
 export interface IComparisonResult {
   remote: IElesForScope
@@ -22,15 +23,15 @@ export class Comparator {
     remote: {
       delete: {},
       insert: {},
-      update: {}
+      update: {},
     },
     remoteData: {} as TAnitaUniversalDataStorage,
     local: {
       delete: {},
       insert: {},
-      update: {}
+      update: {},
     },
-    localData: {} as TAnitaUniversalDataStorage
+    localData: {} as TAnitaUniversalDataStorage,
   }
 
   private localElementsMerged: { [key: keyof TAnitaUniversalDataStorage]: Array<string> } = {}
@@ -38,7 +39,7 @@ export class Comparator {
   constructor (
     private lastSync: string | undefined,
     private localData: TAnitaUniversalDataStorage,
-    private remoteData: TAnitaUniversalDataStorage
+    private remoteData: TAnitaUniversalDataStorage,
   ) { }
 
   public compare (): IComparisonResult {

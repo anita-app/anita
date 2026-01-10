@@ -1,13 +1,14 @@
-import { SUPPORTED_VALIDATORS } from 'app/components/shared-components/forms-automator/form-validation/supported-validators.enum'
-import { IValidatorsConatinerProps, IValidatorsState } from 'app/components/shared-components/forms-automator/form-validation/validators'
 import { EmailFormat } from 'app/components/shared-components/forms-automator/form-validation/validators/email-format.component'
 import { RequiredField } from 'app/components/shared-components/forms-automator/form-validation/validators/required-field.component'
 import { TelephoneNumber } from 'app/components/shared-components/forms-automator/form-validation/validators/telephone-number.component'
 import { UrlFormat } from 'app/components/shared-components/forms-automator/form-validation/validators/url-format.component'
 import { TextInputSupportedTypes } from 'app/components/shared-components/forms-automator/input-supported-types.const'
-import React, { memo, useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
+import type { FC } from 'react'
+import type { IValidatorsConatinerProps, IValidatorsState } from 'app/components/shared-components/forms-automator/form-validation/validators'
+import type { SUPPORTED_VALIDATORS } from 'app/components/shared-components/forms-automator/form-validation/supported-validators.enum'
 
-export const ValidatorsContainer: React.FC<IValidatorsConatinerProps> = memo(function ValidatorsContainer (props: IValidatorsConatinerProps) {
+export const ValidatorsContainer: FC<IValidatorsConatinerProps> = memo(function ValidatorsContainer (props: IValidatorsConatinerProps) {
   const validators = []
   const [fieldValidatorsState, setFieldValidatorsState] = useState<IValidatorsState>({})
 
@@ -28,19 +29,35 @@ export const ValidatorsContainer: React.FC<IValidatorsConatinerProps> = memo(fun
   }, [fieldValidatorsState])
 
   if (props.formEle.required) {
-    validators.push(<RequiredField key="required-validator" updateValidatorState={updateValidatorState} {...props} />)
+    validators.push(<RequiredField
+      key="required-validator"
+      updateValidatorState={updateValidatorState}
+      {...props}
+                    />)
   }
 
   if (props.formEle?.type === TextInputSupportedTypes.email) {
-    validators.push(<EmailFormat key="email-validator" updateValidatorState={updateValidatorState} {...props} />)
+    validators.push(<EmailFormat
+      key="email-validator"
+      updateValidatorState={updateValidatorState}
+      {...props}
+                    />)
   }
 
   if (props.formEle?.type === TextInputSupportedTypes.tel) {
-    validators.push(<TelephoneNumber key="telephone-validator" updateValidatorState={updateValidatorState} {...props} />)
+    validators.push(<TelephoneNumber
+      key="telephone-validator"
+      updateValidatorState={updateValidatorState}
+      {...props}
+                    />)
   }
 
   if (props.formEle?.type === TextInputSupportedTypes.url) {
-    validators.push(<UrlFormat key="url-validator" updateValidatorState={updateValidatorState} {...props} />)
+    validators.push(<UrlFormat
+      key="url-validator"
+      updateValidatorState={updateValidatorState}
+      {...props}
+                    />)
   }
 
   return (

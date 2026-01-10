@@ -1,4 +1,4 @@
-import { IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
+import type { IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 
 export enum TextInputSupportedTypes {
   color = 'color',
@@ -8,13 +8,13 @@ export enum TextInputSupportedTypes {
   range = 'range',
   tel = 'tel',
   text = 'text',
-  url = 'url'
+  url = 'url',
 }
 
 export enum DateInputSupportedTypes {
   date = 'date',
   month = 'month',
-  week = 'week'
+  week = 'week',
 }
 
 export enum DateTimeInputSupportedTypes {
@@ -25,60 +25,60 @@ export enum DateTimeInputSupportedTypes {
 export const TEXT_INPUT_SUPPORTED_TYPES_OPTIONS: Array<IOptionKeysModel> = [
   {
     value: TextInputSupportedTypes.text,
-    label: 'Text'
+    label: 'Text',
   },
   {
     value: TextInputSupportedTypes.email,
-    label: 'Email'
+    label: 'Email',
   },
   {
     value: TextInputSupportedTypes.number,
-    label: 'Number'
+    label: 'Number',
   },
   {
     value: TextInputSupportedTypes.password,
-    label: 'Password'
+    label: 'Password',
   },
   {
     value: TextInputSupportedTypes.color,
-    label: 'Color'
+    label: 'Color',
   },
   {
     value: TextInputSupportedTypes.range,
-    label: 'Range'
+    label: 'Range',
   },
   {
     value: TextInputSupportedTypes.tel,
-    label: 'Tel'
+    label: 'Tel',
   },
   {
     value: TextInputSupportedTypes.url,
-    label: 'Url'
-  }
+    label: 'Url',
+  },
 ]
 
 export const DATE_INPUT_SUPPORTED_TYPES_OPTIONS: Array<IOptionKeysModel> = [
   {
     value: DateInputSupportedTypes.date,
-    label: 'Date'
+    label: 'Date',
   },
   {
     value: DateInputSupportedTypes.month,
-    label: 'Month'
+    label: 'Month',
   },
   {
     value: DateInputSupportedTypes.week,
-    label: 'Week'
-  }
+    label: 'Week',
+  },
 ]
 
 export const DATE_TIME_INPUT_SUPPORTED_TYPES_OPTIONS: Array<IOptionKeysModel> = [
   {
     value: DateTimeInputSupportedTypes.datetimeLocal,
-    label: 'Date & time'
+    label: 'Date & time',
   },
   {
     value: DateTimeInputSupportedTypes.time,
-    label: 'Time only'
-  }
+    label: 'Time only',
+  },
 ]

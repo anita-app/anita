@@ -1,6 +1,6 @@
 import { Bucket } from 'app/state/bucket.state'
 import { FormElementAtoms } from 'app/state/form-element/form-element.atoms'
-import { ISectionElement } from 'app/models/section-element/section-element.declarations'
+import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
 export class FormElementState {
   public static setElement = (element: ISectionElement | null) => {

@@ -1,6 +1,6 @@
-import { ISection } from 'app/models/section/section.declarations'
 import { FieldSelector } from 'app/components/shared-components/forms-automator/form-layout/field-selector.component'
-import React from 'react'
+import type { FC } from 'react'
+import type { ISection } from 'app/models/section/section.declarations'
 
 export interface IFormAutomatorProps {
   formModel: ISection['formModel']
@@ -10,10 +10,14 @@ export interface IFormAutomatorProps {
 
 }
 
-export const FormAutomator: React.FC<IFormAutomatorProps> = (props) => (
+export const FormAutomator: FC<IFormAutomatorProps> = (props) => (
   <span>
     {props.formModel.map((formEle, index) => (
-      <FieldSelector key={formEle.fieldName + index.toString()} formEle={formEle} {...props} />
+      <FieldSelector
+        key={formEle.fieldName + index.toString()}
+        formEle={formEle}
+        {...props}
+      />
     ))}
   </span>
 )

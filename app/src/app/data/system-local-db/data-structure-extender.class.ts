@@ -1,9 +1,9 @@
-import { ISectionElement } from 'app/models/section-element/section-element.declarations'
-import { ISection } from 'app/models/section/section.declarations'
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import { SezBuilder } from 'app/libs/db-connector/db-builder/sez-builder.class'
-import { SectionDefinition, SectionModel } from 'app/libs/db-connector/db-builder/sez-definition'
-import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
+import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
+import type { ISection } from 'app/models/section/section.declarations'
+import type { SectionDefinition, SectionModel } from 'app/libs/db-connector/db-builder/sez-definition'
+import type { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 
 /**
  * Converts the abstract definition of a Section into a complete datastructure that can be processed by FormDataParserService
@@ -21,7 +21,7 @@ export class DataStructureExtender {
   private datastructure: AbstractModel = {}
 
   constructor (
-    private sections: Array<ISection>
+    private sections: Array<ISection>,
   ) { }
 
   /**
@@ -42,7 +42,7 @@ export class DataStructureExtender {
     const sezDefinition: SectionDefinition<ISectionElement> = {
       name: section.id,
       fields: Object.values(RESERVED_FIELDS),
-      jsonFields: [RESERVED_FIELDS.parentsInfo]
+      jsonFields: [RESERVED_FIELDS.parentsInfo],
     }
     section.formModel.forEach(field => {
       sezDefinition.fields!.push(field.fieldName)
@@ -58,7 +58,7 @@ export class DataStructureExtender {
     const sez = new SezBuilder<ISectionElement>(
       this.allSez,
       sezDefinition.name,
-      sezDefinition.fields
+      sezDefinition.fields,
     ).make()
     this.addToTempTs(sez)
   }

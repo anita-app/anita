@@ -1,15 +1,17 @@
 import { useTippyTooltip } from 'app/components/hooks/tippy-tooltip'
-import { COLOR_SCHEME, TFill, Type } from 'app/components/shared-components/common-ui-eles/components.const'
-import { Icons, TIconName } from 'app/libs/icons/icons.class'
-import React from 'react'
+import { COLOR_SCHEME, Type } from 'app/components/shared-components/common-ui-eles/components.const'
+import { Icons } from 'app/libs/icons/icons.class'
 import { Link } from 'react-router-dom'
+import type { FC } from 'react'
+import type { TIconName } from 'app/libs/icons/icons.class'
+import type { TFill } from 'app/components/shared-components/common-ui-eles/components.const'
 
 const sizeClasses = {
   xs: 'rounded px-2.5 py-1.5 text-xs',
   sm: 'rounded-md px-3 py-2 text-sm leading-4',
   md: 'rounded-md px-4 py-2 text-sm',
   lg: 'rounded-md px-4 py-2 text-base',
-  xl: 'rounded-md px-6 py-3 text-base'
+  xl: 'rounded-md px-6 py-3 text-base',
 }
 
 export interface IButtonWithTooltipProps {
@@ -40,7 +42,7 @@ enum LabelBreakpoints {
   md = 'md:inline-block',
   lg = 'lg:inline-block',
   xl = 'xl:inline-block',
-  xxl = 'xxl:inline-block'
+  xxl = 'xxl:inline-block',
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -49,12 +51,12 @@ enum TooltipBreakpoints {
   md = 'md:hidden',
   lg = 'lg:hidden',
   xl = 'xl:hidden',
-  xxl = 'xxl:hidden'
+  xxl = 'xxl:hidden',
 }
 
 const sharedClasses = 'inline-flex items-center justify-center border border-transparent font-medium focus:outline-none focus:ring-2 focus:ring-offset-2'
 
-export const Button: React.FC<IButtonWithTooltipProps> = (props) => {
+export const Button: FC<IButtonWithTooltipProps> = (props) => {
   const Component = props.href ? Link : 'button'
   const collapsable = (props.hasTooltip || !!props.tooltip) && props.breakpoint
   const fillStyle: TFill = props.fill ?? 'solid'

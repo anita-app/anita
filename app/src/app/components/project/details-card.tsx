@@ -1,28 +1,37 @@
 import { availableSystems } from 'app/data/project-form-builder/project-info-builder.constant'
-import { IProjectSettings } from 'app/models/project/project.declarations'
 import { SectionElement } from 'app/models/section-element/section-element.class'
 import { DeleteProjectButton } from 'app/components/shared-components/buttons/delete-project.component'
-import { EditButton } from 'app/components/shared-components/buttons/edit-project-button.component'
+import { EditProjectButton } from 'app/components/shared-components/buttons/edit-project-button.component'
 import { ExportButton } from 'app/components/shared-components/buttons/export-project-button.component'
 import { CardFooter } from 'app/components/shared-components/common-ui-eles/card-footer.component'
 import * as dateFormat from 'date-format'
-import React from 'react'
 import { WordpressHelper } from 'app/libs/cloud-sync/wordpress/wordpress-helper.class'
+import { useEffect, useState, type FC } from 'react'
+import type { IProjectSettings } from 'app/models/project/project.declarations'
 
 interface IProjectDetailsCardProps {
   project: IProjectSettings
 }
 
-const LinkToRemote: React.FC<{ remoteUrl: string }> = ({ remoteUrl }) => (
+const LinkToRemote: FC<{ remoteUrl: string }> = (props) => (
   <>
-    {' '}(<a href={remoteUrl} target="_blank" rel="noopener noreferrer" className="underline">{remoteUrl}</a>)
+    {' '}
+    <a
+      href={props.remoteUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="underline"
+    >
+      {props.remoteUrl}
+    </a>
   </>
 )
 
-export const ProjectDetailsCard: React.FC<IProjectDetailsCardProps> = (props) => {
-  const [remoteName, setRemoteName] = React.useState<null | string>()
-  const [remoteUrl, setRemoteUrl] = React.useState<null | string>()
-  React.useEffect(() => {
+export const ProjectDetailsCard: FC<IProjectDetailsCardProps> = (props) => {
+  const [remoteName, setRemoteName] = useState<null | string>()
+  const [remoteUrl, setRemoteUrl] = useState<null | string>()
+
+  useEffect(() => {
     const fetchRemoteName = async () => {
       if (props.project.remoteStorage) {
         const remote = await WordpressHelper.instance.getRemoteInfo(props.project.remoteStorage)
@@ -58,7 +67,7 @@ export const ProjectDetailsCard: React.FC<IProjectDetailsCardProps> = (props) =>
         <DeleteProjectButton project={props.project} />
         <div className="flex items-end">
           <ExportButton />
-          <EditButton project={props.project} />
+          <EditProjectButton project={props.project} />
         </div>
       </CardFooter>
 

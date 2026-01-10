@@ -1,7 +1,7 @@
-import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
-import { DbConnectorInstance, Selector } from 'app/libs/db-connector/models/executers'
 import { QueryMaker } from 'app/libs/db-connector/plugins/indexed-db/query-makers/query-maker.class'
-import Dexie from 'dexie'
+import type { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
+import type { DbConnectorInstance, Selector } from 'app/libs/db-connector/models/executers'
+import type Dexie from 'dexie'
 
 /**
  * Implements selector for IndexedDB
@@ -18,7 +18,7 @@ export class DbSelector<E> implements Selector<E> {
   constructor (
     private dbConnector: DbConnectorInstance<Dexie>,
     private section: keyof AbstractModel,
-    private args?: Partial<E>
+    private args?: Partial<E>,
   ) { }
 
   /**

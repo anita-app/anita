@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react'
+import { memo, useState } from 'react'
 import { AdminLayoutSidebarEditMenuButton } from 'app/components/admin-layout/admin-layout-sidebar-edit-menu-button.component'
 import { AdminLayoutSidebarMenu } from 'app/components/admin-layout/admin-layout-sidebar-menu.component'
 import { useTippyTooltip } from 'app/components/hooks/tippy-tooltip'
@@ -6,8 +6,9 @@ import { Icons } from 'app/libs/icons/icons.class'
 import { LayoutAtoms } from 'app/state/layout/layout.atoms'
 import { appVersion } from 'app/version'
 import { useAtomValue } from 'jotai'
+import type { FC } from 'react'
 
-export const AdminLayoutSidebar: React.FC = memo(function Sidebar () {
+export const AdminLayoutSidebar: FC = memo(function Sidebar () {
   const sidebarCollapsed = useAtomValue(LayoutAtoms.sidebarCollapsed)
   const [isEditingMenuItemsVisibility, setIsEditingMenuItemsVisibility] = useState(false)
 
@@ -30,7 +31,13 @@ export const AdminLayoutSidebar: React.FC = memo(function Sidebar () {
         <div className="absolute bottom-1 text-xs text-gray-400">
           <div className="flex items-center">
             <p className="inline-block mr-1">v{appVersion}</p>|
-            <a className="ml-1" href="https://github.com/anita-app/anita/issues" target="_blank" rel="noreferrer" id="reportBug">
+            <a
+              className="ml-1"
+              href="https://github.com/anita-app/anita/issues"
+              target="_blank"
+              rel="noreferrer"
+              id="reportBug"
+            >
               {Icons.render('bugOutline', 'mt-1.5')}
             </a>
           </div>

@@ -1,8 +1,9 @@
 import { DbInitializer } from 'app/data/local-dbs/db-initializer.class'
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
-import { AdditionalInfoForLocalStorage, TAnitaUniversalDataStorage, LocalProjectSettings, RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { SaveProjectSettingsInIndexedDB } from 'app/models/project/save-project-settings-in-indexed-db.class'
+import type { AdditionalInfoForLocalStorage, TAnitaUniversalDataStorage, LocalProjectSettings } from 'app/models/project/project.declarations'
 
 /**
  * Imports a project payload and persists it to IndexedDB.
@@ -14,7 +15,7 @@ export class ProjectDataImporter {
    * @param projectData The project data to import
    */
   constructor (
-    private projectData: TAnitaUniversalDataStorage
+    private projectData: TAnitaUniversalDataStorage,
   ) { }
 
   /**

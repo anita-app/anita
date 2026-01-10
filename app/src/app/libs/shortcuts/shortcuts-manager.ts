@@ -1,4 +1,5 @@
-import { IShortcut, IShortcutsByKey, SHORTCUTS_STORE } from 'app/libs/shortcuts/shortcuts-store'
+import { SHORTCUTS_STORE } from 'app/libs/shortcuts/shortcuts-store'
+import type { IShortcut, IShortcutsByKey } from 'app/libs/shortcuts/shortcuts-store'
 
 export class ShortcutsManager {
   public static add (shortcut: IShortcut): void {

@@ -1,14 +1,14 @@
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
-import { FormFieldsModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
 import { TextInputSupportedTypes } from 'app/components/shared-components/forms-automator/input-supported-types.const'
 import { Icons } from 'app/libs/icons/icons.class'
-import { SectionDetailsDeclaration } from 'app/models/section/section.declarations'
+import type { FormFieldsModel } from 'app/components/shared-components/forms-automator/form-automator.types'
+import type { SectionDetailsDeclaration } from 'app/models/section/section.declarations'
 
 export const sectionDetailsFormFieldsModel: Array<FormFieldsModel<SectionDetailsDeclaration>> = [
   {
     componentCode: FORM_COMPONENTS_CODES.hiddenInput,
-    fieldName: RESERVED_FIELDS.id
+    fieldName: RESERVED_FIELDS.id,
   },
   {
     componentCode: FORM_COMPONENTS_CODES.basicInput,
@@ -16,7 +16,7 @@ export const sectionDetailsFormFieldsModel: Array<FormFieldsModel<SectionDetails
     type: TextInputSupportedTypes.text,
     label: 'Title',
     required: true,
-    width: '6'
+    width: '6',
   },
   {
     componentCode: FORM_COMPONENTS_CODES.basicInput,
@@ -25,7 +25,7 @@ export const sectionDetailsFormFieldsModel: Array<FormFieldsModel<SectionDetails
     value: '',
     label: 'Abbreviation',
     width: '3',
-    labelHint: 'Used in the menu, if set.'
+    labelHint: 'Used in the menu, if set.',
   },
   {
     componentCode: FORM_COMPONENTS_CODES.basicSelect,
@@ -33,12 +33,12 @@ export const sectionDetailsFormFieldsModel: Array<FormFieldsModel<SectionDetails
     label: 'Icon',
     options: Icons.getIconsOptionsList(),
     required: false,
-    width: '3'
+    width: '3',
   },
   {
     componentCode: FORM_COMPONENTS_CODES.childOfSelectorForSection,
     fieldName: 'childOf',
     label: 'Parent sections:',
-    options: []
-  }
+    options: [],
+  },
 ]

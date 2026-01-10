@@ -1,10 +1,10 @@
 import { ANITA_URLS } from 'app/libs/routing/anita-routes.constant'
-import { IProjectSettings, RESERVED_AUDS_KEYS, TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
 import { Manager } from 'app/cross-refs-exports'
 import { ProjectFileImporter } from 'app/libs/projects-helpers/project-importers/project-file-importer.class'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import { ImportProjectModalContent } from 'app/components/projects/project-importer-components/import-project-modal-content.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { ModalState } from 'app/state/modal/modal-state.class'
@@ -12,12 +12,14 @@ import { useAtomValue } from 'jotai'
 import { FormElesValidStateAtoms } from 'app/state/form-eles-valid-state/form-eles-valid-state.atoms'
 import { FormElementState } from 'app/state/form-element/form-element-state.class'
 import { RoutingState } from 'app/state/routing/routing-state.class'
+import type { FC } from 'react'
+import type { IProjectSettings, TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
 
 interface IImportProjectButtonProps {
   btnType: 'icon' | 'text'
 }
 
-export const ImportProjectButton: React.FC<IImportProjectButtonProps> = (props) => {
+export const ImportProjectButton: FC<IImportProjectButtonProps> = (props) => {
   const validObj = useAtomValue(FormElesValidStateAtoms.validState)
   const projectData = useRef<TAnitaUniversalDataStorage>(null)
 
@@ -31,7 +33,6 @@ export const ImportProjectButton: React.FC<IImportProjectButtonProps> = (props) 
 
   const handleClickModal = async () => {
     const { project } = await new ProjectFileImporter().import() || {}
-    console.log('🚀 ~ handleClickModal ~ project:', project)
 
     if (!project) {
       return
@@ -45,11 +46,11 @@ export const ImportProjectButton: React.FC<IImportProjectButtonProps> = (props) 
       ctas: [{
         actionText: 'Import',
         handleClickAction: handleClickImport,
-        disableAction: Object.keys(validObj).some(key => validObj[key] === false)
+        disableAction: Object.keys(validObj).some(key => validObj[key] === false),
       }],
       children: (
         <ImportProjectModalContent projectSettings={project[RESERVED_AUDS_KEYS._settings][0]} />
-      )
+      ),
     })
   }
 

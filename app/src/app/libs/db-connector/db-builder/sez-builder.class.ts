@@ -1,6 +1,6 @@
 import { DEFAULT_OWNER_IDENTIFIER, DEFAULT_PARENTS_IDENTIFIER, DEFAULT_PK } from 'app/libs/db-connector/db-builder/default-values.constant'
-import { SectionDefinition, SectionModel, SectionName } from 'app/libs/db-connector/db-builder/sez-definition'
 import { Logger } from 'app/libs/logger/logger.class'
+import type { SectionDefinition, SectionModel, SectionName } from 'app/libs/db-connector/db-builder/sez-definition'
 
 /**
  * Builds a Section model
@@ -33,7 +33,7 @@ export class SezBuilder<T> {
     private orderBy: keyof T & string = DEFAULT_PK as keyof T & string,
     private childOf?: Array<SectionName>,
     private parentsIdentifiers?: keyof T,
-    private ownerIdentifier?: keyof T & string
+    private ownerIdentifier?: keyof T & string,
   ) { }
 
   /**
@@ -181,7 +181,7 @@ export class SezBuilder<T> {
       orderBy: this.orderBy,
       fields: this.fields,
       ownerIdentifier: this.ownerIdentifier as keyof T & string,
-      jsonFields: this.jsonFields
+      jsonFields: this.jsonFields,
     }
     this.addChildOf()
   }

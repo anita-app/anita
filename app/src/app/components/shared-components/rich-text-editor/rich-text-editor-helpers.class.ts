@@ -1,4 +1,4 @@
-import { Descendant } from 'slate'
+import type { Descendant } from 'slate'
 
 export class RichTextEditorHelpers {
   public static makeInitialOutputData = (rawValue: string): Array<Descendant> => {
@@ -10,18 +10,18 @@ export class RichTextEditorHelpers {
         {
           type: 'paragraph',
           children: [
-            { text: rawValue || '' }
-          ]
-        } as any
+            { text: rawValue || '' },
+          ],
+        } as any,
       ]
     } catch (error) {
       return [
         {
           type: 'paragraph',
           children: [
-            { text: '' }
-          ]
-        } as any
+            { text: '' },
+          ],
+        } as any,
       ]
     }
   }

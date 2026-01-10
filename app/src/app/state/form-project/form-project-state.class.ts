@@ -1,18 +1,19 @@
 import { Bucket } from 'app/state/bucket.state'
 import { FormProjectAtoms } from 'app/state/form-project/form-project.atoms'
 import { PROJECT_EDITOR_MODE } from 'app/data/project-form-builder/project-editor-form-builder.const'
-import { IProjectSettings, RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { IdCreator } from 'app/libs/id-creator/id-creator.class'
-import { FormFieldsModel, IBasicSelect, IOptionKeysModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
-import { ISection, ISectionCustomFieldProperties } from 'app/models/section/section.declarations'
 import cloneDeep from 'lodash.clonedeep'
+import type { IProjectSettings, TSystemData } from 'app/models/project/project.declarations'
+import type { FormFieldsModel, IBasicSelect, IOptionKeysModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
+import type { ISection, ISectionCustomFieldProperties } from 'app/models/section/section.declarations'
 
 export class FormProjectState {
   public static toggleProjectEditorMode = () => {
     const current = Bucket.general.get(FormProjectAtoms.mode)
     Bucket.general.set(
       FormProjectAtoms.mode,
-      current === PROJECT_EDITOR_MODE.basic ? PROJECT_EDITOR_MODE.advanced : PROJECT_EDITOR_MODE.basic
+      current === PROJECT_EDITOR_MODE.basic ? PROJECT_EDITOR_MODE.advanced : PROJECT_EDITOR_MODE.basic,
     )
   }
 
@@ -28,7 +29,7 @@ export class FormProjectState {
     const nextSettings = [{ ...currentSettingsValue, [fieldName]: value }]
     Bucket.general.set(FormProjectAtoms.project, {
       ...currentProject,
-      [RESERVED_AUDS_KEYS._settings]: nextSettings
+      [RESERVED_AUDS_KEYS._settings]: nextSettings,
     })
   }
 
@@ -39,11 +40,11 @@ export class FormProjectState {
       id: IdCreator.random(),
       title: '',
       formModel: [{} as any],
-      createdAt: ''
+      createdAt: '',
     })
     Bucket.general.set(FormProjectAtoms.project, {
       ...currentProject,
-      [RESERVED_AUDS_KEYS._sections]: nextSections
+      [RESERVED_AUDS_KEYS._sections]: nextSections,
     })
   }
 
@@ -59,7 +60,7 @@ export class FormProjectState {
     nextSections[index] = { ...currentSection, [fieldName]: value }
     Bucket.general.set(FormProjectAtoms.project, {
       ...currentProject,
-      [RESERVED_AUDS_KEYS._sections]: nextSections
+      [RESERVED_AUDS_KEYS._sections]: nextSections,
     })
   }
 
@@ -68,7 +69,7 @@ export class FormProjectState {
     indexFormElement: number,
     fieldName: keyof FormFieldsModel<TSupportedFormsTypes>,
     value: FormFieldsModel<TSupportedFormsTypes>[keyof FormFieldsModel<TSupportedFormsTypes>],
-    identifierAutoVal: string | null
+    identifierAutoVal: string | null,
   ) => {
     const currentProject = Bucket.general.get(FormProjectAtoms.project)
     const currentSections = currentProject[RESERVED_AUDS_KEYS._sections] ?? []
@@ -91,7 +92,7 @@ export class FormProjectState {
 
     Bucket.general.set(FormProjectAtoms.project, {
       ...currentProject,
-      [RESERVED_AUDS_KEYS._sections]: nextSections
+      [RESERVED_AUDS_KEYS._sections]: nextSections,
     })
   }
 
@@ -106,11 +107,11 @@ export class FormProjectState {
     const nextSections = currentSections.slice()
     nextSections[sectionIndex] = {
       ...currentSection,
-      formModel: currentSection.formModel.concat({} as any)
+      formModel: currentSection.formModel.concat({} as any),
     }
     Bucket.general.set(FormProjectAtoms.project, {
       ...currentProject,
-      [RESERVED_AUDS_KEYS._sections]: nextSections
+      [RESERVED_AUDS_KEYS._sections]: nextSections,
     })
   }
 
@@ -127,11 +128,11 @@ export class FormProjectState {
     nextFormModel.splice(fieldIndex, 1)
     nextSections[sectionIndex] = {
       ...currentSection,
-      formModel: nextFormModel
+      formModel: nextFormModel,
     }
     Bucket.general.set(FormProjectAtoms.project, {
       ...currentProject,
-      [RESERVED_AUDS_KEYS._sections]: nextSections
+      [RESERVED_AUDS_KEYS._sections]: nextSections,
     })
   }
 
@@ -142,7 +143,7 @@ export class FormProjectState {
     nextSections.splice(sectionIndex, 1)
     Bucket.general.set(FormProjectAtoms.project, {
       ...currentProject,
-      [RESERVED_AUDS_KEYS._sections]: nextSections
+      [RESERVED_AUDS_KEYS._sections]: nextSections,
     })
   }
 
@@ -168,7 +169,7 @@ export class FormProjectState {
 
     Bucket.general.set(FormProjectAtoms.project, {
       ...currentProject,
-      [RESERVED_AUDS_KEYS._sections]: nextSections
+      [RESERVED_AUDS_KEYS._sections]: nextSections,
     })
   }
 
@@ -193,7 +194,7 @@ export class FormProjectState {
 
     Bucket.general.set(FormProjectAtoms.project, {
       ...currentProject,
-      [RESERVED_AUDS_KEYS._sections]: nextSections
+      [RESERVED_AUDS_KEYS._sections]: nextSections,
     })
   }
 
@@ -201,7 +202,7 @@ export class FormProjectState {
     indexSection: number,
     indexFormElement: number,
     indexOptions: number,
-    formElement: IOptionKeysModel
+    formElement: IOptionKeysModel,
   ) => {
     const currentProject = Bucket.general.get(FormProjectAtoms.project)
     const currentSections = currentProject[RESERVED_AUDS_KEYS._sections] ?? []
@@ -223,7 +224,7 @@ export class FormProjectState {
 
     Bucket.general.set(FormProjectAtoms.project, {
       ...currentProject,
-      [RESERVED_AUDS_KEYS._sections]: nextSections
+      [RESERVED_AUDS_KEYS._sections]: nextSections,
     })
   }
 }

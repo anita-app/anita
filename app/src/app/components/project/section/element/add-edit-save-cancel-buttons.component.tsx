@@ -1,5 +1,5 @@
 import { Manager } from 'app/cross-refs-exports'
-import React, { useCallback } from 'react'
+import { useCallback } from 'react'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
@@ -9,6 +9,7 @@ import { useAtomValue } from 'jotai'
 import { FormElementAtoms } from 'app/state/form-element/form-element.atoms'
 import { FormElesValidStateAtoms } from 'app/state/form-eles-valid-state/form-eles-valid-state.atoms'
 import { RoutingState } from 'app/state/routing/routing-state.class'
+import type { FC } from 'react'
 
 interface IProjectSectionElementAddEditSaveCancelButtonsProps {
   sectionId: string
@@ -20,13 +21,13 @@ const saveOnShortcut = (sectionId: string, e: KeyboardEvent) => {
   Manager.getCurrentProject()?.getSectionById(sectionId)?.saveElement(currentElementInStore!)
 }
 
-export const ProjectSectionElementAddEditSaveCancelButtons: React.FC<IProjectSectionElementAddEditSaveCancelButtonsProps> = ({ sectionId }) => {
+export const ProjectSectionElementAddEditSaveCancelButtons: FC<IProjectSectionElementAddEditSaveCancelButtonsProps> = (props) => {
   const element = useAtomValue(FormElementAtoms.element)
   const validObj = useAtomValue(FormElesValidStateAtoms.validState)
 
   const handleSave = useCallback(async () => {
-    await Manager.getCurrentProject()?.getSectionById(sectionId)?.saveElement(element!)
-  }, [element, sectionId])
+    await Manager.getCurrentProject()?.getSectionById(props.sectionId)?.saveElement(element!)
+  }, [element, props.sectionId])
 
   const handleSaveAndClose = useCallback(async () => {
     await handleSave()
@@ -37,10 +38,10 @@ export const ProjectSectionElementAddEditSaveCancelButtons: React.FC<IProjectSec
     RoutingState.goTo(-1)
   }, [])
 
-  useShortcut({ key: 's', withMetaKey: true, callback: saveOnShortcut.bind(undefined, sectionId) })
+  useShortcut({ key: 's', withMetaKey: true, callback: saveOnShortcut.bind(undefined, props.sectionId) })
   useShortcut({ key: 'Escape', callback: handleCancel })
 
-  const hasLongDetailsField = Manager.getCurrentProject()!.getSectionById(sectionId)!.getFirstFieldOfType([FORM_COMPONENTS_CODES.richText]) !== undefined
+  const hasLongDetailsField = Manager.getCurrentProject()!.getSectionById(props.sectionId)!.getFirstFieldOfType([FORM_COMPONENTS_CODES.richText]) !== undefined
   const saveAndCloseText = hasLongDetailsField ? 'Save & Close' : 'Save'
   return (
     <div className="mt-6 flex justify-end">

@@ -2,7 +2,7 @@ import { Type } from 'app/components/shared-components/common-ui-eles/components
 import { CloudSyncBase, SupportedCloud } from 'app/cross-refs-exports'
 import { CloudSyncTable } from 'app/libs/cloud-sync/cloud-sync.const'
 import { WordPressClient } from 'app/libs/cloud-sync/wordpress/wordpress-client.class'
-import { IWordPressRemoteInfo, WORD_PRESS_ROLE_WEIGHT } from 'app/libs/cloud-sync/wordpress/wordpress.const'
+import { WORD_PRESS_ROLE_WEIGHT } from 'app/libs/cloud-sync/wordpress/wordpress.const'
 import { ProjectDataImporter } from 'app/libs/projects-helpers/project-importers/project-data-importer.class'
 import { ProjectDeletor } from 'app/models/project/project-deletor.class'
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
@@ -12,6 +12,7 @@ import { ProjectsListAtoms } from 'app/state/projects-list/projects-list.atoms'
 import { SyncStateAtoms } from 'app/state/sync/sync-state.atoms'
 import { SyncState } from 'app/state/sync/sync-state.class'
 import { liveQuery } from 'dexie'
+import type { IWordPressRemoteInfo } from 'app/libs/cloud-sync/wordpress/wordpress.const'
 
 /**
  * API reference: Anita Project Manager Wordpress plugin
@@ -56,7 +57,6 @@ export class WordpressHelper extends CloudSyncBase<SupportedCloud.WORDPRESS> {
       const client = new WordPressClient(remoteId, authData)
       try {
         const res = await client.getSpaceInfo()
-        console.log('getAccessTokenFromCode ~ res:', res)
         if (res.statusText === 'OK') {
           this.saveRemoteInfo(remoteId, res.data)
         } else if (res?.statusText === 'rest_token_tampered') {
@@ -68,8 +68,8 @@ export class WordpressHelper extends CloudSyncBase<SupportedCloud.WORDPRESS> {
             children: `There is an issue with the your authentication data. Please re-authenticate on ${cleanRemoteUrl}.`,
             ctas: [{
               actionText: 'Open login page',
-              handleClickAction: () => client.openLoginPage()
-            }]
+              handleClickAction: () => client.openLoginPage(),
+            }],
           })
         }
       } catch (error: unknown) {
@@ -89,8 +89,8 @@ export class WordpressHelper extends CloudSyncBase<SupportedCloud.WORDPRESS> {
         children: `There is an issue with the your authentication data. Please re-authenticate on ${remoteId}.`,
         ctas: [{
           actionText: 'Open login page',
-          handleClickAction: () => window.open(`https://${remoteId}/index.php?anita_oauth=1`)
-        }]
+          handleClickAction: () => window.open(`https://${remoteId}/index.php?anita_oauth=1`),
+        }],
       })
       return
     }

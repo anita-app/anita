@@ -1,3 +1,3 @@
 export enum LOCAL_STORAGE_SYSTEMS {
-  IndexedDB = 2
+  IndexedDB = 2,
 }

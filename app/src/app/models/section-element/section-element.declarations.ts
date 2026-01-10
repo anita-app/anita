@@ -1,4 +1,4 @@
-import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
+import type { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 
 /**
  * Defines the bare minimum fields of an `Element` of a `Section`.

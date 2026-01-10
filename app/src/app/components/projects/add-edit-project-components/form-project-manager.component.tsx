@@ -1,12 +1,11 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const'
-import { IProjectSettings, RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { Manager } from 'app/cross-refs-exports'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { SectionManager } from 'app/components/projects/add-edit-project-components/section-manager.component'
 import { FormAutomator } from 'app/components/shared-components/forms-automator/form-automator.component'
 import { useParams } from 'react-router-dom'
-import React from 'react'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { useAtomValue } from 'jotai'
@@ -14,8 +13,10 @@ import { FormProjectAtoms } from 'app/state/form-project/form-project.atoms'
 import { FormProjectState } from 'app/state/form-project/form-project-state.class'
 import { FormElesValidStateAtoms } from 'app/state/form-eles-valid-state/form-eles-valid-state.atoms'
 import { RoutingState } from 'app/state/routing/routing-state.class'
+import type { FC } from 'react'
+import type { IProjectSettings, TSystemData } from 'app/models/project/project.declarations'
 
-export const FormProjectManager: React.FC = () => {
+export const FormProjectManager: FC = () => {
   const { projectId } = useParams<URL_PARAMS>()
   const projectEditorMode = useAtomValue(FormProjectAtoms.mode)
   const project = useAtomValue(FormProjectAtoms.project)
@@ -43,10 +44,18 @@ export const FormProjectManager: React.FC = () => {
   return (
     <span>
       <div className="mt-5 p-4 bg-white rounded shadow">
-        <FormAutomator formModel={projectFormModel as any} element={project[RESERVED_AUDS_KEYS._settings]![0]} handleChange={handleProjectChange} />
+        <FormAutomator
+          formModel={projectFormModel as any}
+          element={project[RESERVED_AUDS_KEYS._settings]![0]}
+          handleChange={handleProjectChange}
+        />
       </div>
       <div className="px-1 md:px-2 lg:px-3">
-        {project[RESERVED_AUDS_KEYS._sections]?.map((section, index) => <SectionManager key={section.id} section={section} sectionIndex={index} />)}
+        {project[RESERVED_AUDS_KEYS._sections]?.map((section, index) => (<SectionManager
+          key={section.id}
+          section={section}
+          sectionIndex={index}
+                                                                         />))}
       </div>
       <div className="mt-5 p-4 bg-white rounded shadow">
         <div className="flex sm:justify-between flex-wrap">

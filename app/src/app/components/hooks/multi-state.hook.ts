@@ -1,4 +1,5 @@
-import { Dispatch, Reducer, useCallback, useReducer, useRef } from 'react'
+import { useCallback, useReducer, useRef } from 'react'
+import type { Dispatch, Reducer } from 'react'
 
 export const useMultiState = <T extends Object>(data: T): [T, Dispatch<Partial<T>>, () => T] => {
   const lastState = useRef<T>(data)

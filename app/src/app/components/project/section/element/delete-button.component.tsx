@@ -1,11 +1,11 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
-import React from 'react'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { Manager } from 'app/cross-refs-exports'
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import { ModalState } from 'app/state/modal/modal-state.class'
 import { RoutingState } from 'app/state/routing/routing-state.class'
+import type { FC } from 'react'
 
 interface IProjectSectionElementDeleteButtonProps {
   projectId: string
@@ -13,10 +13,10 @@ interface IProjectSectionElementDeleteButtonProps {
   elementId: string
 }
 
-export const ProjectSectionElementDeleteButton: React.FC<IProjectSectionElementDeleteButtonProps> = ({ projectId, sectionId, elementId }) => {
+export const ProjectSectionElementDeleteButton: FC<IProjectSectionElementDeleteButtonProps> = (props) => {
   const handleClickDelete = () => {
-    Manager.getCurrentProject()?.getSectionById(sectionId)?.deleteElement({ [RESERVED_FIELDS.id]: elementId })
-    RoutingState.goTo(ANITA_URLS.projectSectionElesList, [{ name: URL_PARAMS.projectId, value: projectId }, { name: URL_PARAMS.sectionId, value: sectionId }])
+    Manager.getCurrentProject()?.getSectionById(props.sectionId)?.deleteElement({ [RESERVED_FIELDS.id]: props.elementId })
+    RoutingState.goTo(ANITA_URLS.projectSectionElesList, [{ name: URL_PARAMS.projectId, value: props.projectId }, { name: URL_PARAMS.sectionId, value: props.sectionId }])
   }
 
   const handleClickModal = () => {
@@ -25,7 +25,7 @@ export const ProjectSectionElementDeleteButton: React.FC<IProjectSectionElementD
       type: Type.danger,
       ctas: [{
         actionText: 'Delete',
-        handleClickAction: handleClickDelete
+        handleClickAction: handleClickDelete,
       }],
       children: (
         <>
@@ -36,7 +36,7 @@ export const ProjectSectionElementDeleteButton: React.FC<IProjectSectionElementD
             This action cannot be undone.
           </p>
         </>
-      )
+      ),
     })
   }
 

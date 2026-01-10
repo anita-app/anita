@@ -1,4 +1,3 @@
-import React from 'react'
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import { CLIENT_SEZ_DEFINITIONS, previousVersions } from 'app/data/system-local-db/client-sections.enum'
 import { DropboxHelper } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'

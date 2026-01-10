@@ -1,8 +1,9 @@
 import { ProjectSectionListTable } from 'app/components/project/section/list/table/table.component'
-import { ISectionElement } from 'app/models/section-element/section-element.declarations'
-import { Section } from 'app/models/section/section.class'
 import { useAtomValue } from 'jotai'
-import React, { useCallback } from 'react'
+import { useCallback } from 'react'
+import type { FC } from 'react'
+import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
+import type { Section } from 'app/models/section/section.class'
 
 interface IProjectSectionListTableProps {
   section: Section
@@ -32,7 +33,7 @@ const sortViewData = (sectionData: Array<ISectionElement>, field: string, order:
   })
 )
 
-export const ProjectSectionListTableContainer: React.FC<IProjectSectionListTableProps> = (props) => {
+export const ProjectSectionListTableContainer: FC<IProjectSectionListTableProps> = (props) => {
   const [field, order] = useAtomValue(props.section.sorting)
   useAtomValue(props.section.visibleColumnsInTableView)
 
@@ -42,6 +43,10 @@ export const ProjectSectionListTableContainer: React.FC<IProjectSectionListTable
   , [field, order, props.sectionData])
 
   return (
-    <ProjectSectionListTable section={props.section} sectionData={sortedData()} columns={props.section.getVisibleColumnsInTableView()} />
+    <ProjectSectionListTable
+      section={props.section}
+      sectionData={sortedData()}
+      columns={props.section.getVisibleColumnsInTableView()}
+    />
   )
 }

@@ -1,8 +1,8 @@
-import React from 'react'
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
+import type { FC } from 'react'
 
 interface IProjectSectionNoDataProps {
   sectionTitle: string
@@ -10,7 +10,7 @@ interface IProjectSectionNoDataProps {
   projectId: string
 }
 
-export const ProjectSectionNoData: React.FC<IProjectSectionNoDataProps> = (props) => (
+export const ProjectSectionNoData: FC<IProjectSectionNoDataProps> = (props) => (
   <div className="container px-5 py-24 mx-auto">
     <div className="p-4 lg:w-2/3 mx-auto">
       <div className="h-full bg-white shadow px-8 pt-16 pb-16 rounded-lg overflow-hidden text-center relative">

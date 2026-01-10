@@ -1,13 +1,15 @@
-import React, { memo, useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
-import { RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { Link } from 'react-router-dom'
 import { Manager } from 'app/cross-refs-exports'
 import { Icons } from 'app/libs/icons/icons.class'
-import { ISection } from 'app/models/section/section.declarations'
 import { AdminLayoutSidebarMenuItemIcon } from 'app/components/admin-layout/admin-layout-sidebar-menu-item-icon.component'
 import { LayoutState } from 'app/state/layout/layout-state.class'
+import type { FC } from 'react'
+import type { ISection } from 'app/models/section/section.declarations'
+import type { TSystemData } from 'app/models/project/project.declarations'
 
 const baseStyleOfSidebarLinks = 'flex items-center block py-2.5 px-2 transition duration-200 border-l-2 hover:border-prussian-blue-700 hover:text-prussian-blue-500 text-sm font-semibold'
 
@@ -26,7 +28,7 @@ interface IAdminLayoutSidebarMenuItemProps {
   setCurrentSelectedSectionId: (id: string) => void
 }
 
-export const AdminLayoutSidebarMenuItem: React.FC<IAdminLayoutSidebarMenuItemProps> = memo(function AdminLayoutSidebarMenuItem (props: IAdminLayoutSidebarMenuItemProps) {
+export const AdminLayoutSidebarMenuItem: FC<IAdminLayoutSidebarMenuItemProps> = memo(function AdminLayoutSidebarMenuItem (props: IAdminLayoutSidebarMenuItemProps) {
   const linkPath = urlParamFiller(ANITA_URLS.projectSectionElesList, [{ name: URL_PARAMS.projectId, value: props.project[RESERVED_AUDS_KEYS._settings][0].id }, { name: URL_PARAMS.sectionId, value: props.section.id }])
   const [isHiddenInMenu, setIsHiddenInMenu] = useState<boolean>(Manager.getCurrentProject()?.getSectionById(props.section.id)?.getIsHiddenInMenu()!)
 
@@ -72,7 +74,12 @@ export const AdminLayoutSidebarMenuItem: React.FC<IAdminLayoutSidebarMenuItemPro
           {Icons.render(Manager.getCurrentProject()?.getSectionById(props.section.id)?.getSectionIcon() || 'chevronForwardOutline')}<span className="ml-2">{props.section.title_short || props.section.title}</span>
         </div>
         {props.isEditingMenuItemsVisibility && (
-          <AdminLayoutSidebarMenuItemIcon elementId={`menuItem${props.section.id}`} tooltip={tooltip} icon={icon} onClick={handleVisibilityClick} />
+          <AdminLayoutSidebarMenuItemIcon
+            elementId={`menuItem${props.section.id}`}
+            tooltip={tooltip}
+            icon={icon}
+            onClick={handleVisibilityClick}
+          />
         )}
       </div>
     </Link>

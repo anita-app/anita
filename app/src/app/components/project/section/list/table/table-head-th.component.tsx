@@ -1,15 +1,15 @@
-import { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
 import { Icons } from 'app/libs/icons/icons.class'
 import { Manager } from 'app/cross-refs-exports'
-import React from 'react'
+import type { FC } from 'react'
+import type { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
 
 interface IProjectSectionListTableHeadThProps {
   sectionId: string
   col: FormFieldsModel<TSupportedFormsTypes>
 }
 
-export const ProjectSectionListTableHeadTh: React.FC<IProjectSectionListTableHeadThProps> = (props) => {
+export const ProjectSectionListTableHeadTh: FC<IProjectSectionListTableHeadThProps> = (props) => {
   const handleHeaderClick = () => {
     Manager.getCurrentProject()?.getSectionById(props.sectionId)?.setSorting(props.col.fieldName)
   }

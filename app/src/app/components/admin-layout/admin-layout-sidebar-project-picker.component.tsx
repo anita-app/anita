@@ -1,6 +1,6 @@
-import React, { Fragment, useRef, useState } from 'react'
+import { Fragment, useRef, useState } from 'react'
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
-import { RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { Manager } from 'app/cross-refs-exports'
 import { useClickOutside } from 'app/components/hooks/click-outside.hook'
 import { Icons } from 'app/libs/icons/icons.class'
@@ -8,12 +8,14 @@ import { Transition } from '@headlessui/react'
 import { ProjectsListAtoms } from 'app/state/projects-list/projects-list.atoms'
 import { useAtomValue } from 'jotai'
 import { RoutingState } from 'app/state/routing/routing-state.class'
+import type { FC } from 'react'
+import type { TSystemData } from 'app/models/project/project.declarations'
 
 interface IProjectPickerProps {
   project: TSystemData
 }
 
-export const AdminLayoutSidebarProjectPicker: React.FC<IProjectPickerProps> = ({ project }) => {
+export const AdminLayoutSidebarProjectPicker: FC<IProjectPickerProps> = (props) => {
   const projects = useAtomValue(ProjectsListAtoms.projects)
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const dropDownRef = useRef<HTMLDivElement>(null)
@@ -57,10 +59,20 @@ export const AdminLayoutSidebarProjectPicker: React.FC<IProjectPickerProps> = ({
 
   return (
     <div className="block py-2.5 px-1">
-      <p className="text-xs text-gray-400" style={{ fontVariant: 'small-caps' }}>project</p>
-      <div ref={dropDownRef} className="relative">
-        <button onClick={() => toggleDropdown(dropdownOpen)} className="relative w-full flex justify-between text-left z-10 py-2 transition-all focus:px-2 hover:px-2 border-b hover:border-b-prussian-blue-700 hover:rounded focus:border-b-prussian-blue-700 active:border-b-prussian-blue-700 focus:outline-none hover:bg-gray-100 focus:bg-gray-200 focus:rounded active:bg-gray-300 active:rounded">
-          <span>{project?.[RESERVED_AUDS_KEYS._settings][0]?.title}</span>
+      <p
+        className="text-xs text-gray-400"
+        style={{ fontVariant: 'small-caps' }}
+      >project
+      </p>
+      <div
+        ref={dropDownRef}
+        className="relative"
+      >
+        <button
+          onClick={() => toggleDropdown(dropdownOpen)}
+          className="relative w-full flex justify-between text-left z-10 py-2 transition-all focus:px-2 hover:px-2 border-b hover:border-b-prussian-blue-700 hover:rounded focus:border-b-prussian-blue-700 active:border-b-prussian-blue-700 focus:outline-none hover:bg-gray-100 focus:bg-gray-200 focus:rounded active:bg-gray-300 active:rounded"
+        >
+          <span>{props.project?.[RESERVED_AUDS_KEYS._settings][0]?.title}</span>
           {Icons.render('codeOutline', 'my-auto rotate-90')}
         </button>
         <Transition
@@ -75,26 +87,43 @@ export const AdminLayoutSidebarProjectPicker: React.FC<IProjectPickerProps> = ({
         >
           <div className="absolute left-0 mt-2 w-64 bg-white rounded-md overflow-hidden shadow-xl z-20 border border-bg-500">
             <div className="block py-2.5 px-4 text-sm bg-gray-100 text-gray-600">Current Project</div>
-            <button className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => goToDetails(project[RESERVED_AUDS_KEYS._settings][0].id)}>
+            <button
+              className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200"
+              onClick={() => goToDetails(props.project[RESERVED_AUDS_KEYS._settings][0].id)}
+            >
               {Icons.render('informationCircleOutline', 'mr-2')}
               Details
             </button>
-            <button className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => goToEditProject(project[RESERVED_AUDS_KEYS._settings][0].id)}>
+            <button
+              className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200"
+              onClick={() => goToEditProject(props.project[RESERVED_AUDS_KEYS._settings][0].id)}
+            >
               {Icons.render('createOutline', 'mr-2')}
               Edit
             </button>
             {projects?.length > 1 && (<div className="block py-2.5 px-4 text-sm bg-gray-100 text-gray-600">Switch to Project</div>)}
             {projects?.map(projectFromList => {
-              if (project[RESERVED_AUDS_KEYS._settings][0].id === projectFromList.id) return null
+              if (props.project[RESERVED_AUDS_KEYS._settings][0].id === projectFromList.id) return null
               return (
-                <button key={projectFromList.id} className="w-full block text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => loadProject(projectFromList.id)}>{projectFromList.title}</button>)
+                <button
+                  key={projectFromList.id}
+                  className="w-full block text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200"
+                  onClick={() => loadProject(projectFromList.id)}
+                >{projectFromList.title}
+                </button>)
             })}
             <div className="block py-2.5 px-4 text-sm bg-gray-100 text-gray-600">Actions</div>
-            <button className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => goToPlainRoute(ANITA_URLS.projectsList)}>
+            <button
+              className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200"
+              onClick={() => goToPlainRoute(ANITA_URLS.projectsList)}
+            >
               {Icons.render('fileTrayStackedOutline', 'mr-2')}
               Go to the projects list
             </button>
-            <button className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200" onClick={() => goToPlainRoute(ANITA_URLS.projectAdd)}>
+            <button
+              className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200"
+              onClick={() => goToPlainRoute(ANITA_URLS.projectAdd)}
+            >
               {Icons.render('addOutline', 'mr-2')}
               Create a new project
             </button>

@@ -1,6 +1,6 @@
-import { FormFieldsModel, IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
 import { TextInputSupportedTypes } from 'app/components/shared-components/forms-automator/input-supported-types.const'
+import type { FormFieldsModel, IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 
 const commonFieldsAdvanced: FormFieldsModel<IOptionKeysModel> = {
   componentCode: FORM_COMPONENTS_CODES.basicInput,
@@ -8,7 +8,7 @@ const commonFieldsAdvanced: FormFieldsModel<IOptionKeysModel> = {
   type: TextInputSupportedTypes.text,
   label: 'Label',
   required: true,
-  width: '8'
+  width: '8',
 }
 
 const commonFieldsBasic: FormFieldsModel<IOptionKeysModel> = {
@@ -17,7 +17,7 @@ const commonFieldsBasic: FormFieldsModel<IOptionKeysModel> = {
   type: TextInputSupportedTypes.text,
   label: 'Label',
   required: true,
-  width: '11'
+  width: '11',
 }
 
 /**
@@ -33,17 +33,17 @@ export const optionsBuilderForAddingAdvanced: Array<FormFieldsModel<IOptionKeysM
     type: TextInputSupportedTypes.text,
     label: 'Value',
     required: true,
-    width: '3'
+    width: '3',
   },
-  commonFieldsAdvanced
+  commonFieldsAdvanced,
 ]
 
 export const optionsBuilderForAddingBasic: Array<FormFieldsModel<IOptionKeysModel>> = [
   {
     componentCode: FORM_COMPONENTS_CODES.hiddenInput,
-    fieldName: 'value'
+    fieldName: 'value',
   },
-  commonFieldsBasic
+  commonFieldsBasic,
 ]
 
 /**
@@ -60,16 +60,16 @@ export const optionsBuilderForEditingAdvanced: Array<FormFieldsModel<IOptionKeys
     label: 'Value',
     disabled: true,
     required: true,
-    width: '3'
+    width: '3',
   },
-  commonFieldsAdvanced
+  commonFieldsAdvanced,
 
 ]
 export const optionsBuilderForEditingBasic: Array<FormFieldsModel<IOptionKeysModel>> = [
   {
     componentCode: FORM_COMPONENTS_CODES.hiddenInput,
-    fieldName: 'value'
+    fieldName: 'value',
   },
-  commonFieldsBasic
+  commonFieldsBasic,
 
 ]

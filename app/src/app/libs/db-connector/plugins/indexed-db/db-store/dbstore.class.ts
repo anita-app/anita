@@ -1,8 +1,10 @@
-import { AdditionalInfoForLocalStorage, RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { DataStructureExtender } from 'app/data/system-local-db/data-structure-extender.class'
-import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
-import { DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers'
-import Dexie, { Version } from 'dexie'
+import Dexie from 'dexie'
+import type { AdditionalInfoForLocalStorage, TSystemData } from 'app/models/project/project.declarations'
+import type { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
+import type { DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers'
+import type { Version } from 'dexie'
 
 /**
  * Implementation of DbStore for IndexedDB with Dexie.
@@ -13,7 +15,7 @@ export class DbStore implements DbStoreInterface<Dexie> {
 
   constructor (
     private options: DsDbInitOptions,
-    private DS: AbstractModel
+    private DS: AbstractModel,
   ) { }
 
   public async initDB (): Promise<DbStoreInterface<Dexie>> {
@@ -96,7 +98,7 @@ export class DbStore implements DbStoreInterface<Dexie> {
       if (!this.DS[section]) {
         this.deletedSections.push(section)
       }
-    })
+    }),
     )
   }
 

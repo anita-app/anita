@@ -1,5 +1,5 @@
 import { SectionElement } from 'app/models/section-element/section-element.class'
-import { IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
+import type { IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 
 interface ITextFromOptionsByValueProps {
   value: string | number

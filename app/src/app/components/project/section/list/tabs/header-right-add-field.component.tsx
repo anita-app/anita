@@ -3,18 +3,19 @@ import { SectionFormModelManager } from 'app/components/projects/add-edit-projec
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { Manager } from 'app/cross-refs-exports'
-import { RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { ModalState } from 'app/state/modal/modal-state.class'
-import React from 'react'
 import { useAtomValue } from 'jotai'
 import { FormProjectAtoms } from 'app/state/form-project/form-project.atoms'
 import { FormElesValidStateAtoms } from 'app/state/form-eles-valid-state/form-eles-valid-state.atoms'
+import type { FC } from 'react'
+import type { TSystemData } from 'app/models/project/project.declarations'
 
 interface IListTabsHeaderRightAddFieldProps {
   sectionId: string
 }
 
-export const ListTabsHeaderRightAddField: React.FC<IListTabsHeaderRightAddFieldProps> = (props) => {
+export const ListTabsHeaderRightAddField: FC<IListTabsHeaderRightAddFieldProps> = (props) => {
   const project = useAtomValue(FormProjectAtoms.project)
   const validObj = useAtomValue(FormElesValidStateAtoms.validState)
   const sections = project[RESERVED_AUDS_KEYS._sections]!

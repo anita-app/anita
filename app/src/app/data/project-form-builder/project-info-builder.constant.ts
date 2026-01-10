@@ -1,19 +1,19 @@
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
-import { IProjectSettings } from 'app/models/project/project.declarations'
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
-import { FormFieldsModel, IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
 import { TextInputSupportedTypes } from 'app/components/shared-components/forms-automator/input-supported-types.const'
+import type { FormFieldsModel, IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
+import type { IProjectSettings } from 'app/models/project/project.declarations'
 
 const indexedDB = 'The Project is saved on your computer in the IndexedDB database of your Browser.\nYou can export data in a JSON file at any time.'
 
 const commonFieldsForProjectInfo: Array<FormFieldsModel<IProjectSettings>> = [{
   componentCode: FORM_COMPONENTS_CODES.hiddenInput,
-  fieldName: RESERVED_FIELDS.id
+  fieldName: RESERVED_FIELDS.id,
 },
 {
   componentCode: FORM_COMPONENTS_CODES.hiddenInput,
-  fieldName: RESERVED_FIELDS.createdAt
+  fieldName: RESERVED_FIELDS.createdAt,
 },
 {
   componentCode: FORM_COMPONENTS_CODES.basicInput,
@@ -21,22 +21,22 @@ const commonFieldsForProjectInfo: Array<FormFieldsModel<IProjectSettings>> = [{
   type: TextInputSupportedTypes.text,
   value: '',
   label: 'Project',
-  required: true
+  required: true,
 },
 {
   componentCode: FORM_COMPONENTS_CODES.basicTextarea,
   fieldName: 'description',
   value: '',
   label: 'Description',
-  required: true
+  required: true,
 }]
 
 export const availableSystems: Array<IOptionKeysModel> = [
   {
     label: 'Internal database (IndexedDB)',
     value: LOCAL_STORAGE_SYSTEMS.IndexedDB,
-    hint: indexedDB
-  }
+    hint: indexedDB,
+  },
 ]
 
 /**
@@ -51,10 +51,10 @@ export const projectInfoNewItem: Array<FormFieldsModel<IProjectSettings>> = [
     value: LOCAL_STORAGE_SYSTEMS.IndexedDB,
     label: 'Remote storage',
     required: false,
-    options: [] // to be filled by the component itself with the available remote storage options
-  }
+    options: [], // to be filled by the component itself with the available remote storage options
+  },
 ]
 
 export const projectInfoForEditing: Array<FormFieldsModel<IProjectSettings>> = [
-  ...commonFieldsForProjectInfo
+  ...commonFieldsForProjectInfo,
 ]

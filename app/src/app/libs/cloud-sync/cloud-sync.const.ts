@@ -12,7 +12,7 @@ export enum CloudSyncState {
   NOT_CONNECTED = 1,
   OAUTH_IN_PROGRESS,
   NOT_LINKED,
-  LINKED
+  LINKED,
 }
 
 export interface ISharedFileMeta {
@@ -26,5 +26,5 @@ export enum CloudSyncTable {
   ACCOUNTS = 'accounts',
   SYNC_INFO = 'syncInfo',
   FILES_INFO = 'filesInfo',
-  REMOTES_INFO = 'remotesInfo'
+  REMOTES_INFO = 'remotesInfo',
 }

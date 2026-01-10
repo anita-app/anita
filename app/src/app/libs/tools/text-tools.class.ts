@@ -13,7 +13,7 @@ export class TextTools {
       o: '[òóôõö]',
       oe: 'œ',
       u: '[ùúûűü]',
-      y: '[ýÿ]'
+      y: '[ýÿ]',
     }
     for (const i in nonAsciis) {
       r = r.replace(new RegExp(nonAsciis[i as keyof typeof nonAsciis], 'g'), i)

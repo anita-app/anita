@@ -1,8 +1,8 @@
-import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
-import { DbConnectorInstance, Updator } from 'app/libs/db-connector/models/executers'
 import { QueryMaker } from 'app/libs/db-connector/plugins/indexed-db/query-makers/query-maker.class'
 import { Logger } from 'app/libs/logger/logger.class'
-import Dexie from 'dexie'
+import type { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
+import type { DbConnectorInstance, Updator } from 'app/libs/db-connector/models/executers'
+import type Dexie from 'dexie'
 
 /**
  * Implements updator for IndexedDb
@@ -16,7 +16,7 @@ export class DbUpdator<E> implements Updator<E> {
   constructor (
     private dbConnector: DbConnectorInstance<Dexie>,
     private section: keyof AbstractModel,
-    private element: Partial<E>
+    private element: Partial<E>,
   ) { }
 
   /**

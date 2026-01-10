@@ -1,6 +1,6 @@
+import { StrictMode } from 'react'
 import 'animate.css'
 import { Startupper } from 'app/libs/startupper/startupper.class'
-import React from 'react'
 import { RouterProvider } from 'react-router-dom'
 import './index.css'
 import { ModalPortal } from 'app/components/shared-components/modals/modal.component'
@@ -14,10 +14,10 @@ const start = async () => {
   const rootElement = document.getElementById('root')
   const root = ReactDOMClient.createRoot(rootElement!)
   root.render(
-    <React.StrictMode>
+    <StrictMode>
       <ModalPortal />
       <RouterProvider router={anitaRouter} />
-    </React.StrictMode>
+    </StrictMode>,
   )
 }
 

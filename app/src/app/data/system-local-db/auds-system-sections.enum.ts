@@ -6,7 +6,7 @@ import { audsSettings } from 'app/data/system-local-db/sections/auds-settings.co
  */
 export enum AUDS_SYSTEM_SECTIONS {
   auds_settings = 1,
-  auds_sections
+  auds_sections,
 }
 
 /**

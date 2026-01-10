@@ -1,13 +1,13 @@
 import { ArrayTools } from 'app/libs/tools/array-tools.class'
-import { ParentInfoForDetailsView } from 'app/models/parent-element/parent-element.declarations'
-import { Project } from 'app/models/project/project.class'
+import type { ParentInfoForDetailsView } from 'app/models/parent-element/parent-element.declarations'
+import type { Project } from 'app/models/project/project.class'
 
 export class GetParentInfoForDetailsView {
   private parentInfoForDetailsView: Array<ParentInfoForDetailsView> = []
 
   constructor (
     private project: Project,
-    private listOfParents: Array<string>
+    private listOfParents: Array<string>,
   ) { }
 
   public async get (): Promise<Array<ParentInfoForDetailsView>> {
@@ -26,7 +26,7 @@ export class GetParentInfoForDetailsView {
     this.parentInfoForDetailsView.push({
       sectionId: arrInfo[0],
       element: element!,
-      txt: element[formEle?.fieldName!]
+      txt: element[formEle?.fieldName!],
     })
   }
 }

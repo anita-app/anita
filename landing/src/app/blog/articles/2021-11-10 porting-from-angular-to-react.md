@@ -61,7 +61,6 @@ The only drawback of `create-react-app` is that it adds a lot of starter stuff t
 
 We don't need the `App` component, and its related files, and we can also clean up `index.tsx`:
 
-        import React from 'react';
         import ReactDOM from 'react-dom';
         import './index.css';
         import * as serviceWorkerRegistration from './serviceWorkerRegistration';

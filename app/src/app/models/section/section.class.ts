@@ -1,13 +1,8 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
-import { ISectionElement } from 'app/models/section-element/section-element.declarations'
-import { ISection } from 'app/models/section/section.declarations'
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import { ParentInfoFormEleBuilder } from 'app/models/section/parent-info-form-ele-builder.class'
 import { SectionElementSaver } from 'app/models/section/section-element-saver.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
-import { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
-import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
-import { TIconName } from 'app/libs/icons/icons.class'
 import { SupportedViews } from 'app/models/section/view-settings.const'
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { DateTools } from 'app/libs/tools/date-tools.class'
@@ -16,6 +11,11 @@ import { SyncState } from 'app/state/sync/sync-state.class'
 import { atom } from 'jotai'
 import { Bucket } from 'app/state/bucket.state'
 import { ProjectState } from 'app/state/project/project-state.class'
+import type { TIconName } from 'app/libs/icons/icons.class'
+import type { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
+import type { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
+import type { ISection } from 'app/models/section/section.declarations'
+import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
 export class Section implements ISection {
   public id: string
@@ -30,7 +30,7 @@ export class Section implements ISection {
 
   constructor (
     private projectId: string,
-    private sectionDefinition: ISection = {} as ISection
+    private sectionDefinition: ISection = {} as ISection,
   ) {
     this.id = sectionDefinition.id
     this.title = sectionDefinition.title
