@@ -1,6 +1,6 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
-import { EditButton } from 'app/components/shared-components/buttons/edit-project-button.component'
+import { EditProjectButton } from 'app/components/shared-components/buttons/edit-project-button.component'
 import { ExportButton } from 'app/components/shared-components/buttons/export-project-button.component'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
@@ -14,7 +14,7 @@ interface IProjectLoadedFooterProps {
 export const ProjectLoadedFooter: FC<IProjectLoadedFooterProps> = (props) => (
   <div className="ml-auto">
     <ExportButton />
-    <EditButton project={props.project} />
+    <EditProjectButton project={props.project} />
     <Button
       id="projectDetails"
       label="Project details"
