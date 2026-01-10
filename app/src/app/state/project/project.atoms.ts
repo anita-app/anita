@@ -17,6 +17,14 @@ export class ProjectAtoms {
     return new Project(systemData)
   })
 
+  public static projectSettings = atom(get => {
+    const systemData = get(this.currentSystemData)
+    if (!systemData) {
+      return null
+    }
+    return systemData[RESERVED_AUDS_KEYS._settings][0]
+  })
+
   private static sectionsDefinitionsById = atom<Record<string, ISection>>(get => {
     const systemData = get(this.currentSystemData)
     if (!systemData) {

@@ -1,26 +1,13 @@
-import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
-import { IProjectSettings } from 'app/models/project/project.declarations'
-import { Manager } from 'app/cross-refs-exports'
+import { ANITA_URLS } from 'app/libs/routing/anita-routes.constant'
 import { Loader } from 'app/components/shared-components/loader/loader.component'
-import React, { useEffect, useState } from 'react'
-import { Navigate, useParams } from 'react-router-dom'
-import { useIdLastChangedBySync } from 'app/components/hooks/id-last-changed-by-sync'
+import React from 'react'
+import { Navigate } from 'react-router-dom'
+import { useAtomValue } from 'jotai'
+import { ProjectAtoms } from 'app/state/project/project.atoms'
 import { ProjectDetailsCard } from './details-card'
 
 export const ProjectDetails: React.FC = () => {
-  const urlParams = useParams()
-  const projectId = urlParams[URL_PARAMS.projectId]
-  const [project, setElement] = useState<IProjectSettings | undefined | null>(null)
-
-  const projectLastChangedBySyncAt = useIdLastChangedBySync(projectId)
-
-  useEffect(() => {
-    const loadProject = async () => {
-      const project = await Manager.getProjectById(projectId)
-      setElement(project?.getSettings())
-    }
-    loadProject()
-  }, [projectId, projectLastChangedBySyncAt])
+  const project = useAtomValue(ProjectAtoms.projectSettings)
 
   // If there is no DB instance loaded, for now we just redirect to the project list
   if (project === undefined) {

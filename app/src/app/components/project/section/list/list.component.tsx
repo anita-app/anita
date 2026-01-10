@@ -14,9 +14,7 @@ import { ProjectAtoms } from 'app/state/project/project.atoms'
 
 export const ProjectSectionList: React.FC = () => {
   const projectId = useAtomValue(ProjectAtoms.projectId)!
-  console.log('🚀 ~ ProjectSectionList ~ projectId:', projectId)
   const sectionId = useAtomValue(RoutingAtoms.param(URL_PARAMS.sectionId))
-  console.log('🚀 ~ ProjectSectionList ~ sectionId:', sectionId)
   const section = useAtomValue(ProjectAtoms.sectionById(sectionId))
   const sectionData = useLiveQuery(() => section?.getAllElements() || null, [section], null)
   const activeTab = section?.getPreferredView() ?? null
