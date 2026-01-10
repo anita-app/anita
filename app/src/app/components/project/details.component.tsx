@@ -9,7 +9,6 @@ import { ProjectDetailsCard } from './details-card'
 export const ProjectDetails: React.FC = () => {
   const project = useAtomValue(ProjectAtoms.projectSettings)
 
-  // If there is no DB instance loaded, for now we just redirect to the project list
   if (project === undefined) {
     return <Navigate to={ANITA_URLS.projectsList} />
   }
