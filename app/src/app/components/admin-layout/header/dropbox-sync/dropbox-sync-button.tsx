@@ -5,7 +5,8 @@ import { DropboxHelper } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
 import { DropboxSyncButtonOpenFilePicker } from 'app/components/admin-layout/header/dropbox-sync/dropbox-sync-button-open-file-picker'
 import { DropboxSyncButtonDoSync } from 'app/components/admin-layout/header/dropbox-sync/dropbox-sync-button-do-sync'
 import { useMultiState } from 'app/components/hooks/multi-state.hook'
-import { Manager } from 'app/cross-refs-exports'
+import { Bucket } from 'app/state/bucket.state'
+import { ProjectAtoms } from 'app/state/project/project.atoms'
 import type { FC } from 'react'
 
 interface IDropboxSyncButtonProps {
@@ -27,7 +28,7 @@ export const DropboxSyncButton: FC<IDropboxSyncButtonProps> = memo(function Clou
 
   useEffect(() => {
     const getCloudSyncState = async () => {
-      const currentProject = Manager.getCurrentProject()
+      const currentProject = Bucket.general.get(ProjectAtoms.currentProject)
       const isAuthenticated = await DropboxHelper.instance.isAuthenticated()
       if (!projectId) {
         return
@@ -50,7 +51,7 @@ export const DropboxSyncButton: FC<IDropboxSyncButtonProps> = memo(function Clou
     getCloudSyncState()
 
     return () => {
-      const currentProject = Manager.getCurrentProject()
+      const currentProject = Bucket.general.get(ProjectAtoms.currentProject)
       currentProject?.dropBoxSyncInfo.setCloudSyncState(CloudSyncState.NOT_CONNECTED)
       currentProject?.dropBoxSyncInfo.setLinkedFileId(null)
     }
