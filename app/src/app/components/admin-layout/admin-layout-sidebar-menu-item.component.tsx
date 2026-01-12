@@ -1,12 +1,13 @@
-import { memo, useEffect, useState } from 'react'
+import { memo, useEffect } from 'react'
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { Link } from 'react-router-dom'
-import { Manager } from 'app/cross-refs-exports'
 import { Icons } from 'app/libs/icons/icons.class'
 import { AdminLayoutSidebarMenuItemIcon } from 'app/components/admin-layout/admin-layout-sidebar-menu-item-icon.component'
 import { LayoutState } from 'app/state/layout/layout-state.class'
+import { useAtomValue } from 'jotai'
+import { ProjectAtoms } from 'app/state/project/project.atoms'
 import type { FC } from 'react'
 import type { ISection } from 'app/models/section/section.declarations'
 import type { TSystemData } from 'app/models/project/project.declarations'
@@ -30,7 +31,8 @@ interface IAdminLayoutSidebarMenuItemProps {
 
 export const AdminLayoutSidebarMenuItem: FC<IAdminLayoutSidebarMenuItemProps> = memo(function AdminLayoutSidebarMenuItem (props: IAdminLayoutSidebarMenuItemProps) {
   const linkPath = urlParamFiller(ANITA_URLS.projectSectionElesList, [{ name: URL_PARAMS.projectId, value: props.project[RESERVED_AUDS_KEYS._settings][0].id }, { name: URL_PARAMS.sectionId, value: props.section.id }])
-  const [isHiddenInMenu, setIsHiddenInMenu] = useState<boolean>(Manager.getCurrentProject()?.getSectionById(props.section.id)?.getIsHiddenInMenu()!)
+  const section = useAtomValue(ProjectAtoms.sectionById(props.section.id))
+  const isHiddenInMenu = section?.getIsHiddenInMenu()!
 
   const sectionId = props.section.id
   const setCurrentSelectedSectionId = props.setCurrentSelectedSectionId
@@ -43,11 +45,10 @@ export const AdminLayoutSidebarMenuItem: FC<IAdminLayoutSidebarMenuItemProps> = 
   }, [setCurrentSelectedSectionId, sectionId, selected])
 
   const handleVisibilityClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    const newValue = !Manager.getCurrentProject()?.getSectionById(props.section.id)?.getIsHiddenInMenu()
+    const newValue = !section?.getIsHiddenInMenu()
     e.preventDefault()
     e.stopPropagation()
-    setIsHiddenInMenu(newValue)
-    Manager.getCurrentProject()?.getSectionById(props.section.id)?.setIsHiddenInMenu(newValue)
+    section?.setIsHiddenInMenu(newValue)
   }
 
   if (isHiddenInMenu && !props.isEditingMenuItemsVisibility) {
@@ -71,7 +72,7 @@ export const AdminLayoutSidebarMenuItem: FC<IAdminLayoutSidebarMenuItemProps> = 
     >
       <div className="flex items-center justify-between w-full">
         <div className="flex items-center">
-          {Icons.render(Manager.getCurrentProject()?.getSectionById(props.section.id)?.getSectionIcon() || 'chevronForwardOutline')}<span className="ml-2">{props.section.title_short || props.section.title}</span>
+          {Icons.render(section?.getSectionIcon() || 'chevronForwardOutline')}<span className="ml-2">{props.section.title_short || props.section.title}</span>
         </div>
         {props.isEditingMenuItemsVisibility && (
           <AdminLayoutSidebarMenuItemIcon
