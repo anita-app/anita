@@ -8,16 +8,18 @@ import { customRenderPicker } from 'app/components/shared-components/values-rend
 import { AddEditElementButton } from 'app/components/shared-components/buttons/add-edit-element-button.component'
 import { MainContentContainer } from 'app/components/shared-components/common-ui-eles/main-content-container.component'
 import { Loader } from 'app/components/shared-components/loader/loader.component'
-import { useEffect, useState } from 'react'
-import { Navigate, useParams } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
 import { CheckBoxEditable } from 'app/components/shared-components/values-renderers/checkbox-editable.component'
 import { useShortcut } from 'app/components/hooks/shortcut'
-import { useIdLastChangedBySync } from 'app/components/hooks/id-last-changed-by-sync'
 import { RoutingState } from 'app/state/routing/routing-state.class'
-import type { FC } from 'react'
-import type { FormFieldsModel } from 'app/components/shared-components/forms-automator/form-automator.types'
+import { useAtomValue } from 'jotai'
+import { RoutingAtoms } from 'app/state/routing/routing.atoms'
+import { ProjectAtoms } from 'app/state/project/project.atoms'
+import { useLiveQuery } from 'dexie-react-hooks'
 import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
+import type { FormFieldsModel } from 'app/components/shared-components/forms-automator/form-automator.types'
+import type { FC } from 'react'
 
 const ValueWithLabel: FC<{ formModel: FormFieldsModel<ISectionElement>; value: any }> = (props) => {
   if (typeof props.value === 'undefined') {
@@ -62,35 +64,17 @@ const ElementValuesViewer: FC<{ element: ISectionElement; formModels: Array<Form
 )
 
 export const ProjectSectionElementDetails: FC = () => {
-  const [element, setElement] = useState<ISectionElement | undefined | null>(null)
-  const params = useParams()
-  const projectId = params[URL_PARAMS.projectId]
-  const sectionId = params[URL_PARAMS.sectionId]
-  const elementId = params[URL_PARAMS.elementId]
+  const projectId = useAtomValue(ProjectAtoms.projectId)!
+  const sectionId = useAtomValue(RoutingAtoms.param(URL_PARAMS.sectionId))
+  const elementId = useAtomValue(RoutingAtoms.param(URL_PARAMS.elementId))
+  const section = useAtomValue(ProjectAtoms.sectionById(sectionId))
+  const element = useLiveQuery(() => section?.getElementById(elementId!) || null, [section], null)
 
   const goBack = () => {
     RoutingState.goTo(-1)
   }
 
   useShortcut({ key: 'Escape', callback: goBack })
-
-  const elementLastChangedBySyncAt = useIdLastChangedBySync(elementId)
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const project = await Manager.getProjectById(projectId)
-
-      if (!sectionId || !elementId || !project || !project.getSectionById(sectionId)) {
-        return setElement(undefined)
-      }
-
-      const element = await project.getSectionById(sectionId)?.getElementById(elementId)
-
-      setElement(element as ISectionElement | undefined)
-    }
-
-    fetchData()
-  }, [projectId, sectionId, elementId, elementLastChangedBySyncAt])
 
   if (element === undefined) {
     if (projectId && sectionId) {
@@ -108,11 +92,13 @@ export const ProjectSectionElementDetails: FC = () => {
             formModels={Manager.getCurrentProject()?.getSectionById(sectionId)!.formModel!}
             sectionId={sectionId!}
           />}
-      {(element !== null && element.parentsInfo && Array.isArray(element.parentsInfo) && element.parentsInfo.length > 0) && (<ProjectSectionElementDetailsParentsLinks
-        projectId={projectId!}
-        parentsInfo={element.parentsInfo}
-        sections={Manager.getCurrentProject()?.getSectionsDefinitions()!}
-                                                                                                                             />)}
+      {(element !== null && element.parentsInfo && Array.isArray(element.parentsInfo) && element.parentsInfo.length > 0) && (
+        <ProjectSectionElementDetailsParentsLinks
+          projectId={projectId!}
+          parentsInfo={element.parentsInfo}
+          sections={Manager.getCurrentProject()?.getSectionsDefinitions()!}
+        />
+      )}
       {(element !== null && (
         <div>
           <ProjectSectionElementDeleteButton
