@@ -1,8 +1,13 @@
 import { ProjectSectionListGridElement } from 'app/components/project/section/list/grid/grid-element'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
-import { Manager } from 'app/cross-refs-exports'
-import type { FC } from 'react'
+import { Queriers } from 'app/libs/db-connector/common-helpers/Queriers'
+import { Section } from 'app/models/section/section.class'
+import { useLiveQuery } from 'dexie-react-hooks'
+import { useAtomValue } from 'jotai'
+import { RoutingAtoms } from 'app/state/routing/routing.atoms'
+import { URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
+import type { FC } from 'react'
 
 interface IProjectSectionListGridProps {
   sectionId: string
@@ -10,12 +15,21 @@ interface IProjectSectionListGridProps {
 }
 
 export const ProjectSectionListGrid: FC<IProjectSectionListGridProps> = (props) => {
-  const section = Manager.getCurrentProject()?.getSectionById(props.sectionId)!
+  const projectId = useAtomValue(RoutingAtoms.param(URL_PARAMS.projectId))!
+  const sectionData = useLiveQuery(() => Queriers.getProjectSection(projectId, props.sectionId!), [projectId, props.sectionId])
+
+  if (!sectionData) {
+    return null
+  }
+
+  const section = new Section(projectId, sectionData!)
   const titleField = section.getFirstUserDefinedField()
   const descriptionField = section.getFirstFieldOfType([FORM_COMPONENTS_CODES.richText])
+
   if (!titleField) {
     return null
   }
+
   return (
     <div
       role="list"

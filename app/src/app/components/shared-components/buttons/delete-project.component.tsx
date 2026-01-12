@@ -1,5 +1,4 @@
 import { ANITA_URLS } from 'app/libs/routing/anita-routes.constant'
-import { Manager } from 'app/cross-refs-exports'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { ModalState } from 'app/state/modal/modal-state.class'
@@ -7,6 +6,8 @@ import { WordpressHelper } from 'app/libs/cloud-sync/wordpress/wordpress-helper.
 import { ProjectDeletor } from 'app/models/project/project-deletor.class'
 import { ProjectState } from 'app/state/project/project-state.class'
 import { RoutingState } from 'app/state/routing/routing-state.class'
+import { Bucket } from 'app/state/bucket.state'
+import { ProjectAtoms } from 'app/state/project/project.atoms'
 import type { FC } from 'react'
 import type { IProjectSettings } from 'app/models/project/project.declarations'
 
@@ -16,7 +17,7 @@ interface IDeleteProjectButtonProps {
 
 export const DeleteProjectButton: FC<IDeleteProjectButtonProps> = (props) => {
   const handleClickDelete = async () => {
-    if (Manager.getCurrentProject()?.getId() === props.project.id) {
+    if (Bucket.general.get(ProjectAtoms.currentProject)?.getId() === props.project.id) {
       ProjectState.resetCurrentProject()
     }
     new ProjectDeletor(props.project.id).delete()

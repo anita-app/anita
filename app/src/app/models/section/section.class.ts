@@ -18,38 +18,36 @@ import type { ISection } from 'app/models/section/section.declarations'
 import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
 export class Section implements ISection {
-  public id: string
-  public title: string
+  public id: string = ''
+  public title: string = ''
   public icon?: TIconName
   public childOf?: Array<string>
-  public createdAt: string
+  public createdAt: string = ''
   public updatedAt?: string
-  public formModel: Array<FormFieldsModel<TSupportedFormsTypes>>
+  public formModel: Array<FormFieldsModel<TSupportedFormsTypes>> = []
   public visibleColumnsInTableView = atom<Array<FormFieldsModel<TSupportedFormsTypes>>>([])
   public sorting = atom<[string, 'asc' | 'desc'] | [null, null]>([null, null])
 
   constructor (
     private projectId: string,
-    private sectionDefinition: ISection = {} as ISection,
+    private sectionDefinition: ISection = { } as ISection,
   ) {
-    this.id = sectionDefinition.id
-    this.title = sectionDefinition.title
-    this.icon = sectionDefinition.icon || undefined
-    this.childOf = sectionDefinition.childOf
-    this.formModel = sectionDefinition.formModel
-    Bucket.general.set(this.visibleColumnsInTableView, this.getVisibleColumnsInTableView())
-    Bucket.general.set(this.sorting, this.getSorting())
-    this.createdAt = sectionDefinition[RESERVED_FIELDS.createdAt] || DateTools.getUtcIsoString()
-    this.updatedAt = sectionDefinition[RESERVED_FIELDS.updatedAt]
+    if (sectionDefinition) {
+      this.id = sectionDefinition.id
+      this.title = sectionDefinition.title
+      this.icon = sectionDefinition.icon || undefined
+      this.childOf = sectionDefinition.childOf
+      this.formModel = sectionDefinition.formModel || []
+      Bucket.general.set(this.visibleColumnsInTableView, this.getVisibleColumnsInTableView())
+      Bucket.general.set(this.sorting, this.getSorting())
+      this.createdAt = sectionDefinition[RESERVED_FIELDS.createdAt] || DateTools.getUtcIsoString()
+      this.updatedAt = sectionDefinition[RESERVED_FIELDS.updatedAt]
+    }
   }
 
   public getSectionIcon (): TIconName {
     return this.icon || 'chevronForwardOutline'
   }
-
-  public getAllElements = async (): Promise<Array<ISectionElement>> => dbInstances[this.projectId].callSelector<ISectionElement>(this.id).multiple()
-
-  public getElementById = (id: string): Promise<ISectionElement | void> => dbInstances[this.projectId].callSelector<ISectionElement>(this.id, { [RESERVED_FIELDS.id]: id }).single()
 
   public saveElement = async (element: ISectionElement, forceMode?: EDITOR_MODE.add | EDITOR_MODE.edit): Promise<ISectionElement> => {
     SyncState.setIsSavingInFs(true)

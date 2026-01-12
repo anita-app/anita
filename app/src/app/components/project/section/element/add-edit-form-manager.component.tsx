@@ -1,8 +1,8 @@
-import { Manager } from 'app/cross-refs-exports'
 import { FormAutomator } from 'app/components/shared-components/forms-automator/form-automator.component'
 import { useAtomValue } from 'jotai'
 import { FormElementAtoms } from 'app/state/form-element/form-element.atoms'
 import { FormElementState } from 'app/state/form-element/form-element-state.class'
+import { ProjectAtoms } from 'app/state/project/project.atoms'
 import type { FC } from 'react'
 import type { FormAutomatorOnChangeValue } from 'app/components/shared-components/forms-automator/form-automator.types'
 import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
@@ -12,7 +12,7 @@ interface IProjectFormElementManagerProps {
 }
 
 export const ProjectSectionElementAddEditFormManager: FC<IProjectFormElementManagerProps> = (props) => {
-  const project = Manager.getCurrentProject()
+  const project = useAtomValue(ProjectAtoms.currentProject)
   const allSections = project?.getSectionsDefinitions()!
   const section = project?.getSectionById(props.sectionId)
 
@@ -28,11 +28,13 @@ export const ProjectSectionElementAddEditFormManager: FC<IProjectFormElementMana
 
   return (
     <form name="element-form">
-      {section.childOf && section.childOf.length > 0 && (<FormAutomator
-        formModel={[section.getParentInfoFormEle(allSections)]}
-        element={element}
-        handleChange={handleChange}
-                                                         />)}
+      {section.childOf && section.childOf.length > 0 && (
+        <FormAutomator
+          formModel={[section.getParentInfoFormEle(allSections)]}
+          element={element}
+          handleChange={handleChange}
+        />
+      )}
       <FormAutomator
         formModel={section?.formModel!}
         element={element!}

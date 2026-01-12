@@ -1,6 +1,5 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
-import { Manager } from 'app/cross-refs-exports'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { ProjectSectionElementDeleteButton } from 'app/components/project/section/element/delete-button.component'
 import { ProjectSectionElementDetailsParentsLinks } from 'app/components/project/section/element/details-parents-links.component'
@@ -15,8 +14,8 @@ import { useShortcut } from 'app/components/hooks/shortcut'
 import { RoutingState } from 'app/state/routing/routing-state.class'
 import { useAtomValue } from 'jotai'
 import { RoutingAtoms } from 'app/state/routing/routing.atoms'
-import { ProjectAtoms } from 'app/state/project/project.atoms'
 import { useLiveQuery } from 'dexie-react-hooks'
+import { Queriers } from 'app/libs/db-connector/common-helpers/Queriers'
 import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import type { FormFieldsModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 import type { FC } from 'react'
@@ -63,18 +62,22 @@ const ElementValuesViewer: FC<{ element: ISectionElement; formModels: Array<Form
   </div>
 )
 
+const goBack = () => {
+  RoutingState.goTo(-1)
+}
+
 export const ProjectSectionElementDetails: FC = () => {
-  const projectId = useAtomValue(ProjectAtoms.projectId)!
+  const projectId = useAtomValue(RoutingAtoms.param(URL_PARAMS.projectId))!
   const sectionId = useAtomValue(RoutingAtoms.param(URL_PARAMS.sectionId))
   const elementId = useAtomValue(RoutingAtoms.param(URL_PARAMS.elementId))
-  const section = useAtomValue(ProjectAtoms.sectionById(sectionId))
-  const element = useLiveQuery(() => section?.getElementById(elementId!) || null, [section], null)
-
-  const goBack = () => {
-    RoutingState.goTo(-1)
-  }
+  const sectionData = useLiveQuery(() => Queriers.getProjectSection(projectId, sectionId!))
+  const element = useLiveQuery(() => Queriers.getElement(projectId, sectionId!, elementId!), [projectId, sectionId, elementId], null)
 
   useShortcut({ key: 'Escape', callback: goBack })
+
+  if (!sectionData) {
+    return null
+  }
 
   if (element === undefined) {
     if (projectId && sectionId) {
@@ -89,14 +92,13 @@ export const ProjectSectionElementDetails: FC = () => {
         ? <Loader />
         : <ElementValuesViewer
             element={element}
-            formModels={Manager.getCurrentProject()?.getSectionById(sectionId)!.formModel!}
+            formModels={sectionData.formModel!}
             sectionId={sectionId!}
           />}
       {(element !== null && element.parentsInfo && Array.isArray(element.parentsInfo) && element.parentsInfo.length > 0) && (
         <ProjectSectionElementDetailsParentsLinks
           projectId={projectId!}
           parentsInfo={element.parentsInfo}
-          sections={Manager.getCurrentProject()?.getSectionsDefinitions()!}
         />
       )}
       {(element !== null && (

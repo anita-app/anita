@@ -1,9 +1,6 @@
 import { atom } from 'jotai'
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { Project } from 'app/models/project/project.class'
-import { Section } from 'app/models/section/section.class'
-import { atomFamily } from 'jotai-family'
-import type { ISection } from 'app/models/section/section.declarations'
 import type { TSystemData } from 'app/models/project/project.declarations'
 
 export class ProjectAtoms {
@@ -25,36 +22,4 @@ export class ProjectAtoms {
     }
     return systemData[RESERVED_AUDS_KEYS._settings][0]
   })
-
-  private static sectionsDefinitionsById = atom<Record<string, ISection>>(get => {
-    const systemData = get(this.currentSystemData)
-    if (!systemData) {
-      return {}
-    }
-    const sectionsDefinitionsById: Record<string, ISection> = {}
-    const sections = systemData[RESERVED_AUDS_KEYS._sections]
-    for (const section of sections) {
-      sectionsDefinitionsById[section.id] = section
-    }
-    return sectionsDefinitionsById
-  })
-
-  public static sectionById = atomFamily((sectionId?: string) => atom(get => {
-    if (!sectionId) {
-      return null
-    }
-    const projectId = get(this.projectId)
-    if (!projectId) {
-      return null
-    }
-    const sectionDefinition = get(this.sectionsDefinitionsById)[sectionId]
-    if (!sectionDefinition) {
-      return null
-    }
-    const section = new Section(
-      projectId,
-      sectionDefinition,
-    )
-    return section
-  }))
 }

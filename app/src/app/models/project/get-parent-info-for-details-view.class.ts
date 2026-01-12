@@ -1,4 +1,6 @@
+import { Queriers } from 'app/libs/db-connector/common-helpers/Queriers'
 import { ArrayTools } from 'app/libs/tools/array-tools.class'
+import { Section } from 'app/models/section/section.class'
 import type { ParentInfoForDetailsView } from 'app/models/parent-element/parent-element.declarations'
 import type { Project } from 'app/models/project/project.class'
 
@@ -17,11 +19,26 @@ export class GetParentInfoForDetailsView {
 
   private async processElement (sectionIdElementId: string): Promise<void> {
     const arrInfo = sectionIdElementId.split('|')
-    const section = this.project.getSectionById(arrInfo[0])
-    if (!section) {
+    const sectionId = arrInfo[0]
+    const elementId = arrInfo[1]
+
+    if (!sectionId || !elementId) {
       return
     }
-    const element = await section.getElementById(arrInfo[1])
+
+    const sectionData = await Queriers.getProjectSection(this.project.getId(), sectionId)
+
+    if (!sectionData) {
+      return
+    }
+
+    const section = new Section(this.project.getId(), sectionData)
+    const element = await Queriers.getElement(this.project.getId(), sectionId, elementId)
+
+    if (!element) {
+      return
+    }
+
     const formEle = section.getFirstUserDefinedField()
     this.parentInfoForDetailsView.push({
       sectionId: arrInfo[0],

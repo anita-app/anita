@@ -29,13 +29,6 @@ export class Manager {
     ProjectState.setCurrentProject(systemDataClone)
   }
 
-  public static getCurrentProject (): Project | undefined {
-    if (!this.currentProject) {
-      this.loadCurrentProjectFromStore()
-    }
-    return this.currentProject
-  }
-
   public static getProjectById = async (projectId: string | undefined, initialize: boolean = false): Promise<Project | undefined> => {
     if (projectId && await this.isProjectLoaded(projectId)) {
       return this.currentProject
@@ -49,13 +42,6 @@ export class Manager {
     const projectInfo = await new ProjectDataImporter(projectData).import()
     await new ProjectLoader(projectData[RESERVED_AUDS_KEYS._settings][0].id, projectInfo).loadProject()
     await this.saveProject({ [RESERVED_AUDS_KEYS._settings]: projectData[RESERVED_AUDS_KEYS._settings], [RESERVED_AUDS_KEYS._sections]: projectData[RESERVED_AUDS_KEYS._sections] }, EDITOR_MODE.edit)
-  }
-
-  private static loadCurrentProjectFromStore () {
-    const projectInStore = ProjectState.getCurrentProject()
-    if (projectInStore) {
-      this.currentProject = new Project(projectInStore)
-    }
   }
 
   private static async isProjectLoaded (projectId: string): Promise<boolean> {

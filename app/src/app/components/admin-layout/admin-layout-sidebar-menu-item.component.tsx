@@ -6,8 +6,9 @@ import { Link } from 'react-router-dom'
 import { Icons } from 'app/libs/icons/icons.class'
 import { AdminLayoutSidebarMenuItemIcon } from 'app/components/admin-layout/admin-layout-sidebar-menu-item-icon.component'
 import { LayoutState } from 'app/state/layout/layout-state.class'
-import { useAtomValue } from 'jotai'
-import { ProjectAtoms } from 'app/state/project/project.atoms'
+import { Queriers } from 'app/libs/db-connector/common-helpers/Queriers'
+import { Section } from 'app/models/section/section.class'
+import { useLiveQuery } from 'dexie-react-hooks'
 import type { FC } from 'react'
 import type { ISection } from 'app/models/section/section.declarations'
 import type { TSystemData } from 'app/models/project/project.declarations'
@@ -31,8 +32,7 @@ interface IAdminLayoutSidebarMenuItemProps {
 
 export const AdminLayoutSidebarMenuItem: FC<IAdminLayoutSidebarMenuItemProps> = memo(function AdminLayoutSidebarMenuItem (props: IAdminLayoutSidebarMenuItemProps) {
   const linkPath = urlParamFiller(ANITA_URLS.projectSectionElesList, [{ name: URL_PARAMS.projectId, value: props.project[RESERVED_AUDS_KEYS._settings][0].id }, { name: URL_PARAMS.sectionId, value: props.section.id }])
-  const section = useAtomValue(ProjectAtoms.sectionById(props.section.id))
-  const isHiddenInMenu = section?.getIsHiddenInMenu()!
+  const sectionData = useLiveQuery(() => Queriers.getProjectSection(props.project[RESERVED_AUDS_KEYS._settings][0].id, props.section.id))
 
   const sectionId = props.section.id
   const setCurrentSelectedSectionId = props.setCurrentSelectedSectionId
@@ -43,6 +43,13 @@ export const AdminLayoutSidebarMenuItem: FC<IAdminLayoutSidebarMenuItemProps> = 
       setCurrentSelectedSectionId(sectionId)
     }
   }, [setCurrentSelectedSectionId, sectionId, selected])
+
+  if (!sectionData) {
+    return null
+  }
+
+  const section = new Section(props.project[RESERVED_AUDS_KEYS._settings][0].id, sectionData!)
+  const isHiddenInMenu = section?.getIsHiddenInMenu()!
 
   const handleVisibilityClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const newValue = !section?.getIsHiddenInMenu()

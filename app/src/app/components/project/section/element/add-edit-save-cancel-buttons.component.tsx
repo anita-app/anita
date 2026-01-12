@@ -1,4 +1,3 @@
-import { Manager } from 'app/cross-refs-exports'
 import { useCallback } from 'react'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
@@ -9,6 +8,8 @@ import { useAtomValue } from 'jotai'
 import { FormElementAtoms } from 'app/state/form-element/form-element.atoms'
 import { FormElesValidStateAtoms } from 'app/state/form-eles-valid-state/form-eles-valid-state.atoms'
 import { RoutingState } from 'app/state/routing/routing-state.class'
+import { Bucket } from 'app/state/bucket.state'
+import { ProjectAtoms } from 'app/state/project/project.atoms'
 import type { FC } from 'react'
 
 interface IProjectSectionElementAddEditSaveCancelButtonsProps {
@@ -18,7 +19,7 @@ interface IProjectSectionElementAddEditSaveCancelButtonsProps {
 const saveOnShortcut = (sectionId: string, e: KeyboardEvent) => {
   const currentElementInStore = FormElementState.getElement()
   e.preventDefault()
-  Manager.getCurrentProject()?.getSectionById(sectionId)?.saveElement(currentElementInStore!)
+  Bucket.general.get(ProjectAtoms.currentProject)?.getSectionById(sectionId)?.saveElement(currentElementInStore!)
 }
 
 export const ProjectSectionElementAddEditSaveCancelButtons: FC<IProjectSectionElementAddEditSaveCancelButtonsProps> = (props) => {
@@ -26,7 +27,7 @@ export const ProjectSectionElementAddEditSaveCancelButtons: FC<IProjectSectionEl
   const validObj = useAtomValue(FormElesValidStateAtoms.validState)
 
   const handleSave = useCallback(async () => {
-    await Manager.getCurrentProject()?.getSectionById(props.sectionId)?.saveElement(element!)
+    await Bucket.general.get(ProjectAtoms.currentProject)?.getSectionById(props.sectionId)?.saveElement(element!)
   }, [element, props.sectionId])
 
   const handleSaveAndClose = useCallback(async () => {
@@ -41,7 +42,7 @@ export const ProjectSectionElementAddEditSaveCancelButtons: FC<IProjectSectionEl
   useShortcut({ key: 's', withMetaKey: true, callback: saveOnShortcut.bind(undefined, props.sectionId) })
   useShortcut({ key: 'Escape', callback: handleCancel })
 
-  const hasLongDetailsField = Manager.getCurrentProject()!.getSectionById(props.sectionId)!.getFirstFieldOfType([FORM_COMPONENTS_CODES.richText]) !== undefined
+  const hasLongDetailsField = Bucket.general.get(ProjectAtoms.currentProject)!.getSectionById(props.sectionId)!.getFirstFieldOfType([FORM_COMPONENTS_CODES.richText]) !== undefined
   const saveAndCloseText = hasLongDetailsField ? 'Save & Close' : 'Save'
   return (
     <div className="mt-6 flex justify-end">

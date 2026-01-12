@@ -1,4 +1,3 @@
-import { Manager } from 'app/cross-refs-exports'
 import { ParentElement } from 'app/models/parent-element/parent-element.class'
 import { FormEleContainer } from 'app/components/shared-components/forms-automator/form-layout/form-ele-container.component'
 import { FormElementLabel } from 'app/components/shared-components/forms-automator/form-layout/form-element-label.component'
@@ -12,6 +11,8 @@ import {
   useState,
 } from 'react'
 import Select from 'react-select'
+import { Bucket } from 'app/state/bucket.state'
+import { ProjectAtoms } from 'app/state/project/project.atoms'
 import type { FC } from 'react'
 import type { MultiValue } from 'react-select'
 import type { IBasicSelect, ICommonFormEleProps, OptionKeysModelGroup } from 'app/components/shared-components/forms-automator/form-automator.types'
@@ -26,7 +27,7 @@ export const ParentsSelector: FC<ICommonFormEleProps<IBasicSelect<ISectionElemen
 
   useEffect(() => {
     const getSelectOptions = async () => {
-      const options = await Manager.getCurrentProject()?.getOptionsForParentsSelector(formEle.options)
+      const options = await Bucket.general.get(ProjectAtoms.currentProject)?.getOptionsForParentsSelector(formEle.options)
 
       if (options) {
         setSelectOptions(options)

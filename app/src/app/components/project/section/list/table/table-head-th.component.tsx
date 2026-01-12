@@ -1,8 +1,13 @@
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
 import { Icons } from 'app/libs/icons/icons.class'
-import { Manager } from 'app/cross-refs-exports'
-import type { FC } from 'react'
+import { useAtomValue } from 'jotai'
+import { useLiveQuery } from 'dexie-react-hooks'
+import { Queriers } from 'app/libs/db-connector/common-helpers/Queriers'
+import { RoutingAtoms } from 'app/state/routing/routing.atoms'
+import { URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
+import { Section } from 'app/models/section/section.class'
 import type { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
+import type { FC } from 'react'
 
 interface IProjectSectionListTableHeadThProps {
   sectionId: string
@@ -10,10 +15,21 @@ interface IProjectSectionListTableHeadThProps {
 }
 
 export const ProjectSectionListTableHeadTh: FC<IProjectSectionListTableHeadThProps> = (props) => {
-  const handleHeaderClick = () => {
-    Manager.getCurrentProject()?.getSectionById(props.sectionId)?.setSorting(props.col.fieldName)
+  const projectId = useAtomValue(RoutingAtoms.param(URL_PARAMS.projectId))!
+  const sectionData = useLiveQuery(() => Queriers.getProjectSection(projectId, props.sectionId))
+
+  if (!sectionData) {
+    return null
   }
-  const [field, order] = Manager.getCurrentProject()?.getSectionById(props.sectionId)?.getSorting() || []
+
+  const section = new Section(projectId, sectionData)
+
+  const handleHeaderClick = () => {
+    section?.setSorting(props.col.fieldName)
+  }
+
+  const [field, order] = section?.getSorting() || []
+
   return (
     <th
     // eslint-disable-next-line eqeqeq

@@ -1,10 +1,17 @@
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { Toggle } from 'app/components/shared-components/common-ui-eles/toggle.component'
-import { Manager } from 'app/cross-refs-exports'
 import { ListTabsHeaderRightAddField } from 'app/components/project/section/list/tabs/header-right-add-field.component'
 import { ModalState } from 'app/state/modal/modal-state.class'
 import { FormProjectState } from 'app/state/form-project/form-project-state.class'
+import { useAtomValue } from 'jotai'
+import { ProjectAtoms } from 'app/state/project/project.atoms'
+import { Bucket } from 'app/state/bucket.state'
+import { Queriers } from 'app/libs/db-connector/common-helpers/Queriers'
+import { URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
+import { Section } from 'app/models/section/section.class'
+import { RoutingAtoms } from 'app/state/routing/routing.atoms'
+import { useLiveQuery } from 'dexie-react-hooks'
 import type { FC } from 'react'
 import type { IModalProps } from 'app/state/modal/modal-state.class'
 
@@ -13,12 +20,21 @@ interface IListTabsHeaderRightEditViewListProps {
 }
 
 export const ListTabsHeaderRightEditViewTable: FC<IListTabsHeaderRightEditViewListProps> = (props) => {
-  const section = Manager.getCurrentProject()?.getSectionById(props.sectionId)!
+  const projectId = useAtomValue(RoutingAtoms.param(URL_PARAMS.projectId))!
+  const sectionData = useLiveQuery(() => Queriers.getProjectSection(projectId, props.sectionId))
+
+  if (!sectionData) {
+    return null
+  }
+
+  const section = new Section(projectId, sectionData)
+
   const handleChangeForSection = (formEleFieldName: string, value: boolean) => {
     section.setIsFormEleVisibleInTable(formEleFieldName, value)
   }
+
   const handleOnAddFieldClick = () => {
-    const project = Manager.getCurrentProject()
+    const project = Bucket.general.get(ProjectAtoms.currentProject)
     const payload = project?.getSystemData()
     const sectionIndex = payload?._sections?.findIndex((sez) => sez.id === section.id)
     if (payload && sectionIndex !== undefined) {
@@ -33,6 +49,7 @@ export const ListTabsHeaderRightEditViewTable: FC<IListTabsHeaderRightEditViewLi
       children: <><ListTabsHeaderRightAddField sectionId={section.id} /></>,
     } as IModalProps)
   }
+
   return (
     <div className="mt-6">
       {section.formModel.map((formEle) => (

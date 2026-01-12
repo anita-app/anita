@@ -1,10 +1,11 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
-import { Manager } from 'app/cross-refs-exports'
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import { ModalState } from 'app/state/modal/modal-state.class'
 import { RoutingState } from 'app/state/routing/routing-state.class'
+import { Bucket } from 'app/state/bucket.state'
+import { ProjectAtoms } from 'app/state/project/project.atoms'
 import type { FC } from 'react'
 
 interface IProjectSectionElementDeleteButtonProps {
@@ -15,7 +16,7 @@ interface IProjectSectionElementDeleteButtonProps {
 
 export const ProjectSectionElementDeleteButton: FC<IProjectSectionElementDeleteButtonProps> = (props) => {
   const handleClickDelete = () => {
-    Manager.getCurrentProject()?.getSectionById(props.sectionId)?.deleteElement({ [RESERVED_FIELDS.id]: props.elementId })
+    Bucket.general.get(ProjectAtoms.currentProject)?.getSectionById(props.sectionId)?.deleteElement({ [RESERVED_FIELDS.id]: props.elementId })
     RoutingState.goTo(ANITA_URLS.projectSectionElesList, [{ name: URL_PARAMS.projectId, value: props.projectId }, { name: URL_PARAMS.sectionId, value: props.sectionId }])
   }
 

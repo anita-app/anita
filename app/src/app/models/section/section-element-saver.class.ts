@@ -27,13 +27,13 @@ export class SectionElementSaver {
    */
   public async save (): Promise<ISectionElement> {
     this.checkAndSetPk()
-    this.setcreatedAt()
+    this.setCreatedAt()
     this.deleteEmptyProps()
 
     if (this.mode === EDITOR_MODE.add) {
       await dbInstances[this.projectId].callInsertor(this.sectionId, this.element).autoInsert()
     } else {
-      this.setupdatedAtValueIfInEditMode()
+      this.setUpdatedAtValueIfInEditMode()
       await dbInstances[this.projectId].callUpdator(this.sectionId, this.element).autoUpdate()
     }
 
@@ -64,7 +64,7 @@ export class SectionElementSaver {
   /**
    * Checks if `createdAt` value is set, if not one is created.
    */
-  private setcreatedAt (): void {
+  private setCreatedAt (): void {
     if (!this.element[RESERVED_FIELDS.createdAt]) {
       this.element[RESERVED_FIELDS.createdAt] = DateTools.getUtcIsoString()
     }
@@ -73,7 +73,7 @@ export class SectionElementSaver {
   /**
    * Sets the updatedAt value if in edit mode
    */
-  private setupdatedAtValueIfInEditMode (): void {
+  private setUpdatedAtValueIfInEditMode (): void {
     this.element[RESERVED_FIELDS.updatedAt] = DateTools.getUtcIsoString()
   }
 }

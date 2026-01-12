@@ -3,10 +3,11 @@ import { Type } from 'app/components/shared-components/common-ui-eles/components
 import { FileExplorer } from 'app/components/shared-components/file-explorer/file-explorer'
 import { Loader } from 'app/components/shared-components/loader/loader.component'
 import { DropboxHelper } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
-import { Manager } from 'app/cross-refs-exports'
 import { TextTools } from 'app/libs/tools/text-tools.class'
 import { useEffect, useRef } from 'react'
 import { ModalState } from 'app/state/modal/modal-state.class'
+import { Bucket } from 'app/state/bucket.state'
+import { ProjectAtoms } from 'app/state/project/project.atoms'
 import type { FC } from 'react'
 import type { IModalProps } from 'app/state/modal/modal-state.class'
 import type { ISharedFileMeta } from 'app/libs/cloud-sync/cloud-sync.const'
@@ -20,7 +21,7 @@ interface DropboxSyncFilePickerState {
 }
 
 const handleSaveHere = (path: string) => {
-  Manager.getCurrentProject()?.uploadToCloudService(path)
+  Bucket.general.get(ProjectAtoms.currentProject)?.uploadToCloudService(path)
   // todo
 }
 
