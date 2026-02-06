@@ -38,10 +38,12 @@ export const ProjectsList: FC = () => {
         </div>
       </div>
       <div className="p-1 md:w-full">
-        {projects.map(project => (<ProjectCard
-          key={project.id}
-          project={project}
-                                  />))}
+        {projects.map(project => (
+          <ProjectCard
+            key={project.id}
+            project={project}
+          />
+        ))}
       </div>
     </div>
   )
