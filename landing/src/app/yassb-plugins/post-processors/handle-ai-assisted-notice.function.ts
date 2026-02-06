@@ -3,7 +3,6 @@ const AI_ASSISTED_NOTICE_REGEX = /<aside data-ai-assisted="([^"]*)" \/>/g;
 export function handleAiAssistedNotice(content: string): string {
   return content.replace(AI_ASSISTED_NOTICE_REGEX, (_match, flag) => {
     const normalizedFlag = `${flag}`.trim().toLowerCase();
-    console.log('🚀 ~ handleAiAssistedNotice ~ normalizedFlag:', normalizedFlag)
 
     if (normalizedFlag !== 'true') {
       return '';
