@@ -6,6 +6,7 @@ author: ilDon
 type: Article
 slug: react-compiler-and-why-class-objects-work-against-memoization
 image: react-compiler-and-why-class-objects-work-against-memoization/react-compiler-and-why-class-objects-work-against-memoization.jpg
+aiAssisted: true
 ---
 React Compiler is now stable and production-ready (React blog, October 7, 2025), and it significantly reduces the need for manual `useMemo`, `useCallback`, and `React.memo`.
 
