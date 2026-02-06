@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-max-props-per-line */
+/* eslint-disable react/jsx-first-prop-new-line */
 import { useEffect, useState } from 'react'
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { ProjectSectionElementAddEdit } from 'app/components/project/section/element/add-edit.component'
@@ -53,6 +55,7 @@ const anitaRoutes: Array<RouteObject> = [
     path: '/',
     element: <AdminLayout />,
     children: [
+      { index: true, element: <Navigate to={ANITA_URLS.projectsList} replace={true} /> },
       { path: `${ANITA_URLS.auth}/*`, element: <OAuth /> },
       { path: ANITA_URLS.projectsList, element: <ProjectsList /> },
       { path: ANITA_URLS.projectAdd, element: <AddEditProject /> },
@@ -70,10 +73,7 @@ const anitaRoutes: Array<RouteObject> = [
       },
       {
         path: '*',
-        element: <Navigate
-          to={ANITA_URLS.projectsList}
-          replace={true}
-                 />,
+        element: <Navigate to={ANITA_URLS.projectsList} replace={true} />,
       },
     ],
   },
