@@ -84,7 +84,7 @@ export const FileExplorer: FC<IFileExplorerProps> = (props) => {
                         </div>
                         {file.type === 'folder' && (
                         <div
-                          className="py-4 pr-4 flex-shrink-0 border-l pl-4 hover:bg-gray-100 leading-none h-[52px]"
+                          className="py-4 pr-4 shrink-0 border-l pl-4 hover:bg-gray-100 leading-none h-[52px]"
                           onClick={() => props.onNavigateToFolder(file)}
                         >
                           <i

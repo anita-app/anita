@@ -22,7 +22,7 @@ const iconByType: { [key in Type]: TIconName} = {
 export const AlertWithDescription: FC<IAlertWithDescription> = (props) => (
   <div className={`rounded-md ${SolidBg[props.type]} py-4 px-2`}>
     <div className="flex">
-      <div className="flex-shrink-0">
+      <div className="shrink-0">
         <i
           className={`h-5 w-5 ${SolidText[props.type]}`}
           aria-hidden="true"

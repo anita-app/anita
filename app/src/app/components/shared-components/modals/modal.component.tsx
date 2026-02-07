@@ -75,7 +75,7 @@ const Modal: FC<IModalProps> = (props) => {
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 w-full sm:max-w-lg sm:p-6">
                 <div className="sm:flex sm:items-start gap-2">
                   {iconConfig && (
-                    <div className={`absolute sm:relative right-3 sm:right-1.5 top-2.5 sm:top-0 flex items-center justify-center h-12 w-12 flex-shrink-0 rounded-full ${iconConfig.iconBgColor} sm:mx-0 sm:h-10 sm:w-10`}>
+                    <div className={`absolute sm:relative right-3 sm:right-1.5 top-2.5 sm:top-0 flex items-center justify-center h-12 w-12 shrink-0 rounded-full ${iconConfig.iconBgColor} sm:mx-0 sm:h-10 sm:w-10`}>
                       {Icons.render(iconConfig.icon, `${iconConfig.iconTextColor} text-xl -mt-1`)}
                     </div>
                   )}
