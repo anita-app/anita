@@ -54,7 +54,7 @@ export const ProjectSectionListGridElement: FC<IProjectSectionListGridElementPro
                 <RichText value={props.element[props.descriptionKey]} />
               </div>
               {props.element[props.descriptionKey].length > DESCRIPTION_MAX_LENGHT && (
-                <div className="bottom-0 h-10 pointer-events-none absolute inset-x-0 z-10 bg-gradient-to-b from-transparent to-white"></div>
+                <div className="bottom-0 h-10 pointer-events-none absolute inset-x-0 z-10 bg-linear-to-b from-transparent to-white"></div>
               )}
             </>
           )}

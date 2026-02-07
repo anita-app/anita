@@ -129,7 +129,7 @@ export const FileExplorer: FC<IFileExplorerProps> = (props) => {
         </Transition>
       </div>
       {!isScrollAtBottom && !!navigableFolders?.length && (
-        <div className="bottom-0 h-10 pointer-events-none absolute inset-x-0 z-10 bg-gradient-to-b from-transparent to-white"></div>
+        <div className="bottom-0 h-10 pointer-events-none absolute inset-x-0 z-10 bg-linear-to-b from-transparent to-white"></div>
       )}
     </div>
   )
