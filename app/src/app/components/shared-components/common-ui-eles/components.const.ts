@@ -9,13 +9,13 @@ export enum Type {
 }
 
 export enum SolidBg {
-  primary = 'bg-prussian-blue-400',
-  secondary = 'bg-gray-100',
-  success = 'bg-green-500',
-  info = 'bg-blue-500',
-  warning = 'bg-orange-700',
-  danger = 'bg-red-600',
-  transparent = 'bg-transparent',
+  primary = 'bg-prussian-blue-400/80',
+  secondary = 'bg-gray-100/80',
+  success = 'bg-green-500/80',
+  info = 'bg-blue-500/80',
+  warning = 'bg-orange-700/80',
+  danger = 'bg-red-600/80',
+  transparent = 'bg-transparent/80',
 }
 
 export enum SolidBgWithHover {
@@ -23,7 +23,7 @@ export enum SolidBgWithHover {
   secondary = 'bg-gray-100 hover:bg-gray-200 focus:ring-gray-200',
   success = 'bg-green-500 hover:bg-green-600 focus:ring-green-500',
   info = 'bg-blue-500 hover:bg-blue-600 focus:ring-blue-500',
-  warning = 'bg-orange-700 bg-opacity-10 hover:bg-opacity-20 focus:ring-orange-700 focus:ring-opacity-10',
+  warning = 'bg-orange-700/10 hover:bg-orange-700/20 focus:ring-orange-700 focus:ring-opacity-10',
   danger = 'bg-red-600 hover:bg-red-700 focus:ring-red-600',
   transparent = 'bg-transparent hover:bg-gray-200 focus:ring-0',
 }

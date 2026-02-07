@@ -1,6 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "../../../tailwind.config.js";
+@plugin "@tailwindcss/typography";
 
 /**
  * Automatic headers numbering for blog articles
@@ -61,8 +61,8 @@ article a {
 .code-block code {
   @apply rounded-xl;
   @apply overflow-x-auto;
-  @apply bg-gray-800 !important;
-  @apply text-white !important;
+  @apply !bg-gray-800;
+  @apply !text-white;
   @apply py-0;
   @apply pl-0;
   @apply pr-5;

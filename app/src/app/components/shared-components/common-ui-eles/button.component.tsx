@@ -60,7 +60,7 @@ export const Button: FC<IButtonWithTooltipProps> = (props) => {
   const Component = props.href ? Link : 'button'
   const collapsable = (props.hasTooltip || !!props.tooltip) && props.breakpoint
   const fillStyle: TFill = props.fill ?? 'solid'
-  const bgClassName = props.disabled ? 'disabled:bg-gray-400 disabled:bg-opacity-40 disabled:cursor-not-allowed' : COLOR_SCHEME[fillStyle].bg[props.type]
+  const bgClassName = props.disabled ? 'disabled:bg-gray-400/40 disabled:cursor-not-allowed' : COLOR_SCHEME[fillStyle].bg[props.type]
   const textClassName = COLOR_SCHEME[fillStyle].text[props.type]
 
   const handleClick = (e: React.MouseEvent) => {

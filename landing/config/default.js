@@ -1,11 +1,12 @@
-import { YassbConfig } from 'yassb-web';
-import { DateFormatterDirective } from '../src/app/yassb-plugins/custom-directives/date-formatter-directive.class';
-import { blogList } from '../src/app/yassb-plugins/custom-renderers/blog-list';
-import { packagesList } from '../src/app/yassb-plugins/custom-renderers/packages-list';
-import { addDivToPreCode } from '../src/app/yassb-plugins/post-processors/add-div-to-pre-code.function';
-import { buildTailwind } from '../src/app/yassb-plugins/styles-parser/build-tailwind.function';
+require('ts-node/register/transpile-only');
 
-export default {
+const { DateFormatterDirective } = require('../src/app/yassb-plugins/custom-directives/date-formatter-directive.class');
+const { blogList } = require('../src/app/yassb-plugins/custom-renderers/blog-list');
+const { packagesList } = require('../src/app/yassb-plugins/custom-renderers/packages-list');
+const { addDivToPreCode } = require('../src/app/yassb-plugins/post-processors/add-div-to-pre-code.function');
+const { buildTailwind } = require('../src/app/yassb-plugins/styles-parser/build-tailwind.function');
+
+module.exports = {
   workingDir: {
     out: '../anita-app.github.io',
     styles: 'styles/styles.css'
@@ -30,4 +31,4 @@ export default {
     excerpt_separator: '<!-- /preview -->'
   },
   postProcessors: [addDivToPreCode]
-} as YassbConfig;
+};
