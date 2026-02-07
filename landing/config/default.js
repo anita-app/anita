@@ -4,6 +4,7 @@ const { DateFormatterDirective } = require('../src/app/yassb-plugins/custom-dire
 const { blogList } = require('../src/app/yassb-plugins/custom-renderers/blog-list');
 const { packagesList } = require('../src/app/yassb-plugins/custom-renderers/packages-list');
 const { addDivToPreCode } = require('../src/app/yassb-plugins/post-processors/add-div-to-pre-code.function');
+const { handleAiAssistedNotice } = require('../src/app/yassb-plugins/post-processors/handle-ai-assisted-notice.function');
 const { buildTailwind } = require('../src/app/yassb-plugins/styles-parser/build-tailwind.function');
 
 module.exports = {
@@ -30,5 +31,5 @@ module.exports = {
     excerpt: true,
     excerpt_separator: '<!-- /preview -->'
   },
-  postProcessors: [addDivToPreCode]
-};
+  postProcessors: [addDivToPreCode, handleAiAssistedNotice]
+}
