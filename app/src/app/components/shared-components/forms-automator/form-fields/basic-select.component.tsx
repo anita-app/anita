@@ -10,7 +10,7 @@ import { memo, useRef, useState, Fragment } from 'react'
 import { Combobox, Transition } from '@headlessui/react'
 import { Icons } from 'app/libs/icons/icons.class'
 import type { FC } from 'react'
-import type { IBasicSelect, ICommonFormEleProps } from 'app/components/shared-components/forms-automator/form-automator.types'
+import type { IBasicSelect, ICommonFormEleProps, IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import type { IOption } from 'app/models/parent-element/parent-element.class'
 
@@ -40,8 +40,8 @@ export const BasicSelect: FC<ICommonFormEleProps<IBasicSelect<ISectionElement>>>
       .includes(query.toLowerCase().replace(/\s+/g, '')),
     )
 
-  const handleSelected = (option: IOption): void => {
-    handleChange(formEle.fieldName, option.value)
+  const handleSelected = (option: IOptionKeysModel | null): void => {
+    handleChange(formEle.fieldName, option?.value ?? null)
   }
 
   const handleClear = (e: React.MouseEvent): void => {
@@ -63,7 +63,7 @@ export const BasicSelect: FC<ICommonFormEleProps<IBasicSelect<ISectionElement>>>
         <div className="relative">
           <div className={`relative w-full cursor-default overflow-hidden bg-white text-left sm:text-sm ${isValid || ''}`}>
             <Combobox.Input
-              className={`w-full h-[42px] pr-10 text-sm leading-5 focus:ring-0 rounded-md ${!isValid && touched ? FORM_ELEMENTS_CSS_CLASSES_ERR : FORM_ELEMENTS_CSS_CLASSES}`}
+              className={`w-full h-10.5 pr-10 text-sm leading-5 focus:ring-0 rounded-md ${!isValid && touched ? FORM_ELEMENTS_CSS_CLASSES_ERR : FORM_ELEMENTS_CSS_CLASSES}`}
               displayValue={(option) => (option as unknown as IOption)?.label}
               onChange={(event) => setQuery(event.target.value)}
               onBlur={() => setTouched(true)}

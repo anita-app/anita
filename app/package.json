@@ -54,7 +54,7 @@
     "workbox-streams": "^6.5.4"
   },
   "devDependencies": {
-    "@headlessui/react": "^1.7.3",
+    "@headlessui/react": "^2.2.9",
     "@tailwindcss/forms": "^0.5.11",
     "@tailwindcss/postcss": "^4.1.18",
     "@testing-library/jest-dom": "^5.16.5",
