@@ -16,7 +16,9 @@ export class Queriers {
     if (!db || !table) {
       return null
     }
-    return dbInstances[db].callSelector<T>(table).multiple()
+    const elements = await dbInstances[db].callSelector<T>(table).multiple()
+    // Ids are hashes, so the order of the database is random: records are listed in the order they were created.
+    return elements?.sort((a, b) => String(a[RESERVED_FIELDS.createdAt] ?? '').localeCompare(String(b[RESERVED_FIELDS.createdAt] ?? ''))) ?? elements
   }
 
   public static getProjectSection (projectId: string, sectionId: string): Promise<ISection | void | null> {

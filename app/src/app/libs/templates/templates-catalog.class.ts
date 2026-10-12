@@ -255,6 +255,8 @@ export class TemplatesCatalog {
   private static makeSampleRecords (template: IProjectTemplate, sectionIds: Record<string, string>, now: string): Record<string, Array<ISectionElement>> {
     const today = new Date()
     const recordIds: Record<string, string> = {}
+    // One millisecond apart, so that records are listed in the order of the catalog.
+    let created = Date.parse(now)
     const result: Record<string, Array<ISectionElement>> = {}
 
     template.sections.forEach((section) => {
@@ -267,7 +269,7 @@ export class TemplatesCatalog {
         if (sample.ref) {
           recordIds[`${section.key}:${sample.ref}`] = id
         }
-        const record: ISectionElement = { id, createdAt: now }
+        const record: ISectionElement = { id, createdAt: new Date(created++).toISOString() }
         section.fields.forEach((field) => {
           const value = sampleValueFor(field, sample.values[field.fieldName], today)
           if (value !== undefined) {

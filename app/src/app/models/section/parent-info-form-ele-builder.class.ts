@@ -38,7 +38,7 @@ export class ParentInfoFormEleBuilder {
     this.parentInfoFormModel = {
       componentCode: FORM_COMPONENTS_CODES.parentsSelector,
       fieldName: RESERVED_FIELDS.parentsInfo,
-      label: 'Parent elements',
+      label: `Linked to ${this.options.map(option => option.label).join(', ')}`,
       options: this.options,
     }
   }

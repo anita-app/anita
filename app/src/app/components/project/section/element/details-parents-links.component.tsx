@@ -29,23 +29,44 @@ export const ProjectSectionElementDetailsParentsLinks: FC<IProjectSectionElement
     getParents()
   }, [props.parentsInfo, props.projectId, sections])
 
+  // One row per parent section, labelled like the fields above, e.g. "Cuisines: American".
+  const groups = (parents ?? []).reduce<Array<{ sectionId: string; parents: Array<ParentInfoForDetailsView> }>>((result, parent) => {
+    const group = result.find(item => item.sectionId === parent.sectionId)
+    if (group) {
+      group.parents.push(parent)
+    } else {
+      result.push({ sectionId: parent.sectionId, parents: [parent] })
+    }
+    return result
+  }, [])
+
   return (
-    <div className="p-3 pt-0">
-      <p className="text-sm text-gray-500 mb-2">Parent elements:</p>
-      {parents?.map(parent => (
-        <Button
-          id={parent.element.id!}
-          label={parent.txt}
-          type={Type.secondary}
-          size="sm"
-          href={urlParamFiller(ANITA_URLS.projectSectionEleDetails, [
-            { name: URL_PARAMS.projectId, value: props.projectId! },
-            { name: URL_PARAMS.sectionId, value: parent.sectionId! },
-            { name: URL_PARAMS.elementId, value: parent.element.id! },
-          ])}
-          key={parent.element.id}
-          className="font-semibold"
-        />
+    <div className="px-3">
+      {groups.map(group => (
+        <div
+          key={group.sectionId}
+          className="mb-3"
+        >
+          <p className="text-sm text-gray-500">{sections?.find(section => section.id === group.sectionId)?.title ?? 'Linked to'}</p>
+          <div className="flex flex-wrap gap-2 mt-1">
+            {group.parents.map(parent => (
+              <Button
+                id={`parent-${parent.element.id!}`}
+                label={parent.txt || 'Untitled'}
+                type={Type.secondary}
+                size="sm"
+                iconLeft="linkOutline"
+                href={urlParamFiller(ANITA_URLS.projectSectionEleDetails, [
+                  { name: URL_PARAMS.projectId, value: props.projectId! },
+                  { name: URL_PARAMS.sectionId, value: parent.sectionId! },
+                  { name: URL_PARAMS.elementId, value: parent.element.id! },
+                ])}
+                key={parent.element.id}
+                marginClassName=""
+              />
+            ))}
+          </div>
+        </div>
       ))}
     </div>
   )
