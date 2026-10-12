@@ -92,7 +92,7 @@ const Modal: FC<IModalProps> = (props) => {
                   </div>
                 </div>
                 {!config.hideActionRow && (
-                  <div className="flex items-center justify-end mt-5">
+                  <div className="flex flex-wrap items-center justify-end gap-y-2 mt-5">
                     {config.leftButton && (
                       <Button
                         {...config.leftButton!}

@@ -37,4 +37,19 @@ Our goal for version 1.0.0 is to implement the following:
 - [X] hide show columns in table views;
 - [ ] addition of a tab view for child sections;
 - [ ] Anita templates (at least one example template); 
-- [ ] support for synchronization of locally stored data with at least one remote data store (TBD);
+- [X] support for synchronization of locally stored data with at least one remote data store: Dropbox and WordPress (see below);
+
+## WordPress
+
+Any WordPress site with the [Anita Project Manager](https://wordpress.org/plugins/anita-project-manager/) plugin can store Anita projects and share them with the users of the site, according to their WordPress roles. The plugin lives in the [anita-project-manager-for-wordpress](https://github.com/anita-app/anita-project-manager-for-wordpress) repository, together with its API reference and quickstart.
+
+In the app, the integration is in `app/src/app/libs/cloud-sync/wordpress/`:
+
+- `wordpress-auth.class.ts`: connection flow (site check, login on the site, single-use code exchanged with PKCE);
+- `wordpress-client.class.ts`: REST client with transparent token refresh;
+- `wordpress-sync.class.tsx`: first-sync policy, import of the site's projects, projects removed from the site, record pushes;
+- `../remote-and-local-merger.class.ts`: two-way merge of the open project, shared with Dropbox.
+
+Self-hosted installations of Anita must be added to the *Allowed app URLs* of the plugin settings. During development, run the WordPress environment of the plugin repository (`docker compose up -d && ./tests/setup.sh`): it accepts `http://localhost:3000`.
+
+Unit tests: `cd app && CI=true npx react-app-rewired test --watchAll=false`.

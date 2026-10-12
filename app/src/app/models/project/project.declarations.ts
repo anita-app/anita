@@ -1,3 +1,4 @@
+import type { TAccessLevel } from 'app/libs/cloud-sync/wordpress/wordpress.const'
 import type { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
 import type { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 import type { ISection } from 'app/models/section/section.declarations'
@@ -45,7 +46,14 @@ export interface IProjectSettings {
   [RESERVED_FIELDS.createdAt]: string
   [RESERVED_FIELDS.updatedAt]?: string
   localStorage?: LOCAL_STORAGE_SYSTEMS
+  /**
+   * Id of the WordPress site the project is synced with (its address without protocol), if any.
+   */
   remoteStorage?: string
+  /**
+   * Who can see the project on the WordPress site: 'private' (only the owner) or the minimum WordPress role.
+   */
+  remoteAccessLevel?: TAccessLevel
   encrypted?: boolean
   cloudSync?: {
     dropbox?: string

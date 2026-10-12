@@ -43,18 +43,22 @@ export const availableSystems: Array<IOptionKeysModel> = [
  * Defines the Form model to set the field properties of `ProjectSettings`.
  * Empty project template used when creating new projects.
  */
+const remoteStorageField: FormFieldsModel<IProjectSettings> = {
+  componentCode: FORM_COMPONENTS_CODES.remoteSelector,
+  fieldName: 'remoteStorage',
+  value: '',
+  label: 'Remote storage',
+  labelHint: 'Store the project on a WordPress site, to sync it across devices and share it with the users of the site.',
+  required: false,
+  options: [], // to be filled by the component itself with the available remote storage options
+}
+
 export const projectInfoNewItem: Array<FormFieldsModel<IProjectSettings>> = [
   ...commonFieldsForProjectInfo,
-  {
-    componentCode: FORM_COMPONENTS_CODES.remoteSelector,
-    fieldName: 'remoteStorage',
-    value: LOCAL_STORAGE_SYSTEMS.IndexedDB,
-    label: 'Remote storage',
-    required: false,
-    options: [], // to be filled by the component itself with the available remote storage options
-  },
+  remoteStorageField,
 ]
 
 export const projectInfoForEditing: Array<FormFieldsModel<IProjectSettings>> = [
   ...commonFieldsForProjectInfo,
+  remoteStorageField,
 ]

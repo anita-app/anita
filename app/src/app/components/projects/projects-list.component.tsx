@@ -22,7 +22,17 @@ export const ProjectsList: FC = () => {
           <div className="px-6 py-3">
             <h1 className="title-font text-md font-medium text-gray-900">Projects on this device</h1>
           </div>
-          <div className="my-2">
+          <div className="my-2 flex shrink-0">
+            <Button
+              id="wordpressSites"
+              label="WordPress sites"
+              labelClassName="hidden"
+              href={ANITA_URLS.remotes}
+              iconLeft="logoWordpress"
+              tooltip="Connect and manage WordPress sites"
+              type={Type.secondary}
+              size="sm"
+            />
             <ImportProjectButton btnType="icon" />
             <Button
               id="createProject"

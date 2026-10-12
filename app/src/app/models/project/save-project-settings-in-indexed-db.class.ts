@@ -27,7 +27,7 @@ export class SaveProjectSettingsInIndexedDB {
    */
   public async save (): Promise<LocalProjectSettings> {
     this.setProjectSettingsCloneWithAdditionalKeys()
-    this.doStoreProjectSettings()
+    await this.doStoreProjectSettings()
 
     return this.copyOfProjectSettings!
   }
@@ -42,7 +42,7 @@ export class SaveProjectSettingsInIndexedDB {
   /**
    * Stores the project settings with db-connector
    */
-  private doStoreProjectSettings (): void {
-    dbInstances.system.callInsertor(CLIENT_SECTIONS.projects, this.copyOfProjectSettings).autoInsert()
+  private doStoreProjectSettings (): Promise<void> {
+    return dbInstances.system.callInsertor(CLIENT_SECTIONS.projects, this.copyOfProjectSettings).autoInsert()
   }
 }

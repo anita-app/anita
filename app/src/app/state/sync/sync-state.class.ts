@@ -1,6 +1,6 @@
 import { Bucket } from 'app/state/bucket.state'
-import { atom } from 'jotai'
 import { SyncStateAtoms } from './sync-state.atoms'
+import type { ISyncStatus } from './sync-state.atoms'
 import type { IWordPressRemoteInfo } from 'app/libs/cloud-sync/wordpress/wordpress.const'
 
 export class SyncState {
@@ -21,11 +21,22 @@ export class SyncState {
   }
 
   public static setWordPressRemotes = (remotes: Array<IWordPressRemoteInfo>) => {
-    remotes.forEach(remote => {
-      if ((!SyncStateAtoms.remoteInfo[remote.remoteId])) {
-        SyncStateAtoms.remoteInfo[remote.remoteId] = atom(remote)
-      }
-      Bucket.general.set(SyncStateAtoms.remoteInfo[remote.remoteId], remote)
-    })
+    Bucket.general.set(SyncStateAtoms.wordPressRemotes, remotes)
+  }
+
+  public static getWordPressRemote = (remoteId: string): IWordPressRemoteInfo | undefined => (
+    Bucket.general.get(SyncStateAtoms.wordPressRemotes).find(remote => remote.remoteId === remoteId)
+  )
+
+  public static updateRemoteStatus = (remoteId: string, status: Partial<ISyncStatus>) => {
+    const current = Bucket.general.get(SyncStateAtoms.remotesStatus)
+    Bucket.general.set(SyncStateAtoms.remotesStatus, { ...current, [remoteId]: { ...{ isSyncing: false }, ...current[remoteId], ...status } })
+  }
+
+  public static getProjectStatus = (projectId: string): ISyncStatus | undefined => Bucket.general.get(SyncStateAtoms.projectsStatus)[projectId]
+
+  public static updateProjectStatus = (projectId: string, status: Partial<ISyncStatus>) => {
+    const current = Bucket.general.get(SyncStateAtoms.projectsStatus)
+    Bucket.general.set(SyncStateAtoms.projectsStatus, { ...current, [projectId]: { ...{ isSyncing: false }, ...current[projectId], ...status } })
   }
 }

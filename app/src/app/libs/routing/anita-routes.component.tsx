@@ -11,6 +11,7 @@ import { ProjectsNone } from 'app/components/projects/no-projects.component'
 import { ProjectsList } from 'app/components/projects/projects-list.component'
 import { createHashRouter, Navigate, Outlet } from 'react-router-dom'
 import { OAuth } from 'app/components/auth/o-auth.component'
+import { Remotes } from 'app/components/remotes/remotes.component'
 import { AdminLayout } from 'app/components/admin-layout/admin-layout.component'
 import { RoutingState } from 'app/state/routing/routing-state.class'
 import { Manager } from 'app/cross-refs-exports'
@@ -57,6 +58,7 @@ const anitaRoutes: Array<RouteObject> = [
     children: [
       { index: true, element: <Navigate to={ANITA_URLS.projectsList} replace={true} /> },
       { path: `${ANITA_URLS.auth}/*`, element: <OAuth /> },
+      { path: ANITA_URLS.remotes, element: <Remotes /> },
       { path: ANITA_URLS.projectsList, element: <ProjectsList /> },
       { path: ANITA_URLS.projectAdd, element: <AddEditProject /> },
       { path: ANITA_URLS.projectsNone, element: <ProjectsNone /> },

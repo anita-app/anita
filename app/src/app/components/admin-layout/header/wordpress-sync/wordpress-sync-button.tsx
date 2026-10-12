@@ -1,60 +1,51 @@
-import { useEffect } from 'react'
 import { useAtomValue } from 'jotai'
+import { Link } from 'react-router-dom'
+import { SiteIcon } from 'app/components/remotes/remote-card.component'
+import { useTippyTooltip } from 'app/components/hooks/tippy-tooltip'
+import { ANITA_URLS } from 'app/libs/routing/anita-routes.constant'
 import { SyncStateAtoms } from 'app/state/sync/sync-state.atoms'
-import { WordpressHelper } from 'app/libs/cloud-sync/wordpress/wordpress-helper.class'
 import type { FC } from 'react'
+import type { IWordPressRemoteInfo } from 'app/libs/cloud-sync/wordpress/wordpress.const'
 
 interface IWordPressSyncButtonProps {
-  remoteId: string
+  remote: IWordPressRemoteInfo
 }
 
-const getFallbackText = (siteName: string) => {
-  const words = siteName.split(' ')
-  if (words.length >= 2) {
-    return words[0][0].toUpperCase() + words[1][0].toUpperCase()
-  }
-  return siteName.substring(0, 2).toUpperCase()
-}
-
+/**
+ * Icon of a connected site in the header, with its sync status. Opens the WordPress sites page.
+ */
 export const WordPressSyncButton: FC<IWordPressSyncButtonProps> = (props) => {
-  const remoteInfo = useAtomValue(SyncStateAtoms.remoteInfo[props.remoteId])
+  const remote = props.remote
+  const status = useAtomValue(SyncStateAtoms.remotesStatus)[remote.remoteId]
+  const siteName = remote.data.site_name || remote.remoteId
+  const id = `wpRemote-${remote.remoteId.replace(/[^a-zA-Z0-9]/g, '-')}`
 
-  useEffect(() => {
-    WordpressHelper.instance.syncWithRemote(props.remoteId)
-  }, [props.remoteId])
-
-  if (!remoteInfo?.data || !remoteInfo.data.site_name) {
-    return null
+  let tooltip = `${siteName}: synced`
+  let ringClassName = 'ring-transparent'
+  if (remote.needsReauth) {
+    tooltip = `${siteName}: log in again to resume syncing`
+    ringClassName = 'ring-red-500'
+  } else if (status?.isSyncing) {
+    tooltip = `${siteName}: syncing…`
+    ringClassName = 'ring-prussian-blue-400 animate-pulse'
+  } else if (status?.error) {
+    tooltip = `${siteName}: last sync failed`
+    ringClassName = 'ring-orange-500'
   }
 
-  const handleClick = () => {
-    WordpressHelper.instance.syncWithRemote(props.remoteId)
-  }
+  useTippyTooltip(id, tooltip)
 
   return (
-    <>
-      {!remoteInfo.data.icon_base_64 && (
-        <button
-          className="w-8 h-8 rounded-full flex items-center justify-center bg-gray-300 text-white font-bold text-xs border-none"
-          aria-label="WordPress Sync"
-          onClick={handleClick}
-        >
-          {getFallbackText(remoteInfo.data.site_name)}
-        </button>
-      )}
-      {remoteInfo.data.icon_base_64 && (
-        <button
-          className="w-8 h-8 p-1 rounded-full flex items-center justify-center border border-gray-300"
-          aria-label="WordPress Sync"
-          onClick={handleClick}
-        >
-          <img
-            src={remoteInfo.data.icon_base_64}
-            alt={remoteInfo.data.site_name}
-            className="w-full h-full rounded-full"
-          />
-        </button>
-      )}
-    </>
+    <Link
+      id={id}
+      to={ANITA_URLS.remotes}
+      aria-label={tooltip}
+      className={`rounded-full ring-2 ring-offset-1 ${ringClassName}`}
+    >
+      <SiteIcon
+        remote={remote}
+        sizeClassName="w-8 h-8"
+      />
+    </Link>
   )
 }

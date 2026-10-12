@@ -32,7 +32,11 @@ export interface IModalPropsClosed {
 export type IModalProps = IModalPropsOpen | IModalPropsClosed
 
 export class ModalState {
+  private static hideTimer: ReturnType<typeof setTimeout> | undefined
+
   public static showModal = (props: IModalProps) => {
+    // A modal opened right after another one was closed must not be reset by the close animation timer.
+    clearTimeout(ModalState.hideTimer)
     Bucket.general.set(ModalStateAtoms.modalProps, { type: Type.primary, ...props, isOpen: true } as IModalPropsOpen)
   }
 
@@ -44,7 +48,7 @@ export class ModalState {
   public static hideModal = () => {
     const currentConfig = Bucket.general.get(ModalStateAtoms.modalProps)
     Bucket.general.set(ModalStateAtoms.modalProps, { ...currentConfig, isOpen: false })
-    setTimeout(() => {
+    ModalState.hideTimer = setTimeout(() => {
       Bucket.general.set(ModalStateAtoms.modalProps, { isOpen: false })
     }, 300)
   }

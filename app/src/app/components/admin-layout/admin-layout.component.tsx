@@ -6,6 +6,7 @@ import { OAuthUtils } from 'app/libs/cloud-sync/o-auth-utils.class'
 import { useAtomValue } from 'jotai'
 import { ProjectAtoms } from 'app/state/project/project.atoms'
 import { Outlet } from 'react-router-dom'
+import { WordPressSyncAgent } from 'app/components/admin-layout/wordpress-sync-agent.component'
 import type { FC } from 'react'
 
 export const AdminLayout: FC = () => {
@@ -16,6 +17,7 @@ export const AdminLayout: FC = () => {
 
   return (
     <>
+      <WordPressSyncAgent />
       <AdminLayoutHeader />
       <div className="relative admin-container flex">
         {!!project && <AdminLayoutSidebar />}

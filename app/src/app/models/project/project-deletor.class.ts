@@ -1,8 +1,16 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
-import { CloudSyncBase, SyncManager } from 'app/cross-refs-exports'
-import { EDITOR_MODE } from 'app/components/editor-mode.enum'
+import { CloudSyncBase } from 'app/cross-refs-exports'
+import { WordPressSync } from 'app/libs/cloud-sync/wordpress/wordpress-sync.class'
 import type { IProjectSettings } from 'app/models/project/project.declarations'
+
+interface IProjectDeletorOptions {
+  /**
+   * Also delete the project from the WordPress site it is synced with. If that fails, the local copy is kept.
+   * Default true.
+   */
+  deleteOnRemote?: boolean
+}
 
 /**
  * Deletes a project from the current device
@@ -10,7 +18,7 @@ import type { IProjectSettings } from 'app/models/project/project.declarations'
 export class ProjectDeletor {
   /**
    * Creates an instance of project deletor.
-   * @param projectSettings the settings of the project to delete
+   * @param projectId the id of the project to delete
    */
   constructor (
     private projectId: string,
@@ -19,12 +27,16 @@ export class ProjectDeletor {
   /**
    * Deletes the project and reloads the list of projects
    */
-  public async delete (): Promise<void> {
+  public async delete (options: IProjectDeletorOptions = {}): Promise<void> {
+    if (options.deleteOnRemote !== false) {
+      await WordPressSync.deleteRemoteProject(this.projectId)
+    }
     await this.callOnProjectDeleted()
-    this.deleteOnRemote()
     await this.doDelete()
     await CloudSyncBase.clearRemoteId(this.projectId)
     await CloudSyncBase.deleteLastSync(this.projectId)
+    await CloudSyncBase.deleteRemoteProjectInfo(this.projectId)
+    delete dbInstances[this.projectId]
   }
 
   /**
@@ -32,10 +44,6 @@ export class ProjectDeletor {
    */
   private async doDelete (): Promise<void> {
     await dbInstances.system.callDeletor<IProjectSettings>(CLIENT_SECTIONS.projects, { id: this.projectId }).autoDelete()
-  }
-
-  private deleteOnRemote () {
-    SyncManager.syncWithRemoteOrLocal({ mode: EDITOR_MODE.delete, type: 'project', projectId: this.projectId })
   }
 
   private async callOnProjectDeleted (): Promise<void> {

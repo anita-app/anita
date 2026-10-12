@@ -1,6 +1,6 @@
 import { useTippyTooltip } from 'app/components/hooks/tippy-tooltip'
 import { Icons } from 'app/libs/icons/icons.class'
-import type { FC } from 'react'
+import { useId, type FC } from 'react'
 
 interface IFormElementLabelProps {
   label: string
@@ -8,7 +8,8 @@ interface IFormElementLabelProps {
 }
 
 export const FormElementLabel: FC<IFormElementLabelProps> = (props) => {
-  const elementId = encodeURIComponent(props.label)
+  // Used as a CSS selector by the tooltip: only letters, digits and dashes.
+  const elementId = `label-hint-${useId().replace(/[^a-zA-Z0-9-]/g, '')}`
   useTippyTooltip(elementId, props.labelHint)
 
   return (

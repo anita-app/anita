@@ -7,6 +7,8 @@ import * as dateFormat from 'date-format'
 import { CardFooter } from 'app/components/shared-components/common-ui-eles/card-footer.component'
 import { useAtomValue } from 'jotai'
 import { ProjectAtoms } from 'app/state/project/project.atoms'
+import { SyncStateAtoms } from 'app/state/sync/sync-state.atoms'
+import { Icons } from 'app/libs/icons/icons.class'
 import type { FC } from 'react'
 import type { IProjectSettings } from 'app/models/project/project.declarations'
 
@@ -16,6 +18,7 @@ interface IProjectCardProps {
 
 export const ProjectCard: FC<IProjectCardProps> = (props) => {
   const projectState = useAtomValue(ProjectAtoms.currentSystemData)
+  const remotes = useAtomValue(SyncStateAtoms.wordPressRemotes)
 
   return (
     <div className=" mt-4 h-full border-2 border-gray-200 border-opacity-60 rounded-lg bg-white">
@@ -25,6 +28,12 @@ export const ProjectCard: FC<IProjectCardProps> = (props) => {
 
         <p className="text-gray-600 text-xs">Created on:</p>
         <p className="text-md">{dateFormat('yyyy/MM/dd, at hh:mm', new Date(props.project.createdAt))}</p>
+        {props.project.remoteStorage && (
+          <p className="text-sm text-gray-500 mt-3 flex items-center gap-1">
+            {Icons.render('logoWordpress')}
+            <span>Synced with {remotes.find(remote => remote.remoteId === props.project.remoteStorage)?.data.site_name ?? props.project.remoteStorage}</span>
+          </p>
+        )}
         <CardFooter>
           <DeleteProjectButton project={props.project} />
           <div className="ml-auto">

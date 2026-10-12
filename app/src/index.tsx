@@ -9,6 +9,15 @@ import * as ReactDOMClient from 'react-dom/client'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 import 'tippy.js/dist/tippy.css'
 
+// React Router runs page changes in a view transition; when the page updates during the animation (for example
+// because a sync finished), the browser aborts the transition and the router leaves the rejection unhandled.
+// The navigation itself completes, so the error is harmless.
+window.addEventListener('unhandledrejection', (event) => {
+  if (event.reason?.name === 'InvalidStateError' && /transition was aborted/i.test(event.reason?.message ?? '')) {
+    event.preventDefault()
+  }
+})
+
 const start = async () => {
   await new Startupper().init()
   const rootElement = document.getElementById('root')

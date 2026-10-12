@@ -11,6 +11,13 @@ import { SyncState } from 'app/state/sync/sync-state.class'
 import type { ISyncWithRemoteOrLocalAddProjectProps, ISyncWithRemoteOrLocalEditProjectProps } from 'app/cross-refs-exports'
 import type { TSystemData } from 'app/models/project/project.declarations'
 
+export interface IProjectSaverOptions {
+  /**
+   * The data comes from a remote copy: timestamps are kept as they are and no sync is triggered.
+   */
+  fromSync?: boolean
+}
+
 export class ProjectSaver {
   private localStorage: LOCAL_STORAGE_SYSTEMS | undefined
   constructor (
@@ -19,13 +26,15 @@ export class ProjectSaver {
       [RESERVED_AUDS_KEYS._sections]: [],
     },
     private mode: EDITOR_MODE.add | EDITOR_MODE.edit,
-
+    private options: IProjectSaverOptions = {},
   ) { }
 
   public async save (): Promise<TSystemData> {
     SyncState.setIsSavingInFs(true)
 
-    if (this.mode === EDITOR_MODE.edit) {
+    if (this.options.fromSync) {
+      // Timestamps come from the remote copy.
+    } else if (this.mode === EDITOR_MODE.edit) {
       this.setUpdatedAt()
     } else {
       this.setCreatedAt()
@@ -43,9 +52,14 @@ export class ProjectSaver {
 
     await this.postSaveActions()
 
+    if (this.options.fromSync) {
+      SyncState.setIsSavingInFs(false)
+      return this.project
+    }
+
     const payload = this.mode === EDITOR_MODE.add
       ? { mode: this.mode, type: 'project', systemData: this.project } as ISyncWithRemoteOrLocalAddProjectProps
-      : { mode: this.mode, type: 'project' } as ISyncWithRemoteOrLocalEditProjectProps
+      : { mode: this.mode, type: 'project', systemData: this.project } as ISyncWithRemoteOrLocalEditProjectProps
 
     SyncManager.syncWithRemoteOrLocal(payload)
 

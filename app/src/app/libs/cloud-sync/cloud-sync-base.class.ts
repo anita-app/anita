@@ -4,11 +4,10 @@ import Dexie from 'dexie'
 import { ProjectAtoms } from 'app/state/project/project.atoms'
 import { Bucket } from 'app/state/bucket.state'
 import { CloudSyncTable } from './cloud-sync.const'
-import type { IWordPressAuthData } from 'app/libs/cloud-sync/wordpress/wordpress-helper.class'
-import type { IWordPressRemoteInfo, IWordPressSpaceInfo } from 'app/libs/cloud-sync/wordpress/wordpress.const'
+import type { IRemoteProjectInfo, IWordPressAuthData, IWordPressRemoteInfo, IWordPressSpaceInfo } from 'app/libs/cloud-sync/wordpress/wordpress.const'
 import type { IDropboxTokens } from './cloud-sync.const'
 
-const DB_VERSION = 6
+const DB_VERSION = 7
 
 export enum SupportedCloud {
   DROPBOX = 'dropbox',
@@ -38,6 +37,7 @@ interface ICloudSyncDB<T extends SupportedCloud> {
     fileId: string
   }
   [CloudSyncTable.REMOTES_INFO]: IWordPressRemoteInfo
+  [CloudSyncTable.REMOTE_PROJECTS]: IRemoteProjectInfo
 }
 
 export class CloudSyncBase<T extends SupportedCloud> {
@@ -81,6 +81,7 @@ export class CloudSyncBase<T extends SupportedCloud> {
         [CloudSyncTable.SYNC_INFO]: 'projectId',
         [CloudSyncTable.FILES_INFO]: 'projectId',
         [CloudSyncTable.REMOTES_INFO]: 'remoteId',
+        [CloudSyncTable.REMOTE_PROJECTS]: 'projectId, remoteId',
       })
     }
   }
@@ -93,11 +94,16 @@ export class CloudSyncBase<T extends SupportedCloud> {
     return CloudSyncBase.DB!.table<ICloudSyncDB<T>['accounts']>(CloudSyncTable.ACCOUNTS).get({ service: idToUse || this.service })
   }
 
-  public async setLastSync (projectId: string) {
-    return CloudSyncBase.DB!.table<ICloudSyncDB<T>['syncInfo']>(CloudSyncTable.SYNC_INFO).put({ projectId, lastSync: DateTools.getUtcIsoString() })
+  /**
+   * Stores the time of the last successful sync of a project.
+   * @param lastSync defaults to now; pass the time the sync started to never miss changes made while syncing.
+   */
+  public async setLastSync (projectId: string, lastSync: string = DateTools.getUtcIsoString()) {
+    return CloudSyncBase.DB!.table<ICloudSyncDB<T>['syncInfo']>(CloudSyncTable.SYNC_INFO).put({ projectId, lastSync })
   }
 
   public static async getLastSync <T extends SupportedCloud> (projectId: string): Promise<string | undefined> {
+    CloudSyncBase.initDB()
     return (await CloudSyncBase.DB!.table<ICloudSyncDB<T>['syncInfo']>(CloudSyncTable.SYNC_INFO).get({ projectId }))?.lastSync
   }
 
@@ -105,8 +111,37 @@ export class CloudSyncBase<T extends SupportedCloud> {
     return CloudSyncBase.DB!.table<ICloudSyncDB<T>['syncInfo']>(CloudSyncTable.SYNC_INFO).delete(projectId)
   }
 
-  protected async saveRemoteInfo (remoteId: string, data: IWordPressSpaceInfo) {
-    return CloudSyncBase.DB!.table<ICloudSyncDB<T>['remotesInfo']>(CloudSyncTable.REMOTES_INFO).put({ remoteId, data })
+  protected async saveRemoteInfo (remoteId: string, data: IWordPressSpaceInfo, needsReauth = false) {
+    return CloudSyncBase.DB!.table<ICloudSyncDB<T>['remotesInfo']>(CloudSyncTable.REMOTES_INFO).put({ remoteId, data, needsReauth })
+  }
+
+  protected async setRemoteNeedsReauth (remoteId: string, needsReauth: boolean) {
+    return CloudSyncBase.DB!.table<ICloudSyncDB<T>['remotesInfo']>(CloudSyncTable.REMOTES_INFO).update(remoteId, { needsReauth })
+  }
+
+  protected async deleteRemoteInfo (remoteId: string) {
+    await CloudSyncBase.DB!.table<ICloudSyncDB<T>['remotesInfo']>(CloudSyncTable.REMOTES_INFO).delete(remoteId)
+    await CloudSyncBase.DB!.table<ICloudSyncDB<T>['accounts']>(CloudSyncTable.ACCOUNTS).delete(remoteId)
+  }
+
+  public static async getRemoteProjectInfo (projectId: string): Promise<IRemoteProjectInfo | undefined> {
+    CloudSyncBase.initDB()
+    return CloudSyncBase.DB!.table<IRemoteProjectInfo>(CloudSyncTable.REMOTE_PROJECTS).get(projectId)
+  }
+
+  public static async getRemoteProjectsInfo (remoteId: string): Promise<Array<IRemoteProjectInfo>> {
+    CloudSyncBase.initDB()
+    return CloudSyncBase.DB!.table<IRemoteProjectInfo>(CloudSyncTable.REMOTE_PROJECTS).where('remoteId').equals(remoteId).toArray()
+  }
+
+  public static async saveRemoteProjectInfo (info: IRemoteProjectInfo): Promise<void> {
+    CloudSyncBase.initDB()
+    await CloudSyncBase.DB!.table<IRemoteProjectInfo>(CloudSyncTable.REMOTE_PROJECTS).put(info)
+  }
+
+  public static async deleteRemoteProjectInfo (projectId: string): Promise<void> {
+    CloudSyncBase.initDB()
+    await CloudSyncBase.DB!.table<IRemoteProjectInfo>(CloudSyncTable.REMOTE_PROJECTS).delete(projectId)
   }
 
   public async getAllRemotesInfo (): Promise<Array<ICloudSyncDB<T>['remotesInfo']>> {

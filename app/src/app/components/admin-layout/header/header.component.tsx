@@ -66,13 +66,13 @@ export const AdminLayoutHeader: FC = () => {
       </div>
 
       {(hasMenu || hasProjectLoaded || hasWordPressRemotes) && (
-        <div className="flex items-center justify-end w-1/3 md:pr-5">
+        <div className="flex items-center justify-end w-1/3 pr-2 md:pr-5">
           {hasProjectLoaded && !project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.remoteStorage && (
             <div>
               <DropboxSyncButton projectId={project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.id} />
             </div>
           )}
-          {!!remoteIdsLength && (<WordPressSyncButtons remoteIds={remoteIds} />)}
+          {!!remoteIdsLength && (<WordPressSyncButtons />)}
         </div>
       )}
 

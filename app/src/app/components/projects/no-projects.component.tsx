@@ -22,7 +22,7 @@ export const ProjectsNone: FC = () => {
         <div className="h-full bg-white shadow px-8 pt-16 pb-16 rounded-lg overflow-hidden text-center relative">
           <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">No projects found</h2>
           <h1 className="title-font sm:text-2xl text-xl font-medium text-gray-900 mb-3">You don&apos;t have any Projects on this device yet</h1>
-          <p className="leading-relaxed mb-3">You can create a new project or import one from an existing project file.</p>
+          <p className="leading-relaxed mb-3">You can create a new project, import one from an existing project file, or connect a WordPress site to get the projects stored there.</p>
           <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-2 mt-7">
             <ImportProjectButton btnType="text" />
             <Button
@@ -34,6 +34,15 @@ export const ProjectsNone: FC = () => {
               marginClassName="mt-4 lg:mt-0"
             />
           </div>
+          <Button
+            id="connectWordPress"
+            label="Connect a WordPress site"
+            iconLeft="logoWordpress"
+            type={Type.secondary}
+            size="lg"
+            href={ANITA_URLS.remotes}
+            marginClassName="mt-4"
+          />
         </div>
       </div>
     </div>

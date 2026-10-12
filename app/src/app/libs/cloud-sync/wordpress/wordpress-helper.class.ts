@@ -1,31 +1,18 @@
-import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { CloudSyncBase, SupportedCloud } from 'app/cross-refs-exports'
 import { CloudSyncTable } from 'app/libs/cloud-sync/cloud-sync.const'
 import { WordPressClient } from 'app/libs/cloud-sync/wordpress/wordpress-client.class'
-import { WORD_PRESS_ROLE_WEIGHT } from 'app/libs/cloud-sync/wordpress/wordpress.const'
-import { ProjectDataImporter } from 'app/libs/projects-helpers/project-importers/project-data-importer.class'
-import { ProjectDeletor } from 'app/models/project/project-deletor.class'
-import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
-import { Bucket } from 'app/state/bucket.state'
-import { ModalState } from 'app/state/modal/modal-state.class'
-import { ProjectsListAtoms } from 'app/state/projects-list/projects-list.atoms'
-import { SyncStateAtoms } from 'app/state/sync/sync-state.atoms'
+import { WordPressApiError, WordPressErrorCode, getWordPressErrorMessage } from 'app/libs/cloud-sync/wordpress/wordpress-api-error.class'
 import { SyncState } from 'app/state/sync/sync-state.class'
 import { liveQuery } from 'dexie'
-import type { IWordPressRemoteInfo } from 'app/libs/cloud-sync/wordpress/wordpress.const'
+import type { IWordPressAuthData, IWordPressRemoteInfo, IWordPressSpaceInfo } from 'app/libs/cloud-sync/wordpress/wordpress.const'
 
 /**
- * API reference: Anita Project Manager Wordpress plugin
+ * Connected WordPress sites: credentials, site information and API clients.
+ * API reference: anita-project-manager-for-wordpress/docs/API.md
  */
-
-export interface IWordPressAuthData {
-  access_token: string
-  refresh_token: string
-  remoteBaseUrl: string
-}
-
 export class WordpressHelper extends CloudSyncBase<SupportedCloud.WORDPRESS> {
   public static instance: WordpressHelper
+  private clients: Record<string, WordPressClient> = {}
 
   public static init (): WordpressHelper {
     WordpressHelper.instance = new WordpressHelper()
@@ -38,97 +25,86 @@ export class WordpressHelper extends CloudSyncBase<SupportedCloud.WORDPRESS> {
     this.watchRemotesChanges()
   }
 
+  /**
+   * The id of a site, as stored in the `remoteStorage` setting of its projects: the address without protocol and "www.".
+   * The plugin computes the same value, so it is identical on every device.
+   */
+  public static normalizeRemoteId (url: string): string {
+    return url.trim().replace(/^https?:\/\//i, '').replace(/^www\./i, '').replace(/\/+$/, '').toLowerCase()
+  }
+
   private watchRemotesChanges = () => {
     liveQuery(() => CloudSyncBase.getDB().table<IWordPressRemoteInfo>(CloudSyncTable.REMOTES_INFO).toArray())
       .subscribe((remotes) => {
         SyncState.setWordPressRemotes(remotes)
-        const remoteIds = remotes.map(remote => remote.remoteId)
-        Bucket.general.set(SyncStateAtoms.wordPressRemotesIds, remoteIds)
       })
   }
 
-  public async getAccessTokenFromCode (code: string) {
-    const unencodedData = atob(code)
-    const authData: IWordPressAuthData = JSON.parse(unencodedData)
-    if (authData.access_token && authData.refresh_token) {
-      const cleanRemoteUrl = authData.remoteBaseUrl.replace('https://', '').replace('http://', '')
-      this.storeDataForService(authData, cleanRemoteUrl)
-      const remoteId = authData.remoteBaseUrl.replace(/(https?:\/\/)?(www\.)?/i, '').replace(/\/$/, '')
-      const client = new WordPressClient(remoteId, authData)
-      try {
-        const res = await client.getSpaceInfo()
-        if (res.statusText === 'OK') {
-          this.saveRemoteInfo(remoteId, res.data)
-        } else if (res?.statusText === 'rest_token_tampered') {
-          ModalState.showModal({
-            isOpen: true,
-            title: 'Authentication error',
-            hideCancelButton: true,
-            type: Type.primary,
-            children: `There is an issue with the your authentication data. Please re-authenticate on ${cleanRemoteUrl}.`,
-            ctas: [{
-              actionText: 'Open login page',
-              handleClickAction: () => client.openLoginPage(),
-            }],
-          })
-        }
-      } catch (error: unknown) {
-        console.error('Error getting space info:', error)
-      }
-    }
+  public getRemoteName (remoteId: string): string {
+    return SyncState.getWordPressRemote(remoteId)?.data.site_name || remoteId
   }
 
-  public async getClient (remoteId: string): Promise<WordPressClient | undefined> {
+  /**
+   * Returns the API client of a site. Throws if the site is not connected on this device.
+   */
+  public async getClient (remoteId: string): Promise<WordPressClient> {
+    if (this.clients[remoteId]) {
+      return this.clients[remoteId]
+    }
     const authData = await this.getDataForService(remoteId)
-    if (!authData) {
-      ModalState.showModal({
-        isOpen: true,
-        title: 'Authentication error',
-        hideCancelButton: true,
-        type: Type.primary,
-        children: `There is an issue with the your authentication data. Please re-authenticate on ${remoteId}.`,
-        ctas: [{
-          actionText: 'Open login page',
-          handleClickAction: () => window.open(`https://${remoteId}/index.php?anita_oauth=1`),
-        }],
-      })
-      return
+    if (!authData?.access_token) {
+      throw new WordPressApiError(WordPressErrorCode.notConnected, `${this.getRemoteName(remoteId)} is not connected on this device.`)
     }
-    return new WordPressClient(remoteId, authData)
+    const data: IWordPressAuthData = {
+      access_token: authData.access_token,
+      refresh_token: authData.refresh_token,
+      remoteBaseUrl: authData.remoteBaseUrl,
+      apiUrl: authData.apiUrl,
+    }
+    this.clients[remoteId] = new WordPressClient(remoteId, data, {
+      onTokensRefreshed: async (refreshed) => {
+        await this.storeDataForService(refreshed, remoteId)
+      },
+      onAuthFailed: (error) => this.markNeedsReauth(remoteId, error),
+    })
+    return this.clients[remoteId]
   }
 
-  public async syncWithRemote (remoteId: string) {
+  /**
+   * Stores the credentials and the information of a site after the user logged in.
+   */
+  public async saveConnection (remoteId: string, authData: IWordPressAuthData, spaceInfo: IWordPressSpaceInfo): Promise<void> {
+    delete this.clients[remoteId]
+    await this.storeDataForService(authData, remoteId)
+    await this.saveRemoteInfo(remoteId, spaceInfo, false)
+    SyncState.updateRemoteStatus(remoteId, { error: undefined })
+  }
+
+  public async refreshSpaceInfo (remoteId: string): Promise<IWordPressSpaceInfo> {
     const client = await this.getClient(remoteId)
-    if (!client) {
-      return
-    }
-    const remoteProjects = (await client.getProjects()) || []
-    const localProjects = Bucket.general.get(ProjectsListAtoms.projects)?.filter(project => project.remoteStorage === remoteId)
-    const localProjectsIds = localProjects?.map(project => project.id)
-    for (const remoteProject of remoteProjects) {
-      if (!localProjectsIds?.includes(remoteProject[RESERVED_AUDS_KEYS._settings][0].id)) {
-        new ProjectDataImporter(remoteProject).import()
-      }
-    }
-    const remoteProjectsIds = remoteProjects.map(project => project[RESERVED_AUDS_KEYS._settings][0].id)
-    for (const localProjectId of localProjectsIds) {
-      if (remoteProjectsIds.includes(localProjectId)) {
-        continue
-      }
-      new ProjectDeletor(localProjectId).delete()
-    }
+    const spaceInfo = await client.getSpaceInfo()
+    await this.saveRemoteInfo(remoteId, spaceInfo, false)
+    return spaceInfo
   }
 
-  public canDeleteProject (remoteId: string): boolean {
-    const remoteInfo = Bucket.general.get(SyncStateAtoms.remoteInfo[remoteId])
-    if (!remoteInfo) {
-      return false
+  public async markNeedsReauth (remoteId: string, error: WordPressApiError): Promise<void> {
+    delete this.clients[remoteId]
+    if (SyncState.getWordPressRemote(remoteId)) {
+      await this.setRemoteNeedsReauth(remoteId, true)
     }
-    const userRole = remoteInfo.data.user_role
-    const userRoleWeight = WORD_PRESS_ROLE_WEIGHT[userRole]
-    if (userRoleWeight >= WORD_PRESS_ROLE_WEIGHT.administrator) {
-      return true
-    }
-    return false
+    SyncState.updateRemoteStatus(remoteId, { isSyncing: false, error: getWordPressErrorMessage(error, this.getRemoteName(remoteId)) })
+  }
+
+  /**
+   * Removes the credentials and the information of a site from this device.
+   */
+  public async forgetRemote (remoteId: string): Promise<void> {
+    delete this.clients[remoteId]
+    await this.deleteRemoteInfo(remoteId)
+    SyncState.updateRemoteStatus(remoteId, { isSyncing: false, error: undefined, lastSync: undefined })
+  }
+
+  public async getRemoteUserId (remoteId: string): Promise<number | undefined> {
+    return (await this.getRemoteInfo(remoteId))?.data.user_id
   }
 }

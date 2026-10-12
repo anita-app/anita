@@ -8,7 +8,8 @@ export class OAuthUtils {
       window.location.hash = `${ANITA_URLS.auth}/${UNIQUE_DATA_SEPARATOR}${hashData}`
     }
     if (window.location.href.includes('?code=')) {
-      const base = window.location.href.includes('localhost') ? '/' : '/app/'
+      // The app can be served from any path (e.g. /app/ on anita-app.com, or a self-hosted installation).
+      const base = window.location.pathname
       const hashData = window.location.href.split('?code=')[1].split('#')[0]
       window.location.href = `${base}#${ANITA_URLS.auth}/${UNIQUE_DATA_SEPARATOR}code=${hashData}`
     }
