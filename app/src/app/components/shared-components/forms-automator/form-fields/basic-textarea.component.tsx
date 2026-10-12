@@ -28,7 +28,9 @@ export const BasicTextarea: FC<ICommonFormEleProps> = memo(function BasicTextare
       />
       <textarea
         name={formEle.fieldName}
-        className={`w-full ${!isValid && touched ? FORM_ELEMENTS_CSS_CLASSES_ERR : FORM_ELEMENTS_CSS_CLASSES}`}
+        aria-label={formEle.label}
+        rows={4}
+        className={`w-full resize-y ${!isValid && touched ? FORM_ELEMENTS_CSS_CLASSES_ERR : FORM_ELEMENTS_CSS_CLASSES}`}
         value={element[formEle.fieldName]}
         onChange={event => handleChange(formEle.fieldName, event.target.value)}
         onBlur={() => setTouched(true)}

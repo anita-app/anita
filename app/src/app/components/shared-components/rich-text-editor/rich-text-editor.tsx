@@ -257,7 +257,7 @@ export const RichTextEditor: FC<IRichTextEditorProps> = (props) => {
           renderLeaf={renderLeaf}
           placeholder="Enter text…"
           spellCheck={true}
-          autoFocus={true}
+          className="px-1 py-1 focus:outline-none"
           onKeyDown={event => {
             for (const hotkey in HOTKEYS) {
               if (isHotkey(hotkey, event as any)) {

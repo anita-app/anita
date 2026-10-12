@@ -99,3 +99,7 @@
 [data-slate-editor] > * + * {
   margin-top: 1em;
 }
+/* About six lines by default, growing with the content. Slate sets an inline min-height (the placeholder height). */
+#rich-text-editor [data-slate-editor] {
+  min-height: 9rem !important;
+}

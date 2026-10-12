@@ -1,4 +1,5 @@
 import { BasicText } from 'app/components/shared-components/values-renderers/basic-text.component'
+import { MultilineText } from 'app/components/shared-components/values-renderers/multiline-text.component'
 import { Color } from 'app/components/shared-components/values-renderers/color.component'
 import { Email } from 'app/components/shared-components/values-renderers/email.component'
 import { FormattedDateTime } from 'app/components/shared-components/values-renderers/formatted-date-time.component'
@@ -71,7 +72,7 @@ export const customRenderPicker = (formModel: FormFieldsModel<TSupportedFormsTyp
     case FORM_COMPONENTS_CODES.richText:
       return RichText
     case FORM_COMPONENTS_CODES.basicTextarea:
-      return BasicText
+      return MultilineText
     case FORM_COMPONENTS_CODES.basicSelect:
     case FORM_COMPONENTS_CODES.basicRadio:
       // eslint-disable-next-line dot-notation

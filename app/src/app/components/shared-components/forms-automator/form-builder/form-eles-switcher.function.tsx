@@ -3,6 +3,7 @@ import { BasicCheckbox } from 'app/components/shared-components/forms-automator/
 import { BasicInput } from 'app/components/shared-components/forms-automator/form-fields/basic-input.component'
 import { BasicRadio } from 'app/components/shared-components/forms-automator/form-fields/basic-radio.component'
 import { BasicSelect } from 'app/components/shared-components/forms-automator/form-fields/basic-select.component'
+import { BasicTextarea } from 'app/components/shared-components/forms-automator/form-fields/basic-textarea.component'
 import { RichText } from 'app/components/shared-components/forms-automator/form-fields/rich-text.component'
 import { ChildOfSelectorForSection } from 'app/components/shared-components/forms-automator/form-fields/child-of-selector-for-section.component'
 import { HiddenInput } from 'app/components/shared-components/forms-automator/form-fields/hidden-input.component'
@@ -41,6 +42,13 @@ export function formElesSwitcher (key: string, componentCode: FORM_COMPONENTS_CO
     case FORM_COMPONENTS_CODES.richText:
       return (
         <RichText
+          key={key}
+          {...props}
+        />
+      )
+    case FORM_COMPONENTS_CODES.basicTextarea:
+      return (
+        <BasicTextarea
           key={key}
           {...props}
         />
