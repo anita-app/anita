@@ -16,10 +16,7 @@ export const RichText: FC<IRichTextProps> = (props) => {
   const renderLeaf = useCallback((props: any) => <RichTextEditorLeaf {...props} />, [])
   const editor = useMemo(() => withHistory(withReact(createEditor())), [])
   return (
-    <div
-      id="rich-text-editor"
-      className="mt-2"
-    >
+    <div id="rich-text-editor">
       <Slate
         editor={editor}
         value={RichTextEditorHelpers.makeInitialOutputData(props.value)}
@@ -28,7 +25,6 @@ export const RichText: FC<IRichTextProps> = (props) => {
           renderElement={renderElement}
           renderLeaf={renderLeaf}
           spellCheck={true}
-          autoFocus={true}
           readOnly={true}
         />
       </Slate>
