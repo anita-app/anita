@@ -7,7 +7,7 @@ import { WordPressAuth } from 'app/libs/cloud-sync/wordpress/wordpress-auth.clas
 import { WordPressApiError, WordPressErrorCode, getWordPressErrorMessage } from 'app/libs/cloud-sync/wordpress/wordpress-api-error.class'
 import { WORDPRESS_PLUGIN_NAME, WORDPRESS_PLUGIN_URL } from 'app/libs/cloud-sync/wordpress/wordpress.const'
 
-const getConnectionErrorMessage = (error: unknown, siteUrl: string): string => {
+export const getConnectionErrorMessage = (error: unknown, siteUrl: string): string => {
   const host = siteUrl.replace(/^https?:\/\//, '')
   const apiError = WordPressApiError.from(error)
   switch (apiError.code) {

@@ -8,7 +8,8 @@ export const TelephoneNumber: FC<IValidatorsProps> = memo(function TelephoneNumb
   const isValidTelephonenumber = /^\+?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4,})$/.test(value)
 
   useEffect(() => {
-    updateValidatorState(SUPPORTED_VALIDATORS.telephoneNumber, isValidTelephonenumber)
+    // An empty value is valid: whether the field is mandatory is checked by RequiredField.
+    updateValidatorState(SUPPORTED_VALIDATORS.telephoneNumber, !value || isValidTelephonenumber)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
 

@@ -14,6 +14,10 @@ export interface SectionDetailsDeclaration {
   title_short?: string
   icon?: TIconName
   childOf?: Array<string>
+  /**
+   * Order of the section in the project. Sections are stored by id, so the order is kept here.
+   */
+  position?: number
   [RESERVED_FIELDS.createdAt]: string
   [RESERVED_FIELDS.updatedAt]?: string
 }

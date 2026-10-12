@@ -3,6 +3,7 @@ import { DropboxSyncButton } from 'app/components/admin-layout/header/dropbox-sy
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { WordPressSyncButtons } from 'app/components/admin-layout/header/wordpress-sync/wordpress-sync-buttons'
 import { useAtomValue } from 'jotai'
+import { LocalOnlyHeaderButton } from 'app/components/project/local-only-banner.component'
 import { SyncStateAtoms } from 'app/state/sync/sync-state.atoms'
 import { LayoutState } from 'app/state/layout/layout-state.class'
 import { LayoutAtoms } from 'app/state/layout/layout.atoms'
@@ -72,6 +73,7 @@ export const AdminLayoutHeader: FC = () => {
               <DropboxSyncButton projectId={project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.id} />
             </div>
           )}
+          {hasProjectLoaded && <LocalOnlyHeaderButton />}
           {!!remoteIdsLength && (<WordPressSyncButtons />)}
         </div>
       )}

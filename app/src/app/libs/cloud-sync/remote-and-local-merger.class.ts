@@ -124,9 +124,10 @@ export class RemoteAndLocalMerger {
     const local = { settings: localData[RESERVED_AUDS_KEYS._settings], sections: localData[RESERVED_AUDS_KEYS._sections] }
     const remote = { settings: remoteData[RESERVED_AUDS_KEYS._settings], sections: remoteData[RESERVED_AUDS_KEYS._sections] }
     // localStorage is a device setting and remoteStorage is implied by the site: neither is compared.
+    // Positions follow the order of the sections, which is compared as it is.
     const comparable = (structure: typeof local) => stableStringify({
-      ...structure,
       settings: structure.settings.map(settings => ({ ...settings, localStorage: undefined, remoteStorage: undefined })),
+      sections: structure.sections.map(section => ({ ...section, position: undefined })),
     })
     if (comparable(local) === comparable(remote)) {
       return null

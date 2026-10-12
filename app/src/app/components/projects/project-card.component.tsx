@@ -9,6 +9,7 @@ import { useAtomValue } from 'jotai'
 import { ProjectAtoms } from 'app/state/project/project.atoms'
 import { SyncStateAtoms } from 'app/state/sync/sync-state.atoms'
 import { Icons } from 'app/libs/icons/icons.class'
+import { OnboardingState } from 'app/state/onboarding/onboarding-state.class'
 import type { FC } from 'react'
 import type { IProjectSettings } from 'app/models/project/project.declarations'
 
@@ -28,12 +29,23 @@ export const ProjectCard: FC<IProjectCardProps> = (props) => {
 
         <p className="text-gray-600 text-xs">Created on:</p>
         <p className="text-md">{dateFormat('yyyy/MM/dd, at hh:mm', new Date(props.project.createdAt))}</p>
-        {props.project.remoteStorage && (
-          <p className="text-sm text-gray-500 mt-3 flex items-center gap-1">
-            {Icons.render('logoWordpress')}
-            <span>Synced with {remotes.find(remote => remote.remoteId === props.project.remoteStorage)?.data.site_name ?? props.project.remoteStorage}</span>
-          </p>
-        )}
+        {props.project.remoteStorage
+          ? (
+            <p className="text-sm text-gray-500 mt-3 flex items-center gap-1">
+              {Icons.render('logoWordpress')}
+              <span>Synced with {remotes.find(remote => remote.remoteId === props.project.remoteStorage)?.data.site_name ?? props.project.remoteStorage}</span>
+            </p>)
+          : (
+            <div className="mt-3 flex flex-wrap items-center gap-2 rounded-md bg-orange-50 border border-orange-200 px-3 py-2 text-sm text-orange-800">
+              <span className="flex items-center gap-1">{Icons.render('warningOutline')} Only on this device, no backup</span>
+              <button
+                type="button"
+                onClick={() => OnboardingState.openStoreOnWordPress(props.project.id)}
+                className="underline font-medium hover:text-orange-900"
+              >
+                Save it on WordPress
+              </button>
+            </div>)}
         <CardFooter>
           <DeleteProjectButton project={props.project} />
           <div className="ml-auto">

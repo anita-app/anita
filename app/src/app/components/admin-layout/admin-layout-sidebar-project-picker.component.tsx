@@ -122,7 +122,7 @@ export const AdminLayoutSidebarProjectPicker: FC<IProjectPickerProps> = (props) 
             </button>
             <button
               className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200"
-              onClick={() => goToPlainRoute(ANITA_URLS.projectAdd)}
+              onClick={() => goToPlainRoute(ANITA_URLS.projectNew)}
             >
               {Icons.render('addOutline', 'mr-2')}
               Create a new project

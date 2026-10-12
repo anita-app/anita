@@ -8,13 +8,14 @@ import { FormProjectManager } from 'app/components/projects/add-edit-project-com
 import { ProjectEditorModeToggle } from 'app/components/projects/add-edit-project-components/project-editor-mode-toggle.component'
 import { Loader } from 'app/components/shared-components/loader/loader.component'
 import { useEffect, useState } from 'react'
-import { Navigate, useParams } from 'react-router-dom'
+import { Navigate, useParams, useSearchParams } from 'react-router-dom'
 import { FormProjectState } from 'app/state/form-project/form-project-state.class'
 import type { FC } from 'react'
 import type { TSystemData } from 'app/models/project/project.declarations'
 
 export const AddEditProject: FC = () => {
   const params = useParams()
+  const [searchParams] = useSearchParams()
   const mode = params[URL_PARAMS.projectId] ? EDITOR_MODE.edit : EDITOR_MODE.add
 
   const projectId = params[URL_PARAMS.projectId]
@@ -24,7 +25,9 @@ export const AddEditProject: FC = () => {
   useEffect(() => {
     // in add mode, sets a new project
     if (mode === EDITOR_MODE.add) {
-      const newProjectSystemData: TSystemData = {
+      // ?draft=1: the editor opens on the project prepared from a template.
+      const draft = searchParams.get('draft') ? FormProjectState.getDraftForNewProject() : null
+      const newProjectSystemData: TSystemData = draft ?? {
         [RESERVED_AUDS_KEYS._settings]: [{ id: IdCreator.random(), title: '', description: '', createdAt: '', localStorage: LOCAL_STORAGE_SYSTEMS.IndexedDB }],
         [RESERVED_AUDS_KEYS._sections]: [{ id: IdCreator.random(), title: '', formModel: [{} as any], createdAt: '' }],
       }
@@ -46,7 +49,7 @@ export const AddEditProject: FC = () => {
     }
 
     fetchEProject()
-  }, [mode, projectId])
+  }, [mode, projectId, searchParams])
 
   if (hasProject === undefined) {
     return <Navigate to={ANITA_URLS.projectsList} />

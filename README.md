@@ -39,6 +39,13 @@ Our goal for version 1.0.0 is to implement the following:
 - [ ] Anita templates (at least one example template); 
 - [X] support for synchronization of locally stored data with at least one remote data store: Dropbox and WordPress (see below);
 
+## Templates
+
+New projects can start from ready-made templates. They are not part of the app: the app downloads them from
+[anita-app/templates](https://github.com/anita-app/templates) (`templates.json`, documented in that repository) and keeps
+the last copy for offline use, so templates can be added or changed at any time without a release. Self-hosted
+installations can serve their own catalog by setting `REACT_APP_TEMPLATES_URL` at build time.
+
 ## WordPress
 
 Any WordPress site with the [Anita Project Manager](https://wordpress.org/plugins/anita-project-manager/) plugin can store Anita projects and share them with the users of the site, according to their WordPress roles. The plugin lives in the [anita-project-manager-for-wordpress](https://github.com/anita-app/anita-project-manager-for-wordpress) repository, together with its API reference and quickstart.

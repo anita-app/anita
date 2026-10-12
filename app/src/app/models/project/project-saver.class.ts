@@ -8,6 +8,7 @@ import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
 import { SyncManager } from 'app/cross-refs-exports'
 import { SyncState } from 'app/state/sync/sync-state.class'
+import { withPositions } from 'app/models/section/sort-sections.function'
 import type { ISyncWithRemoteOrLocalAddProjectProps, ISyncWithRemoteOrLocalEditProjectProps } from 'app/cross-refs-exports'
 import type { TSystemData } from 'app/models/project/project.declarations'
 
@@ -100,6 +101,7 @@ export class ProjectSaver {
 
   private async saveSections (): Promise<void> {
     await dbInstances[this.project[RESERVED_AUDS_KEYS._settings][0].id].callDeletor(RESERVED_AUDS_KEYS._sections).clearSection()
+    this.project[RESERVED_AUDS_KEYS._sections] = withPositions(this.project[RESERVED_AUDS_KEYS._sections])
     await dbInstances[this.project[RESERVED_AUDS_KEYS._settings][0].id].callInsertor(RESERVED_AUDS_KEYS._sections, this.project[RESERVED_AUDS_KEYS._sections]).autoInsert()
   }
 

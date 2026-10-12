@@ -38,7 +38,7 @@ export const ProjectsList: FC = () => {
               id="createProject"
               label="Create project"
               labelClassName="hidden"
-              href={ANITA_URLS.projectAdd}
+              href={ANITA_URLS.projectNew}
               iconLeft="addOutline"
               tooltip="Create a new project"
               type={Type.primary}

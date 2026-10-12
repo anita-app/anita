@@ -44,8 +44,9 @@ interface IWordPressAuthState {
 const finishLogin = async (login: ICompletedLogin, setState: (state: IWordPressAuthState) => void) => {
   await login.commit()
   if (login.linkProjectId) {
-    await WordPressSync.linkProject(login.linkProjectId, login.remoteId)
-    RoutingState.goTo(urlParamFiller(ANITA_URLS.projectDetails, [{ name: URL_PARAMS.projectId, value: login.linkProjectId }]))
+    await WordPressSync.linkProject(login.linkProjectId, login.remoteId, login.linkAccessLevel)
+    // Without view transition: the page is still updating after the login.
+    RoutingState.navigate(urlParamFiller(ANITA_URLS.projectDetails, [{ name: URL_PARAMS.projectId, value: login.linkProjectId }]))
     return
   }
   setState({ status: 'done', siteName: login.siteName })

@@ -1,7 +1,7 @@
 import { WordPressClient } from 'app/libs/cloud-sync/wordpress/wordpress-client.class'
 import { WordpressHelper } from 'app/libs/cloud-sync/wordpress/wordpress-helper.class'
 import { WordPressApiError, WordPressErrorCode } from 'app/libs/cloud-sync/wordpress/wordpress-api-error.class'
-import type { IWordPressPingResponse } from 'app/libs/cloud-sync/wordpress/wordpress.const'
+import type { IWordPressPingResponse, TAccessLevel } from 'app/libs/cloud-sync/wordpress/wordpress.const'
 
 const PENDING_AUTH_KEY = 'anita.wordpress.pendingAuth'
 const PENDING_AUTH_MAX_AGE_MS = 30 * 60 * 1000
@@ -15,6 +15,7 @@ interface IPendingAuth {
   createdAt: number
   /** Project to link to the site once connected. */
   linkProjectId?: string
+  linkAccessLevel?: TAccessLevel
 }
 
 interface ILoginPayload {
@@ -30,6 +31,7 @@ export interface ICompletedLogin {
   siteName: string
   userName: string
   linkProjectId?: string
+  linkAccessLevel?: TAccessLevel
   /** Set when this device was connected to the site with another account. */
   previousUserName?: string
   /** Stores the connection on this device. */
@@ -99,7 +101,7 @@ export class WordPressAuth {
   /**
    * Opens the login page of the site in this tab.
    */
-  public static async startLogin (site: Pick<IWordPressPingResponse, 'login_url' | 'api_url' | 'remote_id'>, options: { linkProjectId?: string } = {}): Promise<void> {
+  public static async startLogin (site: Pick<IWordPressPingResponse, 'login_url' | 'api_url' | 'remote_id'>, options: { linkProjectId?: string; linkAccessLevel?: TAccessLevel } = {}): Promise<void> {
     const pending: IPendingAuth = {
       state: randomString(16),
       codeVerifier: randomString(32),
@@ -107,6 +109,7 @@ export class WordPressAuth {
       apiUrl: site.api_url,
       createdAt: Date.now(),
       linkProjectId: options.linkProjectId,
+      linkAccessLevel: options.linkAccessLevel,
     }
     localStorage.setItem(PENDING_AUTH_KEY, JSON.stringify(pending))
 
@@ -167,6 +170,7 @@ export class WordPressAuth {
       siteName: spaceInfo.site_name,
       userName: spaceInfo.user_display_name,
       linkProjectId: pending.linkProjectId,
+      linkAccessLevel: pending.linkAccessLevel,
       previousUserName: previous && previous.data.user_id !== spaceInfo.user_id ? previous.data.user_display_name : undefined,
       commit: () => WordpressHelper.instance.saveConnection(remoteId, authData, spaceInfo),
     }

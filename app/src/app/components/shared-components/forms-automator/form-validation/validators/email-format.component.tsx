@@ -9,7 +9,8 @@ export const EmailFormat: FC<IValidatorsProps> = memo(function EmailFormat ({ fo
   const isValidEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)
 
   useEffect(() => {
-    updateValidatorState(SUPPORTED_VALIDATORS.emailFormat, isValidEmail)
+    // An empty value is valid: whether the field is mandatory is checked by RequiredField.
+    updateValidatorState(SUPPORTED_VALIDATORS.emailFormat, !value || isValidEmail)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
 

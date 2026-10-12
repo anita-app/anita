@@ -12,6 +12,8 @@ import { ProjectsList } from 'app/components/projects/projects-list.component'
 import { createHashRouter, Navigate, Outlet } from 'react-router-dom'
 import { OAuth } from 'app/components/auth/o-auth.component'
 import { Remotes } from 'app/components/remotes/remotes.component'
+import { NewProject } from 'app/components/templates/new-project.component'
+import { CreateFromTemplate } from 'app/components/templates/create-from-template.component'
 import { AdminLayout } from 'app/components/admin-layout/admin-layout.component'
 import { RoutingState } from 'app/state/routing/routing-state.class'
 import { Manager } from 'app/cross-refs-exports'
@@ -61,6 +63,8 @@ const anitaRoutes: Array<RouteObject> = [
       { path: ANITA_URLS.remotes, element: <Remotes /> },
       { path: ANITA_URLS.projectsList, element: <ProjectsList /> },
       { path: ANITA_URLS.projectAdd, element: <AddEditProject /> },
+      { path: ANITA_URLS.projectNew, element: <NewProject /> },
+      { path: ANITA_URLS.projectNewFromTemplate, element: <CreateFromTemplate /> },
       { path: ANITA_URLS.projectsNone, element: <ProjectsNone /> },
       {
         element: <ProjectLoadedGuard />,

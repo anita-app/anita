@@ -9,6 +9,19 @@ import type { FormFieldsModel, IBasicSelect, IOptionKeysModel, TSupportedFormsTy
 import type { ISection, ISectionCustomFieldProperties } from 'app/models/section/section.declarations'
 
 export class FormProjectState {
+  private static draftForNewProject: TSystemData | null = null
+
+  /**
+   * Opens the project editor on a prepared project (e.g. a template) instead of a blank one.
+   */
+  public static setDraftForNewProject = (systemData: TSystemData) => {
+    FormProjectState.draftForNewProject = cloneDeep(systemData)
+  }
+
+  public static getDraftForNewProject = (): TSystemData | null => (
+    FormProjectState.draftForNewProject ? cloneDeep(FormProjectState.draftForNewProject) : null
+  )
+
   public static toggleProjectEditorMode = () => {
     const current = Bucket.general.get(FormProjectAtoms.mode)
     Bucket.general.set(

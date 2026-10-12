@@ -2,6 +2,7 @@ import { DbInitializer } from 'app/data/local-dbs/db-initializer.class'
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
+import { sortSections, withPositions } from 'app/models/section/sort-sections.function'
 import { SaveProjectSettingsInIndexedDB } from 'app/models/project/save-project-settings-in-indexed-db.class'
 import type { AdditionalInfoForLocalStorage, TAnitaUniversalDataStorage, LocalProjectSettings } from 'app/models/project/project.declarations'
 
@@ -23,6 +24,8 @@ export class ProjectDataImporter {
    */
   public async import (): Promise<LocalProjectSettings> {
     this.projectData[RESERVED_AUDS_KEYS._settings][0].localStorage = LOCAL_STORAGE_SYSTEMS.IndexedDB
+    // Keeps the order of the sections of the file.
+    this.projectData[RESERVED_AUDS_KEYS._sections] = withPositions(sortSections(this.projectData[RESERVED_AUDS_KEYS._sections]))
     await this.initializeDb()
     await this.setLocalProjectSettings()
     await this.saveDataToDb()

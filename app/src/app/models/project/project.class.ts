@@ -8,6 +8,7 @@ import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { ProjectUploader } from 'app/models/project/syncing/project-uploader'
 import { DropboxSyncInfo } from 'app/models/project/syncing/dropbox-sync-info.class'
 import { ProjectState } from 'app/state/project/project-state.class'
+import { OnboardingState } from 'app/state/onboarding/onboarding-state.class'
 import type { ParentInfoForDetailsView } from 'app/models/parent-element/parent-element.declarations'
 import type { IOptionKeysModel, OptionKeysModelGroup } from 'app/components/shared-components/forms-automator/form-automator.types'
 import type { ISection } from 'app/models/section/section.declarations'
@@ -33,11 +34,14 @@ export class Project {
 
   public getSectionsDefinitions = (): Array<ISection> => this.sectionsDefinitions || []
 
-  public export = (scope: ExportScope): void => {
-    new ProjectExporter({
+  public export = async (scope: ExportScope): Promise<void> => {
+    await new ProjectExporter({
       [RESERVED_AUDS_KEYS._settings]: [this.settings],
       [RESERVED_AUDS_KEYS._sections]: this.sectionsDefinitions,
     }).exportToFile(scope)
+    if (scope === ExportScope.all) {
+      OnboardingState.markBackedUp(this.getId())
+    }
   }
 
   public getAllData = (): Promise<TAnitaUniversalDataStorage> => new ProjectExporter(this.systemData).getData(ExportScope.all)

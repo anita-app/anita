@@ -5,12 +5,15 @@ import { AdminLayoutSidebar } from 'app/components/admin-layout/admin-layout-sid
 import { OAuthUtils } from 'app/libs/cloud-sync/o-auth-utils.class'
 import { useAtomValue } from 'jotai'
 import { ProjectAtoms } from 'app/state/project/project.atoms'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
+import { LocalOnlyBanner } from 'app/components/project/local-only-banner.component'
+import { StoreOnWordPressDialog } from 'app/components/remotes/store-on-wordpress-dialog.component'
 import { WordPressSyncAgent } from 'app/components/admin-layout/wordpress-sync-agent.component'
 import type { FC } from 'react'
 
 export const AdminLayout: FC = () => {
   const project = useAtomValue(ProjectAtoms.currentSystemData)
+  const location = useLocation()
   useEffect(() => {
     OAuthUtils.redirectToAuthPageIfUrlHasCode()
   }, [])
@@ -18,10 +21,12 @@ export const AdminLayout: FC = () => {
   return (
     <>
       <WordPressSyncAgent />
+      <StoreOnWordPressDialog />
       <AdminLayoutHeader />
       <div className="relative admin-container flex">
         {!!project && <AdminLayoutSidebar />}
         <AdminLayoutContent>
+          {location.pathname.startsWith('/project/') && <LocalOnlyBanner />}
           <Outlet />
         </AdminLayoutContent>
       </div>

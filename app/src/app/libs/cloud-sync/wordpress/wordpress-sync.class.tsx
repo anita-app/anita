@@ -22,6 +22,7 @@ import { ProjectsListAtoms } from 'app/state/projects-list/projects-list.atoms'
 import { RoutingState } from 'app/state/routing/routing-state.class'
 import { SyncState } from 'app/state/sync/sync-state.class'
 import { DateTools } from 'app/libs/tools/date-tools.class'
+import { sortSections } from 'app/models/section/sort-sections.function'
 import type { ReactNode } from 'react'
 import type { WordPressClient } from 'app/libs/cloud-sync/wordpress/wordpress-client.class'
 import type { IRemoteProjectInfo, IWordPressProjectMeta, IWordPressSpaceInfo, TAccessLevel } from 'app/libs/cloud-sync/wordpress/wordpress.const'
@@ -130,7 +131,7 @@ export class WordPressSync {
       await new DbInitializer(info).init()
     }
     const settings = await dbInstances[projectId].callSelector<IProjectSettings>(RESERVED_AUDS_KEYS._settings).multiple()
-    const sections = await dbInstances[projectId].callSelector<ISection>(RESERVED_AUDS_KEYS._sections).multiple()
+    const sections = sortSections(await dbInstances[projectId].callSelector<ISection>(RESERVED_AUDS_KEYS._sections).multiple())
     if (!settings?.length) {
       return null
     }

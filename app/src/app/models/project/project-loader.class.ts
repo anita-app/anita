@@ -6,6 +6,7 @@ import {
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
 import { Manager } from 'app/cross-refs-exports'
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
+import { sortSections } from 'app/models/section/sort-sections.function'
 import type { ISection } from 'app/models/section/section.declarations'
 import type {
   LocalProjectSettings,
@@ -75,7 +76,7 @@ export class ProjectLoader {
    * Loads project sections from the dbInstance
    */
   public async loadProjectSections (): Promise<void> {
-    this.projectSections = await dbInstances[this.projectId].callSelector<ISection>(RESERVED_AUDS_KEYS._sections).multiple()
+    this.projectSections = sortSections(await dbInstances[this.projectId].callSelector<ISection>(RESERVED_AUDS_KEYS._sections).multiple())
   }
 
   /**

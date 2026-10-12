@@ -5,6 +5,7 @@ export enum URL_PARAMS {
   sectionId = 'sectionId',
   elementId = 'elementId',
   parentId = 'parentId',
+  templateId = 'templateId',
 }
 
 export interface IRouteParams {
@@ -12,6 +13,7 @@ export interface IRouteParams {
   [URL_PARAMS.sectionId]?: string
   [URL_PARAMS.elementId]?: string
   [URL_PARAMS.parentId]?: string
+  [URL_PARAMS.templateId]?: string
 }
 
 /**
@@ -28,6 +30,8 @@ export const ANITA_URLS = {
   projectsNone: '/projects/none',
   projectsList: '/projects/list',
   projectAdd: `/projects/${EDITOR_MODE.add}`,
+  projectNew: '/projects/new',
+  projectNewFromTemplate: `/projects/new/:${URL_PARAMS.templateId}`,
   projectEdit: `/projects/${EDITOR_MODE.edit}/:${URL_PARAMS.projectId}`,
   // PROJECT
   projectDetails: `/project/:${URL_PARAMS.projectId}/info`,
