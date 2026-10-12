@@ -178,8 +178,8 @@ export class DropboxHelper extends CloudSyncBase<SupportedCloud.DROPBOX> {
   }
 
   private setBaseUrl () {
-    const base = `${window.location.origin}/`
-    this.BASE_URL = window.location.href.includes('localhost') ? base : `${base}app/`
+    // The app is served from PUBLIC_URL (/2 on anita-app.com, empty in development).
+    this.BASE_URL = `${window.location.origin}${process.env.PUBLIC_URL}/`
   }
 
   private convertFileList = (files: files.ListFolderResult['entries']): Array<ISharedFileMeta> => (

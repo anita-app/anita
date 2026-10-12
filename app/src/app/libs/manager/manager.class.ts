@@ -45,7 +45,8 @@ export class Manager {
   }
 
   private static async isProjectLoaded (projectId: string): Promise<boolean> {
-    if (typeof dbInstances?.[projectId]?.callSelector === 'function') {
+    // The database of other projects may be open (e.g. imported or synced): only the current project counts as loaded.
+    if (typeof dbInstances?.[projectId]?.callSelector === 'function' && this.currentProject?.getId() === projectId) {
       return true
     }
 

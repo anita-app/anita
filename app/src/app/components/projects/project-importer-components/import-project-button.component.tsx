@@ -19,6 +19,20 @@ interface IImportProjectButtonProps {
   btnType: 'icon' | 'text'
 }
 
+const showInvalidFileModal = () => {
+  ModalState.showModal({
+    title: 'This file cannot be imported',
+    type: Type.danger,
+    hideCancelButton: true,
+    ctas: [{ actionText: 'OK' }],
+    children: (
+      <p className="text-sm text-gray-500">
+        The file is not an Anita project. Export the project with &quot;Data and Structure&quot; (or &quot;Structure Only&quot;) and import that file: exports with &quot;Data Only&quot; do not contain the project structure.
+      </p>
+    ),
+  })
+}
+
 export const ImportProjectButton: FC<IImportProjectButtonProps> = (props) => {
   const validObj = useAtomValue(FormElesValidStateAtoms.validState)
   const projectData = useRef<TAnitaUniversalDataStorage>(null)
@@ -32,9 +46,20 @@ export const ImportProjectButton: FC<IImportProjectButtonProps> = (props) => {
   }
 
   const handleClickModal = async () => {
-    const { project } = await new ProjectFileImporter().import() || {}
+    let project: TAnitaUniversalDataStorage | undefined
+    try {
+      project = (await new ProjectFileImporter().import())?.project
+    } catch {
+      // Not valid JSON.
+      showInvalidFileModal()
+      return
+    }
 
     if (!project) {
+      return
+    }
+    if (!project[RESERVED_AUDS_KEYS._settings]?.[0]?.id || !Array.isArray(project[RESERVED_AUDS_KEYS._sections])) {
+      showInvalidFileModal()
       return
     }
 
