@@ -32,7 +32,7 @@ interface IAdminLayoutSidebarMenuItemProps {
 
 export const AdminLayoutSidebarMenuItem: FC<IAdminLayoutSidebarMenuItemProps> = memo(function AdminLayoutSidebarMenuItem (props: IAdminLayoutSidebarMenuItemProps) {
   const linkPath = urlParamFiller(ANITA_URLS.projectSectionElesList, [{ name: URL_PARAMS.projectId, value: props.project[RESERVED_AUDS_KEYS._settings][0].id }, { name: URL_PARAMS.sectionId, value: props.section.id }])
-  const sectionData = useLiveQuery(() => Queriers.getProjectSection(props.project[RESERVED_AUDS_KEYS._settings][0].id, props.section.id))
+  const sectionData = useLiveQuery(() => Queriers.getProjectSection(props.project[RESERVED_AUDS_KEYS._settings][0].id, props.section.id), [props.project, props.section.id])
 
   const sectionId = props.section.id
   const setCurrentSelectedSectionId = props.setCurrentSelectedSectionId

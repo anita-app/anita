@@ -5,7 +5,7 @@ import { ProjectSectionElementAddEditSaveCancelButtons } from 'app/components/pr
 import { MainContentContainer } from 'app/components/shared-components/common-ui-eles/main-content-container.component'
 import { Loader } from 'app/components/shared-components/loader/loader.component'
 import { useEffect, useMemo } from 'react'
-import { Navigate, useParams } from 'react-router-dom'
+import { Navigate, useParams, useSearchParams } from 'react-router-dom'
 import { FormElementState } from 'app/state/form-element/form-element-state.class'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { Queriers } from 'app/libs/db-connector/common-helpers/Queriers'
@@ -23,8 +23,16 @@ export const ProjectSectionElementAddEdit: FC = () => {
   const elementIdFromParams = useAtomValue(RoutingAtoms.param(URL_PARAMS.elementId))
   const elementId = (mode === EDITOR_MODE.edit) ? elementIdFromParams : null
 
+  // ?parent=<sectionId>|<elementId>: the new record is already linked to that parent record.
+  const [searchParams] = useSearchParams()
+  const parent = searchParams.get('parent')
   const elementFromDB = useLiveQuery(() => Queriers.getElement(projectId!, sectionId!, elementId!), [projectId, sectionId, elementId], {})
-  const element = useMemo(() => (mode === EDITOR_MODE.edit) ? elementFromDB : {}, [mode, elementFromDB])
+  const element = useMemo(() => {
+    if (mode === EDITOR_MODE.edit) {
+      return elementFromDB
+    }
+    return parent ? { parentsInfo: [parent] } : {}
+  }, [mode, elementFromDB, parent])
 
   useEffect(() => {
     if (element === null) {

@@ -21,7 +21,7 @@ interface IListTabsHeaderRightEditViewListProps {
 
 export const ListTabsHeaderRightEditViewTable: FC<IListTabsHeaderRightEditViewListProps> = (props) => {
   const projectId = useAtomValue(RoutingAtoms.param(URL_PARAMS.projectId))!
-  const sectionData = useLiveQuery(() => Queriers.getProjectSection(projectId, props.sectionId))
+  const sectionData = useLiveQuery(() => Queriers.getProjectSection(projectId, props.sectionId), [projectId, props.sectionId])
 
   if (!sectionData) {
     return null

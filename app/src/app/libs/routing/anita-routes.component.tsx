@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { ProjectSectionElementAddEdit } from 'app/components/project/section/element/add-edit.component'
 import { ProjectDetails } from 'app/components/project/details.component'
-import { ProjectSectionElementDetails } from 'app/components/project/section/element/details.component'
+import { ProjectSectionElementDetailsPage } from 'app/components/project/section/element/details.component'
 import { ProjectSectionList } from 'app/components/project/section/list/list.component'
 import { AddEditProject } from 'app/components/projects/add-edit-project.component'
 import { ProjectsNone } from 'app/components/projects/no-projects.component'
@@ -72,7 +72,7 @@ const anitaRoutes: Array<RouteObject> = [
           { path: ANITA_URLS.projectEdit, element: <AddEditProject /> },
           { path: ANITA_URLS.projectDetails, element: <ProjectDetails /> },
           { path: ANITA_URLS.projectSectionElesList, element: <ProjectSectionList /> },
-          { path: ANITA_URLS.projectSectionEleDetails, element: <ProjectSectionElementDetails /> },
+          { path: ANITA_URLS.projectSectionEleDetails, element: <ProjectSectionElementDetailsPage /> },
           { path: ANITA_URLS.projectSectionAddEle, element: <ProjectSectionElementAddEdit /> },
           { path: ANITA_URLS.projectSectionEditEle, element: <ProjectSectionElementAddEdit /> },
         ],

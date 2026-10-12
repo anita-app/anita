@@ -16,6 +16,7 @@ import { useAtomValue } from 'jotai'
 import { RoutingAtoms } from 'app/state/routing/routing.atoms'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { Queriers } from 'app/libs/db-connector/common-helpers/Queriers'
+import { ChildRecordsTabs } from 'app/components/project/section/element/child-records-tabs.component'
 import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import type { FormFieldsModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 import type { FC } from 'react'
@@ -70,7 +71,7 @@ export const ProjectSectionElementDetails: FC = () => {
   const projectId = useAtomValue(RoutingAtoms.param(URL_PARAMS.projectId))!
   const sectionId = useAtomValue(RoutingAtoms.param(URL_PARAMS.sectionId))
   const elementId = useAtomValue(RoutingAtoms.param(URL_PARAMS.elementId))
-  const sectionData = useLiveQuery(() => Queriers.getProjectSection(projectId, sectionId!))
+  const sectionData = useLiveQuery(() => Queriers.getProjectSection(projectId, sectionId!), [projectId, sectionId])
   const element = useLiveQuery(() => Queriers.getElement(projectId, sectionId!, elementId!), [projectId, sectionId, elementId], null)
 
   useShortcut({ key: 'Escape', callback: goBack })
@@ -102,7 +103,7 @@ export const ProjectSectionElementDetails: FC = () => {
         />
       )}
       {(element !== null && (
-        <div>
+        <div className="flex flex-wrap gap-y-2 px-3">
           <ProjectSectionElementDeleteButton
             projectId={projectId!}
             sectionId={sectionId!}
@@ -118,5 +119,24 @@ export const ProjectSectionElementDetails: FC = () => {
       )
       )}
     </MainContentContainer>
+  )
+}
+
+export const ProjectSectionElementDetailsPage: FC = () => {
+  const projectId = useAtomValue(RoutingAtoms.param(URL_PARAMS.projectId))
+  const sectionId = useAtomValue(RoutingAtoms.param(URL_PARAMS.sectionId))
+  const elementId = useAtomValue(RoutingAtoms.param(URL_PARAMS.elementId))
+  return (
+    <>
+      <ProjectSectionElementDetails />
+      {projectId && sectionId && elementId && (
+        <ChildRecordsTabs
+          key={elementId}
+          projectId={projectId}
+          sectionId={sectionId}
+          elementId={elementId}
+        />
+      )}
+    </>
   )
 }

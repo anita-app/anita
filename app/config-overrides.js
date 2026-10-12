@@ -1,7 +1,7 @@
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin')
 
-module.exports = function override (config) {
+function overrideWebpack (config) {
   const rulesWithOneOf = config.module.rules.find(rule => Array.isArray(rule.oneOf))
   const postcssLoaderRule = rulesWithOneOf?.oneOf?.find(
     rule => Array.isArray(rule.use) && rule.use.find(use => use?.loader?.includes('postcss-loader'))
@@ -36,4 +36,24 @@ module.exports = function override (config) {
   config.externals = { fs: 'fs' }
   config.resolve.plugins = config.resolve.plugins.filter(plugin => !(plugin instanceof ModuleScopePlugin))
   return config
+}
+
+/**
+ * React Router runs page changes in view transitions; a transition interrupted by another update is reported as an
+ * unhandled error although the navigation completes. Keep it out of the development error overlay.
+ */
+function overrideDevServer (configFunction) {
+  return function (proxy, allowedHost) {
+    const config = configFunction(proxy, allowedHost)
+    config.client.overlay = {
+      ...config.client.overlay,
+      runtimeErrors: (error) => !(error && /Transition was aborted/.test(error.message || '')),
+    }
+    return config
+  }
+}
+
+module.exports = {
+  webpack: overrideWebpack,
+  devServer: overrideDevServer,
 }
