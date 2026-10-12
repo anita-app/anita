@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { useAtomValue } from 'jotai'
 import { Manager } from 'app/cross-refs-exports'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { Icons } from 'app/libs/icons/icons.class'
@@ -18,9 +19,11 @@ import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { FormProjectState } from 'app/state/form-project/form-project-state.class'
 import { RoutingState } from 'app/state/routing/routing-state.class'
+import { ProjectsListAtoms } from 'app/state/projects-list/projects-list.atoms'
 import type { FC } from 'react'
 import type { TStorageChoice } from 'app/components/remotes/storage-choice.component'
 import type { IProjectTemplate, ITemplateField } from 'app/libs/templates/templates-catalog.class'
+import type { TSystemData } from 'app/models/project/project.declarations'
 import type { TIconName } from 'app/libs/icons/icons.class'
 
 const FIELD_KINDS: Record<number, { label: string; icon: TIconName }> = {
@@ -86,6 +89,11 @@ const CreateFromTemplateForm: FC<{ template: IProjectTemplate; accent: string; c
   const [storage, setStorageState] = useState<TStorageChoice>(() => defaultStorageChoice(remotes, true))
   const [storageTouched, setStorageTouched] = useState(false)
   const [isWorking, setIsWorking] = useState(false)
+  const projects = useAtomValue(ProjectsListAtoms.projects)
+  const hasSamples = TemplatesCatalog.hasSamples(props.template)
+  // Proposed to whoever has no projects yet, to see the template at work.
+  const [samplesChoice, setSamplesChoice] = useState<boolean | null>(null)
+  const withSamples = hasSamples && (samplesChoice ?? !projects?.length)
 
   const setStorage = (choice: TStorageChoice) => {
     setStorageTouched(true)
@@ -102,8 +110,8 @@ const CreateFromTemplateForm: FC<{ template: IProjectTemplate; accent: string; c
   }, [firstRemoteId, storageTouched])
   const [error, setError] = useState<string | null>(null)
 
-  const buildProject = () => {
-    const systemData = TemplatesCatalog.instantiate(props.template, { title: title.trim(), description: description.trim() })
+  const buildProject = (options: { withSamples?: boolean } = {}) => {
+    const systemData = TemplatesCatalog.instantiate(props.template, { title: title.trim(), description: description.trim() }, options)
     if (storage.kind === 'remote') {
       systemData[RESERVED_AUDS_KEYS._settings][0].remoteStorage = storage.remoteId
       systemData[RESERVED_AUDS_KEYS._settings][0].remoteAccessLevel = storage.accessLevel
@@ -121,7 +129,15 @@ const CreateFromTemplateForm: FC<{ template: IProjectTemplate; accent: string; c
     try {
       // The site is checked before saving, so that a wrong address does not leave a half-done project.
       const site = await checkSiteOfStorageChoice(storage)
-      const systemData = await Manager.saveProject(buildProject(), EDITOR_MODE.add)
+      const project = buildProject({ withSamples })
+      let systemData: TSystemData
+      if (withSamples) {
+        // The records are saved together with the project, so that they are uploaded with it.
+        await Manager.importProject(project)
+        systemData = { [RESERVED_AUDS_KEYS._settings]: project[RESERVED_AUDS_KEYS._settings], [RESERVED_AUDS_KEYS._sections]: project[RESERVED_AUDS_KEYS._sections] }
+      } else {
+        systemData = await Manager.saveProject(project, EDITOR_MODE.add)
+      }
       const projectId = systemData[RESERVED_AUDS_KEYS._settings][0].id
       Manager.setCurrentProject(systemData)
       if (storage.kind === 'connect') {
@@ -187,6 +203,24 @@ const CreateFromTemplateForm: FC<{ template: IProjectTemplate; accent: string; c
               className={`${FORM_ELEMENTS_CSS_CLASSES} w-full px-3 py-2`}
             />
           </div>
+          {hasSamples && (
+            <label
+              htmlFor="templateWithSamples"
+              className="flex items-start gap-3 rounded-lg border border-gray-200 p-3 cursor-pointer hover:bg-gray-50"
+            >
+              <input
+                id="templateWithSamples"
+                type="checkbox"
+                checked={withSamples}
+                onChange={(event) => setSamplesChoice(event.target.checked)}
+                className="mt-1 h-4 w-4 rounded border-gray-300 text-prussian-blue-500"
+              />
+              <span>
+                <span className="block text-sm font-medium text-gray-900">Start with some example records</span>
+                <span className="block text-xs text-gray-500">A few realistic records, already linked to each other, to see how everything works. Delete them whenever you want.</span>
+              </span>
+            </label>
+          )}
           <div>
             <p className="text-sm text-gray-700 mb-2">Where to save it</p>
             <StorageChoice

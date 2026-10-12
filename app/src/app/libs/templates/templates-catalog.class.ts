@@ -3,7 +3,8 @@ import { DateTools } from 'app/libs/tools/date-tools.class'
 import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import type { TIconName } from 'app/libs/icons/icons.class'
-import type { TSystemData } from 'app/models/project/project.declarations'
+import type { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
+import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import type { ISection } from 'app/models/section/section.declarations'
 import type { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
 
@@ -40,6 +41,16 @@ export interface ITemplateSection {
   fields: Array<ITemplateField>
 }
 
+/**
+ * Example record. Values are keyed by fieldName; dates can be relative to the creation day (@today+7).
+ */
+export interface ITemplateSample {
+  ref?: string
+  values: Record<string, string | number | boolean>
+  /** Linked parent records, as sectionKey:ref */
+  parents?: Array<string>
+}
+
 export interface IProjectTemplate {
   id: string
   title: string
@@ -48,6 +59,8 @@ export interface IProjectTemplate {
   tags?: Array<string>
   icon?: TIconName
   sections: Array<ITemplateSection>
+  /** Example records by section key */
+  samples?: Record<string, Array<ITemplateSample>>
 }
 
 export interface ITemplatesCatalog {
@@ -60,6 +73,54 @@ export interface ILoadedCatalog {
   catalog: ITemplatesCatalog
   /** The catalog comes from the copy saved on this device, because the download failed. */
   fromCache: boolean
+}
+
+const RELATIVE_DATE = /^@today(?:([+-])(\d+))?$/
+
+const pad = (value: number): string => String(value).padStart(2, '0')
+
+/**
+ * Turns a sample date (YYYY-MM-DD or @today±days) into a value for the field type.
+ */
+const resolveSampleDate = (value: string, field: ITemplateField, today: Date): string => {
+  let date = value
+  const match = RELATIVE_DATE.exec(value)
+  if (match) {
+    const day = new Date(today)
+    day.setDate(day.getDate() + (match[1] === '-' ? -1 : 1) * Number(match[2] ?? 0))
+    date = `${day.getFullYear()}-${pad(day.getMonth() + 1)}-${pad(day.getDate())}`
+  }
+  if (field.type === 'month') {
+    return date.slice(0, 7)
+  }
+  if (field.type === 'datetime-local' && !date.includes('T')) {
+    return `${date}T10:00`
+  }
+  return date
+}
+
+/**
+ * Converts a sample value to what the field component saves, or undefined if it does not fit the field.
+ */
+const sampleValueFor = (field: ITemplateField, value: unknown, today: Date): unknown => {
+  if (value === undefined || value === null || value === '') {
+    return undefined
+  }
+  switch (field.componentCode) {
+    case 2:
+      // Rich text is saved as Slate nodes: one paragraph per line.
+      return JSON.stringify(String(value).split('\n').map(line => ({ type: 'paragraph', children: [{ text: line }] })))
+    case 3:
+      return value === true
+    case 4:
+    case 5:
+      return field.options?.some(option => String(option.value) === String(value)) ? String(value) : undefined
+    case 8:
+    case 9:
+      return typeof value === 'string' ? resolveSampleDate(value, field, today) : undefined
+    default:
+      return String(value)
+  }
 }
 
 const isTemplate = (value: any): value is IProjectTemplate => (
@@ -142,9 +203,16 @@ export class TemplatesCatalog {
   }
 
   /**
-   * Builds a new project from a template, with new ids.
+   * Tells whether the template comes with example records.
    */
-  public static instantiate (template: IProjectTemplate, settings: { title: string; description: string }): TSystemData {
+  public static hasSamples (template: IProjectTemplate): boolean {
+    return !!template.samples && Object.values(template.samples).some(records => Array.isArray(records) && records.length > 0)
+  }
+
+  /**
+   * Builds a new project from a template, with new ids, optionally with the example records of the template.
+   */
+  public static instantiate (template: IProjectTemplate, settings: { title: string; description: string }, options: { withSamples?: boolean } = {}): TAnitaUniversalDataStorage {
     const now = DateTools.getUtcIsoString()
     const sectionIds: Record<string, string> = {}
     template.sections.forEach((section) => {
@@ -168,7 +236,7 @@ export class TemplatesCatalog {
       return result
     })
 
-    return {
+    const project: TAnitaUniversalDataStorage = {
       [RESERVED_AUDS_KEYS._settings]: [{
         id: IdCreator.random(),
         title: settings.title,
@@ -178,5 +246,45 @@ export class TemplatesCatalog {
       }],
       [RESERVED_AUDS_KEYS._sections]: sections,
     }
+    if (options.withSamples) {
+      Object.assign(project, TemplatesCatalog.makeSampleRecords(template, sectionIds, now))
+    }
+    return project
+  }
+
+  private static makeSampleRecords (template: IProjectTemplate, sectionIds: Record<string, string>, now: string): Record<string, Array<ISectionElement>> {
+    const today = new Date()
+    const recordIds: Record<string, string> = {}
+    const result: Record<string, Array<ISectionElement>> = {}
+
+    template.sections.forEach((section) => {
+      const samples = template.samples?.[section.key]
+      if (!Array.isArray(samples)) {
+        return
+      }
+      result[sectionIds[section.key]] = samples.filter(sample => sample && typeof sample.values === 'object').map((sample, index) => {
+        const id = IdCreator.make(`${template.id}-${section.key}-${index}`)
+        if (sample.ref) {
+          recordIds[`${section.key}:${sample.ref}`] = id
+        }
+        const record: ISectionElement = { id, createdAt: now }
+        section.fields.forEach((field) => {
+          const value = sampleValueFor(field, sample.values[field.fieldName], today)
+          if (value !== undefined) {
+            record[field.fieldName] = value
+          }
+        })
+        // Parents come earlier in the template, so their ids are already known.
+        const parentsInfo = (sample.parents ?? [])
+          .filter(parent => section.childOf?.includes(parent.split(':')[0]) && recordIds[parent])
+          .map(parent => `${sectionIds[parent.split(':')[0]]}|${recordIds[parent]}`)
+        if (parentsInfo.length) {
+          record.parentsInfo = parentsInfo
+        }
+        return record
+      })
+    })
+
+    return result
   }
 }
