@@ -30,6 +30,7 @@ export const BasicRadio: FC<ICommonFormEleProps<IBasicRadio<ISectionElement>>> =
     >
       <FormElementLabel
         label={formEle.label!}
+        required={!!formEle.required}
         labelHint={formEle.labelHint}
       />
       <div className="mt-2 pl-1">

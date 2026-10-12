@@ -5,6 +5,7 @@ import { useId, type FC } from 'react'
 interface IFormElementLabelProps {
   label: string
   labelHint?: string
+  required?: boolean
 }
 
 export const FormElementLabel: FC<IFormElementLabelProps> = (props) => {
@@ -14,7 +15,17 @@ export const FormElementLabel: FC<IFormElementLabelProps> = (props) => {
 
   return (
     <div className="w-full block">
-      <label className="mb-0 ml-1 text-gray-700 text-sm">{props.label}</label>
+      <label className="mb-0 ml-1 text-gray-700 text-sm">
+        {props.label}
+        {props.required && (
+          <span
+            className="text-red-600 ml-0.5"
+            aria-hidden="true"
+          >
+            *
+          </span>
+        )}
+      </label>
       {props.labelHint && (
         <i
           id={elementId}

@@ -54,6 +54,7 @@ export const BasicSelect: FC<ICommonFormEleProps<IBasicSelect<ISectionElement>>>
     <FormEleContainer width={width}>
       <FormElementLabel
         label={formEle.label!}
+        required={!!formEle.required}
         labelHint={formEle.labelHint}
       />
       <Combobox

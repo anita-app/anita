@@ -51,6 +51,7 @@ export const ParentsSelector: FC<ICommonFormEleProps<IBasicSelect<ISectionElemen
     <FormEleContainer width="w-full">
       <FormElementLabel
         label={formEle.label!}
+        required={!!formEle.required}
         labelHint={formEle.labelHint}
       />
       <Select

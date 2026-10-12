@@ -23,6 +23,7 @@ export const BasicTextarea: FC<ICommonFormEleProps> = memo(function BasicTextare
     <FormEleContainer width={width}>
       <FormElementLabel
         label={formEle.label!}
+        required={!!formEle.required}
         labelHint={formEle.labelHint}
       />
       <textarea

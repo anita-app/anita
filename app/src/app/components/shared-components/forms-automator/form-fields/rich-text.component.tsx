@@ -25,6 +25,7 @@ export const RichText: FC<ICommonFormEleProps> = memo(function BasicTextarea ({ 
     <FormEleContainer width={width}>
       <FormElementLabel
         label={formEle.label!}
+        required={!!formEle.required}
         labelHint={formEle.labelHint}
       />
       <RichTextEditor

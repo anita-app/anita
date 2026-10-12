@@ -8,6 +8,7 @@ import { useAtomValue } from 'jotai'
 import { FormElementAtoms } from 'app/state/form-element/form-element.atoms'
 import { FormElesValidStateAtoms } from 'app/state/form-eles-valid-state/form-eles-valid-state.atoms'
 import { RoutingState } from 'app/state/routing/routing-state.class'
+import { FormElesValidState } from 'app/state/form-eles-valid-state/form-eles-valid-state.class'
 import { Bucket } from 'app/state/bucket.state'
 import { ProjectAtoms } from 'app/state/project/project.atoms'
 import type { FC } from 'react'
@@ -16,9 +17,16 @@ interface IProjectSectionElementAddEditSaveCancelButtonsProps {
   sectionId: string
 }
 
+const isFormValid = (validObj: Record<string, boolean>): boolean => !Object.keys(validObj).some(key => validObj[key] === false)
+
+const isEmptyValue = (value: unknown): boolean => value === undefined || value === null || value === '' || (Array.isArray(value) && value.length === 0)
+
 const saveOnShortcut = (sectionId: string, e: KeyboardEvent) => {
-  const currentElementInStore = FormElementState.getElement()
   e.preventDefault()
+  if (!isFormValid(FormElesValidState.getValidState())) {
+    return
+  }
+  const currentElementInStore = FormElementState.getElement()
   Bucket.general.get(ProjectAtoms.currentProject)?.getSectionById(sectionId)?.saveElement(currentElementInStore!)
 }
 
@@ -42,10 +50,31 @@ export const ProjectSectionElementAddEditSaveCancelButtons: FC<IProjectSectionEl
   useShortcut({ key: 's', withMetaKey: true, callback: saveOnShortcut.bind(undefined, props.sectionId) })
   useShortcut({ key: 'Escape', callback: handleCancel })
 
-  const hasLongDetailsField = Bucket.general.get(ProjectAtoms.currentProject)!.getSectionById(props.sectionId)!.getFirstFieldOfType([FORM_COMPONENTS_CODES.richText]) !== undefined
+  const section = Bucket.general.get(ProjectAtoms.currentProject)!.getSectionById(props.sectionId)!
+  const hasLongDetailsField = section.getFirstFieldOfType([FORM_COMPONENTS_CODES.richText]) !== undefined
   const saveAndCloseText = hasLongDetailsField ? 'Save & Close' : 'Save'
+  const isValid = isFormValid(validObj)
+  // Tell what is missing instead of only disabling the button.
+  const missingFields = section.formModel
+    .filter(formEle => (formEle as { required?: boolean }).required && isEmptyValue(element?.[formEle.fieldName as keyof typeof element]))
+    .map(formEle => formEle.label ?? formEle.fieldName)
+  let invalidMessage = ''
+  if (!isValid) {
+    invalidMessage = missingFields.length
+      ? `To save, fill in ${missingFields.length === 1 ? 'the required field' : 'the required fields'}: ${missingFields.join(', ')}.`
+      : 'To save, correct the fields marked in red.'
+  }
+
   return (
-    <div className="mt-6 flex justify-end">
+    <div className="mt-6 flex flex-wrap items-center justify-end gap-y-2">
+      {invalidMessage && (
+        <p
+          className="text-sm text-gray-600 mr-auto pr-3"
+          role="status"
+        >
+          {invalidMessage}
+        </p>
+      )}
       <Button
         id="cancel"
         label="Cancel"
@@ -58,7 +87,7 @@ export const ProjectSectionElementAddEditSaveCancelButtons: FC<IProjectSectionEl
           label="Save"
           type={Type.primary}
           fill="outline"
-          disabled={Object.keys(validObj).some(key => validObj[key] === false)}
+          disabled={!isValid}
           onClick={handleSave}
         />
       )}
@@ -66,7 +95,7 @@ export const ProjectSectionElementAddEditSaveCancelButtons: FC<IProjectSectionEl
         id="save"
         label={saveAndCloseText}
         type={Type.primary}
-        disabled={Object.keys(validObj).some(key => validObj[key] === false)}
+        disabled={!isValid}
         onClick={handleSaveAndClose}
       />
     </div>

@@ -18,6 +18,7 @@ export const BasicCheckbox: FC<ICommonFormEleProps> = memo(function BasicCheckbo
     <FormEleContainer width={width}>
       <FormElementLabel
         label={formEle.label!}
+        required={!!formEle.required}
         labelHint={formEle.labelHint}
       />
       <input

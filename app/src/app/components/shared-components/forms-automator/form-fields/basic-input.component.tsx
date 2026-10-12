@@ -9,6 +9,12 @@ import { memo, useRef, useState } from 'react'
 import type { FC } from 'react'
 import type { ICommonFormEleProps } from 'app/components/shared-components/forms-automator/form-automator.types'
 
+const INPUT_EXAMPLES: Record<string, string> = {
+  email: 'name@example.com',
+  url: 'https://',
+  tel: '+1 555 0100',
+}
+
 export const BasicInput: FC<ICommonFormEleProps> = memo(function BasicInput ({ formEle, element, handleChange, forceFullWidth }: ICommonFormEleProps) {
   const [touched, setTouched] = useState(false)
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))
@@ -24,13 +30,16 @@ export const BasicInput: FC<ICommonFormEleProps> = memo(function BasicInput ({ f
     <FormEleContainer width={width}>
       <FormElementLabel
         label={formEle.label!}
+        required={!!formEle.required}
         labelHint={formEle.labelHint}
       />
       <input
         key={formEle.fieldName}
         name={formEle.fieldName}
         type={formEle?.type || 'text'}
-        placeholder={formEle.label}
+        // The label is shown above: the placeholder only gives an example of the expected format.
+        placeholder={INPUT_EXAMPLES[formEle?.type ?? ''] ?? ''}
+        aria-label={formEle.label}
         disabled={formEle.disabled ? formEle.disabled : false}
         required={formEle.required ? formEle.required : false}
         className={`w-full ${!isValid && touched ? FORM_ELEMENTS_CSS_CLASSES_ERR : FORM_ELEMENTS_CSS_CLASSES}`}
