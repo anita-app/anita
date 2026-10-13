@@ -4,7 +4,7 @@ import { ProjectSectionElementAddEditFormManager } from 'app/components/project/
 import { ProjectSectionElementAddEditSaveCancelButtons } from 'app/components/project/section/element/add-edit-save-cancel-buttons.component'
 import { MainContentContainer } from 'app/components/shared-components/common-ui-eles/main-content-container.component'
 import { Loader } from 'app/components/shared-components/loader/loader.component'
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Navigate, useParams, useSearchParams } from 'react-router-dom'
 import { FormElementState } from 'app/state/form-element/form-element-state.class'
 import { useLiveQuery } from 'dexie-react-hooks'
@@ -26,29 +26,41 @@ export const ProjectSectionElementAddEdit: FC = () => {
   // ?parent=<sectionId>|<elementId>: the new record is already linked to that parent record.
   const [searchParams] = useSearchParams()
   const parent = searchParams.get('parent')
-  const elementFromDB = useLiveQuery(() => Queriers.getElement(projectId!, sectionId!, elementId!), [projectId, sectionId, elementId], {})
+  // null while loading: the form must not be built before the record is there.
+  const elementFromDB = useLiveQuery(() => Queriers.getElement(projectId!, sectionId!, elementId!), [projectId, sectionId, elementId], null)
   const element = useMemo(() => {
     if (mode === EDITOR_MODE.edit) {
-      return elementFromDB
+      // Right after moving to another record the query may still return the previous one.
+      return elementFromDB && elementFromDB.id !== elementId ? null : elementFromDB
     }
     return parent ? { parentsInfo: [parent] } : {}
-  }, [mode, elementFromDB, parent])
+  }, [mode, elementFromDB, elementId, parent])
+
+  // Some fields (e.g. rich text) read their value only when they are built: the form is shown only once the
+  // shared form state holds the record of this page, never the one of the previous form.
+  const formKey = `${sectionId}|${elementId ?? ''}|${parent ?? ''}`
+  const [loadedFor, setLoadedFor] = useState<string | null>(null)
 
   useEffect(() => {
     if (element === null) {
       FormElementState.setElement(null)
+      setLoadedFor(null)
       return
     }
 
     if (element !== undefined) {
       FormElementState.setElement(element as ISectionElement)
+      setLoadedFor(formKey)
     }
-  }, [element])
+  }, [element, formKey])
+
+  useEffect(() => () => FormElementState.setElement(null), [])
 
   if (element === undefined) {
     return <Navigate to={ANITA_URLS.projectsList} />
   }
 
+  const isReady = element !== null && loadedFor === formKey
   const headerText = mode === EDITOR_MODE.add ? 'Add Element' : 'Edit Element'
 
   return (
@@ -56,9 +68,14 @@ export const ProjectSectionElementAddEdit: FC = () => {
       headerText={headerText}
       overflowClassName="overflow-y-visible"
     >
-      {element === null && <Loader />}
-      {element !== null && <ProjectSectionElementAddEditFormManager sectionId={sectionId!} />}
-      {element !== null && <ProjectSectionElementAddEditSaveCancelButtons sectionId={sectionId!} />}
+      {!isReady && <Loader />}
+      {isReady && (
+        <ProjectSectionElementAddEditFormManager
+          key={formKey}
+          sectionId={sectionId!}
+        />
+      )}
+      {isReady && <ProjectSectionElementAddEditSaveCancelButtons sectionId={sectionId!} />}
     </MainContentContainer>
   )
 }
