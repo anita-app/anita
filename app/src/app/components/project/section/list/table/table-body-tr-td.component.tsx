@@ -14,6 +14,7 @@ interface IProjectSectionListTableTdProps extends ISectionElement {
   sectionId: string
   column: FormFieldsModel<TSupportedFormsTypes>
   columns: Array<FormFieldsModel<TSupportedFormsTypes>>
+  titleFieldName?: string
 }
 
 export const ProjectSectionListTableBodyTrTd: FC<IProjectSectionListTableTdProps> = memo(function ProjectSectionListTableTd (props: IProjectSectionListTableTdProps) {
@@ -35,6 +36,7 @@ export const ProjectSectionListTableBodyTrTd: FC<IProjectSectionListTableTdProps
     <ProjectSectionListTableBodyTrTdWithLinkToDetails
       key={`${props.id}${props.column.fieldName}`}
       elementId={props.id}
+      isTitle={props.column.fieldName === props.titleFieldName}
     >
       <Component value={props[props.column.fieldName]} />
     </ProjectSectionListTableBodyTrTdWithLinkToDetails>

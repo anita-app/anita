@@ -12,6 +12,7 @@ import { Type } from 'app/components/shared-components/common-ui-eles/components
 import { customRenderPicker } from 'app/components/shared-components/values-renderers/custom-render-picker.component'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
 import { ProjectAtoms } from 'app/state/project/project.atoms'
+import { withTitleFieldFirst } from 'app/models/section/title-field.function'
 import type { FC, ReactNode } from 'react'
 import type { ISection } from 'app/models/section/section.declarations'
 import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
@@ -29,9 +30,10 @@ export const addLinkedRecordUrl = (projectId: string, sectionId: string, parentS
 )
 
 const columnsOf = (section: ISection): Array<FormFieldsModel<ISectionElement>> => (
-  (section.formModel as Array<FormFieldsModel<ISectionElement>>)
-    .filter(formEle => formEle.label && !HIDDEN_CODES.includes(Number(formEle.componentCode)))
-    .slice(0, MAX_COLUMNS)
+  withTitleFieldFirst(
+    (section.formModel as Array<FormFieldsModel<ISectionElement>>).filter(formEle => formEle.label && !HIDDEN_CODES.includes(Number(formEle.componentCode))),
+    section.formModel,
+  ).slice(0, MAX_COLUMNS)
 )
 
 const renderValue = (formEle: FormFieldsModel<ISectionElement>, value: unknown): ReactNode => {

@@ -5,6 +5,8 @@ import type { FC, ReactNode } from 'react'
 
 interface IProjectSectionListTableTdWithLinkToDetailsProps {
   elementId: string | undefined
+  /** The cell holds the name of the record */
+  isTitle?: boolean
   children: ReactNode
 }
 
@@ -30,7 +32,7 @@ export const ProjectSectionListTableBodyTrTdWithLinkToDetails: FC<IProjectSectio
   return (
     <td
       onClick={handleClick}
-      className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 md:pl-0 cursor-pointer"
+      className={`whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6 md:pl-0 cursor-pointer ${props.isTitle ? 'font-semibold text-prussian-blue-500 hover:underline' : 'font-medium text-gray-900'}`}
     >
       {props.children}
     </td>

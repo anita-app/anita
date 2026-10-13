@@ -11,6 +11,7 @@ import { SyncState } from 'app/state/sync/sync-state.class'
 import { atom } from 'jotai'
 import { Bucket } from 'app/state/bucket.state'
 import { ProjectState } from 'app/state/project/project-state.class'
+import { getTitleFieldOrFirst } from 'app/models/section/title-field.function'
 import type { TIconName } from 'app/libs/icons/icons.class'
 import type { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
 import type { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
@@ -65,6 +66,13 @@ export class Section implements ISection {
 
   public getFirstUserDefinedField (): FormFieldsModel<TSupportedFormsTypes> | undefined {
     return this.formModel.find(formEle => !RESERVED_FIELDS[formEle.fieldName!])
+  }
+
+  /**
+   * The field that names the records (see getTitleField), or the first field.
+   */
+  public getTitleField (): FormFieldsModel<TSupportedFormsTypes> | undefined {
+    return getTitleFieldOrFirst(this.formModel)
   }
 
   public getFirstFieldOfType = (types: Array<FORM_COMPONENTS_CODES>): FormFieldsModel<TSupportedFormsTypes> | undefined => this.formModel.find(formEle => types.includes(parseInt(formEle.componentCode as unknown as string)))

@@ -3,8 +3,9 @@ import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { useParams } from 'react-router-dom'
 import { RichText } from 'app/components/shared-components/values-renderers/rich-text.component'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
+import { customRenderPicker } from 'app/components/shared-components/values-renderers/custom-render-picker.component'
 import { RoutingState } from 'app/state/routing/routing-state.class'
-import type { FC } from 'react'
+import type { FC, ReactNode } from 'react'
 import type { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
 import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
@@ -12,6 +13,14 @@ interface IProjectSectionListGridElementProps {
   element: ISectionElement
   titleField: FormFieldsModel<TSupportedFormsTypes>
   descriptionKey: string
+}
+
+// Values other than text (e.g. dates) are shown as in the table.
+const renderTitle = (field: FormFieldsModel<TSupportedFormsTypes>, value: unknown): ReactNode => {
+  if (value === undefined || value === null || value === '') {
+    return <span className="text-gray-400">Untitled</span>
+  }
+  return customRenderPicker(field)({ value }) as ReactNode
 }
 
 export const ProjectSectionListGridElement: FC<IProjectSectionListGridElementProps> = (props) => {
@@ -56,7 +65,7 @@ export const ProjectSectionListGridElement: FC<IProjectSectionListGridElementPro
         <div className="flex-1 relative overflow-hidden">
           <div className="flex items-center space-x-3">
             {props.titleField.componentCode !== FORM_COMPONENTS_CODES.richText && (
-              <h3 className="text-gray-900 text-sm font-medium">{props.element[props.titleField.fieldName]}</h3>
+              <h3 className="text-gray-900 text-sm font-medium">{renderTitle(props.titleField, props.element[props.titleField.fieldName])}</h3>
             )}
             {props.titleField.componentCode === FORM_COMPONENTS_CODES.richText && (
               <RichText value={props.element[props.titleField.fieldName]} />

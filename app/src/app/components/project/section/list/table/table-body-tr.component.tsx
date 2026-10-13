@@ -8,6 +8,7 @@ interface ITableTbodyTrProps extends ISectionElement {
   element: ISectionElement
   sectionId: string
   columns: Array<FormFieldsModel<TSupportedFormsTypes>>
+  titleFieldName?: string
 }
 
 export const ProjectSectionListTableBodyTr: FC<ITableTbodyTrProps> = memo(function TableTbodyTr (props: ITableTbodyTrProps) {

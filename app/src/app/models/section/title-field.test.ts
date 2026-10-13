@@ -1,4 +1,4 @@
-import { getRecordTitle, getTitleField } from 'app/models/section/title-field.function'
+import { getRecordTitle, getTitleField, getTitleFieldOrFirst, withTitleFieldFirst } from 'app/models/section/title-field.function'
 import type { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
 
 const field = (fieldName: string, componentCode: number, extra: Record<string, unknown> = {}) => ({ fieldName, label: fieldName, componentCode, ...extra }) as unknown as FormFieldsModel<TSupportedFormsTypes>
@@ -31,5 +31,25 @@ describe('getRecordTitle', () => {
   it('returns nothing for an empty title', () => {
     expect(getRecordTitle(formModel, { name: '' })).toBeUndefined()
     expect(getRecordTitle(formModel, null)).toBeUndefined()
+  })
+})
+
+describe('withTitleFieldFirst', () => {
+  it('moves the title field to the first column', () => {
+    const formModel = [field('done', 3), field('due', 8), field('task', 1, { required: true })]
+    expect(withTitleFieldFirst(formModel, formModel).map(column => column.fieldName)).toEqual(['task', 'done', 'due'])
+  })
+
+  it('keeps the columns when there is no title field or it is hidden', () => {
+    const formModel = [field('date', 8), field('task', 1, { required: true })]
+    expect(withTitleFieldFirst([formModel[0]], formModel).map(column => column.fieldName)).toEqual(['date'])
+    const noTitle = [field('date', 8), field('notes', 2)]
+    expect(withTitleFieldFirst(noTitle, noTitle)).toBe(noTitle)
+  })
+})
+
+describe('getTitleFieldOrFirst', () => {
+  it('falls back to the first field', () => {
+    expect(getTitleFieldOrFirst([field('id', 6), field('date', 8), field('notes', 2)])?.fieldName).toBe('date')
   })
 })

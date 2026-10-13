@@ -39,7 +39,7 @@ export class GetParentInfoForDetailsView {
       return
     }
 
-    const formEle = section.getFirstUserDefinedField()
+    const formEle = section.getTitleField()
     this.parentInfoForDetailsView.push({
       sectionId: arrInfo[0],
       element: element!,

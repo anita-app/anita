@@ -1,3 +1,4 @@
+import { getTitleField, withTitleFieldFirst } from 'app/models/section/title-field.function'
 import { ProjectSectionListTable } from 'app/components/project/section/list/table/table.component'
 import { useAtomValue } from 'jotai'
 import { useCallback } from 'react'
@@ -46,7 +47,8 @@ export const ProjectSectionListTableContainer: FC<IProjectSectionListTableProps>
     <ProjectSectionListTable
       section={props.section}
       sectionData={sortedData()}
-      columns={props.section.getVisibleColumnsInTableView()}
+      columns={withTitleFieldFirst(props.section.getVisibleColumnsInTableView(), props.section.formModel)}
+      titleFieldName={getTitleField(props.section.formModel)?.fieldName}
     />
   )
 }

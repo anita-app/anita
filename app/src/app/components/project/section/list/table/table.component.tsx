@@ -9,6 +9,8 @@ interface IProjectSectionListTableProps {
   section: Section
   sectionData: Array<ISectionElement>
   columns: Array<FormFieldsModel<TSupportedFormsTypes>>
+  /** Field naming the records, shown as the name of each row */
+  titleFieldName?: string
 }
 
 export const ProjectSectionListTable: FC<IProjectSectionListTableProps> = (props) => (
@@ -31,6 +33,7 @@ export const ProjectSectionListTable: FC<IProjectSectionListTableProps> = (props
           element={element}
           columns={props.columns}
           sectionId={props.section.id}
+          titleFieldName={props.titleFieldName}
           {...element}
         />
       ))}

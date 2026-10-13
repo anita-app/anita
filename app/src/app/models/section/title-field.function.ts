@@ -20,6 +20,22 @@ export const getTitleField = (formModel: Array<FormFieldsModel<TSupportedFormsTy
 }
 
 /**
+ * The field shown as the name of records where something must be shown: the title field, otherwise the first field.
+ */
+export const getTitleFieldOrFirst = (formModel: Array<FormFieldsModel<TSupportedFormsTypes>>): FormFieldsModel<TSupportedFormsTypes> | undefined => (
+  getTitleField(formModel) ?? formModel.find(formEle => !RESERVED_FIELDS[formEle.fieldName as keyof typeof RESERVED_FIELDS])
+)
+
+/**
+ * Puts the title field first, so that lists start with the name of each record.
+ */
+export const withTitleFieldFirst = <T extends FormFieldsModel<TSupportedFormsTypes>>(columns: Array<T>, formModel: Array<FormFieldsModel<TSupportedFormsTypes>>): Array<T> => {
+  const titleField = getTitleField(formModel)
+  const index = titleField ? columns.findIndex(column => column.fieldName === titleField.fieldName) : -1
+  return index > 0 ? [columns[index], ...columns.slice(0, index), ...columns.slice(index + 1)] : columns
+}
+
+/**
  * The title of a record, or undefined if its section has no title field or the record leaves it empty.
  */
 export const getRecordTitle = (formModel: Array<FormFieldsModel<TSupportedFormsTypes>>, element: ISectionElement | null | undefined): { title: string; fieldName: string } | undefined => {

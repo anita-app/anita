@@ -31,7 +31,7 @@ export class GetOptionsForParentsSelector {
     if (!section) {
       return
     }
-    const formEle = section.getFirstUserDefinedField()
+    const formEle = section.getTitleField()
     sectionEles.forEach(ele => options.push({
       value: `${sectionId}|${ele.id}`,
       label: ele[formEle!.fieldName],

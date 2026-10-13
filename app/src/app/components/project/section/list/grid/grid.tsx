@@ -23,7 +23,7 @@ export const ProjectSectionListGrid: FC<IProjectSectionListGridProps> = (props) 
   }
 
   const section = new Section(projectId, sectionData!)
-  const titleField = section.getFirstUserDefinedField()
+  const titleField = section.getTitleField()
   const descriptionField = section.getFirstFieldOfType([FORM_COMPONENTS_CODES.richText])
 
   if (!titleField) {
