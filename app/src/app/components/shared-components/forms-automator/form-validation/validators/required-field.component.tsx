@@ -11,8 +11,9 @@ export const RequiredField: FC<IValidatorsProps> = memo(function RequiredField (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
 
+  // The asterisk on the label already marks the field: the message appears only when it is left empty.
   if (value || !touched) {
-    return (<div className="ml-1 text-xs italic text-gray-400 d-block-inline">Required</div>)
+    return null
   }
 
   return (<div className="ml-1 text-red-600 text-xs italic">This field is required</div>)

@@ -11,6 +11,7 @@ import {
   useState,
 } from 'react'
 import Select from 'react-select'
+import { formSelectStyles } from 'app/components/shared-components/forms-automator/form-layout/select-styles.const'
 import { Bucket } from 'app/state/bucket.state'
 import { ProjectAtoms } from 'app/state/project/project.atoms'
 import type { FC } from 'react'
@@ -59,7 +60,7 @@ export const ParentsSelector: FC<ICommonFormEleProps<IBasicSelect<ISectionElemen
         isMulti={true}
         name={formEle.fieldName}
         options={selectOptions as any}
-        className={!isValid && touched ? 'border border-red-600 rounded' : ''}
+        styles={formSelectStyles(!isValid && touched)}
         onChange={handleChangeInParentsSelector}
         onBlur={() => setTouched(true)}
       />

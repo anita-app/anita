@@ -12,6 +12,7 @@ import {
   useState,
 } from 'react'
 import Select from 'react-select'
+import { formSelectStyles } from 'app/components/shared-components/forms-automator/form-layout/select-styles.const'
 import { useAtomValue } from 'jotai'
 import { FormProjectAtoms } from 'app/state/form-project/form-project.atoms'
 import type { FC } from 'react'
@@ -71,7 +72,7 @@ export const ChildOfSelectorForSection: FC<ICommonFormEleProps<IBasicSelect<ISec
         isMulti={true}
         name={formEle.fieldName}
         options={selectOptions as any}
-        className={!isValid && touched ? 'border border-red-600 rounded' : ''}
+        styles={formSelectStyles(!isValid && touched)}
         onChange={handleChangeInChildOfSelectorForSection}
         onBlur={() => setTouched(true)}
       />

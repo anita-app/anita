@@ -18,6 +18,6 @@ export const UrlFormat: FC<IValidatorsProps> = memo(function TelephoneNumber ({ 
     return null
   }
 
-  return (<div className="ml-1 text-red-600 text-xs italic  d-block-inline">Invalid address (must start with &lsquohttp://&lsquo or &lsquohttps://&lsquo)</div>)
+  return (<div className="ml-1 text-red-600 text-xs italic  d-block-inline">Invalid address (it must start with http:// or https://)</div>)
 }, (prevProps, nextProps) => prevProps.element[prevProps.formEle.fieldName] === nextProps.element[nextProps.formEle.fieldName] &&
     prevProps.touched === nextProps.touched)

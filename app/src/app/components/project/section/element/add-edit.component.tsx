@@ -11,6 +11,8 @@ import { useLiveQuery } from 'dexie-react-hooks'
 import { Queriers } from 'app/libs/db-connector/common-helpers/Queriers'
 import { useAtomValue } from 'jotai'
 import { RoutingAtoms } from 'app/state/routing/routing.atoms'
+import { ProjectAtoms } from 'app/state/project/project.atoms'
+import { getRecordTitle } from 'app/models/section/title-field.function'
 import type { FC } from 'react'
 import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
@@ -22,6 +24,7 @@ export const ProjectSectionElementAddEdit: FC = () => {
   const sectionId = useAtomValue(RoutingAtoms.param(URL_PARAMS.sectionId))
   const elementIdFromParams = useAtomValue(RoutingAtoms.param(URL_PARAMS.elementId))
   const elementId = (mode === EDITOR_MODE.edit) ? elementIdFromParams : null
+  const section = useAtomValue(ProjectAtoms.currentProject)?.getSectionById(sectionId!)
 
   // ?parent=<sectionId>|<elementId>: the new record is already linked to that parent record.
   const [searchParams] = useSearchParams()
@@ -61,11 +64,16 @@ export const ProjectSectionElementAddEdit: FC = () => {
   }
 
   const isReady = element !== null && loadedFor === formKey
-  const headerText = mode === EDITOR_MODE.add ? 'Add Element' : 'Edit Element'
+  // Named after the saved record (not the one being typed), as on the details page.
+  const recordTitle = mode === EDITOR_MODE.edit && section?.formModel ? getRecordTitle(section.formModel, elementFromDB as ISectionElement | null) : undefined
+  const headerText = mode === EDITOR_MODE.add
+    ? (section ? `Add to ${section.title}` : 'Add record')
+    : (recordTitle ? `Edit “${recordTitle.title}”` : 'Edit record')
 
   return (
     <MainContentContainer
       headerText={headerText}
+      wrapHeader={!!recordTitle}
       overflowClassName="overflow-y-visible"
     >
       {!isReady && <Loader />}
