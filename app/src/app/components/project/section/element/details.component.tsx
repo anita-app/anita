@@ -18,10 +18,9 @@ import { useLiveQuery } from 'dexie-react-hooks'
 import { Queriers } from 'app/libs/db-connector/common-helpers/Queriers'
 import { ChildRecordsTabs } from 'app/components/project/section/element/child-records-tabs.component'
 import { useState } from 'react'
-import { Section } from 'app/models/section/section.class'
+import { getRecordTitle } from 'app/models/section/title-field.function'
 import { ProjectAtoms } from 'app/state/project/project.atoms'
 import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
-import type { ISection } from 'app/models/section/section.declarations'
 import type { FormFieldsModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 import type { FC } from 'react'
 
@@ -38,10 +37,11 @@ const ValueWithLabel: FC<{ formModel: FormFieldsModel<ISectionElement>; value: a
   )
 }
 
-const ElementValuesViewer: FC<{ element: ISectionElement; formModels: Array<FormFieldsModel<ISectionElement>>; sectionId: string }> = (props) => (
+const ElementValuesViewer: FC<{ element: ISectionElement; formModels: Array<FormFieldsModel<ISectionElement>>; sectionId: string; titleFieldName?: string }> = (props) => (
   <div className="p-3">
     {props.formModels.map((formModel) => {
-      if (!formModel.label) {
+      // The title of the record is already the header of the page.
+      if (!formModel.label || formModel.fieldName === props.titleFieldName) {
         return null
       }
       if (formModel.componentCode === FORM_COMPONENTS_CODES.basicCheckbox) {
@@ -100,15 +100,6 @@ const useDetailsCollapsed = (sectionId: string | undefined): [boolean, () => voi
   return [collapsed, toggle]
 }
 
-/**
- * Title of a record, shown next to the header when the details are collapsed.
- */
-const recordTitle = (sectionData: ISection, projectId: string, element: ISectionElement | null): string | undefined => {
-  const field = new Section(projectId, sectionData).getFirstUserDefinedField()
-  const value = field && element ? element[field.fieldName] : undefined
-  return typeof value === 'string' && !value.startsWith('[') ? value : (typeof value === 'number' ? String(value) : undefined)
-}
-
 export const ProjectSectionElementDetails: FC<{ collapsible: boolean }> = (props) => {
   const projectId = useAtomValue(RoutingAtoms.param(URL_PARAMS.projectId))!
   const sectionId = useAtomValue(RoutingAtoms.param(URL_PARAMS.sectionId))
@@ -130,11 +121,16 @@ export const ProjectSectionElementDetails: FC<{ collapsible: boolean }> = (props
     return <Navigate to={ANITA_URLS.projectsList} />
   }
 
+  // The record is named by its title field (e.g. the name of a client); "Details" when it has none.
+  const recordTitle = getRecordTitle(sectionData.formModel!, element)
+  const headerText = element === null ? '\u00a0' : (recordTitle?.title ?? 'Details')
+
   return (
     <>
       <MainContentContainer
-        headerText="Details"
-        collapsible={props.collapsible ? { collapsed, onToggle: toggleCollapsed, summary: recordTitle(sectionData, projectId, element) } : undefined}
+        headerText={headerText}
+        wrapHeader={!!recordTitle}
+        collapsible={props.collapsible ? { collapsed, onToggle: toggleCollapsed } : undefined}
       >
         {(element === null)
           ? <Loader />
@@ -142,6 +138,7 @@ export const ProjectSectionElementDetails: FC<{ collapsible: boolean }> = (props
               element={element}
               formModels={sectionData.formModel!}
               sectionId={sectionId!}
+              titleFieldName={recordTitle?.fieldName}
             />}
         {(element !== null && element.parentsInfo && Array.isArray(element.parentsInfo) && element.parentsInfo.length > 0) && (
         <ProjectSectionElementDetailsParentsLinks

@@ -6,8 +6,6 @@ import type { IListTabsHeaderRightProps } from 'app/components/project/section/l
 interface ICollapsibleProps {
   collapsed: boolean
   onToggle: () => void
-  /** Shown next to the header when the content is collapsed */
-  summary?: ReactNode
 }
 
 interface IMainContentContainerProps {
@@ -16,6 +14,8 @@ interface IMainContentContainerProps {
   headerRightComponentProps?: IListTabsHeaderRightProps
   hasHeaderOnlyStyle?: boolean
   overflowClassName?: string
+  /** Long headers wrap instead of being cut, e.g. when the header is the title of a record */
+  wrapHeader?: boolean
   /** The header becomes a button that shows and hides the content */
   collapsible?: ICollapsibleProps
   children: ReactNode
@@ -25,6 +25,7 @@ export const MainContentContainer: FC<IMainContentContainerProps> = (props) => {
   const RightComponent = props.headerRightComponent
   const contentId = useId()
   const collapsed = !!props.collapsible?.collapsed
+  const headerTextClassName = `text-xl font-semibold ${props.wrapHeader ? 'break-words min-w-0' : 'truncate'}`
   return (
     <div className={props.hasHeaderOnlyStyle ? '' : 'p-4 bg-white rounded shadow'}>
       {props.headerText && (
@@ -40,16 +41,13 @@ export const MainContentContainer: FC<IMainContentContainerProps> = (props) => {
                 aria-controls={contentId}
                 className={`w-full flex items-center justify-between gap-3 px-4 pt-7 ${collapsed ? 'pb-7' : ''} text-left cursor-pointer group`}
               >
-                <span className="flex items-baseline gap-2 min-w-0">
-                  <span className="text-xl font-semibold truncate">{props.headerText}</span>
-                  {collapsed && props.collapsible.summary && <span className="text-gray-500 truncate">{props.collapsible.summary}</span>}
-                </span>
+                <span className={headerTextClassName}>{props.headerText}</span>
                 <span className={`shrink-0 text-xl text-gray-400 group-hover:text-gray-700 transition-transform ${collapsed ? '' : 'rotate-180'}`}>{Icons.render('chevronDownOutline')}</span>
               </button>
             </h3>)
           : (
             <div className="mt-3 flex justify-between">
-              <h3 className="text-xl font-semibold truncate">{props.headerText}</h3>
+              <h3 className={headerTextClassName}>{props.headerText}</h3>
               {!!RightComponent && !!props.headerRightComponentProps && <RightComponent {...props.headerRightComponentProps} />}
             </div>)}
         {!props.hasHeaderOnlyStyle && !collapsed && <hr className="mt-4" />}
