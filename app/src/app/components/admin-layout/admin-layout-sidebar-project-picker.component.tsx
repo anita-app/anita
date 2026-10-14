@@ -8,11 +8,13 @@ import { Transition } from '@headlessui/react'
 import { ProjectsListAtoms } from 'app/state/projects-list/projects-list.atoms'
 import { useAtomValue } from 'jotai'
 import { RoutingState } from 'app/state/routing/routing-state.class'
+import { ProjectAvatar } from 'app/components/shared-components/common-ui-eles/project-avatar.component'
 import type { FC } from 'react'
 import type { TSystemData } from 'app/models/project/project.declarations'
 
 interface IProjectPickerProps {
   project: TSystemData
+  sectionsCount: number
 }
 
 export const AdminLayoutSidebarProjectPicker: FC<IProjectPickerProps> = (props) => {
@@ -57,79 +59,109 @@ export const AdminLayoutSidebarProjectPicker: FC<IProjectPickerProps> = (props) 
     RoutingState.goTo(route)
   }
 
+  const currentId = props.project[RESERVED_AUDS_KEYS._settings][0].id
+  const currentTitle = props.project?.[RESERVED_AUDS_KEYS._settings][0]?.title
+
   return (
-    <div className="block py-2.5 px-1">
-      <p
-        className="text-xs text-gray-400"
-        style={{ fontVariant: 'small-caps' }}
-      >project
-      </p>
+    <div className="block pt-2 pb-1">
       <div
         ref={dropDownRef}
         className="relative"
       >
         <button
           onClick={() => toggleDropdown(dropdownOpen)}
-          className="relative w-full flex justify-between text-left z-10 py-2 transition-all focus:px-2 hover:px-2 border-b hover:border-b-prussian-blue-700 hover:rounded focus:border-b-prussian-blue-700 active:border-b-prussian-blue-700 focus:outline-none hover:bg-gray-100 focus:bg-gray-200 focus:rounded active:bg-gray-300 active:rounded"
+          aria-expanded={dropdownOpen}
+          aria-haspopup="menu"
+          className="ui-picker relative z-10 w-full flex items-center gap-2.5 text-left px-2 py-2"
         >
-          <span>{props.project?.[RESERVED_AUDS_KEYS._settings][0]?.title}</span>
-          {Icons.render('codeOutline', 'my-auto rotate-90')}
+          <ProjectAvatar
+            title={currentTitle}
+            id={currentId}
+          />
+          <span className="min-w-0 grow">
+            <span className="block truncate text-sm font-semibold text-[#0b1f36] leading-tight">{currentTitle}</span>
+            <span className="block text-[0.7rem] text-[#7a8799]">{props.sectionsCount} {props.sectionsCount === 1 ? 'section' : 'sections'}</span>
+          </span>
+          {Icons.render('codeOutline', 'my-auto rotate-90 text-[#8a97a8] shrink-0')}
         </button>
         <Transition
           as={Fragment}
           show={dropdownOpen}
-          enter="transition ease-out duration-100"
-          enterFrom="transform opacity-0 scale-95"
-          enterTo="transform opacity-100 scale-100"
+          enter="transition ease-out duration-150"
+          enterFrom="transform opacity-0 scale-95 -translate-y-1"
+          enterTo="transform opacity-100 scale-100 translate-y-0"
           leave="transition ease-in duration-75"
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <div className="absolute left-0 mt-2 w-64 bg-white rounded-md overflow-hidden shadow-xl z-20 border border-bg-500">
-            <div className="block py-2.5 px-4 text-sm bg-gray-100 text-gray-600">Current Project</div>
+          <div className="ui-menu absolute left-0 mt-2 w-64 z-20 origin-top-left">
+            <div className="ui-menu-label">Current project</div>
             <button
-              className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200"
-              onClick={() => goToDetails(props.project[RESERVED_AUDS_KEYS._settings][0].id)}
+              className="ui-menu-item ui-active"
+              onClick={() => goToDetails(currentId)}
             >
-              {Icons.render('informationCircleOutline', 'mr-2')}
-              Details
+              <ProjectAvatar
+                title={currentTitle}
+                id={currentId}
+                size="small"
+              />
+              <span className="truncate grow">{currentTitle}</span>
+              {Icons.render('checkmarkOutline', 'text-[#006fdf] shrink-0')}
             </button>
             <button
-              className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200"
-              onClick={() => goToEditProject(props.project[RESERVED_AUDS_KEYS._settings][0].id)}
+              className="ui-menu-item"
+              onClick={() => goToDetails(currentId)}
             >
-              {Icons.render('createOutline', 'mr-2')}
-              Edit
+              <span className="ui-menu-tile">{Icons.render('informationCircleOutline')}</span>
+              <span>Details</span>
             </button>
-            {projects?.length > 1 && (<div className="block py-2.5 px-4 text-sm bg-gray-100 text-gray-600">Switch to Project</div>)}
+            <button
+              className="ui-menu-item"
+              onClick={() => goToEditProject(currentId)}
+            >
+              <span className="ui-menu-tile">{Icons.render('createOutline')}</span>
+              <span>Edit</span>
+            </button>
+            {projects?.length > 1 && (
+              <>
+                <div className="ui-menu-sep" />
+                <div className="ui-menu-label">Switch to</div>
+              </>
+            )}
             {projects?.map(projectFromList => {
-              if (props.project[RESERVED_AUDS_KEYS._settings][0].id === projectFromList.id) return null
+              if (currentId === projectFromList.id) return null
               return (
                 <button
                   key={projectFromList.id}
-                  className="w-full block text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200"
+                  className="ui-menu-item"
                   onClick={() => loadProject(projectFromList.id)}
-                >{projectFromList.title}
+                >
+                  <ProjectAvatar
+                    title={projectFromList.title}
+                    id={projectFromList.id}
+                    size="small"
+                  />
+                  <span className="truncate">{projectFromList.title}</span>
                 </button>)
             })}
-            <div className="block py-2.5 px-4 text-sm bg-gray-100 text-gray-600">Actions</div>
+            <div className="ui-menu-sep" />
             <button
-              className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200"
+              className="ui-menu-item"
               onClick={() => goToPlainRoute(ANITA_URLS.projectsList)}
             >
-              {Icons.render('fileTrayStackedOutline', 'mr-2')}
-              Go to the projects list
+              <span className="ui-menu-tile">{Icons.render('fileTrayStackedOutline')}</span>
+              <span>Go to the projects list</span>
             </button>
             <button
-              className="flex items-center w-full text-left px-4 py-2 text-sm text-gray-800 border-b hover:bg-gray-200"
+              className="ui-menu-item"
               onClick={() => goToPlainRoute(ANITA_URLS.projectNew)}
             >
-              {Icons.render('addOutline', 'mr-2')}
-              Create a new project
+              <span className="ui-menu-tile">{Icons.render('addOutline')}</span>
+              <span>Create a new project</span>
             </button>
           </div>
         </Transition>
-      </div >
-    </div >
+      </div>
+    </div>
   )
 }

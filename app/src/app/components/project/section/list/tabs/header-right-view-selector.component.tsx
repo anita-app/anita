@@ -1,27 +1,27 @@
 import { Tab } from '@headlessui/react'
 import { Icons } from 'app/libs/icons/icons.class'
-import { SupportedViews, SUPPORTED_VIEWS_ICONS } from 'app/models/section/view-settings.const'
+import { SUPPORTED_VIEWS_ICONS } from 'app/models/section/view-settings.const'
+import type { SupportedViews } from 'app/models/section/view-settings.const'
 import type { FC } from 'react'
-
-function classNames (...classes: Array<string>) {
-  return classes.filter(Boolean).join(' ')
-}
 
 interface IListTabsHeaderRightViewSelectorProps {
   activeTab: SupportedViews
 }
 
+/** Each button is 32px wide (ui-seg-btn): the white thumb slides under the selected one. */
+const BUTTON_WIDTH_PX = 32
+
 export const ListTabsHeaderRightViewSelector: FC<IListTabsHeaderRightViewSelectorProps> = (props) => (
-  <Tab.List className={`flex space-x-1 rounded-md ${props.activeTab === SupportedViews.grid ? 'bg-gray-200' : 'bg-gray-100'} p-1 w-20`}>
+  <Tab.List className="ui-seg">
+    <span
+      className="ui-seg-thumb"
+      style={{ transform: `translateX(${props.activeTab * BUTTON_WIDTH_PX}px)` }}
+      aria-hidden="true"
+    />
     {SUPPORTED_VIEWS_ICONS.map(view => (
       <Tab
         key={view}
-        className={({ selected }) => classNames(
-          'flex items-center justify-center w-full rounded text-sm font-medium leading-5 text-prussian-blue-700',
-          selected
-            ? 'bg-white shadow'
-            : 'hover:bg-white/[0.12] hover:text-prussian-blue-500',
-        )}
+        className="ui-seg-btn text-base"
       >
         {Icons.render(view)}
       </Tab>

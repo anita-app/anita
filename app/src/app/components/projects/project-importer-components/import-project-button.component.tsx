@@ -16,7 +16,8 @@ import type { FC } from 'react'
 import type { IProjectSettings, TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
 
 interface IImportProjectButtonProps {
-  btnType: 'icon' | 'text'
+  /** icon: only the icon; compact: icon, with the label from md up; text: a large button with the label */
+  btnType: 'icon' | 'compact' | 'text'
 }
 
 const showInvalidFileModal = () => {
@@ -77,6 +78,21 @@ export const ImportProjectButton: FC<IImportProjectButtonProps> = (props) => {
         <ImportProjectModalContent projectSettings={project[RESERVED_AUDS_KEYS._settings][0]} />
       ),
     })
+  }
+
+  if (props.btnType === 'compact') {
+    return (
+      <Button
+        id="importProject"
+        label="Import"
+        tooltip="Import an existing project"
+        breakpoint="md"
+        iconLeft="downloadOutline"
+        onClick={handleClickModal}
+        type={Type.secondary}
+        size="sm"
+      />
+    )
   }
 
   return (

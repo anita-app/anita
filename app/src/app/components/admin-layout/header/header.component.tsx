@@ -22,8 +22,9 @@ export const AdminLayoutHeader: FC = () => {
   const headerElementsNumber = Number(hasMenu) + Number(hasWordPressRemotes) + Number(hasProjectLoaded)
 
   return (
-    <div className={`bg-white text-gray-700 flex items-center h-14 shadow-md ${headerElementsNumber > 0 ? 'justify-between' : 'justify-center md:justify-start'}`}>
-      {(hasMenu || hasProjectLoaded || hasWordPressRemotes) && (
+    <>
+      <div className={`ui-header text-gray-700 flex items-center h-14 ${headerElementsNumber > 0 ? 'justify-between' : 'justify-center md:justify-start'}`}>
+        {(hasMenu || hasProjectLoaded || hasWordPressRemotes) && (
         <div className="flex items-center w-1/3 md:hidden">
           <button
             className="mobile-menu-button p-4 focus:outline-none"
@@ -45,28 +46,30 @@ export const AdminLayoutHeader: FC = () => {
             </svg>
           </button>
         </div>
-      )}
+        )}
 
-      <div className={`relative grow flex items-center justify-center md:justify-start md:pl-5 ${headerElementsNumber === 1 ? 'ml-2 md:ml-0' : ''}`}>
-        <Link
-          to="/"
-          className={'text-lg font-bold leading-relaxed inline-block md:mr-4 py-2 whitespace-no-wrap uppercase'}
-        >
-          <img
-            src={`${process.env.PUBLIC_URL}/assets/logo/logo_square.svg`}
-            style={{ height: '30px', width: 'auto' }}
-            alt="Anita"
-          />
-        </Link>
-        <Link
-          to="/"
-          className="hidden md:inline-block mr-4 py-2 whitespace-no-wrap text-prussian-blue-400"
-        >
-          <span className="text-md font-bold leading-relaxed uppercase">Anita</span><sup style={{ fontVariant: 'small-caps' }}>Beta</sup>
-        </Link>
-      </div>
+        <div className={`relative grow flex items-center justify-center md:justify-start md:pl-5 ${headerElementsNumber === 1 ? 'ml-2 md:ml-0' : ''}`}>
+          <Link
+            to="/"
+            className={'text-lg font-bold leading-relaxed inline-block md:mr-4 py-2 whitespace-no-wrap uppercase'}
+          >
+            <img
+              src={`${process.env.PUBLIC_URL}/assets/logo/logo_square.svg`}
+              style={{ height: '30px', width: 'auto' }}
+              className="ui-logo"
+              alt="Anita"
+            />
+          </Link>
+          <Link
+            to="/"
+            className="hidden md:inline-flex items-center gap-2 mr-4 py-2 whitespace-no-wrap text-prussian-blue-500"
+          >
+            <span className="text-sm font-extrabold uppercase tracking-[0.1em]">Anita</span>
+            <span className="ui-beta">BETA</span>
+          </Link>
+        </div>
 
-      {(hasMenu || hasProjectLoaded || hasWordPressRemotes) && (
+        {(hasMenu || hasProjectLoaded || hasWordPressRemotes) && (
         <div className="flex items-center justify-end w-1/3 pr-2 md:pr-5">
           {hasProjectLoaded && !project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.remoteStorage && (
             <div>
@@ -76,16 +79,17 @@ export const AdminLayoutHeader: FC = () => {
           {hasProjectLoaded && <LocalOnlyHeaderButton />}
           {!!remoteIdsLength && (<WordPressSyncButtons />)}
         </div>
-      )}
+        )}
 
+      </div>
+      {/* Outside the header, which is positioned: the overlay covers the whole page, as before. */}
       {!sidebarCollapsed && (
-        <div
-          onClick={LayoutState.toggleSidebar}
-          className="absolute inset-0 h-full w-full z-10 md:hidden"
-        >
-        </div>
+      <div
+        onClick={LayoutState.toggleSidebar}
+        className="absolute inset-0 h-full w-full z-10 md:hidden"
+      >
+      </div>
       )}
-
-    </div>
+    </>
   )
 }

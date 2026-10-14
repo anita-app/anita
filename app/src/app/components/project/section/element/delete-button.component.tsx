@@ -51,7 +51,7 @@ export const ProjectSectionElementDeleteButton: FC<IProjectSectionElementDeleteB
       onClick={handleClickModal}
       breakpoint="lg"
       hasTooltip={true}
-      marginClassName="mt-6"
+      marginClassName=""
     />
   )
 }

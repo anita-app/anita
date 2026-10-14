@@ -2,10 +2,12 @@ import { AdminLayoutSidebarProjectPicker } from 'app/components/admin-layout/adm
 import { AdminLayoutSidebarMenuItem } from 'app/components/admin-layout/admin-layout-sidebar-menu-item.component'
 import { useAtomValue } from 'jotai'
 import { ProjectAtoms } from 'app/state/project/project.atoms'
-import { useState, type FC } from 'react'
+import { useState, type FC, type ReactNode } from 'react'
 
 interface IAdminLayoutSidebarMenuProps {
   isEditingMenuItemsVisibility: boolean
+  /** Button to show or hide sections, next to the "Sections" label */
+  editMenuButton: ReactNode
 }
 
 export const AdminLayoutSidebarMenu: FC<IAdminLayoutSidebarMenuProps> = (props) => {
@@ -18,19 +20,27 @@ export const AdminLayoutSidebarMenu: FC<IAdminLayoutSidebarMenuProps> = (props) 
   }
 
   return (
-    <div className="mt-3">
-      <AdminLayoutSidebarProjectPicker project={projectSystemData} />
-      {project.getSectionsDefinitions().map(section => (
-        <AdminLayoutSidebarMenuItem
-          key={section.id}
-          project={projectSystemData}
-          section={section}
-          selected={currentSelectedSectionId === section.id}
-          isEditingMenuItemsVisibility={props.isEditingMenuItemsVisibility}
-          setCurrentSelectedSectionId={setCurrentSelectedSectionId}
-        />
-      ))}
-
+    <div className="mt-2">
+      <AdminLayoutSidebarProjectPicker
+        project={projectSystemData}
+        sectionsCount={project.getSectionsDefinitions().length}
+      />
+      <div className="flex items-center justify-between mt-4 mb-1.5 pl-2.5">
+        <p className="ui-nav-label">Sections</p>
+        {props.editMenuButton}
+      </div>
+      <div className="flex flex-col gap-0.5">
+        {project.getSectionsDefinitions().map(section => (
+          <AdminLayoutSidebarMenuItem
+            key={section.id}
+            project={projectSystemData}
+            section={section}
+            selected={currentSelectedSectionId === section.id}
+            isEditingMenuItemsVisibility={props.isEditingMenuItemsVisibility}
+            setCurrentSelectedSectionId={setCurrentSelectedSectionId}
+          />
+        ))}
+      </div>
     </div>
   )
 }

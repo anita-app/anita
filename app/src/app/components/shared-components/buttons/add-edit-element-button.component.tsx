@@ -45,12 +45,24 @@ export const AddEditElementButton: FC<IAddEditElementButtonProps> = (props) => {
 
   useShortcut({ key, callback: navigateOnShortcut })
 
+  const label = props.mode === EDITOR_MODE.add ? 'New record' : 'Edit record'
+
   return (
-    <Link
-      to={url}
-      className="absolute bottom-5 right-7 md:bottom-7 md:right-10 bg-prussian-blue-400 text-white text-xl shadow-xl rounded-3xl h-14 w-14 flex items-center justify-center"
-    >
-      {Icons.render(icon)}
-    </Link>
+    <div className="ui-fab-wrap ui-pop absolute bottom-5 right-7 md:bottom-7 md:right-10 z-10 flex items-center gap-3">
+      {/* The label with the shortcut appears on hover and on keyboard focus. */}
+      <span
+        className="ui-fab-tip"
+        aria-hidden="true"
+      >
+        {label} <span className="ui-kbd">{key.toUpperCase()}</span>
+      </span>
+      <Link
+        to={url}
+        aria-label={label}
+        className={`ui-fab ${props.mode === EDITOR_MODE.add ? 'ui-fab-add' : ''}`}
+      >
+        {Icons.render(icon)}
+      </Link>
+    </div>
   )
 }

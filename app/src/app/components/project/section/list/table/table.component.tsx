@@ -14,7 +14,7 @@ interface IProjectSectionListTableProps {
 }
 
 export const ProjectSectionListTable: FC<IProjectSectionListTableProps> = (props) => (
-  <table className="table-auto min-w-full divide-y divide-gray-300">
+  <table className="ui-table table-auto min-w-full">
     <thead>
       <tr>
         {props.columns.map((col) => (
@@ -24,16 +24,19 @@ export const ProjectSectionListTable: FC<IProjectSectionListTableProps> = (props
             sectionId={props.section.id}
           />
         ))}
+        {/* Column of the arrow that appears on the hovered row */}
+        <th aria-hidden="true" />
       </tr>
     </thead>
-    <tbody className="divide-y divide-gray-200">
-      {props.sectionData.map((element) => (
+    <tbody>
+      {props.sectionData.map((element, index) => (
         <ProjectSectionListTableBodyTr
           key={element.id}
           element={element}
           columns={props.columns}
           sectionId={props.section.id}
           titleFieldName={props.titleFieldName}
+          entranceIndex={index}
           {...element}
         />
       ))}

@@ -10,11 +10,14 @@ import { ProjectAtoms } from 'app/state/project/project.atoms'
 import { SyncStateAtoms } from 'app/state/sync/sync-state.atoms'
 import { Icons } from 'app/libs/icons/icons.class'
 import { OnboardingState } from 'app/state/onboarding/onboarding-state.class'
-import type { FC } from 'react'
+import { ProjectAvatar } from 'app/components/shared-components/common-ui-eles/project-avatar.component'
+import type { CSSProperties, FC } from 'react'
 import type { IProjectSettings } from 'app/models/project/project.declarations'
 
 interface IProjectCardProps {
   project: IProjectSettings
+  /** Position in the list, for the staggered entrance */
+  index?: number
 }
 
 export const ProjectCard: FC<IProjectCardProps> = (props) => {
@@ -22,31 +25,44 @@ export const ProjectCard: FC<IProjectCardProps> = (props) => {
   const remotes = useAtomValue(SyncStateAtoms.wordPressRemotes)
 
   return (
-    <div className=" mt-4 h-full border-2 border-gray-200 border-opacity-60 rounded-lg bg-white">
-      <div className="p-6">
-        <h1 className="title-font text-lg font-medium text-gray-900 mb-3">{props.project.title}</h1>
-        <p className="text-lg mb-3">{props.project.description}</p>
-
-        <p className="text-gray-600 text-xs">Created on:</p>
-        <p className="text-md">{dateFormat('yyyy/MM/dd, at hh:mm', new Date(props.project.createdAt))}</p>
-        {props.project.remoteStorage
-          ? (
-            <p className="text-sm text-gray-500 mt-3 flex items-center gap-1">
-              {Icons.render('logoWordpress')}
-              <span>Synced with {remotes.find(remote => remote.remoteId === props.project.remoteStorage)?.data.site_name ?? props.project.remoteStorage}</span>
-            </p>)
-          : (
-            <div className="mt-3 flex flex-wrap items-center gap-2 rounded-md bg-orange-50 border border-orange-200 px-3 py-2 text-sm text-orange-800">
-              <span className="flex items-center gap-1">{Icons.render('warningOutline')} Only on this device, no backup</span>
-              <button
-                type="button"
-                onClick={() => OnboardingState.openStoreOnWordPress(props.project.id)}
-                className="underline font-medium hover:text-orange-900"
-              >
-                Save it on WordPress
-              </button>
-            </div>)}
-        <CardFooter>
+    <div
+      className="ui-card ui-pcard ui-rise h-full"
+      style={{ '--d': props.index ?? 0 } as CSSProperties}
+    >
+      <div className="p-5 md:p-6">
+        <div className="flex items-start gap-4">
+          <ProjectAvatar
+            id={props.project.id}
+            title={props.project.title}
+            size="large"
+          />
+          <div className="min-w-0 grow">
+            <h2 className="ui-title text-lg break-words">{props.project.title}</h2>
+            {props.project.description && <p className="text-sm text-[#5b6b80] mt-0.5">{props.project.description}</p>}
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-3 text-xs text-[#7a8799]">
+              <span className="inline-flex items-center gap-1">
+                {Icons.render('calendarOutline')} Created on {dateFormat('yyyy/MM/dd, at hh:mm', new Date(props.project.createdAt))}
+              </span>
+              {props.project.remoteStorage
+                ? (
+                  <span className="inline-flex items-center gap-1">
+                    {Icons.render('logoWordpress')}
+                    Synced with {remotes.find(remote => remote.remoteId === props.project.remoteStorage)?.data.site_name ?? props.project.remoteStorage}
+                  </span>)
+                : (
+                  <button
+                    type="button"
+                    onClick={() => OnboardingState.openStoreOnWordPress(props.project.id)}
+                    className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-2.5 py-0.5 font-semibold text-orange-800 transition hover:bg-orange-100 hover:shadow-[0_0_0_3px_rgba(249,115,22,0.12)]"
+                  >
+                    <span className="ui-dot" />
+                    Only on this device, no backup ·{' '}
+                    <span className="underline underline-offset-2">Save it on WordPress</span>
+                  </button>)}
+            </div>
+          </div>
+        </div>
+        <CardFooter className="mt-5! pt-4 border-t border-[#eef1f5] items-center!">
           <DeleteProjectButton project={props.project} />
           <div className="ml-auto">
             {(

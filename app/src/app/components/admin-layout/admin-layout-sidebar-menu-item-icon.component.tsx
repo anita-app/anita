@@ -20,7 +20,7 @@ export const AdminLayoutSidebarMenuItemIcon: FC<IAdminLayoutSidebarMenuItemIconP
       onClick={props.onClick}
       id={props.elementId}
     >
-      {Icons.render(props.icon, 'text-gray-400')}
+      {Icons.render(props.icon, 'text-[#9aa7b8] hover:text-prussian-blue-500')}
     </button>
   )
 })

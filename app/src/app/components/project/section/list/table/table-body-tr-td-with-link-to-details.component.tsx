@@ -7,6 +7,8 @@ interface IProjectSectionListTableTdWithLinkToDetailsProps {
   elementId: string | undefined
   /** The cell holds the name of the record */
   isTitle?: boolean
+  /** Replaces the classes of a regular cell */
+  className?: string
   children: ReactNode
 }
 
@@ -32,7 +34,7 @@ export const ProjectSectionListTableBodyTrTdWithLinkToDetails: FC<IProjectSectio
   return (
     <td
       onClick={handleClick}
-      className={`whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6 md:pl-0 cursor-pointer ${props.isTitle ? 'font-semibold text-prussian-blue-500 hover:underline' : 'font-medium text-gray-900'}`}
+      className={`cursor-pointer ${props.className ?? `whitespace-nowrap py-3 pl-4 pr-3 text-sm sm:pl-3 ${props.isTitle ? 'ui-title-cell font-semibold text-[#0b1f36]' : 'text-[#334155]'}`}`}
     >
       {props.children}
     </td>

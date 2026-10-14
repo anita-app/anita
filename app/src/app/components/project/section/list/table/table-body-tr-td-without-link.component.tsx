@@ -5,7 +5,7 @@ interface IProjectSectionListTableTdWithoutLinkProps {
 }
 
 export const ProjectSectionListTableBodyTrTdWithoutLink: FC<IProjectSectionListTableTdWithoutLinkProps> = (props) => (
-  <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 md:pl-0">
+  <td className="whitespace-nowrap py-3 pl-4 pr-3 text-sm text-[#334155] sm:pl-3">
     {props.children}
   </td>
 )

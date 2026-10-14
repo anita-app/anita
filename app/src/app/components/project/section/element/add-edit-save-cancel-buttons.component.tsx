@@ -66,7 +66,7 @@ export const ProjectSectionElementAddEditSaveCancelButtons: FC<IProjectSectionEl
   }
 
   return (
-    <div className="mt-6 flex flex-wrap items-center justify-end gap-y-2">
+    <div className="mt-6 pt-4 border-t border-[#eef1f5] flex flex-wrap items-center justify-end gap-y-2">
       {invalidMessage && (
         <p
           className="text-sm text-gray-600 mr-auto pr-3"
@@ -94,6 +94,7 @@ export const ProjectSectionElementAddEditSaveCancelButtons: FC<IProjectSectionEl
       <Button
         id="save"
         label={saveAndCloseText}
+        iconLeft="checkmarkOutline"
         type={Type.primary}
         disabled={!isValid}
         onClick={handleSaveAndClose}

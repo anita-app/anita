@@ -62,7 +62,7 @@ export const BasicSelect: FC<ICommonFormEleProps<IBasicSelect<ISectionElement>>>
         onChange={handleSelected}
       >
         <div className="relative">
-          <div className={`relative w-full cursor-default overflow-hidden bg-white text-left sm:text-sm ${isValid || ''}`}>
+          <div className={`relative w-full cursor-default bg-white rounded-[10px] text-left sm:text-sm ${isValid || ''}`}>
             <Combobox.Input
               className={`w-full h-10.5 pr-10 text-base leading-5 focus:ring-0 rounded-md ${!isValid && touched ? FORM_ELEMENTS_CSS_CLASSES_ERR : FORM_ELEMENTS_CSS_CLASSES}`}
               displayValue={(option) => (option as unknown as IOption)?.label}
@@ -80,7 +80,7 @@ export const BasicSelect: FC<ICommonFormEleProps<IBasicSelect<ISectionElement>>>
             leaveTo="opacity-0"
             afterLeave={() => setQuery('')}
           >
-            <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-10">
+            <Combobox.Options className="ui-menu absolute mt-1 max-h-60 w-full overflow-auto text-base focus:outline-none sm:text-sm z-10">
               {filteredOptions.length === 0 && query !== ''
                 ? (
                   <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
@@ -91,8 +91,8 @@ export const BasicSelect: FC<ICommonFormEleProps<IBasicSelect<ISectionElement>>>
                     filteredOptions.map((option) => (
                       <Combobox.Option
                         key={option.value}
-                        className={({ active }) => `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                        active ? 'bg-prussian-blue-600 text-white' : 'text-gray-900'
+                        className={({ active }) => `relative cursor-default select-none rounded-[9px] py-2 pl-10 pr-4 ${
+                        active ? 'bg-[#eef4fc] text-prussian-blue-500' : 'text-gray-900'
                       }`}
                         value={option}
                       >
@@ -106,7 +106,7 @@ export const BasicSelect: FC<ICommonFormEleProps<IBasicSelect<ISectionElement>>>
                             </span>
                             {(selected || option.icon) && (
                             <span className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                              active ? 'text-white' : selected ? 'text-teal-500' : 'text-prussian-blue-600'
+                              active ? 'text-[#006fdf]' : selected ? 'text-teal-500' : 'text-prussian-blue-600'
                             }`}
                             >
                               {Icons.render(selected ? 'checkmark' : option.icon!, 'h-5 w-5')}
@@ -115,7 +115,7 @@ export const BasicSelect: FC<ICommonFormEleProps<IBasicSelect<ISectionElement>>>
                             {(selected) && (
                             <span
                               className={`absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer ${
-                              active ? 'text-white' : 'text-prussian-blue-600'
+                              active ? 'text-[#006fdf]' : 'text-prussian-blue-600'
                                   }`}
                               onClick={handleClear}
                             >

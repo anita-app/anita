@@ -13,14 +13,8 @@ import type { FC } from 'react'
 import type { ISection } from 'app/models/section/section.declarations'
 import type { TSystemData } from 'app/models/project/project.declarations'
 
-const baseStyleOfSidebarLinks = 'flex items-center block py-2.5 px-2 transition duration-200 border-l-2 hover:border-prussian-blue-700 hover:text-prussian-blue-500 text-sm font-semibold'
-
-const addActiveClassNameToBaseStyle = (selected: boolean): string => {
-  if (selected) {
-    return `${baseStyleOfSidebarLinks} border-prussian-blue-700`
-  }
-  return `${baseStyleOfSidebarLinks} border-transparent`
-}
+// ui-nav-item (ui.css): rounded row; the active one has a tinted background and a blue-teal bar.
+const addActiveClassNameToBaseStyle = (selected: boolean): string => (selected ? 'ui-nav-item ui-active' : 'ui-nav-item')
 
 interface IAdminLayoutSidebarMenuItemProps {
   project: TSystemData
@@ -78,8 +72,8 @@ export const AdminLayoutSidebarMenuItem: FC<IAdminLayoutSidebarMenuItemProps> = 
       className={addActiveClassNameToBaseStyle(!!props.selected)}
     >
       <div className="flex items-center justify-between w-full">
-        <div className="flex items-center">
-          {Icons.render(section?.getSectionIcon() || 'chevronForwardOutline')}<span className="ml-2">{props.section.title_short || props.section.title}</span>
+        <div className="flex items-center gap-2.5 min-w-0">
+          {Icons.render(section?.getSectionIcon() || 'chevronForwardOutline')}<span className="truncate">{props.section.title_short || props.section.title}</span>
         </div>
         {props.isEditingMenuItemsVisibility && (
           <AdminLayoutSidebarMenuItemIcon

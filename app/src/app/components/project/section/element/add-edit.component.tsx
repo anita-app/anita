@@ -73,6 +73,7 @@ export const ProjectSectionElementAddEdit: FC = () => {
   return (
     <MainContentContainer
       headerText={headerText}
+      eyebrow={section?.title}
       wrapHeader={!!recordTitle}
       overflowClassName="overflow-y-visible"
     >

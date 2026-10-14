@@ -33,12 +33,12 @@ export const ProjectSectionListTableHeadTh: FC<IProjectSectionListTableHeadThPro
   return (
     <th
     // eslint-disable-next-line eqeqeq
-      className={`py-3.5 pl-4 pr-3 text-sm font-semibold text-gray-900 sm:pl-6 md:pl-0 cursor-pointer relative ${props.col.componentCode != FORM_COMPONENTS_CODES.basicCheckbox ? 'text-left' : 'text-center'}`}
+      className={`whitespace-nowrap py-3 pl-4 pr-6 sm:pl-3 cursor-pointer relative select-none hover:text-prussian-blue-400 transition-colors ${props.col.componentCode != FORM_COMPONENTS_CODES.basicCheckbox ? 'text-left' : 'text-center'}`}
       onClick={handleHeaderClick}
     >
       {props.col.label}
       {field === props.col.fieldName && (
-        <span className="absolute top-4 ml-1 opacity-60">
+        <span className="absolute top-3 ml-1 text-[#006fdf]">
           {order === 'asc' ? Icons.render('arrowDown') : Icons.render('arrowUp')}
         </span>
       )}

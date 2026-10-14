@@ -23,7 +23,7 @@ export const AdminLayout: FC = () => {
       <WordPressSyncAgent />
       <StoreOnWordPressDialog />
       <AdminLayoutHeader />
-      <div className="relative admin-container flex">
+      <div className="relative admin-container ui-aurora flex">
         {!!project && <AdminLayoutSidebar />}
         <AdminLayoutContent>
           {location.pathname.startsWith('/project/') && <LocalOnlyBanner />}

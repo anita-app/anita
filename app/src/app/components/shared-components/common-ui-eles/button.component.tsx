@@ -7,11 +7,11 @@ import type { TIconName } from 'app/libs/icons/icons.class'
 import type { TFill } from 'app/components/shared-components/common-ui-eles/components.const'
 
 const sizeClasses = {
-  xs: 'rounded px-2.5 py-1.5 text-xs',
-  sm: 'rounded-md px-3 py-2 text-sm leading-4',
-  md: 'rounded-md px-4 py-2 text-sm',
-  lg: 'rounded-md px-4 py-2 text-base',
-  xl: 'rounded-md px-6 py-3 text-base',
+  xs: 'rounded-lg px-2.5 py-1.5 text-xs',
+  sm: 'rounded-[10px] px-3 py-2 text-sm leading-4',
+  md: 'rounded-[10px] px-4 py-2 text-sm',
+  lg: 'rounded-[10px] px-4 py-2 text-base',
+  xl: 'rounded-xl px-6 py-3 text-base',
 }
 
 export interface IButtonWithTooltipProps {
@@ -54,7 +54,8 @@ enum TooltipBreakpoints {
   xxl = 'xxl:hidden',
 }
 
-const sharedClasses = 'inline-flex items-center justify-center border border-transparent font-medium focus:outline-none focus:ring-2 focus:ring-offset-2'
+// ui-btn (ui.css): focus outline, press effect, arrow nudge on hover.
+const sharedClasses = 'ui-btn inline-flex items-center justify-center border font-semibold'
 
 export const Button: FC<IButtonWithTooltipProps> = (props) => {
   const Component = props.href ? Link : 'button'
@@ -82,12 +83,12 @@ export const Button: FC<IButtonWithTooltipProps> = (props) => {
       to={props.href ? props.href : undefined as any}
       onClick={handleClick}
       onMouseDown={props.onMouseDown ? props.onMouseDown : undefined}
-      className={`${sharedClasses} ${props.type !== Type.transparent ? 'shadow-sm' : ''} ${sizeClasses[props.size || 'md']} ${props.className || ''} ${props.marginClassName ?? 'mr-3'} leading-none text-sm rounded ${textClassName} ${bgClassName} focus:outline-none focus:ring-2 focus:ring-offset-2`}
+      className={`${sharedClasses} ${props.type !== Type.transparent ? 'shadow-sm' : ''} ${sizeClasses[props.size || 'md']} ${props.className || ''} ${props.marginClassName ?? 'mr-3'} leading-none text-sm ${textClassName} ${bgClassName}`}
       disabled={props.disabled ?? false}
     >
       {!!props.iconLeft && Icons.render(props.iconLeft, props.iconLeftClassName)}
       {!!props.label && <span className={`${props.iconLeft ? 'ml-2' : ''} ${collapsable ? 'hidden' : ''} ${props.breakpoint ? LabelBreakpoints[props.breakpoint] : ''} ${props.labelClassName ?? ''}`}>{props.label}</span>}
-      {!!props.iconRight && Icons.render(props.iconRight, `ml-2 ${props.iconRightClassName || ''}`)}
+      {!!props.iconRight && Icons.render(props.iconRight, `ml-2 ${props.iconRight.startsWith('arrowForward') ? 'ui-btn-arrow' : ''} ${props.iconRightClassName || ''}`)}
     </Component>
   )
 }

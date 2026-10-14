@@ -7,6 +7,9 @@ import { Tab } from '@headlessui/react'
 import { ProjectSectionListGrid } from 'app/components/project/section/list/grid/grid'
 import { ProjectSectionListTableContainer } from 'app/components/project/section/list/table/table-container.component'
 import { ListTabsHeaderRight } from 'app/components/project/section/list/tabs/header-right.component'
+import { useAtomValue } from 'jotai'
+import { ProjectAtoms } from 'app/state/project/project.atoms'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import type { FC } from 'react'
 import type { SupportedViews } from 'app/models/section/view-settings.const'
 import type { Section } from 'app/models/section/section.class'
@@ -23,6 +26,7 @@ interface IProjectSectionListTabsProps {
 }
 
 export const ProjectSectionListTabs: FC<IProjectSectionListTabsProps> = memo(function ProjectSectionListTabs (props: IProjectSectionListTabsProps) {
+  const projectTitle = useAtomValue(ProjectAtoms.currentSystemData)?.[RESERVED_AUDS_KEYS._settings]?.[0]?.title
   if (props.sectionData.length === 0) {
     return (
       <ProjectSectionNoData
@@ -39,6 +43,8 @@ export const ProjectSectionListTabs: FC<IProjectSectionListTabsProps> = memo(fun
     >
       <MainContentContainer
         headerText={props.section.title}
+        eyebrow={projectTitle}
+        count={props.sectionData.length}
         hasHeaderOnlyStyle={props.activeTab === 1}
         headerRightComponent={ListTabsHeaderRight}
         headerRightComponentProps={{ activeTab: props.activeTab, sectionId: props.sectionId }}
@@ -57,12 +63,13 @@ export const ProjectSectionListTabs: FC<IProjectSectionListTabsProps> = memo(fun
             />
           </Tab.Panel>
         </Tab.Panels>
-        <AddEditElementButton
-          projectId={props.projectId!}
-          sectionId={props.sectionId!}
-          mode={EDITOR_MODE.add}
-        />
       </MainContentContainer>
+      {/* Outside the panel: its entrance animation would move the button while it plays. */}
+      <AddEditElementButton
+        projectId={props.projectId!}
+        sectionId={props.sectionId!}
+        mode={EDITOR_MODE.add}
+      />
     </Tab.Group>
   )
 }, (prevProps, nextProps) => (

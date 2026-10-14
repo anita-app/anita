@@ -15,11 +15,11 @@ export const FormElementLabel: FC<IFormElementLabelProps> = (props) => {
 
   return (
     <div className="w-full block">
-      <label className="mb-0 ml-1 text-gray-700 text-sm">
+      <label className="mb-1 ml-1 inline-block text-[#33445a] text-sm font-semibold">
         {props.label}
         {props.required && (
           <span
-            className="text-red-600 ml-0.5"
+            className="text-rose-600 ml-0.5"
             aria-hidden="true"
           >
             *

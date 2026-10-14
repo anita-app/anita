@@ -5,6 +5,7 @@ import { RichText } from 'app/components/shared-components/values-renderers/rich
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
 import { customRenderPicker } from 'app/components/shared-components/values-renderers/custom-render-picker.component'
 import { RoutingState } from 'app/state/routing/routing-state.class'
+import { Icons } from 'app/libs/icons/icons.class'
 import type { FC, ReactNode } from 'react'
 import type { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
 import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
@@ -13,6 +14,8 @@ interface IProjectSectionListGridElementProps {
   element: ISectionElement
   titleField: FormFieldsModel<TSupportedFormsTypes>
   descriptionKey: string
+  /** Short values shown under the title, e.g. status and due date */
+  metaFields?: Array<FormFieldsModel<TSupportedFormsTypes>>
 }
 
 // Values other than text (e.g. dates) are shown as in the table.
@@ -46,6 +49,11 @@ export const ProjectSectionListGridElement: FC<IProjectSectionListGridElementPro
     return () => observer.disconnect()
   }, [description])
 
+  const metaFields = (props.metaFields ?? []).filter(field => {
+    const value = props.element[field.fieldName]
+    return value !== undefined && value !== null && value !== ''
+  })
+
   const handleClick = () => {
     if (params.projectId && params.sectionId && props.element.id) {
       RoutingState.goTo(ANITA_URLS.projectSectionEleDetails, [
@@ -61,16 +69,29 @@ export const ProjectSectionListGridElement: FC<IProjectSectionListGridElementPro
       className="h-max cursor-pointer mb-6 break-inside-avoid-column"
       onClick={handleClick}
     >
-      <div className="w-full bg-white rounded-lg shadow flex items-center justify-between p-6 space-x-6">
+      <div className="ui-gcard w-full flex items-center justify-between p-5 space-x-6">
         <div className="flex-1 relative overflow-hidden">
           <div className="flex items-center space-x-3">
             {props.titleField.componentCode !== FORM_COMPONENTS_CODES.richText && (
-              <h3 className="text-gray-900 text-sm font-medium">{renderTitle(props.titleField, props.element[props.titleField.fieldName])}</h3>
+              <h3 className="text-[#0b1f36] text-sm font-semibold">{renderTitle(props.titleField, props.element[props.titleField.fieldName])}</h3>
             )}
             {props.titleField.componentCode === FORM_COMPONENTS_CODES.richText && (
               <RichText value={props.element[props.titleField.fieldName]} />
             )}
           </div>
+          {metaFields.length > 0 && (
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 mt-2.5 text-xs text-[#7a8799]">
+              {metaFields.map(field => (
+                <span
+                  key={field.fieldName}
+                  className="inline-flex items-center gap-1"
+                >
+                  {Number(field.componentCode) === FORM_COMPONENTS_CODES.datePicker && Icons.render('calendarOutline')}
+                  {customRenderPicker(field)({ value: props.element[field.fieldName] }) as ReactNode}
+                </span>
+              ))}
+            </div>
+          )}
           {description && (
             <>
               <div

@@ -17,10 +17,11 @@ export const ProjectLoadedFooter: FC<IProjectLoadedFooterProps> = (props) => (
     <EditProjectButton project={props.project} />
     <Button
       id="projectDetails"
-      label="Project details"
+      label="Open project"
+      tooltip="Project details"
       href={urlParamFiller(ANITA_URLS.projectDetails, [{ name: URL_PARAMS.projectId, value: props.project.id }])}
-      type={Type.info}
-      iconLeft="informationCircleOutline"
+      type={Type.primary}
+      iconRight="arrowForwardOutline"
       marginClassName=""
       hasTooltip={true}
       breakpoint={'sm'}

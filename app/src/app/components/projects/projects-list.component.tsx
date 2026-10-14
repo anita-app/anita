@@ -17,41 +17,42 @@ export const ProjectsList: FC = () => {
 
   return (
     <div>
-      <div className="md:w-full bg-white border-b-2 rounded border-white">
-        <div className="flex items-center h-full border-t-2 border-prussian-blue-400 border-opacity-60 rounded justify-between">
-          <div className="px-6 py-3">
-            <h1 className="title-font text-md font-medium text-gray-900">Projects on this device</h1>
-          </div>
-          <div className="my-2 flex shrink-0">
-            <Button
-              id="wordpressSites"
-              label="WordPress sites"
-              labelClassName="hidden"
-              href={ANITA_URLS.remotes}
-              iconLeft="logoWordpress"
-              tooltip="Connect and manage WordPress sites"
-              type={Type.secondary}
-              size="sm"
-            />
-            <ImportProjectButton btnType="icon" />
-            <Button
-              id="createProject"
-              label="Create project"
-              labelClassName="hidden"
-              href={ANITA_URLS.projectNew}
-              iconLeft="addOutline"
-              tooltip="Create a new project"
-              type={Type.primary}
-              size="sm"
-            />
-          </div>
+      <div className="flex flex-wrap items-end justify-between gap-3 mb-5">
+        <div className="ui-rise">
+          <p className="ui-eyebrow">On this device</p>
+          <h1 className="ui-title text-2xl">Projects</h1>
+        </div>
+        <div className="flex shrink-0">
+          <Button
+            id="wordpressSites"
+            label="WordPress sites"
+            href={ANITA_URLS.remotes}
+            iconLeft="logoWordpress"
+            tooltip="Connect and manage WordPress sites"
+            breakpoint="md"
+            type={Type.secondary}
+            size="sm"
+          />
+          <ImportProjectButton btnType="compact" />
+          <Button
+            id="createProject"
+            label="New project"
+            href={ANITA_URLS.projectNew}
+            iconLeft="addOutline"
+            tooltip="Create a new project"
+            breakpoint="sm"
+            type={Type.primary}
+            size="sm"
+            marginClassName=""
+          />
         </div>
       </div>
-      <div className="p-1 md:w-full">
-        {projects.map(project => (
+      <div className="grid gap-4">
+        {projects.map((project, index) => (
           <ProjectCard
             key={project.id}
             project={project}
+            index={index}
           />
         ))}
       </div>

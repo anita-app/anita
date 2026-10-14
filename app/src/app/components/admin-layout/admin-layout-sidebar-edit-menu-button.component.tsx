@@ -12,11 +12,11 @@ export const AdminLayoutSidebarEditMenuButton: FC<IAdminLayoutSidebarEditMenuBut
 
   return (
     <button
-      className="absolute right-3"
+      className="flex w-7 h-7 items-center justify-center rounded-lg text-[#8a97a8] hover:bg-[#eef3f9] hover:text-prussian-blue-500 transition-colors"
       onClick={props.onClick}
       id="editMenu"
     >
-      {Icons.render(props.isEditingMenuItemsVisibility ? 'checkmarkCircleOutline' : 'cogOutline', 'text-gray-500 text-md')}
+      {Icons.render(props.isEditingMenuItemsVisibility ? 'checkmarkCircleOutline' : 'cogOutline', 'text-md')}
     </button>
   )
 }

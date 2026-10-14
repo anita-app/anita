@@ -29,16 +29,19 @@ const ValueWithLabel: FC<{ formModel: FormFieldsModel<ISectionElement>; value: a
     return null
   }
 
+  // Long texts take the whole row.
+  const isLong = [FORM_COMPONENTS_CODES.richText, FORM_COMPONENTS_CODES.basicTextarea].includes(Number(props.formModel.componentCode))
+
   return (
-    <div>
-      <p className="text-sm text-gray-500">{props.formModel.label}</p>
-      <div className="mb-3">{customRenderPicker(props.formModel)({ value: props.value }) as React.ReactNode}</div>
+    <div className={`ui-field ${isLong ? 'sm:col-span-2' : ''}`}>
+      <p className="ui-field-label">{props.formModel.label}</p>
+      <div className="ui-field-value">{customRenderPicker(props.formModel)({ value: props.value }) as React.ReactNode}</div>
     </div>
   )
 }
 
 const ElementValuesViewer: FC<{ element: ISectionElement; formModels: Array<FormFieldsModel<ISectionElement>>; sectionId: string; titleFieldName?: string }> = (props) => (
-  <div className="p-3">
+  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 py-1">
     {props.formModels.map((formModel) => {
       // The title of the record is already the header of the page.
       if (!formModel.label || formModel.fieldName === props.titleFieldName) {
@@ -46,13 +49,17 @@ const ElementValuesViewer: FC<{ element: ISectionElement; formModels: Array<Form
       }
       if (formModel.componentCode === FORM_COMPONENTS_CODES.basicCheckbox) {
         return (
-          <CheckBoxEditable
+          <div
             key={formModel.fieldName}
-            element={props.element}
-            sectionId={props.sectionId}
-            label={formModel.label}
-            fieldName={formModel.fieldName}
-          />)
+            className="ui-field"
+          >
+            <CheckBoxEditable
+              element={props.element}
+              sectionId={props.sectionId}
+              label={formModel.label}
+              fieldName={formModel.fieldName}
+            />
+          </div>)
       }
 
       return (
@@ -129,6 +136,7 @@ export const ProjectSectionElementDetails: FC<{ collapsible: boolean }> = (props
     <>
       <MainContentContainer
         headerText={headerText}
+        eyebrow={sectionData.title}
         wrapHeader={!!recordTitle}
         collapsible={props.collapsible ? { collapsed, onToggle: toggleCollapsed } : undefined}
       >
@@ -147,7 +155,7 @@ export const ProjectSectionElementDetails: FC<{ collapsible: boolean }> = (props
         />
         )}
         {(element !== null && (
-        <div className="flex flex-wrap gap-y-2 px-3">
+        <div className="flex flex-wrap gap-y-2 mt-5 pt-4 border-t border-[#eef1f5]">
           <ProjectSectionElementDeleteButton
             projectId={projectId!}
             sectionId={sectionId!}

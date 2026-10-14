@@ -19,20 +19,6 @@ button[disabled]:hover {
   @apply cursor-not-allowed;
 }
 
-/**
-  * Placed here because focus:border-b-4 does not work
-  */
-input:focus,
-textarea:focus,
-select:focus {
-  border-bottom-width: 2px !important;
-}
-input.border-red-300:focus,
-textarea.border-red-300:focus,
-select.border-red-300:focus {
-  border-width: 1px !important;
-  border-bottom-width: 3px !important;
-}
 
 .msg-wrapper {
   white-space: pre-wrap;
@@ -82,7 +68,8 @@ select.border-red-300:focus {
 }
 
 .main-scrollbar::-webkit-scrollbar-thumb {
-  border: 3px solid theme('colors.gray.100') !important;
+  border: 3px solid transparent !important;
+  background-clip: padding-box;
 }
 
 /**
