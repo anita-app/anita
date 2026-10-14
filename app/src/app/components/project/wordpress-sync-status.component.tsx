@@ -36,9 +36,11 @@ export const WordPressSyncStatus: FC<{ project: IProjectSettings }> = (props) =>
 
   if (!remote) {
     return (
-      <div className="mb-3">
-        <p className="text-gray-600 text-xs">Remote storage:</p>
-        <p className="text-md mb-2">{remoteId}</p>
+      <div className="mb-3 space-y-2.5">
+        <div className="ui-field">
+          <p className="ui-field-label">Remote storage</p>
+          <p className="ui-field-value">{remoteId}</p>
+        </div>
         <AlertWithDescription
           title="This site is not connected on this device"
           description={`Connect ${remoteId} from the WordPress sites page to sync this project. Until then, changes are saved on this device only.`}
@@ -57,37 +59,43 @@ export const WordPressSyncStatus: FC<{ project: IProjectSettings }> = (props) =>
   }
 
   return (
-    <div className="mb-3">
-      <p className="text-gray-600 text-xs">Remote storage:</p>
-      <p className="text-md mb-3">
-        {siteName}{' '}
-        <a
-          href={remote.data.site_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline"
-        >
-          {remote.data.site_url}
-        </a>
-      </p>
-
-      {info && (
-        <>
-          <p className="text-gray-600 text-xs">Visible to:</p>
-          <p className="text-md mb-3">
-            {WordPressSync.describeAccessLevel(info.accessLevel)}
-            {isOwner && ' · you own this project'}
-            {!isOwner && !info.canManage && ' · shared with you: only its owner or an administrator can change its structure'}
+    <div className="mb-3 space-y-2.5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+        <div className="ui-field">
+          <p className="ui-field-label">Remote storage</p>
+          <p className="ui-field-value">
+            {siteName}{' '}
+            <a
+              href={remote.data.site_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-normal text-sm text-[#5b6b80] hover:text-[#006fdf] underline underline-offset-2"
+            >
+              {remote.data.site_url}
+            </a>
           </p>
-        </>
-      )}
+        </div>
 
-      <p className="text-gray-600 text-xs">Last sync:</p>
-      <div className="flex items-center flex-wrap gap-2 mb-2">
-        <p className="text-md">
-          {status?.isSyncing ? 'Syncing…' : ((status?.lastSync ?? lastSync) ? formatDate((status?.lastSync ?? lastSync)!) : 'Not synced yet')}
-          {!status?.isSyncing && status?.pendingChanges && ' · some changes are not synced yet'}
-        </p>
+        {info && (
+          <div className="ui-field">
+            <p className="ui-field-label">Visible to</p>
+            <p className="ui-field-value">
+              {WordPressSync.describeAccessLevel(info.accessLevel)}
+              {isOwner && ' · you own this project'}
+              {!isOwner && !info.canManage && ' · shared with you: only its owner or an administrator can change its structure'}
+            </p>
+          </div>
+        )}
+      </div>
+
+      <div className="ui-field flex items-center justify-between flex-wrap gap-2">
+        <div>
+          <p className="ui-field-label">Last sync</p>
+          <p className="ui-field-value">
+            {status?.isSyncing ? 'Syncing…' : ((status?.lastSync ?? lastSync) ? formatDate((status?.lastSync ?? lastSync)!) : 'Not synced yet')}
+            {!status?.isSyncing && status?.pendingChanges && ' · some changes are not synced yet'}
+          </p>
+        </div>
         {!remote.needsReauth && (
           <Button
             id="syncProjectNow"

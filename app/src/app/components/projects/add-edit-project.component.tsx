@@ -59,9 +59,10 @@ export const AddEditProject: FC = () => {
 
   return (
     <span>
-      <div className="p-4 bg-white rounded shadow flex">
+      <div className="ui-card ui-rise p-4 md:px-5 flex items-end">
         <div>
-          <h3 className="text-xl font-bold">{headerText}</h3>
+          <p className="ui-eyebrow">Project</p>
+          <h3 className="ui-title text-xl">{headerText}</h3>
         </div>
         {hasProject !== null && <ProjectEditorModeToggle />}
       </div>

@@ -1,4 +1,5 @@
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
+import { Icons } from 'app/libs/icons/icons.class'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { Loader } from 'app/components/shared-components/loader/loader.component'
 import { SupportedCloud } from 'app/cross-refs-exports'
@@ -25,9 +26,10 @@ const onClick = () => {
 const AuthCard: FC<{ subtitle: string; title: string; children?: ReactNode }> = (props) => (
   <div className="container px-0 md:px2 lg:px-5 pt-20 md:pt-24 mx-auto">
     <div className="p-4 lg:w-2/3 mx-auto">
-      <div className="h-full bg-white shadow px-8 pt-16 pb-16 rounded-lg overflow-hidden text-center relative">
-        <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">{props.subtitle}</h2>
-        <h1 className="title-font sm:text-2xl text-xl font-medium text-gray-900 mb-3">{props.title}</h1>
+      <div className="ui-card ui-rise h-full px-8 pt-14 pb-14 overflow-hidden text-center relative">
+        <span className="ui-avatar w-14 h-14 rounded-2xl text-2xl mx-auto mb-5">{Icons.render('logoWordpress')}</span>
+        <h2 className="ui-eyebrow mb-1">{props.subtitle}</h2>
+        <h1 className="ui-title sm:text-2xl text-xl mb-3">{props.title}</h1>
         {props.children}
       </div>
     </div>

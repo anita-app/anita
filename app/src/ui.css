@@ -263,6 +263,9 @@ a:hover > .ui-logo, a:focus-visible > .ui-logo { box-shadow: 0 0 0 4px rgba(45, 
 .ui-link-chip:hover, .ui-link-chip:focus-visible { transform: translateY(-2px); border-color: #b9d3f2; box-shadow: 0 8px 18px -10px rgba(0, 111, 223, 0.5); outline: none; }
 .ui-link-chip:hover .ui-link-chip-arrow, .ui-link-chip:focus-visible .ui-link-chip-arrow { opacity: 1; margin-left: 0; }
 
+/* Number of a step in a sequence, e.g. how to connect a WordPress site */
+.ui-step { width: 1.5rem; height: 1.5rem; border-radius: 9999px; flex: none; display: grid; place-items: center; font-size: 0.75rem; font-weight: 700; color: #fff; background: linear-gradient(135deg, #2d96ff, #006fdf); box-shadow: 0 4px 10px -4px rgba(0, 111, 223, 0.6); }
+
 /* ---------- Banner (D2) ---------- */
 
 .ui-banner {

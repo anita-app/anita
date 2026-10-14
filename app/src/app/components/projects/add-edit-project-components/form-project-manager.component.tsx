@@ -43,7 +43,7 @@ export const FormProjectManager: FC = () => {
 
   return (
     <span>
-      <div className="mt-5 p-4 bg-white rounded shadow">
+      <div className="ui-card ui-rise mt-5 p-4 md:px-5">
         <FormAutomator
           formModel={projectFormModel as any}
           element={project[RESERVED_AUDS_KEYS._settings]![0]}
@@ -57,7 +57,7 @@ export const FormProjectManager: FC = () => {
           sectionIndex={index}
                                                                          />))}
       </div>
-      <div className="mt-5 p-4 bg-white rounded shadow">
+      <div className="ui-card mt-5 p-4 md:px-5">
         <div className="flex sm:justify-between flex-wrap">
           <Button
             id="addSection"

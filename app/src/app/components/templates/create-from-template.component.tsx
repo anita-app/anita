@@ -20,7 +20,7 @@ import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { FormProjectState } from 'app/state/form-project/form-project-state.class'
 import { RoutingState } from 'app/state/routing/routing-state.class'
 import { ProjectsListAtoms } from 'app/state/projects-list/projects-list.atoms'
-import type { FC } from 'react'
+import type { CSSProperties, FC } from 'react'
 import type { TStorageChoice } from 'app/components/remotes/storage-choice.component'
 import type { IProjectTemplate, ITemplateField } from 'app/libs/templates/templates-catalog.class'
 import type { TSystemData } from 'app/models/project/project.declarations'
@@ -48,17 +48,18 @@ const TemplatePreview: FC<{ template: IProjectTemplate }> = (props) => {
   const titles = Object.fromEntries(props.template.sections.map(section => [section.key, section.title]))
   return (
     <div className="space-y-3">
-      {props.template.sections.map(section => (
+      {props.template.sections.map((section, index) => (
         <div
           key={section.key}
-          className="rounded-lg border border-gray-200 bg-white p-4"
+          className="ui-card ui-rise p-4"
+          style={{ '--d': index + 1 } as CSSProperties}
         >
-          <div className="flex items-center gap-2">
-            <span className="text-gray-500">{Icons.render(section.icon ?? 'chevronForwardOutline')}</span>
-            <h3 className="font-medium text-gray-900">{section.title}</h3>
+          <div className="flex items-center gap-2.5">
+            <span className="ui-menu-tile text-[#006fdf] bg-[#eef4fc]">{Icons.render(section.icon ?? 'chevronForwardOutline')}</span>
+            <h3 className="font-semibold text-[#0b1f36]">{section.title}</h3>
           </div>
           {!!section.childOf?.length && (
-            <p className="text-xs text-gray-500 mt-1">Each record can be linked to {section.childOf.map(key => titles[key]).join(', ')}</p>
+            <p className="text-xs text-[#7a8799] mt-1.5">Each record can be linked to {section.childOf.map(key => titles[key]).join(', ')}</p>
           )}
           <ul className="flex flex-wrap gap-2 mt-3">
             {section.fields.map(field => {
@@ -66,12 +67,12 @@ const TemplatePreview: FC<{ template: IProjectTemplate }> = (props) => {
               return (
                 <li
                   key={field.fieldName}
-                  className="flex items-center gap-1 rounded-full bg-gray-100 px-2 py-1 text-xs text-gray-700"
+                  className="flex items-center gap-1 rounded-full bg-[#f4f7fb] border border-[#e6ecf3] px-2 py-1 text-xs font-medium text-[#33445a]"
                   title={kind.label}
                 >
-                  <span className="text-gray-400">{Icons.render(kind.icon)}</span>
+                  <span className="text-[#8a97a8]">{Icons.render(kind.icon)}</span>
                   {field.label}
-                  {field.options && <span className="text-gray-400">({field.options.map(option => option.label).join(', ')})</span>}
+                  {field.options && <span className="text-[#9aa7b8] font-normal">({field.options.map(option => option.label).join(', ')})</span>}
                 </li>
               )
             })}
@@ -165,20 +166,20 @@ const CreateFromTemplateForm: FC<{ template: IProjectTemplate; accent: string; c
           <TemplateIcon
             icon={props.template.icon}
             accent={props.accent}
-            sizeClassName="w-14 h-14 text-3xl"
+            sizeClassName="w-14 h-14 text-3xl shadow-[0_10px_24px_-12px_rgba(0,35,70,0.35)]"
           />
-          <div>
-            {props.categoryLabel && <p className="text-xs uppercase tracking-wide text-gray-500">{props.categoryLabel}</p>}
-            <h1 className="text-2xl font-semibold text-gray-900">{props.template.title}</h1>
-            <p className="text-gray-600 mt-1">{props.template.description}</p>
+          <div className="ui-rise">
+            {props.categoryLabel && <p className="ui-eyebrow">{props.categoryLabel}</p>}
+            <h1 className="ui-title text-2xl">{props.template.title}</h1>
+            <p className="text-[#5b6b80] mt-1">{props.template.description}</p>
           </div>
         </div>
 
-        <div className="rounded-lg bg-white shadow p-5 space-y-4">
+        <div className="ui-card ui-rise p-5 md:p-6 space-y-4">
           <div>
             <label
               htmlFor="templateProjectTitle"
-              className="block text-sm text-gray-700 mb-1"
+              className="block text-sm font-semibold text-[#33445a] mb-1"
             >
               Project name
             </label>
@@ -192,7 +193,7 @@ const CreateFromTemplateForm: FC<{ template: IProjectTemplate; accent: string; c
           <div>
             <label
               htmlFor="templateProjectDescription"
-              className="block text-sm text-gray-700 mb-1"
+              className="block text-sm font-semibold text-[#33445a] mb-1"
             >
               Description
             </label>
@@ -206,7 +207,7 @@ const CreateFromTemplateForm: FC<{ template: IProjectTemplate; accent: string; c
           {hasSamples && (
             <label
               htmlFor="templateWithSamples"
-              className="flex items-start gap-3 rounded-lg border border-gray-200 p-3 cursor-pointer hover:bg-gray-50"
+              className="flex items-start gap-3 rounded-xl border border-[#e1e8f1] p-3.5 cursor-pointer transition hover:border-[#c3d0e0] hover:bg-[#f9fbfe] has-[:checked]:border-[#2d96ff] has-[:checked]:bg-[#f4f8fe]"
             >
               <input
                 id="templateWithSamples"
@@ -216,13 +217,13 @@ const CreateFromTemplateForm: FC<{ template: IProjectTemplate; accent: string; c
                 className="mt-1 h-4 w-4 rounded border-gray-300 text-prussian-blue-500"
               />
               <span>
-                <span className="block text-sm font-medium text-gray-900">Start with some example records</span>
-                <span className="block text-xs text-gray-500">A few realistic records, already linked to each other, to see how everything works. Delete them whenever you want.</span>
+                <span className="block text-sm font-semibold text-[#0b1f36]">Start with some example records</span>
+                <span className="block text-xs text-[#7a8799]">A few realistic records, already linked to each other, to see how everything works. Delete them whenever you want.</span>
               </span>
             </label>
           )}
           <div>
-            <p className="text-sm text-gray-700 mb-2">Where to save it</p>
+            <p className="text-sm font-semibold text-[#33445a] mb-2">Where to save it</p>
             <StorageChoice
               value={storage}
               onChange={setStorage}
@@ -238,7 +239,7 @@ const CreateFromTemplateForm: FC<{ template: IProjectTemplate; accent: string; c
             />
           )}
 
-          <div className="flex flex-wrap items-center gap-3 pt-2">
+          <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-[#eef1f5]">
             <Button
               id="createFromTemplate"
               label={isWorking ? 'Creating…' : (storage.kind === 'connect' ? 'Create and connect WordPress' : 'Create project')}
@@ -259,12 +260,12 @@ const CreateFromTemplateForm: FC<{ template: IProjectTemplate; accent: string; c
               marginClassName=""
             />
           </div>
-          <p className="text-xs text-gray-500">You can change sections and fields at any time from &quot;Edit project&quot;.</p>
+          <p className="text-xs text-[#7a8799]">You can change sections and fields at any time from &quot;Edit project&quot;.</p>
         </div>
       </div>
 
       <div className="lg:col-span-2">
-        <h2 className="text-sm uppercase tracking-wide text-gray-500 mb-2">What&apos;s inside</h2>
+        <h2 className="ui-eyebrow mb-3">What&apos;s inside</h2>
         <TemplatePreview template={props.template} />
       </div>
     </div>
@@ -285,7 +286,7 @@ export const CreateFromTemplate: FC = () => {
     <div className="max-w-6xl mx-auto">
       <Link
         to={ANITA_URLS.projectNew}
-        className="inline-flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900 mb-4"
+        className="inline-flex items-center gap-1 text-sm font-semibold text-[#5b6b80] hover:text-[#006fdf] transition-colors mb-4"
       >
         {Icons.render('arrowBackOutline')} All templates
       </Link>

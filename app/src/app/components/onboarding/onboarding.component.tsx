@@ -91,10 +91,11 @@ const CHIPS: Array<{ label: string; icon: TIconName; className: string }> = [
   { label: 'Invoices', icon: 'receiptOutline', className: 'right-4 -bottom-2' },
 ]
 
+// Same pills as the option values in the app (ui.css).
 const ROWS = [
-  { title: 'Design the new logo', status: 'Done', color: 'bg-green-400' },
-  { title: 'Call ACME about the offer', status: 'Doing', color: 'bg-yellow-300' },
-  { title: 'Plan the team offsite', status: 'To do', color: 'bg-blue-300' },
+  { title: 'Design the new logo', status: 'Done', pill: 'ui-pill-3' },
+  { title: 'Call ACME about the offer', status: 'Doing', pill: 'ui-pill-1' },
+  { title: 'Plan the team offsite', status: 'To do', pill: 'ui-pill-0' },
 ]
 
 const AppMockup: FC = () => (
@@ -134,7 +135,7 @@ const AppMockup: FC = () => (
           style={delay(index)}
         >
           <span className="truncate">{row.title}</span>
-          <span className={`shrink-0 rounded-full px-2 py-0.5 text-xs text-gray-800 ${row.color}`}>{row.status}</span>
+          <span className={`ui-pill ${row.pill} shrink-0`}>{row.status}</span>
         </div>
       ))}
     </div>

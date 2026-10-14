@@ -13,7 +13,7 @@ import { customRenderPicker } from 'app/components/shared-components/values-rend
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
 import { ProjectAtoms } from 'app/state/project/project.atoms'
 import { withTitleFieldFirst } from 'app/models/section/title-field.function'
-import type { FC, ReactNode } from 'react'
+import type { CSSProperties, FC, ReactNode } from 'react'
 import type { ISection } from 'app/models/section/section.declarations'
 import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import type { FormFieldsModel } from 'app/components/shared-components/forms-automator/form-automator.types'
@@ -59,7 +59,7 @@ const ChildRecordsTable: FC<IChildRecordsTableProps> = (props) => {
 
   if (!props.records.length) {
     return (
-      <div className="text-center py-8 text-gray-600">
+      <div className="text-center py-8 text-[#5b6b80]">
         <p>No {title.toLowerCase()} linked to this record yet.</p>
         <Button
           id={`addFirst-${props.section.id}`}
@@ -75,13 +75,13 @@ const ChildRecordsTable: FC<IChildRecordsTableProps> = (props) => {
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-sm">
+      <table className="ui-table w-full text-sm">
         <thead>
-          <tr className="text-left text-gray-500 border-b border-gray-200">
+          <tr className="text-left">
             {columns.map(column => (
               <th
                 key={column.fieldName}
-                className="font-medium px-3 py-2 whitespace-nowrap"
+                className="px-3 py-2.5 whitespace-nowrap"
               >
                 {column.label}
               </th>
@@ -90,7 +90,7 @@ const ChildRecordsTable: FC<IChildRecordsTableProps> = (props) => {
           </tr>
         </thead>
         <tbody>
-          {props.records.map(record => {
+          {props.records.map((record, rowIndex) => {
             const url = urlParamFiller(ANITA_URLS.projectSectionEleDetails, [
               { name: URL_PARAMS.projectId, value: props.projectId },
               { name: URL_PARAMS.sectionId, value: props.section.id },
@@ -99,29 +99,30 @@ const ChildRecordsTable: FC<IChildRecordsTableProps> = (props) => {
             return (
               <tr
                 key={record.id}
-                className="border-b border-gray-100 last:border-0 hover:bg-gray-50"
+                className="ui-row"
+                style={{ '--d': Math.min(rowIndex, 12) } as CSSProperties}
               >
                 {columns.map((column, index) => (
                   <td
                     key={column.fieldName}
-                    className="px-3 py-2 align-top"
+                    className={`px-3 py-2.5 align-top ${index === 0 ? 'ui-title-cell' : 'text-[#334155]'}`}
                   >
                     {index === 0
                       ? (
                         <Link
                           to={url}
-                          className="font-medium text-prussian-blue-400 hover:underline"
+                          className="font-semibold text-inherit"
                         >
                           {renderValue(column, record[column.fieldName]) ?? 'Untitled'}
                         </Link>)
                       : renderValue(column, record[column.fieldName])}
                   </td>
                 ))}
-                <td className="px-3 py-2 text-right">
+                <td className="ui-row-go px-3 py-2.5 text-right">
                   <Link
                     to={url}
                     aria-label="Open"
-                    className="text-gray-400 hover:text-gray-700"
+                    className="inline-flex"
                   >
                     {Icons.render('chevronForwardOutline')}
                   </Link>
@@ -171,10 +172,10 @@ export const ChildRecordsTabs: FC<IChildRecordsTabsProps> = (props) => {
   const addUrl = addLinkedRecordUrl(props.projectId, active.id, props.sectionId, props.elementId)
 
   return (
-    <div className="mt-4 p-4 bg-white rounded shadow">
-      <div className="flex flex-wrap items-end justify-between gap-2 border-b border-gray-200">
+    <div className="ui-card ui-rise mt-4 p-4 md:px-5">
+      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-[#eef1f5]">
         <div
-          className="flex gap-1 overflow-x-auto -mb-px"
+          className="ui-seg max-w-full overflow-x-auto gap-0.5"
           role="tablist"
           aria-label="Linked records"
         >
@@ -188,12 +189,12 @@ export const ChildRecordsTabs: FC<IChildRecordsTabsProps> = (props) => {
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => setActiveSectionId(section.id)}
-                className={`flex items-center gap-2 whitespace-nowrap px-3 py-2 text-sm font-medium border-b-2 transition ${isActive ? 'border-prussian-blue-400 text-prussian-blue-500' : 'border-transparent text-gray-500 hover:text-gray-800 hover:border-gray-300'}`}
+                className={`flex items-center gap-2 whitespace-nowrap px-3 py-1.5 rounded-[8px] text-sm font-semibold transition ${isActive ? 'bg-white text-prussian-blue-500 shadow-[0_1px_2px_rgba(0,35,70,0.14),0_3px_8px_-3px_rgba(0,35,70,0.2)]' : 'text-[#7a8799] hover:text-[#33445a]'}`}
               >
                 {Icons.render(section.icon ?? 'chevronForwardOutline')}
                 {section.title}
                 {count !== undefined && (
-                  <span className={`rounded-full px-2 py-0.5 text-xs ${isActive ? 'bg-prussian-blue-400 text-white' : 'bg-gray-100 text-gray-600'}`}>{count}</span>
+                  <span className={isActive ? 'ui-count' : 'ui-count bg-transparent! text-[#8a97a8]!'}>{count}</span>
                 )}
               </button>
             )
@@ -207,7 +208,7 @@ export const ChildRecordsTabs: FC<IChildRecordsTabsProps> = (props) => {
             type={Type.secondary}
             size="sm"
             href={addUrl}
-            marginClassName="mb-2"
+            marginClassName=""
           />
         )}
       </div>

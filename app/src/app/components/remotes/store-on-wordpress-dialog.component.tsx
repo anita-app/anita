@@ -136,7 +136,7 @@ export const StoreOnWordPressDialog: FC = () => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-gray-500/75" />
+          <div className="fixed inset-0 bg-[#000f20]/40 backdrop-blur-sm" />
         </Transition.Child>
         <div className="fixed inset-0 overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4">
@@ -149,9 +149,9 @@ export const StoreOnWordPressDialog: FC = () => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-lg rounded-lg bg-white p-5 sm:p-6 shadow-xl">
-                <Dialog.Title className="text-lg font-medium text-gray-900 flex items-center gap-2">
-                  <span className="text-prussian-blue-400">{Icons.render('logoWordpress')}</span>
+              <Dialog.Panel className="w-full max-w-lg rounded-2xl bg-white border border-[#000f20]/5 p-5 sm:p-6 shadow-[0_30px_60px_-20px_rgba(0,35,70,0.45)]">
+                <Dialog.Title className="ui-title text-lg flex items-center gap-3">
+                  <span className="ui-avatar w-9 h-9 rounded-[10px] text-lg">{Icons.render('logoWordpress')}</span>
                   Keep your project safe
                 </Dialog.Title>
                 <div className="mt-3">

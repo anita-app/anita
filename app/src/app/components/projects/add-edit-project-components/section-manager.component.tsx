@@ -42,10 +42,11 @@ export const SectionManager: FC<ISectionManagerProps> = (props) => {
   }
 
   return (
-    <div className="mt-5 p-4 bg-white rounded shadow">
+    <div className="ui-card mt-5 p-4 md:px-5">
       <div>
-        <h3 className="text-md font-bold">{`Section # ${props.sectionIndex + 1}`}</h3>
-        <hr className="mt-4" />
+        <p className="ui-eyebrow">{`Section ${props.sectionIndex + 1}`}</p>
+        <h3 className="ui-title text-lg">{props.section.title || 'New section'}</h3>
+        <hr className="ui-divider mt-4" />
       </div>
       <div className="pt-4">
         <FormAutomator
@@ -55,13 +56,13 @@ export const SectionManager: FC<ISectionManagerProps> = (props) => {
           sectionId={props.section.id}
         />
       </div>
-      <h4 className="pl-2 font-bold mb-2 mt-6">Section element fields</h4>
+      <h4 className="ui-field-label pl-2 mb-2 mt-6">Section element fields</h4>
       {props.section.formModel.map((formElement, indexFormElement) => !customFields.includes(formElement.fieldName)
         ? null
         : (
           <div
             key={`${props.section.id}-${indexFormElement}`}
-            className="border border-transparent hover:border-prussian-blue-500 shadow rounded mb-3 p-4"
+            className="rounded-xl border border-[#e6ecf3] bg-[#fbfcfe] hover:border-[#b9d3f2] hover:shadow-[0_0_0_3px_rgba(45,150,255,0.08)] transition mb-3 p-4"
           >
             <SectionFormModelManager
               indexFormElement={indexFormElement}

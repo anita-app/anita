@@ -15,7 +15,7 @@ export const ProjectDetails: FC = () => {
 
   return (
     <div
-      className="relative border-2 border-gray-200 border-opacity-60 rounded bg-white"
+      className="ui-card ui-rise relative"
       style={{ minHeight: '200px' }}
     >
       {(project === null) ? <Loader /> : <ProjectDetailsCard project={project} />}

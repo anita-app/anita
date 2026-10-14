@@ -8,7 +8,7 @@ import { FORM_ELEMENTS_CSS_CLASSES } from 'app/components/shared-components/form
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
 import { TemplatesCatalog } from 'app/libs/templates/templates-catalog.class'
-import type { FC } from 'react'
+import type { CSSProperties, FC } from 'react'
 import type { ILoadedCatalog, IProjectTemplate } from 'app/libs/templates/templates-catalog.class'
 import type { TIconName } from 'app/libs/icons/icons.class'
 
@@ -31,7 +31,7 @@ const ACCENTS = [
 export const templateUrl = (templateId: string): string => urlParamFiller(ANITA_URLS.projectNewFromTemplate, [{ name: URL_PARAMS.templateId, value: templateId }])
 
 export const TemplateIcon: FC<{ icon?: TIconName; accent: string; sizeClassName?: string }> = (props) => (
-  <span className={`${props.sizeClassName ?? 'w-10 h-10 text-xl'} rounded-lg flex items-center justify-center shrink-0 ${props.accent}`}>
+  <span className={`${props.sizeClassName ?? 'w-10 h-10 text-xl'} rounded-xl flex items-center justify-center shrink-0 ${props.accent}`}>
     {Icons.render(props.icon ?? 'documentTextOutline')}
   </span>
 )
@@ -67,10 +67,14 @@ export const accentOfCategory = (categoryIds: Array<string>, categoryId: string)
   return ACCENTS[(index < 0 ? 0 : index) % ACCENTS.length]
 }
 
-const TemplateCard: FC<{ template: IProjectTemplate; accent: string; categoryLabel?: string }> = (props) => (
+/** Templates after this one appear together, so long lists do not wait. */
+const MAX_ENTRANCE_DELAY_STEPS = 12
+
+const TemplateCard: FC<{ template: IProjectTemplate; accent: string; categoryLabel?: string; index: number }> = (props) => (
   <Link
     to={templateUrl(props.template.id)}
-    className="group flex flex-col rounded-lg border-2 border-gray-200 bg-white p-4 hover:border-prussian-blue-400 hover:shadow-md transition"
+    className="ui-gcard ui-rise group flex flex-col p-4"
+    style={{ '--d': Math.min(props.index, MAX_ENTRANCE_DELAY_STEPS) } as CSSProperties}
   >
     <div className="flex items-start gap-3">
       <TemplateIcon
@@ -78,12 +82,13 @@ const TemplateCard: FC<{ template: IProjectTemplate; accent: string; categoryLab
         accent={props.accent}
       />
       <div className="min-w-0">
-        <h3 className="font-medium text-gray-900 group-hover:text-prussian-blue-400">{props.template.title}</h3>
-        {props.categoryLabel && <p className="text-xs text-gray-500">{props.categoryLabel}</p>}
+        <h3 className="font-semibold text-[#0b1f36] group-hover:text-[#006fdf] transition-colors">{props.template.title}</h3>
+        {props.categoryLabel && <p className="text-xs text-[#7a8799]">{props.categoryLabel}</p>}
       </div>
+      <span className="ml-auto text-[#006fdf] opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition">{Icons.render('arrowForwardOutline')}</span>
     </div>
-    <p className="text-sm text-gray-600 mt-3 grow">{props.template.description}</p>
-    <p className="text-xs text-gray-500 mt-3">
+    <p className="text-sm text-[#5b6b80] mt-3 grow">{props.template.description}</p>
+    <p className="text-xs text-[#7a8799] mt-3 pt-3 border-t border-[#eef1f5]">
       {props.template.sections.map(section => section.title).join(' · ')}
     </p>
   </Link>
@@ -116,7 +121,7 @@ export const TemplateGallery: FC<ITemplateGalleryProps> = (props) => {
 
   if (error) {
     return (
-      <div className="rounded-lg border-2 border-dashed border-gray-300 p-6 text-center text-gray-600">
+      <div className="rounded-[14px] border border-dashed border-[#c3d0e0] bg-white/60 p-6 text-center text-[#5b6b80]">
         <p>The templates could not be downloaded. Check your connection and try again, or start from scratch.</p>
         <div className="mt-4 flex justify-center flex-wrap gap-2">
           <Button
@@ -146,9 +151,9 @@ export const TemplateGallery: FC<ITemplateGalleryProps> = (props) => {
 
   return (
     <div>
-      <div className="flex flex-col md:flex-row md:items-center gap-3 mb-4">
-        <div className="relative md:w-72 shrink-0">
-          <span className="absolute left-3 top-2.5 text-gray-400">{Icons.render('searchOutline')}</span>
+      <div className="flex flex-col gap-3 mb-5">
+        <div className="relative md:w-80 shrink-0">
+          <span className="absolute left-3 top-2.5 text-[#8a97a8] z-10">{Icons.render('searchOutline')}</span>
           <input
             type="search"
             placeholder="Search templates"
@@ -172,33 +177,34 @@ export const TemplateGallery: FC<ITemplateGalleryProps> = (props) => {
                 role="tab"
                 aria-selected={category === item.id}
                 onClick={() => setCategory(item.id)}
-                className={`shrink-0 whitespace-nowrap rounded-full px-3 py-1 text-sm border transition ${category === item.id ? 'bg-prussian-blue-400 border-prussian-blue-400 text-white' : 'bg-white border-gray-300 text-gray-700 hover:border-gray-400'}`}
+                className={`ui-btn shrink-0 whitespace-nowrap rounded-full px-3 py-1 text-sm font-semibold border ${category === item.id ? 'ui-btn-primary border-transparent text-white' : 'bg-white border-[#dfe5ee] text-[#33445a] hover:border-[#c4d2e3] hover:bg-[#f9fbfe]'}`}
               >
                 {item.label}
-                <span className={`ml-1 ${category === item.id ? 'text-white/70' : 'text-gray-400'}`}>{item.count}</span>
+                <span className={`ml-1.5 ${category === item.id ? 'text-white/70' : 'text-[#9aa7b8]'}`}>{item.count}</span>
               </button>
             ))}
         </div>
       </div>
 
       {loaded?.fromCache && (
-        <p className="text-xs text-gray-500 mb-3">You are offline: showing the templates saved on this device.</p>
+        <p className="text-xs text-[#7a8799] mb-3">You are offline: showing the templates saved on this device.</p>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
         {props.showBlankCard && category === 'all' && !query && (
           <Link
             to={ANITA_URLS.projectAdd}
-            className="group flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-white p-4 text-center hover:border-prussian-blue-400 transition min-h-[10rem]"
+            className="ui-rise group flex flex-col items-center justify-center rounded-[14px] border border-dashed border-[#c3d0e0] bg-white/60 p-4 text-center hover:border-[#2d96ff] hover:bg-white hover:shadow-[0_0_0_3px_rgba(45,150,255,0.1)] transition min-h-[10rem]"
           >
-            <span className="text-3xl text-gray-400 group-hover:text-prussian-blue-400">{Icons.render('addOutline')}</span>
-            <h3 className="font-medium text-gray-900 mt-2">Start from scratch</h3>
-            <p className="text-sm text-gray-600 mt-1">Design your own sections and fields.</p>
+            <span className="w-11 h-11 rounded-full grid place-items-center text-2xl text-[#8a97a8] bg-[#eef2f7] transition group-hover:text-white group-hover:bg-[#006fdf] group-hover:rotate-90 group-hover:shadow-[0_8px_18px_-8px_rgba(0,111,223,0.7)]">{Icons.render('addOutline')}</span>
+            <h3 className="font-semibold text-[#0b1f36] mt-3">Start from scratch</h3>
+            <p className="text-sm text-[#5b6b80] mt-1">Design your own sections and fields.</p>
           </Link>
         )}
-        {visibleTemplates.map(template => (
+        {visibleTemplates.map((template, index) => (
           <TemplateCard
             key={template.id}
+            index={index + 1}
             template={template}
             accent={accentOfCategory(categoryIds, template.category)}
             categoryLabel={category === 'all' ? categoryLabels[template.category] : undefined}
@@ -207,7 +213,7 @@ export const TemplateGallery: FC<ITemplateGalleryProps> = (props) => {
       </div>
 
       {!visibleTemplates.length && (
-        <p className="text-center text-gray-600 py-8">No template matches your search. Try other words, or start from scratch.</p>
+        <p className="text-center text-[#5b6b80] py-8">No template matches your search. Try other words, or start from scratch.</p>
       )}
     </div>
   )

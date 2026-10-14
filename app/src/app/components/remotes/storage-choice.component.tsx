@@ -44,7 +44,7 @@ interface IOptionCardProps {
 const OptionCard: FC<IOptionCardProps> = (props) => (
   <label
     htmlFor={props.id}
-    className={`block rounded-lg border-2 p-3 cursor-pointer transition ${props.selected ? 'border-prussian-blue-400 bg-blue-50/40' : 'border-gray-200 hover:border-gray-300 bg-white'}`}
+    className={`block rounded-xl border p-3.5 cursor-pointer transition ${props.selected ? 'border-[#2d96ff] bg-[#f4f8fe] shadow-[0_0_0_3px_rgba(45,150,255,0.14)]' : 'border-[#e1e8f1] hover:border-[#c3d0e0] bg-white'}`}
   >
     <div className="flex items-start gap-3">
       <input
@@ -58,7 +58,7 @@ const OptionCard: FC<IOptionCardProps> = (props) => (
       <div className="shrink-0">{props.icon}</div>
       <div className="min-w-0 grow">
         <div className="flex items-center flex-wrap gap-2">
-          <span className="font-medium text-gray-900">{props.title}</span>
+          <span className="font-semibold text-[#0b1f36]">{props.title}</span>
           {props.badge && <span className={`text-xs rounded-full px-2 py-0.5 ${props.badge.className}`}>{props.badge.label}</span>}
         </div>
         {props.children}
@@ -105,7 +105,7 @@ export const StorageChoice: FC<IStorageChoiceProps> = (props) => {
         id="storage-connect"
         selected={props.value.kind === 'connect'}
         onSelect={() => props.onChange({ kind: 'connect', siteUrl: props.value.kind === 'connect' ? props.value.siteUrl : '', accessLevel })}
-        icon={<span className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-700">{Icons.render('logoWordpress')}</span>}
+        icon={<span className="ui-avatar w-8 h-8 rounded-[9px]">{Icons.render('logoWordpress')}</span>}
         title={remotes.length ? 'Another WordPress site' : 'My WordPress site'}
         badge={remotes.length ? undefined : RECOMMENDED}
       >
@@ -144,7 +144,7 @@ export const StorageChoice: FC<IStorageChoiceProps> = (props) => {
           id="storage-local"
           selected={props.value.kind === 'local'}
           onSelect={() => props.onChange({ kind: 'local' })}
-          icon={<span className="w-8 h-8 rounded-full bg-orange-50 flex items-center justify-center text-orange-700">{Icons.render('phonePortraitOutline')}</span>}
+          icon={<span className="w-8 h-8 rounded-[9px] bg-orange-50 border border-orange-200 flex items-center justify-center text-orange-700">{Icons.render('phonePortraitOutline')}</span>}
           title="Only on this device"
         >
           <p className="text-sm text-orange-800">Saved only in this browser, with no backup. Clearing browsing data, private browsing or losing this device deletes it. You can move it to WordPress later.</p>

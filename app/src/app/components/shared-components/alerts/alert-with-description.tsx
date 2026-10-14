@@ -32,14 +32,14 @@ const classesByType: { [key in Type]: { container: string; title: string; text: 
 export const AlertWithDescription: FC<IAlertWithDescription> = (props) => (
   <div
     role="alert"
-    className={`rounded-md border ${classesByType[props.type].container} py-3 px-3`}
+    className={`rounded-xl border ${classesByType[props.type].container} py-3 px-3.5`}
   >
     <div className="flex">
       <div className={`shrink-0 ${classesByType[props.type].title}`}>
         {Icons.render(iconByType[props.type])}
       </div>
       <div className="ml-3">
-        <h3 className={`text-sm font-medium ${classesByType[props.type].title}`}>{props.title}</h3>
+        <h3 className={`text-sm font-semibold ${classesByType[props.type].title}`}>{props.title}</h3>
         <p className={`mt-1 text-sm ${classesByType[props.type].text}`}>{props.description}</p>
       </div>
     </div>

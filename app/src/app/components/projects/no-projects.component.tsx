@@ -6,6 +6,7 @@ import { ImportProjectButton } from 'app/components/projects/project-importer-co
 import { TemplateGallery } from 'app/components/templates/template-gallery.component'
 import { Onboarding, isOnboardingDone, markOnboardingDone } from 'app/components/onboarding/onboarding.component'
 import { Icons } from 'app/libs/icons/icons.class'
+import { PageHeader } from 'app/components/shared-components/common-ui-eles/page-header.component'
 import { RoutingState } from 'app/state/routing/routing-state.class'
 import { ProjectsListAtoms } from 'app/state/projects-list/projects-list.atoms'
 import type { FC } from 'react'
@@ -15,17 +16,14 @@ import type { FC } from 'react'
  */
 const FirstProjectTemplates: FC<{ onShowIntro: () => void }> = (props) => (
   <div className="max-w-7xl mx-auto animate__animated animate__fadeIn">
-    <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-5">
-      <div>
-        <h1 className="text-2xl font-semibold text-gray-900">Choose a template</h1>
-        <p className="text-gray-600 mt-1">Everything is set up in a click. You can change sections and fields whenever you want.</p>
-      </div>
-      <div className="shrink-0">
-        <ImportProjectButton btnType="text" />
-      </div>
-    </div>
+    <PageHeader
+      eyebrow="Your first project"
+      title="Choose a template"
+      description="Everything is set up in a click. You can change sections and fields whenever you want."
+      actions={<ImportProjectButton btnType="compact" />}
+    />
     <TemplateGallery showBlankCard={true} />
-    <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-gray-500 mt-8 mb-4">
+    <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-[#7a8799] mt-8 mb-4">
       <Link
         to={ANITA_URLS.remotes}
         className="inline-flex items-center gap-1 hover:text-gray-800"

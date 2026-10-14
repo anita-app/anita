@@ -6,6 +6,7 @@ import { FORM_ELEMENTS_CSS_CLASSES } from 'app/components/shared-components/form
 import { WordPressAuth } from 'app/libs/cloud-sync/wordpress/wordpress-auth.class'
 import { WordPressApiError, WordPressErrorCode, getWordPressErrorMessage } from 'app/libs/cloud-sync/wordpress/wordpress-api-error.class'
 import { WORDPRESS_PLUGIN_NAME, WORDPRESS_PLUGIN_URL } from 'app/libs/cloud-sync/wordpress/wordpress.const'
+import { Icons } from 'app/libs/icons/icons.class'
 
 export const getConnectionErrorMessage = (error: unknown, siteUrl: string): string => {
   const host = siteUrl.replace(/^https?:\/\//, '')
@@ -50,27 +51,41 @@ export const ConnectWordPress: FC = () => {
   }
 
   return (
-    <div className="p-6">
-      <h2 className="title-font text-lg font-medium text-gray-900 mb-1">Connect a WordPress site</h2>
-      <p className="text-sm text-gray-600 mb-4">Store your projects on your own WordPress site and share them with its users. Each user logs in with their WordPress account.</p>
+    <div className="p-5 md:p-6">
+      <div className="flex items-start gap-4">
+        <span className="ui-avatar w-11 h-11 rounded-xl text-xl">{Icons.render('logoWordpress')}</span>
+        <div className="min-w-0">
+          <h2 className="ui-title text-lg">Connect a WordPress site</h2>
+          <p className="text-sm text-[#5b6b80] mt-0.5">Store your projects on your own WordPress site and share them with its users. Each user logs in with their WordPress account.</p>
+        </div>
+      </div>
 
-      <ol className="list-decimal ml-5 text-sm text-gray-700 space-y-1 mb-5">
-        <li>
-          On your WordPress site, install and activate the
-          {' '}
-          <a
-            href={WORDPRESS_PLUGIN_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline"
-          >
-            {WORDPRESS_PLUGIN_NAME}
-          </a>
-          {' '}
-          plugin (Plugins → Add New).
+      <ol className="grid gap-2.5 sm:grid-cols-3 my-5">
+        <li className="ui-field flex gap-3 text-sm text-[#33445a]">
+          <span className="ui-step">1</span>
+          <span>
+            On your WordPress site, install and activate the
+            {' '}
+            <a
+              href={WORDPRESS_PLUGIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-[#006fdf] underline underline-offset-2"
+            >
+              {WORDPRESS_PLUGIN_NAME}
+            </a>
+            {' '}
+            plugin (Plugins → Add New).
+          </span>
         </li>
-        <li>Enter the address of the site below and click Connect.</li>
-        <li>Log in with your WordPress account and approve the connection: you will be brought back here.</li>
+        <li className="ui-field flex gap-3 text-sm text-[#33445a]">
+          <span className="ui-step">2</span>
+          <span>Enter the address of the site below and click Connect.</span>
+        </li>
+        <li className="ui-field flex gap-3 text-sm text-[#33445a]">
+          <span className="ui-step">3</span>
+          <span>Log in with your WordPress account and approve the connection: you will be brought back here.</span>
+        </li>
       </ol>
 
       <form
@@ -115,7 +130,7 @@ export const ConnectWordPress: FC = () => {
         </div>
       )}
 
-      <p className="text-xs text-gray-500 mt-4">The plugin works with any permalink setting. Your data is stored in the database of your site; Anita keeps a copy on this device so you can also work offline.</p>
+      <p className="text-xs text-[#7a8799] mt-4">The plugin works with any permalink setting. Your data is stored in the database of your site; Anita keeps a copy on this device so you can also work offline.</p>
     </div>
   )
 }

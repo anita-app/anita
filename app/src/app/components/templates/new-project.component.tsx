@@ -1,5 +1,6 @@
 import { TemplateGallery } from 'app/components/templates/template-gallery.component'
 import { ImportProjectButton } from 'app/components/projects/project-importer-components/import-project-button.component'
+import { PageHeader } from 'app/components/shared-components/common-ui-eles/page-header.component'
 import type { FC } from 'react'
 
 /**
@@ -7,15 +8,12 @@ import type { FC } from 'react'
  */
 export const NewProject: FC = () => (
   <div className="max-w-7xl mx-auto">
-    <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-5">
-      <div>
-        <h1 className="text-2xl font-semibold text-gray-900">Create a project</h1>
-        <p className="text-gray-600 mt-1">Pick a template to start in a click: you can change its sections and fields whenever you want.</p>
-      </div>
-      <div className="shrink-0">
-        <ImportProjectButton btnType="text" />
-      </div>
-    </div>
+    <PageHeader
+      eyebrow="New project"
+      title="Create a project"
+      description="Pick a template to start in a click: you can change its sections and fields whenever you want."
+      actions={<ImportProjectButton btnType="compact" />}
+    />
     <TemplateGallery showBlankCard={true} />
   </div>
 )
