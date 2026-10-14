@@ -1,6 +1,6 @@
 {
   "name": "anita-app",
-  "version": "0.20.0",
+  "version": "0.20.1",
   "private": false,
   "scripts": {
     "eslint": "eslint \"src/**/*.?(ts|tsx)\" --fix",
@@ -15,7 +15,6 @@
     "@types/react-tooltip": "^4.2.4",
     "add": "^2.0.6",
     "animate.css": "^4.1.1",
-    "axios": "^1.3.4",
     "crypto-es": "^1.2.7",
     "date-format": "^4.0.14",
     "deta": "^1.1.0",

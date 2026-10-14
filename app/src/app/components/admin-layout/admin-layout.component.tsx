@@ -6,7 +6,6 @@ import { AdminLayoutSidebar } from 'app/components/admin-layout/admin-layout-sid
 import { useSelector } from 'react-redux'
 import { AnitaStore } from 'app/libs/redux/reducers.const'
 import { OAuthUtils } from 'app/libs/cloud-sync/o-auth-utils.class'
-import { AssistantProvider } from 'app/components/admin-layout/assistant/assistant-provider'
 
 export const AdminLayout: React.FC = () => {
   const project = useSelector((state: AnitaStore) => state.project)
@@ -15,7 +14,7 @@ export const AdminLayout: React.FC = () => {
   }, [])
 
   return (
-    <AssistantProvider>
+    <>
       <AdminLayoutHeader />
       <div className="relative admin-container flex">
         {!!project && <AdminLayoutSidebar />}
@@ -23,6 +22,6 @@ export const AdminLayout: React.FC = () => {
           <AnitaRoutes />
         </AdminLayoutContent>
       </div>
-    </AssistantProvider>
+    </>
   )
 }

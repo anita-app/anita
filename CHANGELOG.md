@@ -7,6 +7,10 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [0.20.1] - 2026-10-14
+### Removed
+- removed the OpenAI powered assistant.
+
 ## [0.20.0] - 2023-03-12
 ### Added
 - added support for conversation with assistant.

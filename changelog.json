@@ -4,6 +4,16 @@
   "temp": [],
   "changes": [
     {
+      "version": "0.20.1",
+      "date": "2026-10-14",
+      "items": [
+        {
+          "type": "removed",
+          "value": "removed the OpenAI powered assistant"
+        }
+      ]
+    },
+    {
       "version": "0.20.0",
       "date": "2023-03-12",
       "items": [
