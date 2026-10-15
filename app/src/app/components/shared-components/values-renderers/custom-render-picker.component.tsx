@@ -60,7 +60,7 @@ const handleDateTimeType = (type: TextInputSupportedTypes | DateInputSupportedTy
 }
 
 export const customRenderPicker = (formModel: FormFieldsModel<TSupportedFormsTypes>): React.FC<any> => {
-  const componentCode = typeof formModel.componentCode === 'string' ? parseInt(formModel.componentCode, 10) : formModel.componentCode
+  const componentCode = typeof formModel.componentCode === 'string' ? parseInt((formModel as any).componentCode, 10) : formModel.componentCode
   switch (componentCode) {
     case FORM_COMPONENTS_CODES.basicInput:
       return handleInputType(formModel.type)

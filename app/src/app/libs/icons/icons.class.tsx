@@ -45,6 +45,7 @@ export class Icons {
       return null
     }
     const icon = svgIcons[iconName as TSVGIcons] ? svgIcons[iconName as TSVGIcons] : ionicons[iconName as keyof typeof ionicons]
-    return <IonIcon icon={icon} className={className} />
+    const Component = IonIcon as any
+    return <Component icon={icon} className={className} />
   }
 }

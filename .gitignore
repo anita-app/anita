@@ -42,3 +42,4 @@ landing/src/app/data-sources/app-packages.json
 landing/src/app/version.ts
 app/src/app/version.ts
 app/package-lock.json
+app/full-code.tsx

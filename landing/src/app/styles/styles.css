@@ -199,6 +199,25 @@ article p img {
   margin: 0 auto;
 }
 
+article .ai-assisted-notice {
+  margin: 0 0 2.5rem;
+  padding: 1rem 1.5rem;
+  border: 1px solid #dbe7f5;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, #f1f7ff 0%, #e8f2ff 100%);
+  color: #1f2937;
+  font-size: 1rem;
+  line-height: 1.75;
+  font-style: italic;
+}
+
+@media (min-width: 768px) {
+  article .ai-assisted-notice {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
 @media (min-width: 1024px) {
   article table {
     @apply shadow-lg;

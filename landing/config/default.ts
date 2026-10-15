@@ -3,6 +3,7 @@ import { DateFormatterDirective } from '../src/app/yassb-plugins/custom-directiv
 import { blogList } from '../src/app/yassb-plugins/custom-renderers/blog-list';
 import { packagesList } from '../src/app/yassb-plugins/custom-renderers/packages-list';
 import { addDivToPreCode } from '../src/app/yassb-plugins/post-processors/add-div-to-pre-code.function';
+import { handleAiAssistedNotice } from '../src/app/yassb-plugins/post-processors/handle-ai-assisted-notice.function';
 import { buildTailwind } from '../src/app/yassb-plugins/styles-parser/build-tailwind.function';
 
 export default {
@@ -29,5 +30,5 @@ export default {
     excerpt: true,
     excerpt_separator: '<!-- /preview -->'
   },
-  postProcessors: [addDivToPreCode]
+  postProcessors: [addDivToPreCode, handleAiAssistedNotice]
 } as YassbConfig;
