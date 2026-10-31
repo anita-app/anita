@@ -87,7 +87,8 @@ export interface IDropboxSyncPlan {
 
 /**
  * Decides what the account-level sync does, from the files of the Dropbox folder, the projects on this device
- * and their links. `missingFileIds` are linked files that Dropbox reported as deleted.
+ * and their links. `missingFileIds` are linked files that Dropbox reported as deleted; `ignoredFileIds` are files of
+ * projects deleted only from this device, which are not imported again.
  * @featurePart sync.dropbox-projects, sync.dropbox-missing-file
  */
 export const planDropboxSync = (
@@ -95,6 +96,7 @@ export const planDropboxSync = (
   localProjects: Array<ILocalProjectForPlan>,
   links: Record<string, IDropboxFileLink>,
   missingFileIds: Set<string>,
+  ignoredFileIds: Set<string> = new Set(),
 ): IDropboxSyncPlan => {
   const plan: IDropboxSyncPlan = { toImport: [], toLink: [], toUpload: [], missing: [], staleLinks: [] }
   const localById = new Map(localProjects.map(project => [project.id, project]))
@@ -108,7 +110,7 @@ export const planDropboxSync = (
 
   firstFileOfProject.forEach((file, projectId) => {
     // A local copy that is not synced with Dropbox, or synced with another file, keeps its own sync data.
-    if (!localById.has(projectId) && !linkedFileIds.has(file.fileId)) {
+    if (!localById.has(projectId) && !linkedFileIds.has(file.fileId) && !ignoredFileIds.has(file.fileId)) {
       plan.toImport.push(file)
     }
   })

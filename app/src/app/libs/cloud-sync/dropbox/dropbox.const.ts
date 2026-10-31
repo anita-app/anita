@@ -78,6 +78,17 @@ export interface IDropboxFileLink {
 }
 
 /**
+ * The Dropbox file of a project deleted only from this device: the sync does not download it again.
+ * @internal
+ */
+export interface IDropboxIgnoredFile {
+  fileId: string
+  projectId: string
+  /** Path of the file when the project was deleted, for display. */
+  path?: string
+}
+
+/**
  * An Anita project file found in the Dropbox projects folder.
  * @internal
  */

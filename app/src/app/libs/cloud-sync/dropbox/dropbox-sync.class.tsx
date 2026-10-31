@@ -47,7 +47,7 @@ const MAX_CONFLICT_RETRIES = 3
  * @where Chosen as storage of a project: "Dropbox" when creating a project, "Remote storage" in the project settings, or "Save it in Dropbox or WordPress" for a project saved only on this device. The project page shows "Remote storage: Dropbox", the "File" and "Last sync", with a "Sync now" button; the projects list marks it "Synced with Dropbox".
  * @usage 1. Connect Dropbox. 2. Choose Dropbox as storage of a project (optionally pick another folder with "Change"). 3. Work as usual: changes are sent to Dropbox a moment after they are saved, and changes made on other devices are received when the project is opened or checked again. 4. Use "Sync now" on the project page or on the Dropbox card of Storage and sync to sync right away.
  * @options Folder of the file: /Anita by default, or any folder chosen with "Change" (Choose a folder: browse, "New folder", "Save in <folder>"). Setting "Remote storage" back to "None: this device only" stops syncing (confirmation "Stop syncing with Dropbox?"): the project stays on this device and in Dropbox.
- * @rules Each project is one .json file named after the project title (Dropbox renames it if a file with the same name exists). Projects in the /Anita folder are downloaded automatically on every device connected to the same account; projects saved in other folders are opened on other devices with "Open from Dropbox". Local changes are grouped and sent about 1.5 seconds after the last save. Records are merged one by one using the time of their last change: a record changed on both sides since the last sync keeps the most recent version, and the project page says "N records were changed both on this device and on another one since the last sync. The most recent version was kept." If the file is changed by another device during a sync, the merge is retried up to 3 times. When Dropbox cannot be reached, changes stay on this device ("some changes are not synced yet") and are sent later. Deleting a synced project moves its file to the deleted files of Dropbox, where it can be restored for a while; if Dropbox cannot be reached the project is kept on this device. If Dropbox is not connected on the device the project page shows "Dropbox is not connected on this device" and a "Storage and sync" button.
+ * @rules Each project is one .json file named after the project title (Dropbox renames it if a file with the same name exists). Projects in the /Anita folder are downloaded automatically on every device connected to the same account; projects saved in other folders are opened on other devices with "Open from Dropbox". Local changes are grouped and sent about 1.5 seconds after the last save. Records are merged one by one using the time of their last change: a record changed on both sides since the last sync keeps the most recent version, and the project page says "N records were changed both on this device and on another one since the last sync. The most recent version was kept." If the file is changed by another device during a sync, the merge is retried up to 3 times. When Dropbox cannot be reached, changes stay on this device ("some changes are not synced yet") and are sent later. Deleting a synced project asks whether to delete its file from Dropbox too: only with "Delete also from Dropbox" the file is moved to the deleted files of Dropbox, where it can be restored for a while (if Dropbox cannot be reached the project is kept on this device); with "Delete from this device only" the file stays and this device no longer downloads it, until it is opened again with "Open from Dropbox". If Dropbox is not connected on the device the project page shows "Dropbox is not connected on this device" and a "Storage and sync" button.
  * @errors dropbox.network, dropbox.notConnected, dropbox.conflict, dropbox.insufficientSpace, dropbox.rateLimited, dropbox.serverError, dropbox.invalidFile, dropbox.unknown
  * @status beta
  * @since 0.18.0
@@ -176,7 +176,7 @@ export class DropboxSync {
         }
       }
 
-      const plan = planDropboxSync(files, localProjects, links, missingFileIds)
+      const plan = planDropboxSync(files, localProjects, links, missingFileIds, await CloudSyncBase.getIgnoredDropboxFileIds())
       const isFree = (projectId: string) => !DropboxSync.busy.has(projectId)
       for (const projectId of plan.staleLinks.filter(isFree)) {
         // Checked against the stored settings: a link is never forgotten because of a list not updated yet.
@@ -394,6 +394,8 @@ export class DropboxSync {
     }
     const projectId = downloaded.data[RESERVED_AUDS_KEYS._settings][0].id
     DropboxSync.projectIdByFileId.set(downloaded.fileId, projectId)
+    // Opened on purpose: a file of a project deleted only from this device is synced again.
+    await CloudSyncBase.unignoreDropboxFile(downloaded.fileId)
     const link = await CloudSyncBase.getDropboxLink(projectId)
     if (link?.fileId === downloaded.fileId) {
       return projectId
@@ -626,6 +628,19 @@ export class DropboxSync {
       DropboxSync.pushTimers[projectId] = undefined
       DropboxSync.syncProject(projectId)
     }, PUSH_DELAY_MS)
+  }
+
+  /**
+   * Called when a project is deleted only from this device: its file stays in Dropbox, and the sync must not
+   * download it again. "Open from Dropbox" brings it back.
+   */
+  public static async ignoreRemoteProject (projectId: string): Promise<void> {
+    const link = await CloudSyncBase.getDropboxLink(projectId)
+    if (!link) {
+      return
+    }
+    clearTimeout(DropboxSync.pushTimers[projectId])
+    await CloudSyncBase.ignoreDropboxFile({ fileId: link.fileId, projectId, path: link.path })
   }
 
   /**

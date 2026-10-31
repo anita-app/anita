@@ -1742,11 +1742,11 @@
           "id": "project.delete",
           "kind": "project",
           "title": "Delete a project",
-          "summary": "Removes a project and all its records from this device and, if it is synced, from Dropbox or from the WordPress site.",
+          "summary": "Removes a project and all its records from this device and, if it is synced, from the WordPress site, or from Dropbox if you confirm it.",
           "where": "\"Delete Project\" button on the card of the project (Projects screen).",
-          "usage": "1. Click \"Delete Project\".\n2. Read the confirmation and click \"Delete\".",
-          "options": "none",
-          "rules": "The confirmation says what happens: for a project only on this device, all its data is removed from this device and\ncopies on other devices are not affected; for Dropbox, its file is moved to the deleted files of your Dropbox (where\nit can be restored for a while) and your other devices ask what to do with their copy; for WordPress, it is deleted\nfrom the site and from this device, for every user it is shared with. On WordPress only the owner of the project and\nthe administrators of the site see the button. If the deletion on Dropbox or WordPress fails, \"The project was not\ndeleted\" explains why and the project is kept on this device. It cannot be undone. Afterwards the Projects list opens.",
+          "usage": "1. Click \"Delete Project\".\n2. Read the confirmation and click \"Delete\" (for Dropbox: \"Delete from this device only\" or \"Delete also from Dropbox\").",
+          "options": "For a project synced with Dropbox: \"Delete from this device only\" keeps its file in your Dropbox, \"Delete also from Dropbox\" moves the file to the deleted files of your Dropbox. Nothing is deleted from Dropbox without this explicit choice.",
+          "rules": "The confirmation says what happens: for a project only on this device, all its data is removed from this device and\ncopies on other devices are not affected; for Dropbox, the dialog asks whether to delete the file in your Dropbox too:\nwith \"Delete from this device only\" the file stays in Dropbox, your other devices keep syncing it, and this device no\nlonger downloads it automatically (\"Open from Dropbox\" brings it back); with \"Delete also from Dropbox\" the file is\nmoved to the deleted files of your Dropbox (where it can be restored for a while) and your other devices ask what to\ndo with their copy; for WordPress, it is deleted\nfrom the site and from this device, for every user it is shared with. On WordPress only the owner of the project and\nthe administrators of the site see the button. If the deletion on Dropbox or WordPress fails, \"The project was not\ndeleted\" explains why and the project is kept on this device. It cannot be undone. Afterwards the Projects list opens.",
           "status": "stable",
           "since": "0.1.0",
           "related": [
@@ -1766,7 +1766,7 @@
           },
           "source": {
             "file": "src/app/models/project/project-deletor.class.ts",
-            "line": 17,
+            "line": 18,
             "symbol": "ProjectDeletor"
           },
           "parts": [
@@ -3021,7 +3021,7 @@
           "where": "Chosen as storage of a project: \"Dropbox\" when creating a project, \"Remote storage\" in the project settings, or \"Save it in Dropbox or WordPress\" for a project saved only on this device. The project page shows \"Remote storage: Dropbox\", the \"File\" and \"Last sync\", with a \"Sync now\" button; the projects list marks it \"Synced with Dropbox\".",
           "usage": "1. Connect Dropbox. 2. Choose Dropbox as storage of a project (optionally pick another folder with \"Change\"). 3. Work as usual: changes are sent to Dropbox a moment after they are saved, and changes made on other devices are received when the project is opened or checked again. 4. Use \"Sync now\" on the project page or on the Dropbox card of Storage and sync to sync right away.",
           "options": "Folder of the file: /Anita by default, or any folder chosen with \"Change\" (Choose a folder: browse, \"New folder\", \"Save in <folder>\"). Setting \"Remote storage\" back to \"None: this device only\" stops syncing (confirmation \"Stop syncing with Dropbox?\"): the project stays on this device and in Dropbox.",
-          "rules": "Each project is one .json file named after the project title (Dropbox renames it if a file with the same name exists). Projects in the /Anita folder are downloaded automatically on every device connected to the same account; projects saved in other folders are opened on other devices with \"Open from Dropbox\". Local changes are grouped and sent about 1.5 seconds after the last save. Records are merged one by one using the time of their last change: a record changed on both sides since the last sync keeps the most recent version, and the project page says \"N records were changed both on this device and on another one since the last sync. The most recent version was kept.\" If the file is changed by another device during a sync, the merge is retried up to 3 times. When Dropbox cannot be reached, changes stay on this device (\"some changes are not synced yet\") and are sent later. Deleting a synced project moves its file to the deleted files of Dropbox, where it can be restored for a while; if Dropbox cannot be reached the project is kept on this device. If Dropbox is not connected on the device the project page shows \"Dropbox is not connected on this device\" and a \"Storage and sync\" button.",
+          "rules": "Each project is one .json file named after the project title (Dropbox renames it if a file with the same name exists). Projects in the /Anita folder are downloaded automatically on every device connected to the same account; projects saved in other folders are opened on other devices with \"Open from Dropbox\". Local changes are grouped and sent about 1.5 seconds after the last save. Records are merged one by one using the time of their last change: a record changed on both sides since the last sync keeps the most recent version, and the project page says \"N records were changed both on this device and on another one since the last sync. The most recent version was kept.\" If the file is changed by another device during a sync, the merge is retried up to 3 times. When Dropbox cannot be reached, changes stay on this device (\"some changes are not synced yet\") and are sent later. Deleting a synced project asks whether to delete its file from Dropbox too: only with \"Delete also from Dropbox\" the file is moved to the deleted files of Dropbox, where it can be restored for a while (if Dropbox cannot be reached the project is kept on this device); with \"Delete from this device only\" the file stays and this device no longer downloads it, until it is opened again with \"Open from Dropbox\". If Dropbox is not connected on the device the project page shows \"Dropbox is not connected on this device\" and a \"Storage and sync\" button.",
           "status": "beta",
           "since": "0.18.0",
           "related": [
@@ -3087,7 +3087,7 @@
             },
             {
               "file": "src/app/libs/cloud-sync/dropbox/dropbox-files.function.ts",
-              "line": 93,
+              "line": 94,
               "symbol": "planDropboxSync"
             },
             {
@@ -3191,7 +3191,7 @@
           "parts": [
             {
               "file": "src/app/libs/cloud-sync/dropbox/dropbox-files.function.ts",
-              "line": 93,
+              "line": 94,
               "symbol": "planDropboxSync"
             },
             {

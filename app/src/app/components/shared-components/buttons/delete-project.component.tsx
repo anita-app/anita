@@ -29,9 +29,9 @@ export const DeleteProjectButton: FC<IDeleteProjectButtonProps> = (props) => {
   const isOnWordPress = !!remoteInfo
   const siteName = isOnWordPress ? (SyncState.getWordPressRemote(props.project.remoteStorage!)?.data.site_name ?? props.project.remoteStorage!) : ''
 
-  const handleClickDelete = async () => {
+  const handleClickDelete = async (deleteOnRemote = true) => {
     try {
-      await new ProjectDeletor(props.project.id).delete()
+      await new ProjectDeletor(props.project.id).delete({ deleteOnRemote })
     } catch (error) {
       ModalState.showModal({
         title: 'The project was not deleted',
@@ -49,27 +49,40 @@ export const DeleteProjectButton: FC<IDeleteProjectButtonProps> = (props) => {
   }
 
   const handleClickModal = () => {
+    if (isOnDropbox) {
+      // Deleting the file in Dropbox needs an explicit choice: the other answer only deletes the copy on this device.
+      ModalState.showModal({
+        title: 'Delete Project',
+        type: Type.danger,
+        ctas: [
+          { actionText: 'Delete from this device only', actionType: Type.secondary, handleClickAction: () => handleClickDelete(false) },
+          { actionText: 'Delete also from Dropbox', actionType: Type.danger, handleClickAction: () => handleClickDelete(true) },
+        ],
+        children: (
+          <p className="text-sm text-gray-500">
+            This project is synced with Dropbox{dropboxLink?.path ? <> ({dropboxLink.path})</> : null}. Do you also want to delete its file from your Dropbox?
+            <br /><br /><strong>Delete from this device only</strong>: the file stays in your Dropbox and your other devices keep syncing it. This device will no longer download it; use &quot;Open from Dropbox&quot; to get it back.
+            <br /><br /><strong>Delete also from Dropbox</strong>: the file is moved to the deleted files of your Dropbox, where you can restore it for a while. Your other devices will ask what to do with their copy.
+          </p>),
+      })
+      return
+    }
     ModalState.showModal({
       title: 'Delete Project',
       type: Type.danger,
       ctas: [{
         actionText: 'Delete',
-        handleClickAction: handleClickDelete,
+        handleClickAction: () => handleClickDelete(),
       }],
       children: isOnWordPress
         ? (
           <p className="text-sm text-gray-500">
             Are you sure you want to delete this project?<br /><br />It will be deleted from {siteName} and from this device, for every user it is shared with. This action cannot be undone.
           </p>)
-        : isOnDropbox
-          ? (
-            <p className="text-sm text-gray-500">
-              Are you sure you want to delete this project?<br /><br />It will be deleted from this device, and its file will be moved to the deleted files of your Dropbox, where you can restore it for a while. Your other devices will ask what to do with their copy.
-            </p>)
-          : (
-            <p className="text-sm text-gray-500">
-              Are you sure you want to delete this project?<br /><br />All project data will be permanently removed from this device. This action cannot be undone.<br /><br />Data stored on other devices will not be affected.
-            </p>),
+        : (
+          <p className="text-sm text-gray-500">
+            Are you sure you want to delete this project?<br /><br />All project data will be permanently removed from this device. This action cannot be undone.<br /><br />Data stored on other devices will not be affected.
+          </p>),
     })
   }
 

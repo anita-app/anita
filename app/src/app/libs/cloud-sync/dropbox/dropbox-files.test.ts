@@ -73,6 +73,11 @@ describe('planDropboxSync', () => {
     expect(plan.toImport.map(item => item.fileId)).toEqual(['f1'])
   })
 
+  it('does not import again the files of projects deleted only from this device', () => {
+    const plan = planDropboxSync([file('f1', 'p1'), file('f2', 'p2')], [], {}, new Set(), new Set(['f1']))
+    expect(plan.toImport.map(item => item.fileId)).toEqual(['f2'])
+  })
+
   it('leaves alone local projects that are not synced with Dropbox', () => {
     const plan = planDropboxSync([file('f1', 'p1')], [{ id: 'p1' }, { id: 'p2', remoteStorage: 'example.com' }], {}, new Set())
     expect(plan).toEqual({ toImport: [], toLink: [], toUpload: [], missing: [], staleLinks: [] })

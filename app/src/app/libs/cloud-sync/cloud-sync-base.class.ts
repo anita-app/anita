@@ -2,9 +2,9 @@ import { DateTools } from 'app/libs/tools/date-tools.class'
 import Dexie from 'dexie'
 import { CloudSyncTable } from './cloud-sync.const'
 import type { IRemoteProjectInfo, IWordPressAuthData, IWordPressRemoteInfo, IWordPressSpaceInfo } from 'app/libs/cloud-sync/wordpress/wordpress.const'
-import type { IDropboxAccountData, IDropboxFileLink } from 'app/libs/cloud-sync/dropbox/dropbox.const'
+import type { IDropboxAccountData, IDropboxFileLink, IDropboxIgnoredFile } from 'app/libs/cloud-sync/dropbox/dropbox.const'
 
-const DB_VERSION = 7
+const DB_VERSION = 8
 
 /** @internal */
 export enum SupportedCloud {
@@ -34,6 +34,8 @@ interface ICloudSyncDB<T extends SupportedCloud> {
   [CloudSyncTable.FILES_INFO]: IDropboxFileLink
   [CloudSyncTable.REMOTES_INFO]: IWordPressRemoteInfo
   [CloudSyncTable.REMOTE_PROJECTS]: IRemoteProjectInfo
+  /** Dropbox files of projects deleted only from this device: they are not downloaded again automatically. */
+  [CloudSyncTable.IGNORED_FILES]: IDropboxIgnoredFile
 }
 
 /** @internal */
@@ -76,6 +78,22 @@ export class CloudSyncBase<T extends SupportedCloud> {
     await CloudSyncBase.DB!.table<IDropboxFileLink>(CloudSyncTable.FILES_INFO).delete(projectId)
   }
 
+  public static async getIgnoredDropboxFileIds (): Promise<Set<string>> {
+    CloudSyncBase.initDB()
+    const ignored = await CloudSyncBase.DB!.table<IDropboxIgnoredFile>(CloudSyncTable.IGNORED_FILES).toArray()
+    return new Set(ignored.map(file => file.fileId))
+  }
+
+  public static async ignoreDropboxFile (file: IDropboxIgnoredFile): Promise<void> {
+    CloudSyncBase.initDB()
+    await CloudSyncBase.DB!.table<IDropboxIgnoredFile>(CloudSyncTable.IGNORED_FILES).put(file)
+  }
+
+  public static async unignoreDropboxFile (fileId: string): Promise<void> {
+    CloudSyncBase.initDB()
+    await CloudSyncBase.DB!.table<IDropboxIgnoredFile>(CloudSyncTable.IGNORED_FILES).delete(fileId)
+  }
+
   protected static initDB () {
     if (!CloudSyncBase.DB) {
       CloudSyncBase.DB = new Dexie('CloudSync')
@@ -85,6 +103,7 @@ export class CloudSyncBase<T extends SupportedCloud> {
         [CloudSyncTable.FILES_INFO]: 'projectId',
         [CloudSyncTable.REMOTES_INFO]: 'remoteId',
         [CloudSyncTable.REMOTE_PROJECTS]: 'projectId, remoteId',
+        [CloudSyncTable.IGNORED_FILES]: 'fileId',
       })
     }
   }

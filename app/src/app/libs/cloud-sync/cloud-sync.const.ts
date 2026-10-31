@@ -5,4 +5,5 @@ export enum CloudSyncTable {
   FILES_INFO = 'filesInfo',
   REMOTES_INFO = 'remotesInfo',
   REMOTE_PROJECTS = 'remoteProjects',
+  IGNORED_FILES = 'ignoredFiles',
 }
