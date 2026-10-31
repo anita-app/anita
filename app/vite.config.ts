@@ -1,8 +1,7 @@
 /// <reference types="vitest/config" />
 import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
-import react, { reactCompilerPreset } from '@vitejs/plugin-react'
-import babel from '@rolldown/plugin-babel'
+import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
@@ -30,8 +29,8 @@ export default defineConfig(({ mode }) => ({
     format: 'es',
   },
   plugins: [
-    react(),
-    babel({ presets: [reactCompilerPreset()] }),
+    // React Compiler, in its Rust port (oxc-transform-react).
+    react({ compiler: true }),
     tailwindcss(),
     VitePWA({
       // The service worker is ours (src/service-worker.ts): the plugin adds the list of files to precache.
