@@ -44,9 +44,10 @@ const Modal: FC<IModalProps> = (props) => {
       show={props.isOpen}
       as={Fragment}
     >
+      {/* Above the header (z-20) and the other dialogs: a modal covers the whole app. */}
       <Dialog
         as="div"
-        className="relative z-10"
+        className="relative z-40"
         onClose={onCloseAction}
       >
         <Transition.Child
@@ -72,27 +73,27 @@ const Modal: FC<IModalProps> = (props) => {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-2xl bg-white border border-[#000f20]/5 px-4 pt-5 pb-4 text-left shadow-[0_30px_60px_-20px_rgba(0,35,70,0.45)] transition-all sm:my-8 w-full sm:max-w-lg sm:p-6">
-                <div className="sm:flex sm:items-start gap-2">
+              {/* At most as tall as the window: the title and the buttons stay in view, the content scrolls. */}
+              <Dialog.Panel className="relative transform overflow-hidden rounded-2xl bg-white border border-[#000f20]/5 px-4 pt-5 pb-4 text-left shadow-[0_30px_60px_-20px_rgba(0,35,70,0.45)] transition-all sm:my-8 w-full sm:max-w-lg sm:p-6 flex flex-col max-h-[calc(100dvh-2rem)] sm:max-h-[calc(100dvh-4rem)]">
+                <div className="sm:flex sm:items-start gap-2 shrink-0">
                   {iconConfig && (
                     <div className={`absolute sm:relative right-3 sm:right-1.5 top-2.5 sm:top-0 flex items-center justify-center h-12 w-12 shrink-0 rounded-full ${iconConfig.iconBgColor} sm:mx-0 sm:h-10 sm:w-10`}>
                       {Icons.render(iconConfig.icon, `${iconConfig.iconTextColor} text-xl -mt-1`)}
                     </div>
                   )}
-                  <div className="text-left w-full">
-                    <Dialog.Title
-                      as="h3"
-                      className={`ui-title text-lg leading-6 ${iconConfig ? 'sm:pt-1' : ''}`}
-                    >
-                      {config.title}
-                    </Dialog.Title>
-                    <div className="mt-2">
-                      {config.children}
-                    </div>
-                  </div>
+                  <Dialog.Title
+                    as="h3"
+                    className={`ui-title text-lg leading-6 text-left w-full ${iconConfig ? 'sm:pt-1' : ''}`}
+                  >
+                    {config.title}
+                  </Dialog.Title>
+                </div>
+                {/* Aligned with the title, also when there is an icon; the padding keeps focus rings visible. */}
+                <div className={`mt-2 min-h-0 overflow-y-auto overscroll-contain -mx-1 px-1 ${iconConfig ? 'sm:pl-13' : ''}`}>
+                  {config.children}
                 </div>
                 {!config.hideActionRow && (
-                  <div className="flex flex-wrap items-center justify-end gap-y-2 mt-5 pt-4 border-t border-[#eef1f5]">
+                  <div className="flex flex-wrap items-center justify-end gap-y-2 mt-5 pt-4 border-t border-[#eef1f5] shrink-0">
                     {config.leftButton && (
                       <Button
                         {...config.leftButton!}
