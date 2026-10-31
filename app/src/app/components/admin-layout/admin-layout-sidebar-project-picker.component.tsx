@@ -1,7 +1,6 @@
 import { Fragment, useRef, useState } from 'react'
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
-import { Manager } from 'app/cross-refs-exports'
 import { useClickOutside } from 'app/components/hooks/click-outside.hook'
 import { Icons } from 'app/libs/icons/icons.class'
 import { Transition } from '@headlessui/react'
@@ -9,6 +8,7 @@ import { ProjectsListAtoms } from 'app/state/projects-list/projects-list.atoms'
 import { useAtomValue } from 'jotai'
 import { RoutingState } from 'app/state/routing/routing-state.class'
 import { ProjectAvatar } from 'app/components/shared-components/common-ui-eles/project-avatar.component'
+import { ProjectLoader } from 'app/models/project/project-loader.class'
 import type { FC } from 'react'
 import type { TSystemData } from 'app/models/project/project.declarations'
 
@@ -45,7 +45,7 @@ export const AdminLayoutSidebarProjectPicker: FC<IProjectPickerProps> = (props) 
 
   const loadProject = async (projectId: string) => {
     closeDropdown()
-    await Manager.loadProjectById(projectId)
+    await new ProjectLoader(projectId).loadProject()
     goToDetails(projectId)
   }
 

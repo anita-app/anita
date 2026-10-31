@@ -12,10 +12,6 @@ import type { TAnitaUniversalDataStorage, IProjectSettings, LocalProjectSettings
 export class Manager {
   private static currentProject: Project
 
-  public static loadProjectById (projectId: string): Promise<void> {
-    return new ProjectLoader(projectId).loadProject()
-  }
-
   public static setCurrentProject (systemData: TSystemData) {
     const systemDataClone = {
       [RESERVED_AUDS_KEYS._settings]: [{ ...systemData[RESERVED_AUDS_KEYS._settings][0] }],
