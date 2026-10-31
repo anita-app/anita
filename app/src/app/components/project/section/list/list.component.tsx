@@ -19,7 +19,8 @@ export const ProjectSectionList: FC = () => {
   const project = useAtomValue(ProjectAtoms.currentProject)
   const sectionData = useLiveQuery(() => Queriers.getProjectSection(projectId, sectionId!), [projectId, sectionId])
   const section = new Section(projectId, sectionData!)
-  const sectionElements = useLiveQuery(() => Queriers.getElements(projectId, sectionId!), [section], null)
+  // Depends on the ids: `section` is a new object at every render, which would run the query in a loop.
+  const sectionElements = useLiveQuery(() => Queriers.getElements(projectId, sectionId!), [projectId, sectionId], null)
 
   if (!section) {
     return null
