@@ -61,6 +61,8 @@ const anitaRoutes: Array<RouteObject> = [
       { index: true, element: <Navigate to={ANITA_URLS.projectsList} replace={true} /> },
       { path: `${ANITA_URLS.auth}/*`, element: <OAuth /> },
       { path: ANITA_URLS.remotes, element: <Remotes /> },
+      // Address of the page when it listed only WordPress sites.
+      { path: '/wordpress-sites', element: <Navigate to={ANITA_URLS.remotes} replace={true} /> },
       { path: ANITA_URLS.projectsList, element: <ProjectsList /> },
       { path: ANITA_URLS.projectAdd, element: <AddEditProject /> },
       { path: ANITA_URLS.projectNew, element: <NewProject /> },

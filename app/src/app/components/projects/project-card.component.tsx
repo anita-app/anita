@@ -11,6 +11,7 @@ import { SyncStateAtoms } from 'app/state/sync/sync-state.atoms'
 import { Icons } from 'app/libs/icons/icons.class'
 import { OnboardingState } from 'app/state/onboarding/onboarding-state.class'
 import { ProjectAvatar } from 'app/components/shared-components/common-ui-eles/project-avatar.component'
+import { DROPBOX_REMOTE_ID } from 'app/libs/cloud-sync/dropbox/dropbox.const'
 import type { CSSProperties, FC } from 'react'
 import type { IProjectSettings } from 'app/models/project/project.declarations'
 
@@ -43,22 +44,26 @@ export const ProjectCard: FC<IProjectCardProps> = (props) => {
               <span className="inline-flex items-center gap-1">
                 {Icons.render('calendarOutline')} Created on {dateFormat('yyyy/MM/dd, at hh:mm', new Date(props.project.createdAt))}
               </span>
-              {props.project.remoteStorage
-                ? (
-                  <span className="inline-flex items-center gap-1">
-                    {Icons.render('logoWordpress')}
-                    Synced with {remotes.find(remote => remote.remoteId === props.project.remoteStorage)?.data.site_name ?? props.project.remoteStorage}
-                  </span>)
-                : (
-                  <button
-                    type="button"
-                    onClick={() => OnboardingState.openStoreOnWordPress(props.project.id)}
-                    className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-2.5 py-0.5 font-semibold text-orange-800 transition hover:bg-orange-100 hover:shadow-[0_0_0_3px_rgba(249,115,22,0.12)]"
-                  >
-                    <span className="ui-dot" />
-                    Only on this device, no backup ·{' '}
-                    <span className="underline underline-offset-2">Save it on WordPress</span>
-                  </button>)}
+              {props.project.remoteStorage === DROPBOX_REMOTE_ID && (
+                <span className="inline-flex items-center gap-1">
+                  {Icons.render('logoDropbox')}
+                  Synced with Dropbox
+                </span>)}
+              {!!props.project.remoteStorage && props.project.remoteStorage !== DROPBOX_REMOTE_ID && (
+                <span className="inline-flex items-center gap-1">
+                  {Icons.render('logoWordpress')}
+                  Synced with {remotes.find(remote => remote.remoteId === props.project.remoteStorage)?.data.site_name ?? props.project.remoteStorage}
+                </span>)}
+              {!props.project.remoteStorage && (
+              <button
+                type="button"
+                onClick={() => OnboardingState.openStoreProject(props.project.id)}
+                className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-2.5 py-0.5 font-semibold text-orange-800 transition hover:bg-orange-100 hover:shadow-[0_0_0_3px_rgba(249,115,22,0.12)]"
+              >
+                <span className="ui-dot" />
+                Only on this device, no backup ·{' '}
+                <span className="underline underline-offset-2">Keep it safe</span>
+              </button>)}
             </div>
           </div>
         </div>

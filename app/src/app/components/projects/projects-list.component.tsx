@@ -1,6 +1,7 @@
 import { ANITA_URLS } from 'app/libs/routing/anita-routes.constant'
 import { ProjectCard } from 'app/components/projects/project-card.component'
 import { ImportProjectButton } from 'app/components/projects/project-importer-components/import-project-button.component'
+import { OpenFromDropboxButton } from 'app/components/remotes/open-from-dropbox-button.component'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Navigate } from 'react-router-dom'
 import { PageHeader } from 'app/components/shared-components/common-ui-eles/page-header.component'
@@ -24,15 +25,16 @@ export const ProjectsList: FC = () => {
         actions={(
           <>
             <Button
-              id="wordpressSites"
-              label="WordPress sites"
+              id="storageAndSync"
+              label="Storage and sync"
               href={ANITA_URLS.remotes}
-              iconLeft="logoWordpress"
-              tooltip="Connect and manage WordPress sites"
+              iconLeft="cloudUploadOutline"
+              tooltip="Connect Dropbox or WordPress sites"
               breakpoint="md"
               type={Type.secondary}
               size="sm"
             />
+            <OpenFromDropboxButton breakpoint="lg" />
             <ImportProjectButton btnType="compact" />
             <Button
               id="createProject"

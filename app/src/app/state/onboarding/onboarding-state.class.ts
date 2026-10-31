@@ -5,12 +5,15 @@ import { DateTools } from 'app/libs/tools/date-tools.class'
 const BACKUP_KEY_PREFIX = 'anita.lastBackup.'
 
 export class OnboardingState {
-  public static openStoreOnWordPress = (projectId: string) => {
-    Bucket.general.set(OnboardingAtoms.storeOnWordPressProjectId, projectId)
+  /**
+   * Opens the dialog to save a project of this device in Dropbox or on a WordPress site.
+   */
+  public static openStoreProject = (projectId: string) => {
+    Bucket.general.set(OnboardingAtoms.storeProjectId, projectId)
   }
 
-  public static closeStoreOnWordPress = () => {
-    Bucket.general.set(OnboardingAtoms.storeOnWordPressProjectId, null)
+  public static closeStoreProject = () => {
+    Bucket.general.set(OnboardingAtoms.storeProjectId, null)
   }
 
   /**

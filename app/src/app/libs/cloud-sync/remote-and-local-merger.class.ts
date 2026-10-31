@@ -11,18 +11,17 @@ import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import { ProjectSaver } from 'app/models/project/project-saver.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { WordPressApiError, WordPressErrorCode } from 'app/libs/cloud-sync/wordpress/wordpress-api-error.class'
+import { DropboxErrorCode, DropboxSyncError } from 'app/libs/cloud-sync/dropbox/dropbox-error.class'
+import { markAsDropboxProject } from 'app/libs/cloud-sync/dropbox/dropbox-files.function'
+import { DROPBOX_REMOTE_ID } from 'app/libs/cloud-sync/dropbox/dropbox.const'
+import { ProjectSyncHelpers } from 'app/libs/cloud-sync/project-sync-helpers.class'
 import type { Project } from 'app/models/project/project.class'
 import type { IComparisonResult } from 'app/models/project/syncing/project-comparator'
 import type { TAnitaUniversalDataStorage, TSystemData } from 'app/models/project/project.declarations'
 import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import type { WordPressClient } from 'app/libs/cloud-sync/wordpress/wordpress-client.class'
 import type { IWordPressBatchOperation, IWordPressProjectMeta, IWordPressProjectResponse } from 'app/libs/cloud-sync/wordpress/wordpress.const'
-
-/**
- * Changes made on another device while a sync is running must not be considered older than the sync.
- * lastSync is therefore set to the start of the sync, minus this margin to absorb small clock differences.
- */
-const LAST_SYNC_SAFETY_MARGIN_MS = 2 * 60 * 1000
+import type { IDropboxFileMeta } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
 
 export interface IMergeOutcome {
   /** Records changed both on this device and remotely since the last sync; the most recent version was kept. */
@@ -31,6 +30,8 @@ export interface IMergeOutcome {
   pushed: number
   /** Metadata returned by the site when the structure was sent. */
   meta?: IWordPressProjectMeta
+  /** The Dropbox file after the sync: its revision is the one now in sync with this device. */
+  dropboxFile?: IDropboxFileMeta
 }
 
 export interface IWordPressMergeOptions {
@@ -57,9 +58,14 @@ const stableStringify = (value: unknown): string => JSON.stringify(value, (_key,
  * Records are compared by `updatedAt` (or `createdAt`) and with the time of the last successful sync,
  * to tell apart records added on one side from records deleted on the other. Changes received from the
  * remote are written directly to the local database, so they are not sent back to the remote.
+ *
+ * On Dropbox the whole project is a single file: it is written only if it still has the revision that was read,
+ * otherwise the sync fails with a conflict and must be run again (see DropboxSync).
  */
 export class RemoteAndLocalMerger {
   private project: Project
+  /** The Dropbox file as it was read, before the merge. */
+  private dropboxFile: IDropboxFileMeta | undefined
 
   constructor (
     private remoteId: string,
@@ -73,7 +79,7 @@ export class RemoteAndLocalMerger {
   public async sync (): Promise<IMergeOutcome | null> {
     SyncState.setIsSyncing(true)
     try {
-      const syncStartedAt = new Date(Date.now() - LAST_SYNC_SAFETY_MARGIN_MS).toISOString()
+      const syncStartedAt = ProjectSyncHelpers.syncStartTime()
       const lastSync = await CloudSyncBase.getLastSync(this.project.getId())
       const localData = await this.project.getAllData()
       const remoteData = await this.getRemoteData()
@@ -104,7 +110,10 @@ export class RemoteAndLocalMerger {
         await this.saveLocalChanges(result)
       }
       if (outcome.pushed) {
-        await this.sendToRemote(result)
+        await this.sendToRemote(result, outcome)
+      }
+      if (this.type === SupportedCloud.DROPBOX) {
+        outcome.dropboxFile = outcome.dropboxFile ?? this.dropboxFile
       }
 
       await new CloudSyncBase(this.type).setLastSync(this.project.getId(), syncStartedAt)
@@ -157,7 +166,17 @@ export class RemoteAndLocalMerger {
 
   private async getRemoteData (): Promise<TAnitaUniversalDataStorage | null> {
     if (this.type === SupportedCloud.DROPBOX) {
-      return DropboxHelper.instance.downloadFile(this.project.getId(), this.remoteId)
+      const downloaded = await DropboxHelper.instance.downloadProject(this.remoteId)
+      if (!downloaded.data) {
+        throw new DropboxSyncError(DropboxErrorCode.invalidFile, `${downloaded.path} is not an Anita project.`)
+      }
+      const fileProjectId = downloaded.data[RESERVED_AUDS_KEYS._settings][0].id
+      if (fileProjectId !== this.project.getId()) {
+        throw new DropboxSyncError(DropboxErrorCode.invalidFile, `${downloaded.path} contains another project.`)
+      }
+      const { data, ...meta } = downloaded
+      this.dropboxFile = meta
+      return markAsDropboxProject(data)
     }
     return JSON.parse(JSON.stringify(this.wordPress!.remote.project))
   }
@@ -246,6 +265,9 @@ export class RemoteAndLocalMerger {
     const settings = { ...systemData[RESERVED_AUDS_KEYS._settings][0] }
     if (this.type === SupportedCloud.WORDPRESS) {
       settings.remoteStorage = this.remoteId
+    } else {
+      settings.remoteStorage = DROPBOX_REMOTE_ID
+      delete settings.remoteAccessLevel
     }
     const saved = await new ProjectSaver({ ...systemData, [RESERVED_AUDS_KEYS._settings]: [settings] }, EDITOR_MODE.edit, { fromSync: true }).save()
     if (Bucket.general.get(ProjectAtoms.currentProject)?.getId() === this.project.getId()) {
@@ -253,9 +275,9 @@ export class RemoteAndLocalMerger {
     }
   }
 
-  private async sendToRemote (result: IComparisonResult): Promise<void> {
+  private async sendToRemote (result: IComparisonResult, outcome: IMergeOutcome): Promise<void> {
     if (this.type === SupportedCloud.DROPBOX) {
-      await DropboxHelper.instance.updateFile(this.remoteId, result.remoteData)
+      outcome.dropboxFile = await DropboxHelper.instance.updateProjectFile(this.remoteId, markAsDropboxProject(result.remoteData), this.dropboxFile?.rev)
       return
     }
     await this.sendChangesToWordPress(result)

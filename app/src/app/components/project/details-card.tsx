@@ -7,6 +7,8 @@ import { CardFooter } from 'app/components/shared-components/common-ui-eles/card
 import * as dateFormat from 'date-format'
 import { ProjectAvatar } from 'app/components/shared-components/common-ui-eles/project-avatar.component'
 import { WordPressSyncStatus } from 'app/components/project/wordpress-sync-status.component'
+import { DropboxSyncStatus } from 'app/components/project/dropbox-sync-status.component'
+import { DROPBOX_REMOTE_ID } from 'app/libs/cloud-sync/dropbox/dropbox.const'
 import type { FC } from 'react'
 import type { IProjectSettings } from 'app/models/project/project.declarations'
 
@@ -41,7 +43,8 @@ export const ProjectDetailsCard: FC<IProjectDetailsCardProps> = (props) => (
       </div>
     </div>
 
-    {props.project.remoteStorage && <WordPressSyncStatus project={props.project} />}
+    {props.project.remoteStorage === DROPBOX_REMOTE_ID && <DropboxSyncStatus project={props.project} />}
+    {!!props.project.remoteStorage && props.project.remoteStorage !== DROPBOX_REMOTE_ID && <WordPressSyncStatus project={props.project} />}
 
     <CardFooter className="mt-5! pt-4 border-t border-[#eef1f5] items-center!">
       <DeleteProjectButton project={props.project} />

@@ -24,8 +24,8 @@ export interface IRouteParams {
 export const ANITA_URLS = {
   // OAUTH
   auth: '/auth',
-  // REMOTES
-  remotes: '/wordpress-sites',
+  // REMOTES: Dropbox and WordPress sites
+  remotes: '/storage',
   // PROJECTS
   projectsNone: '/projects/none',
   projectsList: '/projects/list',

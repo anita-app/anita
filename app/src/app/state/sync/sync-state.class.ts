@@ -2,6 +2,7 @@ import { Bucket } from 'app/state/bucket.state'
 import { SyncStateAtoms } from './sync-state.atoms'
 import type { ISyncStatus } from './sync-state.atoms'
 import type { IWordPressRemoteInfo } from 'app/libs/cloud-sync/wordpress/wordpress.const'
+import type { IDropboxAccountState, IDropboxFileLink } from 'app/libs/cloud-sync/dropbox/dropbox.const'
 
 export class SyncState {
   public static atoms = SyncStateAtoms
@@ -27,6 +28,18 @@ export class SyncState {
   public static getWordPressRemote = (remoteId: string): IWordPressRemoteInfo | undefined => (
     Bucket.general.get(SyncStateAtoms.wordPressRemotes).find(remote => remote.remoteId === remoteId)
   )
+
+  public static setDropboxAccount = (account: IDropboxAccountState | null) => {
+    Bucket.general.set(SyncStateAtoms.dropboxAccount, account)
+  }
+
+  public static getDropboxAccount = (): IDropboxAccountState | null => Bucket.general.get(SyncStateAtoms.dropboxAccount)
+
+  public static setDropboxLinks = (links: Array<IDropboxFileLink>) => {
+    Bucket.general.set(SyncStateAtoms.dropboxLinks, Object.fromEntries(links.map(link => [link.projectId, link])))
+  }
+
+  public static getRemoteStatus = (remoteId: string): ISyncStatus | undefined => Bucket.general.get(SyncStateAtoms.remotesStatus)[remoteId]
 
   public static updateRemoteStatus = (remoteId: string, status: Partial<ISyncStatus>) => {
     const current = Bucket.general.get(SyncStateAtoms.remotesStatus)

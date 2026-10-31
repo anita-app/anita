@@ -48,7 +48,7 @@ const remoteStorageField: FormFieldsModel<IProjectSettings> = {
   fieldName: 'remoteStorage',
   value: '',
   label: 'Remote storage',
-  labelHint: 'Store the project on a WordPress site, to sync it across devices and share it with the users of the site.',
+  labelHint: 'Store the project in Dropbox or on a WordPress site, to sync it across devices. On WordPress you can also share it with the users of the site.',
   required: false,
   options: [], // to be filled by the component itself with the available remote storage options
 }

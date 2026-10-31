@@ -3,6 +3,7 @@ import { Navigate, Link } from 'react-router-dom'
 import { useAtomValue } from 'jotai'
 import { ANITA_URLS } from 'app/libs/routing/anita-routes.constant'
 import { ImportProjectButton } from 'app/components/projects/project-importer-components/import-project-button.component'
+import { OpenFromDropboxButton } from 'app/components/remotes/open-from-dropbox-button.component'
 import { TemplateGallery } from 'app/components/templates/template-gallery.component'
 import { Onboarding, isOnboardingDone, markOnboardingDone } from 'app/components/onboarding/onboarding.component'
 import { Icons } from 'app/libs/icons/icons.class'
@@ -20,7 +21,12 @@ const FirstProjectTemplates: FC<{ onShowIntro: () => void }> = (props) => (
       eyebrow="Your first project"
       title="Choose a template"
       description="Everything is set up in a click. You can change sections and fields whenever you want."
-      actions={<ImportProjectButton btnType="compact" />}
+      actions={(
+        <>
+          <OpenFromDropboxButton breakpoint="md" />
+          <ImportProjectButton btnType="compact" />
+        </>
+      )}
     />
     <TemplateGallery showBlankCard={true} />
     <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-[#7a8799] mt-8 mb-4">
@@ -28,7 +34,7 @@ const FirstProjectTemplates: FC<{ onShowIntro: () => void }> = (props) => (
         to={ANITA_URLS.remotes}
         className="inline-flex items-center gap-1 hover:text-gray-800"
       >
-        {Icons.render('logoWordpress')} I have projects on WordPress
+        {Icons.render('cloudDownloadOutline')} I have projects in Dropbox or on WordPress
       </Link>
       <button
         type="button"
@@ -61,7 +67,7 @@ export const ProjectsNone: FC = () => {
           markOnboardingDone()
           setView('templates')
         }}
-        onWordPress={() => {
+        onImport={() => {
           markOnboardingDone()
           RoutingState.navigate(ANITA_URLS.remotes)
         }}

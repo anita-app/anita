@@ -29,7 +29,8 @@ const SLIDES = 3
 
 interface IOnboardingProps {
   onTemplates: () => void
-  onWordPress: () => void
+  /** Connect Dropbox or a WordPress site, to download the projects stored there. */
+  onImport: () => void
   onScratch: () => void
   /** Slide to open, e.g. the last one when coming back from the templates. */
   initialStep?: number
@@ -186,11 +187,11 @@ const WhatSlide: FC<{ onNext: () => void }> = (props) => (
           It runs in your browser and keeps working without a connection.
         </Feature>
         <Feature
-          icon="logoWordpress"
-          title="Your data, on your site"
+          icon="cloudDoneOutline"
+          title="Your data, where you want it"
           index={4}
         >
-          Store projects on your own WordPress site: backed up, on all your devices, shared with your team.
+          Store projects in your Dropbox or on your own WordPress site: backed up, on all your devices, shared with your team.
         </Feature>
       </div>
       <div className="mt-10">
@@ -208,7 +209,7 @@ const WhatSlide: FC<{ onNext: () => void }> = (props) => (
   </div>
 )
 
-const ChooseSlide: FC<Pick<IOnboardingProps, 'onTemplates' | 'onWordPress' | 'onScratch'>> = (props) => (
+const ChooseSlide: FC<Pick<IOnboardingProps, 'onTemplates' | 'onImport' | 'onScratch'>> = (props) => (
   <div className="flex flex-col items-center text-center">
     <p
       className="onb-rise text-blue-200 uppercase tracking-[0.25em] text-sm"
@@ -248,14 +249,14 @@ const ChooseSlide: FC<Pick<IOnboardingProps, 'onTemplates' | 'onWordPress' | 'on
 
     <button
       type="button"
-      onClick={props.onWordPress}
+      onClick={props.onImport}
       className="onb-rise onb-card-hover w-full max-w-2xl mt-4 text-left rounded-2xl border border-white/20 bg-white/5 hover:bg-white/10 p-5 flex items-center gap-4 focus:outline-none focus:ring-4 focus:ring-white/30"
       style={delay(3)}
     >
-      <span className="w-11 h-11 shrink-0 rounded-xl bg-white/10 flex items-center justify-center text-2xl">{Icons.render('logoWordpress')}</span>
+      <span className="w-11 h-11 shrink-0 rounded-xl bg-white/10 flex items-center justify-center text-2xl">{Icons.render('cloudDownloadOutline')}</span>
       <span className="grow">
-        <span className="block font-semibold">Import my projects from WordPress</span>
-        <span className="block text-sm text-white/65">Already using Anita with a WordPress site? Connect it and your projects are downloaded here.</span>
+        <span className="block font-semibold">Import my projects from Dropbox or WordPress</span>
+        <span className="block text-sm text-white/65">Already using Anita with Dropbox or a WordPress site? Connect it and your projects are downloaded here.</span>
       </span>
       <span className="text-xl text-white/50">{Icons.render('chevronForwardOutline')}</span>
     </button>
@@ -342,7 +343,7 @@ export const Onboarding: FC<IOnboardingProps> = (props) => {
             {step === 2 && (
               <ChooseSlide
                 onTemplates={props.onTemplates}
-                onWordPress={props.onWordPress}
+                onImport={props.onImport}
                 onScratch={props.onScratch}
               />
             )}

@@ -3,7 +3,10 @@ import { Icons } from 'app/libs/icons/icons.class'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { Loader } from 'app/components/shared-components/loader/loader.component'
 import { SupportedCloud } from 'app/cross-refs-exports'
-import { DropboxHelper } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
+import { DropboxHelper, type ICompletedDropboxLogin } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
+import { DropboxSync } from 'app/libs/cloud-sync/dropbox/dropbox-sync.class'
+import { getDropboxErrorMessage } from 'app/libs/cloud-sync/dropbox/dropbox-error.class'
+import { DROPBOX_PROJECTS_FOLDER } from 'app/libs/cloud-sync/dropbox/dropbox.const'
 import { OAuthUtils } from 'app/libs/cloud-sync/o-auth-utils.class'
 import { WordPressAuth, type ICompletedLogin } from 'app/libs/cloud-sync/wordpress/wordpress-auth.class'
 import { WordPressSync } from 'app/libs/cloud-sync/wordpress/wordpress-sync.class'
@@ -11,23 +14,19 @@ import { getWordPressErrorMessage } from 'app/libs/cloud-sync/wordpress/wordpres
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
 import { RoutingState } from 'app/state/routing/routing-state.class'
-import { Navigate } from 'react-router-dom'
 import { useEffect, useState, type FC, type ReactNode } from 'react'
+import type { TIconName } from 'app/libs/icons/icons.class'
 
 /**
  * Codes already handled: the auth route can render more than once with the same URL.
  */
 const handledCodes = new Set<string>()
 
-const onClick = () => {
-  window.close()
-}
-
-const AuthCard: FC<{ subtitle: string; title: string; children?: ReactNode }> = (props) => (
+const AuthCard: FC<{ subtitle: string; title: string; icon?: TIconName; children?: ReactNode }> = (props) => (
   <div className="container px-0 md:px2 lg:px-5 pt-20 md:pt-24 mx-auto">
     <div className="p-4 lg:w-2/3 mx-auto">
       <div className="ui-card ui-rise h-full px-8 pt-14 pb-14 overflow-hidden text-center relative">
-        <span className="ui-avatar w-14 h-14 rounded-2xl text-2xl mx-auto mb-5">{Icons.render('logoWordpress')}</span>
+        <span className={`ui-avatar w-14 h-14 rounded-2xl text-2xl mx-auto mb-5 ${props.icon === 'logoDropbox' ? 'ui-avatar-dropbox' : ''}`}>{Icons.render(props.icon ?? 'logoWordpress')}</span>
         <h2 className="ui-eyebrow mb-1">{props.subtitle}</h2>
         <h1 className="ui-title sm:text-2xl text-xl mb-3">{props.title}</h1>
         {props.children}
@@ -145,7 +144,7 @@ const WordPressAuthResult: FC<{ code?: string; error?: string }> = (props) => {
         <div className="flex justify-center">
           <Button
             id="backToRemotes"
-            label="Back to WordPress sites"
+            label="Back to Storage and sync"
             type={Type.primary}
             size="lg"
             href={ANITA_URLS.remotes}
@@ -165,7 +164,7 @@ const WordPressAuthResult: FC<{ code?: string; error?: string }> = (props) => {
       <div className="flex justify-center flex-wrap gap-y-2">
         <Button
           id="goToRemotes"
-          label="WordPress sites"
+          label="Storage and sync"
           type={Type.secondary}
           size="lg"
           href={ANITA_URLS.remotes}
@@ -184,24 +183,152 @@ const WordPressAuthResult: FC<{ code?: string; error?: string }> = (props) => {
   )
 }
 
-const DropboxAuthResult: FC<{ code: string }> = (props) => {
+interface IDropboxAuthState {
+  status: 'working' | 'done' | 'error' | 'confirmSwitch'
+  message?: string
+  accountName?: string
+  login?: ICompletedDropboxLogin
+}
+
+const finishDropboxLogin = async (login: ICompletedDropboxLogin, setState: (state: IDropboxAuthState) => void) => {
+  if (login.previousAccountName) {
+    await DropboxSync.onAccountSwitched()
+  }
+  await login.commit()
+  if (login.linkProjectId) {
+    await DropboxSync.linkProject(login.linkProjectId)
+    // Without view transition: the page is still updating after the login.
+    RoutingState.navigate(urlParamFiller(ANITA_URLS.projectDetails, [{ name: URL_PARAMS.projectId, value: login.linkProjectId }]))
+    return
+  }
+  setState({ status: 'done', accountName: login.accountName })
+  DropboxSync.syncAccount()
+}
+
+const DropboxAuthResult: FC<{ code?: string; state?: string; error?: string }> = (props) => {
+  const [state, setState] = useState<IDropboxAuthState>(() => (
+    props.error
+      ? { status: 'error', message: props.error === 'access_denied' ? 'The connection was cancelled on Dropbox.' : 'Dropbox did not complete the connection.' }
+      : { status: 'working' }
+  ))
+
   useEffect(() => {
-    DropboxHelper.instance.getAccessTokenFromCode(props.code)
-  }, [props.code])
+    if (props.error) {
+      DropboxHelper.clearPendingLogin()
+      return
+    }
+    if (!props.code || handledCodes.has(props.code)) {
+      return
+    }
+    handledCodes.add(props.code)
+
+    const complete = async () => {
+      try {
+        const login = await DropboxHelper.instance.completeLogin(props.code!, props.state)
+        if (login.previousAccountName) {
+          setState({ status: 'confirmSwitch', login })
+          return
+        }
+        await finishDropboxLogin(login, setState)
+      } catch (error) {
+        setState({ status: 'error', message: getDropboxErrorMessage(error) })
+      }
+    }
+    complete()
+  }, [props.code, props.state, props.error])
+
+  if (state.status === 'working') {
+    return (
+      <AuthCard
+        subtitle="Dropbox"
+        title="Connecting…"
+        icon="logoDropbox"
+      >
+        <Loader />
+      </AuthCard>
+    )
+  }
+
+  if (state.status === 'confirmSwitch' && state.login) {
+    const login = state.login
+    const handleContinue = () => {
+      setState({ status: 'working' })
+      finishDropboxLogin(login, setState).catch(error => setState({ status: 'error', message: getDropboxErrorMessage(error) }))
+    }
+    return (
+      <AuthCard
+        subtitle="Dropbox"
+        title="Switch Dropbox account?"
+        icon="logoDropbox"
+      >
+        <p className="leading-relaxed mb-3">This device was connected to the Dropbox of {login.previousAccountName}, and you have now logged in as {login.accountName}.</p>
+        <p className="leading-relaxed mb-3">If you continue, the projects synced with the Dropbox of {login.previousAccountName} stop syncing and stay on this device as local projects. Nothing is deleted from Dropbox.</p>
+        <div className="flex justify-center flex-wrap gap-y-2">
+          <Button
+            id="cancelSwitch"
+            label="Cancel"
+            type={Type.secondary}
+            size="lg"
+            href={ANITA_URLS.remotes}
+            marginClassName="mt-4 mr-3"
+          />
+          <Button
+            id="confirmSwitch"
+            label={`Continue as ${login.accountName}`}
+            type={Type.primary}
+            size="lg"
+            onClick={handleContinue}
+            marginClassName="mt-4"
+          />
+        </div>
+      </AuthCard>
+    )
+  }
+
+  if (state.status === 'error') {
+    return (
+      <AuthCard
+        subtitle="Dropbox"
+        title="The connection did not complete"
+        icon="logoDropbox"
+      >
+        <p className="leading-relaxed mb-3">{state.message}</p>
+        <div className="flex justify-center">
+          <Button
+            id="backToRemotes"
+            label="Back to Storage and sync"
+            type={Type.primary}
+            size="lg"
+            href={ANITA_URLS.remotes}
+            marginClassName="mt-4"
+          />
+        </div>
+      </AuthCard>
+    )
+  }
 
   return (
     <AuthCard
       subtitle="Authentication successful"
       title="Dropbox connected"
+      icon="logoDropbox"
     >
-      <p className="leading-relaxed mb-3">You can close this window and go back to Anita.</p>
-      <div className="flex justify-center">
+      <p className="leading-relaxed mb-3">Logged in as {state.accountName}. The projects in the {DROPBOX_PROJECTS_FOLDER} folder of your Dropbox are being downloaded to this device. To sync a project of this device with Dropbox, choose Dropbox as remote storage in the project settings.</p>
+      <div className="flex justify-center flex-wrap gap-y-2">
         <Button
-          id="close"
-          label="Close"
+          id="goToRemotes"
+          label="Storage and sync"
+          type={Type.secondary}
+          size="lg"
+          href={ANITA_URLS.remotes}
+          marginClassName="mt-4 mr-3"
+        />
+        <Button
+          id="goToProjects"
+          label="Go to projects list"
           type={Type.primary}
           size="lg"
-          onClick={onClick}
+          href={ANITA_URLS.projectsList}
           marginClassName="mt-4"
         />
       </div>
@@ -222,9 +349,11 @@ export const OAuth: FC = () => {
     )
   }
 
-  if (!data?.code) {
-    return <Navigate to={ANITA_URLS.projectsList} />
-  }
-
-  return <DropboxAuthResult code={data.code} />
+  return (
+    <DropboxAuthResult
+      code={data.code ?? undefined}
+      state={data.state ?? undefined}
+      error={data.error ?? (data.code ? undefined : 'missing_code')}
+    />
+  )
 }

@@ -10,10 +10,11 @@ import { Type } from 'app/components/shared-components/common-ui-eles/components
 import { AlertWithDescription } from 'app/components/shared-components/alerts/alert-with-description'
 import { FORM_ELEMENTS_CSS_CLASSES } from 'app/components/shared-components/forms-automator/form-layout/fom-elements-css-classes.const'
 import { StorageChoice, defaultStorageChoice, useWritableRemotes } from 'app/components/remotes/storage-choice.component'
-import { getConnectionErrorMessage } from 'app/components/remotes/connect-wordpress.component'
+import { useDropboxIsWritable } from 'app/components/remotes/dropbox-icon.component'
+import { getStoreErrorMessage } from 'app/components/remotes/store-project-dialog.component'
 import { TemplateIcon, accentOfCategory, useTemplatesCatalog } from 'app/components/templates/template-gallery.component'
-import { checkSiteOfStorageChoice, storeProject } from 'app/libs/cloud-sync/wordpress/store-project.function'
-import { WordPressAuth } from 'app/libs/cloud-sync/wordpress/wordpress-auth.class'
+import { checkSiteOfStorageChoice, storageChoiceNeedsLogin, storeProject } from 'app/libs/cloud-sync/store-project.function'
+import { DROPBOX_PROJECTS_FOLDER, DROPBOX_REMOTE_ID } from 'app/libs/cloud-sync/dropbox/dropbox.const'
 import { TemplatesCatalog } from 'app/libs/templates/templates-catalog.class'
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
@@ -84,11 +85,19 @@ const TemplatePreview: FC<{ template: IProjectTemplate }> = (props) => {
   )
 }
 
+const createLabel = (storage: TStorageChoice): string => {
+  if (storage.kind === 'connect') {
+    return 'Create and connect WordPress'
+  }
+  return storageChoiceNeedsLogin(storage) ? 'Create and connect Dropbox' : 'Create project'
+}
+
 const CreateFromTemplateForm: FC<{ template: IProjectTemplate; accent: string; categoryLabel?: string }> = (props) => {
   const remotes = useWritableRemotes()
+  const dropboxIsWritable = useDropboxIsWritable()
   const [title, setTitle] = useState(props.template.title)
   const [description, setDescription] = useState(props.template.description)
-  const [storage, setStorageState] = useState<TStorageChoice>(() => defaultStorageChoice(remotes, true))
+  const [storage, setStorageState] = useState<TStorageChoice>(() => defaultStorageChoice(remotes, true, dropboxIsWritable))
   const [storageTouched, setStorageTouched] = useState(false)
   const [isWorking, setIsWorking] = useState(false)
   const projects = useAtomValue(ProjectsListAtoms.projects)
@@ -102,14 +111,14 @@ const CreateFromTemplateForm: FC<{ template: IProjectTemplate; accent: string; c
     setStorageState(choice)
   }
 
-  // Connected sites are read asynchronously: propose the first one when it arrives.
+  // Connected sites and Dropbox are read asynchronously: propose them when they arrive.
   const firstRemoteId = remotes[0]?.remoteId
   useEffect(() => {
-    if (!storageTouched && firstRemoteId) {
-      setStorageState(defaultStorageChoice(remotes, true))
+    if (!storageTouched && (firstRemoteId || dropboxIsWritable)) {
+      setStorageState(defaultStorageChoice(remotes, true, dropboxIsWritable))
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [firstRemoteId, storageTouched])
+  }, [firstRemoteId, dropboxIsWritable, storageTouched])
   const [error, setError] = useState<string | null>(null)
 
   const buildProject = (options: { withSamples?: boolean } = {}) => {
@@ -117,6 +126,11 @@ const CreateFromTemplateForm: FC<{ template: IProjectTemplate; accent: string; c
     if (storage.kind === 'remote') {
       systemData[RESERVED_AUDS_KEYS._settings][0].remoteStorage = storage.remoteId
       systemData[RESERVED_AUDS_KEYS._settings][0].remoteAccessLevel = storage.accessLevel
+    } else if (storage.kind === 'dropbox' && !storageChoiceNeedsLogin(storage)) {
+      systemData[RESERVED_AUDS_KEYS._settings][0].remoteStorage = DROPBOX_REMOTE_ID
+      if (storage.folder !== DROPBOX_PROJECTS_FOLDER) {
+        systemData[RESERVED_AUDS_KEYS._settings][0].dropboxFolder = storage.folder
+      }
     }
     return systemData
   }
@@ -128,6 +142,7 @@ const CreateFromTemplateForm: FC<{ template: IProjectTemplate; accent: string; c
     }
     setError(null)
     setIsWorking(true)
+    const needsLogin = storageChoiceNeedsLogin(storage)
     try {
       // The site is checked before saving, so that a wrong address does not leave a half-done project.
       const site = await checkSiteOfStorageChoice(storage)
@@ -142,15 +157,14 @@ const CreateFromTemplateForm: FC<{ template: IProjectTemplate; accent: string; c
       }
       const projectId = systemData[RESERVED_AUDS_KEYS._settings][0].id
       Manager.setCurrentProject(systemData)
-      if (storage.kind === 'connect') {
-        // Leaves the app: the project is linked when the user comes back from the site.
+      if (needsLogin) {
+        // Leaves the app: the project is linked when the user comes back from the site or from Dropbox.
         await storeProject(projectId, storage, site)
         return
       }
       RoutingState.goTo(ANITA_URLS.projectDetails, [{ name: URL_PARAMS.projectId, value: projectId }])
     } catch (createError) {
-      const siteUrl = storage.kind === 'connect' ? WordPressAuth.normalizeSiteUrl(storage.siteUrl || 'your site') : ''
-      setError(storage.kind === 'connect' ? getConnectionErrorMessage(createError, siteUrl) : (createError as Error).message)
+      setError(getStoreErrorMessage(createError, storage, remotes.find(remote => storage.kind === 'remote' && remote.remoteId === storage.remoteId)?.data.site_name))
       setIsWorking(false)
     }
   }
@@ -243,7 +257,7 @@ const CreateFromTemplateForm: FC<{ template: IProjectTemplate; accent: string; c
           <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-[#eef1f5]">
             <Button
               id="createFromTemplate"
-              label={isWorking ? 'Creating…' : (storage.kind === 'connect' ? 'Create and connect WordPress' : 'Create project')}
+              label={isWorking ? 'Creating…' : createLabel(storage)}
               iconLeft="checkmarkOutline"
               type={Type.primary}
               size="lg"
@@ -256,7 +270,7 @@ const CreateFromTemplateForm: FC<{ template: IProjectTemplate; accent: string; c
               label="Customize the structure first"
               type={Type.secondary}
               size="lg"
-              disabled={isWorking || storage.kind === 'connect'}
+              disabled={isWorking || storageChoiceNeedsLogin(storage)}
               onClick={handleCustomize}
               marginClassName=""
             />

@@ -43,12 +43,12 @@ export const WordPressSyncStatus: FC<{ project: IProjectSettings }> = (props) =>
         </div>
         <AlertWithDescription
           title="This site is not connected on this device"
-          description={`Connect ${remoteId} from the WordPress sites page to sync this project. Until then, changes are saved on this device only.`}
+          description={`Connect ${remoteId} from the storage page to sync this project. Until then, changes are saved on this device only.`}
           type={Type.warning}
         />
         <Button
           id="goToRemotes"
-          label="WordPress sites"
+          label="Storage and sync"
           iconLeft="logoWordpress"
           type={Type.secondary}
           href={ANITA_URLS.remotes}

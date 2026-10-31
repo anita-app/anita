@@ -5,8 +5,6 @@ import { ExportScope, ProjectExporter } from 'app/models/project/project-exporte
 import { Section } from 'app/models/section/section.class'
 import { ProjectSaver } from 'app/models/project/project-saver.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
-import { ProjectUploader } from 'app/models/project/syncing/project-uploader'
-import { DropboxSyncInfo } from 'app/models/project/syncing/dropbox-sync-info.class'
 import { ProjectState } from 'app/state/project/project-state.class'
 import { OnboardingState } from 'app/state/onboarding/onboarding-state.class'
 import type { ParentInfoForDetailsView } from 'app/models/parent-element/parent-element.declarations'
@@ -15,8 +13,6 @@ import type { ISection } from 'app/models/section/section.declarations'
 import type { IProjectSettings, TAnitaUniversalDataStorage, TSystemData } from 'app/models/project/project.declarations'
 
 export class Project {
-  public dropBoxSyncInfo: DropboxSyncInfo = new DropboxSyncInfo()
-
   private settings: TSystemData[RESERVED_AUDS_KEYS._settings][0]
   private sectionsDefinitions: TSystemData[RESERVED_AUDS_KEYS._sections]
   private sections: { [key: string]: Section } = {}
@@ -45,13 +41,6 @@ export class Project {
   }
 
   public getAllData = (): Promise<TAnitaUniversalDataStorage> => new ProjectExporter(this.systemData).getData(ExportScope.all)
-
-  public uploadToCloudService = (path: string): void => {
-    new ProjectUploader({
-      [RESERVED_AUDS_KEYS._settings]: [this.settings],
-      [RESERVED_AUDS_KEYS._sections]: this.sectionsDefinitions,
-    }).uploadToCloudService(path)
-  }
 
   public getSectionById = (sectionId: string | undefined): Section | null => {
     if (!sectionId) {

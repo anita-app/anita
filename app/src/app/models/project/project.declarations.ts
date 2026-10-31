@@ -47,17 +47,20 @@ export interface IProjectSettings {
   [RESERVED_FIELDS.updatedAt]?: string
   localStorage?: LOCAL_STORAGE_SYSTEMS
   /**
-   * Id of the WordPress site the project is synced with (its address without protocol), if any.
+   * Where the project is synced besides this device, if anywhere: the id of a WordPress site (its address without
+   * protocol), or DROPBOX_REMOTE_ID for Dropbox.
    */
   remoteStorage?: string
   /**
    * Who can see the project on the WordPress site: 'private' (only the owner) or the minimum WordPress role.
    */
   remoteAccessLevel?: TAccessLevel
+  /**
+   * Dropbox folder where the file of the project is created, when it is not the default one.
+   * Kept only until the project is saved in Dropbox.
+   */
+  dropboxFolder?: string
   encrypted?: boolean
-  cloudSync?: {
-    dropbox?: string
-  }
 }
 
 export interface AdditionalInfoForLocalStorage {

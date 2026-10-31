@@ -9,6 +9,10 @@ import { ANITA_URLS } from 'app/libs/routing/anita-routes.constant'
 import { ModalState } from 'app/state/modal/modal-state.class'
 import { SyncStateAtoms } from 'app/state/sync/sync-state.atoms'
 import { ACCESS_LEVEL_LABELS, DEFAULT_ACCESS_LEVEL, WORD_PRESS_ROLE_WEIGHT } from 'app/libs/cloud-sync/wordpress/wordpress.const'
+import { DROPBOX_PROJECTS_FOLDER, DROPBOX_REMOTE_ID } from 'app/libs/cloud-sync/dropbox/dropbox.const'
+import { displayDropboxFolder } from 'app/libs/cloud-sync/dropbox/dropbox-files.function'
+import { dropboxAccountLabel } from 'app/components/remotes/dropbox-icon.component'
+import { DropboxFolderField } from 'app/components/remotes/dropbox-picker.component'
 import type { FC } from 'react'
 import type { SingleValue } from 'react-select'
 import type { IBasicSelect, ICommonFormEleProps } from 'app/components/shared-components/forms-automator/form-automator.types'
@@ -32,24 +36,35 @@ const accessLevelOptions: Array<ISelectOption<TAccessLevel>> = (Object.keys(ACCE
 }))
 
 /**
- * Chooses the WordPress site a project is stored on (`remoteStorage`) and who can see it there (`remoteAccessLevel`).
+ * Chooses where a project is stored besides this device (`remoteStorage`): Dropbox or a WordPress site, and who can
+ * see it on the site (`remoteAccessLevel`).
  */
 export const RemoteSelector: FC<ICommonFormEleProps<IBasicSelect<ISectionElement>>> = memo(function RemoteSelector ({ formEle, element, handleChange }: ICommonFormEleProps<IBasicSelect<ISectionElement>>) {
   const remotes = useAtomValue(SyncStateAtoms.wordPressRemotes)
+  const dropboxAccount = useAtomValue(SyncStateAtoms.dropboxAccount)
+  const dropboxLinks = useAtomValue(SyncStateAtoms.dropboxLinks)
+  const dropboxFolder = (element as { dropboxFolder?: string }).dropboxFolder || DROPBOX_PROJECTS_FOLDER
+  const linkedFile = dropboxLinks[(element as { id?: string }).id ?? '']
   const currentRemoteId = (element[formEle.fieldName] as string | undefined) || ''
   const accessLevel = ((element as { remoteAccessLevel?: TAccessLevel }).remoteAccessLevel) ?? DEFAULT_ACCESS_LEVEL
   // The remote the project had when the form was opened: changing it is linking or unlinking.
   const { current: initialRemoteId } = useRef(currentRemoteId)
 
+  const remoteName = (remoteId: string): string => (
+    remoteId === DROPBOX_REMOTE_ID ? 'Dropbox' : (remotes.find(remote => remote.remoteId === remoteId)?.data.site_name ?? remoteId)
+  )
+  const isWordPressSite = !!currentRemoteId && currentRemoteId !== DROPBOX_REMOTE_ID
+
   const options: Array<ISelectOption> = [
     LOCAL_ONLY,
+    ...(dropboxAccount || currentRemoteId === DROPBOX_REMOTE_ID ? [{ label: dropboxAccount ? `Dropbox (${dropboxAccountLabel(dropboxAccount)})` : 'Dropbox', value: DROPBOX_REMOTE_ID }] : []),
     ...remotes
       .filter(remote => canCreateProjects(remote) || remote.remoteId === currentRemoteId)
       .map(remote => ({ label: remote.data.site_name || remote.remoteId, value: remote.remoteId })),
   ]
   const selectedOption = options.find(option => option.value === currentRemoteId) ?? { label: currentRemoteId, value: currentRemoteId }
-  const selectedRemote = remotes.find(remote => remote.remoteId === currentRemoteId)
-  const initialRemoteName = remotes.find(remote => remote.remoteId === initialRemoteId)?.data.site_name ?? initialRemoteId
+  const initialRemoteName = remoteName(initialRemoteId)
+  const initialIsDropbox = initialRemoteId === DROPBOX_REMOTE_ID
 
   const handleRemoteChange = (newValue: SingleValue<ISelectOption>) => {
     const value = newValue?.value ?? ''
@@ -58,7 +73,7 @@ export const RemoteSelector: FC<ICommonFormEleProps<IBasicSelect<ISectionElement
         title: `Stop syncing with ${initialRemoteName}?`,
         children: (
           <p className="text-sm text-gray-500">
-            When you save, this project will stop syncing with {initialRemoteName}. The project is not deleted: it stays on this device and on {initialRemoteName}.
+            When you save, this project will stop syncing with {initialRemoteName}. The project is not deleted: it stays on this device and {initialIsDropbox ? 'in your Dropbox' : `on ${initialRemoteName}`}.
           </p>
         ),
         ctas: [{
@@ -69,7 +84,10 @@ export const RemoteSelector: FC<ICommonFormEleProps<IBasicSelect<ISectionElement
       return
     }
     handleChange(formEle.fieldName, value)
-    if (value && !(element as { remoteAccessLevel?: TAccessLevel }).remoteAccessLevel) {
+    if (value !== DROPBOX_REMOTE_ID && (element as { dropboxFolder?: string }).dropboxFolder) {
+      handleChange('dropboxFolder', '')
+    }
+    if (value && value !== DROPBOX_REMOTE_ID && !(element as { remoteAccessLevel?: TAccessLevel }).remoteAccessLevel) {
       handleChange('remoteAccessLevel', DEFAULT_ACCESS_LEVEL)
     }
   }
@@ -78,7 +96,7 @@ export const RemoteSelector: FC<ICommonFormEleProps<IBasicSelect<ISectionElement
     handleChange('remoteAccessLevel', newValue?.value ?? DEFAULT_ACCESS_LEVEL)
   }
 
-  if (remotes.length === 0 && !currentRemoteId) {
+  if (remotes.length === 0 && !dropboxAccount && !currentRemoteId) {
     return (
       <FormEleContainer width="w-full">
         <FormElementLabel
@@ -86,11 +104,11 @@ export const RemoteSelector: FC<ICommonFormEleProps<IBasicSelect<ISectionElement
           labelHint={formEle.labelHint}
         />
         <div className="rounded-md border border-dashed border-gray-300 p-3 text-sm text-gray-600 flex flex-col sm:flex-row sm:items-center gap-2">
-          <p className="grow">This project is saved on this device only. Connect a WordPress site to store it there and share it with the users of the site.</p>
+          <p className="grow">This project is saved on this device only. Connect Dropbox to keep it on all your devices, or a WordPress site to also share it with the users of the site.</p>
           <Button
-            id="connectWordPressFromForm"
-            label="Connect WordPress"
-            iconLeft="logoWordpress"
+            id="connectStorageFromForm"
+            label="Connect storage"
+            iconLeft="cloudUploadOutline"
             type={Type.secondary}
             size="sm"
             href={ANITA_URLS.remotes}
@@ -118,13 +136,31 @@ export const RemoteSelector: FC<ICommonFormEleProps<IBasicSelect<ISectionElement
           isSearchable={false}
           onChange={handleRemoteChange}
         />
-        {!!currentRemoteId && currentRemoteId !== initialRemoteId && (
+        {currentRemoteId === DROPBOX_REMOTE_ID && currentRemoteId !== initialRemoteId && (
+          <>
+            {!!dropboxAccount && !dropboxAccount.needsReauth && (
+              <div className="mt-2">
+                <DropboxFolderField
+                  value={dropboxFolder}
+                  onChange={(folder) => handleChange('dropboxFolder', folder === DROPBOX_PROJECTS_FOLDER ? '' : folder)}
+                />
+              </div>
+            )}
+            <p className="text-xs text-gray-500 mt-1">
+              When you save, this project will be saved in {displayDropboxFolder(dropboxFolder)} in your Dropbox, and the projects of the {DROPBOX_PROJECTS_FOLDER} folder will be downloaded to this device.
+            </p>
+          </>
+        )}
+        {currentRemoteId === DROPBOX_REMOTE_ID && initialRemoteId === DROPBOX_REMOTE_ID && linkedFile?.path && (
+          <p className="text-xs text-gray-500 mt-1">Synced with {linkedFile.path}</p>
+        )}
+        {isWordPressSite && currentRemoteId !== initialRemoteId && (
           <p className="text-xs text-gray-500 mt-1">
-            When you save, this project will be uploaded to {selectedRemote?.data.site_name ?? currentRemoteId}, and the projects you can access there will be downloaded to this device.
+            When you save, this project will be uploaded to {remoteName(currentRemoteId)}, and the projects you can access there will be downloaded to this device.
           </p>
         )}
       </FormEleContainer>
-      {!!currentRemoteId && (
+      {isWordPressSite && (
         <FormEleContainer width="w-full">
           <FormElementLabel
             label="Visible to"
@@ -144,5 +180,6 @@ export const RemoteSelector: FC<ICommonFormEleProps<IBasicSelect<ISectionElement
   )
 }, (prevProps, nextProps) => (
   prevProps.element[prevProps.formEle.fieldName] === nextProps.element[nextProps.formEle.fieldName] &&
-  (prevProps.element as { remoteAccessLevel?: string }).remoteAccessLevel === (nextProps.element as { remoteAccessLevel?: string }).remoteAccessLevel
+  (prevProps.element as { remoteAccessLevel?: string }).remoteAccessLevel === (nextProps.element as { remoteAccessLevel?: string }).remoteAccessLevel &&
+  (prevProps.element as { dropboxFolder?: string }).dropboxFolder === (nextProps.element as { dropboxFolder?: string }).dropboxFolder
 ))

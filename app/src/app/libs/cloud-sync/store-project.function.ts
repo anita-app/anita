@@ -1,7 +1,16 @@
 import { WordPressAuth } from 'app/libs/cloud-sync/wordpress/wordpress-auth.class'
 import { WordPressSync } from 'app/libs/cloud-sync/wordpress/wordpress-sync.class'
+import { DropboxHelper } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
+import { DropboxSync } from 'app/libs/cloud-sync/dropbox/dropbox-sync.class'
 import type { IWordPressPingResponse } from 'app/libs/cloud-sync/wordpress/wordpress.const'
 import type { TStorageChoice } from 'app/components/remotes/storage-choice.component'
+
+/**
+ * Whether storing a project as chosen leaves the app to log in (to a new WordPress site, or to Dropbox).
+ */
+export const storageChoiceNeedsLogin = (choice: TStorageChoice): boolean => (
+  choice.kind === 'connect' || (choice.kind === 'dropbox' && !DropboxHelper.instance.isConnected())
+)
 
 /**
  * Checks the site chosen in a "connect" storage choice before anything is saved. Throws with an explanation.
@@ -17,8 +26,8 @@ export const checkSiteOfStorageChoice = async (choice: TStorageChoice): Promise<
 }
 
 /**
- * Stores a project saved on this device as chosen: links it to a connected site, or opens the login of a new site
- * (the browser leaves the app and the project is linked when the user comes back).
+ * Stores a project saved on this device as chosen: links it to a connected site or to Dropbox, or opens the login of
+ * a new site or of Dropbox (the browser leaves the app and the project is linked when the user comes back).
  */
 export const storeProject = async (projectId: string, choice: TStorageChoice, checkedSite?: IWordPressPingResponse | null): Promise<void> => {
   if (choice.kind === 'remote') {
@@ -26,5 +35,11 @@ export const storeProject = async (projectId: string, choice: TStorageChoice, ch
   } else if (choice.kind === 'connect') {
     const site = checkedSite ?? await checkSiteOfStorageChoice(choice)
     await WordPressAuth.startLogin(site!, { linkProjectId: projectId, linkAccessLevel: choice.accessLevel })
+  } else if (choice.kind === 'dropbox') {
+    if (DropboxHelper.instance.isConnected()) {
+      await DropboxSync.linkProject(projectId, { folder: choice.folder })
+    } else {
+      await DropboxHelper.instance.startLogin({ linkProjectId: projectId })
+    }
   }
 }

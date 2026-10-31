@@ -1,11 +1,8 @@
-import { Manager } from 'app/cross-refs-exports'
 import { DateTools } from 'app/libs/tools/date-tools.class'
 import Dexie from 'dexie'
-import { ProjectAtoms } from 'app/state/project/project.atoms'
-import { Bucket } from 'app/state/bucket.state'
 import { CloudSyncTable } from './cloud-sync.const'
 import type { IRemoteProjectInfo, IWordPressAuthData, IWordPressRemoteInfo, IWordPressSpaceInfo } from 'app/libs/cloud-sync/wordpress/wordpress.const'
-import type { IDropboxTokens } from './cloud-sync.const'
+import type { IDropboxAccountData, IDropboxFileLink } from 'app/libs/cloud-sync/dropbox/dropbox.const'
 
 const DB_VERSION = 7
 
@@ -14,7 +11,7 @@ export enum SupportedCloud {
   WORDPRESS = 'wordpress',
 }
 
-interface IAccountsTableForDropbox extends IDropboxTokens {
+interface IAccountsTableForDropbox extends IDropboxAccountData {
   service: SupportedCloud
 }
 
@@ -22,7 +19,7 @@ interface IAccountsTableForWordpress extends IWordPressAuthData {
   service: SupportedCloud
 }
 
-type TDataForTable<T extends SupportedCloud> = T extends SupportedCloud.DROPBOX ? IDropboxTokens : IWordPressAuthData
+type TDataForTable<T extends SupportedCloud> = T extends SupportedCloud.DROPBOX ? IDropboxAccountData : IWordPressAuthData
 
 type TAccountsTable<T extends SupportedCloud> = T extends SupportedCloud.DROPBOX ? IAccountsTableForDropbox : IAccountsTableForWordpress
 
@@ -32,10 +29,8 @@ interface ICloudSyncDB<T extends SupportedCloud> {
     projectId: string
     lastSync: string
   }
-  [CloudSyncTable.FILES_INFO]: {
-    projectId: string
-    fileId: string
-  }
+  /** The Dropbox file each project is synced with. */
+  [CloudSyncTable.FILES_INFO]: IDropboxFileLink
   [CloudSyncTable.REMOTES_INFO]: IWordPressRemoteInfo
   [CloudSyncTable.REMOTE_PROJECTS]: IRemoteProjectInfo
 }
@@ -51,26 +46,32 @@ export class CloudSyncBase<T extends SupportedCloud> {
     return CloudSyncBase.DB!
   }
 
-  public async getLinkedFileIdOrNull (projectId: string | undefined): Promise<string | null> {
+  public static async getDropboxLink (projectId: string | undefined): Promise<IDropboxFileLink | undefined> {
     if (!projectId) {
-      return null
+      return undefined
     }
     CloudSyncBase.initDB()
-    return (await CloudSyncBase.DB!.table<ICloudSyncDB<SupportedCloud.DROPBOX>['filesInfo']>(CloudSyncTable.FILES_INFO).get({ projectId }))?.fileId ?? null
+    return CloudSyncBase.DB!.table<IDropboxFileLink>(CloudSyncTable.FILES_INFO).get(projectId)
   }
 
-  protected async setRemoteId (remoteId: string) {
-    const currentProject = Bucket.general.get(ProjectAtoms.currentProject)!
-
-    if (!currentProject) {
-      return
-    }
-    await CloudSyncBase.DB!.table<ICloudSyncDB<SupportedCloud.DROPBOX>['filesInfo']>(CloudSyncTable.FILES_INFO).put({ projectId: currentProject.getId(), fileId: remoteId })
-    Manager.loadProjectById(currentProject.getId())
+  public static async getDropboxLinks (): Promise<Array<IDropboxFileLink>> {
+    CloudSyncBase.initDB()
+    return CloudSyncBase.DB!.table<IDropboxFileLink>(CloudSyncTable.FILES_INFO).toArray()
   }
 
-  public static async clearRemoteId (projectId: string) {
-    await CloudSyncBase.DB!.table<ICloudSyncDB<SupportedCloud.DROPBOX>['filesInfo']>(CloudSyncTable.FILES_INFO).delete(projectId)
+  public static async saveDropboxLink (link: IDropboxFileLink): Promise<void> {
+    CloudSyncBase.initDB()
+    await CloudSyncBase.DB!.table<IDropboxFileLink>(CloudSyncTable.FILES_INFO).put(link)
+  }
+
+  public static async updateDropboxLink (projectId: string, changes: Partial<IDropboxFileLink>): Promise<void> {
+    CloudSyncBase.initDB()
+    await CloudSyncBase.DB!.table<IDropboxFileLink>(CloudSyncTable.FILES_INFO).update(projectId, changes)
+  }
+
+  public static async deleteDropboxLink (projectId: string): Promise<void> {
+    CloudSyncBase.initDB()
+    await CloudSyncBase.DB!.table<IDropboxFileLink>(CloudSyncTable.FILES_INFO).delete(projectId)
   }
 
   protected static initDB () {
@@ -90,6 +91,10 @@ export class CloudSyncBase<T extends SupportedCloud> {
     CloudSyncBase.DB!.table<ICloudSyncDB<T>['accounts']>(CloudSyncTable.ACCOUNTS).put({ ...data, service: idToUse || this.service } as TAccountsTable<T>)
   )
 
+  protected deleteDataForService (idToUse?: string): Promise<void> {
+    return CloudSyncBase.DB!.table<ICloudSyncDB<T>['accounts']>(CloudSyncTable.ACCOUNTS).delete(idToUse || this.service)
+  }
+
   protected getDataForService (idToUse?: string): Promise<ICloudSyncDB<T>['accounts'] | undefined> {
     return CloudSyncBase.DB!.table<ICloudSyncDB<T>['accounts']>(CloudSyncTable.ACCOUNTS).get({ service: idToUse || this.service })
   }
@@ -108,6 +113,7 @@ export class CloudSyncBase<T extends SupportedCloud> {
   }
 
   public static async deleteLastSync <T extends SupportedCloud> (projectId: string): Promise<void> {
+    CloudSyncBase.initDB()
     return CloudSyncBase.DB!.table<ICloudSyncDB<T>['syncInfo']>(CloudSyncTable.SYNC_INFO).delete(projectId)
   }
 

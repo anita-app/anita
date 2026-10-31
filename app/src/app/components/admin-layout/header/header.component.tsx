@@ -14,10 +14,11 @@ export const AdminLayoutHeader: FC = () => {
   const sidebarCollapsed = useAtomValue(LayoutAtoms.sidebarCollapsed)
   const project = useAtomValue(ProjectAtoms.currentSystemData)
   const remoteIds = useAtomValue(SyncStateAtoms.wordPressRemotesIds)
+  const dropboxAccount = useAtomValue(SyncStateAtoms.dropboxAccount)
   const remoteIdsLength = remoteIds?.length
 
   const hasMenu = !!project
-  const hasWordPressRemotes = !!remoteIdsLength
+  const hasWordPressRemotes = !!remoteIdsLength || !!dropboxAccount
   const hasProjectLoaded = !!project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.id
   const headerElementsNumber = Number(hasMenu) + Number(hasWordPressRemotes) + Number(hasProjectLoaded)
 
@@ -71,13 +72,11 @@ export const AdminLayoutHeader: FC = () => {
 
         {(hasMenu || hasProjectLoaded || hasWordPressRemotes) && (
         <div className="flex items-center justify-end w-1/3 pr-2 md:pr-5">
-          {hasProjectLoaded && !project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.remoteStorage && (
-            <div>
-              <DropboxSyncButton projectId={project?.[RESERVED_AUDS_KEYS._settings]?.[0]?.id} />
-            </div>
-          )}
           {hasProjectLoaded && <LocalOnlyHeaderButton />}
-          {!!remoteIdsLength && (<WordPressSyncButtons />)}
+          <div className="flex items-center space-x-2">
+            {dropboxAccount && <DropboxSyncButton account={dropboxAccount} />}
+            {!!remoteIdsLength && (<WordPressSyncButtons />)}
+          </div>
         </div>
         )}
 

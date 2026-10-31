@@ -1,12 +1,8 @@
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
-import { SupportedCloud } from 'app/cross-refs-exports'
-import { CloudSyncState } from 'app/libs/cloud-sync/cloud-sync.const'
-import { RemoteAndLocalMerger } from 'app/libs/cloud-sync/remote-and-local-merger.class'
+import { DropboxSync } from 'app/libs/cloud-sync/dropbox/dropbox-sync.class'
+import { ProjectSyncHelpers } from 'app/libs/cloud-sync/project-sync-helpers.class'
 import { WordPressSync } from 'app/libs/cloud-sync/wordpress/wordpress-sync.class'
-import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { SyncState } from 'app/state/sync/sync-state.class'
-import { Bucket } from 'app/state/bucket.state'
-import { ProjectAtoms } from 'app/state/project/project.atoms'
 import { Logger } from 'app/libs/logger/logger.class'
 import type { TSystemData } from 'app/models/project/project.declarations'
 import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
@@ -49,12 +45,14 @@ type ISyncWithRemoteOrLocalProps = ISyncWithRemoteOrLocalAddProjectProps | ISync
 export class SyncManager {
   public static syncWithRemoteOrLocal = async (props: ISyncWithRemoteOrLocalProps): Promise<void> => {
     try {
-      const dropboxFileId = SyncManager.getDropboxFileId(props)
-      if (dropboxFileId) {
-        await SyncManager.syncWithDropbox(dropboxFileId)
-      } else if (props.type === 'project' || WordPressSync.getRemoteIdOfProject(props.projectId)) {
-        // Project saves always go through WordPressSync, which also handles projects being linked or unlinked.
-        await SyncManager.syncWithWordPress(props)
+      if (props.type === 'project') {
+        // Both are told: each one links, unlinks or syncs the project, also when it moves from one to the other.
+        await DropboxSync.onProjectSaved(props.systemData)
+        await WordPressSync.onProjectSaved(props.systemData)
+      } else if (DropboxSync.isDropboxProject(ProjectSyncHelpers.getLocalProjectSettings(props.projectId))) {
+        DropboxSync.pushLocalChange(props.projectId)
+      } else if (WordPressSync.getRemoteIdOfProject(props.projectId)) {
+        await SyncManager.syncElementWithWordPress(props)
       }
     } catch (error) {
       Logger.error('[SyncManager] sync failed', error as string)
@@ -63,29 +61,8 @@ export class SyncManager {
     }
   }
 
-  /**
-   * Dropbox sync applies to the current project only, when it is linked to a Dropbox file.
-   */
-  private static getDropboxFileId = (props: ISyncWithRemoteOrLocalProps): string | null => {
-    const project = Bucket.general.get(ProjectAtoms.currentProject)
-    const projectId = props.type === 'project' ? props.systemData[RESERVED_AUDS_KEYS._settings][0].id : props.projectId
-    if (!project || project.getId() !== projectId) {
-      return null
-    }
-    const fileId = project.dropBoxSyncInfo.getLinkedFileId()
-    return fileId && project.dropBoxSyncInfo.getCloudSyncState() === CloudSyncState.LINKED ? fileId : null
-  }
-
-  private static syncWithDropbox = async (fileId: string): Promise<void> => {
-    if (!SyncState.getIsSyncing()) {
-      await new RemoteAndLocalMerger(fileId, SupportedCloud.DROPBOX).sync()
-    }
-  }
-
-  private static syncWithWordPress = async (props: ISyncWithRemoteOrLocalProps): Promise<void> => {
-    if (props.type === 'project') {
-      await WordPressSync.onProjectSaved(props.systemData)
-    } else if (props.mode === EDITOR_MODE.delete) {
+  private static syncElementWithWordPress = async (props: ISyncWithRemoteOrLocalAddOrEditElementSectionProps | ISyncWithRemoteOrLocalDeleteElementSectionProps): Promise<void> => {
+    if (props.mode === EDITOR_MODE.delete) {
       await WordPressSync.pushElementDeletion(props.projectId, props.sectionId, props.elementId)
     } else {
       await WordPressSync.pushElement(props.projectId, props.sectionId, props.elementData)

@@ -2,11 +2,13 @@ import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
 import { CloudSyncBase } from 'app/cross-refs-exports'
 import { WordPressSync } from 'app/libs/cloud-sync/wordpress/wordpress-sync.class'
+import { DropboxSync } from 'app/libs/cloud-sync/dropbox/dropbox-sync.class'
 import type { IProjectSettings } from 'app/models/project/project.declarations'
 
 interface IProjectDeletorOptions {
   /**
-   * Also delete the project from the WordPress site it is synced with. If that fails, the local copy is kept.
+   * Also delete the project from the WordPress site it is synced with, or move its file to the deleted files of
+   * Dropbox. If that fails, the local copy is kept.
    * Default true.
    */
   deleteOnRemote?: boolean
@@ -29,11 +31,12 @@ export class ProjectDeletor {
    */
   public async delete (options: IProjectDeletorOptions = {}): Promise<void> {
     if (options.deleteOnRemote !== false) {
+      await DropboxSync.deleteRemoteProject(this.projectId)
       await WordPressSync.deleteRemoteProject(this.projectId)
     }
     await this.callOnProjectDeleted()
     await this.doDelete()
-    await CloudSyncBase.clearRemoteId(this.projectId)
+    await CloudSyncBase.deleteDropboxLink(this.projectId)
     await CloudSyncBase.deleteLastSync(this.projectId)
     await CloudSyncBase.deleteRemoteProjectInfo(this.projectId)
     delete dbInstances[this.projectId]

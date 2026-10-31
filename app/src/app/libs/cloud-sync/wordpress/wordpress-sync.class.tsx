@@ -1,77 +1,33 @@
-import { CloudSyncBase, Manager, SupportedCloud } from 'app/cross-refs-exports'
+import { CloudSyncBase, SupportedCloud } from 'app/cross-refs-exports'
 import { RemoteAndLocalMerger } from 'app/libs/cloud-sync/remote-and-local-merger.class'
+import { askUser } from 'app/libs/cloud-sync/sync-prompt'
+import { ProjectSyncHelpers } from 'app/libs/cloud-sync/project-sync-helpers.class'
+import { DROPBOX_REMOTE_ID } from 'app/libs/cloud-sync/dropbox/dropbox.const'
 import { WordpressHelper } from 'app/libs/cloud-sync/wordpress/wordpress-helper.class'
 import { WordPressApiError, WordPressErrorCode, getWordPressErrorMessage } from 'app/libs/cloud-sync/wordpress/wordpress-api-error.class'
 import { ACCESS_LEVEL_LABELS, DEFAULT_ACCESS_LEVEL } from 'app/libs/cloud-sync/wordpress/wordpress.const'
 import { ProjectDataImporter } from 'app/libs/projects-helpers/project-importers/project-data-importer.class'
-import { DbInitializer } from 'app/data/local-dbs/db-initializer.class'
-import { dbInstances } from 'app/data/local-dbs/db-instances.const'
-import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
 import { Project } from 'app/models/project/project.class'
-import { ProjectSaver } from 'app/models/project/project-saver.class'
 import { ProjectDeletor } from 'app/models/project/project-deletor.class'
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
-import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { ANITA_URLS } from 'app/libs/routing/anita-routes.constant'
 import { Bucket } from 'app/state/bucket.state'
-import { ModalState } from 'app/state/modal/modal-state.class'
 import { ProjectAtoms } from 'app/state/project/project.atoms'
 import { ProjectState } from 'app/state/project/project-state.class'
 import { ProjectsListAtoms } from 'app/state/projects-list/projects-list.atoms'
 import { RoutingState } from 'app/state/routing/routing-state.class'
 import { SyncState } from 'app/state/sync/sync-state.class'
 import { DateTools } from 'app/libs/tools/date-tools.class'
-import { sortSections } from 'app/models/section/sort-sections.function'
-import type { ReactNode } from 'react'
+import type { IModalChoice } from 'app/libs/cloud-sync/sync-prompt'
 import type { WordPressClient } from 'app/libs/cloud-sync/wordpress/wordpress-client.class'
 import type { IRemoteProjectInfo, IWordPressProjectMeta, IWordPressSpaceInfo, TAccessLevel } from 'app/libs/cloud-sync/wordpress/wordpress.const'
 import type { IProjectSettings, LocalProjectSettings, TSystemData } from 'app/models/project/project.declarations'
-import type { ISection } from 'app/models/section/section.declarations'
 import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
 const LAST_SYNC_SAFETY_MARGIN_MS = 2 * 60 * 1000
 
 const syncStartTime = (): string => new Date(Date.now() - LAST_SYNC_SAFETY_MARGIN_MS).toISOString()
-
-interface IModalChoice<T extends string> {
-  value: T
-  label: string
-  type?: Type
-}
-
-const showPrompt = <T extends string>(title: string, children: ReactNode, choices: Array<IModalChoice<T>>, options: { hideCancelButton?: boolean } = {}): Promise<T | null> => (
-  new Promise((resolve) => {
-    ModalState.showModal({
-      title,
-      type: Type.primary,
-      hideCancelButton: options.hideCancelButton,
-      children,
-      handleClickCancel: () => resolve(null),
-      handleOnClose: () => {
-        ModalState.hideModal()
-        resolve(null)
-      },
-      ctas: choices.map(choice => ({
-        actionText: choice.label,
-        actionType: choice.type,
-        handleClickAction: () => resolve(choice.value),
-      })),
-    })
-  })
-)
-
-let promptQueue: Promise<unknown> = Promise.resolve()
-
-/**
- * Shows a modal and resolves with the chosen action, or null if the user cancels.
- * Prompts are shown one at a time, so that two syncs never overwrite each other's question.
- */
-const ask = <T extends string>(title: string, children: ReactNode, choices: Array<IModalChoice<T>>, options: { hideCancelButton?: boolean } = {}): Promise<T | null> => {
-  const answer = promptQueue.then(() => showPrompt(title, children, choices, options))
-  promptQueue = answer.catch(() => undefined)
-  return answer
-}
 
 /**
  * Sync between the projects on this device and the WordPress sites they are linked to.
@@ -98,8 +54,16 @@ export class WordPressSync {
     return Bucket.general.get(ProjectsListAtoms.projects)?.find(project => project.id === projectId)
   }
 
+  /**
+   * The WordPress site a project is synced with: its `remoteStorage`, unless the project is synced with Dropbox.
+   */
+  public static wordPressRemoteIdOf (settings: Pick<IProjectSettings, 'remoteStorage'> | undefined): string | undefined {
+    const remoteStorage = settings?.remoteStorage
+    return remoteStorage && remoteStorage !== DROPBOX_REMOTE_ID ? remoteStorage : undefined
+  }
+
   public static getRemoteIdOfProject (projectId: string): string | undefined {
-    return WordPressSync.getLocalProjectSettings(projectId)?.remoteStorage || undefined
+    return WordPressSync.wordPressRemoteIdOf(WordPressSync.getLocalProjectSettings(projectId))
   }
 
   private static isCurrentProject (projectId: string): boolean {
@@ -119,44 +83,9 @@ export class WordPressSync {
     return info
   }
 
-  /**
-   * Reads the settings and sections of any local project, loading its database if needed.
-   */
-  private static async getSystemData (projectId: string): Promise<TSystemData | null> {
-    const info = await dbInstances.system.callSelector<LocalProjectSettings>(CLIENT_SECTIONS.projects, { id: projectId }).single()
-    if (!info) {
-      return null
-    }
-    if (!dbInstances[projectId]) {
-      await new DbInitializer(info).init()
-    }
-    const settings = await dbInstances[projectId].callSelector<IProjectSettings>(RESERVED_AUDS_KEYS._settings).multiple()
-    const sections = sortSections(await dbInstances[projectId].callSelector<ISection>(RESERVED_AUDS_KEYS._sections).multiple())
-    if (!settings?.length) {
-      return null
-    }
-    return { [RESERVED_AUDS_KEYS._settings]: settings, [RESERVED_AUDS_KEYS._sections]: sections }
-  }
+  private static getSystemData = (projectId: string) => ProjectSyncHelpers.getSystemData(projectId)
 
-  /**
-   * Saves settings coming from a sync, without changing timestamps and without triggering another sync.
-   */
-  private static async saveSettingsSilently (projectId: string, changes: Partial<IProjectSettings>): Promise<void> {
-    const systemData = await WordPressSync.getSystemData(projectId)
-    if (!systemData) {
-      return
-    }
-    const settings = { ...systemData[RESERVED_AUDS_KEYS._settings][0], ...changes }
-    Object.keys(changes).forEach((key) => {
-      if (changes[key as keyof IProjectSettings] === undefined) {
-        delete settings[key as keyof IProjectSettings]
-      }
-    })
-    const saved = await new ProjectSaver({ ...systemData, [RESERVED_AUDS_KEYS._settings]: [settings] }, EDITOR_MODE.edit, { fromSync: true }).save()
-    if (WordPressSync.isCurrentProject(projectId)) {
-      Manager.setCurrentProject(saved)
-    }
-  }
+  private static saveSettingsSilently = (projectId: string, changes: Partial<IProjectSettings>) => ProjectSyncHelpers.saveSettingsSilently(projectId, changes)
 
   private static reportProjectError (projectId: string, remoteId: string, error: unknown): void {
     const apiError = WordPressApiError.from(error)
@@ -291,7 +220,7 @@ export class WordPressSync {
       await WordPressSync.removeLocalCopy(project.id)
     }
     if (ownedBySomeoneElse.length) {
-      await ask(
+      await askUser(
         `Projects removed from ${siteName}`,
         (
           <div className="text-sm text-gray-600">
@@ -319,7 +248,7 @@ export class WordPressSync {
       }
       choices.push({ value: 'delete', label: 'Delete from this device', type: Type.danger })
 
-      const choice = await ask(
+      const choice = await askUser(
         `"${project.title}" is no longer on ${siteName}`,
         (
           <div className="text-sm text-gray-600">
@@ -515,7 +444,7 @@ export class WordPressSync {
   public static async onProjectSaved (systemData: TSystemData): Promise<void> {
     const settings = systemData[RESERVED_AUDS_KEYS._settings][0]
     const projectId = settings.id
-    const remoteId = settings.remoteStorage
+    const remoteId = WordPressSync.wordPressRemoteIdOf(settings)
     const known = await CloudSyncBase.getRemoteProjectInfo(projectId)
 
     if (!remoteId) {

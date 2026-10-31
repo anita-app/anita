@@ -1,89 +1,43 @@
-import { memo, useCallback, useEffect } from 'react'
-import { CloudSyncState } from 'app/libs/cloud-sync/cloud-sync.const'
-import { DropboxSyncButtonConnect } from 'app/components/admin-layout/header/dropbox-sync/dropbox-sync-button-connect'
-import { DropboxHelper } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
-import { DropboxSyncButtonOpenFilePicker } from 'app/components/admin-layout/header/dropbox-sync/dropbox-sync-button-open-file-picker'
-import { DropboxSyncButtonDoSync } from 'app/components/admin-layout/header/dropbox-sync/dropbox-sync-button-do-sync'
-import { useMultiState } from 'app/components/hooks/multi-state.hook'
-import { Bucket } from 'app/state/bucket.state'
-import { ProjectAtoms } from 'app/state/project/project.atoms'
+import { useAtomValue } from 'jotai'
+import { Link } from 'react-router-dom'
+import { DropboxIcon } from 'app/components/remotes/dropbox-icon.component'
+import { useTippyTooltip } from 'app/components/hooks/tippy-tooltip'
+import { ANITA_URLS } from 'app/libs/routing/anita-routes.constant'
+import { DROPBOX_REMOTE_ID } from 'app/libs/cloud-sync/dropbox/dropbox.const'
+import { SyncStateAtoms } from 'app/state/sync/sync-state.atoms'
 import type { FC } from 'react'
+import type { IDropboxAccountState } from 'app/libs/cloud-sync/dropbox/dropbox.const'
 
-interface IDropboxSyncButtonProps {
-  projectId: string
-}
+/**
+ * Icon of the connected Dropbox account in the header, with its sync status. Opens the storage page.
+ */
+export const DropboxSyncButton: FC<{ account: IDropboxAccountState }> = (props) => {
+  const status = useAtomValue(SyncStateAtoms.remotesStatus)[DROPBOX_REMOTE_ID]
+  const id = 'dropboxRemote'
 
-interface IDropboxSyncButtonState {
-  cloudSyncState: CloudSyncState | null
-  linkedFileId: string | null
-}
-
-export const DropboxSyncButton: FC<IDropboxSyncButtonProps> = memo(function CloudSyncButton (props: IDropboxSyncButtonProps) {
-  const [state, setState] = useMultiState<IDropboxSyncButtonState>({
-    cloudSyncState: null,
-    linkedFileId: null,
-  })
-
-  const projectId = props.projectId
-
-  useEffect(() => {
-    const getCloudSyncState = async () => {
-      const currentProject = Bucket.general.get(ProjectAtoms.currentProject)
-      const isAuthenticated = await DropboxHelper.instance.isAuthenticated()
-      if (!projectId) {
-        return
-      }
-      if (!isAuthenticated) {
-        currentProject?.dropBoxSyncInfo.setCloudSyncState(CloudSyncState.NOT_CONNECTED)
-        return setState({ cloudSyncState: CloudSyncState.NOT_CONNECTED })
-      }
-      const linkedFileId = await DropboxHelper.instance.getLinkedFileIdOrNull(projectId)
-      if (!linkedFileId) {
-        currentProject?.dropBoxSyncInfo.setCloudSyncState(CloudSyncState.NOT_LINKED)
-        return setState({ cloudSyncState: CloudSyncState.NOT_LINKED })
-      }
-
-      currentProject?.dropBoxSyncInfo.setCloudSyncState(CloudSyncState.LINKED)
-      currentProject?.dropBoxSyncInfo.setLinkedFileId(linkedFileId)
-      setState({ cloudSyncState: CloudSyncState.LINKED, linkedFileId })
-    }
-
-    getCloudSyncState()
-
-    return () => {
-      const currentProject = Bucket.general.get(ProjectAtoms.currentProject)
-      currentProject?.dropBoxSyncInfo.setCloudSyncState(CloudSyncState.NOT_CONNECTED)
-      currentProject?.dropBoxSyncInfo.setLinkedFileId(null)
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [projectId])
-
-  const setCloudSyncState = useCallback((cloudSyncState: CloudSyncState) => {
-    setState({ cloudSyncState })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [projectId])
-
-  if (!state.cloudSyncState) {
-    return null
+  let tooltip = 'Dropbox: synced'
+  let ringClassName = 'ring-transparent'
+  if (props.account.needsReauth) {
+    tooltip = 'Dropbox: log in again to resume syncing'
+    ringClassName = 'ring-red-500'
+  } else if (status?.isSyncing) {
+    tooltip = 'Dropbox: syncing…'
+    ringClassName = 'ring-prussian-blue-400 animate-pulse'
+  } else if (status?.error) {
+    tooltip = 'Dropbox: last sync failed'
+    ringClassName = 'ring-orange-500'
   }
 
-  if (state.cloudSyncState === CloudSyncState.NOT_CONNECTED) {
-    return (
-      <DropboxSyncButtonConnect setCloudSyncState={setCloudSyncState} />
-    )
-  }
-
-  if (state.cloudSyncState === CloudSyncState.NOT_LINKED) {
-    return (
-      <DropboxSyncButtonOpenFilePicker />
-    )
-  }
-
-  if (!state.linkedFileId) {
-    return null
-  }
+  useTippyTooltip(id, tooltip)
 
   return (
-    <DropboxSyncButtonDoSync linkedFileId={state.linkedFileId} />
+    <Link
+      id={id}
+      to={ANITA_URLS.remotes}
+      aria-label={tooltip}
+      className={`rounded-xl ring-2 ring-offset-1 ${ringClassName}`}
+    >
+      <DropboxIcon sizeClassName="w-8 h-8" />
+    </Link>
   )
-})
+}

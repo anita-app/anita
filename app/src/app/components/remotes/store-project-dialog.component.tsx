@@ -7,9 +7,11 @@ import { Type } from 'app/components/shared-components/common-ui-eles/components
 import { AlertWithDescription } from 'app/components/shared-components/alerts/alert-with-description'
 import { StorageChoice, defaultStorageChoice, useWritableRemotes } from 'app/components/remotes/storage-choice.component'
 import { getConnectionErrorMessage } from 'app/components/remotes/connect-wordpress.component'
-import { checkSiteOfStorageChoice, storeProject } from 'app/libs/cloud-sync/wordpress/store-project.function'
+import { useDropboxIsWritable } from 'app/components/remotes/dropbox-icon.component'
+import { checkSiteOfStorageChoice, storageChoiceNeedsLogin, storeProject } from 'app/libs/cloud-sync/store-project.function'
 import { WordPressAuth } from 'app/libs/cloud-sync/wordpress/wordpress-auth.class'
 import { getWordPressErrorMessage } from 'app/libs/cloud-sync/wordpress/wordpress-api-error.class'
+import { getDropboxErrorMessage } from 'app/libs/cloud-sync/dropbox/dropbox-error.class'
 import { OnboardingAtoms } from 'app/state/onboarding/onboarding.atoms'
 import { OnboardingState } from 'app/state/onboarding/onboarding-state.class'
 import { ProjectsListAtoms } from 'app/state/projects-list/projects-list.atoms'
@@ -23,38 +25,69 @@ const Benefit: FC<{ icon: 'shieldCheckmarkOutline' | 'phonePortraitOutline' | 'p
   </li>
 )
 
-const StoreOnWordPressForm: FC<{ projectId: string; projectTitle: string }> = (props) => {
+/**
+ * Message for an error while storing a project as chosen.
+ */
+export const getStoreErrorMessage = (error: unknown, choice: TStorageChoice, siteName: string | undefined): string => {
+  switch (choice.kind) {
+    case 'connect':
+      return getConnectionErrorMessage(error, WordPressAuth.normalizeSiteUrl(choice.siteUrl || 'your site'))
+    case 'dropbox':
+      return getDropboxErrorMessage(error)
+    case 'remote':
+      return getWordPressErrorMessage(error, siteName ?? 'the site')
+    default:
+      return (error as Error).message
+  }
+}
+
+/**
+ * Label of the button that stores a project as chosen.
+ */
+export const storeActionLabel = (choice: TStorageChoice, siteName: string | undefined): string => {
+  switch (choice.kind) {
+    case 'connect':
+      return 'Connect and save'
+    case 'dropbox':
+      return storageChoiceNeedsLogin(choice) ? 'Connect Dropbox and save' : 'Save in Dropbox'
+    case 'remote':
+      return `Save on ${siteName ?? 'WordPress'}`
+    default:
+      return 'Save'
+  }
+}
+
+const StoreProjectForm: FC<{ projectId: string; projectTitle: string }> = (props) => {
   const remotes = useWritableRemotes()
-  const [choice, setChoice] = useState<TStorageChoice>(() => defaultStorageChoice(remotes, false))
+  const dropboxIsWritable = useDropboxIsWritable()
+  const [choice, setChoice] = useState<TStorageChoice>(() => defaultStorageChoice(remotes, false, dropboxIsWritable))
   const [isWorking, setIsWorking] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const siteName = choice.kind === 'remote' ? remotes.find(remote => remote.remoteId === choice.remoteId)?.data.site_name : undefined
 
   const handleStore = async () => {
     setError(null)
     setIsWorking(true)
     try {
+      const leavesApp = storageChoiceNeedsLogin(choice)
       const site = await checkSiteOfStorageChoice(choice)
       await storeProject(props.projectId, choice, site)
-      if (choice.kind !== 'connect') {
-        OnboardingState.closeStoreOnWordPress()
+      if (!leavesApp) {
+        OnboardingState.closeStoreProject()
       }
     } catch (storeError) {
-      setError(choice.kind === 'connect'
-        ? getConnectionErrorMessage(storeError, WordPressAuth.normalizeSiteUrl(choice.siteUrl || 'your site'))
-        : getWordPressErrorMessage(storeError, remotes.find(remote => choice.kind === 'remote' && remote.remoteId === choice.remoteId)?.data.site_name ?? 'the site'))
+      setError(getStoreErrorMessage(storeError, choice, siteName))
       setIsWorking(false)
     }
   }
 
-  const siteName = choice.kind === 'remote' ? remotes.find(remote => remote.remoteId === choice.remoteId)?.data.site_name : undefined
-
   return (
     <>
-      <p className="text-sm text-gray-600">&quot;{props.projectTitle}&quot; is saved only in this browser. Save it on a WordPress site:</p>
+      <p className="text-sm text-gray-600">&quot;{props.projectTitle}&quot; is saved only in this browser. Save it in Dropbox or on a WordPress site:</p>
       <ul className="mt-3 space-y-1">
         <Benefit
           icon="shieldCheckmarkOutline"
-          text="it is backed up in your site's database"
+          text="it is backed up in your Dropbox or in your site's database"
         />
         <Benefit
           icon="phonePortraitOutline"
@@ -62,7 +95,7 @@ const StoreOnWordPressForm: FC<{ projectId: string; projectTitle: string }> = (p
         />
         <Benefit
           icon="peopleOutline"
-          text="you can share it with the users of the site"
+          text="on WordPress, you can share it with the users of the site"
         />
       </ul>
       <div className="mt-4">
@@ -75,7 +108,7 @@ const StoreOnWordPressForm: FC<{ projectId: string; projectTitle: string }> = (p
       {error && (
         <div className="mt-3">
           <AlertWithDescription
-            title="The project was not saved on WordPress"
+            title="The project was not saved"
             description={error}
             type={Type.warning}
           />
@@ -83,15 +116,15 @@ const StoreOnWordPressForm: FC<{ projectId: string; projectTitle: string }> = (p
       )}
       <div className="flex flex-wrap items-center justify-end gap-y-2 mt-5">
         <Button
-          id="storeOnWordPressLater"
+          id="storeProjectLater"
           label="Not now"
           type={Type.secondary}
-          onClick={OnboardingState.closeStoreOnWordPress}
+          onClick={OnboardingState.closeStoreProject}
         />
         <Button
-          id="storeOnWordPress"
-          label={isWorking ? 'Saving…' : (choice.kind === 'connect' ? 'Connect and save' : `Save on ${siteName ?? 'WordPress'}`)}
-          iconLeft="logoWordpress"
+          id="storeProject"
+          label={isWorking ? 'Saving…' : storeActionLabel(choice, siteName)}
+          iconLeft={choice.kind === 'dropbox' ? 'logoDropbox' : 'logoWordpress'}
           type={Type.primary}
           disabled={isWorking}
           onClick={handleStore}
@@ -103,10 +136,11 @@ const StoreOnWordPressForm: FC<{ projectId: string; projectTitle: string }> = (p
 }
 
 /**
- * Dialog to move a project saved only on this device to a WordPress site. Opened with OnboardingState.openStoreOnWordPress.
+ * Dialog to move a project saved only on this device to Dropbox or to a WordPress site.
+ * Opened with OnboardingState.openStoreProject.
  */
-export const StoreOnWordPressDialog: FC = () => {
-  const projectId = useAtomValue(OnboardingAtoms.storeOnWordPressProjectId)
+export const StoreProjectDialog: FC = () => {
+  const projectId = useAtomValue(OnboardingAtoms.storeProjectId)
   const project = useAtomValue(ProjectsListAtoms.projects).find(item => item.id === projectId)
   const [shownProject, setShownProject] = useState(project)
 
@@ -125,7 +159,7 @@ export const StoreOnWordPressDialog: FC = () => {
       <Dialog
         as="div"
         className="relative z-20"
-        onClose={OnboardingState.closeStoreOnWordPress}
+        onClose={OnboardingState.closeStoreProject}
       >
         <Transition.Child
           as={Fragment}
@@ -151,12 +185,12 @@ export const StoreOnWordPressDialog: FC = () => {
             >
               <Dialog.Panel className="w-full max-w-lg rounded-2xl bg-white border border-[#000f20]/5 p-5 sm:p-6 shadow-[0_30px_60px_-20px_rgba(0,35,70,0.45)]">
                 <Dialog.Title className="ui-title text-lg flex items-center gap-3">
-                  <span className="ui-avatar w-9 h-9 rounded-[10px] text-lg">{Icons.render('logoWordpress')}</span>
+                  <span className="ui-avatar w-9 h-9 rounded-[10px] text-lg">{Icons.render('shieldCheckmarkOutline')}</span>
                   Keep your project safe
                 </Dialog.Title>
                 <div className="mt-3">
                   {shownProject && (
-                    <StoreOnWordPressForm
+                    <StoreProjectForm
                       key={shownProject.id}
                       projectId={shownProject.id}
                       projectTitle={shownProject.title}
