@@ -42,7 +42,7 @@ export default defineConfig(({ mode }) => ({
       injectRegister: false,
       manifest: false,
       injectManifest: {
-        // The files of the build only, as before: public files (e.g. the unused sql-wasm.wasm) are not precached.
+        // The files of the build only, as before: files of public/ are not precached.
         globPatterns: ['**/*.{js,css,html}'],
         maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
       },
