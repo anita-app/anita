@@ -16,10 +16,6 @@ export class Manager {
     return new ProjectLoader(projectId).loadProject()
   }
 
-  public static saveProject = (systemData: TSystemData, mode: EDITOR_MODE.add | EDITOR_MODE.edit): Promise<TSystemData> => (
-    new ProjectSaver(systemData, mode).save()
-  )
-
   public static setCurrentProject (systemData: TSystemData) {
     const systemDataClone = {
       [RESERVED_AUDS_KEYS._settings]: [{ ...systemData[RESERVED_AUDS_KEYS._settings][0] }],
@@ -41,7 +37,8 @@ export class Manager {
   public static async importProject (projectData: TAnitaUniversalDataStorage): Promise<void> {
     const projectInfo = await new ProjectDataImporter(projectData).import()
     await new ProjectLoader(projectData[RESERVED_AUDS_KEYS._settings][0].id, projectInfo).loadProject()
-    await this.saveProject({ [RESERVED_AUDS_KEYS._settings]: projectData[RESERVED_AUDS_KEYS._settings], [RESERVED_AUDS_KEYS._sections]: projectData[RESERVED_AUDS_KEYS._sections] }, EDITOR_MODE.edit)
+    const systemData = { [RESERVED_AUDS_KEYS._settings]: projectData[RESERVED_AUDS_KEYS._settings], [RESERVED_AUDS_KEYS._sections]: projectData[RESERVED_AUDS_KEYS._sections] }
+    new ProjectSaver(systemData, EDITOR_MODE.edit).save()
   }
 
   private static async isProjectLoaded (projectId: string): Promise<boolean> {

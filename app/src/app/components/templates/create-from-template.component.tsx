@@ -20,6 +20,7 @@ import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { FormProjectState } from 'app/state/form-project/form-project-state.class'
 import { RoutingState } from 'app/state/routing/routing-state.class'
 import { ProjectsListAtoms } from 'app/state/projects-list/projects-list.atoms'
+import { ProjectSaver } from 'app/models/project/project-saver.class'
 import type { CSSProperties, FC } from 'react'
 import type { TStorageChoice } from 'app/components/remotes/storage-choice.component'
 import type { IProjectTemplate, ITemplateField } from 'app/libs/templates/templates-catalog.class'
@@ -137,7 +138,7 @@ const CreateFromTemplateForm: FC<{ template: IProjectTemplate; accent: string; c
         await Manager.importProject(project)
         systemData = { [RESERVED_AUDS_KEYS._settings]: project[RESERVED_AUDS_KEYS._settings], [RESERVED_AUDS_KEYS._sections]: project[RESERVED_AUDS_KEYS._sections] }
       } else {
-        systemData = await Manager.saveProject(project, EDITOR_MODE.add)
+        systemData = await new ProjectSaver(project as TSystemData, EDITOR_MODE.add).save()
       }
       const projectId = systemData[RESERVED_AUDS_KEYS._settings][0].id
       Manager.setCurrentProject(systemData)

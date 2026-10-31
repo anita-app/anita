@@ -13,6 +13,7 @@ import { FormProjectAtoms } from 'app/state/form-project/form-project.atoms'
 import { FormProjectState } from 'app/state/form-project/form-project-state.class'
 import { FormElesValidStateAtoms } from 'app/state/form-eles-valid-state/form-eles-valid-state.atoms'
 import { RoutingState } from 'app/state/routing/routing-state.class'
+import { ProjectSaver } from 'app/models/project/project-saver.class'
 import type { FC } from 'react'
 import type { IProjectSettings, TSystemData } from 'app/models/project/project.declarations'
 
@@ -28,7 +29,7 @@ export const FormProjectManager: FC = () => {
   }
 
   const handleClickSave = async () => {
-    const systemData = await Manager.saveProject(project as TSystemData, mode)
+    const systemData = await new ProjectSaver(project as TSystemData, mode).save()
     Manager.setCurrentProject(systemData)
     RoutingState.goTo(ANITA_URLS.projectDetails, [{ name: URL_PARAMS.projectId, value: project[RESERVED_AUDS_KEYS._settings]![0].id }])
   }

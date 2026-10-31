@@ -8,6 +8,7 @@ import { ModalState } from 'app/state/modal/modal-state.class'
 import { useAtomValue } from 'jotai'
 import { FormProjectAtoms } from 'app/state/form-project/form-project.atoms'
 import { FormElesValidStateAtoms } from 'app/state/form-eles-valid-state/form-eles-valid-state.atoms'
+import { ProjectSaver } from 'app/models/project/project-saver.class'
 import type { FC } from 'react'
 import type { TSystemData } from 'app/models/project/project.declarations'
 
@@ -26,7 +27,7 @@ export const ListTabsHeaderRightAddField: FC<IListTabsHeaderRightAddFieldProps> 
   }
 
   const handleActionClick = async () => {
-    const systemData = await Manager.saveProject(project as TSystemData, EDITOR_MODE.edit)
+    const systemData = await new ProjectSaver(project as TSystemData, EDITOR_MODE.edit).save()
     Manager.setCurrentProject(systemData)
     ModalState.hideModal()
   }
