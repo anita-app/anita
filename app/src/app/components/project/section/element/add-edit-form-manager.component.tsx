@@ -11,6 +11,7 @@ interface IProjectFormElementManagerProps {
   sectionId: string
 }
 
+/** @featurePart record.add, record.edit */
 export const ProjectSectionElementAddEditFormManager: FC<IProjectFormElementManagerProps> = (props) => {
   const project = useAtomValue(ProjectAtoms.currentProject)
   const allSections = project?.getSectionsDefinitions()!

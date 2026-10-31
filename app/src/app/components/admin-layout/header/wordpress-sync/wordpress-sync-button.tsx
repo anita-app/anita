@@ -13,6 +13,7 @@ interface IWordPressSyncButtonProps {
 
 /**
  * Icon of a connected site in the header, with its sync status. Opens the storage page.
+ * @featurePart sync.status
  */
 export const WordPressSyncButton: FC<IWordPressSyncButtonProps> = (props) => {
   const remote = props.remote

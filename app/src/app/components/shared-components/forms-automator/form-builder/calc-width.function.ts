@@ -1,6 +1,7 @@
 // Converts a col size in the range of 1-12 to the equivalente TailwindCSS width class
 // We can't use string concatenation here because it will break the build
 // See optimizing for production at https://tailwindcss.com/docs/optimizing-for-production
+/** @internal */
 export function calcWidth (width: string): string {
   switch (width) {
     case '1':

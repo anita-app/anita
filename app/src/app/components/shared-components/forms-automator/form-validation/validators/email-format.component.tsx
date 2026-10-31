@@ -3,6 +3,7 @@ import { memo, useEffect } from 'react'
 import type { FC } from 'react'
 import type { IValidatorsProps } from 'app/components/shared-components/forms-automator/form-validation/validators'
 
+/** @featurePart field.format-validation */
 export const EmailFormat: FC<IValidatorsProps> = memo(function EmailFormat ({ formEle, element, updateValidatorState }: IValidatorsProps) {
   const value = element[formEle.fieldName]
   // eslint-disable-next-line no-useless-escape

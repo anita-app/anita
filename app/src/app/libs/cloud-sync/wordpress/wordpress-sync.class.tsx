@@ -37,6 +37,19 @@ const syncStartTime = (): string => new Date(Date.now() - LAST_SYNC_SAFETY_MARGI
  * - Project level (`syncProject`): two-way merge of the current project.
  * - Single records are sent as soon as they are saved (`pushElement`, `pushElementDeletion`); if that fails, the next
  *   merge sends them.
+ *
+ * @feature sync.wordpress-projects
+ * @title Sync projects with a WordPress site
+ * @summary Stores a project on a connected WordPress site and keeps this device and the site in sync, record by record.
+ * @where Chosen as storage of a project: the site when creating a project, "Remote storage" in the project settings, or "Save it in Dropbox or WordPress" for a local project. The project page shows the site, "Visible to", "Last sync" and "Sync now"; the projects list marks it "Synced with <site>"; each site card in Storage and sync has "Sync now".
+ * @usage 1. Connect the site. 2. Choose it as storage of a project and choose who can see it. 3. Work as usual: each saved or deleted record is sent to the site right away, and changes made by others or on other devices are merged when the project is opened, checked again, or with "Sync now".
+ * @options Setting "Remote storage" back to "None: this device only" stops syncing (confirmation "Stop syncing with <site>?"): the project stays on this device and on the site.
+ * @rules When a project is first linked it is uploaded with all its records; then all the projects of the site visible to you are downloaded to this device (other local projects are not uploaded). If the site already has the project, the two are merged instead of overwritten. Records are merged by the time of their last change: when a record was changed on both sides since the last sync the most recent version is kept, and the project page says "N records were changed both on this device and on <site> since the last sync. The most recent version was kept." The structure (settings and sections) of the site wins, unless an owner or administrator changed it on this device after the last sync: then it is sent to the site, keeping sections added on the site meanwhile. Records of sections no longer on the site stay on this device. When the site cannot be reached, changes stay on this device ("some changes are not synced yet") and are sent at the next sync. If the site is not connected on this device the project page says "This site is not connected on this device". Messages: "<site> could not save the data. Please try again later."; "This project is no longer available on <site>."; otherwise the message of the site or "Something went wrong while syncing with <site>."
+ * @errors wordpress.network, wordpress.dbError, wordpress.invalidRequest, wordpress.notFound, wordpress.unknown
+ * @status beta
+ * @since 1.0.0
+ * @covers cloud:WORDPRESS
+ * @related sync.wordpress-connect, sync.wordpress-share, sync.wordpress-removed-projects, sync.status, sync.automatic, storage.choice
  */
 export class WordPressSync {
   private static remoteRuns: Record<string, Promise<void> | undefined> = {}
@@ -204,6 +217,18 @@ export class WordPressSync {
   /**
    * Projects that were on the site and are no longer returned: deleted on the site or no longer shared with the user.
    * Projects owned by someone else are removed from this device. For their own projects, users decide.
+   *
+   * @feature sync.wordpress-removed-projects
+   * @title Projects removed from a WordPress site
+   * @summary Handles the projects of this device that a WordPress site no longer returns: deleted on the site, or no longer shared with you.
+   * @where Dialogs shown while syncing with a site: "Projects removed from <site>" and "<project> is no longer on <site>".
+   * @usage Read the list of removed projects and click "OK"; for your own projects pick one of the choices.
+   * @options For projects you created: "Keep on this device only", "Upload again to <site>" (only if you can create projects on the site), "Delete from this device".
+   * @rules Projects owned by someone else are removed from this device automatically, then listed in "Projects removed from <site>" ("These projects were deleted on <site>, or their owner stopped sharing them with you"). Your own projects are never deleted without asking ("The copy on this device has not been deleted."). Closing the dialog asks again at the next session. One question at a time is shown.
+   * @errors wordpress.notFound
+   * @status beta
+   * @since 1.0.0
+   * @related sync.wordpress-projects, sync.wordpress-share
    */
   private static async handleMissingProjects (remoteId: string, spaceInfo: IWordPressSpaceInfo, missing: Array<LocalProjectSettings>, known: Map<string, IRemoteProjectInfo>): Promise<void> {
     const siteName = spaceInfo.site_name

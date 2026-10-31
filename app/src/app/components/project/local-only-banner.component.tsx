@@ -10,6 +10,7 @@ import type { FC } from 'react'
 
 /**
  * Whether the current project exists only on this device: not synced with WordPress or Dropbox.
+ * @featurePart storage.local-only
  */
 export const useCurrentProjectIsLocalOnly = (): boolean => {
   const systemData = useAtomValue(ProjectAtoms.currentSystemData)
@@ -17,10 +18,23 @@ export const useCurrentProjectIsLocalOnly = (): boolean => {
   return !!settings?.id && !settings.remoteStorage
 }
 
+/** @featurePart storage.local-only */
 export const formatBackupDate = (isoDate: string | null): string => (isoDate ? dateFormat('yyyy/MM/dd, at hh:mm', new Date(isoDate)) : 'never')
 
 /**
  * Warning shown above every page of a project saved only on this device. Closing it hides it until the app is reopened.
+ *
+ * @feature storage.local-only
+ * @title Warning for projects saved only on this device
+ * @summary Reminds you that a project not stored in Dropbox or on WordPress exists only in this browser, and offers to save it safely or download a backup.
+ * @where Orange banner "This project is saved only on this device" at the top of every page of the project; badge "Only on this device" in the header; badge "Only on this device, no backup · Keep it safe" on the project card in the list of projects.
+ * @usage Click "Save it in Dropbox or WordPress" (or the header badge) to choose where to keep the project, or "Download a backup" to save a copy of the whole project as a file. Close the banner with the × button.
+ * @options none
+ * @rules The banner shows the date of the last backup ("never" if none). Closing it hides it for that project until the app is reopened; the header badge stays visible. The banner disappears once the project is stored in Dropbox or on a WordPress site.
+ * @errors none
+ * @status beta
+ * @since 1.0.0
+ * @related storage.choice
  */
 export const LocalOnlyBanner: FC = () => {
   const isLocalOnly = useCurrentProjectIsLocalOnly()
@@ -82,6 +96,7 @@ export const LocalOnlyBanner: FC = () => {
 
 /**
  * Header indicator for a project saved only on this device. Always visible, also after the banner is closed.
+ * @featurePart storage.local-only
  */
 export const LocalOnlyHeaderButton: FC = () => {
   const isLocalOnly = useCurrentProjectIsLocalOnly()

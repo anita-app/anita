@@ -30,6 +30,30 @@ const getAlreadyExists = (section: ISection, fieldName: string): boolean => {
   return section.formModel.some(formElement => formElement.fieldName === fieldName)
 }
 
+/**
+ * @feature section.fields
+ * @title Add fields to a section
+ * @summary Defines the fields of the records of a section: their label, data type and whether they must be filled.
+ * @where Project editor ("Add Project" / "Edit Project"), "Section element fields" of each section card, with the "Add field" and
+ * "Delete field" buttons.
+ * @usage 1. In a section card click "Add field".
+ * 2. Type the "Field label".
+ * 3. Choose the "Data type"; for text fields also the "Content type", for dates the "Date format", for date and time the
+ * "Time format".
+ * 4. For drop-down and alternative choice fields, type the "Choices".
+ * 5. Tick "Required" if the field must always be filled.
+ * 6. Save the project.
+ * @options Data type: any field type of Anita (default: the first of the list). Content type of text fields (text, email,
+ * number, phone, link, color...), date format, time format. "Required", off by default. "Identifier", only in Advanced
+ * mode.
+ * @rules The label is required. In basic mode the identifier is created from the label and kept unique in the section; once
+ * the field is saved its identifier cannot be changed, while label, type and the other settings can. A new section
+ * starts with one empty field; "Delete field" appears only when the section has more than one field.
+ * @errors none
+ * @status stable
+ * @since 0.1.0
+ * @related section.add, project.advanced-editor
+ */
 export const SectionFormModelManager: FC<ISectionFormModelManagerProps> = (props) => {
   const params = useParams()
   const projectEditorMode = useAtomValue(FormProjectAtoms.mode)

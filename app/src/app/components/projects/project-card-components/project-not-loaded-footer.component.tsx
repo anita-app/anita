@@ -8,6 +8,7 @@ interface IProjectNotLoadedFooterProps {
   project: IProjectSettings
 }
 
+/** @featurePart project.list */
 export const ProjectNotLoadedFooter: FC<IProjectNotLoadedFooterProps> = (props) => (
   <Button
     id="loadProject"

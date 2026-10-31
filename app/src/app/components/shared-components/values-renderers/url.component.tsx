@@ -6,6 +6,7 @@ interface IUrlProps {
 
 const removeProtocolFromUrl = (url: string) => url.replace(/^(?:https?:\/\/)?(?:www\.)?/i, '')
 
+/** @featurePart field.short-text */
 export const Url: FC<IUrlProps> = (props) => props.value
   ? (
     <a

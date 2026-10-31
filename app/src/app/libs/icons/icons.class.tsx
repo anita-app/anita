@@ -24,10 +24,16 @@ const svgIcons = {
 
 type TSVGIcons = keyof typeof svgIcons
 
+/**
+ * @internal
+ */
 export type TIconName = keyof typeof ionicons | TSVGIcons
 
 const ALL_ICONS = Object.keys(ionicons).concat(Object.keys(svgIcons))
 
+/**
+ * @internal
+ */
 export class Icons {
   public static getIconsOptionsList (): Array<IOption> {
     return Object.keys(ionicons)

@@ -13,6 +13,7 @@
     "licenses": "yarn licenses-landing && yarn licenses-app",
     "build-landing": "cd landing && npm run build",
     "build-app": "yarn workspace anita-app build",
+    "features": "yarn workspace anita-app features",
     "testdist": "cd anita-app.github.io && npx http-server",
     "buildTest": "yarn build-app && yarn testdist",
     "pull-main": "cd anita-app.github.io && git pull --force origin main",

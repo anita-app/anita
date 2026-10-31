@@ -16,6 +16,21 @@ interface IProjectSectionListGridProps {
 
 const MAX_PILLS_PER_CARD = 2
 
+/**
+ * @feature view.grid
+ * @title Grid (cards) view
+ * @summary Shows the records of a section as cards, with their name, a few short values and a description.
+ * @where List of a section, with the grid icon selected at the top right.
+ * @usage Click the grid icon above the list. Click a card to open the details of the record.
+ * @options none (the gear icon "Edit view" opens an "Edit Card Layout" window that has no settings yet).
+ * @rules Each card shows the field that names the records as its title ("Untitled" when empty), then up to two choice fields (drop-down or radio buttons) and the first date field when they have a value, then the first rich text field of the section as description. Long descriptions are cut, with a fade only when they are actually cut. Cards are arranged in 1 to 4 columns depending on the width of the screen.
+ * @errors none
+ * @status stable
+ * @since 0.14.0
+ * @routes projectSectionElesList
+ * @covers view:grid
+ * @related view.switch-view, record.title
+ */
 export const ProjectSectionListGrid: FC<IProjectSectionListGridProps> = (props) => {
   const projectId = useAtomValue(RoutingAtoms.param(URL_PARAMS.projectId))!
   const sectionData = useLiveQuery(() => Queriers.getProjectSection(projectId, props.sectionId!), [projectId, props.sectionId])

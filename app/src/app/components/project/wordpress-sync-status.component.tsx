@@ -16,6 +16,7 @@ const formatDate = (isoDate: string): string => dateFormat('yyyy/MM/dd, at hh:mm
 
 /**
  * Hook: what this device knows about a project synced with WordPress.
+ * @internal
  */
 export const useRemoteProjectInfo = (projectId: string | undefined) => (
   useLiveQuery(() => (projectId ? CloudSyncBase.getRemoteProjectInfo(projectId) : undefined), [projectId])
@@ -23,6 +24,7 @@ export const useRemoteProjectInfo = (projectId: string | undefined) => (
 
 /**
  * Sync information and "Sync now" for a project linked to a WordPress site.
+ * @featurePart sync.wordpress-projects, sync.wordpress-share, sync.status
  */
 export const WordPressSyncStatus: FC<{ project: IProjectSettings }> = (props) => {
   const project = props.project

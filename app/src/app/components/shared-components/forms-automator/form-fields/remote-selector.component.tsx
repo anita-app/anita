@@ -38,6 +38,7 @@ const accessLevelOptions: Array<ISelectOption<TAccessLevel>> = (Object.keys(ACCE
 /**
  * Chooses where a project is stored besides this device (`remoteStorage`): Dropbox or a WordPress site, and who can
  * see it on the site (`remoteAccessLevel`).
+ * @featurePart storage.choice, sync.wordpress-share
  */
 export const RemoteSelector: FC<ICommonFormEleProps<IBasicSelect<ISectionElement>>> = memo(function RemoteSelector ({ formEle, element, handleChange }: ICommonFormEleProps<IBasicSelect<ISectionElement>>) {
   const remotes = useAtomValue(SyncStateAtoms.wordPressRemotes)

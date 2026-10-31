@@ -336,6 +336,7 @@ const DropboxAuthResult: FC<{ code?: string; state?: string; error?: string }> =
   )
 }
 
+/** @featurePart sync.dropbox-connect, sync.wordpress-connect, security.sync-sessions */
 export const OAuth: FC = () => {
   const data = OAuthUtils.parseQueryString()
   const service = data.service ?? SupportedCloud.DROPBOX

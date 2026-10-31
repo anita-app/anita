@@ -6,10 +6,14 @@ import type { Filter4Dexie, SuppoertedOperators } from 'app/libs/db-connector/pl
 import type { Table } from 'dexie'
 import type Dexie from 'dexie'
 
+/**
+ * @internal
+ */
 export type NewWhere = [string, SuppoertedOperators, string | number]
 
 /**
  * Builds queries to be executed with Dexie
+ * @internal
  */
 export class QueryMaker<E> {
   private logic: 'AND' | 'OR' = 'AND'

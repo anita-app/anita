@@ -48,6 +48,18 @@ const syncCurrentProject = () => {
  * Keeps the connected WordPress sites, the Dropbox account and the current project in sync while the app is open:
  * at start, when the current project changes, periodically, and when the window gets focus or the device goes back
  * online. Renders nothing.
+ *
+ * @feature sync.automatic
+ * @title Automatic sync and working offline
+ * @summary Syncs Dropbox, the connected WordPress sites and the open project by itself while Anita is open, and keeps the changes on the device while offline.
+ * @where Nothing to open: it runs in the background whenever Anita is open in a browser tab.
+ * @usage Nothing to do: keep working, also offline. Use "Sync now" to sync immediately.
+ * @options none
+ * @rules Syncs at start, when a service is connected or a login is renewed, when a project is opened, every 5 minutes for the list of projects of each service, every minute (and when the window gets focus, at most every 15 seconds) for changes to the open project, and when the device goes back online. Nothing is synced while the tab is hidden or the device is offline, and services that need a new login are skipped. Changes made offline are kept on this device and sent at the next sync. Messages: "Anita could not reach Dropbox. Your changes are kept on this device and will be synced when Dropbox is reachable again."; "Anita could not reach <site>. Your changes are kept on this device and will be synced when the site is reachable again."
+ * @errors dropbox.network, wordpress.network
+ * @status beta
+ * @since 1.0.0
+ * @related sync.status, sync.dropbox-projects, sync.wordpress-projects
  */
 export const CloudSyncAgent: FC = () => {
   const remotesIds = useAtomValue(SyncStateAtoms.wordPressRemotesIds)

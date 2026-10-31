@@ -10,6 +10,7 @@ import { SyncStateAtoms } from 'app/state/sync/sync-state.atoms'
 import type { FC, ReactNode } from 'react'
 import type { IWordPressRemoteInfo, TAccessLevel } from 'app/libs/cloud-sync/wordpress/wordpress.const'
 
+/** @internal */
 export type TStorageChoice =
   | { kind: 'local' }
   | { kind: 'remote'; remoteId: string; accessLevel: TAccessLevel }
@@ -26,6 +27,7 @@ const isWordPressChoice = (choice: TStorageChoice): choice is Extract<TStorageCh
 
 /**
  * Sites where the user can create projects.
+ * @featurePart storage.choice
  */
 export const useWritableRemotes = (): Array<IWordPressRemoteInfo> => (
   useAtomValue(SyncStateAtoms.wordPressRemotes).filter(remote => (
@@ -36,6 +38,7 @@ export const useWritableRemotes = (): Array<IWordPressRemoteInfo> => (
 /**
  * The storage proposed by default: the first connected site, otherwise Dropbox if connected, otherwise this device.
  * When the project must leave this device, Dropbox: it needs nothing more than a login.
+ * @featurePart storage.choice
  */
 export const defaultStorageChoice = (remotes: Array<IWordPressRemoteInfo>, allowLocal: boolean, dropboxIsWritable: boolean): TStorageChoice => {
   if (remotes.length) {
@@ -93,6 +96,18 @@ interface IStorageChoiceProps {
 
 /**
  * Where a project is stored: on a connected WordPress site, in Dropbox, on a site to connect now, or only on this device.
+ *
+ * @feature storage.choice
+ * @title Choose where a project is stored
+ * @summary Chooses whether a project is kept in Dropbox, on a WordPress site, or only on this device, when creating it, in its settings, or later for a local project.
+ * @where The storage options when creating a project from a template; "Remote storage" in the project settings; the dialog "Keep your project safe" opened from "Save it in Dropbox or WordPress", the "Only on this device" header badge or "Keep it safe" on a project card.
+ * @usage 1. Pick one of the options (the recommended one is marked "Recommended"). 2. For Dropbox, optionally change the folder; for WordPress, choose "Who can see it on the site"; for a new site, type its address. 3. Confirm with the button, whose label says what happens: "Save on <site>", "Save in Dropbox", "Connect Dropbox and save", "Connect and save", "Create and connect Dropbox", "Create and connect WordPress". Choosing a service not yet connected opens its login and brings you back to the project.
+ * @options Each connected WordPress site where you can create projects, "Dropbox" (or "My Dropbox" if not connected yet), "My WordPress site" / "Another WordPress site" (connect a new site), "Only on this device" (not offered when moving a local project). Default: the first connected site, otherwise Dropbox, otherwise this device; Dropbox is recommended when no site is connected. In the project settings, "None: this device only" and "Connect storage" when nothing is connected.
+ * @rules "Only on this device" is saved only in this browser, with no backup: clearing browsing data, private browsing or losing the device deletes it; it can be moved to Dropbox or WordPress later. Changing or removing the storage of a synced project asks "Stop syncing with <name>?": the project is not deleted, it stays on this device and in Dropbox or on the site. "Not now" closes the dialog. Errors are shown as "The project was not saved" with the message of the service.
+ * @errors none
+ * @status beta
+ * @since 1.0.0
+ * @related storage.local-only, sync.dropbox-projects, sync.wordpress-projects, sync.wordpress-share
  */
 export const StorageChoice: FC<IStorageChoiceProps> = (props) => {
   const remotes = useWritableRemotes()

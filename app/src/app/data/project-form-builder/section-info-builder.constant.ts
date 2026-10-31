@@ -5,6 +5,7 @@ import { Icons } from 'app/libs/icons/icons.class'
 import type { FormFieldsModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 import type { SectionDetailsDeclaration } from 'app/models/section/section.declarations'
 
+/** @featurePart section.add */
 export const sectionDetailsFormFieldsModel: Array<FormFieldsModel<SectionDetailsDeclaration>> = [
   {
     componentCode: FORM_COMPONENTS_CODES.hiddenInput,

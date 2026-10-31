@@ -6,6 +6,7 @@ import type Dexie from 'dexie'
 
 /**
  * Implements updator for IndexedDb
+ * @internal
  */
 export class DbUpdator<E> implements Updator<E> {
   /**

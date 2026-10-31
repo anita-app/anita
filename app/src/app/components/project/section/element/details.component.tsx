@@ -78,6 +78,20 @@ const goBack = () => {
   RoutingState.goTo(-1)
 }
 
+/**
+ * @feature view.details-panel
+ * @title Collapse the details of a record
+ * @summary Folds the Details panel of a record, to give room to the tabs of its linked records.
+ * @where Details page of a record whose section has child sections: the header of the panel, with the chevron on the right.
+ * @usage Click anywhere on the header of the panel to collapse it; click again to expand it.
+ * @options Expanded (default) or collapsed.
+ * @rules Collapsed, the panel shows only the record title, and the tabs of the linked records move up. The choice is remembered for each section on this device only. The edit button stays available when the panel is collapsed. Sections without child sections have no collapsible header.
+ * @errors none
+ * @status stable
+ * @since 1.0.0
+ * @routes projectSectionEleDetails
+ * @related record.details, view.child-records-tabs
+ */
 const collapsedKey = (sectionId: string) => `anita.detailsCollapsed.${sectionId}`
 
 /**
@@ -107,6 +121,21 @@ const useDetailsCollapsed = (sectionId: string | undefined): [boolean, () => voi
   return [collapsed, toggle]
 }
 
+/**
+ * @feature record.details
+ * @title Record details page
+ * @summary Shows all the values of a record, the records it is linked to, and the buttons to edit or delete it.
+ * @where List of a section: click a row of the table or a card of the grid. Also from the links to linked records.
+ * @usage Open a record from the list. Read its values; click a linked record to open it; press Escape to go back.
+ * @options none
+ * @rules The header is the name of the record ("Details" when it has none), with the section name above it. Each field is shown with its label; empty fields are not shown and long texts take the whole row. Checkbox fields can be ticked directly. Records it is linked to are shown under the name of their section (for example "Cuisines: American"), each as a link; "Untitled" when the linked record has no name. If the record no longer exists, the list of the section opens.
+ * @errors none
+ * @status stable
+ * @since 0.1.0
+ * @routes projectSectionEleDetails
+ * @shortcuts Escape
+ * @related record.edit, record.delete, view.details-panel, view.child-records-tabs, record.title
+ */
 export const ProjectSectionElementDetails: FC<{ collapsible: boolean }> = (props) => {
   const projectId = useAtomValue(RoutingAtoms.param(URL_PARAMS.projectId))!
   const sectionId = useAtomValue(RoutingAtoms.param(URL_PARAMS.sectionId))
@@ -178,6 +207,7 @@ export const ProjectSectionElementDetails: FC<{ collapsible: boolean }> = (props
   )
 }
 
+/** @featurePart record.details, view.details-panel, view.child-records-tabs */
 export const ProjectSectionElementDetailsPage: FC = () => {
   const projectId = useAtomValue(RoutingAtoms.param(URL_PARAMS.projectId))
   const sectionId = useAtomValue(RoutingAtoms.param(URL_PARAMS.sectionId))

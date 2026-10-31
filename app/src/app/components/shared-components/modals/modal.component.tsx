@@ -128,6 +128,23 @@ const Modal: FC<IModalProps> = (props) => {
   )
 }
 
+/**
+ * @feature navigation.dialogs
+ * @title Dialogs and confirmations
+ * @summary Questions and confirmations open in a window over the page, with the action buttons at the bottom.
+ * @where Over any page, when an action needs an answer (for example deleting, or a choice during a sync).
+ * @usage 1. Read the title and the text of the dialog.
+ * 2. Click the button of the action you want, or "Cancel" to do nothing.
+ * @options none
+ * @rules Only one dialog is open at a time and it covers the whole app, header included; the page behind is dimmed.
+ * The action buttons are at the bottom right, "Cancel" before them; some dialogs have no "Cancel" or have an extra button on the left. A button can be disabled until the dialog is filled in.
+ * Dialogs for dangerous actions (such as deleting) show a red warning icon and a red action button.
+ * A dialog is at most as tall as the window: title and buttons stay visible and the content scrolls.
+ * Most dialogs close only with their buttons; some (such as the sync questions) also close, as a cancel, with Escape or a click outside.
+ * @errors none
+ * @status stable
+ * @since 0.7.0
+ */
 export const ModalPortal: FC = () => {
   const modalConfig = useAtomValue(ModalStateAtoms.modalProps)
   return (

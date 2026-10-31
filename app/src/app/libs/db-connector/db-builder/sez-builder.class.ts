@@ -4,6 +4,7 @@ import type { SectionDefinition, SectionModel, SectionName } from 'app/libs/db-c
 
 /**
  * Builds a Section model
+ * @internal
  */
 export class SezBuilder<T> {
   /**

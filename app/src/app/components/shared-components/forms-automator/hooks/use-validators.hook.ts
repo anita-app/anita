@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { FormElesValidState } from 'app/state/form-eles-valid-state/form-eles-valid-state.class'
 
+/** @featurePart field.required, field.format-validation */
 export const useValidators = (fieldId: string): [boolean, ((isValid: boolean) => void)] => {
   const [isValid, setIsValid] = useState(true)
 

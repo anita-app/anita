@@ -2,6 +2,7 @@ import type { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-def
 
 /**
  * Defines the table localSettings and its fields for the `indexedDb` plugin of `db-connector`
+ * @internal
  */
 export const localSettings: SectionDefinition<LocalSettingsData<LOCAL_SETTINGS_KEYS>> = {
   name: 'localSettings',
@@ -13,6 +14,7 @@ export const localSettings: SectionDefinition<LocalSettingsData<LOCAL_SETTINGS_K
 /**
  * Constant to uniquely identify values of local settings.
  * As of now there are no settings yet to save, so we keep `testData`.
+ * @internal
  */
 export enum LOCAL_SETTINGS_KEYS {
   testData = 1,
@@ -20,6 +22,7 @@ export enum LOCAL_SETTINGS_KEYS {
 
 /**
  * Defines the expected data structure to be saved in `localSettings`.
+ * @internal
  */
 export interface LocalSettingsData<T extends LOCAL_SETTINGS_KEYS> {
   id: T

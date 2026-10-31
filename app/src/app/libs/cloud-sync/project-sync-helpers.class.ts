@@ -15,11 +15,13 @@ import type { ISection } from 'app/models/section/section.declarations'
 /**
  * Changes made on another device while a sync is running must not be considered older than the sync.
  * lastSync is therefore set to the start of the sync, minus this margin to absorb small clock differences.
+ * @internal
  */
 export const LAST_SYNC_SAFETY_MARGIN_MS = 2 * 60 * 1000
 
 /**
  * Helpers shared by the syncs with WordPress and with Dropbox.
+ * @internal
  */
 export class ProjectSyncHelpers {
   public static syncStartTime = (): string => new Date(Date.now() - LAST_SYNC_SAFETY_MARGIN_MS).toISOString()

@@ -9,6 +9,7 @@ import type { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
  * Converts the abstract definition of a Section into a complete datastructure that can be processed by FormDataParserService
  *
  * @see FormDataParserService
+ * @internal
  */
 export class DataStructureExtender {
   /**

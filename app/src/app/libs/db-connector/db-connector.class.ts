@@ -21,6 +21,7 @@ import type {
  * @param [options={}] Initialization options of the DB. These very depending on the plugin requirements (e.g. connection parameters)
  * @param [allSez] section definitions defining the data structure of the DB
  * @param [addSystemSections=true] whether to automatically build the data structure for system sections (`_settings` and `_sections`)
+ * @internal
  */
 export class DbConnector<DbTypes> implements DbConnectorInstance<DbTypes> {
   public dbStore!: DbStoreInterface<DbTypes>

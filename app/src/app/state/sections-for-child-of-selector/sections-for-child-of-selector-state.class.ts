@@ -2,6 +2,7 @@ import { Bucket } from 'app/state/bucket.state'
 import { SectionsForChildOfSelectorAtoms } from 'app/state/sections-for-child-of-selector/sections-for-child-of-selector.atoms'
 import type { SectionDetailsDeclaration } from 'app/models/section/section.declarations'
 
+/** @internal */
 export class SectionsForChildOfSelectorState {
   public static addSection = (section: SectionDetailsDeclaration) => {
     const current = Bucket.general.get(SectionsForChildOfSelectorAtoms.sections)

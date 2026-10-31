@@ -31,6 +31,7 @@ const commonFieldsForProjectInfo: Array<FormFieldsModel<IProjectSettings>> = [{
   required: true,
 }]
 
+/** @internal */
 export const availableSystems: Array<IOptionKeysModel> = [
   {
     label: 'Internal database (IndexedDB)',
@@ -53,11 +54,30 @@ const remoteStorageField: FormFieldsModel<IProjectSettings> = {
   options: [], // to be filled by the component itself with the available remote storage options
 }
 
+/**
+ * @feature project.settings
+ * @title Name and describe a project
+ * @summary The name, description and remote storage of a project, set at the top of the project editor.
+ * @where Top card of the "Add Project" / "Edit Project" editor, and the "Import project" dialog.
+ * @usage 1. Type the name in "Project" and a short text in "Description".
+ * 2. Optionally choose a "Remote storage".
+ * 3. Save.
+ * @options "Remote storage": none (only this device), Dropbox or a connected WordPress site. Its hint: store the project in
+ * Dropbox or on a WordPress site to sync it across devices; on WordPress you can also share it with the users of the
+ * site.
+ * @rules "Project" and "Description" are required: "Save" stays disabled while they are empty. The name is shown on the project
+ * card and in the app, and names the export files.
+ * @errors none
+ * @status stable
+ * @since 0.1.0
+ * @related project.create, project.edit, import.file
+ */
 export const projectInfoNewItem: Array<FormFieldsModel<IProjectSettings>> = [
   ...commonFieldsForProjectInfo,
   remoteStorageField,
 ]
 
+/** @featurePart project.settings */
 export const projectInfoForEditing: Array<FormFieldsModel<IProjectSettings>> = [
   ...commonFieldsForProjectInfo,
   remoteStorageField,

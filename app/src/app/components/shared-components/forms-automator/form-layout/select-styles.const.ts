@@ -6,6 +6,7 @@ const FOCUS_RING = { normal: '0 0 0 4px rgba(45, 150, 255, 0.16)', error: '0 0 0
 
 /**
  * Styles of react-select fields, so that they look like the other fields of the form.
+ * @internal
  */
 export const formSelectStyles = (hasError: boolean): StylesConfig<any, true> => ({
   control: (base, state) => ({

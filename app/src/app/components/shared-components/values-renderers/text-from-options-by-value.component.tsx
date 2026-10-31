@@ -12,6 +12,7 @@ const PILL_COLORS = 6
 /**
  * The label of the chosen option, as a pill. Its color comes from the position of the option, so the same
  * choice always has the same color.
+ * @featurePart field.drop-down, field.alternative-choice
  */
 export const TextFromOptionsByValue = (options: Array<IOptionKeysModel>, field: ITextFromOptionsByValueProps): ReactNode => {
   const label = SectionElement.txtByFieldValue(options, field.value)

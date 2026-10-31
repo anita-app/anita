@@ -16,6 +16,7 @@ interface IProjectDetailsCardProps {
   project: IProjectSettings
 }
 
+/** @featurePart project.info-page */
 export const ProjectDetailsCard: FC<IProjectDetailsCardProps> = (props) => (
   <div className="p-5 md:p-6">
     <div className="flex items-start gap-4">

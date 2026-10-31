@@ -13,6 +13,7 @@ import { DROPBOX_PROJECTS_FOLDER } from 'app/libs/cloud-sync/dropbox/dropbox.con
 import { displayDropboxFolder } from 'app/libs/cloud-sync/dropbox/dropbox-files.function'
 import type { IDropboxFolderEntry } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
 
+/** @internal */
 export interface IDropboxPickedFile {
   fileId: string
   path: string
@@ -310,6 +311,7 @@ const PickerContent: FC<Omit<IDropboxPickerProps, 'open'>> = (props) => {
 
 /**
  * Browses the connected Dropbox to choose a folder or a project file.
+ * @featurePart sync.dropbox-open-file, sync.dropbox-projects
  */
 export const DropboxPicker: FC<IDropboxPickerProps> = (props) => (
   <Transition
@@ -356,6 +358,7 @@ export const DropboxPicker: FC<IDropboxPickerProps> = (props) => (
 
 /**
  * The Dropbox folder where a project will be saved, with a button to choose another one. '/' is the root.
+ * @featurePart sync.dropbox-projects, storage.choice
  */
 export const DropboxFolderField: FC<{ value: string; onChange: (folder: string) => void; id?: string }> = (props) => {
   const [isOpen, setIsOpen] = useState(false)

@@ -4,6 +4,7 @@ import type { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 
 /**
  * Builds the data structure of the DB from the section definitions and returns it.
+ * @internal
  */
 export class DataStructureBuilder {
   /**

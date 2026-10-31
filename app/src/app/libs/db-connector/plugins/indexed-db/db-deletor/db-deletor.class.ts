@@ -6,6 +6,7 @@ import type Dexie from 'dexie'
 
 /**
  * Implements the deletor for IndexedDB
+ * @internal
  */
 export class DbDeletor<E> implements Deletor<E> {
   /**

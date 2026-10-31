@@ -8,6 +8,8 @@ import type { AdditionalInfoForLocalStorage, TAnitaUniversalDataStorage, LocalPr
 
 /**
  * Imports a project payload and persists it to IndexedDB.
+ *
+ * @featurePart import.file, template.sample-records
  */
 export class ProjectDataImporter {
   private additionalInfoForLocalStorage!: AdditionalInfoForLocalStorage

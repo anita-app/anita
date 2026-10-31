@@ -6,5 +6,6 @@ interface IMultilineTextProps {
 
 /**
  * Plain text that keeps its line breaks.
+ * @internal
  */
 export const MultilineText: FC<IMultilineTextProps> = (props) => (props.value ? <span className="whitespace-pre-line">{props.value}</span> : null)

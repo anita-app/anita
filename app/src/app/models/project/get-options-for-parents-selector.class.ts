@@ -6,6 +6,7 @@ import type { ISectionElement } from 'app/models/section-element/section-element
 import type { Project } from 'app/models/project/project.class'
 import type { IOptionKeysModel, OptionKeysModelGroup } from 'app/components/shared-components/forms-automator/form-automator.types'
 
+/** @featurePart relation.link-to-parent */
 export class GetOptionsForParentsSelector {
   private optionsGroups: Array<OptionKeysModelGroup> = []
 

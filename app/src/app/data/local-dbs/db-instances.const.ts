@@ -6,6 +6,9 @@ interface DbInstances {
   [projectIdentifier: string]: DbConnectorInstance<Dexie>
 }
 
+/**
+ * @internal
+ */
 export const dbInstances: DbInstances = {
   system: undefined as any,
 }

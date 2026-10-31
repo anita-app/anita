@@ -9,6 +9,7 @@ interface IFormEleContainerProps {
   advancedModeOnly?: boolean
 }
 
+/** @internal */
 export const FormEleContainer: FC<IFormEleContainerProps> = (props) => {
   const projectEditorMode = useAtomValue(FormProjectAtoms.mode)
   const hiddenClass = projectEditorMode === PROJECT_EDITOR_MODE.basic && props.advancedModeOnly ? 'hidden' : ''

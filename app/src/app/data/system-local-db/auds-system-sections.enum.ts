@@ -3,6 +3,7 @@ import { audsSettings } from 'app/data/system-local-db/sections/auds-settings.co
 
 /**
  * Identifies the table on which run the query with `db-connector`.
+ * @internal
  */
 export enum AUDS_SYSTEM_SECTIONS {
   auds_settings = 1,
@@ -11,5 +12,6 @@ export enum AUDS_SYSTEM_SECTIONS {
 
 /**
  * Array to be passed to `db-connector` to initialize the DB with Dexie, via the IndexedDb plugin.
+ * @internal
  */
 export const AUDS_SYSTEM_SECTIONS_DEFINITIONS = [audsSettings, audsSections]

@@ -8,6 +8,7 @@ const MAX_FILE_NAME_LENGTH = 80
 /**
  * Path of the file for a new project: its title, made safe for every operating system.
  * Dropbox renames the file if one with the same name exists.
+ * @featurePart sync.dropbox-projects
  */
 export const dropboxPathForProject = (title: string | undefined, folder: string = DROPBOX_PROJECTS_FOLDER): string => {
   const safeTitle = (title ?? '')
@@ -23,16 +24,19 @@ export const dropboxPathForProject = (title: string | undefined, folder: string 
 /**
  * How a folder is shown to users: "Dropbox" for the root, otherwise its path.
  * The root is '' for the Dropbox API, and '/' where an empty value means "the Anita folder" (`dropboxFolder`).
+ * @internal
  */
 export const displayDropboxFolder = (folder: string): string => (folder && folder !== '/' ? folder : 'Dropbox')
 
 /**
  * The folder that contains a file or folder ('' for the root).
+ * @internal
  */
 export const parentDropboxFolder = (path: string): string => path.replace(/\/[^/]*$/, '')
 
 /**
  * Reads the content of a file: returns the project, or null if the file is not an Anita project.
+ * @featurePart sync.dropbox-open-file
  */
 export const parseProjectFile = (content: string): TAnitaUniversalDataStorage | null => {
   try {
@@ -50,6 +54,7 @@ export const parseProjectFile = (content: string): TAnitaUniversalDataStorage | 
 /**
  * Settings of a project as stored in Dropbox and on this device: always marked as synced with Dropbox,
  * also for files created by older versions of the app, and without the options of WordPress or of the first upload.
+ * @internal
  */
 export const markAsDropboxProject = (data: TAnitaUniversalDataStorage): TAnitaUniversalDataStorage => {
   const settings = data[RESERVED_AUDS_KEYS._settings]?.[0]
@@ -66,6 +71,7 @@ interface ILocalProjectForPlan {
   remoteStorage?: string
 }
 
+/** @internal */
 export interface IDropboxSyncPlan {
   /** Projects in the Dropbox folder that are not on this device. */
   toImport: Array<IDropboxProjectFile>
@@ -82,6 +88,7 @@ export interface IDropboxSyncPlan {
 /**
  * Decides what the account-level sync does, from the files of the Dropbox folder, the projects on this device
  * and their links. `missingFileIds` are linked files that Dropbox reported as deleted.
+ * @featurePart sync.dropbox-projects, sync.dropbox-missing-file
  */
 export const planDropboxSync = (
   files: Array<IDropboxProjectFile>,

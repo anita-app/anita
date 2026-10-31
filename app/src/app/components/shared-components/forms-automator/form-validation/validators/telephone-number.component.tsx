@@ -3,6 +3,7 @@ import { memo, useEffect } from 'react'
 import type { FC } from 'react'
 import type { IValidatorsProps } from 'app/components/shared-components/forms-automator/form-validation/validators'
 
+/** @featurePart field.format-validation */
 export const TelephoneNumber: FC<IValidatorsProps> = memo(function TelephoneNumber ({ formEle, element, updateValidatorState }: IValidatorsProps) {
   const value = element[formEle.fieldName]
   const isValidTelephonenumber = /^\+?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4,})$/.test(value)

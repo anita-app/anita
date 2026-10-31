@@ -5,6 +5,7 @@ import { ProjectsListAtoms } from 'app/state/projects-list/projects-list.atoms'
 import { liveQuery } from 'dexie'
 import type { LocalProjectSettings } from 'app/models/project/project.declarations'
 
+/** @featurePart project.list */
 export class ProjectsListState {
   public static watchProjectsList = (): Promise<true> => (
     new Promise((resolve) => {

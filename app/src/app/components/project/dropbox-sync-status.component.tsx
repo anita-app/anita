@@ -17,6 +17,7 @@ const formatDate = (isoDate: string): string => dateFormat('yyyy/MM/dd, at hh:mm
 
 /**
  * Sync information and "Sync now" for a project synced with Dropbox.
+ * @featurePart sync.dropbox-projects, sync.status
  */
 export const DropboxSyncStatus: FC<{ project: IProjectSettings }> = (props) => {
   const project = props.project

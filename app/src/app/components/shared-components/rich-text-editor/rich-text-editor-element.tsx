@@ -1,5 +1,6 @@
 import type { FC } from 'react'
 
+/** @featurePart field.long-text, field.rich-text-formatting */
 export const RichTextEditorElement: FC<any> = (props) => {
   const style = { textAlign: props.element.align }
   switch (props.element.type) {

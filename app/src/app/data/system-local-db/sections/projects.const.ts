@@ -5,6 +5,7 @@ import type { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-def
 /**
  * Defines the table projects and its fields for the `indexedDb` plugin of `db-connector`.
  * In the table `projects` are stored only the essential information needed to load the project from its data source.
+ * @internal
  */
 export const projects: SectionDefinition<LocalProjectSettings> = {
   name: 'projects',

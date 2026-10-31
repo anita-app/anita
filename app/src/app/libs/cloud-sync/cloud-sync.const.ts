@@ -1,3 +1,4 @@
+/** @internal */
 export enum CloudSyncTable {
   ACCOUNTS = 'accounts',
   SYNC_INFO = 'syncInfo',

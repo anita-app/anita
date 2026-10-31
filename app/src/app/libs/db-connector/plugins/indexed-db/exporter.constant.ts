@@ -8,6 +8,7 @@ import type { DbObjects } from 'app/libs/db-connector/models/executers'
 
 /**
  * Constant to be passed to DbInit to use IndexedDB as plugin
+ * @internal
  */
 export const INDEXEDDB_PLUGIN: DbObjects<any, Dexie> = {
   insertor: DbInsertor,

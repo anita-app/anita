@@ -10,6 +10,7 @@ import { LayoutAtoms } from 'app/state/layout/layout.atoms'
 import { ProjectAtoms } from 'app/state/project/project.atoms'
 import type { FC } from 'react'
 
+/** @featurePart sync.status, storage.local-only */
 export const AdminLayoutHeader: FC = () => {
   const sidebarCollapsed = useAtomValue(LayoutAtoms.sidebarCollapsed)
   const project = useAtomValue(ProjectAtoms.currentSystemData)

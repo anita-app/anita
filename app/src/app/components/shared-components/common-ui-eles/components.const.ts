@@ -1,3 +1,6 @@
+/**
+ * @internal
+ */
 export enum Type {
   primary = 'primary',
   secondary = 'secondary',
@@ -8,6 +11,9 @@ export enum Type {
   transparent = 'transparent',
 }
 
+/**
+ * @internal
+ */
 export enum SolidBg {
   primary = 'bg-prussian-blue-400/80',
   secondary = 'bg-gray-100/80',
@@ -19,6 +25,9 @@ export enum SolidBg {
 }
 
 // The primary look (ui-btn-primary) is defined in ui.css: a light blue gradient with a colored shadow.
+/**
+ * @internal
+ */
 export enum SolidBgWithHover {
   primary = 'ui-btn-primary border-transparent',
   secondary = 'bg-white border-[#dfe5ee] shadow-[0_1px_2px_rgba(0,35,70,0.06)] hover:bg-[#f9fbfe] hover:border-[#c4d2e3]',
@@ -30,6 +39,9 @@ export enum SolidBgWithHover {
   transparent = 'bg-transparent border-transparent hover:bg-[#eef3f9]',
 }
 
+/**
+ * @internal
+ */
 export enum SolidText {
   primary = 'text-white',
   secondary = 'text-[#1e2b3c]',
@@ -40,6 +52,9 @@ export enum SolidText {
   transparent = 'text-gray-600 hover:text-prussian-blue-500',
 }
 
+/**
+ * @internal
+ */
 export enum OutlineBg {
   primary = 'bg-white border-prussian-blue-300/40 hover:bg-[#f2f7fd] hover:border-prussian-blue-300',
   secondary = 'bg-transparent border-gray-200 hover:bg-gray-50',
@@ -50,6 +65,9 @@ export enum OutlineBg {
   transparent = 'bg-transparent border-transparent hover:bg-gray-100',
 }
 
+/**
+ * @internal
+ */
 export enum OutlineText {
   primary = 'text-prussian-blue-400',
   secondary = 'text-gray-700 hover:text-gray-800',
@@ -60,6 +78,9 @@ export enum OutlineText {
   transparent = 'text-gray-700 hover:text-gray-800',
 }
 
+/**
+ * @internal
+ */
 export const COLOR_SCHEME = {
   solid: {
     bg: SolidBgWithHover,
@@ -71,4 +92,7 @@ export const COLOR_SCHEME = {
   },
 }
 
+/**
+ * @internal
+ */
 export type TFill = keyof typeof COLOR_SCHEME

@@ -11,6 +11,7 @@ interface IListTabsHeaderRightEditViewProps {
   activeTab: SupportedViews
 }
 
+/** @featurePart view.table-columns, view.grid */
 export const ListTabsHeaderRightEditView: FC<IListTabsHeaderRightEditViewProps> = (props: IListTabsHeaderRightEditViewProps) => {
   const modalConfigsByView: { [key: number]: IModalProps } = {
     [SupportedViews.grid]: {

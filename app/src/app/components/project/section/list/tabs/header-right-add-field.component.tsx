@@ -16,6 +16,20 @@ interface IListTabsHeaderRightAddFieldProps {
   sectionId: string
 }
 
+/**
+ * @feature view.add-field
+ * @title Add a field from the list
+ * @summary Adds a new field to a section without opening the project editor.
+ * @where List of a section, table view: gear icon "Edit view", then "Add field" at the bottom of the "Edit visible columns" window.
+ * @usage Click "Add field", fill in the new field (name, type and its settings) in the "Add field" window, then click "Add". Click "Cancel" to close without adding.
+ * @options The same field types and settings as in the project editor.
+ * @rules "Add" is disabled while the new field is not valid (for example without a name). The field is added at the end of the section and the project is saved; existing records have no value for it until they are edited.
+ * @errors none
+ * @status stable
+ * @since 0.17.0
+ * @routes projectSectionElesList
+ * @related view.table-columns
+ */
 export const ListTabsHeaderRightAddField: FC<IListTabsHeaderRightAddFieldProps> = (props) => {
   const project = useAtomValue(FormProjectAtoms.project)
   const validObj = useAtomValue(FormElesValidStateAtoms.validState)

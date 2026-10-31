@@ -10,6 +10,26 @@ import { useAtomValue } from 'jotai'
 import { ProjectsListAtoms } from 'app/state/projects-list/projects-list.atoms'
 import type { FC } from 'react'
 
+/**
+ * @feature project.list
+ * @title See and open your projects
+ * @summary The list of the projects saved on this device, with where each one is stored and the actions on it.
+ * @where "Projects" screen ("On this device"), one card per project.
+ * @usage 1. Open the Projects screen.
+ * 2. On the card of a project click "Load project".
+ * 3. Click "Open project" to go to its details, or use "Export" and "Edit Project" on the card.
+ * @options Buttons of the screen: "Storage and sync" (connect Dropbox or WordPress sites), "Open from Dropbox", "Import" and
+ * "New project". Buttons of each card: "Delete Project", "Load project", then "Export", "Edit Project" and "Open project".
+ * @rules Each card shows the avatar, name and description of the project, its creation date and where it is synced: "Synced
+ * with Dropbox", "Synced with" and the name of the WordPress site, or the warning "Only on this device, no backup · Keep
+ * it safe", which opens the dialog to save the project in Dropbox or on a WordPress site. "Export", "Edit Project" and
+ * "Open project" appear once the project is loaded. When there are no projects the app shows the first project page.
+ * @errors none
+ * @status stable
+ * @since 0.1.0
+ * @routes projectsList
+ * @related project.first-project, project.create, project.delete, export.project, import.file
+ */
 export const ProjectsList: FC = () => {
   const projects = useAtomValue(ProjectsListAtoms.projects)
 

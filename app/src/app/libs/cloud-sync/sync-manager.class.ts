@@ -7,12 +7,14 @@ import { Logger } from 'app/libs/logger/logger.class'
 import type { TSystemData } from 'app/models/project/project.declarations'
 import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
+/** @internal */
 export interface ISyncWithRemoteOrLocalAddProjectProps {
   mode: EDITOR_MODE.add
   type: 'project'
   systemData: TSystemData
 }
 
+/** @internal */
 export interface ISyncWithRemoteOrLocalEditProjectProps {
   mode: EDITOR_MODE.edit
   type: 'project'
@@ -41,6 +43,7 @@ type ISyncWithRemoteOrLocalProps = ISyncWithRemoteOrLocalAddProjectProps | ISync
 /**
  * Sends local changes to the remote copy of the project, if any: a Dropbox file or a WordPress site.
  * Project deletion is handled by ProjectDeletor, which must know whether the remote deletion succeeded.
+ * @featurePart sync.dropbox-projects, sync.wordpress-projects
  */
 export class SyncManager {
   public static syncWithRemoteOrLocal = async (props: ISyncWithRemoteOrLocalProps): Promise<void> => {

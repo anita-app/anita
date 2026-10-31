@@ -26,6 +26,7 @@ interface ILoginPayload {
   state: string
 }
 
+/** @internal */
 export interface ICompletedLogin {
   remoteId: string
   siteName: string
@@ -60,6 +61,19 @@ const sha256 = async (value: string): Promise<string> => {
  *
  * The user is sent to the login page of the site (the standard WordPress login, then an approval page).
  * The site sends the browser back to this app with a single-use code, exchanged for tokens with PKCE.
+ *
+ * @feature security.sync-sessions
+ * @title Logins to Dropbox and WordPress sites
+ * @summary Keeps your Dropbox and WordPress logins secure on this device and asks you to log in again when a session expires or is revoked, without losing changes.
+ * @where "Log in again" on the Dropbox or site card of Storage and sync and on the project page ("Log in to Dropbox again", "Log in to <site> again"); red ring on the header icon.
+ * @usage When "Login required" appears, click "Log in again", log in on Dropbox or on the site and come back to Anita: syncing resumes and pending changes are sent.
+ * @options none
+ * @rules You always log in on the page of Dropbox or of the site: Anita never sees your password. The connection uses a single-use code checked against the browser that started it (PKCE), valid 30 minutes, and the answer must come from the site that was checked. Access tokens are stored only in this browser and renewed automatically; disconnecting forgets them (on Dropbox they are also revoked). While a login is required, changes are kept on this device. Messages: "Your Dropbox session has expired or was disconnected. Log in again to resume syncing; your changes are kept on this device."; "Dropbox is not connected on this device. Connect it to sync this project; until then, changes are saved on this device only."; "Your session on <site> has expired. Log in again to resume syncing; your changes are kept on this device."; "This device was disconnected from <site>, for example because your password was changed. Log in again to resume syncing."
+ * @errors dropbox.authFailed, dropbox.missingScope, dropbox.notConnected, wordpress.unauthorized, wordpress.tokenExpired, wordpress.tokenInvalid, wordpress.tokenRevoked, wordpress.notConnected, wordpress.invalidCode
+ * @status beta
+ * @since 1.0.0
+ * @routes auth, remotes
+ * @related sync.dropbox-connect, sync.wordpress-connect, sync.status
  */
 export class WordPressAuth {
   /**

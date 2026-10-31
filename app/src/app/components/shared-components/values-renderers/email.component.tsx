@@ -4,6 +4,7 @@ interface IEmailProps {
   value: string
 }
 
+/** @featurePart field.short-text */
 export const Email: FC<IEmailProps> = (props) => props.value
   ? (
     <a

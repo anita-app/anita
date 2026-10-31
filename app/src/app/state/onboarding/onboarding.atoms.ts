@@ -1,5 +1,6 @@
 import { atom } from 'jotai'
 
+/** @featurePart project.list, export.project */
 export class OnboardingAtoms {
   /** Project for which the dialog to save it in Dropbox or on WordPress is open, if any. */
   public static storeProjectId = atom<string | null>(null)

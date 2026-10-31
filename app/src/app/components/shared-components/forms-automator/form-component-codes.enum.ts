@@ -5,6 +5,7 @@ import type { IOptionKeysModel } from 'app/components/shared-components/forms-au
  *
  * @remarks
  * These values are stored in each `Section` in `AnitaUniversalDataStorage['sections']` so their number __must__ not be changed. Element can be added freely.
+ * @internal
  */
 export enum FORM_COMPONENTS_CODES {
   basicInput = 1,
@@ -24,6 +25,7 @@ export enum FORM_COMPONENTS_CODES {
 
 /**
  * Defines the value of the Select element for picking the type of Component for a field.
+ * @featurePart field.short-text, field.long-text, field.checkbox, field.drop-down, field.alternative-choice, field.date, field.date-time
  */
 export const SELECTABLE_FORM_ELES: Array<IOptionKeysModel> = [
   {

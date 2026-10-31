@@ -20,6 +20,7 @@ const SIZE_CLASSES = {
 
 /**
  * Gradient tile with the initial of the project.
+ * @featurePart navigation.project-picker
  */
 export const ProjectAvatar: FC<IProjectAvatarProps> = (props) => (
   <span

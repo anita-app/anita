@@ -1,6 +1,9 @@
 import { SHORTCUTS_STORE } from 'app/libs/shortcuts/shortcuts-store'
 import type { IShortcut, IShortcutsByKey } from 'app/libs/shortcuts/shortcuts-store'
 
+/**
+ * @featurePart navigation.keyboard-shortcuts
+ */
 export class ShortcutsManager {
   public static add (shortcut: IShortcut): void {
     const shortcutsByKey = this.getShortcutsStore(shortcut)

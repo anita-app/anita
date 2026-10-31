@@ -4,6 +4,7 @@ import type { ISyncStatus } from './sync-state.atoms'
 import type { IWordPressRemoteInfo } from 'app/libs/cloud-sync/wordpress/wordpress.const'
 import type { IDropboxAccountState, IDropboxFileLink } from 'app/libs/cloud-sync/dropbox/dropbox.const'
 
+/** @internal */
 export class SyncState {
   public static atoms = SyncStateAtoms
 

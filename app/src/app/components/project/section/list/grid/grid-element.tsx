@@ -26,6 +26,7 @@ const renderTitle = (field: FormFieldsModel<TSupportedFormsTypes>, value: unknow
   return customRenderPicker(field)({ value }) as ReactNode
 }
 
+/** @featurePart view.grid */
 export const ProjectSectionListGridElement: FC<IProjectSectionListGridElementProps> = (props) => {
   const descriptionRef = useRef<HTMLDivElement>(null)
   const [isDescriptionCut, setIsDescriptionCut] = useState(false)

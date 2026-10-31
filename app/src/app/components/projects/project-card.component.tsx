@@ -21,6 +21,7 @@ interface IProjectCardProps {
   index?: number
 }
 
+/** @featurePart project.list, project.delete */
 export const ProjectCard: FC<IProjectCardProps> = (props) => {
   const projectState = useAtomValue(ProjectAtoms.currentSystemData)
   const remotes = useAtomValue(SyncStateAtoms.wordPressRemotes)

@@ -10,6 +10,9 @@ function classNames (...classes: Array<string>) {
   return classes.filter(Boolean).join(' ')
 }
 
+/**
+ * @internal
+ */
 export interface IMenuItem {
   id: string
   label: string
@@ -29,6 +32,9 @@ interface IDropdown {
   margin?: string
 }
 
+/**
+ * @internal
+ */
 export const Dropdown: FC<IDropdown> = (props) => {
   const dropdownRef = useRef<HTMLDivElement>(null)
   const [open, setOpen] = useState(false)

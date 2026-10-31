@@ -8,6 +8,28 @@ import { appVersion } from 'app/version'
 import { useAtomValue } from 'jotai'
 import type { FC } from 'react'
 
+/**
+ * @feature navigation.sidebar
+ * @title Sidebar and sections menu
+ * @summary The menu on the left that lists the sections of the open project and takes you to their records.
+ * @where Left side of every page while a project is open; on phones it is hidden behind the menu button (three lines) at the top left of the header.
+ * @usage 1. Open a project.
+ * 2. Click a section under "Sections" to see its records.
+ * 3. On a phone, tap the menu button in the header to open the sidebar; tap a section, or anywhere outside the sidebar, to close it.
+ * @options none
+ * @rules The sidebar appears only when a project is open; on the projects list with no project it is not shown.
+ * At the top is the project picker, then the label "Sections" with the list of the sections in the order of the project.
+ * Each section shows its icon (a chevron when it has none) and its short name when one is set, otherwise its full name; long names are cut.
+ * The section you are viewing is highlighted.
+ * Sections hidden from the menu are not listed (see "Show or hide sections in the menu").
+ * On wide screens the sidebar is always visible; on small screens it slides in over the page and closes after you pick a section.
+ * At the bottom it shows the version of Anita ("v" and the number) and a bug icon ("Report a bug") that opens the Anita issues page on GitHub in a new tab.
+ * @errors none
+ * @status stable
+ * @since 0.1.0
+ * @routes projectDetails, projectSectionElesList, projectSectionEleDetails, projectSectionAddEle, projectSectionEditEle
+ * @related navigation.project-picker, navigation.hide-sections-in-menu
+ */
 export const AdminLayoutSidebar: FC = memo(function Sidebar () {
   const sidebarCollapsed = useAtomValue(LayoutAtoms.sidebarCollapsed)
   const [isEditingMenuItemsVisibility, setIsEditingMenuItemsVisibility] = useState(false)

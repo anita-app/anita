@@ -7,6 +7,7 @@ interface IPasswordProps {
   value: string
 }
 
+/** @featurePart field.short-text */
 export const Password: FC<IPasswordProps> = (props) => {
   const [showPassword, setShowPassword] = useState(false)
 

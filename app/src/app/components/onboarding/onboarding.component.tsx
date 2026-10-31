@@ -6,6 +6,7 @@ import './onboarding.css'
 
 const ONBOARDING_DONE_KEY = 'anita.onboarding.done'
 
+/** @featurePart app.onboarding */
 export const isOnboardingDone = (): boolean => {
   try {
     return localStorage.getItem(ONBOARDING_DONE_KEY) === '1'
@@ -14,6 +15,7 @@ export const isOnboardingDone = (): boolean => {
   }
 }
 
+/** @featurePart app.onboarding */
 export const markOnboardingDone = (): void => {
   try {
     localStorage.setItem(ONBOARDING_DONE_KEY, '1')
@@ -274,6 +276,25 @@ const ChooseSlide: FC<Pick<IOnboardingProps, 'onTemplates' | 'onImport' | 'onScr
 
 /**
  * First-run introduction, in three slides: welcome, what Anita does, how to start.
+ *
+ * @feature app.onboarding
+ * @title Introduction to Anita
+ * @summary A welcome in three steps that explains what Anita does and asks how you want to start.
+ * @where Shown at the first start, when there are no projects on the device; "Show the introduction again" link on the first
+ * project page.
+ * @usage 1. Click "Let's start" on the welcome step.
+ * 2. Read "What is Anita" and click "How do I start?".
+ * 3. Choose "Start from a template" (recommended), "Import my projects from Dropbox or WordPress", or "or start from
+ * scratch with an empty project".
+ * @options "Back", "Skip intro" (goes to the last step) and the step dots; the left and right arrow keys move between the steps.
+ * @rules Choosing how to start marks the introduction as seen in this browser, so it is not shown again (if the browser blocks
+ * storage it is shown again next time). Templates open the template gallery, import opens the "Storage and sync" screen,
+ * scratch opens the empty project editor.
+ * @errors none
+ * @status stable
+ * @since 1.0.0
+ * @routes projectsNone
+ * @related project.first-project, template.gallery, project.create
  */
 export const Onboarding: FC<IOnboardingProps> = (props) => {
   const [step, setStep] = useState(props.initialStep ?? 0)

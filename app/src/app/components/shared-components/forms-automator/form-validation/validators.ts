@@ -1,14 +1,17 @@
 import type { ICommonFormEleProps } from 'app/components/shared-components/forms-automator/form-automator.types'
 import type { SUPPORTED_VALIDATORS } from 'app/components/shared-components/forms-automator/form-validation/supported-validators.enum'
 
+/** @internal */
 export type IValidatorsConatinerProps = Pick<ICommonFormEleProps, 'formEle' | 'element' | 'fieldId' | 'touched'> & {
   setIsValidForField: (isValid: boolean) => void
 }
 
+/** @internal */
 export type IValidatorsProps = Pick<ICommonFormEleProps, 'formEle' | 'element' | 'fieldId' | 'touched'> & {
   updateValidatorState: (validatorName: SUPPORTED_VALIDATORS, isValid: boolean) => void
 }
 
+/** @internal */
 export type IValidatorsState = {
   [key in SUPPORTED_VALIDATORS]?: boolean;
 }

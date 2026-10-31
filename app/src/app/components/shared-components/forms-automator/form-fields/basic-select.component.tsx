@@ -14,6 +14,20 @@ import type { IBasicSelect, ICommonFormEleProps, IOptionKeysModel } from 'app/co
 import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import type { IOption } from 'app/models/parent-element/parent-element.class'
 
+/**
+ * @feature field.drop-down
+ * @title Drop-down list field
+ * @summary Pick one value from a list of choices defined for the field, in a drop-down that can be searched.
+ * @where Project editor: a field with Data type "Drop-down list" and its "Choices". In the form of a record, a box with an arrow; the chosen value is shown as a coloured label in lists and on the details page.
+ * @usage Define the choices of the field in the project editor. In the form of a record, click the box or its arrow to open the list and click a choice; type in the box to narrow the list. To clear the field, open the list and click the × next to the chosen item.
+ * @options The choices of the field (see "Choices of a drop-down or alternative choice"). The field starts empty.
+ * @rules The chosen item has a check mark in the open list. Typing narrows the list by the value stored for each choice, not by its label: in basic mode the values are numbers (1, 2, 3...), so typing a word may show "Nothing found.". The chosen value is shown as a coloured label; its colour depends on the position of the choice in the list (six colours, repeated), so the same choice always has the same colour. A record whose value no longer matches any choice (e.g. the choice was deleted) shows the field empty. If the field is required, "This field is required" appears when it is left empty.
+ * @errors none
+ * @status stable
+ * @since 0.1.0
+ * @covers field:basicSelect
+ * @related field.choices, field.alternative-choice, field.required
+ */
 export const BasicSelect: FC<ICommonFormEleProps<IBasicSelect<ISectionElement>>> = memo(function BasicSelect ({ formEle, element, handleChange, forceFullWidth }: ICommonFormEleProps<IBasicSelect<ISectionElement>>) {
   const [touched, setTouched] = useState(false)
   const [query, setQuery] = useState('')

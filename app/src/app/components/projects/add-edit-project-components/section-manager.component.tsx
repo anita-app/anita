@@ -17,6 +17,27 @@ interface ISectionManagerProps {
   sectionIndex: number
 }
 
+/**
+ * @feature section.add
+ * @title Add sections to a project
+ * @summary Sections are the kinds of records of a project (tasks, clients, books...): add them, name them and give them an icon
+ * and a short name for the menu.
+ * @where Project editor ("Add Project" / "Edit Project"): one card per section ("Section 1", "Section 2"...), "Add section"
+ * button at the bottom, "Delete section" in each card.
+ * @usage 1. Click "Add section".
+ * 2. Fill in the "Title" and, if you want, the "Abbreviation" and the "Icon".
+ * 3. Add the fields of the section.
+ * 4. Save the project.
+ * @options "Abbreviation": used in the menu instead of the title, if set. "Icon": shown with the section in the menu. "Parent
+ * sections:" to make it the child of other sections, so that its records can be linked to theirs.
+ * @rules The title is required; the card shows "New section" until it has one. A new project starts with one empty section.
+ * "Delete section" appears only when the project has more than one section. Sections keep the order in which they are
+ * listed in the editor.
+ * @errors none
+ * @status stable
+ * @since 0.1.0
+ * @related section.fields, project.edit, project.create
+ */
 export const SectionManager: FC<ISectionManagerProps> = (props) => {
   const projectEditorMode = useAtomValue(FormProjectAtoms.mode)
   const project = useAtomValue(FormProjectAtoms.project)

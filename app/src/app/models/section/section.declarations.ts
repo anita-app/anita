@@ -7,6 +7,7 @@ import type { FORM_COMPONENTS_CODES } from 'app/components/shared-components/for
 
 /**
  * Defines the bare minimum properties of a `Section` of a Project.
+ * @internal
  */
 export interface SectionDetailsDeclaration {
   id: string
@@ -24,12 +25,14 @@ export interface SectionDetailsDeclaration {
 
 /**
  * Defines the full properties of a Section.
+ * @internal
  */
 export interface ISection extends SectionDetailsDeclaration {
   formModel: Array<FormFieldsModel<TSupportedFormsTypes>>
   viewSettings?: ISectionViewSettings
 }
 
+/** @internal */
 export interface ISectionViewSettings {
   preferredView?: SupportedViews
   isHiddenInMenu?: boolean
@@ -44,6 +47,7 @@ export interface ISectionViewSettings {
  *
  * @remarks
  * These fields are for the object to be stored in `sections.formModel[]` of the `AnitaUniversalDataStorage` store.
+ * @internal
  */
 export interface ISectionCustomFieldProperties {
   componentCode: FORM_COMPONENTS_CODES

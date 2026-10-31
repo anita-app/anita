@@ -16,6 +16,7 @@ interface IProjectSectionListTableTdProps extends ISectionElement {
   titleFieldName?: string
 }
 
+/** @featurePart view.table, record.inline-checkbox */
 export const ProjectSectionListTableBodyTrTd: FC<IProjectSectionListTableTdProps> = memo(function ProjectSectionListTableTd (props: IProjectSectionListTableTdProps) {
   if (props.column.componentCode === FORM_COMPONENTS_CODES.basicCheckbox) {
     return (

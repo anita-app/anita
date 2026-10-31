@@ -14,6 +14,9 @@ const sizeClasses = {
   xl: 'rounded-xl px-6 py-3 text-base',
 }
 
+/**
+ * @internal
+ */
 export interface IButtonWithTooltipProps {
   id: string
   label?: string
@@ -56,6 +59,9 @@ enum TooltipBreakpoints {
 // ui-btn (ui.css): focus outline, press effect, arrow nudge on hover.
 const sharedClasses = 'ui-btn inline-flex items-center justify-center border font-semibold'
 
+/**
+ * @internal
+ */
 export const Button: FC<IButtonWithTooltipProps> = (props) => {
   const Component = props.href ? Link : 'button'
   const collapsable = (props.hasTooltip || !!props.tooltip) && props.breakpoint

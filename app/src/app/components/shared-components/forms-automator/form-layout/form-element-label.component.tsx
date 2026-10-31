@@ -8,6 +8,7 @@ interface IFormElementLabelProps {
   required?: boolean
 }
 
+/** @featurePart field.required */
 export const FormElementLabel: FC<IFormElementLabelProps> = (props) => {
   // Used as a CSS selector by the tooltip: only letters, digits and dashes.
   const elementId = `label-hint-${useId().replace(/[^a-zA-Z0-9-]/g, '')}`

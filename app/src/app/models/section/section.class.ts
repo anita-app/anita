@@ -18,6 +18,7 @@ import type { FormFieldsModel, TSupportedFormsTypes } from 'app/components/share
 import type { ISection } from 'app/models/section/section.declarations'
 import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
+/** @featurePart view.switch-view, view.table-columns, view.table-sort, navigation.hide-sections-in-menu, record.save, record.delete */
 export class Section implements ISection {
   public id: string = ''
   public title: string = ''

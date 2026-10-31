@@ -12,6 +12,7 @@ import type { IOptionKeysModel, OptionKeysModelGroup } from 'app/components/shar
 import type { ISection } from 'app/models/section/section.declarations'
 import type { IProjectSettings, TAnitaUniversalDataStorage, TSystemData } from 'app/models/project/project.declarations'
 
+/** @featurePart export.project, project.edit */
 export class Project {
   private settings: TSystemData[RESERVED_AUDS_KEYS._settings][0]
   private sectionsDefinitions: TSystemData[RESERVED_AUDS_KEYS._sections]

@@ -4,6 +4,8 @@ import type { AdditionalInfoForLocalStorage, LocalProjectSettings, IProjectSetti
 
 /**
  * Saves project's settings in IndexedDB.
+ *
+ * @internal
  */
 export class SaveProjectSettingsInIndexedDB {
   /**

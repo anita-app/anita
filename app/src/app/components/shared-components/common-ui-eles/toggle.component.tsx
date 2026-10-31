@@ -14,6 +14,9 @@ interface IToggleProps {
   onChange: (value: boolean) => void
 }
 
+/**
+ * @internal
+ */
 export const Toggle: FC<IToggleProps> = (props) => {
   const [enabled, setEnabled] = useState(props.initialState)
 

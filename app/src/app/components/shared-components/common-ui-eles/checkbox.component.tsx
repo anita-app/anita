@@ -8,6 +8,9 @@ interface ICheckboxProps {
   onChange: (value: boolean) => void
 }
 
+/**
+ * @internal
+ */
 export const Checkbox: FC<ICheckboxProps> = (props) => {
   const [checked, setChecked] = useState(props.initialValue)
 

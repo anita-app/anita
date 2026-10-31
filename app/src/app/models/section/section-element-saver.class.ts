@@ -7,6 +7,7 @@ import type { ISectionElement } from 'app/models/section-element/section-element
 
 /**
  * Saves a new element in a section of the project, stores the project on disk and dispatches the changes to the current state
+ * @featurePart record.save
  */
 export class SectionElementSaver {
   /**

@@ -13,6 +13,20 @@ import { Section } from 'app/models/section/section.class'
 import type { FC } from 'react'
 import type { SupportedViews } from 'app/models/section/view-settings.const'
 
+/**
+ * @feature view.section-list
+ * @title List of the records of a section
+ * @summary Shows all the records of a section of the project, as a table or as cards.
+ * @where Sidebar: click the name of a section of the open project.
+ * @usage Click a section in the sidebar. The page shows the section title, the project name above it and the number of records; click a record to open its details, or the round "+" button at the bottom right to add one.
+ * @options The records can be shown as a table or as cards (grid); the view chosen last is kept for each section.
+ * @rules Records are listed in the order they were created (the table can be sorted by a column instead). When the section has no records, the page reads "Nothing here yet" and "There are no items in" followed by the section name, with a "Create a new entry" button. The list updates by itself when records change, also after a sync. If the section does not exist, the app goes back to the projects list.
+ * @errors none
+ * @status stable
+ * @since 0.1.0
+ * @routes projectSectionElesList
+ * @related view.table, view.grid, view.switch-view, record.add, record.details
+ */
 export const ProjectSectionList: FC = () => {
   const projectId = useAtomValue(RoutingAtoms.param(URL_PARAMS.projectId))!
   const sectionId = useAtomValue(RoutingAtoms.param(URL_PARAMS.sectionId))

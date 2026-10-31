@@ -13,6 +13,7 @@ import { RemoteSelector } from 'app/components/shared-components/forms-automator
 import type { IBasicRadio, IBasicSelect, ICommonFormEleProps } from 'app/components/shared-components/forms-automator/form-automator.types'
 import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
+/** @internal */
 export function formElesSwitcher (key: string, componentCode: FORM_COMPONENTS_CODES, props: ICommonFormEleProps) {
   const codaAsInt = typeof componentCode === 'number' ? componentCode : parseInt(componentCode, 10)
   switch (codaAsInt) {

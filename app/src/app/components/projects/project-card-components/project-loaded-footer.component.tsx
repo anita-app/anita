@@ -11,6 +11,7 @@ interface IProjectLoadedFooterProps {
   project: IProjectSettings
 }
 
+/** @featurePart project.list, export.project, project.edit */
 export const ProjectLoadedFooter: FC<IProjectLoadedFooterProps> = (props) => (
   <div className="ml-auto">
     <ExportButton />

@@ -19,6 +19,21 @@ interface IListTabsHeaderRightEditViewListProps {
   sectionId: string
 }
 
+/**
+ * @feature view.table-columns
+ * @title Show or hide columns of a table
+ * @summary Chooses which fields of a section appear as columns in its table.
+ * @where List of a section, table view: the gear icon "Edit view" at the top right, then the "Edit visible columns" window.
+ * @usage Click the gear icon, switch on or off the field you want to show or hide, then click "Close".
+ * @options One switch per field of the section; all fields are shown by default. The "Add field" button in the same window adds a new field to the section.
+ * @rules Changes apply at once and are saved in the project (they are synced with it). Hiding a column does not delete any data. The field that names the records stays the first column when it is shown.
+ * @errors none
+ * @status stable
+ * @since 0.16.0
+ * @routes projectSectionElesList
+ * @covers view:table
+ * @related view.table, view.add-field
+ */
 export const ListTabsHeaderRightEditViewTable: FC<IListTabsHeaderRightEditViewListProps> = (props) => {
   const projectId = useAtomValue(RoutingAtoms.param(URL_PARAMS.projectId))!
   const sectionData = useLiveQuery(() => Queriers.getProjectSection(projectId, props.sectionId), [projectId, props.sectionId])

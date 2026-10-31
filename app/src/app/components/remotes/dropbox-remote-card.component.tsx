@@ -18,6 +18,7 @@ import type { IDropboxAccountState } from 'app/libs/cloud-sync/dropbox/dropbox.c
 
 /**
  * Opens the Dropbox login again, to renew the session. Shows what went wrong if it cannot.
+ * @featurePart security.sync-sessions
  */
 export const reconnectDropbox = async (): Promise<void> => {
   try {
@@ -34,6 +35,7 @@ export const reconnectDropbox = async (): Promise<void> => {
 
 /**
  * The Dropbox account connected on this device, with its status and actions.
+ * @featurePart sync.dropbox-connect, sync.status
  */
 export const DropboxRemoteCard: FC<{ account: IDropboxAccountState; index?: number }> = (props) => {
   const account = props.account

@@ -5,6 +5,7 @@ import type { ISection } from 'app/models/section/section.declarations'
 
 const LAST_PROJECT_KEY = 'anita.lastProjectId'
 
+/** @featurePart navigation.reopen-last-project */
 export class ProjectState {
   public static setCurrentProject = (systemData: TSystemData) => {
     Bucket.general.set(ProjectAtoms.currentSystemData, systemData)

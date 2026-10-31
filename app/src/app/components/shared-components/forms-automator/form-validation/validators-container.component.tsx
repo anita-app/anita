@@ -8,6 +8,20 @@ import type { FC } from 'react'
 import type { IValidatorsConatinerProps, IValidatorsState } from 'app/components/shared-components/forms-automator/form-validation/validators'
 import type { SUPPORTED_VALIDATORS } from 'app/components/shared-components/forms-automator/form-validation/supported-validators.enum'
 
+/**
+ * @feature field.format-validation
+ * @title Check of e-mail, phone and web addresses
+ * @summary Short text fields with Content type Email, Tel or Url check the format of the value and prevent saving until it is correct.
+ * @where Form to add or edit a record: a red message under the field.
+ * @usage Give a Short text field the Content type Email, Tel or Url. When filling in a record, a red message appears under the field while the value has a wrong format and disappears when it is correct.
+ * @options none: the check depends on the Content type of the field.
+ * @rules Messages: "Invalid Email" (an address like name@example.com is expected); "Invalid telephone number" (at least ten digits grouped 3-3-4, optionally with a + in front and spaces, dots, dashes or brackets between the groups, e.g. 555 123 4567: numbers with a country code such as +39 in front are not accepted); "Invalid address (it must start with http:// or https://)" (a web address with a domain such as example.com; addresses of a local network such as 192.168.1.1 are not accepted). An empty value passes the check, unless the field is required. While a value is wrong the save buttons are disabled and the form says "To save, correct the fields marked in red.".
+ * @errors none
+ * @status stable
+ * @since 0.12.0
+ * @covers validator:emailFormat, validator:telephoneNumber, validator:urlFormat
+ * @related field.short-text, field.required
+ */
 export const ValidatorsContainer: FC<IValidatorsConatinerProps> = memo(function ValidatorsContainer (props: IValidatorsConatinerProps) {
   const validators = []
   const [fieldValidatorsState, setFieldValidatorsState] = useState<IValidatorsState>({})

@@ -3,6 +3,7 @@ import { memo, useEffect } from 'react'
 import type { FC } from 'react'
 import type { IValidatorsProps } from 'app/components/shared-components/forms-automator/form-validation/validators'
 
+/** @featurePart field.format-validation */
 export const UrlFormat: FC<IValidatorsProps> = memo(function TelephoneNumber ({ formEle, element, updateValidatorState }: IValidatorsProps) {
   const value = element[formEle.fieldName]
   // see https://stackoverflow.com/questions/8667070/javascript-regular-expression-to-validate-url

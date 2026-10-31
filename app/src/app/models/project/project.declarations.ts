@@ -10,6 +10,8 @@ import type { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
  *
  * @remarks
  * Users can still pick any of these as section names as sections are stored using their system-generated `id` as key.
+ *
+ * @internal
  */
 export enum RESERVED_AUDS_KEYS {
   _settings = '_settings',
@@ -18,11 +20,15 @@ export enum RESERVED_AUDS_KEYS {
 
 /**
  * Data structure of Anita, composed of both SystemData and UserData.
+ *
+ * @internal
  */
 export type TAnitaUniversalDataStorage = TSystemData & UserData
 
 /**
  * Store for system required properties. Includes general settings and Sections declarations. The reserved keys define system required properties.
+ *
+ * @internal
  */
 export interface TSystemData {
   [RESERVED_AUDS_KEYS._settings]: Array<IProjectSettings>
@@ -31,6 +37,8 @@ export interface TSystemData {
 
 /**
  * Sections' data, stored in a Object, where the key is the section `id` and the value is a `Array<SectionElement>`.
+ *
+ * @internal
  */
 export interface UserData {
   [sectionId: string]: Array<ISectionElement>
@@ -38,6 +46,8 @@ export interface UserData {
 
 /**
  * Defines the structure of the general information on a project.
+ *
+ * @internal
  */
 export interface IProjectSettings {
   id: string
@@ -63,6 +73,7 @@ export interface IProjectSettings {
   encrypted?: boolean
 }
 
+/** @internal */
 export interface AdditionalInfoForLocalStorage {
   dexieInfoForUpgrade?: {
     previousVersions: Array<Array<string>>
@@ -74,6 +85,8 @@ export interface AdditionalInfoForLocalStorage {
  * Info on Projects saved locally to know what project are on the device.
  *
  * @property [sections] - The sections of the project to load the IndexedDB database with Dexie
+ *
+ * @internal
  */
 export interface LocalProjectSettings extends IProjectSettings, AdditionalInfoForLocalStorage {
 }

@@ -11,6 +11,9 @@ interface ICta {
   handleClickAction?: () => void
 }
 
+/**
+ * @internal
+ */
 export interface IModalPropsOpen {
   isOpen?: true
   title: string
@@ -25,12 +28,21 @@ export interface IModalPropsOpen {
 }
 
 // When isOpen is false or not provided
+/**
+ * @internal
+ */
 export interface IModalPropsClosed {
   isOpen: false
 }
 
+/**
+ * @internal
+ */
 export type IModalProps = IModalPropsOpen | IModalPropsClosed
 
+/**
+ * @featurePart navigation.dialogs
+ */
 export class ModalState {
   private static hideTimer: ReturnType<typeof setTimeout> | undefined
 

@@ -8,6 +8,23 @@
 // existing tabs open on the page have been closed, since previously cached
 // resources are updated in the background.
 
+/**
+ * @feature app.install
+ * @title Install Anita as an app
+ * @summary Add Anita to the home screen, dock or start menu and open it in its own window like any other app.
+ * @where The browser's install option (install icon in the address bar, or "Add to Home Screen" / "Install app" in the browser menu) while Anita is open.
+ * @usage 1. Open Anita in a browser that supports installing web apps (for example Chrome, Edge, Safari on iPhone and iPad).
+ * 2. Choose "Install" or "Add to Home Screen" in the browser.
+ * 3. Open Anita from its icon: it starts on the projects list in its own window, without the browser bars.
+ * @options none
+ * @rules The installed app is the same Anita as the web page, works offline and gets the same updates.
+ * On computers and Android the installed app usually shares the data of the browser it was installed from; on iPhone and iPad an app added to the Home Screen keeps its own data, separate from Safari, and removing it can delete that data: sync or export your projects to move them between the two.
+ * Installing needs a browser that supports it; in the others Anita keeps working as a normal web page.
+ * @errors none
+ * @status stable
+ * @since 0.1.0
+ * @related app.offline, app.updates, storage.local-database
+ */
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
     // [::1] is the IPv6 localhost address.
@@ -21,6 +38,21 @@ interface Config {
   onUpdate?: (registration: ServiceWorkerRegistration) => void
 }
 
+/**
+ * @feature app.updates
+ * @title App updates
+ * @summary New versions of Anita are downloaded automatically and used the next time the app is opened.
+ * @where Automatic; the version in use is shown at the bottom of the sidebar.
+ * @usage Nothing to do. To start using a new version, close every tab and window of Anita (also the installed app) and open it again.
+ * @options none
+ * @rules When you open Anita while online, it checks for a new version and downloads it in the background.
+ * The new version is used only after all the tabs and windows of Anita have been closed; until then the current one keeps running. No message is shown when an update is ready.
+ * Updates never touch your data, which stays in the browser.
+ * @errors none
+ * @status stable
+ * @since 0.1.0
+ * @related app.offline, app.install
+ */
 export function register (config?: Config) {
   function registerValidSW (swUrl: string, config?: Config) {
     navigator.serviceWorker
@@ -127,6 +159,9 @@ export function register (config?: Config) {
   }
 }
 
+/**
+ * @internal
+ */
 export function unregister () {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.ready

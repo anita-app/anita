@@ -2,6 +2,9 @@ import { useEffect, useId } from 'react'
 import { ShortcutsManager } from 'app/libs/shortcuts/shortcuts-manager'
 import type { IShortcut } from 'app/libs/shortcuts/shortcuts-store'
 
+/**
+ * @featurePart navigation.keyboard-shortcuts
+ */
 export const useShortcut = (shortcut: IShortcut) => {
   // Stable for the life of the component, without computing anything during render.
   const shortcutId = useId()

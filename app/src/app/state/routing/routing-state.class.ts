@@ -6,6 +6,9 @@ import { RoutingAtoms } from 'app/state/routing/routing.atoms'
 import type { IRouteParams, TAnitaRoute, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import type { NavigateFunction } from 'react-router-dom'
 
+/**
+ * @featurePart navigation.addresses
+ */
 export class RoutingState {
   public static navigate: NavigateFunction
 

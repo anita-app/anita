@@ -150,6 +150,19 @@ interface IRichTextEditorProps {
   onChange: (value: Array<Descendant>) => void
 }
 
+/**
+ * @feature field.rich-text-formatting
+ * @title Format a long text
+ * @summary Make text bold, italic, underlined or code, add headings, quotes, numbered and bulleted lists, and align paragraphs.
+ * @where Toolbar at the top of the editor of every Long text field, in the form to add or edit a record.
+ * @usage Select some text, or place the cursor where you will type, then click a button of the toolbar or press its keyboard shortcut. Click the same button again to remove that formatting.
+ * @options Text styles: Bold (Mod+B), Italic (Mod+I), Underline (Mod+U), Code (Mod+`). Paragraph types: Heading 1, Heading 2, Quote, Numbered list, Bulleted list. Alignment: left, center, right, justify. Mod is Cmd on macOS and Ctrl elsewhere; Mod+Z undoes the last change.
+ * @rules The buttons of the formatting already applied have a grey background. Text styles apply to the selected text, or to what is typed next when nothing is selected. Paragraph types and alignment apply to whole paragraphs: choosing a list turns the selected paragraphs into list items, choosing it again turns them back into paragraphs. The toolbar stays visible at the top of the editor while scrolling. The buttons have icons only, no text.
+ * @errors none
+ * @status stable
+ * @since 0.18.0
+ * @related field.long-text
+ */
 export const RichTextEditor: FC<IRichTextEditorProps> = (props) => {
   const renderElement = useCallback((props: any) => <RichTextEditorElement {...props} />, [])
   const renderLeaf = useCallback((props: any) => <RichTextEditorLeaf {...props} />, [])

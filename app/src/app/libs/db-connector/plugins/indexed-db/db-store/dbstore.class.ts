@@ -8,6 +8,21 @@ import type { Version } from 'dexie'
 
 /**
  * Implementation of DbStore for IndexedDB with Dexie.
+ * @feature storage.local-database
+ * @title Where your data is kept
+ * @summary Projects and records are saved in the browser of your device, without any Anita server.
+ * @where Automatic; nothing to set. The data lives in the storage of the browser (IndexedDB) for the site of Anita.
+ * @usage Nothing to do: every change is saved on the device as soon as you make it.
+ * @options none
+ * @rules Anita has no server: your data never leaves the device unless you sync it with Dropbox or WordPress, or export it.
+ * The data belongs to one browser on one device: another browser, another device or a private window does not see it. To use the same projects elsewhere, sync or export them.
+ * The list of projects is kept in one database of the browser; each project has its own database with a table per section.
+ * Removing a section from a project deletes its records from the device; deleting a project deletes its database from the device.
+ * Clearing the site data or the history of the browser (or private windows being closed) deletes the data kept on the device: keep a copy with sync or export.
+ * @errors none
+ * @status stable
+ * @since 0.9.0
+ * @related app.offline
  */
 export class DbStore implements DbStoreInterface<Dexie> {
   public db!: Dexie

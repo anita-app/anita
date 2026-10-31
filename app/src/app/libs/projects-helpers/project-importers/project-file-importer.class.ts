@@ -3,6 +3,8 @@ import type { TAnitaUniversalDataStorage } from 'app/models/project/project.decl
 
 /**
  * Imports an existing project file from disk.
+ *
+ * @featurePart import.file
  */
 export class ProjectFileImporter {
   private projectData: TAnitaUniversalDataStorage | undefined

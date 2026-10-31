@@ -17,6 +17,23 @@ interface IProjectPickerProps {
   sectionsCount: number
 }
 
+/**
+ * @feature navigation.project-picker
+ * @title Switch project from the sidebar
+ * @summary A menu at the top of the sidebar to see the open project, open its details or settings, switch to another project or create a new one.
+ * @where Top of the sidebar: the box with the initial of the project, its name and how many sections it has.
+ * @usage 1. Click the project box at the top of the sidebar.
+ * 2. Choose an item of the menu: the current project or "Details" opens its details page, "Edit" opens its settings, a project under "Switch to" opens it, "Go to the projects list" or "Create a new project" open those pages.
+ * 3. Click outside the menu to close it without choosing.
+ * @options none
+ * @rules The box shows a coloured tile with the initial of the project (the same project always gets the same colour), the name and "1 section" or "N sections".
+ * The menu has the parts "Current project" (marked with a check), "Switch to" (only when there is more than one project; lists all the other projects on this device) and the links to the projects list and to create a project.
+ * Switching opens the chosen project and its details page.
+ * @errors none
+ * @status stable
+ * @since 0.10.0
+ * @related navigation.sidebar, navigation.reopen-last-project
+ */
 export const AdminLayoutSidebarProjectPicker: FC<IProjectPickerProps> = (props) => {
   const projects = useAtomValue(ProjectsListAtoms.projects)
   const [dropdownOpen, setDropdownOpen] = useState(false)

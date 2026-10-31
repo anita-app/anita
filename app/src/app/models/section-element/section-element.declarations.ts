@@ -2,6 +2,7 @@ import type { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 
 /**
  * Defines the bare minimum fields of an `Element` of a `Section`.
+ * @internal
  */
 export interface ISectionElement {
   [RESERVED_FIELDS.id]?: string

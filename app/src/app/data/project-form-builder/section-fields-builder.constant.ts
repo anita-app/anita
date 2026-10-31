@@ -11,6 +11,7 @@ import {
 import type { FormFieldsModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 import type { ISectionCustomFieldProperties, SectionDetailsDeclaration } from 'app/models/section/section.declarations'
 
+/** @internal */
 export const sectionDetailsFormFieldsModel: Array<FormFieldsModel<SectionDetailsDeclaration>> = [
   {
     componentCode: FORM_COMPONENTS_CODES.hiddenInput,
@@ -131,6 +132,8 @@ const commonAddAndEditFields: Array<FormFieldsModel<ISectionCustomFieldPropertie
  *
  * @remarks
  * For new fields only. Existing items must use `sectionElesForEditingAdvanced` as some properties can't be changed after the filed has been created.
+ *
+ * @featurePart section.fields, project.advanced-editor
  */
 export const sectionElesNewItemAdvanced: Array<FormFieldsModel<ISectionCustomFieldProperties>> = [
   ...labelsForBasicAndAdvanced(7, 5),
@@ -147,6 +150,7 @@ export const sectionElesNewItemAdvanced: Array<FormFieldsModel<ISectionCustomFie
   ...commonAddAndEditFields,
 ]
 
+/** @featurePart section.fields */
 export const sectionElesNewItemBasic: Array<FormFieldsModel<ISectionCustomFieldProperties>> = [
   ...labelsForBasicAndAdvanced(8, 6),
   componentSelectorForBasicAndAdvanced(4),
@@ -163,6 +167,8 @@ export const sectionElesNewItemBasic: Array<FormFieldsModel<ISectionCustomFieldP
  *
  * @remarks
  * For existing fields only, some properties can't be changed after the filed has been created. New items must use `sectionElesNewItemAdvanced` instead.
+ *
+ * @featurePart section.fields, project.advanced-editor
  */
 export const sectionElesForEditingAdvanced: Array<FormFieldsModel<ISectionCustomFieldProperties>> = [
   ...labelsForBasicAndAdvanced(7, 5),
@@ -180,6 +186,7 @@ export const sectionElesForEditingAdvanced: Array<FormFieldsModel<ISectionCustom
   ...commonAddAndEditFields,
 ]
 
+/** @featurePart section.fields */
 export const sectionElesForEditingBasic: Array<FormFieldsModel<ISectionCustomFieldProperties>> = [
   ...labelsForBasicAndAdvanced(8, 6),
   componentSelectorForBasicAndAdvanced(4),

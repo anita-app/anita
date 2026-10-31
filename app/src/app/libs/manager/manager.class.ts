@@ -9,6 +9,9 @@ import { ProjectDataImporter } from 'app/libs/projects-helpers/project-importers
 import { ProjectState } from 'app/state/project/project-state.class'
 import type { TAnitaUniversalDataStorage, IProjectSettings, LocalProjectSettings, TSystemData } from 'app/models/project/project.declarations'
 
+/**
+ * @internal
+ */
 export class Manager {
   private static currentProject: Project
 

@@ -19,6 +19,18 @@ interface IOpenFromDropboxButtonProps {
 /**
  * Opens a project file saved anywhere in Dropbox: the project is added to this device and kept in sync with that file.
  * Shown only when Dropbox is connected.
+ *
+ * @feature sync.dropbox-open-file
+ * @title Open a project from Dropbox
+ * @summary Opens a project file saved anywhere in your Dropbox: the project is added to this device and kept in sync with that file.
+ * @where Button "Open from Dropbox" in the list of projects, on the page shown when there are no projects, and on the Dropbox card of Storage and sync. Shown only when Dropbox is connected and logged in.
+ * @usage 1. Click "Open from Dropbox". 2. In "Open a project from Dropbox" browse the folders (the breadcrumb goes back up). 3. Select the .json file of an Anita project and click "Open project" (or double-click it). 4. The project opens and is synced with that file from then on.
+ * @options none
+ * @rules Only .json files can be selected. If the project is already on this device and not synced, the two copies are merged keeping the records of both. Messages: "<file> is not an Anita project.", "This project is already on this device, synced with <path>.", "This project is already on this device, synced with a WordPress site." Errors are shown in the picker under "The project could not be opened".
+ * @errors dropbox.invalidFile, dropbox.notFound, dropbox.network
+ * @status beta
+ * @since 1.0.0
+ * @related sync.dropbox-projects
  */
 export const OpenFromDropboxButton: FC<IOpenFromDropboxButtonProps> = (props) => {
   const isWritable = useDropboxIsWritable()

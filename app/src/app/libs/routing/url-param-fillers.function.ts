@@ -2,6 +2,7 @@ import type { URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 
 /**
  * Accepts a url and a param and replaces all the occurences of the url param with a given value
+ * @internal
  */
 export function urlParamFiller (url: string, paramsToFill: Array<{ name: URL_PARAMS; value: string }>): string {
   let result = url

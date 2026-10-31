@@ -4,6 +4,7 @@ import { DateTools } from 'app/libs/tools/date-tools.class'
 
 const BACKUP_KEY_PREFIX = 'anita.lastBackup.'
 
+/** @featurePart project.list, export.project */
 export class OnboardingState {
   /**
    * Opens the dialog to save a project of this device in Dropbox or on a WordPress site.

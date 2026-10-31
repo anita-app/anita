@@ -3,6 +3,7 @@ import { SHA256 } from 'crypto-es'
 
 /**
  * Randomly generated strings hasehd with sha256 to be used as unique identifiers
+ * @internal
  */
 export class IdCreator {
   /**

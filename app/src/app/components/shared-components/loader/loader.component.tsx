@@ -1,5 +1,8 @@
 import type { FC } from 'react'
 
+/**
+ * @internal
+ */
 export const Loader: FC = () => (
   <svg
     className="mx-auto my-5 animate-spin h-5 w-5 text-prussian-blue-600"

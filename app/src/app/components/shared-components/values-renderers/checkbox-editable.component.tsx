@@ -11,6 +11,7 @@ interface ICheckBoxAsCheckProps {
   fieldName: string
 }
 
+/** @featurePart field.checkbox */
 export const CheckBoxEditable: FC<ICheckBoxAsCheckProps> = (props) => {
   const handleOnChange = (value: boolean) => {
     Bucket.general.get(ProjectAtoms.currentProject)

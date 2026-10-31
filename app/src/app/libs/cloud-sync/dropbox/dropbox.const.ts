@@ -1,17 +1,21 @@
 /**
  * Value of the `remoteStorage` setting of a project synced with Dropbox.
  * WordPress sites use their address there, which always contains a dot, so the two never collide.
+ * @internal
  */
 export const DROPBOX_REMOTE_ID = 'dropbox'
 
 /**
  * Folder of the user's Dropbox where projects are saved. Projects found there are downloaded on every device
  * connected to the same Dropbox account.
+ * @featurePart sync.dropbox-projects
  */
 export const DROPBOX_PROJECTS_FOLDER = '/Anita'
 
+/** @internal */
 export const DROPBOX_CLIENT_ID = 'neonkm3wexybl7c'
 
+/** @featurePart security.sync-sessions */
 export const DROPBOX_SCOPES = [
   // Granted to every Dropbox app: used to show which account is connected.
   'account_info.read',
@@ -23,6 +27,7 @@ export const DROPBOX_SCOPES = [
 
 /**
  * Tokens returned by Dropbox when the user logs in.
+ * @internal
  */
 export interface IDropboxTokens {
   access_token: string
@@ -36,6 +41,7 @@ export interface IDropboxTokens {
 
 /**
  * What the app stores about the connected Dropbox account (one per device).
+ * @internal
  */
 export interface IDropboxAccountData extends IDropboxTokens {
   /** Time when the access token expires, in milliseconds. */
@@ -48,6 +54,7 @@ export interface IDropboxAccountData extends IDropboxTokens {
 
 /**
  * The connected Dropbox account, as shown in the UI (without tokens).
+ * @internal
  */
 export interface IDropboxAccountState {
   accountId: string
@@ -58,6 +65,7 @@ export interface IDropboxAccountState {
 
 /**
  * The Dropbox file a project is synced with, on this device.
+ * @internal
  */
 export interface IDropboxFileLink {
   projectId: string
@@ -71,6 +79,7 @@ export interface IDropboxFileLink {
 
 /**
  * An Anita project file found in the Dropbox projects folder.
+ * @internal
  */
 export interface IDropboxProjectFile {
   fileId: string

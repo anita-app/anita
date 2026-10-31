@@ -1,3 +1,6 @@
+/**
+ * @internal
+ */
 export class ArrayTools {
   /**
  * Asyncs forEach. Unlike native JS forEach, this one awaits each callback to resolve befofore iterating to the next element of the array

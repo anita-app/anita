@@ -13,6 +13,28 @@ import { FormProjectState } from 'app/state/form-project/form-project-state.clas
 import type { FC } from 'react'
 import type { TSystemData } from 'app/models/project/project.declarations'
 
+/**
+ * @feature project.edit
+ * @title Edit a project
+ * @summary Change the name, description, storage, sections and fields of an existing project.
+ * @where "Edit Project" button on the card of a loaded project (Projects screen) and on the details page of the project; it opens
+ * the "Edit Project" editor.
+ * @usage 1. Click "Edit Project".
+ * 2. Change the project info, add, change or delete sections and fields.
+ * 3. Click "Save", or "Cancel" to leave without changes.
+ * @options "Advanced mode" toggle, to see and set identifiers and stored values.
+ * @rules It is the same editor used for a new project ("Add Project"), headed "Edit Project". "Save" stays disabled while a
+ * required field is empty or invalid. If the project does not exist (old link, deleted project) the app goes back to the
+ * Projects list. The identifier of a field that already exists cannot be changed, so its records keep their values.
+ * Sections and fields deleted in the editor are removed from the structure of the project when you save. On a project
+ * shared on a WordPress site, only its owner and the administrators of the site see "Edit Project". Saved changes are
+ * synced to Dropbox or to the WordPress site if the project is stored there. After saving, the project opens.
+ * @errors none
+ * @status stable
+ * @since 0.1.0
+ * @routes projectEdit
+ * @related project.create, project.settings, section.add, section.fields, project.advanced-editor
+ */
 export const AddEditProject: FC = () => {
   const params = useParams()
   const [searchParams] = useSearchParams()

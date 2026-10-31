@@ -4,6 +4,7 @@ interface ITelProps {
   value: string
 }
 
+/** @featurePart field.short-text */
 export const Tel: FC<ITelProps> = (props) => props.value
   ? (
     <a

@@ -60,6 +60,7 @@ const handleDateTimeType = (type: TextInputSupportedTypes | DateInputSupportedTy
   }
 }
 
+/** @featurePart field.short-text, field.long-text, field.checkbox, field.drop-down, field.alternative-choice, field.date, field.date-time */
 export const customRenderPicker = (formModel: FormFieldsModel<TSupportedFormsTypes>): FC<any> => {
   const componentCode = typeof formModel.componentCode === 'string' ? parseInt((formModel as any).componentCode, 10) : formModel.componentCode
   switch (componentCode) {

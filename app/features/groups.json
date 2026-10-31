@@ -1,0 +1,191 @@
+{
+  "$comment": "Groups of the feature catalogue (AGENTS.md → Feature catalogue). Maintained with skills/feature-grouping.",
+  "groups": [
+    {
+      "id": "getting-started",
+      "title": "Getting started",
+      "goal": "Open Anita for the first time, understand that your data stays on your device and pick how to start your first project.",
+      "audience": "First-time users who have just opened Anita in a browser; no account, no setup, no technical knowledge.",
+      "notes": "Home page material: no sign-up, no Anita server, data kept in your own browser (storage.local-database) — the core promise of privacy. Screenshots: the three steps of the introduction and the \"Your first project\" / \"Choose a template\" page. Explain the three ways to start (template, from scratch, import) and point to the template guide as the recommended one. Pitfall to say early, in plain words: data lives in one browser on one device, so clearing browsing data or using a private window loses it; link to \"Keep your projects safe\". Skip the technical details of the database (IndexedDB, one database per project): they are not for users. Mention \"Show the introduction again\".",
+      "features": [
+        "app.onboarding",
+        "project.first-project",
+        "storage.local-database"
+      ]
+    },
+    {
+      "id": "start-from-a-template",
+      "title": "Start from a ready-made template",
+      "goal": "Find a template that fits what you want to keep track of and create a working project from it in one click, with example records if you like.",
+      "audience": "New users who have seen the introduction and want something working right away.",
+      "notes": "Follow one example through the guide, e.g. the Recipes template (or a simple CRM): browse the gallery, search, open it, look at \"What's inside\", tick \"Start with some example records\", create. Screenshots: the gallery with the category tabs and search, the page of a template with the form and \"What's inside\", the new project with its example records. Explain the \"Where to save it\" choice only briefly and link to \"Keep your projects safe\" and the Dropbox / WordPress guides. Pitfalls: example records are real records (delete them when done); \"Customize the structure first\" creates the project without examples; offline the gallery shows only the templates saved on the device. Home page: \"dozens of ready-made templates\" is a good hook.",
+      "features": [
+        "template.gallery",
+        "template.create-project",
+        "template.sample-records"
+      ]
+    },
+    {
+      "id": "find-your-way-around",
+      "title": "Find your way around",
+      "goal": "Move between your projects and their sections, keep the menu tidy and use the shortcuts that make Anita quicker.",
+      "audience": "Users who have created their first project and want to know where everything is.",
+      "notes": "Use the project created in the template guide. Start from the Projects screen (cards, \"Load project\", \"Open project\"), then the project page, the sidebar with its sections and the project picker at the top; then the small comforts: Anita reopens the last project, hide sections you rarely use, bookmark any page and use the browser's Back button. Screenshots: Projects screen with two or three cards, the sidebar on desktop and the menu button on a phone, the open project picker, the \"Edit menu\" gear. End with a reference table of all keyboard shortcuts gathered from the catalogue: C (new record, on a section list), E (edit, on a record), Escape (close / cancel), Mod+S (save a record), Mod+B / Mod+I / Mod+U / Mod+` (text styles in a long text); explain that Mod is Cmd on a Mac and Ctrl elsewhere, and that single-key shortcuts do nothing while typing. Pitfall: a page address only works on this device — sending it to someone does not share the record. Mention the \"Report a bug\" link and the version number at the bottom of the sidebar. Dialogs need only a short paragraph (red buttons mean something is deleted).",
+      "features": [
+        "project.list",
+        "project.info-page",
+        "navigation.sidebar",
+        "navigation.project-picker",
+        "navigation.reopen-last-project",
+        "navigation.hide-sections-in-menu",
+        "navigation.addresses",
+        "navigation.dialogs",
+        "navigation.keyboard-shortcuts"
+      ]
+    },
+    {
+      "id": "add-and-edit-records",
+      "title": "Add and update your records",
+      "goal": "Add the things you keep track of, look at their details, change them and remove the ones you no longer need.",
+      "audience": "Users with a project open (from a template or built by themselves) who want to fill it in.",
+      "notes": "Continue the example of the template guide: add a recipe (or a client), save it, open its details, edit it, tick a checkbox such as \"Done\" straight from the table, delete a test record. Screenshots: the round \"+\" button, the add form with a required field marked by the asterisk and the message next to the save buttons, the details page, the pencil button. Explain the difference between \"Save\" (stays in the form, only when the section has a long text) and \"Save & Close\", and that the form cannot be saved while a required field is empty or a value is marked in red (details in the fields guide). Shortcuts to mention: C, E, Mod+S, Escape. Pitfall: deleting a record cannot be undone. Linking a record to others (\"Linked to\") is only hinted at here and explained in \"Link records to each other\".",
+      "features": [
+        "record.add",
+        "record.save",
+        "record.details",
+        "record.edit",
+        "record.inline-checkbox",
+        "record.delete"
+      ]
+    },
+    {
+      "id": "see-your-records",
+      "title": "See your records the way you need",
+      "goal": "Look at the records of a section as a table or as cards, sort them and choose which columns to show.",
+      "audience": "Users who already have some records in a section.",
+      "notes": "Use a section with at least six or seven records (the example records of a template are ideal). Show the list of a section, switch between table and cards, sort by a date or a name column, hide a column you do not need. Screenshots: the same section as table and as grid side by side; the sort arrow on a header; the \"Edit visible columns\" window. Tell users that view, sorting and visible columns are saved with the project, so they are the same on other devices and for the people the project is shared with. Explain what a card shows (name, up to two choice fields, the first date, the first long text as description) so users know which fields to add to get nice cards. Pitfall: hiding a column never deletes data. The \"Edit Card Layout\" window of the grid has no settings yet: do not document it as a feature.",
+      "features": [
+        "view.section-list",
+        "view.switch-view",
+        "view.table",
+        "view.table-sort",
+        "view.table-columns",
+        "view.grid"
+      ]
+    },
+    {
+      "id": "build-your-own-project",
+      "title": "Build your own project",
+      "goal": "Create a project from scratch, or adapt one, by choosing its sections (the kinds of things you track) and the fields of each; change it later or delete it.",
+      "audience": "Users who know how to add records and want a project shaped on their own needs; no database knowledge.",
+      "notes": "Follow one example from scratch, e.g. a reading list: project \"My books\" with sections \"Books\" and \"Authors\", a few fields per section. Explain sections as \"the kinds of things you keep track of\" and fields as \"the information you write down for each\" — avoid words like schema, table or entity. Screenshots: \"Create a project\" page with \"Start from scratch\", the editor with the top card (name, description, remote storage), a section card with its fields, \"Add section\" / \"Add field\". Show also the quick way to add a field from the list (gear \"Edit view\" → \"Add field\"). Advanced mode: one short paragraph, for users who need identifiers or stored values; most users never need it. Pitfalls: a field once saved keeps its identifier; deleting a section or a field in the editor deletes its data when you save; on a project shared on WordPress only the owner and administrators can edit or delete it. Deleting a project: explain the three cases of the confirmation (only this device, Dropbox — goes to Dropbox's deleted files, WordPress — gone for everyone) and that it cannot be undone; suggest an export first. Field types are in the next guide; parent sections in \"Link records to each other\".",
+      "features": [
+        "project.create",
+        "project.settings",
+        "section.add",
+        "section.fields",
+        "view.add-field",
+        "project.edit",
+        "project.advanced-editor",
+        "project.delete"
+      ]
+    },
+    {
+      "id": "choose-field-types",
+      "title": "Choose the right fields for your data",
+      "goal": "Pick the right kind of field for each piece of information — text, notes, dates, check boxes, lists of choices — and make sure records are filled in correctly.",
+      "audience": "Users building or changing a project in the editor, who wonder which data type to pick.",
+      "notes": "Best written as a gallery: one short block per field type with a screenshot of how it looks in the form and how it is shown in the list / details. Example to follow: a \"Contacts\" section with Name (short text), Email and Phone (short text with content type), Birthday (date), Notes (long text), Category (drop-down), Priority (alternative choice), Active (check box). Explain early that the first short text of type Text gives each record its name (bold first column, card title, page header) — so put the name field first. A table \"which field for what\" helps: few choices → alternative choice, many → drop-down. Pitfalls to warn about: the phone check accepts only numbers of ten digits grouped 3-3-4 and refuses international prefixes such as +39; web addresses must start with http:// or https://; deleting a choice empties it in the records that used it, renaming it does not; in the drop-down, typing searches the stored value (1, 2, 3…) and not the label; a Password field is only hidden on screen; Range has no settings; a required Long text does not actually block saving. Long text formatting: show the toolbar and the shortcuts Mod+B / I / U / `.",
+      "features": [
+        "field.short-text",
+        "record.title",
+        "field.long-text",
+        "field.rich-text-formatting",
+        "field.date",
+        "field.date-time",
+        "field.checkbox",
+        "field.drop-down",
+        "field.alternative-choice",
+        "field.choices",
+        "field.required",
+        "field.format-validation"
+      ]
+    },
+    {
+      "id": "link-records",
+      "title": "Link records to each other",
+      "goal": "Connect related records — the tasks of a project, the projects of a client — and move from one to the other.",
+      "audience": "Users who have a project with at least two sections and want them connected; may never have heard of relations.",
+      "notes": "Follow one concrete example: sections \"Clients\" and \"Projects\", with Projects as child of Clients. Steps: set \"Parent sections\" in the editor, add a project and pick its client in \"Linked to\", open the client and see its projects in a tab, add a new project from the tab (already linked). Screenshots: the \"Parent sections:\" field, the \"Linked to\" selector, the details page of the client with the tabs and the collapsed Details panel. Avoid the words parent/child in titles: say \"belongs to\" (a project belongs to a client); keep the app terms only as labels. Pitfalls: \"Linked to\" appears only when the parent section has at least one record; a record can be linked to several records, also of different sections; links to deleted records disappear; long texts are not shown in the tabs. Home page: a CRM or project tracker with linked records shows that Anita is more than a list.",
+      "features": [
+        "relation.parent-sections",
+        "relation.link-to-parent",
+        "view.child-records-tabs",
+        "view.details-panel"
+      ]
+    },
+    {
+      "id": "keep-your-projects-safe",
+      "title": "Keep your projects safe",
+      "goal": "Make sure you never lose a project: choose where it is stored, or keep a backup file you can import again on any device.",
+      "audience": "Users with at least one project saved only on this device (orange banner) who want a backup or to move it to another device.",
+      "notes": "Start from the warning users actually see: the orange \"This project is saved only on this device\" banner, the \"Only on this device\" badge and \"Keep it safe\" on the project card. Then the two answers: store it in Dropbox or on a WordPress site (the \"Keep your project safe\" dialog / \"Remote storage\"; link to the two sync guides for the details) or export a file with \"Data and Structure\" and import it again elsewhere. Screenshots: the banner, the \"Keep your project safe\" dialog, the Export menu with its three options, the Import dialog. Explain the three export scopes in plain words: full backup (can be imported), only the records (for reading elsewhere, cannot be imported), only the structure (to start an empty copy). Pitfalls: \"Data Only\" files cannot be imported; stopping sync (\"Stop syncing with…?\") deletes nothing; on iPhone and iPad an app added to the Home Screen has its own data, separate from Safari. Home page: \"your data, your choice: only on your device, in your Dropbox or on your WordPress site\".",
+      "features": [
+        "storage.local-only",
+        "storage.choice",
+        "export.project",
+        "import.file"
+      ]
+    },
+    {
+      "id": "sync-with-dropbox",
+      "title": "Sync your projects with Dropbox",
+      "goal": "Connect your Dropbox to have your projects backed up and the same on your computer, phone and tablet.",
+      "audience": "Users with a Dropbox account and at least one project, who have never connected Anita to anything.",
+      "notes": "Example: a project created on the computer, saved in Dropbox, then opened on the phone. Steps: Storage and sync → Dropbox → Connect, log in on Dropbox's page, choose Dropbox as storage of a project, check \"Synced with Dropbox\" and \"Last sync\", open the app on a second device with the same account (projects of the /Anita folder appear by themselves), \"Open from Dropbox\" for files in other folders. Screenshots: the Dropbox card (not connected and connected, \"Logged in as\"), the project page with \"Remote storage: Dropbox\" and \"Sync now\", the folder picker, the \"is no longer in your Dropbox\" dialog. Explain merging in plain words: when the same record was changed on two devices, the most recent change wins. End with \"if something goes wrong\": the Dropbox messages (not reachable, no space, session expired, file deleted from another device) and what to do; link to \"Syncing, logins and sync problems\". Pitfalls: one Dropbox account per device; switching account turns the old projects into local ones; disconnecting deletes nothing in Dropbox. Home page: sync across devices with your own Dropbox, no Anita account.",
+      "features": [
+        "sync.dropbox-connect",
+        "sync.dropbox-projects",
+        "sync.dropbox-open-file",
+        "sync.dropbox-missing-file"
+      ]
+    },
+    {
+      "id": "share-on-wordpress",
+      "title": "Store and share projects on a WordPress site",
+      "goal": "Keep your projects on your WordPress site and share them with its users, choosing who can see each one.",
+      "audience": "Users who have (or work with) a WordPress site with the Anita Project Manager plugin; some guides are also for the site administrator who installs the plugin.",
+      "notes": "Two readers: the administrator (install and activate the Anita Project Manager plugin, add self-hosted copies of Anita in Settings → Anita → Allowed app URLs, assign roles) and the team member (connect the site, open shared projects). Example: a small association's site where the secretary creates a \"Members\" project and shares it with \"Editors and above\". Steps: Storage and sync → Connect a WordPress site, type the address, log in on the site, choose the site as storage, pick \"Who can see it on the site\", see \"Visible to\" on the project page. Screenshots: the connect card, the WordPress login/authorisation page, the access level choice, the project page for the owner (\"you own this project\") and for another user (\"shared with you\"), the \"Projects removed from <site>\" dialog. Explain what shared users can do: add and edit records, not change the structure or delete the project. End with \"if something goes wrong\": plugin missing, site not reachable (security plugin or firewall blocking the REST API), address not allowed, \"did not allow this change\", project removed or no longer shared. Pitfalls: users whose role cannot create projects see \"Cannot create projects on this site\"; switching account removes projects the new user cannot see. Home page: team sharing with your own WordPress site.",
+      "features": [
+        "sync.wordpress-connect",
+        "sync.wordpress-projects",
+        "sync.wordpress-share",
+        "sync.wordpress-removed-projects"
+      ]
+    },
+    {
+      "id": "sync-status-and-logins",
+      "title": "Syncing, logins and sync problems",
+      "goal": "Know at a glance whether your projects are synced, what Anita does by itself, and what to do when it asks you to log in again or a sync fails.",
+      "audience": "Users who have connected Dropbox or a WordPress site (at least one of the two previous guides).",
+      "notes": "Shared by Dropbox and WordPress: the two sync guides link here for the common part. Explain that syncing is automatic while Anita is open (when it starts, when a project is opened, every minute for the open project, when back online) and that changes made offline or while a login is needed are never lost — they wait on the device. Screenshots: the header icons with their coloured rings (blue syncing, orange failed, red log in again) and tooltips, the status of the cards in Storage and sync, the project page with \"Last sync\", \"some changes are not synced yet\", \"Sync problem\" and \"Sync now\", the \"Log in again\" button. Make a small table: what you see → what it means → what to do. Security in plain words: you always log in on Dropbox's or your site's own page, Anita never sees your password, logins stay only in this browser. Pitfall: nothing syncs while the tab is hidden or offline; \"Sync now\" is hidden while a login is required.",
+      "features": [
+        "sync.automatic",
+        "sync.status",
+        "security.sync-sessions"
+      ]
+    },
+    {
+      "id": "anita-on-your-devices",
+      "title": "Use Anita as an app, also offline",
+      "goal": "Install Anita on your computer or phone like any other app, use it without an internet connection and always have the latest version.",
+      "audience": "Any user; best read after the first project, when Anita becomes a daily tool.",
+      "notes": "Home page material: works offline and can be installed, no app store needed. Steps per platform with screenshots: Chrome / Edge on a computer (install icon in the address bar), Android (\"Install app\"), iPhone and iPad (Safari → Share → \"Add to Home Screen\"). Explain offline simply: after the first visit everything opens without internet; only syncing and connecting accounts need it. Updates: automatic, used after all Anita tabs and windows are closed, never touch your data; the version is at the bottom of the sidebar. Important pitfall for iPhone and iPad: the app added to the Home Screen keeps its own data, separate from Safari, and removing it can delete that data — sync or export first.",
+      "features": [
+        "app.install",
+        "app.offline",
+        "app.updates"
+      ]
+    }
+  ]
+}

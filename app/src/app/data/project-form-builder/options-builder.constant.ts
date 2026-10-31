@@ -25,6 +25,8 @@ const commonFieldsBasic: FormFieldsModel<IOptionKeysModel> = {
  *
  * @remarks
  * For adding options only, some properties can't be changed after the filed has been created. Existing items must use `optionsBuilderForEditingAdvanced` instead.
+ *
+ * @featurePart field.choices
  */
 export const optionsBuilderForAddingAdvanced: Array<FormFieldsModel<IOptionKeysModel>> = [
   {
@@ -38,6 +40,7 @@ export const optionsBuilderForAddingAdvanced: Array<FormFieldsModel<IOptionKeysM
   commonFieldsAdvanced,
 ]
 
+/** @featurePart field.choices */
 export const optionsBuilderForAddingBasic: Array<FormFieldsModel<IOptionKeysModel>> = [
   {
     componentCode: FORM_COMPONENTS_CODES.hiddenInput,
@@ -51,6 +54,8 @@ export const optionsBuilderForAddingBasic: Array<FormFieldsModel<IOptionKeysMode
  *
  * @remarks
  * For existing fields only, some properties can't be changed after the filed has been created. New items must use `optionsBuilderForAddingAdvanced` instead.
+ *
+ * @featurePart field.choices
  */
 export const optionsBuilderForEditingAdvanced: Array<FormFieldsModel<IOptionKeysModel>> = [
   {
@@ -65,6 +70,7 @@ export const optionsBuilderForEditingAdvanced: Array<FormFieldsModel<IOptionKeys
   commonFieldsAdvanced,
 
 ]
+/** @featurePart field.choices */
 export const optionsBuilderForEditingBasic: Array<FormFieldsModel<IOptionKeysModel>> = [
   {
     componentCode: FORM_COMPONENTS_CODES.hiddenInput,

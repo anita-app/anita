@@ -7,6 +7,7 @@ import type Dexie from 'dexie'
 
 /**
  * Implements insertor for IndexedDB
+ * @internal
  */
 export class DbInsertor<E> implements Insertor<E> {
   /**

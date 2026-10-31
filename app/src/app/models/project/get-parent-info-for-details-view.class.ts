@@ -4,6 +4,7 @@ import { Section } from 'app/models/section/section.class'
 import type { ParentInfoForDetailsView } from 'app/models/parent-element/parent-element.declarations'
 import type { Project } from 'app/models/project/project.class'
 
+/** @featurePart record.details */
 export class GetParentInfoForDetailsView {
   private parentInfoForDetailsView: Array<ParentInfoForDetailsView> = []
 

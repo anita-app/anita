@@ -12,6 +12,7 @@ import { withPositions } from 'app/models/section/sort-sections.function'
 import type { ISyncWithRemoteOrLocalAddProjectProps, ISyncWithRemoteOrLocalEditProjectProps } from 'app/cross-refs-exports'
 import type { TSystemData } from 'app/models/project/project.declarations'
 
+/** @internal */
 export interface IProjectSaverOptions {
   /**
    * The data comes from a remote copy: timestamps are kept as they are and no sync is triggered.
@@ -19,6 +20,7 @@ export interface IProjectSaverOptions {
   fromSync?: boolean
 }
 
+/** @featurePart project.create, project.edit, template.create-project */
 export class ProjectSaver {
   private localStorage: LOCAL_STORAGE_SYSTEMS | undefined
   constructor (

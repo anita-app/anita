@@ -12,6 +12,7 @@ interface IProjectSectionListTableTdWithLinkToDetailsProps {
   children: ReactNode
 }
 
+/** @featurePart view.table, record.details */
 export const ProjectSectionListTableBodyTrTdWithLinkToDetails: FC<IProjectSectionListTableTdWithLinkToDetailsProps> = (props) => {
   const params = useParams()
 

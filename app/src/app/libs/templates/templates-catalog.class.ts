@@ -11,6 +11,8 @@ import type { FormFieldsModel, TSupportedFormsTypes } from 'app/components/share
 /**
  * The catalog is maintained in https://github.com/anita-app/templates and downloaded at runtime,
  * so templates can be changed without releasing the app. Self-hosted installations can point to their own copy.
+ *
+ * @featurePart template.gallery
  */
 export const TEMPLATES_URL = import.meta.env.VITE_TEMPLATES_URL || 'https://raw.githubusercontent.com/anita-app/templates/main/templates.json'
 
@@ -18,12 +20,14 @@ const CACHE_KEY = 'anita.templates.catalog'
 const SUPPORTED_SCHEMA_VERSION = 1
 const REQUEST_TIMEOUT_MS = 15000
 
+/** @internal */
 export interface ITemplateCategory {
   id: string
   label: string
   icon?: TIconName
 }
 
+/** @internal */
 export interface ITemplateField {
   label: string
   fieldName: string
@@ -33,6 +37,7 @@ export interface ITemplateField {
   required?: boolean
 }
 
+/** @internal */
 export interface ITemplateSection {
   key: string
   title: string
@@ -43,6 +48,8 @@ export interface ITemplateSection {
 
 /**
  * Example record. Values are keyed by fieldName; dates can be relative to the creation day (@today+7).
+ *
+ * @featurePart template.sample-records
  */
 export interface ITemplateSample {
   ref?: string
@@ -51,6 +58,7 @@ export interface ITemplateSample {
   parents?: Array<string>
 }
 
+/** @internal */
 export interface IProjectTemplate {
   id: string
   title: string
@@ -63,12 +71,14 @@ export interface IProjectTemplate {
   samples?: Record<string, Array<ITemplateSample>>
 }
 
+/** @internal */
 export interface ITemplatesCatalog {
   schemaVersion: number
   categories: Array<ITemplateCategory>
   templates: Array<IProjectTemplate>
 }
 
+/** @internal */
 export interface ILoadedCatalog {
   catalog: ITemplatesCatalog
   /** The catalog comes from the copy saved on this device, because the download failed. */
@@ -144,6 +154,7 @@ const sanitizeCatalog = (raw: any): ITemplatesCatalog | null => {
   return { schemaVersion: raw.schemaVersion, categories, templates }
 }
 
+/** @featurePart template.gallery, template.create-project, template.sample-records */
 export class TemplatesCatalog {
   private static loading: Promise<ILoadedCatalog> | undefined
 

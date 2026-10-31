@@ -24,6 +24,8 @@ const HIDDEN_CODES = [FORM_COMPONENTS_CODES.hiddenInput, FORM_COMPONENTS_CODES.r
 
 /**
  * URL of the form to add a record to a section, already linked to a parent record.
+ *
+ * @featurePart view.child-records-tabs, record.add
  */
 export const addLinkedRecordUrl = (projectId: string, sectionId: string, parentSectionId: string, parentElementId: string): string => (
   `${urlParamFiller(ANITA_URLS.projectSectionAddEle, [{ name: URL_PARAMS.projectId, value: projectId }, { name: URL_PARAMS.sectionId, value: sectionId }])}?parent=${encodeURIComponent(`${parentSectionId}|${parentElementId}`)}`
@@ -145,6 +147,19 @@ interface IChildRecordsTabsProps {
 /**
  * Records of the child sections linked to a record, one tab per child section.
  * E.g. on a client: its projects; on a project: its tasks.
+ *
+ * @feature view.child-records-tabs
+ * @title Linked records in tabs
+ * @summary On the details of a record, shows the records of the child sections linked to it, one tab per child section (for example the projects of a client).
+ * @where Details page of a record whose section has child sections: the card under the Details panel, with one tab per child section.
+ * @usage Click a tab to see the linked records of that section; click a record (or the arrow at the end of its row) to open it; click "Add to" followed by the section name to add a record already linked to this one.
+ * @options One tab per child section; the first is selected when the page opens.
+ * @rules Each tab shows the number of linked records. The table shows up to four short fields, the field that names the records first; long texts and rich text are not shown; ticked checkboxes appear as a check mark. When a tab has no records it reads "No ... linked to this record yet." with an "Add to" button.
+ * @errors none
+ * @status stable
+ * @since 1.0.0
+ * @routes projectSectionEleDetails
+ * @related record.details, view.details-panel, record.add
  */
 export const ChildRecordsTabs: FC<IChildRecordsTabsProps> = (props) => {
   const project = useAtomValue(ProjectAtoms.currentProject)

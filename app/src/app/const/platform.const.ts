@@ -24,6 +24,9 @@ const isIOS = ['iphone', 'ipad', 'ipod'].indexOf(platform) !== -1
   * */
 const isPhone = (/mobile/i.test(navigator.userAgent) && !/ipad|tablet/i.test(navigator.userAgent))
 
+/**
+ * @internal
+ */
 export const PLATFORM = {
   IS_MAC: isOSX,
   IS_IOS: isIOS,

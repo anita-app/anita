@@ -2,6 +2,9 @@ import { useEffect, useRef } from 'react'
 import tippy from 'tippy.js'
 import type { Instance } from 'tippy.js'
 
+/**
+ * @internal
+ */
 export const useTippyTooltip = (elementId: string, content?: string, additionalClasses?: string): void => {
   const instancesRef = useRef<Array<Instance> | null>(null)
   window.requestAnimationFrame(() => {

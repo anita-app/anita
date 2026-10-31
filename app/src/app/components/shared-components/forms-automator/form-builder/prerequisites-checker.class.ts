@@ -1,5 +1,6 @@
 import type { FormFieldsModel, Prerequisites, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
 
+/** @internal */
 export class PrerequisitesChecker<ELEMENT extends Partial<TSupportedFormsTypes>> {
   private isIntegrated = false
 

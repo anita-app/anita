@@ -15,6 +15,9 @@ import { ProjectsListAtoms } from 'app/state/projects-list/projects-list.atoms'
 import { Bucket } from 'app/state/bucket.state'
 import type { FC } from 'react'
 
+/**
+ * @featurePart navigation.sidebar, navigation.reopen-last-project
+ */
 export const AdminLayout: FC = () => {
   const project = useAtomValue(ProjectAtoms.currentSystemData)
   const location = useLocation()
@@ -22,6 +25,21 @@ export const AdminLayout: FC = () => {
     OAuthUtils.redirectToAuthPageIfUrlHasCode()
   }, [])
 
+  /**
+   * @feature navigation.reopen-last-project
+   * @title Reopen the last project
+   * @summary When you come back to Anita, the project you used last is opened again in the sidebar.
+   * @where Automatic, when Anita starts on a page that is not inside a project (for example the projects list).
+   * @usage Nothing to do: open or reload Anita and the sidebar shows the last project you opened.
+   * @options none
+   * @rules Anita remembers on this device the last project you opened; if that project no longer exists, the first project of the list is opened; with no projects nothing is opened.
+   * Pages inside a project (their address starts with /project/) open the project of their address instead.
+   * The remembered project is per browser: other browsers or devices remember their own.
+   * @errors none
+   * @status stable
+   * @since 1.0.0
+   * @related navigation.project-picker
+   */
   // The sidebar (sections and project picker) needs a project. Project pages load theirs; on the other pages, after
   // a reload, the project opened last is reopened, or the first one.
   useEffect(() => {

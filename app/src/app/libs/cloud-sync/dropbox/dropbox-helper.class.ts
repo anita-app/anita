@@ -22,6 +22,7 @@ interface IPendingAuth {
   linkProjectId?: string
 }
 
+/** @internal */
 export interface ICompletedDropboxLogin {
   accountName: string
   linkProjectId?: string
@@ -33,6 +34,7 @@ export interface ICompletedDropboxLogin {
 
 /**
  * Metadata of a file, as used by the sync.
+ * @internal
  */
 export interface IDropboxFileMeta {
   fileId: string
@@ -43,6 +45,7 @@ export interface IDropboxFileMeta {
 
 /**
  * An entry of a folder, as shown in the folder picker.
+ * @internal
  */
 export interface IDropboxFolderEntry {
   kind: 'folder' | 'file'
@@ -53,6 +56,7 @@ export interface IDropboxFolderEntry {
   fileId?: string
 }
 
+/** @internal */
 export interface IDownloadedProject extends IDropboxFileMeta {
   /** The project in the file, or null if the file is not an Anita project. */
   data: TAnitaUniversalDataStorage | null
@@ -70,6 +74,7 @@ const randomString = (): string => Array.from(crypto.getRandomValues(new Uint8Ar
 /**
  * The Dropbox account connected on this device: login, tokens and the file operations used by the sync.
  * API reference: https://www.dropbox.com/developers/documentation/http/documentation
+ * @featurePart sync.dropbox-connect, sync.dropbox-projects, security.sync-sessions
  */
 export class DropboxHelper extends CloudSyncBase<SupportedCloud.DROPBOX> {
   public static instance: DropboxHelper

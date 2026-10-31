@@ -5,6 +5,7 @@ import type Dexie from 'dexie'
 
 /**
  * Implements selector for IndexedDB
+ * @internal
  */
 export class DbSelector<E> implements Selector<E> {
   private data: Array<E> = []

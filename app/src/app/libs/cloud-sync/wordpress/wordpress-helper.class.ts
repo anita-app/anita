@@ -9,6 +9,7 @@ import type { IWordPressAuthData, IWordPressRemoteInfo, IWordPressSpaceInfo } fr
 /**
  * Connected WordPress sites: credentials, site information and API clients.
  * API reference: anita-project-manager-for-wordpress/docs/API.md
+ * @featurePart sync.wordpress-connect, security.sync-sessions
  */
 export class WordpressHelper extends CloudSyncBase<SupportedCloud.WORDPRESS> {
   public static instance: WordpressHelper

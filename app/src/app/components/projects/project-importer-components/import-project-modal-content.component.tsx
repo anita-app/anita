@@ -11,6 +11,7 @@ interface IImportProjectModalContentProps {
   projectSettings: IProjectSettings | null
 }
 
+/** @featurePart import.file */
 export const ImportProjectModalContent: FC<IImportProjectModalContentProps> = (props) => {
   const projectInfoNewItemClone: Array<FormFieldsModel<any>> = JSON.parse(JSON.stringify(projectInfoNewItem))
   const [projectSettings, setProjectSettings] = useState<IProjectSettings | null>(

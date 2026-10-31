@@ -11,6 +11,9 @@ interface IAdminLayoutSidebarMenuItemIconProps {
   onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
+/**
+ * @featurePart navigation.hide-sections-in-menu
+ */
 export const AdminLayoutSidebarMenuItemIcon: FC<IAdminLayoutSidebarMenuItemIconProps> = memo(function AdminLayoutSidebarMenuItem (props: IAdminLayoutSidebarMenuItemIconProps) {
   useTippyTooltip(props.elementId, props.tooltip)
 

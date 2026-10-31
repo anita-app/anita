@@ -6,6 +6,7 @@ import type { IDropboxAccountData, IDropboxFileLink } from 'app/libs/cloud-sync/
 
 const DB_VERSION = 7
 
+/** @internal */
 export enum SupportedCloud {
   DROPBOX = 'dropbox',
   WORDPRESS = 'wordpress',
@@ -35,6 +36,7 @@ interface ICloudSyncDB<T extends SupportedCloud> {
   [CloudSyncTable.REMOTE_PROJECTS]: IRemoteProjectInfo
 }
 
+/** @internal */
 export class CloudSyncBase<T extends SupportedCloud> {
   private static DB: Dexie | undefined
   constructor (

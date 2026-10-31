@@ -1,5 +1,6 @@
 import type { Descendant } from 'slate'
 
+/** @featurePart field.long-text */
 export class RichTextEditorHelpers {
   public static makeInitialOutputData = (rawValue: string): Array<Descendant> => {
     try {

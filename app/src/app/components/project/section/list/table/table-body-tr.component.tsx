@@ -17,6 +17,7 @@ interface ITableTbodyTrProps extends ISectionElement {
 
 const MAX_ENTRANCE_DELAY_STEPS = 12
 
+/** @featurePart view.table */
 export const ProjectSectionListTableBodyTr: FC<ITableTbodyTrProps> = memo(function TableTbodyTr (props: ITableTbodyTrProps) {
   return (
     <tr

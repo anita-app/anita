@@ -5,6 +5,9 @@ interface ICardFooter {
   className?: string
 }
 
+/**
+ * @internal
+ */
 export const CardFooter: FC<ICardFooter> = (props) => (
   <div className={`flex justify-between items-end flex-wrap mt-6 ${props.className ?? ''}`}>
     {props.children}

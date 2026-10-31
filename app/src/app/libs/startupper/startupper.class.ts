@@ -11,6 +11,9 @@ import { appVersion } from 'app/version'
 import { Bucket } from 'app/state/bucket.state'
 import { ProjectsListState } from 'app/state/projects-list/projects-list-state.class'
 
+/**
+ * @featurePart storage.local-database
+ */
 export class Startupper {
   /**
    * The name of the IndexedDB for system data

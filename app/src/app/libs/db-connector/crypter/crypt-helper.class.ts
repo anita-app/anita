@@ -7,6 +7,7 @@ import type { DbConnectorInstance } from 'app/libs/db-connector/models/executers
 
 /**
  * Common methods needed to crypt and decrypt data, when data encryption in the DB is enabled.
+ * @internal
  */
 export class CryptHelper<E, DbTypes> {
   /**

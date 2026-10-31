@@ -4,6 +4,9 @@ import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import type { ISection } from 'app/models/section/section.declarations'
 import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
+/**
+ * @internal
+ */
 export class Queriers {
   public static async getElement<T extends ISectionElement> (db: string, table: string, elementId: string): Promise<T | null | void> {
     if (!db || !table || !elementId) {

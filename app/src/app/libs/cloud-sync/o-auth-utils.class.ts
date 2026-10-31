@@ -1,6 +1,7 @@
 import { ANITA_URLS } from 'app/libs/routing/anita-routes.constant'
 
 const UNIQUE_DATA_SEPARATOR = '|?|?|?|'
+/** @featurePart security.sync-sessions */
 export class OAuthUtils {
   public static redirectToAuthPageIfUrlHasCode (): void {
     if (window.location.href.includes('#access_token=')) {

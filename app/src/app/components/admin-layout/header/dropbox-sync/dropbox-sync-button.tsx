@@ -10,6 +10,7 @@ import type { IDropboxAccountState } from 'app/libs/cloud-sync/dropbox/dropbox.c
 
 /**
  * Icon of the connected Dropbox account in the header, with its sync status. Opens the storage page.
+ * @featurePart sync.status
  */
 export const DropboxSyncButton: FC<{ account: IDropboxAccountState }> = (props) => {
   const status = useAtomValue(SyncStateAtoms.remotesStatus)[DROPBOX_REMOTE_ID]

@@ -14,6 +14,20 @@ interface IProjectSectionElementDeleteButtonProps {
   elementId: string
 }
 
+/**
+ * @feature record.delete
+ * @title Delete a record
+ * @summary Removes a record from its section.
+ * @where Details page of a record: the red "Delete" button at the bottom of the details.
+ * @usage Open the record, click "Delete", then confirm with "Delete" in the "Delete element" window.
+ * @options none
+ * @rules The window asks "Are you sure you want to delete this element?" and warns that the action cannot be undone. After deleting, the list of the section opens. When the project is on Dropbox or WordPress, the deletion is synced. On small screens the button shows only its icon, with a tooltip.
+ * @errors none
+ * @status stable
+ * @since 0.11.0
+ * @routes projectSectionEleDetails
+ * @related record.details
+ */
 export const ProjectSectionElementDeleteButton: FC<IProjectSectionElementDeleteButtonProps> = (props) => {
   const handleClickDelete = () => {
     Bucket.general.get(ProjectAtoms.currentProject)?.getSectionById(props.sectionId)?.deleteElement({ [RESERVED_FIELDS.id]: props.elementId })

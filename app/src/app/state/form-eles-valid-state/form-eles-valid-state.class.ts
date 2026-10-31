@@ -2,6 +2,7 @@ import { Bucket } from 'app/state/bucket.state'
 import { FormElesValidStateAtoms } from 'app/state/form-eles-valid-state/form-eles-valid-state.atoms'
 import type { IFormElesValidState } from 'app/state/form-eles-valid-state/form-eles-valid-state.atoms'
 
+/** @featurePart field.required, field.format-validation */
 export class FormElesValidState {
   public static setValidStateForEle = (formEleId: string, valid: boolean) => {
     const current = Bucket.general.get(FormElesValidStateAtoms.validState)

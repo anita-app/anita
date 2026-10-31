@@ -5,6 +5,9 @@ import { INDEXEDDB_PLUGIN } from 'app/libs/db-connector/plugins/indexed-db/expor
 import type { ISection } from 'app/models/section/section.declarations'
 import type { LocalProjectSettings } from 'app/models/project/project.declarations'
 
+/**
+ * @featurePart storage.local-database
+ */
 export class DbInitializer {
   private projectId: string
 

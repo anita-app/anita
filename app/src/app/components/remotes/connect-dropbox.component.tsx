@@ -9,6 +9,20 @@ import { DROPBOX_PROJECTS_FOLDER } from 'app/libs/cloud-sync/dropbox/dropbox.con
 
 /**
  * Explanation and button to connect Dropbox.
+ *
+ * @feature sync.dropbox-connect
+ * @title Connect a Dropbox account
+ * @summary Connects your Dropbox to Anita on this device, so that your projects are backed up and available on every device where you connect the same account.
+ * @where On the "Storage and sync" page (button "Storage and sync" in the list of projects, or the Dropbox and WordPress icons in the header), section Dropbox, button "Connect". Also with "Connect Dropbox and save" / "Create and connect Dropbox" when Dropbox is chosen as storage of a project before connecting it.
+ * @usage 1. Open Storage and sync. 2. In the Dropbox card click "Connect": Anita opens the Dropbox login in the same tab. 3. Log in and allow Anita to use your files: Dropbox brings you back to Anita, which shows "Dropbox connected". 4. Choose Dropbox as storage when you create a project, or in its settings ("Remote storage"). To remove the account, click "Disconnect" on the Dropbox card.
+ * @options When disconnecting with projects of this device synced with Dropbox: "Keep projects" (they stay on this device as local projects) or "Delete from this device"; with no such projects, just "Disconnect". When logging in with a different Dropbox account: "Continue as <name>" or "Cancel".
+ * @rules One Dropbox account per device; nothing to install. Once connected, the projects of the /Anita folder of the Dropbox are downloaded to this device. The card shows "Logged in as" (name and email), "Projects on this device" and "Status". Disconnecting never deletes anything in Dropbox. Logging in with another account asks "Switch Dropbox account?": the projects of the previous account stop syncing and stay on this device as local projects, so they are not copied to the new account. The login must be completed in the same browser within 30 minutes, otherwise "This connection was not started from this browser, or it took too long. Please connect Dropbox again from Anita." Cancelling on Dropbox shows "The connection was cancelled on Dropbox."; any failure shows "The connection did not complete" with the reason and a "Back to Storage and sync" button. If the login cannot be opened, the card shows "Dropbox cannot be connected" with the reason.
+ * @errors dropbox.authFailed, dropbox.network, dropbox.unknown
+ * @status beta
+ * @since 0.18.0
+ * @routes remotes, auth
+ * @covers cloud:DROPBOX
+ * @related sync.dropbox-projects, security.sync-sessions, storage.choice
  */
 export const ConnectDropbox: FC = () => {
   const [isStarting, setIsStarting] = useState(false)

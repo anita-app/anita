@@ -40,6 +40,19 @@ const MAX_CONFLICT_RETRIES = 3
  *   projects to sync that have no file yet, and asks what to do with projects whose file was deleted.
  * - Project level (`syncProject`): two-way merge of the current project with its file.
  * - Local changes (`pushLocalChange`) are merged shortly after they are saved; if that fails, the next merge sends them.
+ *
+ * @feature sync.dropbox-projects
+ * @title Sync projects with Dropbox
+ * @summary Keeps each project chosen for Dropbox in a file of your Dropbox and merges the changes made on this device with those made on your other devices.
+ * @where Chosen as storage of a project: "Dropbox" when creating a project, "Remote storage" in the project settings, or "Save it in Dropbox or WordPress" for a project saved only on this device. The project page shows "Remote storage: Dropbox", the "File" and "Last sync", with a "Sync now" button; the projects list marks it "Synced with Dropbox".
+ * @usage 1. Connect Dropbox. 2. Choose Dropbox as storage of a project (optionally pick another folder with "Change"). 3. Work as usual: changes are sent to Dropbox a moment after they are saved, and changes made on other devices are received when the project is opened or checked again. 4. Use "Sync now" on the project page or on the Dropbox card of Storage and sync to sync right away.
+ * @options Folder of the file: /Anita by default, or any folder chosen with "Change" (Choose a folder: browse, "New folder", "Save in <folder>"). Setting "Remote storage" back to "None: this device only" stops syncing (confirmation "Stop syncing with Dropbox?"): the project stays on this device and in Dropbox.
+ * @rules Each project is one .json file named after the project title (Dropbox renames it if a file with the same name exists). Projects in the /Anita folder are downloaded automatically on every device connected to the same account; projects saved in other folders are opened on other devices with "Open from Dropbox". Local changes are grouped and sent about 1.5 seconds after the last save. Records are merged one by one using the time of their last change: a record changed on both sides since the last sync keeps the most recent version, and the project page says "N records were changed both on this device and on another one since the last sync. The most recent version was kept." If the file is changed by another device during a sync, the merge is retried up to 3 times. When Dropbox cannot be reached, changes stay on this device ("some changes are not synced yet") and are sent later. Deleting a synced project moves its file to the deleted files of Dropbox, where it can be restored for a while; if Dropbox cannot be reached the project is kept on this device. If Dropbox is not connected on the device the project page shows "Dropbox is not connected on this device" and a "Storage and sync" button.
+ * @errors dropbox.network, dropbox.notConnected, dropbox.conflict, dropbox.insufficientSpace, dropbox.rateLimited, dropbox.serverError, dropbox.invalidFile, dropbox.unknown
+ * @status beta
+ * @since 0.18.0
+ * @covers cloud:DROPBOX
+ * @related sync.dropbox-connect, sync.dropbox-open-file, sync.dropbox-missing-file, sync.status, sync.automatic, storage.choice
  */
 export class DropboxSync {
   private static accountRun: Promise<void> | undefined
@@ -256,6 +269,18 @@ export class DropboxSync {
 
   /**
    * Projects whose file was deleted from Dropbox, for example from another device: users decide.
+   *
+   * @feature sync.dropbox-missing-file
+   * @title Projects whose file was deleted from Dropbox
+   * @summary Asks what to do with a project of this device when its file is no longer in your Dropbox, for example because it was deleted from another device.
+   * @where A dialog titled "<project> is no longer in your Dropbox", shown while syncing with Dropbox.
+   * @usage Pick one of the choices of the dialog; closing it asks again at the next session.
+   * @options "Keep on this device only" (stops syncing, the project becomes local), "Save it again in Dropbox" (creates a new file), "Delete from this device".
+   * @rules The copy on this device is never deleted without asking. One question at a time is shown, also when several syncs run together. A project deleted on another device with "Delete" is moved to the deleted files of Dropbox, so the other devices show this dialog.
+   * @errors dropbox.notFound
+   * @status beta
+   * @since 1.0.0
+   * @related sync.dropbox-projects
    */
   private static async handleMissingProjects (missing: Array<string>): Promise<void> {
     for (const projectId of missing) {

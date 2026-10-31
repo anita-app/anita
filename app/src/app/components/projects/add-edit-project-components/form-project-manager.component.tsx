@@ -17,6 +17,7 @@ import { ProjectSaver } from 'app/models/project/project-saver.class'
 import type { FC } from 'react'
 import type { IProjectSettings, TSystemData } from 'app/models/project/project.declarations'
 
+/** @featurePart project.create, project.edit, project.settings, section.add */
 export const FormProjectManager: FC = () => {
   const { projectId } = useParams<URL_PARAMS>()
   const projectEditorMode = useAtomValue(FormProjectAtoms.mode)

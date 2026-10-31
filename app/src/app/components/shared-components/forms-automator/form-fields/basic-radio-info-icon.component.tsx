@@ -9,6 +9,7 @@ interface IBasicRadioInfoIconProps {
   optionHint: string
 }
 
+/** @featurePart field.alternative-choice */
 export const BasicRadioInfoIcon: FC<IBasicRadioInfoIconProps> = memo(function BasicRadio (props: IBasicRadioInfoIconProps) {
   useTippyTooltip(`${props.fieldId}${props.indexOption}`, props.optionHint)
 

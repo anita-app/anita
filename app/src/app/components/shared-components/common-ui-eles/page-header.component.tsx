@@ -11,6 +11,7 @@ interface IPageHeaderProps {
 
 /**
  * Title of a page that is not a section of a project, e.g. the projects list or the storage page.
+ * @internal
  */
 export const PageHeader: FC<IPageHeaderProps> = (props) => (
   <div className="flex flex-wrap items-end gap-3 mb-5">

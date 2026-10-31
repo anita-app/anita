@@ -1,5 +1,6 @@
 /**
  * Error codes returned by the Anita Project Manager plugin, plus client-side codes.
+ * @internal
  */
 export enum WordPressErrorCode {
   unauthorized = 'anita_unauthorized',
@@ -26,6 +27,7 @@ const AUTH_ERRORS = [
   WordPressErrorCode.notConnected,
 ]
 
+/** @internal */
 export class WordPressApiError extends Error {
   constructor (
     public code: WordPressErrorCode | string,
@@ -60,6 +62,7 @@ export class WordPressApiError extends Error {
 
 /**
  * Returns a message for the user, in the tone used across the app.
+ * @featurePart sync.wordpress-connect, sync.wordpress-projects, security.sync-sessions
  */
 export const getWordPressErrorMessage = (error: unknown, siteName: string): string => {
   const apiError = WordPressApiError.from(error)

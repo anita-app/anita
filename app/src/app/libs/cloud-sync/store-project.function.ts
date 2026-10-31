@@ -7,6 +7,7 @@ import type { TStorageChoice } from 'app/components/remotes/storage-choice.compo
 
 /**
  * Whether storing a project as chosen leaves the app to log in (to a new WordPress site, or to Dropbox).
+ * @featurePart storage.choice
  */
 export const storageChoiceNeedsLogin = (choice: TStorageChoice): boolean => (
   choice.kind === 'connect' || (choice.kind === 'dropbox' && !DropboxHelper.instance.isConnected())
@@ -14,6 +15,7 @@ export const storageChoiceNeedsLogin = (choice: TStorageChoice): boolean => (
 
 /**
  * Checks the site chosen in a "connect" storage choice before anything is saved. Throws with an explanation.
+ * @featurePart storage.choice
  */
 export const checkSiteOfStorageChoice = async (choice: TStorageChoice): Promise<IWordPressPingResponse | null> => {
   if (choice.kind !== 'connect') {
@@ -28,6 +30,7 @@ export const checkSiteOfStorageChoice = async (choice: TStorageChoice): Promise<
 /**
  * Stores a project saved on this device as chosen: links it to a connected site or to Dropbox, or opens the login of
  * a new site or of Dropbox (the browser leaves the app and the project is linked when the user comes back).
+ * @featurePart storage.choice
  */
 export const storeProject = async (projectId: string, choice: TStorageChoice, checkedSite?: IWordPressPingResponse | null): Promise<void> => {
   if (choice.kind === 'remote') {

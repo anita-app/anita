@@ -30,6 +30,21 @@ const saveOnShortcut = (sectionId: string, e: KeyboardEvent) => {
   Bucket.general.get(ProjectAtoms.currentProject)?.getSectionById(sectionId)?.saveElement(currentElementInStore!)
 }
 
+/**
+ * @feature record.save
+ * @title Save or cancel a record
+ * @summary Saves the record being added or edited, or leaves the form without saving.
+ * @where Bottom of the add and edit forms of a record: "Cancel", "Save" and "Save & Close".
+ * @usage Click "Save & Close" (or "Save" in sections without a rich text field) to save and go back to the previous page. In sections with a rich text field, "Save" saves and keeps the form open. Press Mod+S to save without leaving the form. Click "Cancel" or press Escape to go back without saving.
+ * @options "Save" (stay in the form, only in sections with a rich text field), "Save & Close", "Cancel".
+ * @rules The save buttons and Mod+S do nothing while the form is not valid: next to the buttons a message lists the missing required fields ("To save, fill in the required field: ...") or reads "To save, correct the fields marked in red.". Empty values are not stored. The record is saved on this device first, then synced when the project is on Dropbox or WordPress.
+ * @errors none
+ * @status stable
+ * @since 0.1.0
+ * @routes projectSectionAddEle, projectSectionEditEle
+ * @shortcuts Mod+S, Escape
+ * @related record.add, record.edit
+ */
 export const ProjectSectionElementAddEditSaveCancelButtons: FC<IProjectSectionElementAddEditSaveCancelButtonsProps> = (props) => {
   const element = useAtomValue(FormElementAtoms.element)
   const validObj = useAtomValue(FormElesValidStateAtoms.validState)

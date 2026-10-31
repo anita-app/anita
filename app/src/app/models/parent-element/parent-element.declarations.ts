@@ -2,6 +2,7 @@ import type { ISectionElement } from 'app/models/section-element/section-element
 
 /**
  * Defines the properties of each parent to which a element is connected.
+ * @featurePart relation.link-to-parent
  */
 export interface ParentInfoForDetailsView {
   txt: string

@@ -15,6 +15,7 @@ const INPUT_EXAMPLES: Record<string, string> = {
   tel: '+1 555 0100',
 }
 
+/** @featurePart field.short-text, field.date, field.date-time */
 export const BasicInput: FC<ICommonFormEleProps> = memo(function BasicInput ({ formEle, element, handleChange, forceFullWidth }: ICommonFormEleProps) {
   const [touched, setTouched] = useState(false)
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))

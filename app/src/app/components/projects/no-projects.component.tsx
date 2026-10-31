@@ -49,6 +49,22 @@ const FirstProjectTemplates: FC<{ onShowIntro: () => void }> = (props) => (
 
 /**
  * Shown when there are no projects on this device: the introduction the first time, then the templates.
+ *
+ * @feature project.first-project
+ * @title Create your first project
+ * @summary When there are no projects on this device, the app shows the introduction and then the templates to create the first one.
+ * @where Shown automatically when this device has no projects: "Your first project" / "Choose a template".
+ * @usage 1. Go through the introduction (only the first time).
+ * 2. Pick a template, or "Start from scratch".
+ * 3. Or bring existing projects: "Open from Dropbox", "Import", or the link "I have projects in Dropbox or on WordPress".
+ * @options "Show the introduction again" link at the bottom of the page.
+ * @rules The introduction is shown until you choose how to start; afterwards this page opens directly on the templates. As soon
+ * as there is a project on the device the app goes to the Projects list.
+ * @errors none
+ * @status stable
+ * @since 1.0.0
+ * @routes projectsNone
+ * @related app.onboarding, template.gallery, template.create-project, import.file
  */
 export const ProjectsNone: FC = () => {
   const projects = useAtomValue(ProjectsListAtoms.projects)

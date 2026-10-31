@@ -87,6 +87,24 @@ const anitaRoutes: Array<RouteObject> = [
   },
 ]
 
+/**
+ * @feature navigation.addresses
+ * @title Page addresses and the Back button
+ * @summary Every page of Anita has its own address, so you can bookmark it, reload it and go back with the browser's Back button.
+ * @where The address bar of the browser (addresses look like .../#/project/.../list/...); the Back and Forward buttons of the browser or of the phone.
+ * @usage Use the Back and Forward buttons, bookmark a page, or reload it: Anita opens the same page.
+ * @options none
+ * @rules The part of the address after # says which page is open: the projects list, a project, a section list, a record, a form.
+ * The address of the app itself (/) and unknown addresses open the projects list.
+ * A page of a project shows a loader while the project opens; if the project does not exist on this device (for example a link from another device or a deleted project), Anita opens the projects list.
+ * An address points to data on this device only: sending it to someone else does not share the record.
+ * Pages change with a short animation; the header and the sidebar stay in place.
+ * @errors none
+ * @status stable
+ * @since 0.2.4
+ * @routes projectsList
+ * @related navigation.sidebar
+ */
 export const anitaRouter = createHashRouter(anitaRoutes)
 RoutingState.navigate = anitaRouter.navigate
 

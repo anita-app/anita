@@ -29,6 +29,9 @@ const classesByType: { [key in Type]: { container: string; title: string; text: 
   [Type.transparent]: { container: 'bg-transparent border-transparent', title: 'text-gray-800', text: 'text-gray-600' },
 }
 
+/**
+ * @internal
+ */
 export const AlertWithDescription: FC<IAlertWithDescription> = (props) => (
   <div
     role="alert"

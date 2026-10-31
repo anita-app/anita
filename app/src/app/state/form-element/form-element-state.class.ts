@@ -2,6 +2,7 @@ import { Bucket } from 'app/state/bucket.state'
 import { FormElementAtoms } from 'app/state/form-element/form-element.atoms'
 import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
+/** @featurePart record.add, record.edit */
 export class FormElementState {
   public static setElement = (element: ISectionElement | null) => {
     Bucket.general.set(FormElementAtoms.element, element ? { ...element } : null)

@@ -23,6 +23,7 @@ const exportMenuItems: Array<IMenuItem> = [
   },
 ]
 
+/** @featurePart project.info-page, export.project */
 export const ExportButton: FC = () => (
   <Dropdown
     id="exportProject"

@@ -24,6 +24,7 @@ interface IEditElementButtonProps {
 
 type IAddEditElementButtonProps = | IAddElementButtonProps | IEditElementButtonProps
 
+/** @featurePart record.add, record.edit */
 export const AddEditElementButton: FC<IAddEditElementButtonProps> = (props) => {
   const icon: TIconName = props.mode === EDITOR_MODE.add ? 'addOutline' : 'createOutline'
   const urlParamsToFill = [{ name: URL_PARAMS.projectId, value: props.projectId }, { name: URL_PARAMS.sectionId, value: props.sectionId }]

@@ -6,6 +6,7 @@ import { AES } from 'crypto-es'
  * @param value the value to encrypt
  * @param keyToUse the key to use for encryption
  * @return the encrypted string
+ * @internal
  */
 export function stringCrypter (value: string, keyToUse: string): string {
   const encrypted = AES.encrypt(value, keyToUse)

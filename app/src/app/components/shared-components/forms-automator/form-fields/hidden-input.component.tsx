@@ -2,6 +2,7 @@ import { memo } from 'react'
 import type { FC } from 'react'
 import type { ICommonFormEleProps } from 'app/components/shared-components/forms-automator/form-automator.types'
 
+/** @internal */
 export const HiddenInput: FC<ICommonFormEleProps> = memo(function HiddenInput ({ formEle, element, handleChange }: ICommonFormEleProps) {
   if (element[formEle.fieldName] === undefined || element[formEle.fieldName] === null) {
     element[formEle.fieldName] = ''

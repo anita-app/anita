@@ -2,6 +2,8 @@ import type { ISectionCustomFieldProperties } from 'app/models/section/section.d
 
 /**
  * Creates a section form element based on the information provided by the user when creating/editing a project
+ *
+ * @internal
  */
 export class SectionFormEleGenerator {
   /**

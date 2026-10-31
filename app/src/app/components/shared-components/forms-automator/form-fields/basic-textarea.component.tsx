@@ -8,6 +8,7 @@ import { memo, useRef, useState } from 'react'
 import type { FC } from 'react'
 import type { ICommonFormEleProps } from 'app/components/shared-components/forms-automator/form-automator.types'
 
+/** @internal */
 export const BasicTextarea: FC<ICommonFormEleProps> = memo(function BasicTextarea ({ formEle, element, handleChange }: ICommonFormEleProps) {
   const [touched, setTouched] = useState(false)
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))

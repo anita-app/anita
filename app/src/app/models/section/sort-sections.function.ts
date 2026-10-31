@@ -2,6 +2,7 @@ import type { ISection } from 'app/models/section/section.declarations'
 
 /**
  * Sections in their saved order. Sections saved before positions existed keep their relative order at the end.
+ * @internal
  */
 export const sortSections = <S extends ISection>(sections: Array<S>): Array<S> => (
   sections
@@ -12,5 +13,6 @@ export const sortSections = <S extends ISection>(sections: Array<S>): Array<S> =
 
 /**
  * Sets the position of each section from its index.
+ * @internal
  */
 export const withPositions = <S extends ISection>(sections: Array<S>): Array<S> => sections.map((section, position) => ({ ...section, position }))

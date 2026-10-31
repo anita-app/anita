@@ -4,6 +4,7 @@ interface IMonthProps {
   value: string
 }
 
+/** @featurePart field.date */
 export const Month: FC<IMonthProps> = (props) => props.value
   ? <>{new Date(props.value).toLocaleString('default', { month: 'short', year: 'numeric' })}</>
   : null

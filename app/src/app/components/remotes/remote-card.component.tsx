@@ -21,6 +21,7 @@ const ROLE_LABELS: Record<string, string> = {
   subscriber: 'Subscriber',
 }
 
+/** @internal */
 export const getSiteInitials = (siteName: string): string => {
   const words = siteName.trim().split(/\s+/)
   if (words.length >= 2) {
@@ -29,6 +30,7 @@ export const getSiteInitials = (siteName: string): string => {
   return siteName.substring(0, 2).toUpperCase()
 }
 
+/** @internal */
 export const SiteIcon: FC<{ remote: IWordPressRemoteInfo; sizeClassName?: string }> = (props) => {
   const [hasImageError, setHasImageError] = useState(false)
   const sizeClassName = props.sizeClassName ?? 'w-10 h-10'
@@ -51,6 +53,7 @@ export const SiteIcon: FC<{ remote: IWordPressRemoteInfo; sizeClassName?: string
 
 /**
  * A connected WordPress site, with its status and actions.
+ * @featurePart sync.wordpress-connect, sync.status
  */
 export const RemoteCard: FC<{ remote: IWordPressRemoteInfo; index?: number }> = (props) => {
   const remote = props.remote

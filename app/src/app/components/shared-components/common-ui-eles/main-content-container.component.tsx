@@ -25,6 +25,9 @@ interface IMainContentContainerProps {
   children: ReactNode
 }
 
+/**
+ * @internal
+ */
 export const MainContentContainer: FC<IMainContentContainerProps> = (props) => {
   const RightComponent = props.headerRightComponent
   const contentId = useId()

@@ -11,6 +11,7 @@ interface IWorkerResponse {
 /**
  * Runs the comparison between local and remote data in a Web Worker, one promise per request,
  * so that concurrent syncs of different projects never receive each other's results.
+ * @internal
  */
 export class ComparatorRunner {
   private static worker: Worker | undefined

@@ -28,14 +28,17 @@ const ACCENTS = [
   'bg-cyan-100 text-cyan-700',
 ]
 
+/** @featurePart template.gallery */
 export const templateUrl = (templateId: string): string => urlParamFiller(ANITA_URLS.projectNewFromTemplate, [{ name: URL_PARAMS.templateId, value: templateId }])
 
+/** @featurePart template.gallery, template.create-project */
 export const TemplateIcon: FC<{ icon?: TIconName; accent: string; sizeClassName?: string }> = (props) => (
   <span className={`${props.sizeClassName ?? 'w-10 h-10 text-xl'} rounded-xl flex items-center justify-center shrink-0 ${props.accent}`}>
     {Icons.render(props.icon ?? 'documentTextOutline')}
   </span>
 )
 
+/** @featurePart template.gallery, template.create-project */
 export const useTemplatesCatalog = () => {
   const [state, setState] = useState<{ loaded?: ILoadedCatalog; error?: boolean }>({})
   const [attempt, setAttempt] = useState(0)
@@ -62,6 +65,7 @@ export const useTemplatesCatalog = () => {
   }
 }
 
+/** @featurePart template.gallery, template.create-project */
 export const accentOfCategory = (categoryIds: Array<string>, categoryId: string): string => {
   const index = categoryIds.indexOf(categoryId)
   return ACCENTS[(index < 0 ? 0 : index) % ACCENTS.length]
@@ -101,6 +105,26 @@ interface ITemplateGalleryProps {
 
 /**
  * Searchable gallery of the project templates, grouped by category.
+ *
+ * @feature template.gallery
+ * @title Browse the templates
+ * @summary A gallery of ready-made projects (tasks, CRM, budget, recipes...), by category and with search.
+ * @where "Create a project" page (from "New project") and the first project page ("Choose a template").
+ * @usage 1. Type in "Search templates" or pick a category.
+ * 2. Click a template to see what is inside and create the project.
+ * @options Category tabs ("All" and each category, with the number of templates). Search box. "Start from scratch" card, shown
+ * in "All" when nothing is searched.
+ * @rules Each card shows the name, category, description and sections of the template. The search looks in names,
+ * descriptions, tags and section names; with no result: "No template matches your search. Try other words, or start
+ * from scratch.". Templates are downloaded from the Anita catalog and the last copy is kept on the device: offline the
+ * gallery says "You are offline: showing the templates saved on this device.". If they cannot be downloaded and no copy
+ * is saved: "The templates could not be downloaded..." with "Try again" and "Start from scratch". Templates change
+ * without updating the app; self-hosted installations can use their own catalog (set when the app is built).
+ * @errors none
+ * @status stable
+ * @since 1.0.0
+ * @routes projectNew, projectsNone
+ * @related template.create-project, project.create, project.first-project
  */
 export const TemplateGallery: FC<ITemplateGalleryProps> = (props) => {
   const { loaded, error, retry } = useTemplatesCatalog()

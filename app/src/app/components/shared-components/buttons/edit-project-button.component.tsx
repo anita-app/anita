@@ -10,6 +10,7 @@ interface IEditButtonProps {
   project: IProjectSettings
 }
 
+/** @featurePart project.info-page, project.edit, sync.wordpress-share */
 export const EditProjectButton: FC<IEditButtonProps> = (props) => {
   const remoteInfo = useRemoteProjectInfo(props.project.remoteStorage ? props.project.id : undefined)
 

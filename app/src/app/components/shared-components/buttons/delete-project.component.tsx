@@ -21,6 +21,7 @@ interface IDeleteProjectButtonProps {
   project: IProjectSettings
 }
 
+/** @featurePart project.info-page, project.delete, sync.dropbox-projects, sync.wordpress-share */
 export const DeleteProjectButton: FC<IDeleteProjectButtonProps> = (props) => {
   const dropboxLink = useAtomValue(SyncStateAtoms.dropboxLinks)[props.project.id]
   const isOnDropbox = props.project.remoteStorage === DROPBOX_REMOTE_ID && !!dropboxLink

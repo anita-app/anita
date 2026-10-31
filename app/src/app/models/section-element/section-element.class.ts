@@ -2,6 +2,7 @@ import { TextTools } from 'app/libs/tools/text-tools.class'
 import type { IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 import type { ISection } from 'app/models/section/section.declarations'
 
+/** @featurePart field.drop-down, field.alternative-choice */
 export class SectionElement {
   public static autoGenerateFieldName (section: ISection, labelValue: string | number | boolean | Array<string>): string | null {
     const allExistingFieldNames = section?.formModel?.map(element => element.fieldName) ?? []

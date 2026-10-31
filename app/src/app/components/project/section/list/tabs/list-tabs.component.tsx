@@ -25,6 +25,7 @@ interface IProjectSectionListTabsProps {
   handleTabClick: (tab: SupportedViews) => void
 }
 
+/** @featurePart view.section-list, view.switch-view */
 export const ProjectSectionListTabs: FC<IProjectSectionListTabsProps> = memo(function ProjectSectionListTabs (props: IProjectSectionListTabsProps) {
   const projectTitle = useAtomValue(ProjectAtoms.currentSystemData)?.[RESERVED_AUDS_KEYS._settings]?.[0]?.title
   if (props.sectionData.length === 0) {

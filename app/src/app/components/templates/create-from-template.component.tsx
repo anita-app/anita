@@ -92,6 +92,24 @@ const createLabel = (storage: TStorageChoice): string => {
   return storageChoiceNeedsLogin(storage) ? 'Create and connect Dropbox' : 'Create project'
 }
 
+/**
+ * @feature template.sample-records
+ * @title Start a template with example records
+ * @summary Fills a project created from a template with a few realistic records, already linked to each other, to see how
+ * everything works.
+ * @where "Start with some example records" checkbox on the page of a template.
+ * @usage 1. Open a template from the gallery.
+ * 2. Tick or untick "Start with some example records".
+ * 3. Create the project.
+ * @options Ticked by default when there are no projects on the device yet, unticked otherwise.
+ * @rules Shown only for templates that come with examples. Dates of the examples are set relative to the day the project is
+ * created. The records are saved, and uploaded to Dropbox or WordPress, together with the project; delete them whenever
+ * you want. "Customize the structure first" creates the project without examples.
+ * @errors none
+ * @status stable
+ * @since 1.0.0
+ * @related template.create-project
+ */
 const CreateFromTemplateForm: FC<{ template: IProjectTemplate; accent: string; categoryLabel?: string }> = (props) => {
   const remotes = useWritableRemotes()
   const dropboxIsWritable = useDropboxIsWritable()
@@ -289,6 +307,29 @@ const CreateFromTemplateForm: FC<{ template: IProjectTemplate; accent: string; c
 
 /**
  * Page to create a project from a template: preview of its structure, name and storage.
+ *
+ * @feature template.create-project
+ * @title Create a project from a template
+ * @summary Preview the sections and fields of a template, name the project, choose where to save it and create it in one click.
+ * @where Click a template in the gallery: page with the form and "What's inside"; "All templates" goes back to the gallery.
+ * @usage 1. Look at "What's inside": sections, their fields and links between sections.
+ * 2. Change "Project name" and "Description" if you want.
+ * 3. Choose "Where to save it".
+ * 4. Click "Create project" ("Create and connect Dropbox" or "Create and connect WordPress" when a login is needed), or
+ * "Customize the structure first" to change sections and fields in the editor before creating it.
+ * @options Project name and description (default: those of the template). "Start with some example records". Where to save it:
+ * only this device, Dropbox, a connected WordPress site or a new WordPress site; a connected Dropbox or site is proposed
+ * when there is one.
+ * @rules The name is required ("Give the project a name."). When Dropbox or the site needs a login, the browser leaves the app
+ * and the project is linked when you come back; "Customize the structure first" is then disabled. The address of a new
+ * site is checked before anything is saved. Problems are shown in "The project was not created". A template that is no
+ * longer in the catalog shows "This template is no longer available."; if the catalog cannot be downloaded, "The
+ * template could not be downloaded." with "Try again". After creation the project opens.
+ * @errors wordpress.network, wordpress.pluginMissing, wordpress.originNotAllowed, dropbox.network, dropbox.authFailed
+ * @status stable
+ * @since 1.0.0
+ * @routes projectNewFromTemplate
+ * @related template.gallery, template.sample-records, project.create, section.add
  */
 export const CreateFromTemplate: FC = () => {
   const params = useParams()

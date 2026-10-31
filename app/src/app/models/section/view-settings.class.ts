@@ -1,6 +1,7 @@
 import { SupportedViews } from 'app/models/section/view-settings.const'
 import type { ISectionViewSettings } from 'app/models/section/section.declarations'
 
+/** @featurePart view.switch-view */
 export class ViewSettings {
   constructor (
     private viewSettings: ISectionViewSettings = {} as ISectionViewSettings,

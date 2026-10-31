@@ -10,6 +10,7 @@ import type { CSSProperties, FC } from 'react'
 
 /**
  * Where projects can be stored besides this device: the Dropbox account and the WordPress sites connected here.
+ * @featurePart sync.dropbox-connect, sync.wordpress-connect
  */
 export const Remotes: FC = () => {
   const remotes = useAtomValue(SyncStateAtoms.wordPressRemotes)

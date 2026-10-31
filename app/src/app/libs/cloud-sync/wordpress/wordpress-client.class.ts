@@ -16,6 +16,7 @@ import type { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios'
 const REQUEST_TIMEOUT_MS = 30000
 const BATCH_SIZE = 200
 
+/** @internal */
 export interface IWordPressClientHooks {
   /** Called after the tokens are refreshed, to persist them. */
   onTokensRefreshed: (authData: IWordPressAuthData) => Promise<void> | void
@@ -61,6 +62,7 @@ const toApiError = (error: unknown): WordPressApiError => {
 /**
  * Client for the REST API of the Anita Project Manager plugin.
  * See anita-project-manager-for-wordpress/docs/API.md.
+ * @featurePart sync.wordpress-projects, security.sync-sessions
  */
 export class WordPressClient {
   private static refreshes: Record<string, Promise<string> | undefined> = {}

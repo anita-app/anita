@@ -4,6 +4,7 @@ import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import type { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
 import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
+/** @internal */
 export interface IComparisonResult {
   remote: IElesForScope
   remoteData: TAnitaUniversalDataStorage
@@ -17,6 +18,7 @@ interface IElesForScope {
   update: Partial<TAnitaUniversalDataStorage>
 }
 
+/** @featurePart sync.dropbox-projects, sync.wordpress-projects */
 export class Comparator {
   private static nonDeletableSections = Object.values(RESERVED_AUDS_KEYS)
   private delta: IComparisonResult = {

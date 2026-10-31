@@ -13,11 +13,13 @@ import {
 } from 'app/data/project-form-builder/section-fields-builder.constant'
 import { sectionDetailsFormFieldsModel } from 'app/data/project-form-builder/section-info-builder.constant'
 
+/** @featurePart project.advanced-editor */
 export enum PROJECT_EDITOR_MODE {
   advanced = 1,
   basic,
 }
 
+/** @featurePart project.advanced-editor, project.settings, section.add, section.fields */
 export const PROJECT_EDITOR_FORM_BUILDER = {
   [PROJECT_EDITOR_MODE.advanced]: {
     projectInfo: {

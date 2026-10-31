@@ -17,6 +17,7 @@ interface IProjectSectionElementDetailsParentsLinksProps {
   parentsInfo: Array<string>
 }
 
+/** @featurePart record.details */
 export const ProjectSectionElementDetailsParentsLinks: FC<IProjectSectionElementDetailsParentsLinksProps> = (props) => {
   const project = useAtomValue(ProjectAtoms.currentProject)
   const [parents, setParents] = useState<Array<ParentInfoForDetailsView> | undefined>([])

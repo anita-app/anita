@@ -1,6 +1,7 @@
 import type { FC, ReactNode } from 'react'
 
 // Slate passes read-only props: the marks wrap a copy of the children.
+/** @featurePart field.long-text, field.rich-text-formatting */
 export const RichTextEditorLeaf: FC<any> = (props) => {
   let children: ReactNode = props.children
 

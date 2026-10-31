@@ -8,6 +8,7 @@ import type { FormFieldsModel, IOptionKeysModel } from 'app/components/shared-co
  * Builds the form element with the info on the parent section for ParentsSelector
  *
  * @see ParentsSelector
+ * @featurePart relation.link-to-parent
  */
 export class ParentInfoFormEleBuilder {
   private parentInfoFormModel: FormFieldsModel<ISectionElement> | undefined

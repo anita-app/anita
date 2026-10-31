@@ -26,6 +26,7 @@ function getCanEdit (section: ISection, indexFormElement: number, value: string 
   return !(section.formModel[indexFormElement] as IBasicSelect<TSupportedFormsTypes>).options.some((opt: IOptionKeysModel) => opt.value === value)
 }
 
+/** @featurePart field.choices */
 export const OptionsMakerSingleOption: FC<ICommonFormEleProps<FormFieldsModel<IOptionKeysModel>>> = memo(function OptionsMakerSingleOption (props: ICommonFormEleProps<FormFieldsModel<IOptionKeysModel>>) {
   const { formEle, element, handleOptionsChange, handleClickDeleteOption, indexSection, indexFormElement, index, optionElement } = props
   const projectEditorMode = useAtomValue(FormProjectAtoms.mode)

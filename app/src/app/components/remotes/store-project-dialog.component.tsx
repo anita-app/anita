@@ -27,6 +27,7 @@ const Benefit: FC<{ icon: 'shieldCheckmarkOutline' | 'phonePortraitOutline' | 'p
 
 /**
  * Message for an error while storing a project as chosen.
+ * @featurePart storage.choice
  */
 export const getStoreErrorMessage = (error: unknown, choice: TStorageChoice, siteName: string | undefined): string => {
   switch (choice.kind) {
@@ -43,6 +44,7 @@ export const getStoreErrorMessage = (error: unknown, choice: TStorageChoice, sit
 
 /**
  * Label of the button that stores a project as chosen.
+ * @featurePart storage.choice
  */
 export const storeActionLabel = (choice: TStorageChoice, siteName: string | undefined): string => {
   switch (choice.kind) {
@@ -138,6 +140,7 @@ const StoreProjectForm: FC<{ projectId: string; projectTitle: string }> = (props
 /**
  * Dialog to move a project saved only on this device to Dropbox or to a WordPress site.
  * Opened with OnboardingState.openStoreProject.
+ * @featurePart storage.choice, storage.local-only
  */
 export const StoreProjectDialog: FC = () => {
   const projectId = useAtomValue(OnboardingAtoms.storeProjectId)

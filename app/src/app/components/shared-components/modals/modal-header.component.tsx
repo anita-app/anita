@@ -4,6 +4,9 @@ interface IModalHeaderProps {
   children: ReactNode
 }
 
+/**
+ * @internal
+ */
 export const ModalHeader: FC<IModalHeaderProps> = (props) => (
   <h3
     className="text-lg leading-6 font-medium text-gray-900"

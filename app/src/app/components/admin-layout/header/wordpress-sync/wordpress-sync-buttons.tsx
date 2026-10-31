@@ -3,6 +3,7 @@ import { WordPressSyncButton } from 'app/components/admin-layout/header/wordpres
 import { SyncStateAtoms } from 'app/state/sync/sync-state.atoms'
 import type { FC } from 'react'
 
+/** @featurePart sync.status */
 export const WordPressSyncButtons: FC = () => {
   const remotes = useAtomValue(SyncStateAtoms.wordPressRemotes)
   return (

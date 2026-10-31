@@ -6,6 +6,7 @@ import type { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-def
 /**
  * Defines the table _settings and its fields for system data of the AnitaUniversalDataStorage structure.
  * This is needed to work on system sections with DbConnector.
+ * @internal
  */
 export const audsSettings: SectionDefinition<IProjectSettings> = {
   name: RESERVED_AUDS_KEYS._settings,

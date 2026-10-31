@@ -11,6 +11,7 @@ interface IRichTextProps {
   value: string
 }
 
+/** @featurePart field.long-text */
 export const RichText: FC<IRichTextProps> = (props) => {
   const renderElement = useCallback((props: any) => <RichTextEditorElement {...props} />, [])
   const renderLeaf = useCallback((props: any) => <RichTextEditorLeaf {...props} />, [])

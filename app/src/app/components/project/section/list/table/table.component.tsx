@@ -13,6 +13,7 @@ interface IProjectSectionListTableProps {
   titleFieldName?: string
 }
 
+/** @featurePart view.table */
 export const ProjectSectionListTable: FC<IProjectSectionListTableProps> = (props) => (
   <table className="ui-table table-auto min-w-full">
     <thead>

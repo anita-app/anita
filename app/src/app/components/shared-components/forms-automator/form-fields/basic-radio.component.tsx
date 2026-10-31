@@ -10,6 +10,20 @@ import type { ISectionElement } from 'app/models/section-element/section-element
 import type { IBasicRadio, ICommonFormEleProps } from 'app/components/shared-components/forms-automator/form-automator.types'
 /* eslint-disable eqeqeq */
 
+/**
+ * @feature field.alternative-choice
+ * @title Alternative choice field
+ * @summary Pick one value among a few choices, all visible at once as round buttons.
+ * @where Project editor: a field with Data type "Alternative choice" and its "Choices". In the form of a record, one round button per choice; the chosen value is shown as a coloured label in lists and on the details page.
+ * @usage Define the choices of the field in the project editor. In the form of a record, click the round button of the choice.
+ * @options The choices of the field (see "Choices of a drop-down or alternative choice"). No choice is selected at first.
+ * @rules Only one choice can be selected. Once a choice is selected the field cannot be emptied again, only changed to another choice. The chosen value is shown like the one of a drop-down list: a label coloured by the position of the choice. Better suited than a drop-down list when the choices are few. If the field is required, "This field is required" appears when it is left empty.
+ * @errors none
+ * @status stable
+ * @since 0.1.0
+ * @covers field:basicRadio
+ * @related field.choices, field.drop-down, field.required
+ */
 export const BasicRadio: FC<ICommonFormEleProps<IBasicRadio<ISectionElement>>> = memo(function BasicRadio ({ formEle, element, handleChange }: ICommonFormEleProps<IBasicRadio<ISectionElement>>) {
   const [touched, setTouched] = useState(false)
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))

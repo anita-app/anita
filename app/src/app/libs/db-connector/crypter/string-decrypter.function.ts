@@ -6,6 +6,7 @@ import { AES } from 'crypto-es'
  * @param value the value to decrypt
  * @param keyToUse the key to use for decryption
  * @return the decrypted string
+ * @internal
  */
 export function stringDecrypter (value: string, keyToUse: string): string {
   const decrypted = AES.decrypt(value, keyToUse)

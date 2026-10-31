@@ -2,6 +2,20 @@ import { atom } from 'jotai'
 import type { IWordPressRemoteInfo } from 'app/libs/cloud-sync/wordpress/wordpress.const'
 import type { IDropboxAccountState, IDropboxFileLink } from 'app/libs/cloud-sync/dropbox/dropbox.const'
 
+/**
+ * @feature sync.status
+ * @title Sync status and problems
+ * @summary Shows whether Dropbox, each WordPress site and the open project are synced, syncing, waiting for a login or failed, and what was resolved in the last sync.
+ * @where Header: the Dropbox icon and one icon per connected site (tooltip and colored ring), opening Storage and sync. Storage and sync: "Status" of each card. Project page: "Last sync", "Sync problem" and "Synced" notes.
+ * @usage Look at the header icons; hover them for the status; click them to open Storage and sync. On the project page read "Last sync" and click "Sync now" to sync right away.
+ * @options none
+ * @rules Header tooltips: "<service>: synced", "<service>: syncing…" (blue pulsing ring), "<service>: last sync failed" (orange ring), "<service>: log in again to resume syncing" (red ring). Card status: "Connected", "Syncing…", "Synced on <date, time>", "Login required", with the alert "Last sync failed" or "Log in again to resume syncing". Project page: "Not synced yet", "Syncing…" or the date of the last sync, plus "some changes are not synced yet" when local changes are waiting; "Sync problem" shows the message of the last failure; "Synced" reports the records changed on both sides, of which the most recent version was kept. "Sync now" is hidden while a login is required.
+ * @errors none
+ * @status beta
+ * @since 1.0.0
+ * @routes remotes
+ * @related sync.automatic, sync.dropbox-projects, sync.wordpress-projects, security.sync-sessions
+ */
 export interface ISyncStatus {
   isSyncing: boolean
   /** Message of the last failed sync, cleared by the next successful one. */
@@ -14,6 +28,7 @@ export interface ISyncStatus {
   notice?: string
 }
 
+/** @internal */
 export class SyncStateAtoms {
   public static isSyncing = atom<boolean>(false)
   public static isSavingInFs = atom<boolean>(false)

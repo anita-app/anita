@@ -34,6 +34,25 @@ const showInvalidFileModal = () => {
   })
 }
 
+/**
+ * @feature import.file
+ * @title Import a project from a file
+ * @summary Adds to this device a project saved in an Anita file (a JSON export), with its structure and its records.
+ * @where "Import" button on the Projects screen, on the "Create a project" page and on the first project page.
+ * @usage 1. Click "Import".
+ * 2. Choose the .json file.
+ * 3. In the "Import project" dialog check or change the name, description and remote storage.
+ * 4. Click "Import".
+ * @options Name, description and remote storage of the project can be changed before importing.
+ * @rules Only files exported with "Data and Structure" or "Structure Only" can be imported. Any other file shows "This file
+ * cannot be imported", explaining that exports with "Data Only" do not contain the project structure. Exports of the
+ * previous version of Anita (0.20.0) can be imported. "Import" stays disabled while a required field is empty. The
+ * project is saved in the browser of this device and the Projects list opens.
+ * @errors none
+ * @status stable
+ * @since 0.1.0
+ * @related export.project, project.list, project.settings
+ */
 export const ImportProjectButton: FC<IImportProjectButtonProps> = (props) => {
   const validObj = useAtomValue(FormElesValidStateAtoms.validState)
   const projectData = useRef<TAnitaUniversalDataStorage>(null)

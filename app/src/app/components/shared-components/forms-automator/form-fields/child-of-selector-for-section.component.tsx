@@ -21,6 +21,19 @@ import type { IBasicSelect, ICommonFormEleProps } from 'app/components/shared-co
 import type { IOption } from 'app/models/parent-element/parent-element.class'
 import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
+/**
+ * @feature relation.parent-sections
+ * @title Parent sections
+ * @summary Make a section the child of other sections, so that its records can be linked to records of those sections (e.g. Tasks linked to Projects).
+ * @where Project editor, in the settings of a section: the "Parent sections:" field.
+ * @usage In the project editor, open the section that will hold the child records and choose one or more sections in "Parent sections:". Remove a parent with the × on its tag. Save the project.
+ * @options Any other section of the project; several parent sections are allowed. Default: none.
+ * @rules The field appears only when the project has at least one other section; a section cannot be its own parent. Once a section has parent sections, the form of its records shows the "Linked to" field, and the records of the parent sections show tabs with the records linked to them.
+ * @errors none
+ * @status stable
+ * @since 0.3.0
+ * @related relation.link-to-parent
+ */
 export const ChildOfSelectorForSection: FC<ICommonFormEleProps<IBasicSelect<ISectionElement>>> = memo(function ChildOfSelectorForSection ({ formEle, element, handleChange, sectionId }: ICommonFormEleProps<IBasicSelect<ISectionElement>>) {
   const currentProject = useAtomValue(FormProjectAtoms.project)
   const currentEditedProjectSections = currentProject[RESERVED_AUDS_KEYS._sections]

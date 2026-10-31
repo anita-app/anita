@@ -1,3 +1,6 @@
+/**
+ * @internal
+ */
 export class TextTools {
   // Removes non ascii characters from a string and replaces with ascii chars, plus replaces spaces with -
   public static cleanString (source: string): string {

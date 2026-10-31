@@ -1,3 +1,6 @@
+/**
+ * @internal
+ */
 export class Logger {
   /**
    * Whether to print to the console debug info

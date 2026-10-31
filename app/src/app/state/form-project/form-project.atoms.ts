@@ -8,6 +8,7 @@ const createEmptySystemData = (): Partial<TSystemData> => ({
   [RESERVED_AUDS_KEYS._sections]: [],
 })
 
+/** @featurePart project.create, project.edit */
 export class FormProjectAtoms {
   public static original = atom<Partial<TSystemData>>(createEmptySystemData())
   public static project = atom<Partial<TSystemData>>(createEmptySystemData())

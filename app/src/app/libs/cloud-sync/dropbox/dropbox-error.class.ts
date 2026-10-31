@@ -1,3 +1,4 @@
+/** @internal */
 export enum DropboxErrorCode {
   network = 'network',
   notConnected = 'not_connected',
@@ -39,6 +40,7 @@ const summaryOf = (error: unknown): string => {
   return ''
 }
 
+/** @internal */
 export class DropboxSyncError extends Error {
   constructor (
     public code: DropboxErrorCode,
@@ -111,6 +113,7 @@ export class DropboxSyncError extends Error {
 
 /**
  * Returns a message for the user, in the tone used across the app.
+ * @featurePart sync.dropbox-connect, sync.dropbox-projects, security.sync-sessions
  */
 export const getDropboxErrorMessage = (error: unknown): string => {
   const syncError = DropboxSyncError.from(error)

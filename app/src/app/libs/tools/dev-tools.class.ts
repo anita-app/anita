@@ -1,5 +1,8 @@
 import * as React from 'react'
 
+/**
+ * @internal
+ */
 export class DevTools {
   /**
    * Detect if React is in development mode

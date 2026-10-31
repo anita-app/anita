@@ -8,6 +8,7 @@ import type { IProjectSettings, TSystemData } from 'app/models/project/project.d
 import type { FormFieldsModel, IBasicSelect, IOptionKeysModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
 import type { ISection, ISectionCustomFieldProperties } from 'app/models/section/section.declarations'
 
+/** @featurePart project.create, project.edit, section.add, section.fields, template.create-project */
 export class FormProjectState {
   private static draftForNewProject: TSystemData | null = null
 

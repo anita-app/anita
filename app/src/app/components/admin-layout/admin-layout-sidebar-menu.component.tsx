@@ -10,6 +10,9 @@ interface IAdminLayoutSidebarMenuProps {
   editMenuButton: ReactNode
 }
 
+/**
+ * @featurePart navigation.sidebar
+ */
 export const AdminLayoutSidebarMenu: FC<IAdminLayoutSidebarMenuProps> = (props) => {
   const projectSystemData = useAtomValue(ProjectAtoms.currentSystemData)
   const project = useAtomValue(ProjectAtoms.currentProject)

@@ -12,6 +12,8 @@ interface IProjectSectionNoDataProps {
 
 /**
  * Empty section: a sketch of a list with floating chips, as in the introduction, and the button to add the first record.
+ *
+ * @featurePart view.section-list, record.add
  */
 export const ProjectSectionNoData: FC<IProjectSectionNoDataProps> = (props) => (
   <div className="container px-2 py-16 md:py-24 mx-auto">

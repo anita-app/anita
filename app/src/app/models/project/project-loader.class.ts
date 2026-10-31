@@ -13,6 +13,7 @@ import type {
   IProjectSettings,
 } from 'app/models/project/project.declarations'
 
+/** @featurePart project.list */
 export class ProjectLoader {
   /**
    * The project info of the project to load

@@ -23,6 +23,7 @@ import type { WordPressClient } from 'app/libs/cloud-sync/wordpress/wordpress-cl
 import type { IWordPressBatchOperation, IWordPressProjectMeta, IWordPressProjectResponse } from 'app/libs/cloud-sync/wordpress/wordpress.const'
 import type { IDropboxFileMeta } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
 
+/** @internal */
 export interface IMergeOutcome {
   /** Records changed both on this device and remotely since the last sync; the most recent version was kept. */
   conflicts: number
@@ -34,6 +35,7 @@ export interface IMergeOutcome {
   dropboxFile?: IDropboxFileMeta
 }
 
+/** @internal */
 export interface IWordPressMergeOptions {
   client: WordPressClient
   remote: IWordPressProjectResponse
@@ -61,6 +63,7 @@ const stableStringify = (value: unknown): string => JSON.stringify(value, (_key,
  *
  * On Dropbox the whole project is a single file: it is written only if it still has the revision that was read,
  * otherwise the sync fails with a conflict and must be run again (see DropboxSync).
+ * @featurePart sync.dropbox-projects, sync.wordpress-projects
  */
 export class RemoteAndLocalMerger {
   private project: Project

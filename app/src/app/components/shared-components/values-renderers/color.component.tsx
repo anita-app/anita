@@ -3,6 +3,7 @@ import type { FC } from 'react'
 interface IColorProps {
   value: string
 }
+/** @featurePart field.short-text */
 export const Color: FC<IColorProps> = (props) => props.value
   ? (
     <div
