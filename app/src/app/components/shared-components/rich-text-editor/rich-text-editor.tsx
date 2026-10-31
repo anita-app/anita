@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo } from 'react'
-import isHotkey from 'is-hotkey'
+import { isHotkey } from 'is-hotkey'
 import { Editable, withReact, useSlate, Slate } from 'slate-react'
 import {
   Editor,
@@ -190,9 +190,10 @@ export const RichTextEditor: FC<IRichTextEditorProps> = (props) => {
       id="rich-text-editor"
       className="border-2 border-gray-200 rounded-lg p-2"
     >
+      {/* Uncontrolled: the editor owns its content and reports every change. */}
       <Slate
         editor={editor}
-        value={props.initialValue}
+        initialValue={props.initialValue}
         onChange={onChange}
       >
         <div

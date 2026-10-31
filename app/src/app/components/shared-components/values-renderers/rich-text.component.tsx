@@ -15,11 +15,13 @@ export const RichText: FC<IRichTextProps> = (props) => {
   const renderElement = useCallback((props: any) => <RichTextEditorElement {...props} />, [])
   const renderLeaf = useCallback((props: any) => <RichTextEditorLeaf {...props} />, [])
   const editor = useMemo(() => withHistory(withReact(createEditor())), [])
+  // Controlled by the saved text: the same object while it doesn't change, the new content when it does.
+  const value = useMemo(() => RichTextEditorHelpers.makeInitialOutputData(props.value), [props.value])
   return (
     <div id="rich-text-editor">
       <Slate
         editor={editor}
-        value={RichTextEditorHelpers.makeInitialOutputData(props.value)}
+        value={value}
       >
         <Editable
           renderElement={renderElement}

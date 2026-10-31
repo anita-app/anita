@@ -1,21 +1,24 @@
-import type { FC } from 'react'
+import type { FC, ReactNode } from 'react'
 
+// Slate passes read-only props: the marks wrap a copy of the children.
 export const RichTextEditorLeaf: FC<any> = (props) => {
+  let children: ReactNode = props.children
+
   if (props.leaf.bold) {
-    props.children = <strong>{props.children}</strong>
+    children = <strong>{children}</strong>
   }
 
   if (props.leaf.code) {
-    props.children = <code>{props.children}</code>
+    children = <code>{children}</code>
   }
 
   if (props.leaf.italic) {
-    props.children = <em>{props.children}</em>
+    children = <em>{children}</em>
   }
 
   if (props.leaf.underline) {
-    props.children = <u>{props.children}</u>
+    children = <u>{children}</u>
   }
 
-  return <span {...props.attributes}>{props.children}</span>
+  return <span {...props.attributes}>{children}</span>
 }

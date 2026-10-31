@@ -8,7 +8,6 @@
 // existing tabs open on the page have been closed, since previously cached
 // resources are updated in the background.
 
-
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
     // [::1] is the IPv6 localhost address.
