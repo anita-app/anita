@@ -6,7 +6,7 @@ import type { Filter4Dexie, SuppoertedOperators } from 'app/libs/db-connector/pl
 import type { Table } from 'dexie'
 import type Dexie from 'dexie'
 
-export type NewWhere = [string, SuppoertedOperators, string | number];
+export type NewWhere = [string, SuppoertedOperators, string | number]
 
 /**
  * Builds queries to be executed with Dexie

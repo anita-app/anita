@@ -12,7 +12,7 @@ import type { FormFieldsModel, TSupportedFormsTypes } from 'app/components/share
  * The catalog is maintained in https://github.com/anita-app/templates and downloaded at runtime,
  * so templates can be changed without releasing the app. Self-hosted installations can point to their own copy.
  */
-export const TEMPLATES_URL = process.env.REACT_APP_TEMPLATES_URL || 'https://raw.githubusercontent.com/anita-app/templates/main/templates.json'
+export const TEMPLATES_URL = import.meta.env.VITE_TEMPLATES_URL || 'https://raw.githubusercontent.com/anita-app/templates/main/templates.json'
 
 const CACHE_KEY = 'anita.templates.catalog'
 const SUPPORTED_SCHEMA_VERSION = 1

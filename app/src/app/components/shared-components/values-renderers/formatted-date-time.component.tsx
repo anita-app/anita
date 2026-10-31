@@ -1,4 +1,4 @@
-import * as dateFormat from 'date-format'
+import dateFormat from 'date-format'
 import type { FC } from 'react'
 
 interface IFormattedDateTimeProps {

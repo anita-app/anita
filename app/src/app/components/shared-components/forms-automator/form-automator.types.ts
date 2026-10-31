@@ -5,13 +5,13 @@ import type { TextInputSupportedTypes } from 'app/components/shared-components/f
 import type { TIconName } from 'app/libs/icons/icons.class'
 import type { ISectionCustomFieldProperties, SectionDetailsDeclaration } from 'app/models/section/section.declarations'
 
-export type FormFieldsModel<T extends TSupportedFormsTypes = TSupportedFormsTypes> = IBasicInput<T> | IBasicCheckbox<T> | IBasicSelect<T> | IBasicRadio<T> | IRichText<T> | IBasicTextarea<T> | IHiddenInput<T> | IOptionsMaker<T> | IDatePicker<T> | IDateTimePicker<T>;
+export type FormFieldsModel<T extends TSupportedFormsTypes = TSupportedFormsTypes> = IBasicInput<T> | IBasicCheckbox<T> | IBasicSelect<T> | IBasicRadio<T> | IRichText<T> | IBasicTextarea<T> | IHiddenInput<T> | IOptionsMaker<T> | IDatePicker<T> | IDateTimePicker<T>
 
-export type TFormFieldWithOptions<T extends TSupportedFormsTypes = TSupportedFormsTypes> = FormFieldsModel<T> & { options: Array<IOptionKeysModel> };
+export type TFormFieldWithOptions<T extends TSupportedFormsTypes = TSupportedFormsTypes> = FormFieldsModel<T> & { options: Array<IOptionKeysModel> }
 
-export type TSupportedFormsTypes = IProjectSettings | ISectionElement | ISectionCustomFieldProperties | SectionDetailsDeclaration | IOptionKeysModel;
+export type TSupportedFormsTypes = IProjectSettings | ISectionElement | ISectionCustomFieldProperties | SectionDetailsDeclaration | IOptionKeysModel
 
-export type FormModel<T = FormFieldsModel<TSupportedFormsTypes>> = Array<T>;
+export type FormModel<T = FormFieldsModel<TSupportedFormsTypes>> = Array<T>
 
 export type FormAutomatorOnChangeValue = string | number | boolean | Array<string> | null
 

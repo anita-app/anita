@@ -1,11 +1,11 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useId } from 'react'
 import { ShortcutsManager } from 'app/libs/shortcuts/shortcuts-manager'
 import type { IShortcut } from 'app/libs/shortcuts/shortcuts-store'
 
 export const useShortcut = (shortcut: IShortcut) => {
-  const shortcutUniqueId = useRef<string>(Math.random().toString(36).substr(2, 9))
+  // Stable for the life of the component, without computing anything during render.
+  const shortcutId = useId()
   useEffect(() => {
-    const shortcutId = shortcutUniqueId.current
     shortcut.id = shortcutId
     ShortcutsManager.add(shortcut)
     return () => {

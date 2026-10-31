@@ -1,5 +1,4 @@
 export class TextTools {
-  /* eslint-disable n/no-callback-literal */
   // Removes non ascii characters from a string and replaces with ascii chars, plus replaces spaces with -
   public static cleanString (source: string): string {
     let r = source.toLowerCase()

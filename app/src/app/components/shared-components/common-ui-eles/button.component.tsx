@@ -45,7 +45,6 @@ enum LabelBreakpoints {
   xxl = 'xxl:inline-block',
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 enum TooltipBreakpoints {
   sm = 'sm:hidden',
   md = 'md:hidden',

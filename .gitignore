@@ -30,13 +30,19 @@ node_modules
 /libpeerconnection.log
 npm-debug.log
 yarn-error.log
+
+# yarn (dependencies in node_modules, see .yarnrc.yml)
+.yarn/*
+!.yarn/releases
+.pnp.*
 testem.log
 /typings
 
 # System Files
 .DS_Store
 Thumbs.db
-yarn.lock
+# The lockfile of the workspace (root) is tracked; the landing site keeps its own, untracked.
+landing/yarn.lock
 landing/src/app/data-sources/landing-packages.json
 landing/src/app/data-sources/app-packages.json
 landing/src/app/version.ts

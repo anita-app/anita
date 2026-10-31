@@ -32,13 +32,13 @@ export const BasicSelect: FC<ICommonFormEleProps<IBasicSelect<ISectionElement>>>
   useSetDefaultValue(currentValueIfValidOrNull, formEle.value!, formEle.fieldName, handleChange)
 
   const filteredOptions =
-  query === ''
-    ? formEle.options
-    : formEle.options.filter((option) => option.value?.toString()
-      .toLowerCase()
-      .replace(/\s+/g, '')
-      .includes(query.toLowerCase().replace(/\s+/g, '')),
-    )
+    query === ''
+      ? formEle.options
+      : formEle.options.filter((option) => option.value?.toString()
+          .toLowerCase()
+          .replace(/\s+/g, '')
+          .includes(query.toLowerCase().replace(/\s+/g, '')),
+        )
 
   const handleSelected = (option: IOptionKeysModel | null): void => {
     handleChange(formEle.fieldName, option?.value ?? null)

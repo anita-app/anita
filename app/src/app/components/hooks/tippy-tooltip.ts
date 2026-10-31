@@ -22,6 +22,6 @@ export const useTippyTooltip = (elementId: string, content?: string, additionalC
   })
   useEffect(() => () => {
     instancesRef.current?.every((i) => i.destroy())
-  }
-  , [])
+  },
+  [])
 }

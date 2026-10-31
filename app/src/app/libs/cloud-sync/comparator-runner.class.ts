@@ -15,7 +15,7 @@ interface IWorkerResponse {
 export class ComparatorRunner {
   private static worker: Worker | undefined
   private static nextId = 0
-  private static pending = new Map<number, { resolve:(result: IComparisonResult) => void; reject: (error: Error) => void }>()
+  private static pending = new Map<number, { resolve: (result: IComparisonResult) => void; reject: (error: Error) => void }>()
 
   public static compare (lastSync: string | undefined, localData: TAnitaUniversalDataStorage, remoteData: TAnitaUniversalDataStorage): Promise<IComparisonResult> {
     if (typeof Worker === 'undefined') {
@@ -31,7 +31,7 @@ export class ComparatorRunner {
 
   private static getWorker (): Worker {
     if (!ComparatorRunner.worker) {
-      ComparatorRunner.worker = new Worker(new URL('app/workers/comparator.worker', import.meta.url), { type: 'module' })
+      ComparatorRunner.worker = new Worker(new URL('../../workers/comparator.worker.ts', import.meta.url), { type: 'module' })
       ComparatorRunner.worker.onmessage = (event: MessageEvent<IWorkerResponse>) => {
         const request = ComparatorRunner.pending.get(event.data.id)
         if (!request) {

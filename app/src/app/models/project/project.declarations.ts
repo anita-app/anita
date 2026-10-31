@@ -19,7 +19,7 @@ export enum RESERVED_AUDS_KEYS {
 /**
  * Data structure of Anita, composed of both SystemData and UserData.
  */
-export type TAnitaUniversalDataStorage = TSystemData & UserData;
+export type TAnitaUniversalDataStorage = TSystemData & UserData
 
 /**
  * Store for system required properties. Includes general settings and Sections declarations. The reserved keys define system required properties.

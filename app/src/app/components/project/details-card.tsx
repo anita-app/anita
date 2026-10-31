@@ -4,7 +4,7 @@ import { DeleteProjectButton } from 'app/components/shared-components/buttons/de
 import { EditProjectButton } from 'app/components/shared-components/buttons/edit-project-button.component'
 import { ExportButton } from 'app/components/shared-components/buttons/export-project-button.component'
 import { CardFooter } from 'app/components/shared-components/common-ui-eles/card-footer.component'
-import * as dateFormat from 'date-format'
+import dateFormat from 'date-format'
 import { ProjectAvatar } from 'app/components/shared-components/common-ui-eles/project-avatar.component'
 import { WordPressSyncStatus } from 'app/components/project/wordpress-sync-status.component'
 import { DropboxSyncStatus } from 'app/components/project/dropbox-sync-status.component'

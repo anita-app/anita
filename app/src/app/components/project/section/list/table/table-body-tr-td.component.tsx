@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/static-components */
 import { ProjectSectionListTableBodyTrTdWithLinkToDetails } from 'app/components/project/section/list/table/table-body-tr-td-with-link-to-details.component'
 import { ProjectSectionListTableBodyTrTdWithoutLink } from 'app/components/project/section/list/table/table-body-tr-td-without-link.component'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'

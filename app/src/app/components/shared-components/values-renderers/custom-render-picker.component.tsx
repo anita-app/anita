@@ -75,7 +75,6 @@ export const customRenderPicker = (formModel: FormFieldsModel<TSupportedFormsTyp
       return MultilineText
     case FORM_COMPONENTS_CODES.basicSelect:
     case FORM_COMPONENTS_CODES.basicRadio:
-      // eslint-disable-next-line dot-notation
       return TextFromOptionsByValue.bind(null, (formModel as TFormFieldWithOptions).options) as unknown as FC<any>
     default:
       return BasicText

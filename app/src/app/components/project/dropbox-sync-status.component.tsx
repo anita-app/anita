@@ -1,6 +1,6 @@
 import { useAtomValue } from 'jotai'
 import { useLiveQuery } from 'dexie-react-hooks'
-import * as dateFormat from 'date-format'
+import dateFormat from 'date-format'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { AlertWithDescription } from 'app/components/shared-components/alerts/alert-with-description'

@@ -55,7 +55,7 @@ export const AdminLayoutHeader: FC = () => {
             className={'text-lg font-bold leading-relaxed inline-block md:mr-4 py-2 whitespace-no-wrap uppercase'}
           >
             <img
-              src={`${process.env.PUBLIC_URL}/assets/logo/logo_square.svg`}
+              src={`${import.meta.env.BASE_URL}assets/logo/logo_square.svg`}
               style={{ height: '30px', width: 'auto' }}
               className="ui-logo"
               alt="Anita"

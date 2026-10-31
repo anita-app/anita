@@ -86,8 +86,8 @@ export class DropboxHelper extends CloudSyncBase<SupportedCloud.DROPBOX> {
   constructor () {
     super(SupportedCloud.DROPBOX)
     CloudSyncBase.initDB()
-    // The app is served from PUBLIC_URL (/2 on anita-app.com, empty in development). Registered on Dropbox.
-    this.redirectUri = `${window.location.origin}${process.env.PUBLIC_URL}/`
+    // The app is served from BASE_URL (/2/ on anita-app.com, / in development). Registered on Dropbox.
+    this.redirectUri = `${window.location.origin}${import.meta.env.BASE_URL}`
     this.watchChanges()
   }
 

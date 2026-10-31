@@ -86,7 +86,6 @@ interface InsertorConstructable<E, DbTypes> {
 /**
  * Defines the public interface that a Insertor instance must have
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface Insertor<E> {
   autoInsert(): Promise<void>
 }

@@ -1,8 +1,8 @@
 import { TemplatesCatalog } from 'app/libs/templates/templates-catalog.class'
 import type { IProjectTemplate } from 'app/libs/templates/templates-catalog.class'
 
-// crypto-es is an ES module, which jest does not transform.
-jest.mock('app/libs/id-creator/id-creator.class', () => {
+// Predictable ids.
+vi.mock('app/libs/id-creator/id-creator.class', () => {
   let count = 0
   return { IdCreator: { make: (name: string) => `${name}-${++count}`, random: () => `random-${++count}` } }
 })

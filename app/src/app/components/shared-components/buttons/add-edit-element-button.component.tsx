@@ -22,7 +22,7 @@ interface IEditElementButtonProps {
   mode: EDITOR_MODE.edit
 }
 
-type IAddEditElementButtonProps = | IAddElementButtonProps | IEditElementButtonProps;
+type IAddEditElementButtonProps = | IAddElementButtonProps | IEditElementButtonProps
 
 export const AddEditElementButton: FC<IAddEditElementButtonProps> = (props) => {
   const icon: TIconName = props.mode === EDITOR_MODE.add ? 'addOutline' : 'createOutline'

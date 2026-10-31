@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { FormEleContainer } from 'app/components/shared-components/forms-automator/form-layout/form-ele-container.component'
 import { FormElementLabel } from 'app/components/shared-components/forms-automator/form-layout/form-element-label.component'
 import { RichTextEditor } from 'app/components/shared-components/rich-text-editor/rich-text-editor'

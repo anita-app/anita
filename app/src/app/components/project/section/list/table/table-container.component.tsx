@@ -40,8 +40,8 @@ export const ProjectSectionListTableContainer: FC<IProjectSectionListTableProps>
 
   const sortedData = useCallback(() => field === null
     ? props.sectionData
-    : sortViewData(props.sectionData, field, order)
-  , [field, order, props.sectionData])
+    : sortViewData(props.sectionData, field, order),
+  [field, order, props.sectionData])
 
   return (
     <ProjectSectionListTable

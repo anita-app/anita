@@ -104,7 +104,7 @@ export class DbStore implements DbStoreInterface<Dexie> {
 
   private buildDb (): Version {
     const version = this.options.previousVersions?.length ? this.options.previousVersions.length + 1 : 1
-    const tables: { [key: string]: string | null} = {}
+    const tables: { [key: string]: string | null } = {}
 
     for (const section in this.DS) {
       tables[this.DS[section].name] = this.DS[section].indexes.join()

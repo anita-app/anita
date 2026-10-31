@@ -47,8 +47,8 @@ const SYSTEM_KEYS: Array<string> = [RESERVED_AUDS_KEYS._settings, RESERVED_AUDS_
 const stableStringify = (value: unknown): string => JSON.stringify(value, (_key, val) => (
   val && typeof val === 'object' && !Array.isArray(val)
     ? Object.keys(val).sort().reduce<Record<string, unknown>>((sorted, key) => {
-      sorted[key] = val[key]; return sorted
-    }, {})
+        sorted[key] = val[key]; return sorted
+      }, {})
     : val
 ))
 

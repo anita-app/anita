@@ -1,7 +1,7 @@
 /**
  * Section name
  */
-export type SectionName = string;
+export type SectionName = string
 
 /**
  * Contains the minimum information needed to build a SectionModel.

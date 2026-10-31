@@ -1,6 +1,6 @@
 import { useState, type CSSProperties, type FC } from 'react'
 import { useAtomValue } from 'jotai'
-import * as dateFormat from 'date-format'
+import dateFormat from 'date-format'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { CardFooter } from 'app/components/shared-components/common-ui-eles/card-footer.component'

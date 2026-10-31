@@ -6,20 +6,20 @@ import type { IOption } from 'app/models/parent-element/parent-element.class'
 import type { ReactElement } from 'react'
 
 const svgIcons = {
-  table: `${process.env.PUBLIC_URL}/assets/icons/svg/table.svg`,
-  format_bold: `${process.env.PUBLIC_URL}/assets/icons/svg/format_bold.svg`,
-  format_italic: `${process.env.PUBLIC_URL}/assets/icons/svg/format_italic.svg`,
-  format_underlined: `${process.env.PUBLIC_URL}/assets/icons/svg/format_underlined.svg`,
-  format_code: `${process.env.PUBLIC_URL}/assets/icons/svg/format_code.svg`,
-  format_looks_one: `${process.env.PUBLIC_URL}/assets/icons/svg/format_looks_one.svg`,
-  format_looks_two: `${process.env.PUBLIC_URL}/assets/icons/svg/format_looks_two.svg`,
-  format_quote: `${process.env.PUBLIC_URL}/assets/icons/svg/format_quote.svg`,
-  format_list_numbered: `${process.env.PUBLIC_URL}/assets/icons/svg/format_list_numbered.svg`,
-  format_list_bulleted: `${process.env.PUBLIC_URL}/assets/icons/svg/format_list_bulleted.svg`,
-  format_align_left: `${process.env.PUBLIC_URL}/assets/icons/svg/format_align_left.svg`,
-  format_align_center: `${process.env.PUBLIC_URL}/assets/icons/svg/format_align_center.svg`,
-  format_align_right: `${process.env.PUBLIC_URL}/assets/icons/svg/format_align_right.svg`,
-  format_align_justify: `${process.env.PUBLIC_URL}/assets/icons/svg/format_align_justify.svg`,
+  table: `${import.meta.env.BASE_URL}assets/icons/svg/table.svg`,
+  format_bold: `${import.meta.env.BASE_URL}assets/icons/svg/format_bold.svg`,
+  format_italic: `${import.meta.env.BASE_URL}assets/icons/svg/format_italic.svg`,
+  format_underlined: `${import.meta.env.BASE_URL}assets/icons/svg/format_underlined.svg`,
+  format_code: `${import.meta.env.BASE_URL}assets/icons/svg/format_code.svg`,
+  format_looks_one: `${import.meta.env.BASE_URL}assets/icons/svg/format_looks_one.svg`,
+  format_looks_two: `${import.meta.env.BASE_URL}assets/icons/svg/format_looks_two.svg`,
+  format_quote: `${import.meta.env.BASE_URL}assets/icons/svg/format_quote.svg`,
+  format_list_numbered: `${import.meta.env.BASE_URL}assets/icons/svg/format_list_numbered.svg`,
+  format_list_bulleted: `${import.meta.env.BASE_URL}assets/icons/svg/format_list_bulleted.svg`,
+  format_align_left: `${import.meta.env.BASE_URL}assets/icons/svg/format_align_left.svg`,
+  format_align_center: `${import.meta.env.BASE_URL}assets/icons/svg/format_align_center.svg`,
+  format_align_right: `${import.meta.env.BASE_URL}assets/icons/svg/format_align_right.svg`,
+  format_align_justify: `${import.meta.env.BASE_URL}assets/icons/svg/format_align_justify.svg`,
 }
 
 type TSVGIcons = keyof typeof svgIcons

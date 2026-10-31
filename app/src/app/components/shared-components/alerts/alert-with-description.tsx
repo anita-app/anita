@@ -9,7 +9,7 @@ interface IAlertWithDescription {
   type: Type
 }
 
-const iconByType: { [key in Type]: TIconName} = {
+const iconByType: { [key in Type]: TIconName } = {
   [Type.primary]: 'informationCircleOutline',
   [Type.secondary]: 'informationCircleOutline',
   [Type.success]: 'checkmarkCircleOutline',

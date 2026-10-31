@@ -50,7 +50,7 @@ const PrimaryButton: FC<{ onClick: () => void; children: ReactNode; index: numbe
 const WelcomeSlide: FC<{ onNext: () => void }> = (props) => (
   <div className="flex flex-col items-center text-center">
     <img
-      src={`${process.env.PUBLIC_URL}/assets/logo/logo_square.svg`}
+      src={`${import.meta.env.BASE_URL}assets/logo/logo_square.svg`}
       alt=""
       className="onb-logo h-24 w-24 rounded-3xl bg-white p-2"
     />

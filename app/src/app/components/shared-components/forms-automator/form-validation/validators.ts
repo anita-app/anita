@@ -7,8 +7,8 @@ export type IValidatorsConatinerProps = Pick<ICommonFormEleProps, 'formEle' | 'e
 
 export type IValidatorsProps = Pick<ICommonFormEleProps, 'formEle' | 'element' | 'fieldId' | 'touched'> & {
   updateValidatorState: (validatorName: SUPPORTED_VALIDATORS, isValid: boolean) => void
-};
+}
 
 export type IValidatorsState = {
   [key in SUPPORTED_VALIDATORS]?: boolean;
-};
+}

@@ -1,5 +1,5 @@
 import { useAtomValue } from 'jotai'
-import * as dateFormat from 'date-format'
+import dateFormat from 'date-format'
 import { Icons } from 'app/libs/icons/icons.class'
 import { ExportScope } from 'app/models/project/project-exporter.class'
 import { OnboardingAtoms } from 'app/state/onboarding/onboarding.atoms'
