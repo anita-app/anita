@@ -1,0 +1,97 @@
+name: Deploy anita-app.com from main
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# The destination is shared by all releases; never run two deploys together.
+concurrency:
+  group: deploy-pages
+  cancel-in-progress: false
+
+jobs:
+  check-versions:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    outputs:
+      deploy_app: ${{ steps.versions.outputs.deploy_app }}
+      deploy_landing: ${{ steps.versions.outputs.deploy_landing }}
+      deploy_any: ${{ steps.versions.outputs.deploy_any }}
+    steps:
+      - name: Check out the publication commit
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+
+      - name: Compare source and published versions
+        id: versions
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/deploy-versions.cjs
+
+  deploy:
+    needs: check-versions
+    if: needs.check-versions.outputs.deploy_any == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out the publication commit
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Check deployment credentials
+        env:
+          PAGES_DEPLOY_TOKEN: ${{ secrets.PAGES_DEPLOY_TOKEN }}
+        run: |
+          if [[ -z "$PAGES_DEPLOY_TOKEN" ]]; then
+            echo '::error::Configure PAGES_DEPLOY_TOKEN with Contents write access to anita-app/anita-app.github.io. See .github/DEPLOYMENT.md.'
+            exit 1
+          fi
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+
+      - name: Enable Corepack (Yarn 4)
+        run: corepack enable
+
+      - name: Install app dependencies
+        run: yarn install --immutable
+
+      - name: Install landing dependencies
+        if: needs.check-versions.outputs.deploy_landing == 'true'
+        working-directory: landing
+        run: npm install --no-audit --no-fund
+
+      - name: Test the app
+        if: needs.check-versions.outputs.deploy_app == 'true'
+        run: yarn workspace anita-app test
+
+      - name: Build and publish
+        env:
+          PAGES_DEPLOY_TOKEN: ${{ secrets.PAGES_DEPLOY_TOKEN }}
+          GIT_AUTHOR_NAME: github-actions[bot]
+          GIT_AUTHOR_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+          GIT_COMMITTER_NAME: github-actions[bot]
+          GIT_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+        run: |
+          # Scope authentication to the Pages repository and keep it out of URLs and files.
+          auth="$(printf 'x-access-token:%s' "$PAGES_DEPLOY_TOKEN" | base64 -w0)"
+          echo "::add-mask::$auth"
+          export GIT_CONFIG_COUNT=1
+          export GIT_CONFIG_KEY_0=http.https://github.com/anita-app/anita-app.github.io.git.extraheader
+          export GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $auth"
+          node scripts/deploy.mjs

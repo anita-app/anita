@@ -1,6 +1,8 @@
 {
   "name": "anita-manager",
   "version": "0.20.0",
+  "appVersion": "1.0.0",
+  "landingVersion": "0.21.0",
   "private": true,
   "packageManager": "yarn@4.18.1",
   "workspaces": [
@@ -17,13 +19,8 @@
     "testdist": "cd anita-app.github.io && npx http-server",
     "buildTest": "yarn build-app && yarn testdist",
     "pull-main": "cd anita-app.github.io && git pull --force origin main",
-    "add-all": "cd anita-app.github.io && git add --all",
     "propagate-version": "node version-propagator.js",
-    "commit-with-message": "cd anita-app.github.io && git commit -m \"New version\"",
-    "push-to-origin": "cd anita-app.github.io && git push -u origin main",
-    "publish-to-github-pages": "yarn add-all && yarn commit-with-message && yarn push-to-origin",
-    "deploy": "yarn pull-main && yarn licenses && cglg --action=newRelease && yarn do-no-run-this-deploy-directly && cglg --action=closeRelease && yarn publish-to-github-pages",
-    "do-no-run-this-deploy-directly": "yarn propagate-version && yarn build-landing && yarn build-app"
+    "deploy": "node scripts/deploy.mjs"
   },
   "dependencies": {
     "fs-extra": "^10.0.0"

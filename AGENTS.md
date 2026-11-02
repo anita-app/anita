@@ -77,3 +77,10 @@ with `enforce: false` only report what is missing; references to unknown ids are
 `enforce: true` once the docs exist.
 
 When you add or change a feature: tag it, run `yarn features`, group it if the build asks, update the docs.
+
+## Publishing
+
+anita-app.com is deployed by `.github/workflows/deploy.yml` on every push to `main` (details in
+`.github/DEPLOYMENT.md`). The root `package.json` has `appVersion` (the app at `/v1/`) and `landingVersion`:
+only a part whose version is higher than the published one is rebuilt and published, so bump `appVersion` for a
+release of the app and `landingVersion` for one of the landing.
