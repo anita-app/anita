@@ -12,6 +12,7 @@
     { "name": "keyboard shortcut", "tag": "shortcuts", "from": { "type": "shortcuts", "hook": "useShortcut" } },
     { "name": "WordPress error", "tag": "errors", "prefix": "wordpress.", "from": { "type": "enum", "file": "src/app/libs/cloud-sync/wordpress/wordpress-api-error.class.ts", "name": "WordPressErrorCode" } },
     { "name": "Dropbox error", "tag": "errors", "prefix": "dropbox.", "from": { "type": "enum", "file": "src/app/libs/cloud-sync/dropbox/dropbox-error.class.ts", "name": "DropboxErrorCode" } },
+    { "name": "local file error", "tag": "errors", "prefix": "localFile.", "from": { "type": "enum", "file": "src/app/libs/cloud-sync/local-file/local-file-error.class.ts", "name": "LocalFileErrorCode" } },
     { "name": "field type", "tag": "covers", "prefix": "field:", "from": { "type": "enum-refs", "file": "src/app/components/shared-components/forms-automator/form-component-codes.enum.ts", "name": "SELECTABLE_FORM_ELES", "enum": "FORM_COMPONENTS_CODES" } },
     { "name": "text input type", "tag": "covers", "prefix": "input-type:", "from": { "type": "enum", "file": "src/app/components/shared-components/forms-automator/input-supported-types.const.ts", "name": "TextInputSupportedTypes" } },
     { "name": "date input type", "tag": "covers", "prefix": "input-type:", "from": { "type": "enum", "file": "src/app/components/shared-components/forms-automator/input-supported-types.const.ts", "name": "DateInputSupportedTypes" } },

@@ -2,6 +2,7 @@ import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { DropboxSync } from 'app/libs/cloud-sync/dropbox/dropbox-sync.class'
 import { ProjectSyncHelpers } from 'app/libs/cloud-sync/project-sync-helpers.class'
 import { WordPressSync } from 'app/libs/cloud-sync/wordpress/wordpress-sync.class'
+import { LocalFileSync } from 'app/libs/cloud-sync/local-file/local-file-sync.class'
 import { SyncState } from 'app/state/sync/sync-state.class'
 import { Logger } from 'app/libs/logger/logger.class'
 import type { TSystemData } from 'app/models/project/project.declarations'
@@ -41,9 +42,9 @@ interface ISyncWithRemoteOrLocalDeleteElementSectionProps {
 type ISyncWithRemoteOrLocalProps = ISyncWithRemoteOrLocalAddProjectProps | ISyncWithRemoteOrLocalEditProjectProps | ISyncWithRemoteOrLocalAddOrEditElementSectionProps | ISyncWithRemoteOrLocalDeleteElementSectionProps
 
 /**
- * Sends local changes to the remote copy of the project, if any: a Dropbox file or a WordPress site.
+ * Sends local changes to the remote copy of the project, if any: a Dropbox file, a WordPress site or a file on this computer.
  * Project deletion is handled by ProjectDeletor, which must know whether the remote deletion succeeded.
- * @featurePart sync.dropbox-projects, sync.wordpress-projects
+ * @featurePart sync.dropbox-projects, sync.wordpress-projects, sync.local-file-projects
  */
 export class SyncManager {
   public static syncWithRemoteOrLocal = async (props: ISyncWithRemoteOrLocalProps): Promise<void> => {
@@ -52,8 +53,11 @@ export class SyncManager {
         // Both are told: each one links, unlinks or syncs the project, also when it moves from one to the other.
         await DropboxSync.onProjectSaved(props.systemData)
         await WordPressSync.onProjectSaved(props.systemData)
+        await LocalFileSync.onProjectSaved(props.systemData)
       } else if (DropboxSync.isDropboxProject(ProjectSyncHelpers.getLocalProjectSettings(props.projectId))) {
         DropboxSync.pushLocalChange(props.projectId)
+      } else if (LocalFileSync.isLocalFileProject(ProjectSyncHelpers.getLocalProjectSettings(props.projectId))) {
+        LocalFileSync.pushLocalChange(props.projectId)
       } else if (WordPressSync.getRemoteIdOfProject(props.projectId)) {
         await SyncManager.syncElementWithWordPress(props)
       }

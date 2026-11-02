@@ -3,6 +3,7 @@ import { RemoteAndLocalMerger } from 'app/libs/cloud-sync/remote-and-local-merge
 import { askUser } from 'app/libs/cloud-sync/sync-prompt'
 import { ProjectSyncHelpers } from 'app/libs/cloud-sync/project-sync-helpers.class'
 import { DROPBOX_REMOTE_ID } from 'app/libs/cloud-sync/dropbox/dropbox.const'
+import { LOCAL_FILE_REMOTE_ID } from 'app/libs/cloud-sync/local-file/local-file.const'
 import { WordpressHelper } from 'app/libs/cloud-sync/wordpress/wordpress-helper.class'
 import { WordPressApiError, WordPressErrorCode, getWordPressErrorMessage } from 'app/libs/cloud-sync/wordpress/wordpress-api-error.class'
 import { ACCESS_LEVEL_LABELS, DEFAULT_ACCESS_LEVEL } from 'app/libs/cloud-sync/wordpress/wordpress.const'
@@ -72,7 +73,7 @@ export class WordPressSync {
    */
   public static wordPressRemoteIdOf (settings: Pick<IProjectSettings, 'remoteStorage'> | undefined): string | undefined {
     const remoteStorage = settings?.remoteStorage
-    return remoteStorage && remoteStorage !== DROPBOX_REMOTE_ID ? remoteStorage : undefined
+    return remoteStorage && remoteStorage !== DROPBOX_REMOTE_ID && remoteStorage !== LOCAL_FILE_REMOTE_ID ? remoteStorage : undefined
   }
 
   public static getRemoteIdOfProject (projectId: string): string | undefined {

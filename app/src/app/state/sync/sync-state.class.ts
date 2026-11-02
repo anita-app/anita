@@ -3,6 +3,7 @@ import { SyncStateAtoms } from './sync-state.atoms'
 import type { ISyncStatus } from './sync-state.atoms'
 import type { IWordPressRemoteInfo } from 'app/libs/cloud-sync/wordpress/wordpress.const'
 import type { IDropboxAccountState, IDropboxFileLink } from 'app/libs/cloud-sync/dropbox/dropbox.const'
+import type { ILocalFileLink } from 'app/libs/cloud-sync/local-file/local-file.const'
 
 /** @internal */
 export class SyncState {
@@ -38,6 +39,10 @@ export class SyncState {
 
   public static setDropboxLinks = (links: Array<IDropboxFileLink>) => {
     Bucket.general.set(SyncStateAtoms.dropboxLinks, Object.fromEntries(links.map(link => [link.projectId, link])))
+  }
+
+  public static setLocalFileLinks = (links: Array<ILocalFileLink>) => {
+    Bucket.general.set(SyncStateAtoms.localFileLinks, Object.fromEntries(links.map(link => [link.projectId, link])))
   }
 
   public static getRemoteStatus = (remoteId: string): ISyncStatus | undefined => Bucket.general.get(SyncStateAtoms.remotesStatus)[remoteId]

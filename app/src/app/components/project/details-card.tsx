@@ -9,6 +9,8 @@ import { ProjectAvatar } from 'app/components/shared-components/common-ui-eles/p
 import { WordPressSyncStatus } from 'app/components/project/wordpress-sync-status.component'
 import { DropboxSyncStatus } from 'app/components/project/dropbox-sync-status.component'
 import { DROPBOX_REMOTE_ID } from 'app/libs/cloud-sync/dropbox/dropbox.const'
+import { LOCAL_FILE_REMOTE_ID } from 'app/libs/cloud-sync/local-file/local-file.const'
+import { LocalFileSyncStatus } from 'app/components/project/local-file-sync-status.component'
 import type { FC } from 'react'
 import type { IProjectSettings } from 'app/models/project/project.declarations'
 
@@ -45,7 +47,8 @@ export const ProjectDetailsCard: FC<IProjectDetailsCardProps> = (props) => (
     </div>
 
     {props.project.remoteStorage === DROPBOX_REMOTE_ID && <DropboxSyncStatus project={props.project} />}
-    {!!props.project.remoteStorage && props.project.remoteStorage !== DROPBOX_REMOTE_ID && <WordPressSyncStatus project={props.project} />}
+    {props.project.remoteStorage === LOCAL_FILE_REMOTE_ID && <LocalFileSyncStatus project={props.project} />}
+    {!!props.project.remoteStorage && props.project.remoteStorage !== DROPBOX_REMOTE_ID && props.project.remoteStorage !== LOCAL_FILE_REMOTE_ID && <WordPressSyncStatus project={props.project} />}
 
     <CardFooter className="mt-5! pt-4 border-t border-[#eef1f5] items-center!">
       <DeleteProjectButton project={props.project} />

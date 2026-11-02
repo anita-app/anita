@@ -7,6 +7,7 @@ import { useAtomValue } from 'jotai'
 import { ProjectAtoms } from 'app/state/project/project.atoms'
 import { Outlet, useLocation } from 'react-router-dom'
 import { LocalOnlyBanner } from 'app/components/project/local-only-banner.component'
+import { LocalFileAccessBanner } from 'app/components/project/local-file-sync-status.component'
 import { StoreProjectDialog } from 'app/components/remotes/store-project-dialog.component'
 import { CloudSyncAgent } from 'app/components/admin-layout/cloud-sync-agent.component'
 import { ProjectLoader } from 'app/models/project/project-loader.class'
@@ -65,6 +66,7 @@ export const AdminLayout: FC = () => {
         {!!project && <AdminLayoutSidebar />}
         <AdminLayoutContent>
           {location.pathname.startsWith('/project/') && <LocalOnlyBanner />}
+          {location.pathname.startsWith('/project/') && <LocalFileAccessBanner />}
           <Outlet />
         </AdminLayoutContent>
       </div>

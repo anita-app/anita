@@ -15,6 +15,8 @@ import { getStoreErrorMessage } from 'app/components/remotes/store-project-dialo
 import { TemplateIcon, accentOfCategory, useTemplatesCatalog } from 'app/components/templates/template-gallery.component'
 import { checkSiteOfStorageChoice, storageChoiceNeedsLogin, storeProject } from 'app/libs/cloud-sync/store-project.function'
 import { DROPBOX_PROJECTS_FOLDER, DROPBOX_REMOTE_ID } from 'app/libs/cloud-sync/dropbox/dropbox.const'
+import { LOCAL_FILE_REMOTE_ID } from 'app/libs/cloud-sync/local-file/local-file.const'
+import { LocalFileSync } from 'app/libs/cloud-sync/local-file/local-file-sync.class'
 import { TemplatesCatalog } from 'app/libs/templates/templates-catalog.class'
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
@@ -144,6 +146,10 @@ const CreateFromTemplateForm: FC<{ template: IProjectTemplate; accent: string; c
     if (storage.kind === 'remote') {
       systemData[RESERVED_AUDS_KEYS._settings][0].remoteStorage = storage.remoteId
       systemData[RESERVED_AUDS_KEYS._settings][0].remoteAccessLevel = storage.accessLevel
+    } else if (storage.kind === 'localFile') {
+      // The file is written when the project is saved.
+      systemData[RESERVED_AUDS_KEYS._settings][0].remoteStorage = LOCAL_FILE_REMOTE_ID
+      LocalFileSync.setPendingFile(systemData[RESERVED_AUDS_KEYS._settings][0].id, storage.handle)
     } else if (storage.kind === 'dropbox' && !storageChoiceNeedsLogin(storage)) {
       systemData[RESERVED_AUDS_KEYS._settings][0].remoteStorage = DROPBOX_REMOTE_ID
       if (storage.folder !== DROPBOX_PROJECTS_FOLDER) {
@@ -261,6 +267,7 @@ const CreateFromTemplateForm: FC<{ template: IProjectTemplate; accent: string; c
               value={storage}
               onChange={setStorage}
               allowLocal={true}
+              projectTitle={title}
             />
           </div>
 

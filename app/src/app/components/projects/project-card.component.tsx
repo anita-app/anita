@@ -12,6 +12,7 @@ import { Icons } from 'app/libs/icons/icons.class'
 import { OnboardingState } from 'app/state/onboarding/onboarding-state.class'
 import { ProjectAvatar } from 'app/components/shared-components/common-ui-eles/project-avatar.component'
 import { DROPBOX_REMOTE_ID } from 'app/libs/cloud-sync/dropbox/dropbox.const'
+import { LOCAL_FILE_REMOTE_ID } from 'app/libs/cloud-sync/local-file/local-file.const'
 import type { CSSProperties, FC } from 'react'
 import type { IProjectSettings } from 'app/models/project/project.declarations'
 
@@ -25,6 +26,8 @@ interface IProjectCardProps {
 export const ProjectCard: FC<IProjectCardProps> = (props) => {
   const projectState = useAtomValue(ProjectAtoms.currentSystemData)
   const remotes = useAtomValue(SyncStateAtoms.wordPressRemotes)
+  const localFile = useAtomValue(SyncStateAtoms.localFileLinks)[props.project.id]
+  const isOnWordPress = !!props.project.remoteStorage && props.project.remoteStorage !== DROPBOX_REMOTE_ID && props.project.remoteStorage !== LOCAL_FILE_REMOTE_ID
 
   return (
     <div
@@ -50,7 +53,12 @@ export const ProjectCard: FC<IProjectCardProps> = (props) => {
                   {Icons.render('logoDropbox')}
                   Synced with Dropbox
                 </span>)}
-              {!!props.project.remoteStorage && props.project.remoteStorage !== DROPBOX_REMOTE_ID && (
+              {props.project.remoteStorage === LOCAL_FILE_REMOTE_ID && (
+                <span className="inline-flex items-center gap-1 break-all">
+                  {Icons.render('desktopOutline')}
+                  {localFile ? `Synced with ${localFile.name}` : 'Synced with a file on this computer'}
+                </span>)}
+              {isOnWordPress && (
                 <span className="inline-flex items-center gap-1">
                   {Icons.render('logoWordpress')}
                   Synced with {remotes.find(remote => remote.remoteId === props.project.remoteStorage)?.data.site_name ?? props.project.remoteStorage}

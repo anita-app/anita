@@ -1,4 +1,8 @@
+import { useState } from 'react'
 import { useAtomValue } from 'jotai'
+import { isLocalFileSyncSupported } from 'app/libs/cloud-sync/local-file/local-file.const'
+import { LocalFileHelper } from 'app/libs/cloud-sync/local-file/local-file-helper.class'
+import { getLocalFileErrorMessage } from 'app/libs/cloud-sync/local-file/local-file-error.class'
 import { Icons } from 'app/libs/icons/icons.class'
 import { SiteIcon } from 'app/components/remotes/remote-card.component'
 import { DropboxIcon, dropboxAccountLabel, useDropboxAccount } from 'app/components/remotes/dropbox-icon.component'
@@ -17,6 +21,8 @@ export type TStorageChoice =
   | { kind: 'connect'; siteUrl: string; accessLevel: TAccessLevel }
   /** In Dropbox: the connected account, or the one the user logs in with, in the given folder. */
   | { kind: 'dropbox'; folder: string }
+  /** In a file on this computer, chosen when the option is selected. */
+  | { kind: 'localFile'; handle: FileSystemFileHandle }
 
 /**
  * Whether the choice is a WordPress site, where the project has an access level.
@@ -92,6 +98,8 @@ interface IStorageChoiceProps {
   value: TStorageChoice
   onChange: (value: TStorageChoice) => void
   allowLocal: boolean
+  /** Title of the project: the name proposed for its file on this computer. */
+  projectTitle?: string
 }
 
 /**
@@ -99,10 +107,10 @@ interface IStorageChoiceProps {
  *
  * @feature storage.choice
  * @title Choose where a project is stored
- * @summary Chooses whether a project is kept in Dropbox, on a WordPress site, or only on this device, when creating it, in its settings, or later for a local project.
+ * @summary Chooses whether a project is kept in Dropbox, on a WordPress site, in a file on this computer, or only on this device, when creating it, in its settings, or later for a local project.
  * @where The storage options when creating a project from a template; "Remote storage" in the project settings; the dialog "Keep your project safe" opened from "Save it in Dropbox or WordPress", the "Only on this device" header badge or "Keep it safe" on a project card.
  * @usage 1. Pick one of the options (the recommended one is marked "Recommended"). 2. For Dropbox, optionally change the folder; for WordPress, choose "Who can see it on the site"; for a new site, type its address. 3. Confirm with the button, whose label says what happens: "Save on <site>", "Save in Dropbox", "Connect Dropbox and save", "Connect and save", "Create and connect Dropbox", "Create and connect WordPress". Choosing a service not yet connected opens its login and brings you back to the project.
- * @options Each connected WordPress site where you can create projects, "Dropbox" (or "My Dropbox" if not connected yet), "My WordPress site" / "Another WordPress site" (connect a new site), "Only on this device" (not offered when moving a local project). Default: the first connected site, otherwise Dropbox, otherwise this device; Dropbox is recommended when no site is connected. In the project settings, "None: this device only" and "Connect storage" when nothing is connected.
+ * @options Each connected WordPress site where you can create projects, "Dropbox" (or "My Dropbox" if not connected yet), "My WordPress site" / "Another WordPress site" (connect a new site), "A file on this computer" (only in Chromium-based browsers on a computer: selecting it asks where to save the file, "Change" picks another one; the button becomes "Save in the file"), "Only on this device" (not offered when moving a local project). Default: the first connected site, otherwise Dropbox, otherwise this device; Dropbox is recommended when no site is connected. In the project settings, "None: this device only" and "Connect storage" when nothing is connected.
  * @rules "Only on this device" is saved only in this browser, with no backup: clearing browsing data, private browsing or losing the device deletes it; it can be moved to Dropbox or WordPress later. Changing or removing the storage of a synced project asks "Stop syncing with <name>?": the project is not deleted, it stays on this device and in Dropbox or on the site. "Not now" closes the dialog. Errors are shown as "The project was not saved" with the message of the service.
  * @errors none
  * @status beta
@@ -116,6 +124,20 @@ export const StorageChoice: FC<IStorageChoiceProps> = (props) => {
   const accessLevel = isWordPressChoice(props.value) ? props.value.accessLevel : DEFAULT_ACCESS_LEVEL
   // The first connected site, otherwise Dropbox: never "only on this device".
   const recommended: 'remote' | 'dropbox' = remotes.length ? 'remote' : 'dropbox'
+  const [fileError, setFileError] = useState<string | null>(null)
+
+  // Browsers open the "Save" dialog only after a click: the file is chosen when the option is selected.
+  const selectLocalFile = async () => {
+    setFileError(null)
+    try {
+      const handle = await LocalFileHelper.pickNewFile(props.projectTitle)
+      if (handle) {
+        props.onChange({ kind: 'localFile', handle })
+      }
+    } catch (error) {
+      setFileError(getLocalFileErrorMessage(error))
+    }
+  }
 
   return (
     <div className="space-y-2">
@@ -202,6 +224,34 @@ export const StorageChoice: FC<IStorageChoiceProps> = (props) => {
           </div>
         )}
       </OptionCard>
+
+      {isLocalFileSyncSupported() && (
+        <OptionCard
+          id="storage-local-file"
+          selected={props.value.kind === 'localFile'}
+          onSelect={selectLocalFile}
+          icon={<span className="ui-avatar w-8 h-8 rounded-[9px]">{Icons.render('desktopOutline')}</span>}
+          title="A file on this computer"
+        >
+          <p className="text-sm text-gray-600">Saved also in a file of your computer, which you can back up, edit or move like any file. Available only on this computer.</p>
+          {props.value.kind === 'localFile' && (
+            <p className="text-xs text-gray-500 mt-1">
+              In {props.value.handle.name}.{' '}
+              <button
+                type="button"
+                className="underline"
+                onClick={(event) => {
+                  event.preventDefault()
+                  selectLocalFile()
+                }}
+              >
+                Change
+              </button>
+            </p>
+          )}
+          {fileError && <p className="text-xs text-orange-700 mt-1">{fileError}</p>}
+        </OptionCard>
+      )}
 
       {props.allowLocal && (
         <OptionCard

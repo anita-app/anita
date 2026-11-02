@@ -3,6 +3,8 @@ import { useAtomValue } from 'jotai'
 import { WordPressSync } from 'app/libs/cloud-sync/wordpress/wordpress-sync.class'
 import { DropboxSync } from 'app/libs/cloud-sync/dropbox/dropbox-sync.class'
 import { DROPBOX_REMOTE_ID } from 'app/libs/cloud-sync/dropbox/dropbox.const'
+import { LocalFileSync } from 'app/libs/cloud-sync/local-file/local-file-sync.class'
+import { LOCAL_FILE_REMOTE_ID } from 'app/libs/cloud-sync/local-file/local-file.const'
 import { ProjectAtoms } from 'app/state/project/project.atoms'
 import { SyncStateAtoms } from 'app/state/sync/sync-state.atoms'
 import { Bucket } from 'app/state/bucket.state'
@@ -10,6 +12,8 @@ import type { FC } from 'react'
 
 const CURRENT_PROJECT_CHECK_INTERVAL_MS = 60 * 1000
 const REMOTES_SYNC_INTERVAL_MS = 5 * 60 * 1000
+/** Reading the date of a file on this computer costs nothing: changes made outside Anita are picked up quickly. */
+const LOCAL_FILE_CHECK_INTERVAL_MS = 5 * 1000
 
 const canSyncNow = (): boolean => !document.hidden && navigator.onLine
 
@@ -44,6 +48,13 @@ const syncCurrentProject = () => {
   DropboxSync.syncCurrentProjectIfNeeded()
 }
 
+/** Files on this computer do not need the network, only a visible tab. */
+const syncLocalFileProject = () => {
+  if (!document.hidden) {
+    LocalFileSync.syncCurrentProjectIfNeeded()
+  }
+}
+
 /**
  * Keeps the connected WordPress sites, the Dropbox account and the current project in sync while the app is open:
  * at start, when the current project changes, periodically, and when the window gets focus or the device goes back
@@ -55,7 +66,7 @@ const syncCurrentProject = () => {
  * @where Nothing to open: it runs in the background whenever Anita is open in a browser tab.
  * @usage Nothing to do: keep working, also offline. Use "Sync now" to sync immediately.
  * @options none
- * @rules Syncs at start, when a service is connected or a login is renewed, when a project is opened, every 5 minutes for the list of projects of each service, every minute (and when the window gets focus, at most every 15 seconds) for changes to the open project, and when the device goes back online. Nothing is synced while the tab is hidden or the device is offline, and services that need a new login are skipped. Changes made offline are kept on this device and sent at the next sync. Messages: "Anita could not reach Dropbox. Your changes are kept on this device and will be synced when Dropbox is reachable again."; "Anita could not reach <site>. Your changes are kept on this device and will be synced when the site is reachable again."
+ * @rules Projects synced with a file on this computer are checked every 5 seconds and when the window gets focus, also offline. Syncs at start, when a service is connected or a login is renewed, when a project is opened, every 5 minutes for the list of projects of each service, every minute (and when the window gets focus, at most every 15 seconds) for changes to the open project, and when the device goes back online. Nothing is synced while the tab is hidden or the device is offline, and services that need a new login are skipped. Changes made offline are kept on this device and sent at the next sync. Messages: "Anita could not reach Dropbox. Your changes are kept on this device and will be synced when Dropbox is reachable again."; "Anita could not reach <site>. Your changes are kept on this device and will be synced when the site is reachable again."
  * @errors dropbox.network, wordpress.network
  * @status beta
  * @since 1.0.0
@@ -101,6 +112,8 @@ export const CloudSyncAgent: FC = () => {
     }
     if (remoteStorage === DROPBOX_REMOTE_ID) {
       DropboxSync.syncProject(projectId)
+    } else if (remoteStorage === LOCAL_FILE_REMOTE_ID) {
+      LocalFileSync.syncProject(projectId)
     } else {
       WordPressSync.syncProject(projectId)
     }
@@ -109,15 +122,19 @@ export const CloudSyncAgent: FC = () => {
   useEffect(() => {
     const projectInterval = setInterval(syncCurrentProject, CURRENT_PROJECT_CHECK_INTERVAL_MS)
     const remotesInterval = setInterval(syncAllRemotes, REMOTES_SYNC_INTERVAL_MS)
+    const localFileInterval = setInterval(syncLocalFileProject, LOCAL_FILE_CHECK_INTERVAL_MS)
     const onBackOnline = () => {
       syncAllRemotes()
       syncCurrentProject()
     }
     window.addEventListener('online', onBackOnline)
     window.addEventListener('focus', syncCurrentProject)
+    window.addEventListener('focus', syncLocalFileProject)
     return () => {
       clearInterval(projectInterval)
       clearInterval(remotesInterval)
+      clearInterval(localFileInterval)
+      window.removeEventListener('focus', syncLocalFileProject)
       window.removeEventListener('online', onBackOnline)
       window.removeEventListener('focus', syncCurrentProject)
     }

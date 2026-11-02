@@ -3,13 +3,15 @@ import Dexie from 'dexie'
 import { CloudSyncTable } from './cloud-sync.const'
 import type { IRemoteProjectInfo, IWordPressAuthData, IWordPressRemoteInfo, IWordPressSpaceInfo } from 'app/libs/cloud-sync/wordpress/wordpress.const'
 import type { IDropboxAccountData, IDropboxFileLink, IDropboxIgnoredFile } from 'app/libs/cloud-sync/dropbox/dropbox.const'
+import type { ILocalFileLink } from 'app/libs/cloud-sync/local-file/local-file.const'
 
-const DB_VERSION = 8
+const DB_VERSION = 9
 
 /** @internal */
 export enum SupportedCloud {
   DROPBOX = 'dropbox',
   WORDPRESS = 'wordpress',
+  LOCAL_FILE = 'localFile',
 }
 
 interface IAccountsTableForDropbox extends IDropboxAccountData {
@@ -36,6 +38,8 @@ interface ICloudSyncDB<T extends SupportedCloud> {
   [CloudSyncTable.REMOTE_PROJECTS]: IRemoteProjectInfo
   /** Dropbox files of projects deleted only from this device: they are not downloaded again automatically. */
   [CloudSyncTable.IGNORED_FILES]: IDropboxIgnoredFile
+  /** The file on this computer each project is synced with. */
+  [CloudSyncTable.LOCAL_FILES]: ILocalFileLink
 }
 
 /** @internal */
@@ -94,6 +98,34 @@ export class CloudSyncBase<T extends SupportedCloud> {
     await CloudSyncBase.DB!.table<IDropboxIgnoredFile>(CloudSyncTable.IGNORED_FILES).delete(fileId)
   }
 
+  public static async getLocalFileLink (projectId: string | undefined): Promise<ILocalFileLink | undefined> {
+    if (!projectId) {
+      return undefined
+    }
+    CloudSyncBase.initDB()
+    return CloudSyncBase.DB!.table<ILocalFileLink>(CloudSyncTable.LOCAL_FILES).get(projectId)
+  }
+
+  public static async getLocalFileLinks (): Promise<Array<ILocalFileLink>> {
+    CloudSyncBase.initDB()
+    return CloudSyncBase.DB!.table<ILocalFileLink>(CloudSyncTable.LOCAL_FILES).toArray()
+  }
+
+  public static async saveLocalFileLink (link: ILocalFileLink): Promise<void> {
+    CloudSyncBase.initDB()
+    await CloudSyncBase.DB!.table<ILocalFileLink>(CloudSyncTable.LOCAL_FILES).put(link)
+  }
+
+  public static async updateLocalFileLink (projectId: string, changes: Partial<ILocalFileLink>): Promise<void> {
+    CloudSyncBase.initDB()
+    await CloudSyncBase.DB!.table<ILocalFileLink>(CloudSyncTable.LOCAL_FILES).update(projectId, changes)
+  }
+
+  public static async deleteLocalFileLink (projectId: string): Promise<void> {
+    CloudSyncBase.initDB()
+    await CloudSyncBase.DB!.table<ILocalFileLink>(CloudSyncTable.LOCAL_FILES).delete(projectId)
+  }
+
   protected static initDB () {
     if (!CloudSyncBase.DB) {
       CloudSyncBase.DB = new Dexie('CloudSync')
@@ -104,6 +136,7 @@ export class CloudSyncBase<T extends SupportedCloud> {
         [CloudSyncTable.REMOTES_INFO]: 'remoteId',
         [CloudSyncTable.REMOTE_PROJECTS]: 'projectId, remoteId',
         [CloudSyncTable.IGNORED_FILES]: 'fileId',
+        [CloudSyncTable.LOCAL_FILES]: 'projectId',
       })
     }
   }

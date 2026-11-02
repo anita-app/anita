@@ -12,6 +12,7 @@ import { checkSiteOfStorageChoice, storageChoiceNeedsLogin, storeProject } from 
 import { WordPressAuth } from 'app/libs/cloud-sync/wordpress/wordpress-auth.class'
 import { getWordPressErrorMessage } from 'app/libs/cloud-sync/wordpress/wordpress-api-error.class'
 import { getDropboxErrorMessage } from 'app/libs/cloud-sync/dropbox/dropbox-error.class'
+import { getLocalFileErrorMessage } from 'app/libs/cloud-sync/local-file/local-file-error.class'
 import { OnboardingAtoms } from 'app/state/onboarding/onboarding.atoms'
 import { OnboardingState } from 'app/state/onboarding/onboarding-state.class'
 import { ProjectsListAtoms } from 'app/state/projects-list/projects-list.atoms'
@@ -35,6 +36,8 @@ export const getStoreErrorMessage = (error: unknown, choice: TStorageChoice, sit
       return getConnectionErrorMessage(error, WordPressAuth.normalizeSiteUrl(choice.siteUrl || 'your site'))
     case 'dropbox':
       return getDropboxErrorMessage(error)
+    case 'localFile':
+      return getLocalFileErrorMessage(error, choice.handle.name)
     case 'remote':
       return getWordPressErrorMessage(error, siteName ?? 'the site')
     default:
@@ -52,6 +55,8 @@ export const storeActionLabel = (choice: TStorageChoice, siteName: string | unde
       return 'Connect and save'
     case 'dropbox':
       return storageChoiceNeedsLogin(choice) ? 'Connect Dropbox and save' : 'Save in Dropbox'
+    case 'localFile':
+      return 'Save in the file'
     case 'remote':
       return `Save on ${siteName ?? 'WordPress'}`
     default:
@@ -85,7 +90,7 @@ const StoreProjectForm: FC<{ projectId: string; projectTitle: string }> = (props
 
   return (
     <>
-      <p className="text-sm text-gray-600">&quot;{props.projectTitle}&quot; is saved only in this browser. Save it in Dropbox or on a WordPress site:</p>
+      <p className="text-sm text-gray-600">&quot;{props.projectTitle}&quot; is saved only in this browser. Save it in Dropbox, on a WordPress site, or in a file on this computer:</p>
       <ul className="mt-3 space-y-1">
         <Benefit
           icon="shieldCheckmarkOutline"
@@ -105,6 +110,7 @@ const StoreProjectForm: FC<{ projectId: string; projectTitle: string }> = (props
           value={choice}
           onChange={setChoice}
           allowLocal={false}
+          projectTitle={props.projectTitle}
         />
       </div>
       {error && (
@@ -126,7 +132,7 @@ const StoreProjectForm: FC<{ projectId: string; projectTitle: string }> = (props
         <Button
           id="storeProject"
           label={isWorking ? 'Saving…' : storeActionLabel(choice, siteName)}
-          iconLeft={choice.kind === 'dropbox' ? 'logoDropbox' : 'logoWordpress'}
+          iconLeft={choice.kind === 'dropbox' ? 'logoDropbox' : (choice.kind === 'localFile' ? 'desktopOutline' : 'logoWordpress')}
           type={Type.primary}
           disabled={isWorking}
           onClick={handleStore}

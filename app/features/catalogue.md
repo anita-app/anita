@@ -16,6 +16,7 @@ lists what that guide must explain.
 - [Keep your projects safe](#group-keep-your-projects-safe) — 4 features
 - [Sync your projects with Dropbox](#group-sync-with-dropbox) — 4 features
 - [Store and share projects on a WordPress site](#group-share-on-wordpress) — 4 features
+- [Keep a project in a file on your computer](#group-sync-with-a-file) — 3 features
 - [Syncing, logins and sync problems](#group-sync-status-and-logins) — 3 features
 - [Use Anita as an app, also offline](#group-anita-on-your-devices) — 3 features
 
@@ -108,7 +109,7 @@ without updating the app; self-hosted installations can use their own catalog (s
 
 ### Create a project from a template
 
-`template.create-project` · stable · since 1.0.0 · `src/app/components/templates/create-from-template.component.tsx:308`
+`template.create-project` · stable · since 1.0.0 · `src/app/components/templates/create-from-template.component.tsx:315`
 
 Preview the sections and fields of a template, name the project, choose where to save it and create it in one click.
 
@@ -132,7 +133,7 @@ template could not be downloaded." with "Try again". After creation the project 
 
 ### Start a template with example records
 
-`template.sample-records` · stable · since 1.0.0 · `src/app/components/templates/create-from-template.component.tsx:95`
+`template.sample-records` · stable · since 1.0.0 · `src/app/components/templates/create-from-template.component.tsx:97`
 
 Fills a project created from a template with a few realistic records, already linked to each other, to see how
 everything works.
@@ -225,7 +226,7 @@ Switching opens the chosen project and its details page.
 
 ### Reopen the last project
 
-`navigation.reopen-last-project` · stable · since 1.0.0 · `src/app/components/admin-layout/admin-layout.component.tsx:28`
+`navigation.reopen-last-project` · stable · since 1.0.0 · `src/app/components/admin-layout/admin-layout.component.tsx:29`
 
 When you come back to Anita, the project you used last is opened again in the sidebar.
 
@@ -518,9 +519,9 @@ The name, description and remote storage of a project, set at the top of the pro
 - **How:** 1. Type the name in "Project" and a short text in "Description".
 2. Optionally choose a "Remote storage".
 3. Save.
-- **Options:** "Remote storage": none (only this device), Dropbox or a connected WordPress site. Its hint: store the project in
-Dropbox or on a WordPress site to sync it across devices; on WordPress you can also share it with the users of the
-site.
+- **Options:** "Remote storage": none (only this browser), Dropbox, a connected WordPress site or a file on this computer.
+Its hint only names the choices; a box under the field explains how the chosen one works (where the project is
+saved, which devices get it, who can see it, and for a file that the browser asks permission at each visit).
 - **Rules:** "Project" and "Description" are required: "Save" stays disabled while they are empty. The name is shown on the project
 card and in the app, and names the export files.
 - **Related:** `project.create`, `project.edit`, `import.file`
@@ -618,14 +619,14 @@ reloaded.
 
 ### Delete a project
 
-`project.delete` · stable · since 0.1.0 · `src/app/models/project/project-deletor.class.ts:18`
+`project.delete` · stable · since 0.1.0 · `src/app/models/project/project-deletor.class.ts:19`
 
 Removes a project and all its records from this device and, if it is synced, from the WordPress site, or from Dropbox if you confirm it.
 
 - **Where:** "Delete Project" button on the card of the project (Projects screen).
 - **How:** 1. Click "Delete Project".
 2. Read the confirmation and click "Delete" (for Dropbox: "Delete from this device only" or "Delete also from Dropbox").
-- **Options:** For a project synced with Dropbox: "Delete from this device only" keeps its file in your Dropbox, "Delete also from Dropbox" moves the file to the deleted files of your Dropbox. Nothing is deleted from Dropbox without this explicit choice.
+- **Options:** For a project synced with a file on this computer, the file is never deleted. For a project synced with Dropbox: "Delete from this device only" keeps its file in your Dropbox, "Delete also from Dropbox" moves the file to the deleted files of your Dropbox. Nothing is deleted from Dropbox without this explicit choice.
 - **Rules:** The confirmation says what happens: for a project only on this device, all its data is removed from this device and
 copies on other devices are not affected; for Dropbox, the dialog asks whether to delete the file in your Dropbox too:
 with "Delete from this device only" the file stays in Dropbox, your other devices keep syncing it, and this device no
@@ -880,13 +881,13 @@ Reminds you that a project not stored in Dropbox or on WordPress exists only in 
 
 ### Choose where a project is stored
 
-`storage.choice` · beta · since 1.0.0 · `src/app/components/remotes/storage-choice.component.tsx:97`
+`storage.choice` · beta · since 1.0.0 · `src/app/components/remotes/storage-choice.component.tsx:105`
 
-Chooses whether a project is kept in Dropbox, on a WordPress site, or only on this device, when creating it, in its settings, or later for a local project.
+Chooses whether a project is kept in Dropbox, on a WordPress site, in a file on this computer, or only on this device, when creating it, in its settings, or later for a local project.
 
 - **Where:** The storage options when creating a project from a template; "Remote storage" in the project settings; the dialog "Keep your project safe" opened from "Save it in Dropbox or WordPress", the "Only on this device" header badge or "Keep it safe" on a project card.
 - **How:** 1. Pick one of the options (the recommended one is marked "Recommended"). 2. For Dropbox, optionally change the folder; for WordPress, choose "Who can see it on the site"; for a new site, type its address. 3. Confirm with the button, whose label says what happens: "Save on <site>", "Save in Dropbox", "Connect Dropbox and save", "Connect and save", "Create and connect Dropbox", "Create and connect WordPress". Choosing a service not yet connected opens its login and brings you back to the project.
-- **Options:** Each connected WordPress site where you can create projects, "Dropbox" (or "My Dropbox" if not connected yet), "My WordPress site" / "Another WordPress site" (connect a new site), "Only on this device" (not offered when moving a local project). Default: the first connected site, otherwise Dropbox, otherwise this device; Dropbox is recommended when no site is connected. In the project settings, "None: this device only" and "Connect storage" when nothing is connected.
+- **Options:** Each connected WordPress site where you can create projects, "Dropbox" (or "My Dropbox" if not connected yet), "My WordPress site" / "Another WordPress site" (connect a new site), "A file on this computer" (only in Chromium-based browsers on a computer: selecting it asks where to save the file, "Change" picks another one; the button becomes "Save in the file"), "Only on this device" (not offered when moving a local project). Default: the first connected site, otherwise Dropbox, otherwise this device; Dropbox is recommended when no site is connected. In the project settings, "None: this device only" and "Connect storage" when nothing is connected.
 - **Rules:** "Only on this device" is saved only in this browser, with no backup: clearing browsing data, private browsing or losing the device deletes it; it can be moved to Dropbox or WordPress later. Changing or removing the storage of a synced project asks "Stop syncing with <name>?": the project is not deleted, it stays on this device and in Dropbox or on the site. "Not now" closes the dialog. Errors are shown as "The project was not saved" with the message of the service.
 - **Related:** `storage.local-only`, `sync.dropbox-projects`, `sync.wordpress-projects`, `sync.wordpress-share`
 
@@ -909,21 +910,24 @@ remembers when it was made, for projects saved only on this device.
 
 ### Import a project from a file
 
-`import.file` · stable · since 0.1.0 · `src/app/components/projects/project-importer-components/import-project-button.component.tsx:37`
+`import.file` · stable · since 0.1.0 · `src/app/components/projects/project-importer-components/import-project-button.component.tsx:72`
 
 Adds to this device a project saved in an Anita file (a JSON export), with its structure and its records.
 
 - **Where:** "Import" button on the Projects screen, on the "Create a project" page and on the first project page.
 - **How:** 1. Click "Import".
 2. Choose the .json file.
-3. In the "Import project" dialog check or change the name, description and remote storage.
+3. In the "Import project" dialog check or change the name, description and remote storage (where the browser
+supports it, the imported file is preselected: see "Keep an imported project in sync with its file").
 4. Click "Import".
 - **Options:** Name, description and remote storage of the project can be changed before importing.
 - **Rules:** Only files exported with "Data and Structure" or "Structure Only" can be imported. Any other file shows "This file
-cannot be imported", explaining that exports with "Data Only" do not contain the project structure. Exports of the
+cannot be imported", explaining that exports with "Data Only" do not contain the project structure. An empty file
+shows "This file is empty", and a file the browser cannot read "This file cannot be read": both suggest downloading
+the file first when it is in a cloud folder and not available offline. Exports of the
 previous version of Anita (0.20.0) can be imported. "Import" stays disabled while a required field is empty. The
 project is saved in the browser of this device and the Projects list opens.
-- **Related:** `export.project`, `project.list`, `project.settings`
+- **Related:** `export.project`, `project.list`, `project.settings`, `import.file-sync`
 
 ## Sync your projects with Dropbox
 
@@ -1013,7 +1017,7 @@ Connects a WordPress site with the Anita Project Manager plugin, where you can s
 
 ### Sync projects with a WordPress site
 
-`sync.wordpress-projects` · beta · since 1.0.0 · `src/app/libs/cloud-sync/wordpress/wordpress-sync.class.tsx:32`
+`sync.wordpress-projects` · beta · since 1.0.0 · `src/app/libs/cloud-sync/wordpress/wordpress-sync.class.tsx:33`
 
 Stores a project on a connected WordPress site and keeps this device and the site in sync, record by record.
 
@@ -1040,7 +1044,7 @@ Chooses who can see a project stored on a WordPress site, from only you to every
 
 ### Projects removed from a WordPress site
 
-`sync.wordpress-removed-projects` · beta · since 1.0.0 · `src/app/libs/cloud-sync/wordpress/wordpress-sync.class.tsx:217`
+`sync.wordpress-removed-projects` · beta · since 1.0.0 · `src/app/libs/cloud-sync/wordpress/wordpress-sync.class.tsx:218`
 
 Handles the projects of this device that a WordPress site no longer returns: deleted on the site, or no longer shared with you.
 
@@ -1050,6 +1054,54 @@ Handles the projects of this device that a WordPress site no longer returns: del
 - **Rules:** Projects owned by someone else are removed from this device automatically, then listed in "Projects removed from <site>" ("These projects were deleted on <site>, or their owner stopped sharing them with you"). Your own projects are never deleted without asking ("The copy on this device has not been deleted."). Closing the dialog asks again at the next session. One question at a time is shown.
 - **errors:** `wordpress.notFound`
 - **Related:** `sync.wordpress-projects`, `sync.wordpress-share`
+
+## Keep a project in a file on your computer
+
+<a id="group-sync-with-a-file"></a>Group `sync-with-a-file`. **Goal:** Save a project in a file of your computer, keep it in sync also when the file is changed outside Anita, and allow Anita to open it at each visit.
+
+**Audience:** Uses Anita on one computer, in Chrome or Edge; wants a file to back up, edit or keep in a folder of their own, without a cloud account.
+
+**Notes for writers:** Explain the browser permission at each visit and the "Allow on every visit" choice (screenshot of the prompt). Say clearly that the project stays only on that computer, and point to Dropbox and WordPress for other devices. Show a manual edit of the JSON being picked up.
+
+### Sync a project with a file on your computer
+
+`sync.local-file-projects` · beta · since 1.0.0 · `src/app/libs/cloud-sync/local-file/local-file-sync.class.tsx:24`
+
+Keeps a project saved also in a file of your computer, and reads the changes made to that file outside Anita.
+
+- **Where:** Chosen as storage of a project: "A file on this computer" when creating a project from a template, in "Remote storage" of the project settings, in the dialog "Keep your project safe", or in the "Import project" dialog, where the imported file is chosen already. The project page shows "Remote storage: A file on this computer", the "File" and "Last sync", with "Sync now", "Choose the file" and "Save in a new file"; the projects list marks it "Synced with <file name>".
+- **How:** 1. Choose "A file on this computer" and pick where to save the file (when importing, the imported file is used). 2. Each time the project is opened, allow Anita to use the file ("Allow access"). 3. Work as usual: changes are written in the file a moment after they are saved; changes made to the file are read when the project is opened, when the window gets focus and every few seconds.
+- **Options:** Where the file is saved and its name (by default the title of the project, in the last folder used). Setting "Remote storage" back to "None: this device only" stops syncing (confirmation "Stop syncing with the file?"): the project stays in the browser and the file stays on the computer.
+- **Rules:** Available only in Chromium-based browsers on a computer (Chrome, Edge, Opera...): elsewhere the option is not offered and the project page explains it. The file is a regular Anita export ("Data and Structure") that can be imported anywhere. Records are merged one by one using the time of their last change, as with Dropbox; a record changed by hand in the file, without changing its dates, counts as changed when the file was saved; records added by hand without an id or creation date get them, and are written back to the file; records removed from the file are removed from the project. A file that is not valid JSON, or not an Anita project, is never overwritten: the project page shows "Sync problem" and changes stay in the browser until the file is fixed or a new file is chosen. A file that was moved, renamed or deleted must be chosen again ("Choose the file") or replaced ("Save in a new file"). Deleting the project never deletes the file. The project exists only on this computer: to use it on other devices, store it in Dropbox or on WordPress.
+- **errors:** `localFile.unsupported`, `localFile.permissionNeeded`, `localFile.notFound`, `localFile.invalidFile`, `localFile.otherProject`, `localFile.conflict`, `localFile.unknown`
+- **covers:** `cloud:LOCAL_FILE`
+- **Related:** `sync.local-file-access`, `import.file-sync`, `storage.choice`, `sync.status`, `sync.automatic`
+
+### Keep an imported project in sync with its file
+
+`import.file-sync` · beta · since 1.0.0 · `src/app/components/projects/project-importer-components/import-project-button.component.tsx:58`
+
+When you import a project from a file of your computer, Anita can keep using that file, as it does with Dropbox or WordPress.
+
+- **Where:** "Remote storage" of the "Import project" dialog, preselected on "A file on this computer (<file name>)", with a box explaining how it works.
+- **How:** 1. Import a project from a file. 2. Leave "A file on this computer (<file name>)" in "Remote storage", or choose another storage. 3. Click "Import" and allow Anita to edit the file in the browser's prompt.
+- **Options:** Keep the file (default), or choose "None: this device only" to import a copy saved only in this browser (the box under the field explains that changes are not written in the file, and that Dropbox or a WordPress site keep the project safe and on all devices), or Dropbox or a WordPress site.
+- **Rules:** The file is not asked again: the one chosen with "Import" is used. Offered only in browsers that can use files on the computer (Chrome, Edge and other Chromium-based browsers on a computer); elsewhere the project is imported as a copy, as before. If the permission to edit the file is not granted, the project is imported and the project page asks for it again.
+- **errors:** `localFile.permissionNeeded`
+- **Related:** `import.file`, `sync.local-file-projects`, `storage.choice`
+
+### Allow Anita to open the file of a project
+
+`sync.local-file-access` · beta · since 1.0.0 · `src/app/libs/cloud-sync/local-file/local-file-sync.class.tsx:226`
+
+Asks your permission to read and write the file on your computer that a project is synced with, as browsers require.
+
+- **Where:** A dialog "Allow Anita to open <file>?" when a project synced with a file is opened; then, until allowed, the blue banner "Anita needs your permission to open <file>" at the top of the project pages and a note on the project page.
+- **How:** Click "Allow access", then allow it in the browser's prompt. To avoid being asked at every visit, choose "Allow on every visit" in the prompt, when the browser offers it.
+- **Options:** "Allow access" or "Not now" in the dialog. In the browser's prompt: allow this time, allow on every visit (where offered), or don't allow.
+- **Rules:** Browsers forget the permission when Anita is closed, unless "Allow on every visit" was chosen, so the question comes back at the next visit. Until it is allowed, the project works as usual and its changes are kept in the browser: they are written in the file once allowed. The dialog is shown once per visit for each project; the banner stays until access is allowed.
+- **errors:** `localFile.permissionNeeded`
+- **Related:** `sync.local-file-projects`
 
 ## Syncing, logins and sync problems
 
@@ -1061,20 +1113,20 @@ Handles the projects of this device that a WordPress site no longer returns: del
 
 ### Automatic sync and working offline
 
-`sync.automatic` · beta · since 1.0.0 · `src/app/components/admin-layout/cloud-sync-agent.component.tsx:47`
+`sync.automatic` · beta · since 1.0.0 · `src/app/components/admin-layout/cloud-sync-agent.component.tsx:58`
 
 Syncs Dropbox, the connected WordPress sites and the open project by itself while Anita is open, and keeps the changes on the device while offline.
 
 - **Where:** Nothing to open: it runs in the background whenever Anita is open in a browser tab.
 - **How:** Nothing to do: keep working, also offline. Use "Sync now" to sync immediately.
 - **Options:** none
-- **Rules:** Syncs at start, when a service is connected or a login is renewed, when a project is opened, every 5 minutes for the list of projects of each service, every minute (and when the window gets focus, at most every 15 seconds) for changes to the open project, and when the device goes back online. Nothing is synced while the tab is hidden or the device is offline, and services that need a new login are skipped. Changes made offline are kept on this device and sent at the next sync. Messages: "Anita could not reach Dropbox. Your changes are kept on this device and will be synced when Dropbox is reachable again."; "Anita could not reach <site>. Your changes are kept on this device and will be synced when the site is reachable again."
+- **Rules:** Projects synced with a file on this computer are checked every 5 seconds and when the window gets focus, also offline. Syncs at start, when a service is connected or a login is renewed, when a project is opened, every 5 minutes for the list of projects of each service, every minute (and when the window gets focus, at most every 15 seconds) for changes to the open project, and when the device goes back online. Nothing is synced while the tab is hidden or the device is offline, and services that need a new login are skipped. Changes made offline are kept on this device and sent at the next sync. Messages: "Anita could not reach Dropbox. Your changes are kept on this device and will be synced when Dropbox is reachable again."; "Anita could not reach <site>. Your changes are kept on this device and will be synced when the site is reachable again."
 - **errors:** `dropbox.network`, `wordpress.network`
 - **Related:** `sync.status`, `sync.dropbox-projects`, `sync.wordpress-projects`
 
 ### Sync status and problems
 
-`sync.status` · beta · since 1.0.0 · `src/app/state/sync/sync-state.atoms.ts:5`
+`sync.status` · beta · since 1.0.0 · `src/app/state/sync/sync-state.atoms.ts:6`
 
 Shows whether Dropbox, each WordPress site and the open project are synced, syncing, waiting for a login or failed, and what was resolved in the last sync.
 

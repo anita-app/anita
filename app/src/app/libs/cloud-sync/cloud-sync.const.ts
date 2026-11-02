@@ -6,4 +6,5 @@ export enum CloudSyncTable {
   REMOTES_INFO = 'remotesInfo',
   REMOTE_PROJECTS = 'remoteProjects',
   IGNORED_FILES = 'ignoredFiles',
+  LOCAL_FILES = 'localFiles',
 }

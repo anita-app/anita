@@ -1,6 +1,7 @@
 import { atom } from 'jotai'
 import type { IWordPressRemoteInfo } from 'app/libs/cloud-sync/wordpress/wordpress.const'
 import type { IDropboxAccountState, IDropboxFileLink } from 'app/libs/cloud-sync/dropbox/dropbox.const'
+import type { ILocalFileLink } from 'app/libs/cloud-sync/local-file/local-file.const'
 
 /**
  * @feature sync.status
@@ -26,6 +27,11 @@ export interface ISyncStatus {
   pendingChanges?: boolean
   /** Information about the last sync, e.g. conflicts that were resolved. */
   notice?: string
+  /**
+   * Projects synced with a file on this computer: 'permission' when the user must allow Anita to use the file in this
+   * visit, 'file' when the file must be chosen again (not linked in this browser, moved or deleted).
+   */
+  needsAccess?: 'permission' | 'file'
 }
 
 /** @internal */
@@ -39,6 +45,8 @@ export class SyncStateAtoms {
   public static dropboxAccount = atom<IDropboxAccountState | null>(null)
   /** The Dropbox file each project is synced with, by project id. */
   public static dropboxLinks = atom<Record<string, IDropboxFileLink>>({})
+  /** The file on this computer each project is synced with, by project id. */
+  public static localFileLinks = atom<Record<string, ILocalFileLink>>({})
   /** Sync status of each WordPress site, by remote id, and of Dropbox (DROPBOX_REMOTE_ID). */
   public static remotesStatus = atom<Record<string, ISyncStatus>>({})
   /** Sync status of each project synced with a WordPress site or with Dropbox, by project id. */

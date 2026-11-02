@@ -2,6 +2,7 @@ import { WordPressAuth } from 'app/libs/cloud-sync/wordpress/wordpress-auth.clas
 import { WordPressSync } from 'app/libs/cloud-sync/wordpress/wordpress-sync.class'
 import { DropboxHelper } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
 import { DropboxSync } from 'app/libs/cloud-sync/dropbox/dropbox-sync.class'
+import { LocalFileSync } from 'app/libs/cloud-sync/local-file/local-file-sync.class'
 import type { IWordPressPingResponse } from 'app/libs/cloud-sync/wordpress/wordpress.const'
 import type { TStorageChoice } from 'app/components/remotes/storage-choice.component'
 
@@ -38,6 +39,8 @@ export const storeProject = async (projectId: string, choice: TStorageChoice, ch
   } else if (choice.kind === 'connect') {
     const site = checkedSite ?? await checkSiteOfStorageChoice(choice)
     await WordPressAuth.startLogin(site!, { linkProjectId: projectId, linkAccessLevel: choice.accessLevel })
+  } else if (choice.kind === 'localFile') {
+    await LocalFileSync.linkProject(projectId, choice.handle, { overwrite: true })
   } else if (choice.kind === 'dropbox') {
     if (DropboxHelper.instance.isConnected()) {
       await DropboxSync.linkProject(projectId, { folder: choice.folder })

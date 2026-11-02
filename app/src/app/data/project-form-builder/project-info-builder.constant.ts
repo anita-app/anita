@@ -49,7 +49,7 @@ const remoteStorageField: FormFieldsModel<IProjectSettings> = {
   fieldName: 'remoteStorage',
   value: '',
   label: 'Remote storage',
-  labelHint: 'Store the project in Dropbox or on a WordPress site, to sync it across devices. On WordPress you can also share it with the users of the site.',
+  labelHint: 'Where the project is kept besides this browser: Dropbox, a WordPress site or a file on this computer.',
   required: false,
   options: [], // to be filled by the component itself with the available remote storage options
 }
@@ -62,9 +62,9 @@ const remoteStorageField: FormFieldsModel<IProjectSettings> = {
  * @usage 1. Type the name in "Project" and a short text in "Description".
  * 2. Optionally choose a "Remote storage".
  * 3. Save.
- * @options "Remote storage": none (only this device), Dropbox or a connected WordPress site. Its hint: store the project in
- * Dropbox or on a WordPress site to sync it across devices; on WordPress you can also share it with the users of the
- * site.
+ * @options "Remote storage": none (only this browser), Dropbox, a connected WordPress site or a file on this computer.
+ * Its hint only names the choices; a box under the field explains how the chosen one works (where the project is
+ * saved, which devices get it, who can see it, and for a file that the browser asks permission at each visit).
  * @rules "Project" and "Description" are required: "Save" stays disabled while they are empty. The name is shown on the project
  * card and in the app, and names the export files.
  * @errors none

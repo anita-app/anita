@@ -3,6 +3,7 @@ import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
 import { CloudSyncBase } from 'app/cross-refs-exports'
 import { WordPressSync } from 'app/libs/cloud-sync/wordpress/wordpress-sync.class'
 import { DropboxSync } from 'app/libs/cloud-sync/dropbox/dropbox-sync.class'
+import { LocalFileSync } from 'app/libs/cloud-sync/local-file/local-file-sync.class'
 import type { IProjectSettings } from 'app/models/project/project.declarations'
 
 interface IProjectDeletorOptions {
@@ -24,7 +25,7 @@ interface IProjectDeletorOptions {
  * @where "Delete Project" button on the card of the project (Projects screen).
  * @usage 1. Click "Delete Project".
  * 2. Read the confirmation and click "Delete" (for Dropbox: "Delete from this device only" or "Delete also from Dropbox").
- * @options For a project synced with Dropbox: "Delete from this device only" keeps its file in your Dropbox, "Delete also from Dropbox" moves the file to the deleted files of your Dropbox. Nothing is deleted from Dropbox without this explicit choice.
+ * @options For a project synced with a file on this computer, the file is never deleted. For a project synced with Dropbox: "Delete from this device only" keeps its file in your Dropbox, "Delete also from Dropbox" moves the file to the deleted files of your Dropbox. Nothing is deleted from Dropbox without this explicit choice.
  * @rules The confirmation says what happens: for a project only on this device, all its data is removed from this device and
  * copies on other devices are not affected; for Dropbox, the dialog asks whether to delete the file in your Dropbox too:
  * with "Delete from this device only" the file stays in Dropbox, your other devices keep syncing it, and this device no
@@ -61,6 +62,8 @@ export class ProjectDeletor {
     await this.callOnProjectDeleted()
     await this.doDelete()
     await CloudSyncBase.deleteDropboxLink(this.projectId)
+    // The file on this computer is never deleted.
+    await LocalFileSync.forgetSyncData(this.projectId)
     await CloudSyncBase.deleteLastSync(this.projectId)
     await CloudSyncBase.deleteRemoteProjectInfo(this.projectId)
     delete dbInstances[this.projectId]

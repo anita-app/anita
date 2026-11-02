@@ -117,7 +117,7 @@
             },
             {
               "file": "src/app/libs/startupper/startupper.class.ts",
-              "line": 17,
+              "line": 18,
               "symbol": "Startupper"
             }
           ],
@@ -229,7 +229,7 @@
           },
           "source": {
             "file": "src/app/components/templates/create-from-template.component.tsx",
-            "line": 308,
+            "line": 315,
             "symbol": "CreateFromTemplate"
           },
           "parts": [
@@ -288,7 +288,7 @@
           },
           "source": {
             "file": "src/app/components/templates/create-from-template.component.tsx",
-            "line": 95,
+            "line": 97,
             "symbol": "CreateFromTemplateForm"
           },
           "parts": [
@@ -363,7 +363,7 @@
             },
             {
               "file": "src/app/components/projects/project-card.component.tsx",
-              "line": 25,
+              "line": 26,
               "symbol": "ProjectCard"
             },
             {
@@ -422,12 +422,12 @@
           "parts": [
             {
               "file": "src/app/components/project/details-card.tsx",
-              "line": 20,
+              "line": 22,
               "symbol": "ProjectDetailsCard"
             },
             {
               "file": "src/app/components/shared-components/buttons/delete-project.component.tsx",
-              "line": 25,
+              "line": 26,
               "symbol": "DeleteProjectButton"
             },
             {
@@ -493,7 +493,7 @@
             },
             {
               "file": "src/app/components/admin-layout/admin-layout.component.tsx",
-              "line": 21,
+              "line": 22,
               "symbol": "AdminLayout"
             },
             {
@@ -566,13 +566,13 @@
           },
           "source": {
             "file": "src/app/components/admin-layout/admin-layout.component.tsx",
-            "line": 28,
+            "line": 29,
             "symbol": ""
           },
           "parts": [
             {
               "file": "src/app/components/admin-layout/admin-layout.component.tsx",
-              "line": 21,
+              "line": 22,
               "symbol": "AdminLayout"
             },
             {
@@ -1438,7 +1438,7 @@
           "summary": "The name, description and remote storage of a project, set at the top of the project editor.",
           "where": "Top card of the \"Add Project\" / \"Edit Project\" editor, and the \"Import project\" dialog.",
           "usage": "1. Type the name in \"Project\" and a short text in \"Description\".\n2. Optionally choose a \"Remote storage\".\n3. Save.",
-          "options": "\"Remote storage\": none (only this device), Dropbox or a connected WordPress site. Its hint: store the project in\nDropbox or on a WordPress site to sync it across devices; on WordPress you can also share it with the users of the\nsite.",
+          "options": "\"Remote storage\": none (only this browser), Dropbox, a connected WordPress site or a file on this computer.\nIts hint only names the choices; a box under the field explains how the chosen one works (where the project is\nsaved, which devices get it, who can see it, and for a file that the browser asks permission at each visit).",
           "rules": "\"Project\" and \"Description\" are required: \"Save\" stays disabled while they are empty. The name is shown on the project\ncard and in the app, and names the export files.",
           "status": "stable",
           "since": "0.1.0",
@@ -1745,7 +1745,7 @@
           "summary": "Removes a project and all its records from this device and, if it is synced, from the WordPress site, or from Dropbox if you confirm it.",
           "where": "\"Delete Project\" button on the card of the project (Projects screen).",
           "usage": "1. Click \"Delete Project\".\n2. Read the confirmation and click \"Delete\" (for Dropbox: \"Delete from this device only\" or \"Delete also from Dropbox\").",
-          "options": "For a project synced with Dropbox: \"Delete from this device only\" keeps its file in your Dropbox, \"Delete also from Dropbox\" moves the file to the deleted files of your Dropbox. Nothing is deleted from Dropbox without this explicit choice.",
+          "options": "For a project synced with a file on this computer, the file is never deleted. For a project synced with Dropbox: \"Delete from this device only\" keeps its file in your Dropbox, \"Delete also from Dropbox\" moves the file to the deleted files of your Dropbox. Nothing is deleted from Dropbox without this explicit choice.",
           "rules": "The confirmation says what happens: for a project only on this device, all its data is removed from this device and\ncopies on other devices are not affected; for Dropbox, the dialog asks whether to delete the file in your Dropbox too:\nwith \"Delete from this device only\" the file stays in Dropbox, your other devices keep syncing it, and this device no\nlonger downloads it automatically (\"Open from Dropbox\" brings it back); with \"Delete also from Dropbox\" the file is\nmoved to the deleted files of your Dropbox (where it can be restored for a while) and your other devices ask what to\ndo with their copy; for WordPress, it is deleted\nfrom the site and from this device, for every user it is shared with. On WordPress only the owner of the project and\nthe administrators of the site see the button. If the deletion on Dropbox or WordPress fails, \"The project was not\ndeleted\" explains why and the project is kept on this device. It cannot be undone. Afterwards the Projects list opens.",
           "status": "stable",
           "since": "0.1.0",
@@ -1766,18 +1766,18 @@
           },
           "source": {
             "file": "src/app/models/project/project-deletor.class.ts",
-            "line": 18,
+            "line": 19,
             "symbol": "ProjectDeletor"
           },
           "parts": [
             {
               "file": "src/app/components/projects/project-card.component.tsx",
-              "line": 25,
+              "line": 26,
               "symbol": "ProjectCard"
             },
             {
               "file": "src/app/components/shared-components/buttons/delete-project.component.tsx",
-              "line": 25,
+              "line": 26,
               "symbol": "DeleteProjectButton"
             }
           ],
@@ -2741,7 +2741,7 @@
             },
             {
               "file": "src/app/components/remotes/store-project-dialog.component.tsx",
-              "line": 145,
+              "line": 151,
               "symbol": "StoreProjectDialog"
             }
           ],
@@ -2751,10 +2751,10 @@
           "id": "storage.choice",
           "kind": "storage",
           "title": "Choose where a project is stored",
-          "summary": "Chooses whether a project is kept in Dropbox, on a WordPress site, or only on this device, when creating it, in its settings, or later for a local project.",
+          "summary": "Chooses whether a project is kept in Dropbox, on a WordPress site, in a file on this computer, or only on this device, when creating it, in its settings, or later for a local project.",
           "where": "The storage options when creating a project from a template; \"Remote storage\" in the project settings; the dialog \"Keep your project safe\" opened from \"Save it in Dropbox or WordPress\", the \"Only on this device\" header badge or \"Keep it safe\" on a project card.",
           "usage": "1. Pick one of the options (the recommended one is marked \"Recommended\"). 2. For Dropbox, optionally change the folder; for WordPress, choose \"Who can see it on the site\"; for a new site, type its address. 3. Confirm with the button, whose label says what happens: \"Save on <site>\", \"Save in Dropbox\", \"Connect Dropbox and save\", \"Connect and save\", \"Create and connect Dropbox\", \"Create and connect WordPress\". Choosing a service not yet connected opens its login and brings you back to the project.",
-          "options": "Each connected WordPress site where you can create projects, \"Dropbox\" (or \"My Dropbox\" if not connected yet), \"My WordPress site\" / \"Another WordPress site\" (connect a new site), \"Only on this device\" (not offered when moving a local project). Default: the first connected site, otherwise Dropbox, otherwise this device; Dropbox is recommended when no site is connected. In the project settings, \"None: this device only\" and \"Connect storage\" when nothing is connected.",
+          "options": "Each connected WordPress site where you can create projects, \"Dropbox\" (or \"My Dropbox\" if not connected yet), \"My WordPress site\" / \"Another WordPress site\" (connect a new site), \"A file on this computer\" (only in Chromium-based browsers on a computer: selecting it asks where to save the file, \"Change\" picks another one; the button becomes \"Save in the file\"), \"Only on this device\" (not offered when moving a local project). Default: the first connected site, otherwise Dropbox, otherwise this device; Dropbox is recommended when no site is connected. In the project settings, \"None: this device only\" and \"Connect storage\" when nothing is connected.",
           "rules": "\"Only on this device\" is saved only in this browser, with no backup: clearing browsing data, private browsing or losing the device deletes it; it can be moved to Dropbox or WordPress later. Changing or removing the storage of a synced project asks \"Stop syncing with <name>?\": the project is not deleted, it stays on this device and in Dropbox or on the site. \"Not now\" closes the dialog. Errors are shown as \"The project was not saved\" with the message of the service.",
           "status": "beta",
           "since": "1.0.0",
@@ -2772,7 +2772,7 @@
           },
           "source": {
             "file": "src/app/components/remotes/storage-choice.component.tsx",
-            "line": 97,
+            "line": 105,
             "symbol": "StorageChoice"
           },
           "parts": [
@@ -2783,47 +2783,47 @@
             },
             {
               "file": "src/app/components/remotes/storage-choice.component.tsx",
-              "line": 32,
+              "line": 38,
               "symbol": "useWritableRemotes"
             },
             {
               "file": "src/app/components/remotes/storage-choice.component.tsx",
-              "line": 43,
+              "line": 49,
               "symbol": "defaultStorageChoice"
             },
             {
               "file": "src/app/components/remotes/store-project-dialog.component.tsx",
-              "line": 32,
+              "line": 33,
               "symbol": "getStoreErrorMessage"
             },
             {
               "file": "src/app/components/remotes/store-project-dialog.component.tsx",
-              "line": 49,
+              "line": 52,
               "symbol": "storeActionLabel"
             },
             {
               "file": "src/app/components/remotes/store-project-dialog.component.tsx",
-              "line": 145,
+              "line": 151,
               "symbol": "StoreProjectDialog"
             },
             {
               "file": "src/app/components/shared-components/forms-automator/form-fields/remote-selector.component.tsx",
-              "line": 43,
+              "line": 56,
               "symbol": "RemoteSelector"
             },
             {
               "file": "src/app/libs/cloud-sync/store-project.function.ts",
-              "line": 12,
+              "line": 13,
               "symbol": "storageChoiceNeedsLogin"
             },
             {
               "file": "src/app/libs/cloud-sync/store-project.function.ts",
-              "line": 20,
+              "line": 21,
               "symbol": "checkSiteOfStorageChoice"
             },
             {
               "file": "src/app/libs/cloud-sync/store-project.function.ts",
-              "line": 35,
+              "line": 36,
               "symbol": "storeProject"
             }
           ],
@@ -2899,15 +2899,16 @@
           "title": "Import a project from a file",
           "summary": "Adds to this device a project saved in an Anita file (a JSON export), with its structure and its records.",
           "where": "\"Import\" button on the Projects screen, on the \"Create a project\" page and on the first project page.",
-          "usage": "1. Click \"Import\".\n2. Choose the .json file.\n3. In the \"Import project\" dialog check or change the name, description and remote storage.\n4. Click \"Import\".",
+          "usage": "1. Click \"Import\".\n2. Choose the .json file.\n3. In the \"Import project\" dialog check or change the name, description and remote storage (where the browser\nsupports it, the imported file is preselected: see \"Keep an imported project in sync with its file\").\n4. Click \"Import\".",
           "options": "Name, description and remote storage of the project can be changed before importing.",
-          "rules": "Only files exported with \"Data and Structure\" or \"Structure Only\" can be imported. Any other file shows \"This file\ncannot be imported\", explaining that exports with \"Data Only\" do not contain the project structure. Exports of the\nprevious version of Anita (0.20.0) can be imported. \"Import\" stays disabled while a required field is empty. The\nproject is saved in the browser of this device and the Projects list opens.",
+          "rules": "Only files exported with \"Data and Structure\" or \"Structure Only\" can be imported. Any other file shows \"This file\ncannot be imported\", explaining that exports with \"Data Only\" do not contain the project structure. An empty file\nshows \"This file is empty\", and a file the browser cannot read \"This file cannot be read\": both suggest downloading\nthe file first when it is in a cloud folder and not available offline. Exports of the\nprevious version of Anita (0.20.0) can be imported. \"Import\" stays disabled while a required field is empty. The\nproject is saved in the browser of this device and the Projects list opens.",
           "status": "stable",
           "since": "0.1.0",
           "related": [
             "export.project",
             "project.list",
-            "project.settings"
+            "project.settings",
+            "import.file-sync"
           ],
           "surfaces": {
             "routes": [],
@@ -2917,7 +2918,7 @@
           },
           "source": {
             "file": "src/app/components/projects/project-importer-components/import-project-button.component.tsx",
-            "line": 37,
+            "line": 72,
             "symbol": "ImportProjectButton"
           },
           "parts": [
@@ -2933,7 +2934,12 @@
             },
             {
               "file": "src/app/libs/projects-helpers/project-importers/project-file-importer.class.ts",
-              "line": 9,
+              "line": 11,
+              "symbol": "ProjectFileReadError"
+            },
+            {
+              "file": "src/app/libs/projects-helpers/project-importers/project-file-importer.class.ts",
+              "line": 42,
               "symbol": "ProjectFileImporter"
             }
           ],
@@ -3072,7 +3078,7 @@
             },
             {
               "file": "src/app/components/shared-components/buttons/delete-project.component.tsx",
-              "line": 25,
+              "line": 26,
               "symbol": "DeleteProjectButton"
             },
             {
@@ -3102,12 +3108,12 @@
             },
             {
               "file": "src/app/libs/cloud-sync/remote-and-local-merger.class.ts",
-              "line": 68,
+              "line": 82,
               "symbol": "RemoteAndLocalMerger"
             },
             {
               "file": "src/app/libs/cloud-sync/sync-manager.class.ts",
-              "line": 48,
+              "line": 49,
               "symbol": "SyncManager"
             },
             {
@@ -3329,7 +3335,7 @@
           },
           "source": {
             "file": "src/app/libs/cloud-sync/wordpress/wordpress-sync.class.tsx",
-            "line": 32,
+            "line": 33,
             "symbol": "WordPressSync"
           },
           "parts": [
@@ -3340,12 +3346,12 @@
             },
             {
               "file": "src/app/libs/cloud-sync/remote-and-local-merger.class.ts",
-              "line": 68,
+              "line": 82,
               "symbol": "RemoteAndLocalMerger"
             },
             {
               "file": "src/app/libs/cloud-sync/sync-manager.class.ts",
-              "line": 48,
+              "line": 49,
               "symbol": "SyncManager"
             },
             {
@@ -3402,7 +3408,7 @@
             },
             {
               "file": "src/app/components/shared-components/buttons/delete-project.component.tsx",
-              "line": 25,
+              "line": 26,
               "symbol": "DeleteProjectButton"
             },
             {
@@ -3412,7 +3418,7 @@
             },
             {
               "file": "src/app/components/shared-components/forms-automator/form-fields/remote-selector.component.tsx",
-              "line": 43,
+              "line": 56,
               "symbol": "RemoteSelector"
             },
             {
@@ -3458,7 +3464,7 @@
           },
           "source": {
             "file": "src/app/libs/cloud-sync/wordpress/wordpress-sync.class.tsx",
-            "line": 217,
+            "line": 218,
             "symbol": ""
           },
           "parts": [
@@ -3469,6 +3475,182 @@
             }
           ],
           "group": "share-on-wordpress"
+        }
+      ]
+    },
+    {
+      "id": "sync-with-a-file",
+      "title": "Keep a project in a file on your computer",
+      "goal": "Save a project in a file of your computer, keep it in sync also when the file is changed outside Anita, and allow Anita to open it at each visit.",
+      "audience": "Uses Anita on one computer, in Chrome or Edge; wants a file to back up, edit or keep in a folder of their own, without a cloud account.",
+      "notes": "Explain the browser permission at each visit and the \"Allow on every visit\" choice (screenshot of the prompt). Say clearly that the project stays only on that computer, and point to Dropbox and WordPress for other devices. Show a manual edit of the JSON being picked up.",
+      "features": [
+        {
+          "id": "sync.local-file-projects",
+          "kind": "sync",
+          "title": "Sync a project with a file on your computer",
+          "summary": "Keeps a project saved also in a file of your computer, and reads the changes made to that file outside Anita.",
+          "where": "Chosen as storage of a project: \"A file on this computer\" when creating a project from a template, in \"Remote storage\" of the project settings, in the dialog \"Keep your project safe\", or in the \"Import project\" dialog, where the imported file is chosen already. The project page shows \"Remote storage: A file on this computer\", the \"File\" and \"Last sync\", with \"Sync now\", \"Choose the file\" and \"Save in a new file\"; the projects list marks it \"Synced with <file name>\".",
+          "usage": "1. Choose \"A file on this computer\" and pick where to save the file (when importing, the imported file is used). 2. Each time the project is opened, allow Anita to use the file (\"Allow access\"). 3. Work as usual: changes are written in the file a moment after they are saved; changes made to the file are read when the project is opened, when the window gets focus and every few seconds.",
+          "options": "Where the file is saved and its name (by default the title of the project, in the last folder used). Setting \"Remote storage\" back to \"None: this device only\" stops syncing (confirmation \"Stop syncing with the file?\"): the project stays in the browser and the file stays on the computer.",
+          "rules": "Available only in Chromium-based browsers on a computer (Chrome, Edge, Opera...): elsewhere the option is not offered and the project page explains it. The file is a regular Anita export (\"Data and Structure\") that can be imported anywhere. Records are merged one by one using the time of their last change, as with Dropbox; a record changed by hand in the file, without changing its dates, counts as changed when the file was saved; records added by hand without an id or creation date get them, and are written back to the file; records removed from the file are removed from the project. A file that is not valid JSON, or not an Anita project, is never overwritten: the project page shows \"Sync problem\" and changes stay in the browser until the file is fixed or a new file is chosen. A file that was moved, renamed or deleted must be chosen again (\"Choose the file\") or replaced (\"Save in a new file\"). Deleting the project never deletes the file. The project exists only on this computer: to use it on other devices, store it in Dropbox or on WordPress.",
+          "status": "beta",
+          "since": "1.0.0",
+          "related": [
+            "sync.local-file-access",
+            "import.file-sync",
+            "storage.choice",
+            "sync.status",
+            "sync.automatic"
+          ],
+          "surfaces": {
+            "routes": [],
+            "shortcuts": [],
+            "errors": [
+              "localFile.unsupported",
+              "localFile.permissionNeeded",
+              "localFile.notFound",
+              "localFile.invalidFile",
+              "localFile.otherProject",
+              "localFile.conflict",
+              "localFile.unknown"
+            ],
+            "covers": [
+              "cloud:LOCAL_FILE"
+            ]
+          },
+          "source": {
+            "file": "src/app/libs/cloud-sync/local-file/local-file-sync.class.tsx",
+            "line": 24,
+            "symbol": "LocalFileSync"
+          },
+          "parts": [
+            {
+              "file": "src/app/components/project/local-file-sync-status.component.tsx",
+              "line": 39,
+              "symbol": "LocalFileSyncStatus"
+            },
+            {
+              "file": "src/app/components/shared-components/buttons/delete-project.component.tsx",
+              "line": 26,
+              "symbol": "DeleteProjectButton"
+            },
+            {
+              "file": "src/app/components/shared-components/forms-automator/form-fields/remote-selector.component.tsx",
+              "line": 56,
+              "symbol": "RemoteSelector"
+            },
+            {
+              "file": "src/app/libs/cloud-sync/local-file/local-file-error.class.ts",
+              "line": 51,
+              "symbol": "getLocalFileErrorMessage"
+            },
+            {
+              "file": "src/app/libs/cloud-sync/local-file/local-file.function.ts",
+              "line": 17,
+              "symbol": "localFileNameForProject"
+            },
+            {
+              "file": "src/app/libs/cloud-sync/local-file/local-file.function.ts",
+              "line": 49,
+              "symbol": "localFileContent"
+            },
+            {
+              "file": "src/app/libs/cloud-sync/local-file/local-file.function.ts",
+              "line": 88,
+              "symbol": "prepareManualEdits"
+            },
+            {
+              "file": "src/app/libs/cloud-sync/remote-and-local-merger.class.ts",
+              "line": 82,
+              "symbol": "RemoteAndLocalMerger"
+            },
+            {
+              "file": "src/app/libs/cloud-sync/sync-manager.class.ts",
+              "line": 49,
+              "symbol": "SyncManager"
+            }
+          ],
+          "group": "sync-with-a-file"
+        },
+        {
+          "id": "import.file-sync",
+          "kind": "import",
+          "title": "Keep an imported project in sync with its file",
+          "summary": "When you import a project from a file of your computer, Anita can keep using that file, as it does with Dropbox or WordPress.",
+          "where": "\"Remote storage\" of the \"Import project\" dialog, preselected on \"A file on this computer (<file name>)\", with a box explaining how it works.",
+          "usage": "1. Import a project from a file. 2. Leave \"A file on this computer (<file name>)\" in \"Remote storage\", or choose another storage. 3. Click \"Import\" and allow Anita to edit the file in the browser's prompt.",
+          "options": "Keep the file (default), or choose \"None: this device only\" to import a copy saved only in this browser (the box under the field explains that changes are not written in the file, and that Dropbox or a WordPress site keep the project safe and on all devices), or Dropbox or a WordPress site.",
+          "rules": "The file is not asked again: the one chosen with \"Import\" is used. Offered only in browsers that can use files on the computer (Chrome, Edge and other Chromium-based browsers on a computer); elsewhere the project is imported as a copy, as before. If the permission to edit the file is not granted, the project is imported and the project page asks for it again.",
+          "status": "beta",
+          "since": "1.0.0",
+          "related": [
+            "import.file",
+            "sync.local-file-projects",
+            "storage.choice"
+          ],
+          "surfaces": {
+            "routes": [],
+            "shortcuts": [],
+            "errors": [
+              "localFile.permissionNeeded"
+            ],
+            "covers": []
+          },
+          "source": {
+            "file": "src/app/components/projects/project-importer-components/import-project-button.component.tsx",
+            "line": 58,
+            "symbol": ""
+          },
+          "parts": [
+            {
+              "file": "src/app/libs/projects-helpers/project-importers/project-file-importer.class.ts",
+              "line": 42,
+              "symbol": "ProjectFileImporter"
+            }
+          ],
+          "group": "sync-with-a-file"
+        },
+        {
+          "id": "sync.local-file-access",
+          "kind": "sync",
+          "title": "Allow Anita to open the file of a project",
+          "summary": "Asks your permission to read and write the file on your computer that a project is synced with, as browsers require.",
+          "where": "A dialog \"Allow Anita to open <file>?\" when a project synced with a file is opened; then, until allowed, the blue banner \"Anita needs your permission to open <file>\" at the top of the project pages and a note on the project page.",
+          "usage": "Click \"Allow access\", then allow it in the browser's prompt. To avoid being asked at every visit, choose \"Allow on every visit\" in the prompt, when the browser offers it.",
+          "options": "\"Allow access\" or \"Not now\" in the dialog. In the browser's prompt: allow this time, allow on every visit (where offered), or don't allow.",
+          "rules": "Browsers forget the permission when Anita is closed, unless \"Allow on every visit\" was chosen, so the question comes back at the next visit. Until it is allowed, the project works as usual and its changes are kept in the browser: they are written in the file once allowed. The dialog is shown once per visit for each project; the banner stays until access is allowed.",
+          "status": "beta",
+          "since": "1.0.0",
+          "related": [
+            "sync.local-file-projects"
+          ],
+          "surfaces": {
+            "routes": [],
+            "shortcuts": [],
+            "errors": [
+              "localFile.permissionNeeded"
+            ],
+            "covers": []
+          },
+          "source": {
+            "file": "src/app/libs/cloud-sync/local-file/local-file-sync.class.tsx",
+            "line": 226,
+            "symbol": ""
+          },
+          "parts": [
+            {
+              "file": "src/app/components/project/local-file-sync-status.component.tsx",
+              "line": 39,
+              "symbol": "LocalFileSyncStatus"
+            },
+            {
+              "file": "src/app/components/project/local-file-sync-status.component.tsx",
+              "line": 175,
+              "symbol": "LocalFileAccessBanner"
+            }
+          ],
+          "group": "sync-with-a-file"
         }
       ]
     },
@@ -3487,7 +3669,7 @@
           "where": "Nothing to open: it runs in the background whenever Anita is open in a browser tab.",
           "usage": "Nothing to do: keep working, also offline. Use \"Sync now\" to sync immediately.",
           "options": "none",
-          "rules": "Syncs at start, when a service is connected or a login is renewed, when a project is opened, every 5 minutes for the list of projects of each service, every minute (and when the window gets focus, at most every 15 seconds) for changes to the open project, and when the device goes back online. Nothing is synced while the tab is hidden or the device is offline, and services that need a new login are skipped. Changes made offline are kept on this device and sent at the next sync. Messages: \"Anita could not reach Dropbox. Your changes are kept on this device and will be synced when Dropbox is reachable again.\"; \"Anita could not reach <site>. Your changes are kept on this device and will be synced when the site is reachable again.\"",
+          "rules": "Projects synced with a file on this computer are checked every 5 seconds and when the window gets focus, also offline. Syncs at start, when a service is connected or a login is renewed, when a project is opened, every 5 minutes for the list of projects of each service, every minute (and when the window gets focus, at most every 15 seconds) for changes to the open project, and when the device goes back online. Nothing is synced while the tab is hidden or the device is offline, and services that need a new login are skipped. Changes made offline are kept on this device and sent at the next sync. Messages: \"Anita could not reach Dropbox. Your changes are kept on this device and will be synced when Dropbox is reachable again.\"; \"Anita could not reach <site>. Your changes are kept on this device and will be synced when the site is reachable again.\"",
           "status": "beta",
           "since": "1.0.0",
           "related": [
@@ -3506,7 +3688,7 @@
           },
           "source": {
             "file": "src/app/components/admin-layout/cloud-sync-agent.component.tsx",
-            "line": 47,
+            "line": 58,
             "symbol": "CloudSyncAgent"
           },
           "parts": [],
@@ -3539,7 +3721,7 @@
           },
           "source": {
             "file": "src/app/state/sync/sync-state.atoms.ts",
-            "line": 5,
+            "line": 6,
             "symbol": "ISyncStatus"
           },
           "parts": [
@@ -3567,6 +3749,11 @@
               "file": "src/app/components/project/dropbox-sync-status.component.tsx",
               "line": 22,
               "symbol": "DropboxSyncStatus"
+            },
+            {
+              "file": "src/app/components/project/local-file-sync-status.component.tsx",
+              "line": 39,
+              "symbol": "LocalFileSyncStatus"
             },
             {
               "file": "src/app/components/project/wordpress-sync-status.component.tsx",

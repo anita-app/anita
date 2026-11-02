@@ -12,6 +12,7 @@ import { useRemoteProjectInfo } from 'app/components/project/wordpress-sync-stat
 import { getWordPressErrorMessage } from 'app/libs/cloud-sync/wordpress/wordpress-api-error.class'
 import { getDropboxErrorMessage } from 'app/libs/cloud-sync/dropbox/dropbox-error.class'
 import { DROPBOX_REMOTE_ID } from 'app/libs/cloud-sync/dropbox/dropbox.const'
+import { LOCAL_FILE_REMOTE_ID } from 'app/libs/cloud-sync/local-file/local-file.const'
 import { SyncStateAtoms } from 'app/state/sync/sync-state.atoms'
 import { useAtomValue } from 'jotai'
 import type { FC } from 'react'
@@ -21,11 +22,13 @@ interface IDeleteProjectButtonProps {
   project: IProjectSettings
 }
 
-/** @featurePart project.info-page, project.delete, sync.dropbox-projects, sync.wordpress-share */
+/** @featurePart project.info-page, project.delete, sync.dropbox-projects, sync.wordpress-share, sync.local-file-projects */
 export const DeleteProjectButton: FC<IDeleteProjectButtonProps> = (props) => {
   const dropboxLink = useAtomValue(SyncStateAtoms.dropboxLinks)[props.project.id]
   const isOnDropbox = props.project.remoteStorage === DROPBOX_REMOTE_ID && !!dropboxLink
-  const remoteInfo = useRemoteProjectInfo(props.project.remoteStorage && props.project.remoteStorage !== DROPBOX_REMOTE_ID ? props.project.id : undefined)
+  const localFile = useAtomValue(SyncStateAtoms.localFileLinks)[props.project.id]
+  const isOnLocalFile = props.project.remoteStorage === LOCAL_FILE_REMOTE_ID
+  const remoteInfo = useRemoteProjectInfo(props.project.remoteStorage && props.project.remoteStorage !== DROPBOX_REMOTE_ID && !isOnLocalFile ? props.project.id : undefined)
   const isOnWordPress = !!remoteInfo
   const siteName = isOnWordPress ? (SyncState.getWordPressRemote(props.project.remoteStorage!)?.data.site_name ?? props.project.remoteStorage!) : ''
 
@@ -79,10 +82,15 @@ export const DeleteProjectButton: FC<IDeleteProjectButtonProps> = (props) => {
           <p className="text-sm text-gray-500">
             Are you sure you want to delete this project?<br /><br />It will be deleted from {siteName} and from this device, for every user it is shared with. This action cannot be undone.
           </p>)
-        : (
-          <p className="text-sm text-gray-500">
-            Are you sure you want to delete this project?<br /><br />All project data will be permanently removed from this device. This action cannot be undone.<br /><br />Data stored on other devices will not be affected.
-          </p>),
+        : isOnLocalFile
+          ? (
+            <p className="text-sm text-gray-500">
+              Are you sure you want to delete this project?<br /><br />It will be removed from this browser. Its file{localFile ? <> ({localFile.name})</> : null} stays on your computer: you can import it again at any time.
+            </p>)
+          : (
+            <p className="text-sm text-gray-500">
+              Are you sure you want to delete this project?<br /><br />All project data will be permanently removed from this device. This action cannot be undone.<br /><br />Data stored on other devices will not be affected.
+            </p>),
     })
   }
 

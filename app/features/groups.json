@@ -164,6 +164,18 @@
       ]
     },
     {
+      "id": "sync-with-a-file",
+      "title": "Keep a project in a file on your computer",
+      "goal": "Save a project in a file of your computer, keep it in sync also when the file is changed outside Anita, and allow Anita to open it at each visit.",
+      "audience": "Uses Anita on one computer, in Chrome or Edge; wants a file to back up, edit or keep in a folder of their own, without a cloud account.",
+      "notes": "Explain the browser permission at each visit and the \"Allow on every visit\" choice (screenshot of the prompt). Say clearly that the project stays only on that computer, and point to Dropbox and WordPress for other devices. Show a manual edit of the JSON being picked up.",
+      "features": [
+        "sync.local-file-projects",
+        "import.file-sync",
+        "sync.local-file-access"
+      ]
+    },
+    {
       "id": "sync-status-and-logins",
       "title": "Syncing, logins and sync problems",
       "goal": "Know at a glance whether your projects are synced, what Anita does by itself, and what to do when it asks you to log in again or a sync fails.",
