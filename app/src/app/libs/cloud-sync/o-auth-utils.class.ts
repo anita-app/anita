@@ -11,7 +11,7 @@ export class OAuthUtils {
     // Back from a login, completed (code) or cancelled (error): the answer is handled by the auth page.
     const query = window.location.search.substring(1)
     if (/(^|&)(code|error)=/.test(query)) {
-      // The app can be served from any path (e.g. /2/ on anita-app.com, or a self-hosted installation).
+      // The app can be served from any path (e.g. /v1/ on anita-app.com, or a self-hosted installation).
       const base = window.location.pathname
       window.location.href = `${base}#${ANITA_URLS.auth}/${UNIQUE_DATA_SEPARATOR}${query}`
     }

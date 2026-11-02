@@ -6,10 +6,10 @@ import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig(({ mode }) => ({
-  // anita-app.com serves the app from /2/, the published files are in the GitHub Pages repository next to this one.
-  base: mode === 'production' ? '/2/' : '/',
+  // anita-app.com serves the app from /v1/, the published files are in the GitHub Pages repository next to this one.
+  base: mode === 'production' ? '/v1/' : '/',
   build: {
-    outDir: '../anita-app.github.io/2',
+    outDir: '../anita-app.github.io/v1',
     emptyOutDir: true,
   },
   server: {
