@@ -4,6 +4,44 @@
   "temp": [],
   "changes": [
     {
+      "version": "1.0.0",
+      "date": "2026-11-02",
+      "items": [
+        {
+          "type": "added",
+          "value": "New version of Anita at anita-app.com/v1/; the previous version stays at /app/ and its exports can be imported"
+        },
+        {
+          "type": "added",
+          "value": "Sync projects with a WordPress site"
+        },
+        {
+          "type": "added",
+          "value": "Dropbox sync, which asks before deleting a project's file"
+        },
+        {
+          "type": "added",
+          "value": "Sync a project with a file on this computer"
+        },
+        {
+          "type": "added",
+          "value": "Onboarding on first launch, with project templates and example records"
+        },
+        {
+          "type": "added",
+          "value": "Tabs with the linked records of child sections"
+        },
+        {
+          "type": "changed",
+          "value": "Redesigned interface: lists, grid, details page and forms"
+        },
+        {
+          "type": "fixed",
+          "value": "Modals and select menus fit the screen, long text fields are more comfortable"
+        }
+      ]
+    },
+    {
       "version": "0.20.1",
       "date": "2026-10-14",
       "items": [

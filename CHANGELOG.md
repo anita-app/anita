@@ -7,6 +7,21 @@ This file has been automatially generated with [changelog-flow](https://github.c
 
 ---
 
+## [1.0.0] - 2026-11-02
+### Added
+- New version of Anita at anita-app.com/v1/; the previous version stays at /app/ and its exports can be imported.
+- Sync projects with a WordPress site.
+- Dropbox sync, which asks before deleting a project's file.
+- Sync a project with a file on this computer.
+- Onboarding on first launch, with project templates and example records.
+- Tabs with the linked records of child sections.
+
+### Changed
+- Redesigned interface: lists, grid, details page and forms.
+
+### Fixed
+- Modals and select menus fit the screen, long text fields are more comfortable.
+
 ## [0.20.1] - 2026-10-14
 ### Removed
 - removed the OpenAI powered assistant.
