@@ -1,22 +1,25 @@
 import { DbInitializer } from 'app/data/local-dbs/db-initializer.class'
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
 import {
+  RESERVED_AUDS_KEYS,
+} from 'app/models/project/project.declarations'
+import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
+import { Manager } from 'app/cross-refs-exports'
+import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
+import { sortSections } from 'app/models/section/sort-sections.function'
+import type { ISection } from 'app/models/section/section.declarations'
+import type {
   LocalProjectSettings,
   IProjectSettings,
-  RESERVED_AUDS_KEYS
 } from 'app/models/project/project.declarations'
-import { ISection } from 'app/models/section/section.declarations'
-import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
-import { Manager } from 'app/libs/manager/manager.class'
-import { LOCAL_STORAGE_SYSTEMS } from 'app/data/local-dbs/local-storage-systems.enum'
 
+/** @featurePart project.list */
 export class ProjectLoader {
   /**
    * The project info of the project to load
    */
   private projectSettings: Array<IProjectSettings> = []
   private projectSections: Array<ISection> = []
-  private localStorage: LOCAL_STORAGE_SYSTEMS = LOCAL_STORAGE_SYSTEMS.IndexedDB
 
   /**
    * Creates an instance of ProjectLoader
@@ -24,7 +27,7 @@ export class ProjectLoader {
    */
   constructor (
     private projectId: string,
-    private projectInfo?: LocalProjectSettings | void
+    private projectInfo?: LocalProjectSettings | void,
   ) { }
 
   public async loadProject (): Promise<void> {
@@ -53,7 +56,6 @@ export class ProjectLoader {
    */
   private async setProjectInfoFromIndexedDB () {
     this.projectInfo = await dbInstances.system.callSelector<LocalProjectSettings>(CLIENT_SECTIONS.projects, { id: this.projectId }).single()
-    this.localStorage = this.projectInfo!.localStorage!
   }
 
   /**
@@ -68,14 +70,14 @@ export class ProjectLoader {
    */
   public async loadProjectSettings (): Promise<void> {
     this.projectSettings = await dbInstances[this.projectId].callSelector<IProjectSettings>(RESERVED_AUDS_KEYS._settings).multiple()
-    this.projectSettings[0].localStorage = this.localStorage
+    this.projectSettings[0].localStorage = this.projectInfo?.localStorage ?? LOCAL_STORAGE_SYSTEMS.IndexedDB
   }
 
   /**
    * Loads project sections from the dbInstance
    */
   public async loadProjectSections (): Promise<void> {
-    this.projectSections = await dbInstances[this.projectId].callSelector<ISection>(RESERVED_AUDS_KEYS._sections).multiple()
+    this.projectSections = sortSections(await dbInstances[this.projectId].callSelector<ISection>(RESERVED_AUDS_KEYS._sections).multiple())
   }
 
   /**
@@ -84,7 +86,7 @@ export class ProjectLoader {
   private callCurrentProjectSetter () {
     Manager.setCurrentProject({
       [RESERVED_AUDS_KEYS._settings]: this.projectSettings,
-      [RESERVED_AUDS_KEYS._sections]: this.projectSections
+      [RESERVED_AUDS_KEYS._sections]: this.projectSections,
     })
   }
 }

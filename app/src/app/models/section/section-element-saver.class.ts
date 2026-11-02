@@ -1,12 +1,13 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
-import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import { IdCreator } from 'app/libs/id-creator/id-creator.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { DateTools } from 'app/libs/tools/date-tools.class'
+import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
 /**
  * Saves a new element in a section of the project, stores the project on disk and dispatches the changes to the current state
+ * @featurePart record.save
  */
 export class SectionElementSaver {
   /**
@@ -19,7 +20,7 @@ export class SectionElementSaver {
     private projectId: string,
     private sectionId: string,
     private element: ISectionElement,
-    private mode: EDITOR_MODE
+    private mode: EDITOR_MODE,
   ) { }
 
   /**
@@ -27,13 +28,13 @@ export class SectionElementSaver {
    */
   public async save (): Promise<ISectionElement> {
     this.checkAndSetPk()
-    this.setcreatedAt()
+    this.setCreatedAt()
     this.deleteEmptyProps()
 
     if (this.mode === EDITOR_MODE.add) {
       await dbInstances[this.projectId].callInsertor(this.sectionId, this.element).autoInsert()
     } else {
-      this.setupdatedAtValueIfInEditMode()
+      this.setUpdatedAtValueIfInEditMode()
       await dbInstances[this.projectId].callUpdator(this.sectionId, this.element).autoUpdate()
     }
 
@@ -64,7 +65,7 @@ export class SectionElementSaver {
   /**
    * Checks if `createdAt` value is set, if not one is created.
    */
-  private setcreatedAt (): void {
+  private setCreatedAt (): void {
     if (!this.element[RESERVED_FIELDS.createdAt]) {
       this.element[RESERVED_FIELDS.createdAt] = DateTools.getUtcIsoString()
     }
@@ -73,7 +74,7 @@ export class SectionElementSaver {
   /**
    * Sets the updatedAt value if in edit mode
    */
-  private setupdatedAtValueIfInEditMode (): void {
+  private setUpdatedAtValueIfInEditMode (): void {
     this.element[RESERVED_FIELDS.updatedAt] = DateTools.getUtcIsoString()
   }
 }

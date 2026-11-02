@@ -1,34 +1,60 @@
 import { availableSystems } from 'app/data/project-form-builder/project-info-builder.constant'
-import { IProjectSettings } from 'app/models/project/project.declarations'
 import { SectionElement } from 'app/models/section-element/section-element.class'
 import { DeleteProjectButton } from 'app/components/shared-components/buttons/delete-project.component'
-import { EditButton } from 'app/components/shared-components/buttons/edit-project-button.component'
+import { EditProjectButton } from 'app/components/shared-components/buttons/edit-project-button.component'
 import { ExportButton } from 'app/components/shared-components/buttons/export-project-button.component'
 import { CardFooter } from 'app/components/shared-components/common-ui-eles/card-footer.component'
-import * as dateFormat from 'date-format'
-import React from 'react'
+import dateFormat from 'date-format'
+import { ProjectAvatar } from 'app/components/shared-components/common-ui-eles/project-avatar.component'
+import { WordPressSyncStatus } from 'app/components/project/wordpress-sync-status.component'
+import { DropboxSyncStatus } from 'app/components/project/dropbox-sync-status.component'
+import { DROPBOX_REMOTE_ID } from 'app/libs/cloud-sync/dropbox/dropbox.const'
+import { LOCAL_FILE_REMOTE_ID } from 'app/libs/cloud-sync/local-file/local-file.const'
+import { LocalFileSyncStatus } from 'app/components/project/local-file-sync-status.component'
+import type { FC } from 'react'
+import type { IProjectSettings } from 'app/models/project/project.declarations'
 
 interface IProjectDetailsCardProps {
   project: IProjectSettings
 }
-export const ProjectDetailsCard: React.FC<IProjectDetailsCardProps> = (props) => (
-  <div className="p-6">
-    <h1 className="title-font text-lg font-medium text-gray-900 mb-3">{props.project.title}</h1>
 
-    <p className="text-gray-600 text-xs">Description</p>
-    <p className="text-lg mb-3">{props.project.description}</p>
+/** @featurePart project.info-page */
+export const ProjectDetailsCard: FC<IProjectDetailsCardProps> = (props) => (
+  <div className="p-5 md:p-6">
+    <div className="flex items-start gap-4">
+      <ProjectAvatar
+        id={props.project.id}
+        title={props.project.title}
+        size="large"
+      />
+      <div className="min-w-0">
+        <p className="ui-eyebrow">Project</p>
+        <h1 className="ui-title text-xl break-words">{props.project.title}</h1>
+        {props.project.description && <p className="text-[#5b6b80] mt-1">{props.project.description}</p>}
+      </div>
+    </div>
+    <hr className="ui-divider my-5" />
 
-    <p className="text-gray-600 text-xs">Created on:</p>
-    <p className="text-md mb-3">{dateFormat('yyyy/MM/dd, at hh:mm', new Date(props.project.createdAt))}</p>
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-3">
+      <div className="ui-field">
+        <p className="ui-field-label">Created on</p>
+        <p className="ui-field-value">{dateFormat('yyyy/MM/dd, at hh:mm', new Date(props.project.createdAt))}</p>
+      </div>
+      <div className="ui-field">
+        <p className="ui-field-label">Storage method</p>
+        <p className="ui-field-value">{SectionElement.txtByFieldValue(availableSystems, props.project.localStorage!)}</p>
+      </div>
+    </div>
 
-    <p className="text-gray-600 text-xs">Storage method:</p>
-    <p className="text-md">{SectionElement.txtByFieldValue(availableSystems, props.project.localStorage!)}</p>
+    {props.project.remoteStorage === DROPBOX_REMOTE_ID && <DropboxSyncStatus project={props.project} />}
+    {props.project.remoteStorage === LOCAL_FILE_REMOTE_ID && <LocalFileSyncStatus project={props.project} />}
+    {!!props.project.remoteStorage && props.project.remoteStorage !== DROPBOX_REMOTE_ID && props.project.remoteStorage !== LOCAL_FILE_REMOTE_ID && <WordPressSyncStatus project={props.project} />}
 
-    <CardFooter>
+    <CardFooter className="mt-5! pt-4 border-t border-[#eef1f5] items-center!">
       <DeleteProjectButton project={props.project} />
       <div className="flex items-end">
         <ExportButton />
-        <EditButton project={props.project} />
+        <EditProjectButton project={props.project} />
       </div>
     </CardFooter>
 

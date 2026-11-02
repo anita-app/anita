@@ -1,6 +1,9 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 
-export const useClickOutside = (parentElement: React.RefObject<HTMLElement>, callback: () => void) => {
+/**
+ * @internal
+ */
+export const useClickOutside = (parentElement: React.RefObject<HTMLElement | null>, callback: () => void) => {
   useEffect(() => {
     // check if the click is inside a div with classs dueDateFieldDropup
     const onClickOutside = (e: MouseEvent) => {

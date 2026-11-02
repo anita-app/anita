@@ -1,143 +1,399 @@
-import { RESERVED_AUDS_KEYS, TAnitaUniversalDataStorage, TSystemData } from 'app/models/project/project.declarations'
-import { IComparisonResult } from 'app/models/project/syncing/project-comparator'
-import { Manager } from 'app/libs/manager/manager.class'
-import { Project } from 'app/models/project/project.class'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
+import { CloudSyncBase, Manager, SupportedCloud } from 'app/cross-refs-exports'
 import { DropboxHelper } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
+import { ComparatorRunner } from 'app/libs/cloud-sync/comparator-runner.class'
+import { SyncState } from 'app/state/sync/sync-state.class'
+import { Bucket } from 'app/state/bucket.state'
+import { ProjectAtoms } from 'app/state/project/project.atoms'
+import { dbInstances } from 'app/data/local-dbs/db-instances.const'
+import { DateTools } from 'app/libs/tools/date-tools.class'
+import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
+import { ProjectSaver } from 'app/models/project/project-saver.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
-import { IS_SYNCING, LAST_SYNCED_ID } from 'app/libs/cloud-sync/sync-manager.const'
-import { CloudSyncBase } from 'app/libs/cloud-sync/cloud-sync-base.class'
+import { WordPressApiError, WordPressErrorCode } from 'app/libs/cloud-sync/wordpress/wordpress-api-error.class'
+import { DropboxErrorCode, DropboxSyncError } from 'app/libs/cloud-sync/dropbox/dropbox-error.class'
+import { markAsDropboxProject } from 'app/libs/cloud-sync/dropbox/dropbox-files.function'
+import { DROPBOX_REMOTE_ID } from 'app/libs/cloud-sync/dropbox/dropbox.const'
+import { ProjectSyncHelpers } from 'app/libs/cloud-sync/project-sync-helpers.class'
+import { LocalFileHelper } from 'app/libs/cloud-sync/local-file/local-file-helper.class'
+import { LocalFileErrorCode, LocalFileSyncError } from 'app/libs/cloud-sync/local-file/local-file-error.class'
+import { LOCAL_FILE_REMOTE_ID } from 'app/libs/cloud-sync/local-file/local-file.const'
+import { markAsLocalFileProject, prepareManualEdits } from 'app/libs/cloud-sync/local-file/local-file.function'
+import { IdCreator } from 'app/libs/id-creator/id-creator.class'
+import type { Project } from 'app/models/project/project.class'
+import type { IComparisonResult } from 'app/models/project/syncing/project-comparator'
+import type { TAnitaUniversalDataStorage, TSystemData } from 'app/models/project/project.declarations'
+import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
+import type { WordPressClient } from 'app/libs/cloud-sync/wordpress/wordpress-client.class'
+import type { IWordPressBatchOperation, IWordPressProjectMeta, IWordPressProjectResponse } from 'app/libs/cloud-sync/wordpress/wordpress.const'
+import type { IDropboxFileMeta } from 'app/libs/cloud-sync/dropbox/dropbox-helper.class'
 
+/** @internal */
+export interface IMergeOutcome {
+  /** Records changed both on this device and remotely since the last sync; the most recent version was kept. */
+  conflicts: number
+  pulled: number
+  pushed: number
+  /** Metadata returned by the site when the structure was sent. */
+  meta?: IWordPressProjectMeta
+  /** The Dropbox file after the sync: its revision is the one now in sync with this device. */
+  dropboxFile?: IDropboxFileMeta
+  /** Modification time of the file on this computer after the sync. */
+  localFileModified?: number
+}
+
+/** @internal */
+export interface ILocalFileMergeOptions {
+  handle: FileSystemFileHandle
+  /** Modification time of the file after the last sync: a different one means it was changed outside Anita. */
+  lastModified?: number
+}
+
+/** @internal */
+export interface IWordPressMergeOptions {
+  client: WordPressClient
+  remote: IWordPressProjectResponse
+}
+
+const SYSTEM_KEYS: Array<string> = [RESERVED_AUDS_KEYS._settings, RESERVED_AUDS_KEYS._sections]
+
+/**
+ * JSON with sorted keys, to compare objects regardless of key order.
+ */
+const stableStringify = (value: unknown): string => JSON.stringify(value, (_key, val) => (
+  val && typeof val === 'object' && !Array.isArray(val)
+    ? Object.keys(val).sort().reduce<Record<string, unknown>>((sorted, key) => {
+        sorted[key] = val[key]; return sorted
+      }, {})
+    : val
+))
+
+/**
+ * Two-way merge of a project with its remote copy (a Dropbox file, a WordPress site or a file on this computer).
+ *
+ * Records are compared by `updatedAt` (or `createdAt`) and with the time of the last successful sync,
+ * to tell apart records added on one side from records deleted on the other. Changes received from the
+ * remote are written directly to the local database, so they are not sent back to the remote.
+ *
+ * On Dropbox the whole project is a single file: it is written only if it still has the revision that was read,
+ * otherwise the sync fails with a conflict and must be run again (see DropboxSync).
+ * @featurePart sync.dropbox-projects, sync.wordpress-projects, sync.local-file-projects
+ */
 export class RemoteAndLocalMerger {
   private project: Project
-  private static comparatorWorker: Worker | undefined
+  /** The Dropbox file as it was read, before the merge. */
+  private dropboxFile: IDropboxFileMeta | undefined
+  /** Modification time of the file on this computer as it was read, before the merge. */
+  private localFileReadAt: number | undefined
 
-  constructor (private remoteId: string) {
-    this.project = Manager.getCurrentProject()!
-    IS_SYNCING.next(false)
+  constructor (
+    private remoteId: string,
+    private type: SupportedCloud,
+    project?: Project,
+    private wordPress?: IWordPressMergeOptions,
+    private localFile?: ILocalFileMergeOptions,
+  ) {
+    this.project = project ?? Bucket.general.get(ProjectAtoms.currentProject)!
   }
 
-  public async sync (): Promise<void> {
-    this.setWorker()
-    IS_SYNCING.next(true)
-    const lastSync = await this.getLastSync()
-    const localData = await this.getLocalData()
-    const remoteData = await this.getRemoteData()
-    if (!remoteData) {
-      IS_SYNCING.next(false)
-      return
-    }
-    this.sendToWorkerForComparison(lastSync, localData, remoteData)
-  }
-
-  private setWorker (): void {
-    if (!RemoteAndLocalMerger.comparatorWorker) {
-      RemoteAndLocalMerger.comparatorWorker = new Worker(new URL('app/workers/comparator.worker', import.meta.url), { type: 'module' })
-      RemoteAndLocalMerger.comparatorWorker.onmessage = (event: MessageEvent<IComparisonResult>) => {
-        this.handleComparisonResult(event.data)
+  public async sync (): Promise<IMergeOutcome | null> {
+    SyncState.setIsSyncing(true)
+    try {
+      const syncStartedAt = ProjectSyncHelpers.syncStartTime()
+      const lastSync = await CloudSyncBase.getLastSync(this.project.getId())
+      const localData = await this.project.getAllData()
+      const remoteData = await this.getRemoteData()
+      if (!remoteData) {
+        return null
       }
+
+      this.alignSections(localData, remoteData)
+      const fileNeedsRewrite = this.prepareManualEditsOfLocalFile(localData, remoteData)
+      const structure = this.type === SupportedCloud.WORDPRESS ? this.resolveWordPressStructure(lastSync, localData, remoteData) : null
+
+      const result = await ComparatorRunner.compare(lastSync, localData, remoteData)
+
+      const outcome: IMergeOutcome = {
+        conflicts: this.countConflicts(lastSync, localData, remoteData, result),
+        pulled: this.countChanges(result, 'local'),
+        pushed: this.countChanges(result, 'remote'),
+      }
+
+      const mergedStructure: TSystemData = { [RESERVED_AUDS_KEYS._settings]: localData[RESERVED_AUDS_KEYS._settings], [RESERVED_AUDS_KEYS._sections]: localData[RESERVED_AUDS_KEYS._sections] }
+      if (structure?.pull) {
+        // Before the records: new sections need their tables.
+        await this.saveSystemDataLocally(mergedStructure)
+      }
+      if (structure?.push) {
+        outcome.meta = await this.wordPress!.client.saveProject(mergedStructure, { accessLevel: mergedStructure[RESERVED_AUDS_KEYS._settings][0].remoteAccessLevel, replaceSections: true })
+      }
+      if (outcome.pulled) {
+        await this.saveLocalChanges(result)
+      }
+      if (outcome.pushed || fileNeedsRewrite) {
+        await this.sendToRemote(result, outcome)
+      }
+      if (this.type === SupportedCloud.DROPBOX) {
+        outcome.dropboxFile = outcome.dropboxFile ?? this.dropboxFile
+      }
+      if (this.type === SupportedCloud.LOCAL_FILE) {
+        outcome.localFileModified = outcome.localFileModified ?? this.localFileReadAt
+      }
+
+      await new CloudSyncBase(this.type).setLastSync(this.project.getId(), syncStartedAt)
+      return outcome
+    } finally {
+      SyncState.setIsSyncing(false)
     }
   }
 
-  private async getLastSync (): Promise<string | undefined> {
-    return CloudSyncBase.getLastSync(this.project.getId())
+  /**
+   * On WordPress the structure (settings and sections) is not merged record by record. The site's version wins,
+   * unless an owner or administrator changed it on this device after the last sync and after the site's version:
+   * then this device's version is sent, keeping the sections added on the site since the last sync.
+   * Afterwards both sides carry the same structure, so the comparison only concerns records.
+   */
+  private resolveWordPressStructure (lastSync: string | undefined, localData: TAnitaUniversalDataStorage, remoteData: TAnitaUniversalDataStorage): { push: boolean; pull: boolean } | null {
+    const local = { settings: localData[RESERVED_AUDS_KEYS._settings], sections: localData[RESERVED_AUDS_KEYS._sections] }
+    const remote = { settings: remoteData[RESERVED_AUDS_KEYS._settings], sections: remoteData[RESERVED_AUDS_KEYS._sections] }
+    // localStorage is a device setting and remoteStorage is implied by the site: neither is compared.
+    // Positions follow the order of the sections, which is compared as it is.
+    const comparable = (structure: typeof local) => stableStringify({
+      settings: structure.settings.map(settings => ({ ...settings, localStorage: undefined, remoteStorage: undefined })),
+      sections: structure.sections.map(section => ({ ...section, position: undefined })),
+    })
+    if (comparable(local) === comparable(remote)) {
+      return null
+    }
+
+    const localUpdatedAt = local.settings[0]?.[RESERVED_FIELDS.updatedAt]
+    const remoteUpdatedAt = remote.settings[0]?.[RESERVED_FIELDS.updatedAt] ?? remote.settings[0]?.[RESERVED_FIELDS.createdAt]
+    const editedHere = !!localUpdatedAt && (!lastSync || DateTools.firstIsAfterSecond(localUpdatedAt, lastSync)) && DateTools.firstIsAfterSecond(localUpdatedAt, remoteUpdatedAt)
+
+    if (!this.wordPress!.remote.meta.can_manage || !editedHere) {
+      localData[RESERVED_AUDS_KEYS._settings] = remote.settings
+      localData[RESERVED_AUDS_KEYS._sections] = remote.sections
+      return { push: false, pull: true }
+    }
+
+    // Sections created on the site after the last sync are not known here: they are kept, not deleted.
+    const localIds = new Set(local.sections.map(section => section.id))
+    const addedOnSite = remote.sections.filter(section => (
+      !localIds.has(section.id) && (!lastSync || DateTools.firstIsAfterSecond(section[RESERVED_FIELDS.createdAt], lastSync))
+    ))
+    const sections = [...local.sections, ...addedOnSite]
+    localData[RESERVED_AUDS_KEYS._sections] = sections
+    remoteData[RESERVED_AUDS_KEYS._settings] = local.settings
+    remoteData[RESERVED_AUDS_KEYS._sections] = sections
+    return { push: true, pull: addedOnSite.length > 0 }
   }
 
-  private getLocalData (): Promise<TAnitaUniversalDataStorage> {
-    return this.project.getAllData()
+  /**
+   * A file on this computer can be changed by hand: if it changed since the last sync, its records are made comparable
+   * with those of this device. Returns whether the file must be written again (ids or dates were added).
+   */
+  private prepareManualEditsOfLocalFile (localData: TAnitaUniversalDataStorage, remoteData: TAnitaUniversalDataStorage): boolean {
+    if (this.type !== SupportedCloud.LOCAL_FILE || this.localFileReadAt === undefined || this.localFileReadAt === this.localFile!.lastModified) {
+      return false
+    }
+    return prepareManualEdits(localData, remoteData, new Date(this.localFileReadAt).toISOString(), IdCreator.random).changed > 0
   }
 
-  private async getRemoteData (): Promise<TAnitaUniversalDataStorage> {
-    return DropboxHelper.instance.downloadFile(this.project.getId(), this.remoteId)
+  private async getRemoteData (): Promise<TAnitaUniversalDataStorage | null> {
+    if (this.type === SupportedCloud.LOCAL_FILE) {
+      const { handle } = this.localFile!
+      const file = await LocalFileHelper.read(handle)
+      if (!file.data) {
+        throw new LocalFileSyncError(LocalFileErrorCode.invalidFile, `${file.name} is empty.`)
+      }
+      if (file.data[RESERVED_AUDS_KEYS._settings][0].id !== this.project.getId()) {
+        throw new LocalFileSyncError(LocalFileErrorCode.otherProject, `${file.name} contains another project.`)
+      }
+      this.localFileReadAt = file.lastModified
+      return markAsLocalFileProject(file.data)
+    }
+    if (this.type === SupportedCloud.DROPBOX) {
+      const downloaded = await DropboxHelper.instance.downloadProject(this.remoteId)
+      if (!downloaded.data) {
+        throw new DropboxSyncError(DropboxErrorCode.invalidFile, `${downloaded.path} is not an Anita project.`)
+      }
+      const fileProjectId = downloaded.data[RESERVED_AUDS_KEYS._settings][0].id
+      if (fileProjectId !== this.project.getId()) {
+        throw new DropboxSyncError(DropboxErrorCode.invalidFile, `${downloaded.path} contains another project.`)
+      }
+      const { data, ...meta } = downloaded
+      this.dropboxFile = meta
+      return markAsDropboxProject(data)
+    }
+    return JSON.parse(JSON.stringify(this.wordPress!.remote.project))
   }
 
-  private sendToWorkerForComparison (lastSync: string | undefined, localData: TAnitaUniversalDataStorage, remoteData: TAnitaUniversalDataStorage): void {
-    RemoteAndLocalMerger.comparatorWorker!.postMessage({
-      lastSync,
-      localData,
-      remoteData
+  /**
+   * Makes sure every section has a list of records on both sides, so new sections are compared too.
+   */
+  private alignSections (localData: TAnitaUniversalDataStorage, remoteData: TAnitaUniversalDataStorage): void {
+    const sectionIds = new Set([
+      ...(localData[RESERVED_AUDS_KEYS._sections] ?? []).map(section => section.id),
+      ...(remoteData[RESERVED_AUDS_KEYS._sections] ?? []).map(section => section.id),
+    ])
+    sectionIds.forEach((sectionId) => {
+      localData[sectionId] = localData[sectionId] ?? []
+      remoteData[sectionId] = remoteData[sectionId] ?? []
     })
   }
 
-  private handleComparisonResult = async (comparisonResult: IComparisonResult): Promise<void> => {
-    if (this.hasScopeChanges('local', comparisonResult)) {
-      await this.saveLocalChanges(comparisonResult)
-    }
-    await this.sendToRemote(comparisonResult)
-    IS_SYNCING.next(false)
+  private countChanges (result: IComparisonResult, scope: 'local' | 'remote'): number {
+    return (['insert', 'update', 'delete'] as const).reduce((total, action) => (
+      total + Object.values(result[scope][action]).reduce((sum, elements) => sum + (elements?.length ?? 0), 0)
+    ), 0)
   }
 
-  private async saveLocalChanges (comparisonResult: IComparisonResult): Promise<void> {
-    const allSectionsWithUpdates = Object.keys(comparisonResult.local.update)
-    const allSectionsWithInserts = Object.keys(comparisonResult.local.insert)
-    const allSectionsWithDeletes = Object.keys(comparisonResult.local.delete)
-    if (allSectionsWithUpdates.includes(RESERVED_AUDS_KEYS._settings) ||
-      allSectionsWithUpdates.includes(RESERVED_AUDS_KEYS._sections) ||
-      allSectionsWithInserts.includes(RESERVED_AUDS_KEYS._settings) ||
-      allSectionsWithInserts.includes(RESERVED_AUDS_KEYS._sections) ||
-      allSectionsWithDeletes.includes(RESERVED_AUDS_KEYS._settings) ||
-      allSectionsWithDeletes.includes(RESERVED_AUDS_KEYS._sections)
-    ) {
-      const newSystemData: TSystemData = {
-        [RESERVED_AUDS_KEYS._settings]: comparisonResult.localData[RESERVED_AUDS_KEYS._settings],
-        [RESERVED_AUDS_KEYS._sections]: comparisonResult.localData[RESERVED_AUDS_KEYS._sections]
+  /**
+   * A conflict is a record updated on both sides since the last sync.
+   */
+  private countConflicts (lastSync: string | undefined, localData: TAnitaUniversalDataStorage, remoteData: TAnitaUniversalDataStorage, result: IComparisonResult): number {
+    if (!lastSync) {
+      return 0
+    }
+    let conflicts = 0
+    for (const scope of ['local', 'remote'] as const) {
+      const losingSide = scope === 'local' ? localData : remoteData
+      for (const section in result[scope].update) {
+        if (SYSTEM_KEYS.includes(section)) {
+          continue
+        }
+        for (const element of result[scope].update[section] ?? []) {
+          const loser = losingSide[section]?.find(ele => ele.id === element.id)
+          const loserDate = loser?.[RESERVED_FIELDS.updatedAt] ?? loser?.[RESERVED_FIELDS.createdAt]
+          if (loserDate && DateTools.firstIsAfterSecond(loserDate, lastSync)) {
+            conflicts++
+          }
+        }
       }
-      await this.project.updateSystemData(newSystemData)
-      LAST_SYNCED_ID.next(newSystemData[RESERVED_AUDS_KEYS._settings][0].id)
-      Object.keys(newSystemData[RESERVED_AUDS_KEYS._sections]).forEach((sectionId) => {
-        LAST_SYNCED_ID.next(sectionId)
+    }
+    return conflicts
+  }
+
+  private hasSystemChanges (result: IComparisonResult, scope: 'local' | 'remote'): boolean {
+    return (['insert', 'update', 'delete'] as const).some(action => SYSTEM_KEYS.some(key => !!result[scope][action][key]?.length))
+  }
+
+  private async saveLocalChanges (result: IComparisonResult): Promise<void> {
+    const projectId = this.project.getId()
+    if (this.hasSystemChanges(result, 'local')) {
+      await this.saveSystemDataLocally({
+        [RESERVED_AUDS_KEYS._settings]: result.localData[RESERVED_AUDS_KEYS._settings],
+        [RESERVED_AUDS_KEYS._sections]: result.localData[RESERVED_AUDS_KEYS._sections],
       })
     }
-    for (const action in comparisonResult.local) {
-      const actionAsKey = action as keyof IComparisonResult['local']
-      if (Object.values(comparisonResult.local[actionAsKey]).length) {
-        for (const section in comparisonResult.local[actionAsKey]) {
-          if (section === RESERVED_AUDS_KEYS._settings || section === RESERVED_AUDS_KEYS._sections) {
-            continue
+
+    for (const action of ['insert', 'update', 'delete'] as const) {
+      for (const section in result.local[action]) {
+        const elements = result.local[action][section] ?? []
+        if (SYSTEM_KEYS.includes(section) || !elements.length || !dbInstances[projectId]?.DS[section]) {
+          continue
+        }
+        if (action === 'delete') {
+          for (const element of elements) {
+            await dbInstances[projectId].callDeletor(section, { id: element.id }).autoDelete()
           }
-          const sectionAsKey = section as keyof IComparisonResult['local'][typeof actionAsKey] & string
-          this.handleSectionElements(actionAsKey, sectionAsKey, comparisonResult)
+        } else {
+          await dbInstances[projectId].callInsertor<Array<ISectionElement>>(section, elements).autoInsert()
+        }
+        SyncState.setLastSyncedId(section)
+      }
+    }
+  }
+
+  /**
+   * Saves settings and sections received from the remote, keeping their timestamps and without triggering another sync.
+   */
+  private async saveSystemDataLocally (systemData: TSystemData): Promise<void> {
+    const settings = { ...systemData[RESERVED_AUDS_KEYS._settings][0] }
+    if (this.type === SupportedCloud.WORDPRESS) {
+      settings.remoteStorage = this.remoteId
+    } else if (this.type === SupportedCloud.LOCAL_FILE) {
+      settings.remoteStorage = LOCAL_FILE_REMOTE_ID
+      delete settings.remoteAccessLevel
+    } else {
+      settings.remoteStorage = DROPBOX_REMOTE_ID
+      delete settings.remoteAccessLevel
+    }
+    const saved = await new ProjectSaver({ ...systemData, [RESERVED_AUDS_KEYS._settings]: [settings] }, EDITOR_MODE.edit, { fromSync: true }).save()
+    if (Bucket.general.get(ProjectAtoms.currentProject)?.getId() === this.project.getId()) {
+      Manager.setCurrentProject(saved)
+    }
+  }
+
+  private async sendToRemote (result: IComparisonResult, outcome: IMergeOutcome): Promise<void> {
+    if (this.type === SupportedCloud.DROPBOX) {
+      outcome.dropboxFile = await DropboxHelper.instance.updateProjectFile(this.remoteId, markAsDropboxProject(result.remoteData), this.dropboxFile?.rev)
+      return
+    }
+    if (this.type === SupportedCloud.LOCAL_FILE) {
+      outcome.localFileModified = await LocalFileHelper.write(this.localFile!.handle, result.remoteData, this.localFileReadAt)
+      return
+    }
+    await this.sendChangesToWordPress(result)
+  }
+
+  private async sendChangesToWordPress (result: IComparisonResult): Promise<void> {
+    const { client } = this.wordPress!
+    const projectId = this.project.getId()
+
+    // The structure was already handled by resolveWordPressStructure.
+    const operations: Array<IWordPressBatchOperation> = []
+    for (const action of ['insert', 'update', 'delete'] as const) {
+      for (const section in result.remote[action]) {
+        if (SYSTEM_KEYS.includes(section)) {
+          continue
+        }
+        for (const element of result.remote[action][section] ?? []) {
+          operations.push(action === 'delete'
+            ? { action: 'delete', sectionId: section, elementId: element.id! }
+            : { action: 'upsert', sectionId: section, elementId: element.id!, element })
         }
       }
     }
-    Manager.loadProjectsList()
+    if (!operations.length) {
+      return
+    }
+
+    const failures = await RemoteAndLocalMerger.sendOperations(client, projectId, operations)
+    // Records of sections that no longer exist on the site cannot be saved there: they stay on this device.
+    const blocking = failures.filter(failure => failure.error.code !== WordPressErrorCode.notFound)
+    if (blocking.length) {
+      throw blocking[0].error
+    }
   }
 
-  private async handleSectionElements<A extends keyof IComparisonResult['local']> (
-    actionAsKey: A,
-    section: keyof IComparisonResult['local'][A] & string,
-    comparisonResult: IComparisonResult
-  ): Promise<void> {
-    const sectionObject = this.project.getSectionById(section)!
-    const sectionId = sectionObject.id
-    if (comparisonResult.local[actionAsKey]?.[section]?.length) {
-      for (const element of comparisonResult.local[actionAsKey][section]!) {
-        const elementId = element.id
-        if (actionAsKey === 'insert') {
-          await sectionObject.saveElement(element, EDITOR_MODE.add)
-        }
-        if (actionAsKey === 'update') {
-          await sectionObject.saveElement(element, EDITOR_MODE.edit)
-        }
-        if (actionAsKey === 'delete') {
-          await sectionObject.deleteElement(element)
-        }
-        if (elementId) {
-          LAST_SYNCED_ID.next(elementId)
-        }
+  /**
+   * Sends record changes with the batch endpoint, or one by one if the site does not support it.
+   */
+  public static async sendOperations (client: WordPressClient, projectId: string, operations: Array<IWordPressBatchOperation>): Promise<Array<{ operation: IWordPressBatchOperation; error: WordPressApiError }>> {
+    try {
+      return await client.batchSectionElements(projectId, operations)
+    } catch (error) {
+      if (!(error instanceof WordPressApiError) || error.code !== WordPressErrorCode.pluginMissing) {
+        throw error
       }
-      LAST_SYNCED_ID.next(sectionId)
     }
-  }
-
-  private async sendToRemote (comparisonResult: IComparisonResult): Promise<void> {
-    if (this.hasScopeChanges('remote', comparisonResult)) {
-      await DropboxHelper.instance.updateFile(this.remoteId, comparisonResult.remoteData)
+    const failures: Array<{ operation: IWordPressBatchOperation; error: WordPressApiError }> = []
+    for (const operation of operations) {
+      try {
+        if (operation.action === 'delete') {
+          await client.deleteSectionElement(projectId, operation.sectionId, operation.elementId)
+        } else {
+          await client.saveSectionElement(projectId, operation.sectionId, operation.elementId, operation.element!)
+        }
+      } catch (error) {
+        const apiError = WordPressApiError.from(error)
+        if (apiError.isTemporary || apiError.requiresLogin) {
+          throw apiError
+        }
+        failures.push({ operation, error: apiError })
+      }
     }
-  }
-
-  private hasScopeChanges (scope: keyof IComparisonResult, comparisonResult: IComparisonResult): boolean {
-    return !!Object.values(comparisonResult[scope].delete).length ||
-    !!Object.values(comparisonResult[scope].update).length ||
-    !!Object.values(comparisonResult[scope].insert).length
+    return failures
   }
 }

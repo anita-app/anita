@@ -1,6 +1,6 @@
-import { AdditionalInfoForLocalStorage, LocalProjectSettings } from 'app/models/project/project.declarations'
-import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition'
-import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
+import type { AdditionalInfoForLocalStorage } from 'app/models/project/project.declarations'
+import type { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition'
+import type { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 export interface DbConnectorConstructable<DbTypes> {
@@ -48,8 +48,6 @@ export interface DetaConnectionData {
 export interface DsDbInitOptions {
   // Deta
   detaConnectionData?: DetaConnectionData
-  // File System
-  projectInfo?: LocalProjectSettings
   // IndexedDB
   indexedDbName?: string
   DS?: AbstractModel
@@ -88,7 +86,6 @@ interface InsertorConstructable<E, DbTypes> {
 /**
  * Defines the public interface that a Insertor instance must have
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface Insertor<E> {
   autoInsert(): Promise<void>
 }

@@ -15,18 +15,18 @@
     "showdown": "^1.9.1"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.7",
-    "@types/autoprefixer": "^10.2.0",
+    "@tailwindcss/postcss": "^4.1.18",
+    "@tailwindcss/typography": "^0.5.19",
     "@types/clean-css": "^4.2.5",
     "@types/showdown": "^1.9.4",
     "@types/tailwindcss": "^2.2.1",
-    "autoprefixer": "^10.4.8",
+    "cssnano": "^7.1.0",
     "postcss": "^8.4.16",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "tailwindcss": "^3.1.8",
+    "tailwindcss": "^4.1.18",
     "typescript": "^4.4.4",
-    "yassb-web": "^1.3.0"
+    "yassb-web": "^1.4.3"
   },
   "license": "CC-BY-NC-4.0"
 }

@@ -1,17 +1,30 @@
 import { ProjectSectionListTableBodyTrTd } from 'app/components/project/section/list/table/table-body-tr-td.component'
-import { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
-import { ISectionElement } from 'app/models/section-element/section-element.declarations'
-import React, { memo } from 'react'
+import { ProjectSectionListTableBodyTrTdWithLinkToDetails } from 'app/components/project/section/list/table/table-body-tr-td-with-link-to-details.component'
+import { Icons } from 'app/libs/icons/icons.class'
+import { memo } from 'react'
+import type { CSSProperties, FC } from 'react'
+import type { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
+import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
 interface ITableTbodyTrProps extends ISectionElement {
   element: ISectionElement
   sectionId: string
   columns: Array<FormFieldsModel<TSupportedFormsTypes>>
+  titleFieldName?: string
+  /** Position of the row, for the staggered entrance; capped so that long lists do not wait. */
+  entranceIndex?: number
 }
 
-export const ProjectSectionListTableBodyTr: React.FC<ITableTbodyTrProps> = memo(function TableTbodyTr (props: ITableTbodyTrProps) {
+const MAX_ENTRANCE_DELAY_STEPS = 12
+
+/** @featurePart view.table */
+export const ProjectSectionListTableBodyTr: FC<ITableTbodyTrProps> = memo(function TableTbodyTr (props: ITableTbodyTrProps) {
   return (
-    <tr className="whitespace-nowrap" key={`row-tr-${props.id}`}>
+    <tr
+      className="ui-row whitespace-nowrap"
+      style={{ '--d': Math.min(props.entranceIndex ?? 0, MAX_ENTRANCE_DELAY_STEPS) } as CSSProperties}
+      key={`row-tr-${props.id}`}
+    >
       {props.columns.map(column => (
         <ProjectSectionListTableBodyTrTd
           key={`row-${props.id}-${column.fieldName}`}
@@ -19,12 +32,18 @@ export const ProjectSectionListTableBodyTr: React.FC<ITableTbodyTrProps> = memo(
           {...props}
         />
       ))}
+      <ProjectSectionListTableBodyTrTdWithLinkToDetails
+        elementId={props.id}
+        className="ui-row-go pr-2"
+      >
+        {Icons.render('chevronForwardOutline')}
+      </ProjectSectionListTableBodyTrTdWithLinkToDetails>
     </tr>
   )
 }, (prevProps, nextProps) => {
   // loop all props and check if they are the same
   for (const key in prevProps) {
-    if (key !== 'element' && prevProps[key] !== nextProps[key]) {
+    if (key !== 'element' && key !== 'entranceIndex' && prevProps[key] !== nextProps[key]) {
       return false
     }
   }

@@ -1,18 +1,19 @@
-import { IProjectSettings } from 'app/models/project/project.declarations'
-import { Manager } from 'app/libs/manager/manager.class'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
-import React from 'react'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
+import { ProjectLoader } from 'app/models/project/project-loader.class'
+import type { FC } from 'react'
+import type { IProjectSettings } from 'app/models/project/project.declarations'
 
 interface IProjectNotLoadedFooterProps {
   project: IProjectSettings
 }
 
-export const ProjectNotLoadedFooter: React.FC<IProjectNotLoadedFooterProps> = ({ project }) => (
+/** @featurePart project.list */
+export const ProjectNotLoadedFooter: FC<IProjectNotLoadedFooterProps> = (props) => (
   <Button
     id="loadProject"
     label="Load project"
-    onClick={() => Manager.loadProjectById(project.id)}
+    onClick={() => new ProjectLoader(props.project.id).loadProject()}
     type={Type.primary}
     fill="outline"
     marginClassName=""

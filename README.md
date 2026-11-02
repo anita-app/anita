@@ -35,6 +35,30 @@ Our goal for version 1.0.0 is to implement the following:
 - [X] relationships between sections and sections elements (-> child elements can link to parent elements of parent sections);
 - [X] possibility to exclude certain sections from the main menu: useful for child sections to be displayed only as a subsection of a parent element;
 - [X] hide show columns in table views;
-- [ ] addition of a tab view for child sections;
-- [ ] Anita templates (at least one example template); 
-- [ ] support for synchronization of locally stored data with at least one remote data store (TBD);
+- [X] addition of a tab view for child sections;
+- [X] Anita templates (at least one example template);
+- [X] support for synchronization of locally stored data with at least one remote data store: Dropbox and WordPress (see below);
+
+## Templates
+
+New projects can start from ready-made templates. They are not part of the app: the app downloads them from
+[anita-app/templates](https://github.com/anita-app/templates) (`templates.json`, documented in that repository) and keeps
+the last copy for offline use, so templates can be added or changed at any time without a release. Self-hosted
+installations can serve their own catalog by setting `REACT_APP_TEMPLATES_URL` at build time.
+
+## WordPress
+
+Any WordPress site with the [Anita Project Manager](https://wordpress.org/plugins/anita-project-manager/) plugin can store Anita projects and share them with the users of the site, according to their WordPress roles. The plugin lives in the [anita-project-manager-for-wordpress](https://github.com/anita-app/anita-project-manager-for-wordpress) repository, together with its API reference and quickstart.
+
+In the app, the integration is in `app/src/app/libs/cloud-sync/wordpress/`:
+
+- `wordpress-auth.class.ts`: connection flow (site check, login on the site, single-use code exchanged with PKCE);
+- `wordpress-client.class.ts`: REST client with transparent token refresh;
+- `wordpress-sync.class.tsx`: first-sync policy, import of the site's projects, projects removed from the site, record pushes;
+- `../remote-and-local-merger.class.ts`: two-way merge of the open project, shared with Dropbox.
+
+On anita-app.com this version of the app is served at `/v1/` (`base` in `app/vite.config.ts`); the previous version (0.20.0) remains at `/app/`, and its JSON exports can be imported here.
+
+Self-hosted installations of Anita must be added to the *Allowed app URLs* of the plugin settings. During development, run the WordPress environment of the plugin repository (`docker compose up -d && ./tests/setup.sh`): it accepts `http://localhost:3000`.
+
+Unit tests: `cd app && CI=true npx react-app-rewired test --watchAll=false`.

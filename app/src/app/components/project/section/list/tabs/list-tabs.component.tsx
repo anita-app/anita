@@ -1,15 +1,19 @@
-import { ISectionElement } from 'app/models/section-element/section-element.declarations'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { ProjectSectionNoData } from 'app/components/project/section/no-data.component'
 import { AddEditElementButton } from 'app/components/shared-components/buttons/add-edit-element-button.component'
 import { MainContentContainer } from 'app/components/shared-components/common-ui-eles/main-content-container.component'
-import React, { memo } from 'react'
+import { memo } from 'react'
 import { Tab } from '@headlessui/react'
 import { ProjectSectionListGrid } from 'app/components/project/section/list/grid/grid'
-import { SupportedViews } from 'app/models/section/view-settings.const'
-import { Section } from 'app/models/section/section.class'
 import { ProjectSectionListTableContainer } from 'app/components/project/section/list/table/table-container.component'
 import { ListTabsHeaderRight } from 'app/components/project/section/list/tabs/header-right.component'
+import { useAtomValue } from 'jotai'
+import { ProjectAtoms } from 'app/state/project/project.atoms'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
+import type { FC } from 'react'
+import type { SupportedViews } from 'app/models/section/view-settings.const'
+import type { Section } from 'app/models/section/section.class'
+import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
 interface IProjectSectionListTabsProps {
   sectionId: string
@@ -21,28 +25,52 @@ interface IProjectSectionListTabsProps {
   handleTabClick: (tab: SupportedViews) => void
 }
 
-export const ProjectSectionListTabs: React.FC<IProjectSectionListTabsProps> = memo(function ProjectSectionListTabs (props: IProjectSectionListTabsProps) {
+/** @featurePart view.section-list, view.switch-view */
+export const ProjectSectionListTabs: FC<IProjectSectionListTabsProps> = memo(function ProjectSectionListTabs (props: IProjectSectionListTabsProps) {
+  const projectTitle = useAtomValue(ProjectAtoms.currentSystemData)?.[RESERVED_AUDS_KEYS._settings]?.[0]?.title
   if (props.sectionData.length === 0) {
-    return <ProjectSectionNoData sectionId={props.sectionId!} sectionTitle={props.section.title} projectId={props.projectId!} />
+    return (
+      <ProjectSectionNoData
+        sectionId={props.sectionId!}
+        sectionTitle={props.section.title}
+        projectId={props.projectId!}
+      />
+    )
   }
   return (
-    <Tab.Group selectedIndex={props.activeTab} onChange={props.handleTabClick}>
+    <Tab.Group
+      selectedIndex={props.activeTab}
+      onChange={props.handleTabClick}
+    >
       <MainContentContainer
         headerText={props.section.title}
+        eyebrow={projectTitle}
+        count={props.sectionData.length}
         hasHeaderOnlyStyle={props.activeTab === 1}
         headerRightComponent={ListTabsHeaderRight}
         headerRightComponentProps={{ activeTab: props.activeTab, sectionId: props.sectionId }}
       >
         <Tab.Panels>
           <Tab.Panel>
-            <ProjectSectionListTableContainer section={props.section} sectionData={props.sectionData} />
+            <ProjectSectionListTableContainer
+              section={props.section}
+              sectionData={props.sectionData}
+            />
           </Tab.Panel>
           <Tab.Panel>
-            <ProjectSectionListGrid sectionId={props.section.id} sectionData={props.sectionData} />
+            <ProjectSectionListGrid
+              sectionId={props.section.id}
+              sectionData={props.sectionData}
+            />
           </Tab.Panel>
         </Tab.Panels>
-        <AddEditElementButton projectId={props.projectId!} sectionId={props.sectionId!} mode={EDITOR_MODE.add} />
       </MainContentContainer>
+      {/* Outside the panel: its entrance animation would move the button while it plays. */}
+      <AddEditElementButton
+        projectId={props.projectId!}
+        sectionId={props.sectionId!}
+        mode={EDITOR_MODE.add}
+      />
     </Tab.Group>
   )
 }, (prevProps, nextProps) => (

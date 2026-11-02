@@ -1,3 +1,6 @@
+/**
+ * @internal
+ */
 export interface IShortcut {
   id?: string
   key: string
@@ -7,6 +10,9 @@ export interface IShortcut {
   callback: (...args: Array<any>) => void
 }
 
+/**
+ * @internal
+ */
 export interface IShortcutsByKey {
   [key: string]: Array<IShortcut>
 }
@@ -17,9 +23,12 @@ interface IShortcutsStore {
   withMetaKeyAndShift: IShortcutsByKey
 }
 
+/**
+ * @internal
+ */
 export const SHORTCUTS_STORE: IShortcutsStore = {
   plain: {},
   withMetaKey: {},
   withShift: {},
-  withMetaKeyAndShift: {}
+  withMetaKeyAndShift: {},
 }

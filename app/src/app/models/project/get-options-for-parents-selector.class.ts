@@ -1,20 +1,23 @@
-import { ISectionElement } from 'app/models/section-element/section-element.declarations'
-import { Manager } from 'app/libs/manager/manager.class'
 import { ArrayTools } from 'app/libs/tools/array-tools.class'
-import { Project } from 'app/models/project/project.class'
-import { IOptionKeysModel, OptionKeysModelGroup } from 'app/components/shared-components/forms-automator/form-automator.types'
+import { ProjectAtoms } from 'app/state/project/project.atoms'
+import { Bucket } from 'app/state/bucket.state'
+import { Queriers } from 'app/libs/db-connector/common-helpers/Queriers'
+import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
+import type { Project } from 'app/models/project/project.class'
+import type { IOptionKeysModel, OptionKeysModelGroup } from 'app/components/shared-components/forms-automator/form-automator.types'
 
+/** @featurePart relation.link-to-parent */
 export class GetOptionsForParentsSelector {
   private optionsGroups: Array<OptionKeysModelGroup> = []
 
   constructor (
-    private project: Project
+    private project: Project,
   ) {
   }
 
   public async buildOptions (options: Array<IOptionKeysModel>): Promise<Array<OptionKeysModelGroup>> {
     await ArrayTools.asyncForEach(options, async (group, index) => {
-      const sectionEles = await this.project.getSectionById(group?.value?.toString?.())?.getAllElements() || []
+      const sectionEles = await Queriers.getElements(this.project.getId(), group?.value?.toString?.()!) || []
       if (sectionEles.length) {
         this.createGroupOption(group.value as string, group.label || `Option ${index + 1}`, sectionEles)
       }
@@ -25,18 +28,18 @@ export class GetOptionsForParentsSelector {
 
   private createGroupOption (sectionId: string, sectionLabel: string, sectionEles: Array<ISectionElement>): void {
     const options: Array<IOptionKeysModel> = []
-    const section = Manager.getCurrentProject()?.getSectionById(sectionId)
+    const section = Bucket.general.get(ProjectAtoms.currentProject)?.getSectionById(sectionId)
     if (!section) {
       return
     }
-    const formEle = section.getFirstUserDefinedField()
+    const formEle = section.getTitleField()
     sectionEles.forEach(ele => options.push({
       value: `${sectionId}|${ele.id}`,
-      label: ele[formEle!.fieldName]
+      label: ele[formEle!.fieldName],
     }))
     this.optionsGroups.push({
       label: sectionLabel,
-      options
+      options,
     })
   }
 }

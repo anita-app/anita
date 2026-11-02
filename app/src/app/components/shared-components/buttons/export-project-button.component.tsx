@@ -1,27 +1,30 @@
-import { Manager } from 'app/libs/manager/manager.class'
-import React from 'react'
-import { Dropdown, IMenuItem } from 'app/components/shared-components/common-ui-eles/dropdown.component'
+import { Dropdown } from 'app/components/shared-components/common-ui-eles/dropdown.component'
 import { ExportScope } from 'app/models/project/project-exporter.class'
+import { Bucket } from 'app/state/bucket.state'
+import { ProjectAtoms } from 'app/state/project/project.atoms'
+import type { FC } from 'react'
+import type { IMenuItem } from 'app/components/shared-components/common-ui-eles/dropdown.component'
 
 const exportMenuItems: Array<IMenuItem> = [
   {
     id: 'dataAndStructure',
     label: 'Data and Structure',
-    handleClick: () => Manager.getCurrentProject()!.export(ExportScope.all)
+    handleClick: () => Bucket.general.get(ProjectAtoms.currentProject)!.export(ExportScope.all),
   },
   {
     id: 'dataOnly',
     label: 'Data Only',
-    handleClick: () => Manager.getCurrentProject()!.export(ExportScope.dataOnly)
+    handleClick: () => Bucket.general.get(ProjectAtoms.currentProject)!.export(ExportScope.dataOnly),
   },
   {
     id: 'structureOnly',
     label: 'Structure Only',
-    handleClick: () => Manager.getCurrentProject()!.export(ExportScope.structureOnly)
-  }
+    handleClick: () => Bucket.general.get(ProjectAtoms.currentProject)!.export(ExportScope.structureOnly),
+  },
 ]
 
-export const ExportButton: React.FC = () => (
+/** @featurePart project.info-page, export.project */
+export const ExportButton: FC = () => (
   <Dropdown
     id="exportProject"
     label="Export"

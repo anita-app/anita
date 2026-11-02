@@ -1,9 +1,19 @@
-import React from 'react'
+import type { FC } from 'react'
 
 interface IEmailProps {
   value: string
 }
 
-export const Email: React.FC<IEmailProps> = ({ value }) => value
-  ? <a href={`mailto:${value}`} target="_blank" rel="noreferrer" className="underline">{value}</a>
+/** @featurePart field.short-text */
+export const Email: FC<IEmailProps> = (props) => props.value
+  ? (
+    <a
+      href={`mailto:${props.value}`}
+      target="_blank"
+      rel="noreferrer"
+      className="underline"
+    >
+      {props.value}
+    </a>
+    )
   : null

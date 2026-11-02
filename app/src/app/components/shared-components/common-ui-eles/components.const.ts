@@ -1,3 +1,6 @@
+/**
+ * @internal
+ */
 export enum Type {
   primary = 'primary',
   secondary = 'secondary',
@@ -5,68 +8,91 @@ export enum Type {
   info = 'info',
   warning = 'warning',
   danger = 'danger',
-  transparent = 'transparent'
+  transparent = 'transparent',
 }
 
+/**
+ * @internal
+ */
 export enum SolidBg {
-  primary = 'bg-prussian-blue-400',
-  secondary = 'bg-gray-100',
-  success = 'bg-green-500',
-  info = 'bg-blue-500',
-  warning = 'bg-orange-700',
-  danger = 'bg-red-600',
-  transparent = 'bg-transparent'
+  primary = 'bg-prussian-blue-400/80',
+  secondary = 'bg-gray-100/80',
+  success = 'bg-green-500/80',
+  info = 'bg-blue-500/80',
+  warning = 'bg-orange-700/80',
+  danger = 'bg-red-600/80',
+  transparent = 'bg-transparent/80',
 }
 
+// The primary look (ui-btn-primary) is defined in ui.css: a light blue gradient with a colored shadow.
+/**
+ * @internal
+ */
 export enum SolidBgWithHover {
-  primary = 'bg-prussian-blue-400 hover:bg-prussian-blue-500 focus:ring-prussian-blue-300',
-  secondary = 'bg-gray-100 hover:bg-gray-200 focus:ring-gray-200',
-  success = 'bg-green-500 hover:bg-green-600 focus:ring-green-500',
-  info = 'bg-blue-500 hover:bg-blue-600 focus:ring-blue-500',
-  warning = 'bg-orange-700 bg-opacity-10 hover:bg-opacity-20 focus:ring-orange-700 focus:ring-opacity-10',
-  danger = 'bg-red-600 hover:bg-red-700 focus:ring-red-600',
-  transparent = 'bg-transparent hover:bg-gray-200 focus:ring-0'
+  primary = 'ui-btn-primary border-transparent',
+  secondary = 'bg-white border-[#dfe5ee] shadow-[0_1px_2px_rgba(0,35,70,0.06)] hover:bg-[#f9fbfe] hover:border-[#c4d2e3]',
+  success = 'bg-green-500 border-transparent hover:bg-green-600',
+  // Same as primary: one blue for every main action.
+  info = 'ui-btn-primary border-transparent',
+  warning = 'bg-orange-700/10 border-transparent hover:bg-orange-700/20',
+  danger = 'bg-red-600 border-transparent hover:bg-red-700',
+  transparent = 'bg-transparent border-transparent hover:bg-[#eef3f9]',
 }
 
+/**
+ * @internal
+ */
 export enum SolidText {
   primary = 'text-white',
-  secondary = 'text-gray-800',
+  secondary = 'text-[#1e2b3c]',
   success = 'text-white',
   info = 'text-white',
   warning = 'text-orange-700 hover:text-orange-800',
   danger = 'text-white',
-  transparent = 'text-gray-800'
+  transparent = 'text-gray-600 hover:text-prussian-blue-500',
 }
 
+/**
+ * @internal
+ */
 export enum OutlineBg {
-  primary = 'bg-transparent border border-prussian-blue hover:bg-prussian-blue-400 focus:ring-prussian-blue-400',
-  secondary = 'bg-transparent border border-gray-100 hover:bg-gray-100 focus:ring-gray-200',
-  success = 'bg-transparent border border-green-500 hover:bg-green-500 focus:ring-green-500',
-  info = 'bg-transparent border border-blue-500 hover:bg-blue-500 focus:ring-blue-500',
-  warning = 'bg-transparent border border-orange-700 hover:bg-orange-700 focus:ring-orange-700',
-  danger = 'bg-transparent border border-red-700 hover:bg-red-700 focus:ring-red-700',
-  transparent = 'bg-transparent hover:bg-gray-100 focus:ring-0',
+  primary = 'bg-white border-prussian-blue-300/40 hover:bg-[#f2f7fd] hover:border-prussian-blue-300',
+  secondary = 'bg-transparent border-gray-200 hover:bg-gray-50',
+  success = 'bg-white border-green-500/50 hover:bg-green-50',
+  info = 'bg-white border-blue-500/50 hover:bg-blue-50',
+  warning = 'bg-white border-orange-700/40 hover:bg-orange-50',
+  danger = 'bg-white border-[#f4d2d4] hover:bg-[#fff5f5] hover:border-[#eeb4b8]',
+  transparent = 'bg-transparent border-transparent hover:bg-gray-100',
 }
 
+/**
+ * @internal
+ */
 export enum OutlineText {
-  primary = 'text-prussian-blue hover:text-white',
+  primary = 'text-prussian-blue-400',
   secondary = 'text-gray-700 hover:text-gray-800',
-  success = 'text-green-500 hover:text-white',
-  info = 'text-blue-500 hover:text-white',
-  warning = 'text-orange-700 hover:text-white',
-  danger = 'text-red-700 hover:text-white',
-  transparent = 'text-gray-700 hover:text-gray-800'
+  success = 'text-green-600',
+  info = 'text-blue-600',
+  warning = 'text-orange-700',
+  danger = 'text-[#c0262d]',
+  transparent = 'text-gray-700 hover:text-gray-800',
 }
 
+/**
+ * @internal
+ */
 export const COLOR_SCHEME = {
   solid: {
     bg: SolidBgWithHover,
-    text: SolidText
+    text: SolidText,
   },
   outline: {
     bg: OutlineBg,
-    text: OutlineText
-  }
+    text: OutlineText,
+  },
 }
 
+/**
+ * @internal
+ */
 export type TFill = keyof typeof COLOR_SCHEME

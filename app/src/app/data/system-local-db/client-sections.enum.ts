@@ -3,10 +3,11 @@ import { projects } from 'app/data/system-local-db/sections/projects.const'
 
 /**
  * Identifies the table on which run the query with `db-connector`.
+ * @internal
  */
 export const CLIENT_SECTIONS = {
   projects: projects.name,
-  localSettings: localSettings.name
+  localSettings: localSettings.name,
 }
 
 /**
@@ -15,6 +16,7 @@ export const CLIENT_SECTIONS = {
  * Each array must contain the unaltered SezDefinitions of that version
  *
  * TODO with Dexie 3.x.x upgrading has been simplified, probably no longer needed.
+ * @internal
  */
 export const previousVersions: Array<Array<string>> = [
   // insert here previous version on DB structure change
@@ -22,5 +24,6 @@ export const previousVersions: Array<Array<string>> = [
 
 /**
  * Array to be passed to `db-connector` to initialize the DB with Dexie, via the IndexedDb plugin.
+ * @internal
  */
 export const CLIENT_SEZ_DEFINITIONS = [projects, localSettings]

@@ -1,119 +1,128 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
-import { ISectionElement } from 'app/models/section-element/section-element.declarations'
-import { ISection } from 'app/models/section/section.declarations'
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
 import { ParentInfoFormEleBuilder } from 'app/models/section/parent-info-form-ele-builder.class'
 import { SectionElementSaver } from 'app/models/section/section-element-saver.class'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
-import { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
-import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
-import { TIconName } from 'app/libs/icons/icons.class'
 import { SupportedViews } from 'app/models/section/view-settings.const'
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
-import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
-import { Subject } from 'rxjs'
-import { SyncManager } from 'app/libs/cloud-sync/sync-manager.class'
-import { IS_SAVING_IN_FS } from 'app/libs/cloud-sync/sync-manager.const'
 import { DateTools } from 'app/libs/tools/date-tools.class'
+import { SyncManager } from 'app/cross-refs-exports'
+import { SyncState } from 'app/state/sync/sync-state.class'
+import { atom } from 'jotai'
+import { Bucket } from 'app/state/bucket.state'
+import { ProjectState } from 'app/state/project/project-state.class'
+import { getTitleFieldOrFirst } from 'app/models/section/title-field.function'
+import type { TIconName } from 'app/libs/icons/icons.class'
+import type { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
+import type { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
+import type { ISection } from 'app/models/section/section.declarations'
+import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
+/** @featurePart view.switch-view, view.table-columns, view.table-sort, navigation.hide-sections-in-menu, record.save, record.delete */
 export class Section implements ISection {
-  public id: string
-  public title: string
+  public id: string = ''
+  public title: string = ''
   public icon?: TIconName
   public childOf?: Array<string>
-  public createdAt: string
+  public createdAt: string = ''
   public updatedAt?: string
-  public formModel: Array<FormFieldsModel<TSupportedFormsTypes>>
-  public visibleColumnsInTableView = new Subject<Array<FormFieldsModel<TSupportedFormsTypes>>>()
-  public sorting = new Subject<[string, 'asc' | 'desc'] | [null, null]>()
+  public formModel: Array<FormFieldsModel<TSupportedFormsTypes>> = []
+  public visibleColumnsInTableView = atom<Array<FormFieldsModel<TSupportedFormsTypes>>>([])
+  public sorting = atom<[string, 'asc' | 'desc'] | [null, null]>([null, null])
 
   constructor (
     private projectId: string,
-    private allSections: Array<ISection>,
-    private sectionData: ISection = {} as ISection
+    private sectionDefinition: ISection = { } as ISection,
   ) {
-    this.id = sectionData.id
-    this.title = sectionData.title
-    this.icon = sectionData.icon || undefined
-    this.childOf = sectionData.childOf
-    this.formModel = sectionData.formModel
-    this.visibleColumnsInTableView.next(this.getVisibleColumnsInTableView())
-    this.sorting.next(this.getSorting())
-    this.createdAt = sectionData[RESERVED_FIELDS.createdAt] || DateTools.getUtcIsoString()
-    this.updatedAt = sectionData[RESERVED_FIELDS.updatedAt]
+    if (sectionDefinition) {
+      this.id = sectionDefinition.id
+      this.title = sectionDefinition.title
+      this.icon = sectionDefinition.icon || undefined
+      this.childOf = sectionDefinition.childOf
+      this.formModel = sectionDefinition.formModel || []
+      Bucket.general.set(this.visibleColumnsInTableView, this.getVisibleColumnsInTableView())
+      Bucket.general.set(this.sorting, this.getSorting())
+      this.createdAt = sectionDefinition[RESERVED_FIELDS.createdAt] || DateTools.getUtcIsoString()
+      this.updatedAt = sectionDefinition[RESERVED_FIELDS.updatedAt]
+    }
   }
 
   public getSectionIcon (): TIconName {
     return this.icon || 'chevronForwardOutline'
   }
 
-  public getAllElements = async (): Promise<Array<ISectionElement>> => dbInstances[this.projectId].callSelector<ISectionElement>(this.id).multiple()
-
-  public getElementById = (id: string): Promise<ISectionElement | void> => dbInstances[this.projectId].callSelector<ISectionElement>(this.id, { [RESERVED_FIELDS.id]: id }).single()
-
-  public saveElement = async (element: ISectionElement, forceMode?: EDITOR_MODE): Promise<ISectionElement> => {
-    IS_SAVING_IN_FS.next(true)
+  public saveElement = async (element: ISectionElement, forceMode?: EDITOR_MODE.add | EDITOR_MODE.edit): Promise<ISectionElement> => {
+    SyncState.setIsSavingInFs(true)
     const mode = forceMode || (element.id ? EDITOR_MODE.edit : EDITOR_MODE.add)
     const savedElement = await new SectionElementSaver(this.projectId, this.id, element, mode).save()
-    SyncManager.syncWithRemoteOrLocal()
+    SyncManager.syncWithRemoteOrLocal({ mode, type: 'element', projectId: this.projectId, sectionId: this.id, elementId: savedElement.id!, elementData: savedElement })
     return savedElement
   }
 
   public deleteElement = async (element: ISectionElement): Promise<void> => {
-    IS_SAVING_IN_FS.next(true)
+    SyncState.setIsSavingInFs(true)
     await dbInstances[this.projectId].callDeletor(this.id, { id: element.id }).autoDelete()
-    SyncManager.syncWithRemoteOrLocal()
+    SyncManager.syncWithRemoteOrLocal({ mode: EDITOR_MODE.delete, type: 'element', projectId: this.projectId, sectionId: this.id, elementId: element.id! })
   }
 
   public getFirstUserDefinedField (): FormFieldsModel<TSupportedFormsTypes> | undefined {
     return this.formModel.find(formEle => !RESERVED_FIELDS[formEle.fieldName!])
   }
 
+  /**
+   * The field that names the records (see getTitleField), or the first field.
+   */
+  public getTitleField (): FormFieldsModel<TSupportedFormsTypes> | undefined {
+    return getTitleFieldOrFirst(this.formModel)
+  }
+
   public getFirstFieldOfType = (types: Array<FORM_COMPONENTS_CODES>): FormFieldsModel<TSupportedFormsTypes> | undefined => this.formModel.find(formEle => types.includes(parseInt(formEle.componentCode as unknown as string)))
 
-  public getParentInfoFormEle = (): FormFieldsModel<ISectionElement> => new ParentInfoFormEleBuilder(this.childOf ?? [], this.allSections).build()
+  public getParentInfoFormEle = (sections: Array<ISection>): FormFieldsModel<ISectionElement> => new ParentInfoFormEleBuilder(this.childOf ?? [], sections).build()
 
   public getIsHiddenInMenu (): boolean {
-    return this.sectionData.viewSettings?.isHiddenInMenu ?? false
+    return this.sectionDefinition.viewSettings?.isHiddenInMenu ?? false
   }
 
   public setIsHiddenInMenu (isHidden: boolean) {
-    if (!this.sectionData.viewSettings) {
-      this.sectionData.viewSettings = {}
+    if (!this.sectionDefinition.viewSettings) {
+      this.sectionDefinition.viewSettings = {}
     }
-    this.sectionData.viewSettings.isHiddenInMenu = isHidden
+    this.sectionDefinition.viewSettings.isHiddenInMenu = isHidden
     this.saveEditedSection()
   }
 
   public getPreferredView (): SupportedViews {
-    return this.sectionData.viewSettings?.preferredView || SupportedViews.table
+    return this.sectionDefinition.viewSettings?.preferredView || SupportedViews.table
   }
 
   public setPreferredView (view: SupportedViews) {
-    if (!this.sectionData.viewSettings) {
-      this.sectionData.viewSettings = {}
+    if (!this.sectionDefinition.viewSettings) {
+      this.sectionDefinition.viewSettings = {}
     }
-    this.sectionData.viewSettings.preferredView = view
+    this.sectionDefinition.viewSettings.preferredView = view
     this.saveEditedSection()
   }
 
   public getIsFormEleVisibleInTable (formEleFieldName: string): boolean {
-    return this.sectionData.viewSettings?.table?.formElesVisibility?.[formEleFieldName!] !== false ?? true
+    if (this.sectionDefinition.viewSettings?.table?.formElesVisibility?.[formEleFieldName!] === false) {
+      return false
+    }
+    return true
   }
 
   public setIsFormEleVisibleInTable (formEleFieldName: string, isVisible: boolean) {
-    if (!this.sectionData.viewSettings) {
-      this.sectionData.viewSettings = {}
+    if (!this.sectionDefinition.viewSettings) {
+      this.sectionDefinition.viewSettings = {}
     }
-    if (!this.sectionData.viewSettings.table) {
-      this.sectionData.viewSettings.table = {}
+    if (!this.sectionDefinition.viewSettings.table) {
+      this.sectionDefinition.viewSettings.table = {}
     }
-    if (!this.sectionData.viewSettings.table.formElesVisibility) {
-      this.sectionData.viewSettings.table.formElesVisibility = {}
+    if (!this.sectionDefinition.viewSettings.table.formElesVisibility) {
+      this.sectionDefinition.viewSettings.table.formElesVisibility = {}
     }
-    this.sectionData.viewSettings.table.formElesVisibility[formEleFieldName!] = isVisible
-    this.visibleColumnsInTableView.next(this.getVisibleColumnsInTableView())
+    this.sectionDefinition.viewSettings.table.formElesVisibility[formEleFieldName!] = isVisible
+    Bucket.general.set(this.visibleColumnsInTableView, this.getVisibleColumnsInTableView())
     this.saveEditedSection()
   }
 
@@ -122,27 +131,27 @@ export class Section implements ISection {
   }
 
   public getSorting (): [string, 'asc' | 'desc'] | [null, null] {
-    return this.sectionData.viewSettings?.table?.sorting ?? [null, null]
+    return this.sectionDefinition.viewSettings?.table?.sorting ?? [null, null]
   }
 
   public setSorting (sorting: string) {
-    if (!this.sectionData.viewSettings) {
-      this.sectionData.viewSettings = {}
+    if (!this.sectionDefinition.viewSettings) {
+      this.sectionDefinition.viewSettings = {}
     }
-    if (!this.sectionData.viewSettings.table) {
-      this.sectionData.viewSettings.table = {}
+    if (!this.sectionDefinition.viewSettings.table) {
+      this.sectionDefinition.viewSettings.table = {}
     }
     const currentSorting = this.getSorting()
     const order: 'asc' | 'desc' = currentSorting[0] === sorting ? (currentSorting[1] === 'asc' ? 'desc' : 'asc') : 'asc'
     const newSorting: [string, 'asc' | 'desc'] = [sorting, order]
-    this.sectionData.viewSettings.table.sorting = newSorting
+    this.sectionDefinition.viewSettings.table.sorting = newSorting
 
-    this.sorting.next(newSorting)
+    Bucket.general.set(this.sorting, newSorting)
     this.saveEditedSection()
   }
 
   private saveEditedSection = async (): Promise<void> => {
-    new SectionElementSaver(this.projectId, RESERVED_AUDS_KEYS._sections, this.sectionData, EDITOR_MODE.edit).save()
-    storeDispatcher({ type: REDUX_ACTIONS.updateSection, payload: this.sectionData })
+    new SectionElementSaver(this.projectId, RESERVED_AUDS_KEYS._sections, this.sectionDefinition, EDITOR_MODE.edit).save()
+    ProjectState.updateSection(this.sectionDefinition)
   }
 }

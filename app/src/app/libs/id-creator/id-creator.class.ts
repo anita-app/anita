@@ -1,8 +1,9 @@
 import { DateTools } from 'app/libs/tools/date-tools.class'
-import CryptoES from 'crypto-es'
+import { SHA256 } from 'crypto-es'
 
 /**
  * Randomly generated strings hasehd with sha256 to be used as unique identifiers
+ * @internal
  */
 export class IdCreator {
   /**
@@ -14,7 +15,7 @@ export class IdCreator {
 
     const id = `${name}${aliasDate}${randNumber}`
 
-    return CryptoES.SHA256(id).toString()
+    return SHA256(id).toString()
   }
 
   /**
@@ -26,6 +27,6 @@ export class IdCreator {
 
     const id = `${aliasDate}${randNumber}`
 
-    return CryptoES.SHA256(id).toString()
+    return SHA256(id).toString()
   }
 }

@@ -1,11 +1,13 @@
-import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
-import { DbConnectorInstance, Insertor } from 'app/libs/db-connector/models/executers'
 import { QueryMaker } from 'app/libs/db-connector/plugins/indexed-db/query-makers/query-maker.class'
 import { Logger } from 'app/libs/logger/logger.class'
-import Dexie, { Table } from 'dexie'
+import type { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
+import type { DbConnectorInstance, Insertor } from 'app/libs/db-connector/models/executers'
+import type { Table } from 'dexie'
+import type Dexie from 'dexie'
 
 /**
  * Implements insertor for IndexedDB
+ * @internal
  */
 export class DbInsertor<E> implements Insertor<E> {
   /**
@@ -16,7 +18,7 @@ export class DbInsertor<E> implements Insertor<E> {
   constructor (
     private dbConnector: DbConnectorInstance<Dexie>,
     private section: keyof AbstractModel,
-    private element: Array<E> | E
+    private element: Array<E> | E,
   ) { }
 
   /**

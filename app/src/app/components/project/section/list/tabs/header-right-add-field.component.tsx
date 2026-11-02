@@ -2,34 +2,48 @@ import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { SectionFormModelManager } from 'app/components/projects/add-edit-project-components/section-form-model-manager.component'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
-import { useModalContext } from 'app/components/shared-components/modals/modal-context'
-import { Manager } from 'app/libs/manager/manager.class'
-import { AnitaStore } from 'app/libs/redux/reducers.const'
-import { RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
-import React from 'react'
-import { useSelector } from 'react-redux'
+import { Manager } from 'app/cross-refs-exports'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
+import { ModalState } from 'app/state/modal/modal-state.class'
+import { useAtomValue } from 'jotai'
+import { FormProjectAtoms } from 'app/state/form-project/form-project.atoms'
+import { FormElesValidStateAtoms } from 'app/state/form-eles-valid-state/form-eles-valid-state.atoms'
+import { ProjectSaver } from 'app/models/project/project-saver.class'
+import type { FC } from 'react'
+import type { TSystemData } from 'app/models/project/project.declarations'
 
 interface IListTabsHeaderRightAddFieldProps {
   sectionId: string
 }
 
-export const ListTabsHeaderRightAddField: React.FC<IListTabsHeaderRightAddFieldProps> = (props) => {
-  const project = useSelector((state: AnitaStore) => state.formProject.project)
-  const validObj = useSelector((state: AnitaStore) => state.formElesValidState)
+/**
+ * @feature view.add-field
+ * @title Add a field from the list
+ * @summary Adds a new field to a section without opening the project editor.
+ * @where List of a section, table view: gear icon "Edit view", then "Add field" at the bottom of the "Edit visible columns" window.
+ * @usage Click "Add field", fill in the new field (name, type and its settings) in the "Add field" window, then click "Add". Click "Cancel" to close without adding.
+ * @options The same field types and settings as in the project editor.
+ * @rules "Add" is disabled while the new field is not valid (for example without a name). The field is added at the end of the section and the project is saved; existing records have no value for it until they are edited.
+ * @errors none
+ * @status stable
+ * @since 0.17.0
+ * @routes projectSectionElesList
+ * @related view.table-columns
+ */
+export const ListTabsHeaderRightAddField: FC<IListTabsHeaderRightAddFieldProps> = (props) => {
+  const project = useAtomValue(FormProjectAtoms.project)
+  const validObj = useAtomValue(FormElesValidStateAtoms.validState)
   const sections = project[RESERVED_AUDS_KEYS._sections]!
   const sectionIndex = sections?.findIndex((section) => section.id === props.sectionId)
-
-  const { hideModal } = useModalContext()
 
   if (!sections || sectionIndex === -1 || sectionIndex === undefined) {
     return null
   }
 
   const handleActionClick = async () => {
-    const systemData = await Manager.saveProject(project as TSystemData, EDITOR_MODE.edit)
-    await Manager.loadProjectsList()
+    const systemData = await new ProjectSaver(project as TSystemData, EDITOR_MODE.edit).save()
     Manager.setCurrentProject(systemData)
-    hideModal()
+    ModalState.hideModal()
   }
 
   const lastSectionFormElementIndex = sections[sectionIndex].formModel.length - 1
@@ -47,7 +61,7 @@ export const ListTabsHeaderRightAddField: React.FC<IListTabsHeaderRightAddFieldP
           id="cancel"
           label="Cancel"
           type={Type.secondary}
-          onClick={hideModal}
+          onClick={ModalState.hideModal}
         />
         <Button
           id="action-button"

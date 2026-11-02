@@ -1,5 +1,6 @@
-import { TIconName } from 'app/libs/icons/icons.class'
+import type { TIconName } from 'app/libs/icons/icons.class'
 
+/** @internal */
 export interface IOption { value: string | number; label: string; icon?: TIconName }
 
 interface IOptionKeysModelGroup {
@@ -7,6 +8,7 @@ interface IOptionKeysModelGroup {
   options: Array<IOption>
 }
 
+/** @featurePart relation.parent-sections, relation.link-to-parent */
 export class ParentElement {
   /**
    * Converts the options used by react-select to a string for storing it in the DB

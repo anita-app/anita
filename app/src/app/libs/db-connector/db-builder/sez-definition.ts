@@ -1,10 +1,12 @@
 /**
  * Section name
+ * @internal
  */
-export type SectionName = string;
+export type SectionName = string
 
 /**
  * Contains the minimum information needed to build a SectionModel.
+ * @internal
  */
 export interface SectionDefinition<T> {
   name: SectionName
@@ -20,6 +22,7 @@ export interface SectionDefinition<T> {
 
 /**
  * Defines the information on a section needed to perform queries.
+ * @internal
  */
 export interface SectionModel<T> extends SectionDefinition<T> {
   name: SectionName

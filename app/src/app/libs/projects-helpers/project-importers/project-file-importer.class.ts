@@ -1,68 +1,66 @@
-import { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
-import { FileSystemFileHandle } from 'app/libs/db-connector/plugins/file-handles/helpers/file-system-access-api'
-import { FsHelper } from 'app/libs/db-connector/plugins/file-handles/helpers/fs-helper'
 import fileDialog from 'file-dialog'
+import { LocalFileHelper } from 'app/libs/cloud-sync/local-file/local-file-helper.class'
+import { isLocalFileSyncSupported } from 'app/libs/cloud-sync/local-file/local-file.const'
+import type { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
 
 /**
- * Imports one or more existing project files, and then calls `SaveProjectSettingsInIndexedDB`.
- * Also sets the last imported project as the current one by calling `CurrentProjectSetter`.
+ * A file chosen for import that has no content (often a file of a cloud folder not downloaded to this computer),
+ * or that the browser could not read.
+ * @featurePart import.file
+ */
+export class ProjectFileReadError extends Error {
+  constructor (
+    public reason: 'empty' | 'unreadable',
+    public fileName: string,
+  ) {
+    super(`${fileName}: ${reason}`)
+    this.name = 'ProjectFileReadError'
+  }
+}
+
+/**
+ * Reads the text of a file, telling apart files that cannot be read and empty files.
+ */
+const readText = async (getFile: () => Promise<File>, fileName: string): Promise<string> => {
+  let text: string
+  try {
+    text = await (await getFile()).text()
+  } catch {
+    throw new ProjectFileReadError('unreadable', fileName)
+  }
+  if (!text.trim()) {
+    throw new ProjectFileReadError('empty', fileName)
+  }
+  return text
+}
+
+/**
+ * Imports an existing project file from disk.
  *
- * @see SaveProjectSettingsInIndexedDB
- * @see CurrentProjectSetter
+ * @featurePart import.file, import.file-sync
  */
 export class ProjectFileImporter {
   /**
-   * List of FileSystemFileHandle for each project to import
+   * Asks for the file to import and returns the project data, or nothing if the user cancels. Where the browser
+   * supports it, the file is chosen with the File System Access API, and its handle is returned too, so that the
+   * project can be kept in sync with it.
+   * Throws ProjectFileReadError if the file is empty or cannot be read, SyntaxError if it is not valid JSON.
    */
-  private fileHandle: FileSystemFileHandle | undefined
-  /**
-   * The file contents of each project to import
-   */
-  private fileContents: string | undefined
-  /**
-   * The project data of each project to import
-   */
-  private projectData: TAnitaUniversalDataStorage | undefined
-
-  /**
-   * Asks for the files to import and processes them, then sets the current project as the last one imported
-   */
-  public async import (): Promise<{ project: TAnitaUniversalDataStorage; fileHandle: FileSystemFileHandle } | void> {
-    if (typeof window.showOpenFilePicker === 'function') {
-      await this.askForFileHandle()
-    } else {
-      await this.importFromFile()
+  public async import (): Promise<{ project: TAnitaUniversalDataStorage; fileHandle?: FileSystemFileHandle } | void> {
+    if (isLocalFileSyncSupported()) {
+      const fileHandle = await LocalFileHelper.pickExistingFile()
+      if (!fileHandle) {
+        return
+      }
+      const fileContents = await readText(() => fileHandle.getFile(), fileHandle.name)
+      return { project: JSON.parse(fileContents), fileHandle }
     }
 
-    if (!this.fileContents) {
+    const files = await fileDialog({ multiple: false, accept: 'application/json,text/json' })
+    if (!files?.length) {
       return
     }
-
-    this.parseFileContents()
-    return { project: this.projectData!, fileHandle: this.fileHandle! }
-  }
-
-  /**
-   * Asks for user permission to open a file with File System Access API
-   */
-  private async askForFileHandle (): Promise<void> {
-    const fileHandles = await FsHelper.getFileHandle()
-    this.fileHandle = fileHandles[0]
-    this.fileContents = await FsHelper.readFileHandleAsText(this.fileHandle)
-  }
-
-  /**
-   * Asks  for a file with file-dialog
-   */
-  public async importFromFile (): Promise<void> {
-    const files = await fileDialog({ multiple: false, accept: 'text/json' })
-    this.fileContents = await files[0].text()
-  }
-
-  /**
-   * Converts the string of the project to the type `AnitaUniversalDataStorage`
-   */
-  private parseFileContents (): void {
-    this.projectData = JSON.parse(this.fileContents!)
+    const fileContents = await readText(() => Promise.resolve(files[0]), files[0].name)
+    return { project: JSON.parse(fileContents) }
   }
 }

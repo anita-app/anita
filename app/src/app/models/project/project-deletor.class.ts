@@ -1,50 +1,84 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
-import { IProjectSettings } from 'app/models/project/project.declarations'
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
-import { ProjectsListLoader } from 'app/libs/projects-helpers/projects-handlers/projects-list-loader.class'
-import { CloudSyncBase } from 'app/libs/cloud-sync/cloud-sync-base.class'
+import { CloudSyncBase } from 'app/cross-refs-exports'
+import { WordPressSync } from 'app/libs/cloud-sync/wordpress/wordpress-sync.class'
+import { DropboxSync } from 'app/libs/cloud-sync/dropbox/dropbox-sync.class'
+import { LocalFileSync } from 'app/libs/cloud-sync/local-file/local-file-sync.class'
+import type { IProjectSettings } from 'app/models/project/project.declarations'
+
+interface IProjectDeletorOptions {
+  /**
+   * Also delete the project from the WordPress site it is synced with, or move its file to the deleted files of
+   * Dropbox. If that fails, the local copy is kept.
+   * When false, the Dropbox file is kept and this device stops downloading it.
+   * Default true.
+   */
+  deleteOnRemote?: boolean
+}
 
 /**
  * Deletes a project from the current device
+ *
+ * @feature project.delete
+ * @title Delete a project
+ * @summary Removes a project and all its records from this device and, if it is synced, from the WordPress site, or from Dropbox if you confirm it.
+ * @where "Delete Project" button on the card of the project (Projects screen).
+ * @usage 1. Click "Delete Project".
+ * 2. Read the confirmation and click "Delete" (for Dropbox: "Delete from this device only" or "Delete also from Dropbox").
+ * @options For a project synced with a file on this computer, the file is never deleted. For a project synced with Dropbox: "Delete from this device only" keeps its file in your Dropbox, "Delete also from Dropbox" moves the file to the deleted files of your Dropbox. Nothing is deleted from Dropbox without this explicit choice.
+ * @rules The confirmation says what happens: for a project only on this device, all its data is removed from this device and
+ * copies on other devices are not affected; for Dropbox, the dialog asks whether to delete the file in your Dropbox too:
+ * with "Delete from this device only" the file stays in Dropbox, your other devices keep syncing it, and this device no
+ * longer downloads it automatically ("Open from Dropbox" brings it back); with "Delete also from Dropbox" the file is
+ * moved to the deleted files of your Dropbox (where it can be restored for a while) and your other devices ask what to
+ * do with their copy; for WordPress, it is deleted
+ * from the site and from this device, for every user it is shared with. On WordPress only the owner of the project and
+ * the administrators of the site see the button. If the deletion on Dropbox or WordPress fails, "The project was not
+ * deleted" explains why and the project is kept on this device. It cannot be undone. Afterwards the Projects list opens.
+ * @errors wordpress.forbidden, wordpress.network, dropbox.network, dropbox.authFailed
+ * @status stable
+ * @since 0.1.0
+ * @related project.list, export.project
  */
 export class ProjectDeletor {
   /**
    * Creates an instance of project deletor.
-   * @param projectSettings the settings of the project to delete
+   * @param projectId the id of the project to delete
    */
   constructor (
-    private projectSettings: IProjectSettings
+    private projectId: string,
   ) { }
 
   /**
    * Deletes the project and reloads the list of projects
    */
-  public async delete (): Promise<void> {
-    const projectId = this.projectSettings.id
+  public async delete (options: IProjectDeletorOptions = {}): Promise<void> {
+    if (options.deleteOnRemote !== false) {
+      await DropboxSync.deleteRemoteProject(this.projectId)
+      await WordPressSync.deleteRemoteProject(this.projectId)
+    } else {
+      await DropboxSync.ignoreRemoteProject(this.projectId)
+    }
     await this.callOnProjectDeleted()
     await this.doDelete()
-    await CloudSyncBase.clearRemoteId(projectId)
-    await CloudSyncBase.deleteLastSync(projectId)
-    this.reloadProjectList()
+    await CloudSyncBase.deleteDropboxLink(this.projectId)
+    // The file on this computer is never deleted.
+    await LocalFileSync.forgetSyncData(this.projectId)
+    await CloudSyncBase.deleteLastSync(this.projectId)
+    await CloudSyncBase.deleteRemoteProjectInfo(this.projectId)
+    delete dbInstances[this.projectId]
   }
 
   /**
    * Performs the delete action on IndexedDB with db-connector
    */
   private async doDelete (): Promise<void> {
-    await dbInstances.system.callDeletor<IProjectSettings>(CLIENT_SECTIONS.projects, { id: this.projectSettings.id }).autoDelete()
+    await dbInstances.system.callDeletor<IProjectSettings>(CLIENT_SECTIONS.projects, { id: this.projectId }).autoDelete()
   }
 
   private async callOnProjectDeleted (): Promise<void> {
-    if (dbInstances[this.projectSettings.id]) {
-      await dbInstances[this.projectSettings.id].dbStore.onProjectDeleted?.()
+    if (dbInstances[this.projectId]) {
+      await dbInstances[this.projectId].dbStore.onProjectDeleted?.()
     }
-  }
-
-  /**
-   * Reloads the project list from scratch
-   */
-  private reloadProjectList (): void {
-    new ProjectsListLoader().load()
   }
 }

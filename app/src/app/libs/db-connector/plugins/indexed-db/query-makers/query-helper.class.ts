@@ -1,6 +1,9 @@
-import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
-import { NewWhere } from 'app/libs/db-connector/plugins/indexed-db/query-makers/query-maker.class'
+import type { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
+import type { NewWhere } from 'app/libs/db-connector/plugins/indexed-db/query-makers/query-maker.class'
 
+/**
+ * @internal
+ */
 export interface BetweenSearchParams {
   field: string
   lowerBound: string | number
@@ -9,18 +12,28 @@ export interface BetweenSearchParams {
   includeUpper: boolean
 }
 
-export type SuppoertedOperators = '===' | '!=' | '>' | '>=' | '<' | '<=' | '=';
+/**
+ * @internal
+ */
+export type SuppoertedOperators = '===' | '!=' | '>' | '>=' | '<' | '<=' | '='
 
+/**
+ * @internal
+ */
 export interface FieldNValues {
   [index: string]: string | number
 }
 
-export type Filter4Dexie = (item: { [key: string]: string | number}) => boolean;
+/**
+ * @internal
+ */
+export type Filter4Dexie = (item: { [key: string]: string | number }) => boolean
 
 /**
  * Support methods to build queries with `QueryMaker` on IndexedDB with Dexie
  *
  * @see QueryMaker
+ * @internal
  */
 export class QueryHelper {
   /**
@@ -92,7 +105,7 @@ export class QueryHelper {
       lowerBound: arraysWhere[0][2],
       upperBound: arraysWhere[1][2],
       includeLower,
-      includeUpper
+      includeUpper,
     }
   }
 
@@ -103,7 +116,7 @@ export class QueryHelper {
     const field = filter[0]
     const operator = filter[1]
     const value = filter[2]
-    return (item: { [key: string]: string | number}): boolean => {
+    return (item: { [key: string]: string | number }): boolean => {
       switch (operator) {
         case '===':
           return item[field] === value

@@ -1,21 +1,25 @@
-import React from 'react'
+import type { FC, ReactNode } from 'react'
 
-export const RichTextEditorLeaf = ({ attributes, children, leaf }: any) => {
-  if (leaf.bold) {
+// Slate passes read-only props: the marks wrap a copy of the children.
+/** @featurePart field.long-text, field.rich-text-formatting */
+export const RichTextEditorLeaf: FC<any> = (props) => {
+  let children: ReactNode = props.children
+
+  if (props.leaf.bold) {
     children = <strong>{children}</strong>
   }
 
-  if (leaf.code) {
+  if (props.leaf.code) {
     children = <code>{children}</code>
   }
 
-  if (leaf.italic) {
+  if (props.leaf.italic) {
     children = <em>{children}</em>
   }
 
-  if (leaf.underline) {
+  if (props.leaf.underline) {
     children = <u>{children}</u>
   }
 
-  return <span {...attributes}>{children}</span>
+  return <span {...props.attributes}>{children}</span>
 }

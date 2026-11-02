@@ -1,29 +1,35 @@
+import { StrictMode } from 'react'
 import 'animate.css'
-import { store } from 'app/libs/redux/state.store'
 import { Startupper } from 'app/libs/startupper/startupper.class'
-import { AdminLayout } from 'app/components/admin-layout/admin-layout.component'
-import React from 'react'
-import { HashRouter as Router } from 'react-router-dom'
-import { Provider as StoreProvider } from 'react-redux'
+import { RouterProvider } from 'react-router-dom'
 import './index.css'
-import { ModalProvider } from 'app/components/shared-components/modals/modal.component'
+import './ui.css'
+import { ModalPortal } from 'app/components/shared-components/modals/modal.component'
+import { anitaRouter } from 'app/libs/routing/anita-routes.component'
 import * as ReactDOMClient from 'react-dom/client'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 import 'tippy.js/dist/tippy.css'
 
-new Startupper().init()
-const rootElement = document.getElementById('root')
-const root = ReactDOMClient.createRoot(rootElement!)
-root.render(
-  <React.StrictMode>
-    <StoreProvider store={store}>
-      <ModalProvider>
-        <Router>
-          <AdminLayout />
-        </Router>
-      </ModalProvider>
-    </StoreProvider>
-  </React.StrictMode>
-)
+// React Router runs page changes in a view transition; when the page updates during the animation (for example
+// because a sync finished), the browser aborts the transition and the router leaves the rejection unhandled.
+// The navigation itself completes, so the error is harmless.
+window.addEventListener('unhandledrejection', (event) => {
+  if (event.reason?.name === 'InvalidStateError' && /transition was aborted/i.test(event.reason?.message ?? '')) {
+    event.preventDefault()
+  }
+})
 
+const start = async () => {
+  await new Startupper().init()
+  const rootElement = document.getElementById('root')
+  const root = ReactDOMClient.createRoot(rootElement!)
+  root.render(
+    <StrictMode>
+      <ModalPortal />
+      <RouterProvider router={anitaRouter} />
+    </StrictMode>,
+  )
+}
+
+start()
 serviceWorkerRegistration.register()

@@ -1,23 +1,20 @@
-import React, { memo, useEffect, useState } from 'react'
+import { memo, useEffect } from 'react'
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
 import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
-import { RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { Link } from 'react-router-dom'
-import { Manager } from 'app/libs/manager/manager.class'
 import { Icons } from 'app/libs/icons/icons.class'
-import { ISection } from 'app/models/section/section.declarations'
-import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
 import { AdminLayoutSidebarMenuItemIcon } from 'app/components/admin-layout/admin-layout-sidebar-menu-item-icon.component'
+import { LayoutState } from 'app/state/layout/layout-state.class'
+import { Queriers } from 'app/libs/db-connector/common-helpers/Queriers'
+import { Section } from 'app/models/section/section.class'
+import { useLiveQuery } from 'dexie-react-hooks'
+import type { FC } from 'react'
+import type { ISection } from 'app/models/section/section.declarations'
+import type { TSystemData } from 'app/models/project/project.declarations'
 
-const baseStyleOfSidebarLinks = 'flex items-center block py-2.5 px-2 transition duration-200 border-l-2 hover:border-prussian-blue-700 hover:text-prussian-blue-500 text-sm font-semibold'
-
-const addActiveClassNameToBaseStyle = (selected: boolean): string => {
-  if (selected) {
-    return `${baseStyleOfSidebarLinks} border-prussian-blue-700`
-  }
-  return `${baseStyleOfSidebarLinks} border-transparent`
-}
+// ui-nav-item (ui.css): rounded row; the active one has a tinted background and a blue-teal bar.
+const addActiveClassNameToBaseStyle = (selected: boolean): string => (selected ? 'ui-nav-item ui-active' : 'ui-nav-item')
 
 interface IAdminLayoutSidebarMenuItemProps {
   project: TSystemData
@@ -27,9 +24,12 @@ interface IAdminLayoutSidebarMenuItemProps {
   setCurrentSelectedSectionId: (id: string) => void
 }
 
-export const AdminLayoutSidebarMenuItem: React.FC<IAdminLayoutSidebarMenuItemProps> = memo(function AdminLayoutSidebarMenuItem (props: IAdminLayoutSidebarMenuItemProps) {
+/**
+ * @featurePart navigation.sidebar, navigation.hide-sections-in-menu
+ */
+export const AdminLayoutSidebarMenuItem: FC<IAdminLayoutSidebarMenuItemProps> = memo(function AdminLayoutSidebarMenuItem (props: IAdminLayoutSidebarMenuItemProps) {
   const linkPath = urlParamFiller(ANITA_URLS.projectSectionElesList, [{ name: URL_PARAMS.projectId, value: props.project[RESERVED_AUDS_KEYS._settings][0].id }, { name: URL_PARAMS.sectionId, value: props.section.id }])
-  const [isHiddenInMenu, setIsHiddenInMenu] = useState<boolean>(Manager.getCurrentProject()?.getSectionById(props.section.id)?.getIsHiddenInMenu()!)
+  const sectionData = useLiveQuery(() => Queriers.getProjectSection(props.project[RESERVED_AUDS_KEYS._settings][0].id, props.section.id), [props.project, props.section.id])
 
   const sectionId = props.section.id
   const setCurrentSelectedSectionId = props.setCurrentSelectedSectionId
@@ -41,12 +41,18 @@ export const AdminLayoutSidebarMenuItem: React.FC<IAdminLayoutSidebarMenuItemPro
     }
   }, [setCurrentSelectedSectionId, sectionId, selected])
 
+  if (!sectionData) {
+    return null
+  }
+
+  const section = new Section(props.project[RESERVED_AUDS_KEYS._settings][0].id, sectionData!)
+  const isHiddenInMenu = section?.getIsHiddenInMenu()!
+
   const handleVisibilityClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    const newValue = !Manager.getCurrentProject()?.getSectionById(props.section.id)?.getIsHiddenInMenu()
+    const newValue = !section?.getIsHiddenInMenu()
     e.preventDefault()
     e.stopPropagation()
-    setIsHiddenInMenu(newValue)
-    Manager.getCurrentProject()?.getSectionById(props.section.id)?.setIsHiddenInMenu(newValue)
+    section?.setIsHiddenInMenu(newValue)
   }
 
   if (isHiddenInMenu && !props.isEditingMenuItemsVisibility) {
@@ -58,7 +64,7 @@ export const AdminLayoutSidebarMenuItem: React.FC<IAdminLayoutSidebarMenuItemPro
 
   const handleLinkClick = () => {
     props.setCurrentSelectedSectionId(props.section.id)
-    storeDispatcher({ type: REDUX_ACTIONS.toggleSidebar })
+    LayoutState.toggleSidebar()
   }
 
   return (
@@ -69,11 +75,16 @@ export const AdminLayoutSidebarMenuItem: React.FC<IAdminLayoutSidebarMenuItemPro
       className={addActiveClassNameToBaseStyle(!!props.selected)}
     >
       <div className="flex items-center justify-between w-full">
-        <div className="flex items-center">
-          {Icons.render(Manager.getCurrentProject()?.getSectionById(props.section.id)?.getSectionIcon() || 'chevronForwardOutline')}<span className="ml-2">{props.section.title_short || props.section.title}</span>
+        <div className="flex items-center gap-2.5 min-w-0">
+          {Icons.render(section?.getSectionIcon() || 'chevronForwardOutline')}<span className="truncate">{props.section.title_short || props.section.title}</span>
         </div>
         {props.isEditingMenuItemsVisibility && (
-          <AdminLayoutSidebarMenuItemIcon elementId={`menuItem${props.section.id}`} tooltip={tooltip} icon={icon} onClick={handleVisibilityClick} />
+          <AdminLayoutSidebarMenuItemIcon
+            elementId={`menuItem${props.section.id}`}
+            tooltip={tooltip}
+            icon={icon}
+            onClick={handleVisibilityClick}
+          />
         )}
       </div>
     </Link>

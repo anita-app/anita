@@ -1,41 +1,42 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
-import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
 import { PROJECT_EDITOR_FORM_BUILDER } from 'app/data/project-form-builder/project-editor-form-builder.const'
-import { IProjectSettings, RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
-import { Manager } from 'app/libs/manager/manager.class'
-import { AnitaStore } from 'app/libs/redux/reducers.const'
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
-import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
+import { Manager } from 'app/cross-refs-exports'
 import { EDITOR_MODE } from 'app/components/editor-mode.enum'
 import { SectionManager } from 'app/components/projects/add-edit-project-components/section-manager.component'
 import { FormAutomator } from 'app/components/shared-components/forms-automator/form-automator.component'
-import { useSelector } from 'react-redux'
-import { useNavigate, useParams } from 'react-router'
-import React from 'react'
+import { useParams } from 'react-router-dom'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
+import { useAtomValue } from 'jotai'
+import { FormProjectAtoms } from 'app/state/form-project/form-project.atoms'
+import { FormProjectState } from 'app/state/form-project/form-project-state.class'
+import { FormElesValidStateAtoms } from 'app/state/form-eles-valid-state/form-eles-valid-state.atoms'
+import { RoutingState } from 'app/state/routing/routing-state.class'
+import { ProjectSaver } from 'app/models/project/project-saver.class'
+import type { FC } from 'react'
+import type { IProjectSettings, TSystemData } from 'app/models/project/project.declarations'
 
-export const FormProjectManager: React.FC = () => {
+/** @featurePart project.create, project.edit, project.settings, section.add */
+export const FormProjectManager: FC = () => {
   const { projectId } = useParams<URL_PARAMS>()
-  const projectEditorMode = useSelector((store: AnitaStore) => store.formProject.mode)
-  const project = useSelector((state: AnitaStore) => state.formProject.project)
-  const validObj = useSelector((state: AnitaStore) => state.formElesValidState)
+  const projectEditorMode = useAtomValue(FormProjectAtoms.mode)
+  const project = useAtomValue(FormProjectAtoms.project)
+  const validObj = useAtomValue(FormElesValidStateAtoms.validState)
   const mode: EDITOR_MODE = projectId ? EDITOR_MODE.edit : EDITOR_MODE.add
-  const navigate = useNavigate()
 
   const handleProjectChange = (fieldName: keyof IProjectSettings, value: IProjectSettings[keyof IProjectSettings]) => {
-    storeDispatcher({ type: REDUX_ACTIONS.updateFormProjectSettings, payload: { fieldName, value } })
+    FormProjectState.updateProjectSettings(fieldName, value)
   }
 
   const handleClickSave = async () => {
-    const systemData = await Manager.saveProject(project as TSystemData, mode)
-    await Manager.loadProjectsList()
+    const systemData = await new ProjectSaver(project as TSystemData, mode).save()
     Manager.setCurrentProject(systemData)
-    navigate(urlParamFiller(ANITA_URLS.projectDetails, [{ name: URL_PARAMS.projectId, value: project[RESERVED_AUDS_KEYS._settings]![0].id }]))
+    RoutingState.goTo(ANITA_URLS.projectDetails, [{ name: URL_PARAMS.projectId, value: project[RESERVED_AUDS_KEYS._settings]![0].id }])
   }
 
   const handleClickAddSection = () => {
-    storeDispatcher({ type: REDUX_ACTIONS.updateFormProjectAddSection })
+    FormProjectState.addSection()
   }
 
   const projectFormModel = mode === EDITOR_MODE.add
@@ -44,13 +45,21 @@ export const FormProjectManager: React.FC = () => {
 
   return (
     <span>
-      <div className="mt-5 p-4 bg-white rounded shadow">
-        <FormAutomator formModel={projectFormModel as any} element={project[RESERVED_AUDS_KEYS._settings]![0]} handleChange={handleProjectChange} />
+      <div className="ui-card ui-rise mt-5 p-4 md:px-5">
+        <FormAutomator
+          formModel={projectFormModel as any}
+          element={project[RESERVED_AUDS_KEYS._settings]![0]}
+          handleChange={handleProjectChange}
+        />
       </div>
       <div className="px-1 md:px-2 lg:px-3">
-        {project[RESERVED_AUDS_KEYS._sections]?.map((section, index) => <SectionManager key={section.id} section={section} sectionIndex={index} />)}
+        {project[RESERVED_AUDS_KEYS._sections]?.map((section, index) => (<SectionManager
+          key={section.id}
+          section={section}
+          sectionIndex={index}
+                                                                         />))}
       </div>
-      <div className="mt-5 p-4 bg-white rounded shadow">
+      <div className="ui-card mt-5 p-4 md:px-5">
         <div className="flex sm:justify-between flex-wrap">
           <Button
             id="addSection"
@@ -68,7 +77,7 @@ export const FormProjectManager: React.FC = () => {
               marginClassName="mt-8 sm:mt-0 mr-3"
               type={Type.secondary}
               className="grow"
-              onClick={() => navigate(-1)}
+              onClick={() => RoutingState.goTo(-1)}
             />
             <Button
               id="save"

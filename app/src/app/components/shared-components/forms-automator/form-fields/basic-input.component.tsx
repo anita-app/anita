@@ -1,4 +1,3 @@
-import { ICommonFormEleProps } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { calcWidth } from 'app/components/shared-components/forms-automator/form-builder/calc-width.function'
 import { FORM_ELEMENTS_CSS_CLASSES, FORM_ELEMENTS_CSS_CLASSES_ERR } from 'app/components/shared-components/forms-automator/form-layout/fom-elements-css-classes.const'
 import { FormEleContainer } from 'app/components/shared-components/forms-automator/form-layout/form-ele-container.component'
@@ -6,9 +5,18 @@ import { FormElementLabel } from 'app/components/shared-components/forms-automat
 import { ValidatorsContainer } from 'app/components/shared-components/forms-automator/form-validation/validators-container.component'
 import { useValidators } from 'app/components/shared-components/forms-automator/hooks/use-validators.hook'
 import uniqueId from 'lodash/uniqueId'
-import React, { memo, useRef, useState } from 'react'
+import { memo, useRef, useState } from 'react'
+import type { FC } from 'react'
+import type { ICommonFormEleProps } from 'app/components/shared-components/forms-automator/form-automator.types'
 
-export const BasicInput: React.FC<ICommonFormEleProps> = memo(function BasicInput ({ formEle, element, handleChange, forceFullWidth }: ICommonFormEleProps) {
+const INPUT_EXAMPLES: Record<string, string> = {
+  email: 'name@example.com',
+  url: 'https://',
+  tel: '+1 555 0100',
+}
+
+/** @featurePart field.short-text, field.date, field.date-time */
+export const BasicInput: FC<ICommonFormEleProps> = memo(function BasicInput ({ formEle, element, handleChange, forceFullWidth }: ICommonFormEleProps) {
   const [touched, setTouched] = useState(false)
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))
   const [isValid, setIsValidForField] = useValidators(fieldId)
@@ -21,12 +29,18 @@ export const BasicInput: React.FC<ICommonFormEleProps> = memo(function BasicInpu
 
   return (
     <FormEleContainer width={width}>
-      <FormElementLabel label={formEle.label!} labelHint={formEle.labelHint} />
+      <FormElementLabel
+        label={formEle.label!}
+        required={!!formEle.required}
+        labelHint={formEle.labelHint}
+      />
       <input
         key={formEle.fieldName}
         name={formEle.fieldName}
         type={formEle?.type || 'text'}
-        placeholder={formEle.label}
+        // The label is shown above: the placeholder only gives an example of the expected format.
+        placeholder={INPUT_EXAMPLES[formEle?.type ?? ''] ?? ''}
+        aria-label={formEle.label}
         disabled={formEle.disabled ? formEle.disabled : false}
         required={formEle.required ? formEle.required : false}
         className={`w-full ${!isValid && touched ? FORM_ELEMENTS_CSS_CLASSES_ERR : FORM_ELEMENTS_CSS_CLASSES}`}
@@ -35,7 +49,13 @@ export const BasicInput: React.FC<ICommonFormEleProps> = memo(function BasicInpu
         onBlur={() => setTouched(true)}
         autoComplete="off"
       />
-      <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} setIsValidForField={setIsValidForField} />
+      <ValidatorsContainer
+        formEle={formEle}
+        element={element}
+        fieldId={fieldId}
+        touched={touched}
+        setIsValidForField={setIsValidForField}
+      />
     </FormEleContainer>
   )
 }, (prevProps, nextProps) => prevProps.element[prevProps.formEle.fieldName] === nextProps.element[nextProps.formEle.fieldName])

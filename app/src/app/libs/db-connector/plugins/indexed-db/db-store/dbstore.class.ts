@@ -1,11 +1,28 @@
-import { AdditionalInfoForLocalStorage, RESERVED_AUDS_KEYS, TSystemData } from 'app/models/project/project.declarations'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { DataStructureExtender } from 'app/data/system-local-db/data-structure-extender.class'
-import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
-import { DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers'
-import Dexie, { Version } from 'dexie'
+import Dexie from 'dexie'
+import type { AdditionalInfoForLocalStorage, TSystemData } from 'app/models/project/project.declarations'
+import type { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
+import type { DbStoreInterface, DsDbInitOptions } from 'app/libs/db-connector/models/executers'
+import type { Version } from 'dexie'
 
 /**
  * Implementation of DbStore for IndexedDB with Dexie.
+ * @feature storage.local-database
+ * @title Where your data is kept
+ * @summary Projects and records are saved in the browser of your device, without any Anita server.
+ * @where Automatic; nothing to set. The data lives in the storage of the browser (IndexedDB) for the site of Anita.
+ * @usage Nothing to do: every change is saved on the device as soon as you make it.
+ * @options none
+ * @rules Anita has no server: your data never leaves the device unless you sync it with Dropbox or WordPress, or export it.
+ * The data belongs to one browser on one device: another browser, another device or a private window does not see it. To use the same projects elsewhere, sync or export them.
+ * The list of projects is kept in one database of the browser; each project has its own database with a table per section.
+ * Removing a section from a project deletes its records from the device; deleting a project deletes its database from the device.
+ * Clearing the site data or the history of the browser (or private windows being closed) deletes the data kept on the device: keep a copy with sync or export.
+ * @errors none
+ * @status stable
+ * @since 0.9.0
+ * @related app.offline
  */
 export class DbStore implements DbStoreInterface<Dexie> {
   public db!: Dexie
@@ -13,7 +30,7 @@ export class DbStore implements DbStoreInterface<Dexie> {
 
   constructor (
     private options: DsDbInitOptions,
-    private DS: AbstractModel
+    private DS: AbstractModel,
   ) { }
 
   public async initDB (): Promise<DbStoreInterface<Dexie>> {
@@ -96,13 +113,13 @@ export class DbStore implements DbStoreInterface<Dexie> {
       if (!this.DS[section]) {
         this.deletedSections.push(section)
       }
-    })
+    }),
     )
   }
 
   private buildDb (): Version {
     const version = this.options.previousVersions?.length ? this.options.previousVersions.length + 1 : 1
-    const tables: { [key: string]: string | null} = {}
+    const tables: { [key: string]: string | null } = {}
 
     for (const section in this.DS) {
       tables[this.DS[section].name] = this.DS[section].indexes.join()

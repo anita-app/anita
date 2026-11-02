@@ -1,0 +1,67 @@
+import { Bucket } from 'app/state/bucket.state'
+import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
+import { ModalStateAtoms } from './modal-state.atoms'
+import type { IButtonWithTooltipProps } from 'app/components/shared-components/common-ui-eles/button.component'
+import type { ReactNode } from 'react'
+
+interface ICta {
+  actionText: string
+  actionType?: Type
+  disableAction?: boolean
+  handleClickAction?: () => void
+}
+
+/**
+ * @internal
+ */
+export interface IModalPropsOpen {
+  isOpen?: true
+  title: string
+  children: ReactNode
+  type?: Type.primary | Type.danger
+  hideCancelButton?: boolean
+  hideActionRow?: boolean
+  leftButton?: IButtonWithTooltipProps
+  ctas?: Array<ICta>
+  handleClickCancel?: () => void
+  handleOnClose?: () => void
+}
+
+// When isOpen is false or not provided
+/**
+ * @internal
+ */
+export interface IModalPropsClosed {
+  isOpen: false
+}
+
+/**
+ * @internal
+ */
+export type IModalProps = IModalPropsOpen | IModalPropsClosed
+
+/**
+ * @featurePart navigation.dialogs
+ */
+export class ModalState {
+  private static hideTimer: ReturnType<typeof setTimeout> | undefined
+
+  public static showModal = (props: IModalProps) => {
+    // A modal opened right after another one was closed must not be reset by the close animation timer.
+    clearTimeout(ModalState.hideTimer)
+    Bucket.general.set(ModalStateAtoms.modalProps, { type: Type.primary, ...props, isOpen: true } as IModalPropsOpen)
+  }
+
+  public static updateModal = (props: Partial<IModalPropsOpen>) => {
+    const currentProps = Bucket.general.get(ModalStateAtoms.modalProps)
+    Bucket.general.set(ModalStateAtoms.modalProps, { ...currentProps, ...props } as IModalPropsOpen)
+  }
+
+  public static hideModal = () => {
+    const currentConfig = Bucket.general.get(ModalStateAtoms.modalProps)
+    Bucket.general.set(ModalStateAtoms.modalProps, { ...currentConfig, isOpen: false })
+    ModalState.hideTimer = setTimeout(() => {
+      Bucket.general.set(ModalStateAtoms.modalProps, { isOpen: false })
+    }, 300)
+  }
+}

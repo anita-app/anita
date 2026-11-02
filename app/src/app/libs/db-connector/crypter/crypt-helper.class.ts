@@ -1,12 +1,13 @@
 import { securePassEncrypter } from 'app/libs/db-connector/crypter/options.constant'
 import { stringCrypter } from 'app/libs/db-connector/crypter/string-crypter.function'
 import { stringDecrypter } from 'app/libs/db-connector/crypter/string-decrypter.function'
-import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
-import { DbConnectorInstance } from 'app/libs/db-connector/models/executers'
 import { Logger } from 'app/libs/logger/logger.class'
+import type { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
+import type { DbConnectorInstance } from 'app/libs/db-connector/models/executers'
 
 /**
  * Common methods needed to crypt and decrypt data, when data encryption in the DB is enabled.
+ * @internal
  */
 export class CryptHelper<E, DbTypes> {
   /**
@@ -34,7 +35,7 @@ export class CryptHelper<E, DbTypes> {
   constructor (
     protected dbConnector: DbConnectorInstance<DbTypes>,
     protected section: keyof AbstractModel,
-    protected element: E
+    protected element: E,
   ) { }
 
   /**

@@ -11,8 +11,10 @@ export const blogList: Renderer = ({ source, lang, options, frontMatterStore }: 
   sortBlogsByDate(source, frontMatterStore);
 
   source.forEach((filePaths, index) => {
-    const date = frontMatterStore[filePaths.absolutePath].date as unknown as Date;
-    let previewContent = converter.makeHtml(frontMatterStore[filePaths.absolutePath].excerpt as string);
+    const rawDate = frontMatterStore[filePaths.absolutePath]?.date as unknown as Date | undefined;
+    const date = rawDate instanceof Date ? rawDate : (rawDate ? new Date(rawDate as unknown as string) : null);
+    const excerpt = (frontMatterStore[filePaths.absolutePath]?.excerpt as string) || '';
+    let previewContent = converter.makeHtml(excerpt);
     // Remove all html tags
     previewContent = previewContent.replace(/(<([^>]+)>)/gi, '');
     // limit to 200 characters
@@ -20,7 +22,7 @@ export const blogList: Renderer = ({ source, lang, options, frontMatterStore }: 
     if (frontMatterStore[filePaths.absolutePath])
       divs.push(
         <div key={filePaths.absolutePath} className="flex flex-col overflow-hidden rounded-lg shadow-lg">
-          <a href={filePaths.absoluteUrl} className="flex-shrink-0">
+          <a href={filePaths.absoluteUrl} className="shrink-0">
             <img className="h-80 w-full object-cover" src={`/assets/images/blog/${frontMatterStore[filePaths.absolutePath].image}`} alt="" />
           </a>
           <div className="flex flex-1 flex-col justify-between bg-white p-6">
@@ -40,7 +42,11 @@ export const blogList: Renderer = ({ source, lang, options, frontMatterStore }: 
                   <a href={filePaths.absoluteUrl} className="hover:underline">{frontMatterStore[filePaths.absolutePath].author}</a>
                 </p>
                 <div className="flex space-x-1 text-sm text-gray-500">
-                  <time dateTime={date.toISOString().split('T')[0]}>{new DateFormatter(date.toISOString(), 'month DD, YYYY').doFormat()}</time>
+                  {date ? (
+                    <time dateTime={date.toISOString().split('T')[0]}>
+                      {new DateFormatter(date.toISOString(), 'month DD, YYYY').doFormat()}
+                    </time>
+                  ) : null}
                 </div>
               </div>
             </div>

@@ -1,14 +1,14 @@
-import { TAnitaUniversalDataStorage } from 'app/models/project/project.declarations'
-import { DbConnectorInstance } from 'app/libs/db-connector/models/executers'
-import Base from 'deta/dist/types/base'
-import Dexie from 'dexie'
-import { Database } from 'sql.js'
+import type { DbConnectorInstance } from 'app/libs/db-connector/models/executers'
+import type Dexie from 'dexie'
 
 interface DbInstances {
   system: DbConnectorInstance<Dexie>
-  [projectIdentifier: string]: DbConnectorInstance<Dexie | Base | TAnitaUniversalDataStorage | Database>
+  [projectIdentifier: string]: DbConnectorInstance<Dexie>
 }
 
+/**
+ * @internal
+ */
 export const dbInstances: DbInstances = {
-  system: undefined as any
+  system: undefined as any,
 }

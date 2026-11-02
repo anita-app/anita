@@ -1,7 +1,8 @@
-import React from 'react'
+import type { FC } from 'react'
 
 interface IPercentageProps {
   value: string
 }
 
-export const Percentage: React.FC<IPercentageProps> = ({ value }) => value ? <>{value}%</> : null
+/** @featurePart field.short-text */
+export const Percentage: FC<IPercentageProps> = (props) => props.value ? <>{props.value}%</> : null

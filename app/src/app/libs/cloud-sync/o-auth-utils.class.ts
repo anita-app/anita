@@ -1,22 +1,25 @@
 import { ANITA_URLS } from 'app/libs/routing/anita-routes.constant'
 
 const UNIQUE_DATA_SEPARATOR = '|?|?|?|'
+/** @featurePart security.sync-sessions */
 export class OAuthUtils {
   public static redirectToAuthPageIfUrlHasCode (): void {
     if (window.location.href.includes('#access_token=')) {
       const hashData = window.location.href.split('#')[1]
       window.location.hash = `${ANITA_URLS.auth}/${UNIQUE_DATA_SEPARATOR}${hashData}`
     }
-    if (window.location.href.includes('?code=')) {
-      const base = window.location.href.includes('localhost') ? '/' : '/app/'
-      const hashData = window.location.href.split('?code=')[1].split('#')[0]
-      window.location.href = `${base}#${ANITA_URLS.auth}/${UNIQUE_DATA_SEPARATOR}code=${hashData}`
+    // Back from a login, completed (code) or cancelled (error): the answer is handled by the auth page.
+    const query = window.location.search.substring(1)
+    if (/(^|&)(code|error)=/.test(query)) {
+      // The app can be served from any path (e.g. /v1/ on anita-app.com, or a self-hosted installation).
+      const base = window.location.pathname
+      window.location.href = `${base}#${ANITA_URLS.auth}/${UNIQUE_DATA_SEPARATOR}${query}`
     }
   }
 
   public static parseQueryString () {
     const ret = Object.create(null)
-    const urlParams = window.location.href.split(UNIQUE_DATA_SEPARATOR)[1]
+    const urlParams = window.location.href.split(UNIQUE_DATA_SEPARATOR)[1] ?? window.location.href.split('?')[1]
 
     urlParams?.split('&').forEach((param) => {
       const parts = param.replace(/\+/g, ' ').split('=')

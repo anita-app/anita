@@ -1,5 +1,3 @@
-import { ISectionElement } from 'app/models/section-element/section-element.declarations'
-import { IBasicSelect, ICommonFormEleProps } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { calcWidth } from 'app/components/shared-components/forms-automator/form-builder/calc-width.function'
 import { FORM_ELEMENTS_CSS_CLASSES, FORM_ELEMENTS_CSS_CLASSES_ERR } from 'app/components/shared-components/forms-automator/form-layout/fom-elements-css-classes.const'
 import { FormEleContainer } from 'app/components/shared-components/forms-automator/form-layout/form-ele-container.component'
@@ -8,12 +6,29 @@ import { ValidatorsContainer } from 'app/components/shared-components/forms-auto
 import { useSetDefaultValue } from 'app/components/shared-components/forms-automator/hooks/use-set-default-value'
 import { useValidators } from 'app/components/shared-components/forms-automator/hooks/use-validators.hook'
 import uniqueId from 'lodash/uniqueId'
-import React, { memo, useRef, useState, Fragment } from 'react'
+import { memo, useRef, useState, Fragment } from 'react'
 import { Combobox, Transition } from '@headlessui/react'
 import { Icons } from 'app/libs/icons/icons.class'
-import { IOption } from 'app/models/parent-element/parent-element.class'
+import type { FC } from 'react'
+import type { IBasicSelect, ICommonFormEleProps, IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
+import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
+import type { IOption } from 'app/models/parent-element/parent-element.class'
 
-export const BasicSelect: React.FC<ICommonFormEleProps<IBasicSelect<ISectionElement>>> = memo(function BasicSelect ({ formEle, element, handleChange, forceFullWidth }: ICommonFormEleProps<IBasicSelect<ISectionElement>>) {
+/**
+ * @feature field.drop-down
+ * @title Drop-down list field
+ * @summary Pick one value from a list of choices defined for the field, in a drop-down that can be searched.
+ * @where Project editor: a field with Data type "Drop-down list" and its "Choices". In the form of a record, a box with an arrow; the chosen value is shown as a coloured label in lists and on the details page.
+ * @usage Define the choices of the field in the project editor. In the form of a record, click the box or its arrow to open the list and click a choice; type in the box to narrow the list. To clear the field, open the list and click the × next to the chosen item.
+ * @options The choices of the field (see "Choices of a drop-down or alternative choice"). The field starts empty.
+ * @rules The chosen item has a check mark in the open list. Typing narrows the list by the value stored for each choice, not by its label: in basic mode the values are numbers (1, 2, 3...), so typing a word may show "Nothing found.". The chosen value is shown as a coloured label; its colour depends on the position of the choice in the list (six colours, repeated), so the same choice always has the same colour. A record whose value no longer matches any choice (e.g. the choice was deleted) shows the field empty. If the field is required, "This field is required" appears when it is left empty.
+ * @errors none
+ * @status stable
+ * @since 0.1.0
+ * @covers field:basicSelect
+ * @related field.choices, field.alternative-choice, field.required
+ */
+export const BasicSelect: FC<ICommonFormEleProps<IBasicSelect<ISectionElement>>> = memo(function BasicSelect ({ formEle, element, handleChange, forceFullWidth }: ICommonFormEleProps<IBasicSelect<ISectionElement>>) {
   const [touched, setTouched] = useState(false)
   const [query, setQuery] = useState('')
   const { current: fieldId } = useRef(uniqueId(formEle.fieldName))
@@ -31,16 +46,16 @@ export const BasicSelect: React.FC<ICommonFormEleProps<IBasicSelect<ISectionElem
   useSetDefaultValue(currentValueIfValidOrNull, formEle.value!, formEle.fieldName, handleChange)
 
   const filteredOptions =
-  query === ''
-    ? formEle.options
-    : formEle.options.filter((option) => option.value?.toString()
-      .toLowerCase()
-      .replace(/\s+/g, '')
-      .includes(query.toLowerCase().replace(/\s+/g, ''))
-    )
+    query === ''
+      ? formEle.options
+      : formEle.options.filter((option) => option.value?.toString()
+          .toLowerCase()
+          .replace(/\s+/g, '')
+          .includes(query.toLowerCase().replace(/\s+/g, '')),
+        )
 
-  const handleSelected = (option: IOption): void => {
-    handleChange(formEle.fieldName, option.value)
+  const handleSelected = (option: IOptionKeysModel | null): void => {
+    handleChange(formEle.fieldName, option?.value ?? null)
   }
 
   const handleClear = (e: React.MouseEvent): void => {
@@ -51,12 +66,19 @@ export const BasicSelect: React.FC<ICommonFormEleProps<IBasicSelect<ISectionElem
 
   return (
     <FormEleContainer width={width}>
-      <FormElementLabel label={formEle.label!} labelHint={formEle.labelHint} />
-      <Combobox value={selectedOption} onChange={handleSelected}>
+      <FormElementLabel
+        label={formEle.label!}
+        required={!!formEle.required}
+        labelHint={formEle.labelHint}
+      />
+      <Combobox
+        value={selectedOption}
+        onChange={handleSelected}
+      >
         <div className="relative">
-          <div className={`relative w-full cursor-default overflow-hidden bg-white text-left sm:text-sm ${isValid || ''}`}>
+          <div className={`relative w-full cursor-default bg-white rounded-[10px] text-left sm:text-sm ${isValid || ''}`}>
             <Combobox.Input
-              className={`w-full h-[42px] pr-10 text-sm leading-5 focus:ring-0 rounded-md ${!isValid && touched ? FORM_ELEMENTS_CSS_CLASSES_ERR : FORM_ELEMENTS_CSS_CLASSES}`}
+              className={`w-full h-10.5 pr-10 text-base leading-5 focus:ring-0 rounded-md ${!isValid && touched ? FORM_ELEMENTS_CSS_CLASSES_ERR : FORM_ELEMENTS_CSS_CLASSES}`}
               displayValue={(option) => (option as unknown as IOption)?.label}
               onChange={(event) => setQuery(event.target.value)}
               onBlur={() => setTouched(true)}
@@ -72,7 +94,7 @@ export const BasicSelect: React.FC<ICommonFormEleProps<IBasicSelect<ISectionElem
             leaveTo="opacity-0"
             afterLeave={() => setQuery('')}
           >
-            <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-10">
+            <Combobox.Options className="ui-menu absolute mt-1 max-h-60 w-full overflow-auto text-base focus:outline-none sm:text-sm z-10">
               {filteredOptions.length === 0 && query !== ''
                 ? (
                   <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
@@ -83,24 +105,22 @@ export const BasicSelect: React.FC<ICommonFormEleProps<IBasicSelect<ISectionElem
                     filteredOptions.map((option) => (
                       <Combobox.Option
                         key={option.value}
-                        className={({ active }) => `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                        active ? 'bg-prussian-blue-600 text-white' : 'text-gray-900'
+                        className={({ active }) => `relative cursor-default select-none rounded-[9px] py-2 pl-10 pr-4 ${
+                        active ? 'bg-[#eef4fc] text-prussian-blue-500' : 'text-gray-900'
                       }`}
                         value={option}
                       >
                         {({ selected, active }) => (
                           <>
-                            <span
-                              className={`block truncate ${
+                            <span className={`block truncate ${
                             selected ? 'font-medium' : 'font-normal'
                           }`}
                             >
                               {option.label}
                             </span>
                             {(selected || option.icon) && (
-                            <span
-                              className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                              active ? 'text-white' : selected ? 'text-teal-500' : 'text-prussian-blue-600'
+                            <span className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
+                              active ? 'text-[#006fdf]' : selected ? 'text-teal-500' : 'text-prussian-blue-600'
                             }`}
                             >
                               {Icons.render(selected ? 'checkmark' : option.icon!, 'h-5 w-5')}
@@ -109,7 +129,7 @@ export const BasicSelect: React.FC<ICommonFormEleProps<IBasicSelect<ISectionElem
                             {(selected) && (
                             <span
                               className={`absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer ${
-                              active ? 'text-white' : 'text-prussian-blue-600'
+                              active ? 'text-[#006fdf]' : 'text-prussian-blue-600'
                                   }`}
                               onClick={handleClear}
                             >
@@ -125,7 +145,13 @@ export const BasicSelect: React.FC<ICommonFormEleProps<IBasicSelect<ISectionElem
           </Transition>
         </div>
       </Combobox>
-      {(!formEle.value || element[formEle.fieldName]) && <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} setIsValidForField={setIsValidForField} />}
+      {(!formEle.value || element[formEle.fieldName]) && (<ValidatorsContainer
+        formEle={formEle}
+        element={element}
+        fieldId={fieldId}
+        touched={touched}
+        setIsValidForField={setIsValidForField}
+                                                          />)}
     </FormEleContainer>
   )
 }, (prevProps, nextProps) => {

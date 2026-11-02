@@ -1,39 +1,92 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
-import { IProjectSettings, RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
-import { AnitaStore } from 'app/libs/redux/reducers.const'
+import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
 import { ProjectLoadedFooter } from 'app/components/projects/project-card-components/project-loaded-footer.component'
 import { ProjectNotLoadedFooter } from 'app/components/projects/project-card-components/project-not-loaded-footer.component'
 import { DeleteProjectButton } from 'app/components/shared-components/buttons/delete-project.component'
-import * as dateFormat from 'date-format'
-import { useSelector } from 'react-redux'
-import React from 'react'
+import dateFormat from 'date-format'
 import { CardFooter } from 'app/components/shared-components/common-ui-eles/card-footer.component'
+import { useAtomValue } from 'jotai'
+import { ProjectAtoms } from 'app/state/project/project.atoms'
+import { SyncStateAtoms } from 'app/state/sync/sync-state.atoms'
+import { Icons } from 'app/libs/icons/icons.class'
+import { OnboardingState } from 'app/state/onboarding/onboarding-state.class'
+import { ProjectAvatar } from 'app/components/shared-components/common-ui-eles/project-avatar.component'
+import { DROPBOX_REMOTE_ID } from 'app/libs/cloud-sync/dropbox/dropbox.const'
+import { LOCAL_FILE_REMOTE_ID } from 'app/libs/cloud-sync/local-file/local-file.const'
+import type { CSSProperties, FC } from 'react'
+import type { IProjectSettings } from 'app/models/project/project.declarations'
 
 interface IProjectCardProps {
   project: IProjectSettings
+  /** Position in the list, for the staggered entrance */
+  index?: number
 }
 
-export const ProjectCard: React.FC<IProjectCardProps> = ({ project }) => {
-  const projectState = useSelector((state: AnitaStore) => state.project)
+/** @featurePart project.list, project.delete */
+export const ProjectCard: FC<IProjectCardProps> = (props) => {
+  const projectState = useAtomValue(ProjectAtoms.currentSystemData)
+  const remotes = useAtomValue(SyncStateAtoms.wordPressRemotes)
+  const localFile = useAtomValue(SyncStateAtoms.localFileLinks)[props.project.id]
+  const isOnWordPress = !!props.project.remoteStorage && props.project.remoteStorage !== DROPBOX_REMOTE_ID && props.project.remoteStorage !== LOCAL_FILE_REMOTE_ID
 
   return (
-    <div className=" mt-4 h-full border-2 border-gray-200 border-opacity-60 rounded-lg bg-white">
-      <div className="p-6">
-        <h1 className="title-font text-lg font-medium text-gray-900 mb-3">{project.title}</h1>
-        <p className="text-lg mb-3">{project.description}</p>
-
-        <p className="text-gray-600 text-xs">Created on:</p>
-        <p className="text-md">{dateFormat('yyyy/MM/dd, at hh:mm', new Date(project.createdAt))}</p>
-
-        <CardFooter>
-          <DeleteProjectButton project={project} />
-          {(
-            projectState === null ||
-            projectState[RESERVED_AUDS_KEYS._settings][0].id !== project.id ||
-            dbInstances[project.id] === undefined
-          )
-            ? <ProjectNotLoadedFooter project={project} />
-            : <ProjectLoadedFooter project={project} />}
+    <div
+      className="ui-card ui-pcard ui-rise h-full"
+      style={{ '--d': props.index ?? 0 } as CSSProperties}
+    >
+      <div className="p-5 md:p-6">
+        <div className="flex items-start gap-4">
+          <ProjectAvatar
+            id={props.project.id}
+            title={props.project.title}
+            size="large"
+          />
+          <div className="min-w-0 grow">
+            <h2 className="ui-title text-lg break-words">{props.project.title}</h2>
+            {props.project.description && <p className="text-sm text-[#5b6b80] mt-0.5">{props.project.description}</p>}
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-3 text-xs text-[#7a8799]">
+              <span className="inline-flex items-center gap-1">
+                {Icons.render('calendarOutline')} Created on {dateFormat('yyyy/MM/dd, at hh:mm', new Date(props.project.createdAt))}
+              </span>
+              {props.project.remoteStorage === DROPBOX_REMOTE_ID && (
+                <span className="inline-flex items-center gap-1">
+                  {Icons.render('logoDropbox')}
+                  Synced with Dropbox
+                </span>)}
+              {props.project.remoteStorage === LOCAL_FILE_REMOTE_ID && (
+                <span className="inline-flex items-center gap-1 break-all">
+                  {Icons.render('desktopOutline')}
+                  {localFile ? `Synced with ${localFile.name}` : 'Synced with a file on this computer'}
+                </span>)}
+              {isOnWordPress && (
+                <span className="inline-flex items-center gap-1">
+                  {Icons.render('logoWordpress')}
+                  Synced with {remotes.find(remote => remote.remoteId === props.project.remoteStorage)?.data.site_name ?? props.project.remoteStorage}
+                </span>)}
+              {!props.project.remoteStorage && (
+              <button
+                type="button"
+                onClick={() => OnboardingState.openStoreProject(props.project.id)}
+                className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-2.5 py-0.5 font-semibold text-orange-800 transition hover:bg-orange-100 hover:shadow-[0_0_0_3px_rgba(249,115,22,0.12)]"
+              >
+                <span className="ui-dot" />
+                Only on this device, no backup ·{' '}
+                <span className="underline underline-offset-2">Keep it safe</span>
+              </button>)}
+            </div>
+          </div>
+        </div>
+        <CardFooter className="mt-5! pt-4 border-t border-[#eef1f5] items-center!">
+          <DeleteProjectButton project={props.project} />
+          <div className="ml-auto">
+            {(
+              projectState === null ||
+            projectState[RESERVED_AUDS_KEYS._settings][0].id !== props.project.id ||
+            dbInstances[props.project.id] === undefined
+            )
+              ? <ProjectNotLoadedFooter project={props.project} />
+              : <ProjectLoadedFooter project={props.project} />}
+          </div>
         </CardFooter>
 
       </div>

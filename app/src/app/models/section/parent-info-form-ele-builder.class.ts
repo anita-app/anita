@@ -1,13 +1,14 @@
-import { ISectionElement } from 'app/models/section-element/section-element.declarations'
-import { ISection } from 'app/models/section/section.declarations'
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
-import { FormFieldsModel, IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
+import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
+import type { ISection } from 'app/models/section/section.declarations'
+import type { FormFieldsModel, IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 
 /**
  * Builds the form element with the info on the parent section for ParentsSelector
  *
  * @see ParentsSelector
+ * @featurePart relation.link-to-parent
  */
 export class ParentInfoFormEleBuilder {
   private parentInfoFormModel: FormFieldsModel<ISectionElement> | undefined
@@ -15,7 +16,7 @@ export class ParentInfoFormEleBuilder {
 
   constructor (
     private childOf: Array<string>,
-    private sections?: Array<ISection>
+    private sections?: Array<ISection>,
 
   ) { }
 
@@ -38,8 +39,8 @@ export class ParentInfoFormEleBuilder {
     this.parentInfoFormModel = {
       componentCode: FORM_COMPONENTS_CODES.parentsSelector,
       fieldName: RESERVED_FIELDS.parentsInfo,
-      label: 'Parent elements',
-      options: this.options
+      label: `Linked to ${this.options.map(option => option.label).join(', ')}`,
+      options: this.options,
     }
   }
 }

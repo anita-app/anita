@@ -1,14 +1,18 @@
-import React, { Fragment, useRef } from 'react'
+import { Fragment, useRef, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
-import { TIconName } from 'app/libs/icons/icons.class'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
 import { useClickOutside } from 'app/components/hooks/click-outside.hook'
+import type { FC } from 'react'
+import type { TIconName } from 'app/libs/icons/icons.class'
 
 function classNames (...classes: Array<string>) {
   return classes.filter(Boolean).join(' ')
 }
 
+/**
+ * @internal
+ */
 export interface IMenuItem {
   id: string
   label: string
@@ -28,14 +32,20 @@ interface IDropdown {
   margin?: string
 }
 
-export const Dropdown: React.FC<IDropdown> = (props) => {
+/**
+ * @internal
+ */
+export const Dropdown: FC<IDropdown> = (props) => {
   const dropdownRef = useRef<HTMLDivElement>(null)
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
   const toggleOpen = (currentState: boolean) => setOpen(!currentState)
   const closeDropdown = () => setOpen(false)
   useClickOutside(dropdownRef, closeDropdown)
   return (
-    <Menu as="div" className={`relative inline-block text-left ${props.margin || ''}`}>
+    <Menu
+      as="div"
+      className={`relative inline-block text-left ${props.margin || ''}`}
+    >
       <div ref={dropdownRef}>
         <div>
           <Button
@@ -66,16 +76,16 @@ export const Dropdown: React.FC<IDropdown> = (props) => {
         >
           <Menu.Items
             as="div"
-            className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+            className="ui-menu origin-top-right absolute right-0 mt-2 w-56 z-20 focus:outline-none"
           >
-            <div className="py-1">
+            <div>
               {props.menuItems.map((item) => (
                 <Menu.Item key={item.id}>
                   {({ active }) => (
                     <div
                       className={classNames(
-                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                        'block px-4 py-2 text-sm cursor-pointer'
+                        active ? 'bg-[#f0f5fb] text-[#002346]' : 'text-[#1e2b3c]',
+                        'block px-3 py-2 rounded-[9px] text-sm cursor-pointer',
                       )}
                       onClick={item.handleClick}
                     >

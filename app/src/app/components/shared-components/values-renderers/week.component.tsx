@@ -1,9 +1,10 @@
-import React from 'react'
+import type { FC } from 'react'
 
 interface IWeekProps {
   value: string
 }
 
-export const Week: React.FC<IWeekProps> = ({ value }) => value
-  ? <>{value.split('-W').reverse().join('-').replace(/0(\d+)/, '$1')}</>
+/** @featurePart field.date */
+export const Week: FC<IWeekProps> = (props) => props.value
+  ? <>{props.value.split('-W').reverse().join('-').replace(/0(\d+)/, '$1')}</>
   : null

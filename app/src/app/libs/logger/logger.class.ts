@@ -1,3 +1,6 @@
+/**
+ * @internal
+ */
 export class Logger {
   /**
    * Whether to print to the console debug info
@@ -123,6 +126,7 @@ export class Logger {
     data[0] = `[${date}] ${data[0]}`
 
     if (Logger.debug === true) {
+      // eslint-disable-next-line no-console
       console[methodName](...data)
     }
 

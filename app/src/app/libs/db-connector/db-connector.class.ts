@@ -1,9 +1,9 @@
 /* eslint-disable new-cap */
 import { AUDS_SYSTEM_SECTIONS_DEFINITIONS } from 'app/data/system-local-db/auds-system-sections.enum'
 import { DataStructureBuilder } from 'app/libs/db-connector/db-builder/data-structure-builder.class'
-import { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition'
-import { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
-import {
+import type { SectionDefinition } from 'app/libs/db-connector/db-builder/sez-definition'
+import type { AbstractModel } from 'app/libs/db-connector/models/abstract-model'
+import type {
   DbConnectorInstance,
   DbObjects,
   DbStoreInterface,
@@ -11,7 +11,7 @@ import {
   DsDbInitOptions,
   Insertor,
   Selector,
-  Updator
+  Updator,
 } from 'app/libs/db-connector/models/executers'
 
 /**
@@ -21,6 +21,7 @@ import {
  * @param [options={}] Initialization options of the DB. These very depending on the plugin requirements (e.g. connection parameters)
  * @param [allSez] section definitions defining the data structure of the DB
  * @param [addSystemSections=true] whether to automatically build the data structure for system sections (`_settings` and `_sections`)
+ * @internal
  */
 export class DbConnector<DbTypes> implements DbConnectorInstance<DbTypes> {
   public dbStore!: DbStoreInterface<DbTypes>
@@ -30,7 +31,7 @@ export class DbConnector<DbTypes> implements DbConnectorInstance<DbTypes> {
     private executers: DbObjects<unknown, DbTypes>,
     public options: DsDbInitOptions = {},
     private allSez: Array<SectionDefinition<any>> = [],
-    private addSystemSections: boolean = true
+    private addSystemSections: boolean = true,
   ) { }
 
   public async init (): Promise<DbConnectorInstance<DbTypes>> {

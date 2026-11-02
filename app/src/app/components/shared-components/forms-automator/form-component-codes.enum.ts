@@ -1,10 +1,11 @@
-import { IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
+import type { IOptionKeysModel } from 'app/components/shared-components/forms-automator/form-automator.types'
 
 /**
  * Values to identify the form component to dynamically load.
  *
  * @remarks
  * These values are stored in each `Section` in `AnitaUniversalDataStorage['sections']` so their number __must__ not be changed. Element can be added freely.
+ * @internal
  */
 export enum FORM_COMPONENTS_CODES {
   basicInput = 1,
@@ -18,39 +19,41 @@ export enum FORM_COMPONENTS_CODES {
   dateTimePicker = 9,
   childOfSelectorForSection = 10,
   parentsSelector = 11,
-  basicTextarea = 12
+  basicTextarea = 12,
+  remoteSelector = 13,
 }
 
 /**
  * Defines the value of the Select element for picking the type of Component for a field.
+ * @featurePart field.short-text, field.long-text, field.checkbox, field.drop-down, field.alternative-choice, field.date, field.date-time
  */
 export const SELECTABLE_FORM_ELES: Array<IOptionKeysModel> = [
   {
     value: FORM_COMPONENTS_CODES.basicInput,
-    label: 'Short text'
+    label: 'Short text',
   },
   {
     value: FORM_COMPONENTS_CODES.richText,
-    label: 'Long text'
+    label: 'Long text',
   },
   {
     value: FORM_COMPONENTS_CODES.basicCheckbox,
-    label: 'Check box'
+    label: 'Check box',
   },
   {
     value: FORM_COMPONENTS_CODES.basicSelect,
-    label: 'Drop-down list'
+    label: 'Drop-down list',
   },
   {
     value: FORM_COMPONENTS_CODES.basicRadio,
-    label: 'Alternative choice'
+    label: 'Alternative choice',
   },
   {
     value: FORM_COMPONENTS_CODES.datePicker,
-    label: 'Date picker'
+    label: 'Date picker',
   },
   {
     value: FORM_COMPONENTS_CODES.dateTimePicker,
-    label: 'Date & time'
-  }
+    label: 'Date & time',
+  },
 ]

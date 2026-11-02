@@ -1,24 +1,42 @@
 import { RESERVED_AUDS_KEYS } from 'app/models/project/project.declarations'
-import { ISectionElement } from 'app/models/section-element/section-element.declarations'
-import { AnitaStore } from 'app/libs/redux/reducers.const'
-import { IOption, ParentElement } from 'app/models/parent-element/parent-element.class'
-import { IBasicSelect, ICommonFormEleProps } from 'app/components/shared-components/forms-automator/form-automator.types'
+import { ParentElement } from 'app/models/parent-element/parent-element.class'
 import { FormEleContainer } from 'app/components/shared-components/forms-automator/form-layout/form-ele-container.component'
 import { FormElementLabel } from 'app/components/shared-components/forms-automator/form-layout/form-element-label.component'
 import { ValidatorsContainer } from 'app/components/shared-components/forms-automator/form-validation/validators-container.component'
 import { useValidators } from 'app/components/shared-components/forms-automator/hooks/use-validators.hook'
 import uniqueId from 'lodash/uniqueId'
-import React, {
+import {
   memo,
   useEffect,
   useRef,
-  useState
+  useState,
 } from 'react'
-import { useSelector } from 'react-redux'
-import Select, { MultiValue } from 'react-select'
+import { Select } from 'app/components/shared-components/common-ui-eles/select.component'
+import { formSelectStyles } from 'app/components/shared-components/forms-automator/form-layout/select-styles.const'
+import { useAtomValue } from 'jotai'
+import { FormProjectAtoms } from 'app/state/form-project/form-project.atoms'
+import type { FC } from 'react'
+import type { MultiValue } from 'react-select'
+import type { IBasicSelect, ICommonFormEleProps } from 'app/components/shared-components/forms-automator/form-automator.types'
+import type { IOption } from 'app/models/parent-element/parent-element.class'
+import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
-export const ChildOfSelectorForSection: React.FC<ICommonFormEleProps<IBasicSelect<ISectionElement>>> = memo(function ChildOfSelectorForSection ({ formEle, element, handleChange, sectionId }: ICommonFormEleProps<IBasicSelect<ISectionElement>>) {
-  const currentEditedProjectSections = useSelector((state: AnitaStore) => state.formProject.project[RESERVED_AUDS_KEYS._sections])
+/**
+ * @feature relation.parent-sections
+ * @title Parent sections
+ * @summary Make a section the child of other sections, so that its records can be linked to records of those sections (e.g. Tasks linked to Projects).
+ * @where Project editor, in the settings of a section: the "Parent sections:" field.
+ * @usage In the project editor, open the section that will hold the child records and choose one or more sections in "Parent sections:". Remove a parent with the × on its tag. Save the project.
+ * @options Any other section of the project; several parent sections are allowed. Default: none.
+ * @rules The field appears only when the project has at least one other section; a section cannot be its own parent. Once a section has parent sections, the form of its records shows the "Linked to" field, and the records of the parent sections show tabs with the records linked to them.
+ * @errors none
+ * @status stable
+ * @since 0.3.0
+ * @related relation.link-to-parent
+ */
+export const ChildOfSelectorForSection: FC<ICommonFormEleProps<IBasicSelect<ISectionElement>>> = memo(function ChildOfSelectorForSection ({ formEle, element, handleChange, sectionId }: ICommonFormEleProps<IBasicSelect<ISectionElement>>) {
+  const currentProject = useAtomValue(FormProjectAtoms.project)
+  const currentEditedProjectSections = currentProject[RESERVED_AUDS_KEYS._sections]
   const [selectOptions, setSelectOptions] = useState<Array<IOption>>([])
 
   const [touched, setTouched] = useState(false)
@@ -26,8 +44,6 @@ export const ChildOfSelectorForSection: React.FC<ICommonFormEleProps<IBasicSelec
   const [isValid, setIsValidForField] = useValidators(fieldId)
 
   useEffect(() => {
-    let isMounted = true
-
     const buildOptions = () => {
       if (!Array.isArray(currentEditedProjectSections)) {
         return
@@ -38,20 +54,14 @@ export const ChildOfSelectorForSection: React.FC<ICommonFormEleProps<IBasicSelec
         if (sectionDec.id !== sectionId) {
           selectableSections.push({
             value: sectionDec.id,
-            label: sectionDec.title
+            label: sectionDec.title,
           })
         }
       })
       setSelectOptions(selectableSections)
     }
 
-    if (isMounted) {
-      buildOptions()
-    }
-
-    return () => {
-      isMounted = false
-    }
+    buildOptions()
   }, [currentEditedProjectSections, currentEditedProjectSections?.length, sectionId])
 
   const handleChangeInChildOfSelectorForSection = (newValue: MultiValue<IOption>) => {
@@ -66,17 +76,26 @@ export const ChildOfSelectorForSection: React.FC<ICommonFormEleProps<IBasicSelec
   // and the ones we define are not compatible.
   return (
     <FormEleContainer width="w-full">
-      <FormElementLabel label={formEle.label!} labelHint={formEle.labelHint} />
+      <FormElementLabel
+        label={formEle.label!}
+        labelHint={formEle.labelHint}
+      />
       <Select
         defaultValue={ParentElement.infoStringToObj(element[formEle.fieldName], selectOptions as any)}
         isMulti={true}
         name={formEle.fieldName}
         options={selectOptions as any}
-        className={!isValid && touched ? 'border border-red-600 rounded' : ''}
+        styles={formSelectStyles(!isValid && touched)}
         onChange={handleChangeInChildOfSelectorForSection}
         onBlur={() => setTouched(true)}
       />
-      <ValidatorsContainer formEle={formEle} element={element} fieldId={fieldId} touched={touched} setIsValidForField={setIsValidForField} />
+      <ValidatorsContainer
+        formEle={formEle}
+        element={element}
+        fieldId={fieldId}
+        touched={touched}
+        setIsValidForField={setIsValidForField}
+      />
     </FormEleContainer>
   )
 }, (prevProps, nextProps) => prevProps.element[prevProps.formEle.fieldName] === nextProps.element[nextProps.formEle.fieldName])

@@ -1,24 +1,26 @@
-import { Manager } from 'app/libs/manager/manager.class'
-import { AnitaStore } from 'app/libs/redux/reducers.const'
-import { REDUX_ACTIONS } from 'app/libs/redux/redux-actions.const'
-import { storeDispatcher } from 'app/libs/redux/store-dispatcher.function'
 import { FormAutomator } from 'app/components/shared-components/forms-automator/form-automator.component'
-import { FormAutomatorOnChangeValue } from 'app/components/shared-components/forms-automator/form-automator.types'
-import { useSelector } from 'react-redux'
-import React from 'react'
+import { useAtomValue } from 'jotai'
+import { FormElementAtoms } from 'app/state/form-element/form-element.atoms'
+import { FormElementState } from 'app/state/form-element/form-element-state.class'
+import { ProjectAtoms } from 'app/state/project/project.atoms'
+import type { FC } from 'react'
+import type { FormAutomatorOnChangeValue } from 'app/components/shared-components/forms-automator/form-automator.types'
+import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
 interface IProjectFormElementManagerProps {
   sectionId: string
 }
 
-export const ProjectSectionElementAddEditFormManager: React.FC<IProjectFormElementManagerProps> = ({ sectionId }) => {
-  const project = Manager.getCurrentProject()
-  const section = project?.getSectionById(sectionId)
+/** @featurePart record.add, record.edit */
+export const ProjectSectionElementAddEditFormManager: FC<IProjectFormElementManagerProps> = (props) => {
+  const project = useAtomValue(ProjectAtoms.currentProject)
+  const allSections = project?.getSectionsDefinitions()!
+  const section = project?.getSectionById(props.sectionId)
 
-  const element = useSelector((store: AnitaStore) => store.formElement.element)
+  const element = useAtomValue(FormElementAtoms.element)
 
   const handleChange = (fieldName: string | number, value: FormAutomatorOnChangeValue) => {
-    storeDispatcher({ type: REDUX_ACTIONS.updateFormElementKey, payload: { fieldName, value } })
+    FormElementState.updateElementKey(fieldName as keyof ISectionElement, value as ISectionElement[keyof ISectionElement])
   }
 
   if (!section || !element) {
@@ -27,12 +29,18 @@ export const ProjectSectionElementAddEditFormManager: React.FC<IProjectFormEleme
 
   return (
     <form name="element-form">
-      {section.childOf && section.childOf.length > 0 && (<FormAutomator
-        formModel={[section.getParentInfoFormEle()]}
-        element={element}
+      {section.childOf && section.childOf.length > 0 && (
+        <FormAutomator
+          formModel={[section.getParentInfoFormEle(allSections)]}
+          element={element}
+          handleChange={handleChange}
+        />
+      )}
+      <FormAutomator
+        formModel={section?.formModel!}
+        element={element!}
         handleChange={handleChange}
-                                                         />)}
-      <FormAutomator formModel={section?.formModel!} element={element!} handleChange={handleChange} />
+      />
     </form>
   )
 }

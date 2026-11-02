@@ -4,6 +4,7 @@ import { stringCrypter } from 'app/libs/db-connector/crypter/string-crypter.func
 
 /**
  * Encrypts one element at a time.
+ * @internal
  */
 export class Encrypter<E, DbTypes> extends CryptHelper<E, DbTypes> {
   /**

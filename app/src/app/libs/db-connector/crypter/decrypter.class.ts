@@ -4,6 +4,7 @@ import { stringDecrypter } from 'app/libs/db-connector/crypter/string-decrypter.
 
 /**
  * Decrypts one element at a time.
+ * @internal
  */
 export class Decrypter<E, DbTypes> extends CryptHelper<E, DbTypes> {
   /**

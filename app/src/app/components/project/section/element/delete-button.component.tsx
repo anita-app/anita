@@ -1,12 +1,12 @@
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
-import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
-import React from 'react'
-import { useNavigate } from 'react-router'
-import { useModalContext } from 'app/components/shared-components/modals/modal-context'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
-import { Manager } from 'app/libs/manager/manager.class'
 import { RESERVED_FIELDS } from 'app/models/reserved-fields.constant'
+import { ModalState } from 'app/state/modal/modal-state.class'
+import { RoutingState } from 'app/state/routing/routing-state.class'
+import { Bucket } from 'app/state/bucket.state'
+import { ProjectAtoms } from 'app/state/project/project.atoms'
+import type { FC } from 'react'
 
 interface IProjectSectionElementDeleteButtonProps {
   projectId: string
@@ -14,24 +14,34 @@ interface IProjectSectionElementDeleteButtonProps {
   elementId: string
 }
 
-export const ProjectSectionElementDeleteButton: React.FC<IProjectSectionElementDeleteButtonProps> = ({ projectId, sectionId, elementId }) => {
-  const { showModal } = useModalContext()
-
-  const navigate = useNavigate()
-
+/**
+ * @feature record.delete
+ * @title Delete a record
+ * @summary Removes a record from its section.
+ * @where Details page of a record: the red "Delete" button at the bottom of the details.
+ * @usage Open the record, click "Delete", then confirm with "Delete" in the "Delete element" window.
+ * @options none
+ * @rules The window asks "Are you sure you want to delete this element?" and warns that the action cannot be undone. After deleting, the list of the section opens. When the project is on Dropbox or WordPress, the deletion is synced. On small screens the button shows only its icon, with a tooltip.
+ * @errors none
+ * @status stable
+ * @since 0.11.0
+ * @routes projectSectionEleDetails
+ * @related record.details
+ */
+export const ProjectSectionElementDeleteButton: FC<IProjectSectionElementDeleteButtonProps> = (props) => {
   const handleClickDelete = () => {
-    Manager.getCurrentProject()?.getSectionById(sectionId)?.deleteElement({ [RESERVED_FIELDS.id]: elementId })
-    navigate(urlParamFiller(ANITA_URLS.projectSectionElesList, [{ name: URL_PARAMS.projectId, value: projectId }, { name: URL_PARAMS.sectionId, value: sectionId }]))
+    Bucket.general.get(ProjectAtoms.currentProject)?.getSectionById(props.sectionId)?.deleteElement({ [RESERVED_FIELDS.id]: props.elementId })
+    RoutingState.goTo(ANITA_URLS.projectSectionElesList, [{ name: URL_PARAMS.projectId, value: props.projectId }, { name: URL_PARAMS.sectionId, value: props.sectionId }])
   }
 
   const handleClickModal = () => {
-    showModal({
+    ModalState.showModal({
       title: 'Delete element',
-      actionText: 'Delete',
       type: Type.danger,
-      handleClickAction: handleClickDelete,
-      icon: 'warningOutline',
-      iconClassName: 'text-red-600',
+      ctas: [{
+        actionText: 'Delete',
+        handleClickAction: handleClickDelete,
+      }],
       children: (
         <>
           <p className="text-sm text-gray-500">
@@ -41,7 +51,7 @@ export const ProjectSectionElementDeleteButton: React.FC<IProjectSectionElementD
             This action cannot be undone.
           </p>
         </>
-      )
+      ),
     })
   }
 
@@ -55,7 +65,7 @@ export const ProjectSectionElementDeleteButton: React.FC<IProjectSectionElementD
       onClick={handleClickModal}
       breakpoint="lg"
       hasTooltip={true}
-      marginClassName="mt-6"
+      marginClassName=""
     />
   )
 }

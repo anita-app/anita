@@ -1,36 +1,40 @@
 import { ListTabsHeaderRightEditViewTable } from 'app/components/project/section/list/tabs/header-right-edit-view-table.component'
 import { Button } from 'app/components/shared-components/common-ui-eles/button.component'
 import { Type } from 'app/components/shared-components/common-ui-eles/components.const'
-import { useModalContext } from 'app/components/shared-components/modals/modal-context'
-import { IModalProps } from 'app/components/shared-components/modals/modal.component'
 import { SupportedViews } from 'app/models/section/view-settings.const'
-import React from 'react'
+import { ModalState } from 'app/state/modal/modal-state.class'
+import type { FC } from 'react'
+import type { IModalProps } from 'app/state/modal/modal-state.class'
 
 interface IListTabsHeaderRightEditViewProps {
   sectionId: string
   activeTab: SupportedViews
 }
 
-export const ListTabsHeaderRightEditView: React.FC<IListTabsHeaderRightEditViewProps> = (props: IListTabsHeaderRightEditViewProps) => {
+/** @featurePart view.table-columns, view.grid */
+export const ListTabsHeaderRightEditView: FC<IListTabsHeaderRightEditViewProps> = (props: IListTabsHeaderRightEditViewProps) => {
   const modalConfigsByView: { [key: number]: IModalProps } = {
     [SupportedViews.grid]: {
       title: 'Edit Card Layout',
-      actionText: 'Close',
+      ctas: [{
+        actionText: 'Close',
+      }],
       hideCancelButton: true,
       type: Type.primary,
-      children: <>ToDo</>
+      children: <>ToDo</>,
     },
     [SupportedViews.table]: {
       title: 'Edit visible columns',
-      actionText: 'Close',
+      ctas: [{
+        actionText: 'Close',
+      }],
       hideCancelButton: true,
       type: Type.primary,
-      children: <><ListTabsHeaderRightEditViewTable sectionId={props.sectionId} /></>
-    }
+      children: <><ListTabsHeaderRightEditViewTable sectionId={props.sectionId} /></>,
+    },
   }
-  const { showModal } = useModalContext()
   const handleOpenConfigForView = () => {
-    showModal(modalConfigsByView[props.activeTab])
+    ModalState.showModal(modalConfigsByView[props.activeTab])
   }
   return (
     <>

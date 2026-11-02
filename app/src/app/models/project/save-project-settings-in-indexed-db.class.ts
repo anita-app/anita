@@ -1,9 +1,11 @@
 import { dbInstances } from 'app/data/local-dbs/db-instances.const'
-import { AdditionalInfoForLocalStorage, LocalProjectSettings, IProjectSettings } from 'app/models/project/project.declarations'
 import { CLIENT_SECTIONS } from 'app/data/system-local-db/client-sections.enum'
+import type { AdditionalInfoForLocalStorage, LocalProjectSettings, IProjectSettings } from 'app/models/project/project.declarations'
 
 /**
  * Saves project's settings in IndexedDB.
+ *
+ * @internal
  */
 export class SaveProjectSettingsInIndexedDB {
   /**
@@ -14,11 +16,11 @@ export class SaveProjectSettingsInIndexedDB {
   /**
    * Creates an instance of save project settings in indexed db.
    * @param projectSettings settings Object of the project to store
-   * @param fileHandle handle of the file on disk. Saved in the IndexedDB for future use
+   * @param localSettingAdditionalKeys extra settings saved in IndexedDB for future use
    */
   constructor (
     private projectSettings: IProjectSettings,
-    private localSettingAdditionalKeys: AdditionalInfoForLocalStorage
+    private localSettingAdditionalKeys: AdditionalInfoForLocalStorage,
   ) { }
 
   /**
@@ -27,13 +29,13 @@ export class SaveProjectSettingsInIndexedDB {
    */
   public async save (): Promise<LocalProjectSettings> {
     this.setProjectSettingsCloneWithAdditionalKeys()
-    this.doStoreProjectSettings()
+    await this.doStoreProjectSettings()
 
     return this.copyOfProjectSettings!
   }
 
   /**
-   * Deep clonse settings and then adds the fileHandle to prevent setting the fileHandle on the project data object
+   * Deep clone settings and then add extra local settings for storage in IndexedDB
    */
   private setProjectSettingsCloneWithAdditionalKeys (): void {
     this.copyOfProjectSettings = { ...this.projectSettings, ...this.localSettingAdditionalKeys }
@@ -42,7 +44,7 @@ export class SaveProjectSettingsInIndexedDB {
   /**
    * Stores the project settings with db-connector
    */
-  private doStoreProjectSettings (): void {
-    dbInstances.system.callInsertor(CLIENT_SECTIONS.projects, this.copyOfProjectSettings).autoInsert()
+  private doStoreProjectSettings (): Promise<void> {
+    return dbInstances.system.callInsertor(CLIENT_SECTIONS.projects, this.copyOfProjectSettings).autoInsert()
   }
 }

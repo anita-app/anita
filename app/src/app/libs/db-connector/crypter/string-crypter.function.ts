@@ -1,4 +1,4 @@
-import CryptoES from 'crypto-es'
+import { AES } from 'crypto-es'
 
 /**
  * Encrypts a string
@@ -6,8 +6,9 @@ import CryptoES from 'crypto-es'
  * @param value the value to encrypt
  * @param keyToUse the key to use for encryption
  * @return the encrypted string
+ * @internal
  */
 export function stringCrypter (value: string, keyToUse: string): string {
-  const encrypted = CryptoES.AES.encrypt(value, keyToUse)
+  const encrypted = AES.encrypt(value, keyToUse)
   return encrypted.toString()
 }

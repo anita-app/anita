@@ -1,5 +1,7 @@
+/**
+ * @internal
+ */
 export class TextTools {
-  /* eslint-disable n/no-callback-literal */
   // Removes non ascii characters from a string and replaces with ascii chars, plus replaces spaces with -
   public static cleanString (source: string): string {
     let r = source.toLowerCase()
@@ -13,7 +15,7 @@ export class TextTools {
       o: '[òóôõö]',
       oe: 'œ',
       u: '[ùúûűü]',
-      y: '[ýÿ]'
+      y: '[ýÿ]',
     }
     for (const i in nonAsciis) {
       r = r.replace(new RegExp(nonAsciis[i as keyof typeof nonAsciis], 'g'), i)

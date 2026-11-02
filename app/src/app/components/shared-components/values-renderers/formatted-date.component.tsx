@@ -1,9 +1,9 @@
-import React from 'react'
-
-import * as dateFormat from 'date-format'
+import dateFormat from 'date-format'
+import type { FC } from 'react'
 
 interface IFormattedDateProps {
   value: string
 }
 
-export const FormattedDate: React.FC<IFormattedDateProps> = ({ value }) => value ? <>{dateFormat('yyyy/MM/dd', new Date(value))}</> : null
+/** @featurePart field.date */
+export const FormattedDate: FC<IFormattedDateProps> = (props) => props.value ? <>{dateFormat('yyyy/MM/dd', new Date(props.value))}</> : null

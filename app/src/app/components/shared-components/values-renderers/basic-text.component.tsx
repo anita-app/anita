@@ -1,7 +1,8 @@
-import React from 'react'
+import type { FC } from 'react'
 
 interface IBasicTextProps {
   value: string
 }
 
-export const BasicText: React.FC<IBasicTextProps> = ({ value }) => value ? <>{value}</> : null
+/** @featurePart field.short-text, field.date-time */
+export const BasicText: FC<IBasicTextProps> = (props) => props.value ? <>{props.value}</> : null

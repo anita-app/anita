@@ -1,55 +1,108 @@
-import React, { useRef } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { ANITA_URLS, URL_PARAMS } from 'app/libs/routing/anita-routes.constant'
-import { urlParamFiller } from 'app/libs/routing/url-param-fillers.function'
-import { ISectionElement } from 'app/models/section-element/section-element.declarations'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { RichText } from 'app/components/shared-components/values-renderers/rich-text.component'
-import { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
 import { FORM_COMPONENTS_CODES } from 'app/components/shared-components/forms-automator/form-component-codes.enum'
+import { customRenderPicker } from 'app/components/shared-components/values-renderers/custom-render-picker.component'
+import { RoutingState } from 'app/state/routing/routing-state.class'
+import { Icons } from 'app/libs/icons/icons.class'
+import type { FC, ReactNode } from 'react'
+import type { FormFieldsModel, TSupportedFormsTypes } from 'app/components/shared-components/forms-automator/form-automator.types'
+import type { ISectionElement } from 'app/models/section-element/section-element.declarations'
 
 interface IProjectSectionListGridElementProps {
   element: ISectionElement
   titleField: FormFieldsModel<TSupportedFormsTypes>
   descriptionKey: string
+  /** Short values shown under the title, e.g. status and due date */
+  metaFields?: Array<FormFieldsModel<TSupportedFormsTypes>>
 }
 
-const DESCRIPTION_MAX_LENGHT = 500
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const shortenDescription = (string: string) => string.length > DESCRIPTION_MAX_LENGHT ? string.slice(0, DESCRIPTION_MAX_LENGHT) + ' …' : string
+// Values other than text (e.g. dates) are shown as in the table.
+const renderTitle = (field: FormFieldsModel<TSupportedFormsTypes>, value: unknown): ReactNode => {
+  if (value === undefined || value === null || value === '') {
+    return <span className="text-gray-400">Untitled</span>
+  }
+  return customRenderPicker(field)({ value }) as ReactNode
+}
 
-export const ProjectSectionListGridElement: React.FC<IProjectSectionListGridElementProps> = (props) => {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const navigation = useNavigate()
+/** @featurePart view.grid */
+export const ProjectSectionListGridElement: FC<IProjectSectionListGridElementProps> = (props) => {
+  const descriptionRef = useRef<HTMLDivElement>(null)
+  const [isDescriptionCut, setIsDescriptionCut] = useState(false)
   const params = useParams()
+  const description = props.descriptionKey && props.descriptionKey !== props.titleField.fieldName ? props.element[props.descriptionKey] : undefined
+
+  // The fade is shown only when the description is taller than the card allows.
+  useLayoutEffect(() => {
+    const box = descriptionRef.current
+    if (!box) {
+      setIsDescriptionCut(false)
+      return
+    }
+    const check = () => setIsDescriptionCut(box.scrollHeight > box.clientHeight + 1)
+    check()
+    const observer = new ResizeObserver(check)
+    observer.observe(box)
+    if (box.firstElementChild) {
+      observer.observe(box.firstElementChild)
+    }
+    return () => observer.disconnect()
+  }, [description])
+
+  const metaFields = (props.metaFields ?? []).filter(field => {
+    const value = props.element[field.fieldName]
+    return value !== undefined && value !== null && value !== ''
+  })
+
   const handleClick = () => {
     if (params.projectId && params.sectionId && props.element.id) {
-      navigation(urlParamFiller(ANITA_URLS.projectSectionEleDetails, [
+      RoutingState.goTo(ANITA_URLS.projectSectionEleDetails, [
         { name: URL_PARAMS.projectId, value: params.projectId },
         { name: URL_PARAMS.sectionId, value: params.sectionId },
-        { name: URL_PARAMS.elementId, value: props.element.id }
-      ]))
+        { name: URL_PARAMS.elementId, value: props.element.id },
+      ])
     }
   }
 
   return (
-    <div ref={containerRef} key={props.element.id} className="h-max cursor-pointer mb-6 break-inside-avoid-column" onClick={handleClick}>
-      <div className="w-full bg-white rounded-lg shadow flex items-center justify-between p-6 space-x-6">
+    <div
+      className="h-max cursor-pointer mb-6 break-inside-avoid-column"
+      onClick={handleClick}
+    >
+      <div className="ui-gcard w-full flex items-center justify-between p-5 space-x-6">
         <div className="flex-1 relative overflow-hidden">
           <div className="flex items-center space-x-3">
             {props.titleField.componentCode !== FORM_COMPONENTS_CODES.richText && (
-              <h3 className="text-gray-900 text-sm font-medium">{props.element[props.titleField.fieldName]}</h3>
+              <h3 className="text-[#0b1f36] text-sm font-semibold">{renderTitle(props.titleField, props.element[props.titleField.fieldName])}</h3>
             )}
             {props.titleField.componentCode === FORM_COMPONENTS_CODES.richText && (
               <RichText value={props.element[props.titleField.fieldName]} />
             )}
           </div>
-          {props.descriptionKey && props.descriptionKey !== props.titleField.fieldName && props.element[props.descriptionKey] && (
+          {metaFields.length > 0 && (
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 mt-2.5 text-xs text-[#7a8799]">
+              {metaFields.map(field => (
+                <span
+                  key={field.fieldName}
+                  className="inline-flex items-center gap-1"
+                >
+                  {Number(field.componentCode) === FORM_COMPONENTS_CODES.datePicker && Icons.render('calendarOutline')}
+                  {customRenderPicker(field)({ value: props.element[field.fieldName] }) as ReactNode}
+                </span>
+              ))}
+            </div>
+          )}
+          {description && (
             <>
-              <div className="mt-1 text-gray-500 text-sm max-h-96 overflow-hidden">
-                <RichText value={props.element[props.descriptionKey]} />
+              <div
+                ref={descriptionRef}
+                className="mt-1 text-gray-500 text-sm max-h-96 overflow-hidden"
+              >
+                <RichText value={description} />
               </div>
-              {props.element[props.descriptionKey].length > DESCRIPTION_MAX_LENGHT && (
-                <div className="bottom-0 h-10 pointer-events-none absolute inset-x-0 z-10 bg-gradient-to-b from-transparent to-white"></div>
+              {isDescriptionCut && (
+                <div className="bottom-0 h-10 pointer-events-none absolute inset-x-0 z-10 bg-linear-to-b from-transparent to-white"></div>
               )}
             </>
           )}
