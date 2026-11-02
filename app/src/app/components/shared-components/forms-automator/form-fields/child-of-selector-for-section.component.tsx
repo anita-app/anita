@@ -11,7 +11,7 @@ import {
   useRef,
   useState,
 } from 'react'
-import Select from 'react-select'
+import { Select } from 'app/components/shared-components/common-ui-eles/select.component'
 import { formSelectStyles } from 'app/components/shared-components/forms-automator/form-layout/select-styles.const'
 import { useAtomValue } from 'jotai'
 import { FormProjectAtoms } from 'app/state/form-project/form-project.atoms'

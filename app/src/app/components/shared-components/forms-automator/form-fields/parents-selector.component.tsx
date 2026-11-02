@@ -10,7 +10,7 @@ import {
   useRef,
   useState,
 } from 'react'
-import Select from 'react-select'
+import { Select } from 'app/components/shared-components/common-ui-eles/select.component'
 import { formSelectStyles } from 'app/components/shared-components/forms-automator/form-layout/select-styles.const'
 import { Bucket } from 'app/state/bucket.state'
 import { ProjectAtoms } from 'app/state/project/project.atoms'
